@@ -1,0 +1,305 @@
+﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
+
+@{
+    ViewBag.Title = "AddEdit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="mainbar">
+    <!-- Page heading -->
+    <div class="page-head">
+        <h2 class="pull-left">Add Employee</h2>
+
+        <div class="clearfix"></div>
+
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Page heading ends -->
+    <!-- Matter -->
+
+    <div class="matter">
+        <div class="container">
+            <!-- Dashboard Graph starts -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            <div class="pull-left">Add new Employee</div>
+                            <div class="widget-icons pull-right">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd">
+
+                                @using (Html.BeginForm("AddEdit", "Employee", FormMethod.Post, new { @id = "AddEditEmployeeForm", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+                                    @Html.HiddenFor(model => model.Employee.EmployeeId)
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">First Name</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.EmpFirstNameE, new { @class = "form-control mandatory", @placeholder = "First Name", @id = "EmployeeName" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpFirstNameE)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Middle Name</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.EmpMiddleNameE, new { @class = "form-control mandatory", @placeholder = "Middle  Name", @id = "Employee Name" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpMiddleNameE)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Last Name</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.EmpLastNameE, new { @class = "form-control mandatory", @placeholder = "Last Name", @id = "EmployeeName" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpLastNameE)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Job Title</label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownListFor(model => model.Employee.JobId, new SelectList(Model.JobTitleList, "JobId", "JobTitleNameE"), "--Select--", new { @class = "input-large form-control setDeptJobId mandatory" })
+                                            @Html.ValidationMessageFor(m => m.Employee.JobId)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Department</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.Department, new { @class = "form-control mandatory", @placeholder = "Department", @id = "DepartmentName", @disabled = true })
+                                            @Html.ValidationMessageFor(m => m.Employee.Department)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Job ID</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.JobId, new { @class = "form-control", @placeholder = "JobID", @id = "JobId", @disabled = true })
+                                            @Html.ValidationMessageFor(m => m.Employee.JobId)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Image</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.UploadImage, new { type = "file", accept = ".jpg,.jpeg,.png" })
+                                            @Html.ValidationMessageFor(m => m.Employee.UploadImage, null, new { @class = "Error" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Mobile Number</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.EmpMobileNumber, new { @class = "form-control mandatory", @placeholder = "Mobile Number", @id = "MobileNumber" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpMobileNumber)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Landline Number</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.EmpLandlineNumber, new { @class = "form-control mandatory", @placeholder = "Landline Number", @id = "LandlineNumber" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpLandlineNumber)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Marital Status</label>
+                                        <div class="col-lg-10">
+                                            @Html.DropDownListFor(model => model.Employee.EmpMaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @class = "input-large form-control mandatory" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpMaritalStatus)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Date of Birth (Arabic-Gregorian)</label>
+                                        <div class="col-lg-10">
+                                            <div class="">
+                                                @Html.TextBoxFor(model => model.Employee.EmpDateOfBirthArabic, new { @class = "form-control mandatory cursorHand datepickerArabic col-lg-2", onchange = "HijriToGregorian(this,'EmpDateOfBirth')", @placeholder = "Date of Birth", @id = "EmpDateOfBirthArabic" })
+                                                @Html.TextBoxFor(model => model.Employee.EmpDateOfBirth, new { @class = "form-control mandatory cursorHand datepicker col-lg-2", @placeholder = "Date of Birth", @id = "EmpDateOfBirth" })
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpDateOfBirth)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Nationality</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.Nationality, new { @class = "form-control mandatory", @placeholder = "Nationality" })
+                                            @Html.ValidationMessageFor(m => m.Employee.Nationality)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">National (Iqama) ID</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.EmpIqama, new { @class = "form-control mandatory", @placeholder = "Iqama ID" })
+                                            @Html.ValidationMessageFor(m => m.Employee.EmpIqama)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Iqama Issue Date</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.IqamaIssueDate, new { @class = "form-control mandatory cursorHand textAlignRight", @placeholder = "Iqama Issue Date", @id = "IqamaIssueDate" })
+                                            @Html.ValidationMessageFor(m => m.Employee.IqamaIssueDate)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Iqama Expiry Date</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.IqamaExpiryDate, new { @class = "form-control mandatory cursorHand textAlignRight", @placeholder = "Iqama Expiry Date", @id = "IqamaExpiryDate" })
+                                            @Html.ValidationMessageFor(m => m.Employee.IqamaExpiryDate)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Passport ID</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.PassportId, new { @class = "form-control mandatory", @placeholder = "Passport ID" })
+                                            @Html.ValidationMessageFor(m => m.Employee.PassportId)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Passport expiry date</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.PassportExpiryDate, new { @class = "form-control mandatory cursorHand textAlignRight", @placeholder = "Passport expiry date", @id = "PassportExpiryDate" })
+                                            @Html.ValidationMessageFor(m => m.Employee.PassportExpiryDate)
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Extra Information</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(model => model.Employee.ExtraInfo, new { @class = "form-control mandatory", @placeholder = "Extra Information" })
+                                            @Html.ValidationMessageFor(m => m.Employee.ExtraInfo)
+                                        </div>
+                                    </div>
+
+                                    @*<div class="form-group">
+                                            <label class="col-lg-2 control-label textAlignLeft">Basic Salary</label>
+                                            <div class="col-lg-10">
+                                                @Html.TextBoxFor(model => model.JobTitle.BasicSalary, new { @class = "form-control mandatory", @placeholder = "Basic Salary" })
+                                                @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary)
+                                            </div>
+                                        </div>*@
+
+                                    <div class="form-group">
+                                        <a href="~/Employee/EmployeeLV">
+                                            <div class="col-lg-2 pull-right">
+                                                <button id="signupuser" type="button" class="btn btn-primary btn-block FontSize16">Cancel</button>
+                                            </div>
+                                        </a>
+                                        <div class="col-lg-2 pull-right">
+                                            <button id="signupuser" type="submit" class="btn btn-success btn-block FontSize16">Save</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Matter ends -->
+
+</div>
+<link rel="stylesheet" href="~/Content/css/zebra.css" type="text/css" media="screen">
+<script type="text/javascript" src="~/Scripts/App/zebra_datepicker.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            autoclose: true
+        });
+        //$('#EmpDateOfBirth').Zebra_DatePicker();
+        $('#IqamaIssueDate').Zebra_DatePicker();
+        $('#IqamaExpiryDate').Zebra_DatePicker();
+        $('#PassportExpiryDate').Zebra_DatePicker();
+        // Arabic Date Picker
+        var calendar = $.calendars.instance('islamic');
+        $('.datepickerArabic').calendarsPicker({
+            calendar: calendar,
+            onSelect: function () {
+                $(this).change();
+            }
+        });
+        // set JobId and Department Name
+        $(".setDeptJobId").on("change", function () {
+            var jobId = $(this).val();
+            if (jobId != "") {
+                $("#JobId").val(jobId);
+                var jobsList = '@Html.Raw(Json.Encode(Model.JobTitleDeptList))';
+                //'@Html.Raw(Json.Encode(Model.JobTitleDeptList))';
+                var parsed = JSON.parse(jobsList);
+
+                $.each(parsed, function (key, value) {
+                    if (value.JobId == jobId) {
+                        $("#DepartmentName").val(value.DeptName);
+                    }
+                });
+            } else {
+                $("#DepartmentName").val(jobId);
+                $("#JobId").val(jobId);
+            }
+
+        });
+        $("#EmpDateOfBirth").on("change", function () {
+            if ($('#EmpDateOfBirth').val() == "") {
+                $('#EmpDateOfBirthArabic').val("");
+            }
+            else {
+                var dateToBeChanged = $('#EmpDateOfBirth').val();
+                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+                $('#EmpDateOfBirthArabic').val(newDate);
+            }
+        });
+        FormatDateFields();
+    });
+    function FormatDateFields() {
+        var fields = $(".datepicker, .datepickerArabic");
+        for (var i = 0; i < fields.length; i++) {
+            if ($(fields[i]).val() != null && $(fields[i]).val() != "") {
+                $(fields[i]).val(moment($(fields[i]).val()).format("MM/DD/YYYY"));
+            }
+        }
+    }
+    function HijriToGregorian(ctl, gregId1, gregId2) {
+        if ($('#EmpDateOfBirthArabic').val() == "") {
+            $('#EmpDateOfBirth').val("");
+        }
+        else {
+            var splittedDate = $('#EmpDateOfBirthArabic').val().split('/');
+            $('#EmpDateOfBirthArabic').val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
+            var dateToBeChanged = $('#EmpDateOfBirthArabic').val();
+            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
+            $('#EmpDateOfBirth').val(newDate);
+        }
+    }
+    
+    function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
+        var calender = $.calendars.instance(fromCalender);
+        var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);
+        calender = $.calendars.instance(toCalender);
+        var changedDate = calender.fromJD(dateToBeChanged.toJD());
+        return calender.formatDate("mm/dd/yyyy", changedDate);
+    }
+</script>

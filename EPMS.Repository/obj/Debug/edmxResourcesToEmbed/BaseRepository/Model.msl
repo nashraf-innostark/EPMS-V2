@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="BaseDbContext">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="DomainModels.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="DomainModels.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="DomainModels.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="DomainModels.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="DomainModels.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Attachments">
+      <EntityTypeMapping TypeName="DomainModels.Attachment">
+        <MappingFragment StoreEntitySet="Attachment">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="AttachmentName" ColumnName="AttachmentName" />
+          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="PrisonerId" ColumnName="PrisonerId" />
+          <ScalarProperty Name="AttachmentId" ColumnName="AttachmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="DomainModels.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CategoryLogs">
+      <EntityTypeMapping TypeName="DomainModels.CategoryLog">
+        <MappingFragment StoreEntitySet="CategoryLog">
+          <ScalarProperty Name="LogID" ColumnName="LogID" />
+          <ScalarProperty Name="LogCategoryID" ColumnName="LogCategoryID" />
+          <ScalarProperty Name="CategoryLogID" ColumnName="CategoryLogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="DomainModels.Log">
+        <MappingFragment StoreEntitySet="Log">
+          <ScalarProperty Name="HandlingInstanceId" ColumnName="HandlingInstanceId" />
+          <ScalarProperty Name="FormattedMessage" ColumnName="FormattedMessage" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Win32ThreadId" ColumnName="Win32ThreadId" />
+          <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
+          <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
+          <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+          <ScalarProperty Name="AppDomainName" ColumnName="AppDomainName" />
+          <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Severity" ColumnName="Severity" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+          <ScalarProperty Name="EventID" ColumnName="EventID" />
+          <ScalarProperty Name="LogID" ColumnName="LogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogCategories">
+      <EntityTypeMapping TypeName="DomainModels.LogCategory">
+        <MappingFragment StoreEntitySet="LogCategory">
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+          <ScalarProperty Name="LogCategoryID" ColumnName="LogCategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MenuRights">
+      <EntityTypeMapping TypeName="DomainModels.MenuRight">
+        <MappingFragment StoreEntitySet="MenuRight">
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
+          <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prisoners">
+      <EntityTypeMapping TypeName="DomainModels.Prisoner">
+        <MappingFragment StoreEntitySet="Prisoner">
+          <ScalarProperty Name="PassportExpiryDateArabic" ColumnName="PassportExpiryDateArabic" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="PassportExpiryDate" ColumnName="PassportExpiryDate" />
+          <ScalarProperty Name="PrisonerPassport" ColumnName="PrisonerPassport" />
+          <ScalarProperty Name="PrisonerCnic" ColumnName="PrisonerCnic" />
+          <ScalarProperty Name="PrisonerLastNameA" ColumnName="PrisonerLastNameA" />
+          <ScalarProperty Name="PrisonerMiddleNameA" ColumnName="PrisonerMiddleNameA" />
+          <ScalarProperty Name="PrisonerFirstNameA" ColumnName="PrisonerFirstNameA" />
+          <ScalarProperty Name="PrisonerLastNameE" ColumnName="PrisonerLastNameE" />
+          <ScalarProperty Name="PrisonerMiddleNameE" ColumnName="PrisonerMiddleNameE" />
+          <ScalarProperty Name="PrisonerFirstNameE" ColumnName="PrisonerFirstNameE" />
+          <ScalarProperty Name="PrisonerId" ColumnName="PrisonerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Menus">
+      <EntityTypeMapping TypeName="DomainModels.Menu">
+        <MappingFragment StoreEntitySet="Menu">
+          <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
+          <ScalarProperty Name="ParentItem_MenuId" ColumnName="ParentItem_MenuId" />
+          <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
+          <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
+          <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
+          <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
+          <ScalarProperty Name="MenuTargetController" ColumnName="MenuTargetController" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+          <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
+          <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="DomainModels.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
+          <ScalarProperty Name="DepartmentNameA" ColumnName="DepartmentNameA" />
+          <ScalarProperty Name="DepartmentNameE" ColumnName="DepartmentNameE" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="DomainModels.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
+          <ScalarProperty Name="PassportExpiryDate" ColumnName="PassportExpiryDate" />
+          <ScalarProperty Name="PassportId" ColumnName="PassportId" />
+          <ScalarProperty Name="IqamaExpiryDate" ColumnName="IqamaExpiryDate" />
+          <ScalarProperty Name="IqamaIssueDate" ColumnName="IqamaIssueDate" />
+          <ScalarProperty Name="EmpIqama" ColumnName="EmpIqama" />
+          <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+          <ScalarProperty Name="EmpDateOfBirth" ColumnName="EmpDateOfBirth" />
+          <ScalarProperty Name="EmpMaritalStatus" ColumnName="EmpMaritalStatus" />
+          <ScalarProperty Name="EmpLandlineNumber" ColumnName="EmpLandlineNumber" />
+          <ScalarProperty Name="EmpMobileNumber" ColumnName="EmpMobileNumber" />
+          <ScalarProperty Name="EmpImage" ColumnName="EmpImage" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="EmpLastNameA" ColumnName="EmpLastNameA" />
+          <ScalarProperty Name="EmpLastNameE" ColumnName="EmpLastNameE" />
+          <ScalarProperty Name="EmpMiddleNameA" ColumnName="EmpMiddleNameA" />
+          <ScalarProperty Name="EmpMiddleNameE" ColumnName="EmpMiddleNameE" />
+          <ScalarProperty Name="EmpFirstNameA" ColumnName="EmpFirstNameA" />
+          <ScalarProperty Name="EmpFirstNameE" ColumnName="EmpFirstNameE" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobTitles">
+      <EntityTypeMapping TypeName="DomainModels.JobTitle">
+        <MappingFragment StoreEntitySet="JobTitles">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+          <ScalarProperty Name="JobDescriptionA" ColumnName="JobDescriptionA" />
+          <ScalarProperty Name="JobDescriptionE" ColumnName="JobDescriptionE" />
+          <ScalarProperty Name="JobTitleNameA" ColumnName="JobTitleNameA" />
+          <ScalarProperty Name="JobTitleNameE" ColumnName="JobTitleNameE" />
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

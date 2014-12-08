@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Telephone" Type="nvarchar(max)" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="ImageName" Type="nvarchar(max)" />
+    <Property Name="DateOfBirth" Type="datetime" />
+    <Property Name="Qualification" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Attachment">
+    <Key>
+      <PropertyRef Name="AttachmentId" />
+    </Key>
+    <Property Name="AttachmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrisonerId" Type="int" Nullable="false" />
+    <Property Name="FileName" Type="nvarchar(max)" />
+    <Property Name="FilePath" Type="nvarchar(max)" />
+    <Property Name="AttachmentName" Type="nvarchar(max)" />
+    <Property Name="Comment" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="CategoryLog">
+    <Key>
+      <PropertyRef Name="CategoryLogID" />
+    </Key>
+    <Property Name="CategoryLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogCategoryID" Type="int" Nullable="false" />
+    <Property Name="LogID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentNameE" Type="nvarchar" MaxLength="50" />
+    <Property Name="DepartmentNameA" Type="nvarchar" MaxLength="50" />
+    <Property Name="DepartmentDesc" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="EmployeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpFirstNameE" Type="nvarchar(max)" />
+    <Property Name="EmpFirstNameA" Type="nvarchar(max)" />
+    <Property Name="EmpMiddleNameE" Type="nvarchar(max)" />
+    <Property Name="EmpMiddleNameA" Type="nvarchar(max)" />
+    <Property Name="EmpLastNameE" Type="nvarchar(max)" />
+    <Property Name="EmpLastNameA" Type="nvarchar(max)" />
+    <Property Name="JobId" Type="bigint" Nullable="false" />
+    <Property Name="EmpImage" Type="nvarchar(max)" />
+    <Property Name="EmpMobileNumber" Type="nvarchar(max)" />
+    <Property Name="EmpLandlineNumber" Type="nvarchar(max)" />
+    <Property Name="EmpMaritalStatus" Type="nvarchar" MaxLength="20" />
+    <Property Name="EmpDateOfBirth" Type="datetime" />
+    <Property Name="Nationality" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmpIqama" Type="bigint" />
+    <Property Name="IqamaIssueDate" Type="datetime" />
+    <Property Name="IqamaExpiryDate" Type="datetime" />
+    <Property Name="PassportId" Type="bigint" />
+    <Property Name="PassportExpiryDate" Type="datetime" />
+    <Property Name="ExtraInfo" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="JobTitles">
+    <Key>
+      <PropertyRef Name="JobId" />
+    </Key>
+    <Property Name="JobId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobTitleNameE" Type="nvarchar" MaxLength="50" />
+    <Property Name="JobTitleNameA" Type="nvarchar" MaxLength="50" />
+    <Property Name="JobDescriptionE" Type="nvarchar(max)" />
+    <Property Name="JobDescriptionA" Type="nvarchar(max)" />
+    <Property Name="BasicSalary" Type="money" />
+    <Property Name="DepartmentId" Type="bigint" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventID" Type="int" Nullable="false" />
+    <Property Name="Priority" Type="int" Nullable="false" />
+    <Property Name="Severity" Type="nvarchar(max)" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Timestamp" Type="datetime" Nullable="false" />
+    <Property Name="MachineName" Type="nvarchar(max)" />
+    <Property Name="AppDomainName" Type="nvarchar(max)" />
+    <Property Name="ProcessID" Type="nvarchar(max)" />
+    <Property Name="ProcessName" Type="nvarchar(max)" />
+    <Property Name="ThreadName" Type="nvarchar(max)" />
+    <Property Name="Win32ThreadId" Type="nvarchar(max)" />
+    <Property Name="Message" Type="nvarchar(max)" />
+    <Property Name="FormattedMessage" Type="nvarchar(max)" />
+    <Property Name="HandlingInstanceId" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="LogCategory">
+    <Key>
+      <PropertyRef Name="LogCategoryID" />
+    </Key>
+    <Property Name="LogCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Menu">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MenuKey" Type="int" Nullable="false" />
+    <Property Name="MenuTitle" Type="nvarchar(max)" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="MenuTargetController" Type="nvarchar(max)" />
+    <Property Name="MenuImagePath" Type="nvarchar(max)" />
+    <Property Name="MenuFunction" Type="nvarchar(max)" />
+    <Property Name="PermissionKey" Type="nvarchar(max)" />
+    <Property Name="IsRootItem" Type="bit" Nullable="false" />
+    <Property Name="ParentItem_MenuId" Type="int" />
+    <Property Name="IsMenuItem" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MenuRight">
+    <Key>
+      <PropertyRef Name="MenuRightId" />
+    </Key>
+    <Property Name="MenuRightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Menu_MenuId" Type="int" />
+    <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="Prisoner">
+    <Key>
+      <PropertyRef Name="PrisonerId" />
+    </Key>
+    <Property Name="PrisonerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrisonerFirstNameE" Type="nvarchar(max)" />
+    <Property Name="PrisonerMiddleNameE" Type="nvarchar(max)" />
+    <Property Name="PrisonerLastNameE" Type="nvarchar(max)" />
+    <Property Name="PrisonerFirstNameA" Type="nvarchar(max)" />
+    <Property Name="PrisonerMiddleNameA" Type="nvarchar(max)" />
+    <Property Name="PrisonerLastNameA" Type="nvarchar(max)" />
+    <Property Name="PrisonerCnic" Type="nvarchar(max)" />
+    <Property Name="PrisonerPassport" Type="nvarchar(max)" />
+    <Property Name="PassportExpiryDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="UpdatedBy" Type="nvarchar(max)" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="PassportExpiryDateArabic" Type="nvarchar(max)" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Attachment_dbo_Prisoner_PrisonerId">
+    <End Role="Prisoner" Type="Self.Prisoner" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Attachment" Type="Self.Attachment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prisoner">
+        <PropertyRef Name="PrisonerId" />
+      </Principal>
+      <Dependent Role="Attachment">
+        <PropertyRef Name="PrisonerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_CategoryLog_dbo_Log_LogID">
+    <End Role="Log" Type="Self.Log" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="LogID" />
+      </Principal>
+      <Dependent Role="CategoryLog">
+        <PropertyRef Name="LogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_CategoryLog_dbo_LogCategory_LogCategoryID">
+    <End Role="LogCategory" Type="Self.LogCategory" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LogCategory">
+        <PropertyRef Name="LogCategoryID" />
+      </Principal>
+      <Dependent Role="CategoryLog">
+        <PropertyRef Name="LogCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+    <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+    <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Menu">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="Menu1">
+        <PropertyRef Name="ParentItem_MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1" />
+    <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MenuRight">
+        <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+    <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+    <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Menu">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="MenuRight">
+        <PropertyRef Name="Menu_MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_JobTitles">
+    <End Role="JobTitles" Type="Self.JobTitles" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitles">
+        <PropertyRef Name="JobId" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobTitles_Department">
+    <End Role="Department" Type="Self.Department" Multiplicity="1" />
+    <End Role="JobTitles" Type="Self.JobTitles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentId" />
+      </Principal>
+      <Dependent Role="JobTitles">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobTitles" EntityType="Self.JobTitles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LogCategory" EntityType="Self.LogCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Prisoner" EntityType="Self.Prisoner" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Attachment_dbo_Prisoner_PrisonerId" Association="Self.FK_dbo_Attachment_dbo_Prisoner_PrisonerId">
+      <End Role="Prisoner" EntitySet="Prisoner" />
+      <End Role="Attachment" EntitySet="Attachment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_CategoryLog_dbo_Log_LogID" Association="Self.FK_dbo_CategoryLog_dbo_Log_LogID">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="CategoryLog" EntitySet="CategoryLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_CategoryLog_dbo_LogCategory_LogCategoryID" Association="Self.FK_dbo_CategoryLog_dbo_LogCategory_LogCategoryID">
+      <End Role="LogCategory" EntitySet="LogCategory" />
+      <End Role="CategoryLog" EntitySet="CategoryLog" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+      <End Role="Menu" EntitySet="Menu" />
+      <End Role="Menu1" EntitySet="Menu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="MenuRight" EntitySet="MenuRight" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+      <End Role="Menu" EntitySet="Menu" />
+      <End Role="MenuRight" EntitySet="MenuRight" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_JobTitles" Association="Self.FK_Employee_JobTitles">
+      <End Role="JobTitles" EntitySet="JobTitles" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobTitles_Department" Association="Self.FK_JobTitles_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="JobTitles" EntitySet="JobTitles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
