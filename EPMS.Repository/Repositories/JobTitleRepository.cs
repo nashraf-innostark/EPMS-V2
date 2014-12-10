@@ -45,11 +45,10 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<JobTitleByColumn, Func<JobTitle, object>>
                     {
-                        { JobTitleByColumn.JobId, c => c.JobId},
-                        { JobTitleByColumn.JobTitleNameE,  c => c.JobTitleNameE},
-                        { JobTitleByColumn.JobTitleNameA, c => c.JobTitleNameA},
-                        { JobTitleByColumn.JobDescriptionE, c => c.JobDescriptionE},
-                        { JobTitleByColumn.JobDescriptionA, c => c.JobDescriptionA}
+                        { JobTitleByColumn.JobTitleId, c => c.JobTitleId},
+                        { JobTitleByColumn.JobTitleName,  c => c.JobTitleName},
+                        { JobTitleByColumn.JobTitleDesc, c => c.JobTitleDesc},
+                        { JobTitleByColumn.BasicSalary, c => c.BasicSalary}
                     };
         #endregion
 
@@ -64,10 +63,10 @@ namespace EPMS.Repository.Repositories
             int toRow = jobTitleSearchRequest.PageSize;
 
             Expression<Func<JobTitle, bool>> query =
-                s => (((jobTitleSearchRequest.JobId == 0) || s.JobId == jobTitleSearchRequest.JobId
-                    || s.JobId.Equals(jobTitleSearchRequest.JobId)) &&
-                    (string.IsNullOrEmpty(jobTitleSearchRequest.JobTitleNameE)
-                    || (s.JobTitleNameE.Contains(jobTitleSearchRequest.JobTitleNameE))));
+                s => (((jobTitleSearchRequest.JobTitleId == 0) || s.JobTitleId == jobTitleSearchRequest.JobTitleId
+                    || s.JobTitleId.Equals(jobTitleSearchRequest.JobTitleId)) &&
+                    (string.IsNullOrEmpty(jobTitleSearchRequest.JobTitleName)
+                    || (s.JobTitleName.Contains(jobTitleSearchRequest.JobTitleName))));
 
             IEnumerable<JobTitle> jobTitles = jobTitleSearchRequest.IsAsc ?
                 DbSet
@@ -85,7 +84,7 @@ namespace EPMS.Repository.Repositories
         /// <returns></returns>
         public JobTitle FindJobTitleById(int? id)
         {
-            return DbSet.FirstOrDefault(jobId => jobId.JobId == id);
+            return DbSet.FirstOrDefault(jobId => jobId.JobTitleId == id);
         }
 
         /// <summary>

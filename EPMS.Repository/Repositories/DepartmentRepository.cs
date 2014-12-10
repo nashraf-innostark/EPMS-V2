@@ -44,8 +44,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<DepartmentByColumn, Func<Department, object>>
                     {
                         { DepartmentByColumn.DepartmentId, c => c.DepartmentId},
-                        { DepartmentByColumn.DepartmentNameE,  c => c.DepartmentNameE},
-                        { DepartmentByColumn.DepartmentNameA, c => c.DepartmentNameA},
+                        { DepartmentByColumn.DepartmentName,  c => c.DepartmentName},
                         { DepartmentByColumn.DepartmentDesc, c => c.DepartmentDesc}
                     };
         #endregion
@@ -63,8 +62,8 @@ namespace EPMS.Repository.Repositories
             Expression<Func<Department, bool>> query =
                 s => (((departmentSearchRequest.DepartmentId == 0) || s.DepartmentId == departmentSearchRequest.DepartmentId
                     || s.DepartmentId == departmentSearchRequest.DepartmentId) &&
-                    (string.IsNullOrEmpty(departmentSearchRequest.DepartmentNameE)
-                    || (s.DepartmentNameE.Contains(departmentSearchRequest.DepartmentNameE))));
+                    (string.IsNullOrEmpty(departmentSearchRequest.DepartmentName)
+                    || (s.DepartmentName.Contains(departmentSearchRequest.DepartmentName))));
 
             IEnumerable<Department> departments = departmentSearchRequest.IsAsc ?
                 DbSet

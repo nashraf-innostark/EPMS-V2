@@ -45,5 +45,19 @@ namespace EPMS.Implementation.Services
         {
             return iRepository.LoadAll();
         }
+
+        public bool AddJob(JobTitle jobTitle)
+        {
+            try
+            {
+                iRepository.Add(jobTitle);
+                iRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception exception)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@
 @using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 
-<html>
+<html dir="@EPMS.Web.Resources.Shared.Common.TextDirection">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -73,11 +73,11 @@
     <script src="~/Scripts/JqueryCalendar/jquery.plugin.js"></script>
 
     <script src="~/Scripts/JqueryCalendar/jquery.calendars.js"></script>
-    <script src="~/Scripts/JqueryCalendar/jquery.calendars.plus.js"></script>  
+    <script src="~/Scripts/JqueryCalendar/jquery.calendars.plus.js"></script>
     @*<script src="~/Scripts/JqueryCalendar/jquery.calendars.all.js"></script>*@
     @*<script src="~/Scripts/JqueryCalendar/jquery.calendars-ar.js"></script>*@
     @*<script src="~/Scripts/JqueryCalendar/jquery.calendars.picker.js"></script>
-    <script src="~/Scripts/JqueryCalendar/jquery.calendars.lang.js"></script>*@
+        <script src="~/Scripts/JqueryCalendar/jquery.calendars.lang.js"></script>*@
     <script src="~/Scripts/JqueryCalendar/jquery.calendars.lang.js"></script>
     <script src="~/Scripts/JqueryCalendar/jquery.calendars.picker.js"></script>
     <script src="~/Scripts/JqueryCalendar/jquery.calendars.islamic.js"></script>
@@ -85,7 +85,7 @@
     <link rel="shortcut icon" href="img/favicon/favicon.png">
     @*<script src="~/Scripts/App/requireConfig.js"></script>  *@
 
-    
+
 </head>
 <body>
     <div>
@@ -106,25 +106,25 @@
 
                         <!-- Links -->
                         @if (@User.Identity.GetUserName() != null && @User.Identity.GetUserName() != "")
-{
-                        <ul class="nav navbar-nav pull-right">
-                            <li class="dropdown pull-right user-data">
-                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                    @*<img src='@("~/" + Session[" ProfileImage"])'>*@ Hello <span class="bold">@Session["FullName"]</span> <b class="caret"></b>
-                                </a>
+                        {
+                            <ul class="nav navbar-nav pull-right">
+                                <li class="dropdown pull-right user-data">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        @*<img src='@("~/" + Session[" ProfileImage"])'>*@ Hello <span class="bold">@Session["FullName"]</span> <b class="caret"></b>
+                                    </a>
 
-                                <!-- Dropdown menu -->
-                                <ul class="dropdown-menu">
-                                    <li><a href="~/Account/Profile"><i class="fa fa-user"></i> Profile</a></li>
-                                    <li><a href="~/Account/Manage"><i class="fa fa-cogs"></i> Change Password</a></li>
-                                    <li><a href="~/Account/LogOff"><i class="fa fa-key"></i> Logout</a></li>
-                                </ul>
-                            </li>
+                                    <!-- Dropdown menu -->
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/Account/Profile"><i class="fa fa-user"></i> Profile</a></li>
+                                        <li><a href="~/Account/Manage"><i class="fa fa-cogs"></i> Change Password</a></li>
+                                        <li><a href="~/Account/LogOff"><i class="fa fa-key"></i> Logout</a></li>
+                                    </ul>
+                                </li>
 
 
 
-                        </ul>
-}
+                            </ul>
+                        }
                     </nav>
 
                 </div>

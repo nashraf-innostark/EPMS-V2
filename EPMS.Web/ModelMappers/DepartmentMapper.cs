@@ -12,14 +12,14 @@ namespace EPMS.Web.ModelMappers
         {
             var caseType = new Department
             {
-                DepartmentId = source.DepartmentId ?? 0,
-                DepartmentNameE = source.DepartmentNameE,
-                DepartmentNameA = source.DepartmentNameA,
-                DepartmentDesc = source.DepartmentDesc,
-                CreatedBy = source.CreatedBy,
-                CreatedDate = source.CreatedDate,
-                UpdatedBy = source.UpdatedBy,
-                UpdatedDate = source.UpdatedDate
+                //DepartmentId = source.DepartmentId ?? 0,
+                //DepartmentNameE = source.DepartmentNameE,
+                //DepartmentNameA = source.DepartmentNameA,
+                //DepartmentDesc = source.DepartmentDesc,
+                //CreatedBy = source.CreatedBy,
+                //CreatedDate = source.CreatedDate,
+                //UpdatedBy = source.UpdatedBy,
+                //UpdatedDate = source.UpdatedDate
             };
             return caseType;
         }
@@ -27,14 +27,14 @@ namespace EPMS.Web.ModelMappers
         {
             return new Models.Department
             {
-                DepartmentId = source.DepartmentId,
-                DepartmentNameE = source.DepartmentNameE,
-                DepartmentNameA = source.DepartmentNameA,
-                DepartmentDesc = source.DepartmentDesc,
-                CreatedBy = source.CreatedBy,
-                CreatedDate = source.CreatedDate,
-                UpdatedBy = source.UpdatedBy,
-                UpdatedDate = source.UpdatedDate
+                //DepartmentId = source.DepartmentId,
+                //DepartmentNameE = source.DepartmentNameE,
+                //DepartmentNameA = source.DepartmentNameA,
+                //DepartmentDesc = source.DepartmentDesc,
+                //CreatedBy = source.CreatedBy,
+                //CreatedDate = source.CreatedDate,
+                //UpdatedBy = source.UpdatedBy,
+                //UpdatedDate = source.UpdatedDate
             };
 
         }

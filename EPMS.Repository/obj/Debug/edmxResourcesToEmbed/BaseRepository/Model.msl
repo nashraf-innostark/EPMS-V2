@@ -1,18 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="BaseDbContext">
-    <EntitySetMapping Name="C__MigrationHistory">
-      <EntityTypeMapping TypeName="DomainModels.C__MigrationHistory">
-        <MappingFragment StoreEntitySet="__MigrationHistory">
-          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-          <ScalarProperty Name="Model" ColumnName="Model" />
-          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+  <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="EPMSEntities">
+    <EntitySetMapping Name="Allowances">
+      <EntityTypeMapping TypeName="EPMSModel.Allowance">
+        <MappingFragment StoreEntitySet="Allowance">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+          <ScalarProperty Name="Allowance5" ColumnName="Allowance5" />
+          <ScalarProperty Name="AllowanceDesc5" ColumnName="AllowanceDesc5" />
+          <ScalarProperty Name="Allowance4" ColumnName="Allowance4" />
+          <ScalarProperty Name="AllowanceDesc4" ColumnName="AllowanceDesc4" />
+          <ScalarProperty Name="Allowance3" ColumnName="Allowance3" />
+          <ScalarProperty Name="AllowanceDesc3" ColumnName="AllowanceDesc3" />
+          <ScalarProperty Name="Allowance2" ColumnName="Allowance2" />
+          <ScalarProperty Name="AllowanceDesc2" ColumnName="AllowanceDesc2" />
+          <ScalarProperty Name="Allowance1" ColumnName="Allowance1" />
+          <ScalarProperty Name="AllowanceDesc1" ColumnName="AllowanceDesc1" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="AllowanceId" ColumnName="AllowanceId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetRoles">
-      <EntityTypeMapping TypeName="DomainModels.AspNetRole">
+      <EntityTypeMapping TypeName="EPMSModel.AspNetRole">
         <MappingFragment StoreEntitySet="AspNetRoles">
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -20,7 +33,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserClaims">
-      <EntityTypeMapping TypeName="DomainModels.AspNetUserClaim">
+      <EntityTypeMapping TypeName="EPMSModel.AspNetUserClaim">
         <MappingFragment StoreEntitySet="AspNetUserClaims">
           <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
           <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -30,7 +43,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUserLogins">
-      <EntityTypeMapping TypeName="DomainModels.AspNetUserLogin">
+      <EntityTypeMapping TypeName="EPMSModel.AspNetUserLogin">
         <MappingFragment StoreEntitySet="AspNetUserLogins">
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -39,132 +52,127 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AspNetUsers">
-      <EntityTypeMapping TypeName="DomainModels.AspNetUser">
+      <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
         <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="SystemUserId" ColumnName="SystemUserId" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
           <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
           <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
           <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
           <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="Qualification" ColumnName="Qualification" />
-          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-          <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Attachments">
-      <EntityTypeMapping TypeName="DomainModels.Attachment">
-        <MappingFragment StoreEntitySet="Attachment">
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="Comment" ColumnName="Comment" />
-          <ScalarProperty Name="AttachmentName" ColumnName="AttachmentName" />
-          <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-          <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="PrisonerId" ColumnName="PrisonerId" />
-          <ScalarProperty Name="AttachmentId" ColumnName="AttachmentId" />
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="EPMSModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="DomainModels.Category">
-        <MappingFragment StoreEntitySet="Category">
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="EPMSModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="EmployeeDetails" ColumnName="EmployeeDetails" />
+          <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
+          <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
+          <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
+          <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
+          <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
+          <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
+          <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
+          <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+          <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
+          <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
+          <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
+          <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+          <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
+          <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+          <ScalarProperty Name="EmployeeMiddleName" ColumnName="EmployeeMiddleName" />
+          <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CategoryLogs">
-      <EntityTypeMapping TypeName="DomainModels.CategoryLog">
-        <MappingFragment StoreEntitySet="CategoryLog">
-          <ScalarProperty Name="LogID" ColumnName="LogID" />
-          <ScalarProperty Name="LogCategoryID" ColumnName="LogCategoryID" />
-          <ScalarProperty Name="CategoryLogID" ColumnName="CategoryLogID" />
+    <EntitySetMapping Name="EmployeeRequests">
+      <EntityTypeMapping TypeName="EPMSModel.EmployeeRequest">
+        <MappingFragment StoreEntitySet="EmployeeRequests">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="IsMonetary" ColumnName="IsMonetary" />
+          <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+          <ScalarProperty Name="RequestTopic" ColumnName="RequestTopic" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Logs">
-      <EntityTypeMapping TypeName="DomainModels.Log">
-        <MappingFragment StoreEntitySet="Log">
-          <ScalarProperty Name="HandlingInstanceId" ColumnName="HandlingInstanceId" />
-          <ScalarProperty Name="FormattedMessage" ColumnName="FormattedMessage" />
-          <ScalarProperty Name="Message" ColumnName="Message" />
-          <ScalarProperty Name="Win32ThreadId" ColumnName="Win32ThreadId" />
-          <ScalarProperty Name="ThreadName" ColumnName="ThreadName" />
-          <ScalarProperty Name="ProcessName" ColumnName="ProcessName" />
-          <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
-          <ScalarProperty Name="AppDomainName" ColumnName="AppDomainName" />
-          <ScalarProperty Name="MachineName" ColumnName="MachineName" />
-          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="Severity" ColumnName="Severity" />
-          <ScalarProperty Name="Priority" ColumnName="Priority" />
-          <ScalarProperty Name="EventID" ColumnName="EventID" />
-          <ScalarProperty Name="LogID" ColumnName="LogID" />
+    <EntitySetMapping Name="JobApplicants">
+      <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
+        <MappingFragment StoreEntitySet="JobApplicants">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="ApplicantCvPath" ColumnName="ApplicantCvPath" />
+          <ScalarProperty Name="ApplicantAge" ColumnName="ApplicantAge" />
+          <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
+          <ScalarProperty Name="ApplicantEmail" ColumnName="ApplicantEmail" />
+          <ScalarProperty Name="ApplicantMobile" ColumnName="ApplicantMobile" />
+          <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
+          <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LogCategories">
-      <EntityTypeMapping TypeName="DomainModels.LogCategory">
-        <MappingFragment StoreEntitySet="LogCategory">
-          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-          <ScalarProperty Name="LogCategoryID" ColumnName="LogCategoryID" />
+    <EntitySetMapping Name="JobOffereds">
+      <EntityTypeMapping TypeName="EPMSModel.JobOffered">
+        <MappingFragment StoreEntitySet="JobOffered">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+          <ScalarProperty Name="ShowBasicSalary" ColumnName="ShowBasicSalary" />
+          <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+          <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+          <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MenuRights">
-      <EntityTypeMapping TypeName="DomainModels.MenuRight">
-        <MappingFragment StoreEntitySet="MenuRight">
-          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
-          <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
-          <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
+    <EntitySetMapping Name="JobTitles">
+      <EntityTypeMapping TypeName="EPMSModel.JobTitle">
+        <MappingFragment StoreEntitySet="JobTitle">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <ScalarProperty Name="JobTitleDesc" ColumnName="JobTitleDesc" />
+          <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
+          <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Prisoners">
-      <EntityTypeMapping TypeName="DomainModels.Prisoner">
-        <MappingFragment StoreEntitySet="Prisoner">
-          <ScalarProperty Name="PassportExpiryDateArabic" ColumnName="PassportExpiryDateArabic" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="PassportExpiryDate" ColumnName="PassportExpiryDate" />
-          <ScalarProperty Name="PrisonerPassport" ColumnName="PrisonerPassport" />
-          <ScalarProperty Name="PrisonerCnic" ColumnName="PrisonerCnic" />
-          <ScalarProperty Name="PrisonerLastNameA" ColumnName="PrisonerLastNameA" />
-          <ScalarProperty Name="PrisonerMiddleNameA" ColumnName="PrisonerMiddleNameA" />
-          <ScalarProperty Name="PrisonerFirstNameA" ColumnName="PrisonerFirstNameA" />
-          <ScalarProperty Name="PrisonerLastNameE" ColumnName="PrisonerLastNameE" />
-          <ScalarProperty Name="PrisonerMiddleNameE" ColumnName="PrisonerMiddleNameE" />
-          <ScalarProperty Name="PrisonerFirstNameE" ColumnName="PrisonerFirstNameE" />
-          <ScalarProperty Name="PrisonerId" ColumnName="PrisonerId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-      <EndProperty Name="AspNetUser">
-        <ScalarProperty Name="Id" ColumnName="UserId" />
-      </EndProperty>
-      <EndProperty Name="AspNetRole">
-        <ScalarProperty Name="Id" ColumnName="RoleId" />
-      </EndProperty>
-    </AssociationSetMapping>
     <EntitySetMapping Name="Menus">
-      <EntityTypeMapping TypeName="DomainModels.Menu">
+      <EntityTypeMapping TypeName="EPMSModel.Menu">
         <MappingFragment StoreEntitySet="Menu">
           <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
           <ScalarProperty Name="ParentItem_MenuId" ColumnName="ParentItem_MenuId" />
@@ -180,66 +188,59 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Departments">
-      <EntityTypeMapping TypeName="DomainModels.Department">
-        <MappingFragment StoreEntitySet="Department">
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
-          <ScalarProperty Name="DepartmentNameA" ColumnName="DepartmentNameA" />
-          <ScalarProperty Name="DepartmentNameE" ColumnName="DepartmentNameE" />
-          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+    <EntitySetMapping Name="MenuRights">
+      <EntityTypeMapping TypeName="EPMSModel.MenuRight">
+        <MappingFragment StoreEntitySet="MenuRight">
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
+          <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="DomainModels.Employee">
-        <MappingFragment StoreEntitySet="Employee">
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ExtraInfo" ColumnName="ExtraInfo" />
-          <ScalarProperty Name="PassportExpiryDate" ColumnName="PassportExpiryDate" />
-          <ScalarProperty Name="PassportId" ColumnName="PassportId" />
-          <ScalarProperty Name="IqamaExpiryDate" ColumnName="IqamaExpiryDate" />
-          <ScalarProperty Name="IqamaIssueDate" ColumnName="IqamaIssueDate" />
-          <ScalarProperty Name="EmpIqama" ColumnName="EmpIqama" />
-          <ScalarProperty Name="Nationality" ColumnName="Nationality" />
-          <ScalarProperty Name="EmpDateOfBirth" ColumnName="EmpDateOfBirth" />
-          <ScalarProperty Name="EmpMaritalStatus" ColumnName="EmpMaritalStatus" />
-          <ScalarProperty Name="EmpLandlineNumber" ColumnName="EmpLandlineNumber" />
-          <ScalarProperty Name="EmpMobileNumber" ColumnName="EmpMobileNumber" />
-          <ScalarProperty Name="EmpImage" ColumnName="EmpImage" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
-          <ScalarProperty Name="EmpLastNameA" ColumnName="EmpLastNameA" />
-          <ScalarProperty Name="EmpLastNameE" ColumnName="EmpLastNameE" />
-          <ScalarProperty Name="EmpMiddleNameA" ColumnName="EmpMiddleNameA" />
-          <ScalarProperty Name="EmpMiddleNameE" ColumnName="EmpMiddleNameE" />
-          <ScalarProperty Name="EmpFirstNameA" ColumnName="EmpFirstNameA" />
-          <ScalarProperty Name="EmpFirstNameE" ColumnName="EmpFirstNameE" />
+    <EntitySetMapping Name="Notifications">
+      <EntityTypeMapping TypeName="EPMSModel.Notification">
+        <MappingFragment StoreEntitySet="Notification">
+          <ScalarProperty Name="IsNotified" ColumnName="IsNotified" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
+          <ScalarProperty Name="AlertTime" ColumnName="AlertTime" />
+          <ScalarProperty Name="NotificationCategory" ColumnName="NotificationCategory" />
+          <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
+          <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="JobTitles">
-      <EntityTypeMapping TypeName="DomainModels.JobTitle">
-        <MappingFragment StoreEntitySet="JobTitles">
-          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-          <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
-          <ScalarProperty Name="JobDescriptionA" ColumnName="JobDescriptionA" />
-          <ScalarProperty Name="JobDescriptionE" ColumnName="JobDescriptionE" />
-          <ScalarProperty Name="JobTitleNameA" ColumnName="JobTitleNameA" />
-          <ScalarProperty Name="JobTitleNameE" ColumnName="JobTitleNameE" />
-          <ScalarProperty Name="JobId" ColumnName="JobId" />
+    <EntitySetMapping Name="RequestDetails">
+      <EntityTypeMapping TypeName="EPMSModel.RequestDetail">
+        <MappingFragment StoreEntitySet="RequestDetails">
+          <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+          <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+          <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+          <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+          <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+          <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+          <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
+          <ScalarProperty Name="NumberOfMonths" ColumnName="NumberOfMonths" />
+          <ScalarProperty Name="LastInstallmentDate" ColumnName="LastInstallmentDate" />
+          <ScalarProperty Name="FirstInstallmentDate" ColumnName="FirstInstallmentDate" />
+          <ScalarProperty Name="InstallmentAmount" ColumnName="InstallmentAmount" />
+          <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+          <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+          <ScalarProperty Name="RequestDesc" ColumnName="RequestDesc" />
+          <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+          <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="EPMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

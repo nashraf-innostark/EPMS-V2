@@ -8,10 +8,9 @@ namespace EPMS.Models.Common
 {
     public enum JobTitleByColumn
     {
-        JobId = 1,
-        JobTitleNameE = 2,
-        JobTitleNameA = 3,
-        JobDescriptionE = 4,
-        JobDescriptionA = 5
+        JobTitleId = 1,
+        JobTitleName = 2,
+        JobTitleDesc = 3,
+        BasicSalary = 4
     }
 }

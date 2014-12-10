@@ -54,8 +54,6 @@ namespace EPMS.Web.Controllers
                         .Get<ApplicationRoleManager>()
                         .FindById(result.AspNetRoles.ToList()[0].Id)
                         .Name;
-                Session["FullName"] = result.FirstName + " " + result.LastName;
-                Session["ProfileImage"] = result.ImageName;
                 Session["LoginID"] = result.Id;
                 Session["RoleName"] = role;
 

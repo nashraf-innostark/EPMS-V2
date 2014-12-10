@@ -16,5 +16,6 @@ namespace EPMS.Interfaces.Repository
         JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);
 
         JobTitle FindJobTitleById(int? id);
+
     }
 }

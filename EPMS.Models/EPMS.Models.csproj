@@ -99,6 +99,7 @@
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
+    <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
     <Compile Include="DomainModels\AspNetUser%27.cs" />
@@ -108,7 +109,12 @@
     <Compile Include="DomainModels\AspNetUserRole.cs" />
     <Compile Include="DomainModels\Department.cs" />
     <Compile Include="DomainModels\Employee.cs" />
+    <Compile Include="DomainModels\EmployeeRequest.cs" />
+    <Compile Include="DomainModels\JobApplicant.cs" />
+    <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
+    <Compile Include="DomainModels\Notification.cs" />
+    <Compile Include="DomainModels\RequestDetail.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>

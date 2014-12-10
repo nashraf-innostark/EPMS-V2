@@ -9,8 +9,7 @@ namespace EPMS.Models.Common
     public enum DepartmentByColumn
     {
         DepartmentId = 1,
-        DepartmentNameE = 2,
-        DepartmentNameA = 3,
-        DepartmentDesc = 4
+        DepartmentName = 2,
+        DepartmentDesc = 3
     }
 }

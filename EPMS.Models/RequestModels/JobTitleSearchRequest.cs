@@ -9,17 +9,15 @@ namespace EPMS.Models.RequestModels
 {
     public class JobTitleSearchRequest : GetPagedListRequest
     {
-        public long JobId { get; set; }
-        public string JobTitleNameE { get; set; }
-        public string JobTitleNameA { get; set; }
-        public string JobDescriptionE { get; set; }
-        public string JobDescriptionA { get; set; }
-        public decimal? BasicSalary { get; set; }
+        public long JobTitleId { get; set; }
+        public string JobTitleName { get; set; }
+        public string JobTitleDesc { get; set; }
         public long DepartmentId { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public Nullable<double> BasicSalary { get; set; }
+        public string RecCreatedBy { get; set; }
+        public Nullable<System.DateTime> RecCreatedDt { get; set; }
+        public string RecLastUpdatedBy { get; set; }
+        public Nullable<System.DateTime> RecLastUpdatedDt { get; set; }
 
         public JobTitleByColumn JobTitleByColumn
         {

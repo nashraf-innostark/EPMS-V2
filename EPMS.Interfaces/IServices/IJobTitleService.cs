@@ -16,5 +16,7 @@ namespace EPMS.Interfaces.IServices
         JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);
 
         JobTitle FindJobTitleById(int? id);
+
+        bool AddJob(JobTitle jobTitle);
     }
 }

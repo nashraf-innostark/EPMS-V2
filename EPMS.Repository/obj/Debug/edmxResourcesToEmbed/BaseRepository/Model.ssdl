@@ -1,14 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="__MigrationHistory">
+<Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Allowance">
     <Key>
-      <PropertyRef Name="MigrationId" />
-      <PropertyRef Name="ContextKey" />
+      <PropertyRef Name="AllowanceId" />
     </Key>
-    <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-    <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="AllowanceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeId" Type="bigint" Nullable="false" />
+    <Property Name="AllowanceDesc1" Type="nvarchar" MaxLength="300" />
+    <Property Name="Allowance1" Type="float" />
+    <Property Name="AllowanceDesc2" Type="nvarchar" MaxLength="300" />
+    <Property Name="Allowance2" Type="float" />
+    <Property Name="AllowanceDesc3" Type="nvarchar" MaxLength="300" />
+    <Property Name="Allowance3" Type="float" />
+    <Property Name="AllowanceDesc4" Type="nvarchar" MaxLength="300" />
+    <Property Name="Allowance4" Type="float" />
+    <Property Name="AllowanceDesc5" Type="nvarchar" MaxLength="300" />
+    <Property Name="Allowance5" Type="float" />
+    <Property Name="RowVersion" Type="int" Nullable="false" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
@@ -49,139 +61,113 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar(max)" />
-    <Property Name="LastName" Type="nvarchar(max)" />
-    <Property Name="Telephone" Type="nvarchar(max)" />
-    <Property Name="Address" Type="nvarchar(max)" />
-    <Property Name="ImageName" Type="nvarchar(max)" />
-    <Property Name="DateOfBirth" Type="datetime" />
-    <Property Name="Qualification" Type="nvarchar(max)" />
     <Property Name="Email" Type="nvarchar" MaxLength="256" />
     <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
     <Property Name="PasswordHash" Type="nvarchar(max)" />
     <Property Name="SecurityStamp" Type="nvarchar(max)" />
-    <Property Name="PhoneNumber" Type="nvarchar(max)" />
-    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
     <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
     <Property Name="LockoutEndDateUtc" Type="datetime" />
     <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
     <Property Name="AccessFailedCount" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Attachment">
-    <Key>
-      <PropertyRef Name="AttachmentId" />
-    </Key>
-    <Property Name="AttachmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PrisonerId" Type="int" Nullable="false" />
-    <Property Name="FileName" Type="nvarchar(max)" />
-    <Property Name="FilePath" Type="nvarchar(max)" />
-    <Property Name="AttachmentName" Type="nvarchar(max)" />
-    <Property Name="Comment" Type="nvarchar(max)" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="CreatedBy" Type="nvarchar(max)" />
-    <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="UpdatedBy" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="Category">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="CategoryLog">
-    <Key>
-      <PropertyRef Name="CategoryLogID" />
-    </Key>
-    <Property Name="CategoryLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LogCategoryID" Type="int" Nullable="false" />
-    <Property Name="LogID" Type="int" Nullable="false" />
+    <Property Name="SystemUserId" Type="bigint" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
       <PropertyRef Name="DepartmentId" />
     </Key>
     <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DepartmentNameE" Type="nvarchar" MaxLength="50" />
-    <Property Name="DepartmentNameA" Type="nvarchar" MaxLength="50" />
-    <Property Name="DepartmentDesc" Type="nvarchar(max)" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
-    <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" />
+    <Property Name="DepartmentName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="DepartmentDesc" Type="nvarchar" MaxLength="1000" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
       <PropertyRef Name="EmployeeId" />
     </Key>
     <Property Name="EmployeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EmpFirstNameE" Type="nvarchar(max)" />
-    <Property Name="EmpFirstNameA" Type="nvarchar(max)" />
-    <Property Name="EmpMiddleNameE" Type="nvarchar(max)" />
-    <Property Name="EmpMiddleNameA" Type="nvarchar(max)" />
-    <Property Name="EmpLastNameE" Type="nvarchar(max)" />
-    <Property Name="EmpLastNameA" Type="nvarchar(max)" />
-    <Property Name="JobId" Type="bigint" Nullable="false" />
-    <Property Name="EmpImage" Type="nvarchar(max)" />
-    <Property Name="EmpMobileNumber" Type="nvarchar(max)" />
-    <Property Name="EmpLandlineNumber" Type="nvarchar(max)" />
-    <Property Name="EmpMaritalStatus" Type="nvarchar" MaxLength="20" />
-    <Property Name="EmpDateOfBirth" Type="datetime" />
-    <Property Name="Nationality" Type="nvarchar" MaxLength="50" />
-    <Property Name="EmpIqama" Type="bigint" />
-    <Property Name="IqamaIssueDate" Type="datetime" />
-    <Property Name="IqamaExpiryDate" Type="datetime" />
-    <Property Name="PassportId" Type="bigint" />
-    <Property Name="PassportExpiryDate" Type="datetime" />
-    <Property Name="ExtraInfo" Type="nvarchar(max)" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
-    <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" />
+    <Property Name="EmployeeFirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="EmployeeMiddleName" Type="nvarchar" MaxLength="100" />
+    <Property Name="EmployeeLastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="EmployeeImagePath" Type="nvarchar" MaxLength="400" />
+    <Property Name="JobTitleId" Type="bigint" />
+    <Property Name="EmployeeJobId" Type="nvarchar" MaxLength="200" />
+    <Property Name="EmployeeMobileNum" Type="nvarchar" MaxLength="200" />
+    <Property Name="EmployeeLandlineNum" Type="nvarchar" MaxLength="200" />
+    <Property Name="MaritalStatus" Type="tinyint" />
+    <Property Name="EmployeeDOB" Type="date" />
+    <Property Name="EmployeeNationality" Type="smallint" />
+    <Property Name="EmployeeIqama" Type="int" />
+    <Property Name="EmployeeIqamaIssueDt" Type="date" />
+    <Property Name="EmployeeIqamaExpiryDt" Type="date" />
+    <Property Name="EmployeePassportNum" Type="nvarchar" MaxLength="200" />
+    <Property Name="EmployeePassportExpiryDt" Type="date" />
+    <Property Name="EmployeeDetails" Type="nvarchar" MaxLength="1000" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
   </EntityType>
-  <EntityType Name="JobTitles">
+  <EntityType Name="EmployeeRequests">
     <Key>
-      <PropertyRef Name="JobId" />
+      <PropertyRef Name="RequestId" />
     </Key>
-    <Property Name="JobId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="JobTitleNameE" Type="nvarchar" MaxLength="50" />
-    <Property Name="JobTitleNameA" Type="nvarchar" MaxLength="50" />
-    <Property Name="JobDescriptionE" Type="nvarchar(max)" />
-    <Property Name="JobDescriptionA" Type="nvarchar(max)" />
-    <Property Name="BasicSalary" Type="money" />
+    <Property Name="RequestId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeId" Type="bigint" Nullable="false" />
+    <Property Name="RequestTopic" Type="nvarchar" MaxLength="200" />
+    <Property Name="RequestDate" Type="date" Nullable="false" />
+    <Property Name="IsMonetary" Type="bit" Nullable="false" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JobApplicants">
+    <Key>
+      <PropertyRef Name="ApplicantId" />
+    </Key>
+    <Property Name="ApplicantId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ApplicantMobile" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ApplicantEmail" Type="nvarchar" MaxLength="200" />
+    <Property Name="JobOfferedId" Type="bigint" Nullable="false" />
+    <Property Name="ApplicantAge" Type="int" />
+    <Property Name="ApplicantCvPath" Type="nvarchar" MaxLength="400" Nullable="false" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JobOffered">
+    <Key>
+      <PropertyRef Name="JobOfferedId" />
+    </Key>
+    <Property Name="JobOfferedId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobTitleId" Type="bigint" Nullable="false" />
+    <Property Name="JobDescription" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="ShowBasicSalary" Type="bit" Nullable="false" />
+    <Property Name="IsOpen" Type="bit" Nullable="false" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="JobTitleId" />
+    </Key>
+    <Property Name="JobTitleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JobTitleName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="JobTitleDesc" Type="nvarchar" MaxLength="1000" />
     <Property Name="DepartmentId" Type="bigint" Nullable="false" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
-    <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" />
-  </EntityType>
-  <EntityType Name="Log">
-    <Key>
-      <PropertyRef Name="LogID" />
-    </Key>
-    <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EventID" Type="int" Nullable="false" />
-    <Property Name="Priority" Type="int" Nullable="false" />
-    <Property Name="Severity" Type="nvarchar(max)" />
-    <Property Name="Title" Type="nvarchar(max)" />
-    <Property Name="Timestamp" Type="datetime" Nullable="false" />
-    <Property Name="MachineName" Type="nvarchar(max)" />
-    <Property Name="AppDomainName" Type="nvarchar(max)" />
-    <Property Name="ProcessID" Type="nvarchar(max)" />
-    <Property Name="ProcessName" Type="nvarchar(max)" />
-    <Property Name="ThreadName" Type="nvarchar(max)" />
-    <Property Name="Win32ThreadId" Type="nvarchar(max)" />
-    <Property Name="Message" Type="nvarchar(max)" />
-    <Property Name="FormattedMessage" Type="nvarchar(max)" />
-    <Property Name="HandlingInstanceId" Type="nvarchar(max)" />
-  </EntityType>
-  <EntityType Name="LogCategory">
-    <Key>
-      <PropertyRef Name="LogCategoryID" />
-    </Key>
-    <Property Name="LogCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CategoryName" Type="nvarchar(max)" />
+    <Property Name="BasicSalary" Type="float" />
+    <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
   </EntityType>
   <EntityType Name="Menu">
     <Key>
@@ -207,26 +193,66 @@
     <Property Name="Menu_MenuId" Type="int" />
     <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
   </EntityType>
-  <EntityType Name="Prisoner">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMS.dbo.Notification' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Notification">
     <Key>
-      <PropertyRef Name="PrisonerId" />
+      <PropertyRef Name="NotificationId" />
+      <PropertyRef Name="NotificationName" />
+      <PropertyRef Name="NotificationCategory" />
+      <PropertyRef Name="AlertTime" />
+      <PropertyRef Name="IsNotified" />
     </Key>
-    <Property Name="PrisonerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PrisonerFirstNameE" Type="nvarchar(max)" />
-    <Property Name="PrisonerMiddleNameE" Type="nvarchar(max)" />
-    <Property Name="PrisonerLastNameE" Type="nvarchar(max)" />
-    <Property Name="PrisonerFirstNameA" Type="nvarchar(max)" />
-    <Property Name="PrisonerMiddleNameA" Type="nvarchar(max)" />
-    <Property Name="PrisonerLastNameA" Type="nvarchar(max)" />
-    <Property Name="PrisonerCnic" Type="nvarchar(max)" />
-    <Property Name="PrisonerPassport" Type="nvarchar(max)" />
-    <Property Name="PassportExpiryDate" Type="datetime" />
-    <Property Name="CreatedBy" Type="nvarchar(max)" />
-    <Property Name="UpdatedBy" Type="nvarchar(max)" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="PassportExpiryDateArabic" Type="nvarchar(max)" />
+    <Property Name="NotificationId" Type="bigint" Nullable="false" />
+    <Property Name="NotificationName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="NotificationCategory" Type="smallint" Nullable="false" />
+    <Property Name="AlertTime" Type="datetime" Nullable="false" />
+    <Property Name="NotificationTime" Type="datetime" />
+    <Property Name="EmployeeId" Type="bigint" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsNotified" Type="bit" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="RequestDetails">
+    <Key>
+      <PropertyRef Name="RequestDetailId" />
+      <PropertyRef Name="RequestId" />
+      <PropertyRef Name="RequestDesc" />
+      <PropertyRef Name="IsReplied" />
+      <PropertyRef Name="IsApproved" />
+      <PropertyRef Name="RowVersion" />
+    </Key>
+    <Property Name="RequestDetailId" Type="bigint" Nullable="false" />
+    <Property Name="RequestId" Type="bigint" Nullable="false" />
+    <Property Name="RequestDesc" Type="nvarchar" MaxLength="1000" Nullable="false" />
+    <Property Name="LoanAmount" Type="float" />
+    <Property Name="LoanDate" Type="date" />
+    <Property Name="InstallmentAmount" Type="float" />
+    <Property Name="FirstInstallmentDate" Type="date" />
+    <Property Name="LastInstallmentDate" Type="date" />
+    <Property Name="NumberOfMonths" Type="int" />
+    <Property Name="IsReplied" Type="bit" Nullable="false" />
+    <Property Name="IsApproved" Type="bit" Nullable="false" />
+    <Property Name="RowVersion" Type="int" Nullable="false" />
+    <Property Name="RecCreatedBy" Type="nvarchar(max)" />
+    <Property Name="RecCreatedDt" Type="datetime" />
+    <Property Name="RecLastUpdatedBy" Type="nvarchar(max)" />
+    <Property Name="RecLastUpdatedDt" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Allowance_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Allowance">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -283,48 +309,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_dbo_Attachment_dbo_Prisoner_PrisonerId">
-    <End Role="Prisoner" Type="Self.Prisoner" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Attachment" Type="Self.Attachment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Prisoner">
-        <PropertyRef Name="PrisonerId" />
-      </Principal>
-      <Dependent Role="Attachment">
-        <PropertyRef Name="PrisonerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_CategoryLog_dbo_Log_LogID">
-    <End Role="Log" Type="Self.Log" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Log">
-        <PropertyRef Name="LogID" />
-      </Principal>
-      <Dependent Role="CategoryLog">
-        <PropertyRef Name="LogID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_dbo_CategoryLog_dbo_LogCategory_LogCategoryID">
-    <End Role="LogCategory" Type="Self.LogCategory" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LogCategory">
-        <PropertyRef Name="LogCategoryID" />
-      </Principal>
-      <Dependent Role="CategoryLog">
-        <PropertyRef Name="LogCategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
     <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
     <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
@@ -361,48 +345,142 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Employee_JobTitles">
-    <End Role="JobTitles" Type="Self.JobTitles" Multiplicity="1" />
+  <Association Name="FK_Employee_JobTitle">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
     <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="JobTitles">
-        <PropertyRef Name="JobId" />
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobTitleId" />
       </Principal>
       <Dependent Role="Employee">
-        <PropertyRef Name="JobId" />
+        <PropertyRef Name="JobTitleId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_JobTitles_Department">
+  <Association Name="FK_EmployeeRequests_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="EmployeeRequests">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobApplicants_JobOffered">
+    <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="1" />
+    <End Role="JobApplicants" Type="Self.JobApplicants" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobOffered">
+        <PropertyRef Name="JobOfferedId" />
+      </Principal>
+      <Dependent Role="JobApplicants">
+        <PropertyRef Name="JobOfferedId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobOffered_JobTitle">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+    <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobTitleId" />
+      </Principal>
+      <Dependent Role="JobOffered">
+        <PropertyRef Name="JobTitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_JobTitle_Department">
     <End Role="Department" Type="Self.Department" Multiplicity="1" />
-    <End Role="JobTitles" Type="Self.JobTitles" Multiplicity="*" />
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Department">
         <PropertyRef Name="DepartmentId" />
       </Principal>
-      <Dependent Role="JobTitles">
+      <Dependent Role="JobTitle">
         <PropertyRef Name="DepartmentId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ModelStoreContainer">
-    <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+  <Association Name="FK_Notification_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeId" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestDetails_EmployeeRequests">
+    <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="1" />
+    <End Role="RequestDetails" Type="Self.RequestDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeRequests">
+        <PropertyRef Name="RequestId" />
+      </Principal>
+      <Dependent Role="RequestDetails">
+        <PropertyRef Name="RequestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EPMSModelStoreContainer">
+    <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Attachment" EntityType="Self.Attachment" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="JobTitles" EntityType="Self.JobTitles" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="LogCategory" EntityType="Self.LogCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobApplicants" EntityType="Self.JobApplicants" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobOffered" EntityType="Self.JobOffered" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Prisoner" EntityType="Self.Prisoner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Notification" EntityType="Self.Notification" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Notification].[NotificationId] AS [NotificationId], 
+    [Notification].[NotificationName] AS [NotificationName], 
+    [Notification].[NotificationCategory] AS [NotificationCategory], 
+    [Notification].[AlertTime] AS [AlertTime], 
+    [Notification].[NotificationTime] AS [NotificationTime], 
+    [Notification].[EmployeeId] AS [EmployeeId], 
+    [Notification].[MobileNumber] AS [MobileNumber], 
+    [Notification].[Email] AS [Email], 
+    [Notification].[IsNotified] AS [IsNotified]
+    FROM [dbo].[Notification] AS [Notification]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [RequestDetails].[RequestDetailId] AS [RequestDetailId], 
+    [RequestDetails].[RequestId] AS [RequestId], 
+    [RequestDetails].[RequestDesc] AS [RequestDesc], 
+    [RequestDetails].[LoanAmount] AS [LoanAmount], 
+    [RequestDetails].[LoanDate] AS [LoanDate], 
+    [RequestDetails].[InstallmentAmount] AS [InstallmentAmount], 
+    [RequestDetails].[FirstInstallmentDate] AS [FirstInstallmentDate], 
+    [RequestDetails].[LastInstallmentDate] AS [LastInstallmentDate], 
+    [RequestDetails].[NumberOfMonths] AS [NumberOfMonths], 
+    [RequestDetails].[IsReplied] AS [IsReplied], 
+    [RequestDetails].[IsApproved] AS [IsApproved], 
+    [RequestDetails].[RowVersion] AS [RowVersion], 
+    [RequestDetails].[RecCreatedBy] AS [RecCreatedBy], 
+    [RequestDetails].[RecCreatedDt] AS [RecCreatedDt], 
+    [RequestDetails].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
+    [RequestDetails].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
+    FROM [dbo].[RequestDetails] AS [RequestDetails]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Allowance" EntitySet="Allowance" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -419,18 +497,6 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
-    <AssociationSet Name="FK_dbo_Attachment_dbo_Prisoner_PrisonerId" Association="Self.FK_dbo_Attachment_dbo_Prisoner_PrisonerId">
-      <End Role="Prisoner" EntitySet="Prisoner" />
-      <End Role="Attachment" EntitySet="Attachment" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_CategoryLog_dbo_Log_LogID" Association="Self.FK_dbo_CategoryLog_dbo_Log_LogID">
-      <End Role="Log" EntitySet="Log" />
-      <End Role="CategoryLog" EntitySet="CategoryLog" />
-    </AssociationSet>
-    <AssociationSet Name="FK_dbo_CategoryLog_dbo_LogCategory_LogCategoryID" Association="Self.FK_dbo_CategoryLog_dbo_LogCategory_LogCategoryID">
-      <End Role="LogCategory" EntitySet="LogCategory" />
-      <End Role="CategoryLog" EntitySet="CategoryLog" />
-    </AssociationSet>
     <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
       <End Role="Menu" EntitySet="Menu" />
       <End Role="Menu1" EntitySet="Menu" />
@@ -443,13 +509,33 @@
       <End Role="Menu" EntitySet="Menu" />
       <End Role="MenuRight" EntitySet="MenuRight" />
     </AssociationSet>
-    <AssociationSet Name="FK_Employee_JobTitles" Association="Self.FK_Employee_JobTitles">
-      <End Role="JobTitles" EntitySet="JobTitles" />
+    <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+      <End Role="JobTitle" EntitySet="JobTitle" />
       <End Role="Employee" EntitySet="Employee" />
     </AssociationSet>
-    <AssociationSet Name="FK_JobTitles_Department" Association="Self.FK_JobTitles_Department">
+    <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobApplicants_JobOffered" Association="Self.FK_JobApplicants_JobOffered">
+      <End Role="JobOffered" EntitySet="JobOffered" />
+      <End Role="JobApplicants" EntitySet="JobApplicants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobOffered_JobTitle" Association="Self.FK_JobOffered_JobTitle">
+      <End Role="JobTitle" EntitySet="JobTitle" />
+      <End Role="JobOffered" EntitySet="JobOffered" />
+    </AssociationSet>
+    <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
       <End Role="Department" EntitySet="Department" />
-      <End Role="JobTitles" EntitySet="JobTitles" />
+      <End Role="JobTitle" EntitySet="JobTitle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Notification" EntitySet="Notification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
+      <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
+      <End Role="RequestDetails" EntitySet="RequestDetails" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

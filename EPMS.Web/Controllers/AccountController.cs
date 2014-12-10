@@ -304,9 +304,8 @@ namespace IdentitySample.Controllers
                 oResult = new RegisterViewModel
                 {
                     UserId = userToEdit.Id,
-                    FirstName = userToEdit.FirstName,
-                    LastName = userToEdit.LastName,
-                    Email = userToEdit.Email,
+                    FirstName = userToEdit.Employee.EmployeeFirstName,
+                    LastName = userToEdit.Employee.EmployeeLastName,
                     SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id
 
                 };
@@ -339,20 +338,15 @@ namespace IdentitySample.Controllers
             oVM.Data = new List<SystemUser>();
             foreach (var item in oList)
             {
-                if (!string.IsNullOrEmpty(item.FirstName))
+                if (!string.IsNullOrEmpty(item.Employee.EmployeeFirstName))
                 {
                     oVM.Data.Add(new SystemUser
                     {
                         EmailConfirmed = item.EmailConfirmed,
                         Email = item.Email,
-                        Address = item.Address,
-                        DateOfBirth = item.DateOfBirth,
-                        FirstName = item.FirstName,
-                        ImageName = item.ImageName,
+                        FirstName = item.Employee.EmployeeFirstName,
                         KeyId = item.Id,
-                        LastName = item.LastName,
-                        Qualification = item.Qualification,
-                        Telephone = item.Telephone,
+                        LastName = item.Employee.EmployeeLastName,
                         Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name
                     });
                 }
@@ -394,7 +388,7 @@ namespace IdentitySample.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new AspNetUser { FirstName = model.FirstName, LastName = model.LastName, UserName = model.Email, Email = model.Email };
+                var user = new AspNetUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -701,15 +695,9 @@ namespace IdentitySample.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
             var ProfileViewModel = new ProfileViewModel
             {
-                Address = (result.Address != null && result.Address != string.Empty) ? result.Address : string.Empty,
                 Email = result.Email,
-                FirstName = result.FirstName,
-                LastName = result.LastName,
-                PhoneNumber = (result.PhoneNumber != null && result.PhoneNumber != string.Empty) ? result.PhoneNumber : string.Empty,
-                Qualification = (result.Qualification != null && result.Qualification != string.Empty) ? result.Qualification : string.Empty,
-                DateOfBirth = (result.DateOfBirth != null && result.DateOfBirth.ToString() != string.Empty) ? result.DateOfBirth : null,
-                ImageName = (result.ImageName != null && result.ImageName != string.Empty) ? result.ImageName : string.Empty,
-                ImagePath = ConfigurationManager.AppSettings["ProfileImage"].ToString() + result.ImageName
+                FirstName = result.Employee.EmployeeFirstName,
+                LastName = result.Employee.EmployeeLastName
             };
             ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
             return View(ProfileViewModel);
@@ -736,21 +724,17 @@ namespace IdentitySample.Controllers
             //Updating Data
             try
             {
-                result.FirstName = profileViewModel.FirstName;
-                result.LastName = profileViewModel.LastName;
+                result.Employee.EmployeeFirstName = profileViewModel.FirstName;
+                result.Employee.EmployeeLastName = profileViewModel.LastName;
                 result.Email = profileViewModel.Email;
-                result.PhoneNumber = profileViewModel.PhoneNumber;
-                result.Address = profileViewModel.Address;
-                result.Qualification = profileViewModel.Qualification;
-                result.DateOfBirth = profileViewModel.DateOfBirth;
                 if ( profileViewModel.ImageName !=null)
                 {
-                    result.ImageName = profileViewModel.ImageName;
+                    //result.ImageName = profileViewModel.ImageName;
                     profileViewModel.ImagePath = ConfigurationManager.AppSettings["ProfileImage"] as string + profileViewModel.ImageName;
                 }
                 else
                 {
-                    profileViewModel.ImagePath = ConfigurationManager.AppSettings["ProfileImage"] as string + result.ImageName;
+                    //profileViewModel.ImagePath = ConfigurationManager.AppSettings["ProfileImage"] as string + result.ImageName;
                 }
                 var updationResult = UserManager.UpdateAsync(result);
                 ViewBag.MessageVM = new MessageViewModel { Message = "Profile has been updated", IsUpdated = true };
@@ -773,8 +757,7 @@ namespace IdentitySample.Controllers
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
             string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
-            Session["FullName"] = result.FirstName + " " + result.LastName;
-            Session["ProfileImage"] = result.ImageName;
+            Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
             Session["LoginID"] = result.Id;
             Session["RoleName"] = role;
         }

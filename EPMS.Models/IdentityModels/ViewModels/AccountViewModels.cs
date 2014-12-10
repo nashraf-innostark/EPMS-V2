@@ -71,6 +71,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+        public string UserName { get; set; }
         [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }

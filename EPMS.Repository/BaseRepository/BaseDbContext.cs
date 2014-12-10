@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using System.Data.Entity;
 using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels;
 using EPMS.Models.LoggerModels;
 using EPMS.Models.MenuModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.BaseRepository

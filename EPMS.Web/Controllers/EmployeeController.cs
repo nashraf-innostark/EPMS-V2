@@ -4,21 +4,20 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
 using Employee = EPMS.Web.Models.Employee;
-using EPMS.Web.ModelMappers;
 
 namespace EPMS.Web.Controllers
 {
+    /// <summary>
+    /// Controller for Employee
+    /// </summary>
     [Authorize]
     public class EmployeeController : BaseController
     {
@@ -58,7 +57,7 @@ namespace EPMS.Web.Controllers
             });
         }
         /// <summary>
-        /// Get All Employees and return
+        /// Get All Employees and return to View
         /// </summary>
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable<Employee> of All Employees</returns>
@@ -96,7 +95,7 @@ namespace EPMS.Web.Controllers
         }
 
         /// <summary>
-        /// view for Add or Update Employee
+        /// Add or Update Employee Action Method
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
