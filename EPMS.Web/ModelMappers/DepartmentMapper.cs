@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using EPMS.Models.DomainModels;
+﻿using EPMS.Models.DomainModels;
+using AreasModel = EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ModelMappers
 {
     public static class DepartmentMapper
     {
-        public static Department CreateFrom(this Models.Department source)
+        public static Department CreateFrom(this AreasModel.Department source)
         {
             var caseType = new Department
             {
@@ -23,9 +20,9 @@ namespace EPMS.Web.ModelMappers
             };
             return caseType;
         }
-        public static Models.Department CreateFrom(this Department source)
+        public static AreasModel.Department CreateFrom(this Department source)
         {
-            return new Models.Department
+            return new AreasModel.Department
             {
                 //DepartmentId = source.DepartmentId,
                 //DepartmentNameE = source.DepartmentNameE,

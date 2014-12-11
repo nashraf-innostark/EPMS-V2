@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels;
+﻿using System.Collections.Generic;
 using EPMS.Models.RequestModels;
+using AreasModel=EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ViewModels.Employee
 {
     public class EmployeeViewModel
     {
-        //public EmployeeViewModel()
-        //{
-            
-        //}
-        public Models.Employee Employee { get; set; }
+        public AreasModel.Employee Employee { get; set; }
 
-        public Models.JobTitle JobTitle { get; set; }
-        public Models.Department Department { get; set; }
+        public AreasModel.JobTitle JobTitle { get; set; }
+        public AreasModel.Department Department { get; set; }
 
         public IEnumerable<EPMS.Models.DomainModels.Department> DepartmentList { get; set; }
         public IEnumerable<EPMS.Models.DomainModels.JobTitle> JobTitleList { get; set; }
         public IEnumerable<Models.JobTitleAndDepartment> JobTitleDeptList { get; set; }
-        public IEnumerable<Models.Employee> data { get; set; }
+        public IEnumerable<AreasModel.Employee> data { get; set; }
 
         public EmployeeSearchRequset SearchRequest { get; set; }
 

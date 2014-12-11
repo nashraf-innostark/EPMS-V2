@@ -11,7 +11,7 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
-using Employee = EPMS.Web.Models.Employee;
+using AreasModel=EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.Controllers
 {
@@ -66,12 +66,11 @@ namespace EPMS.Web.Controllers
         {
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
             var employees = oEmployeeService.GetAllEmployees(employeeSearchRequest);
-            IEnumerable<Employee> employeeList =
-                employees.Employeess.Select(x => x.CreateFromWithImage(User.Identity.Name)).ToList();
+            IEnumerable<AreasModel.Employee> employeeList = employees.Employeess.Select(x => x.CreateFromWithImage(User.Identity.Name)).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 FilePath = (ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/"),
-                data = employeeList,
+                //data = employeeList,
                 recordsTotal = employees.TotalCount,
                 recordsFiltered = employees.TotalCount
             };
@@ -134,7 +133,7 @@ namespace EPMS.Web.Controllers
                         //Rename Image file with time stamp
                         var filename = (DateTime.Now.ToString().Replace(".", "") + fileOldName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
 
-                        viewModel.Employee.EmpImage = filename;
+                        viewModel.Employee.EmployeeImagePath = filename;
                         var savedFileName = Path.Combine(filePath, filename);
                         viewModel.Employee.UploadImage.SaveAs(savedFileName);
                     }
@@ -142,8 +141,8 @@ namespace EPMS.Web.Controllers
 
                     if (viewModel.Employee.EmployeeId > 0)
                     {
-                        viewModel.Employee.UpdatedDate = DateTime.Now;
-                        viewModel.Employee.UpdatedBy = User.Identity.GetUserId();
+                        viewModel.Employee.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.Employee.RecLastUpdatedBy = User.Identity.GetUserId();
                         var employeeToUpdate = viewModel.Employee.CreateFrom();
                         if (oEmployeeService.UpdateEmployee(employeeToUpdate))
                         {
@@ -157,8 +156,8 @@ namespace EPMS.Web.Controllers
 
                     else
                     {
-                        viewModel.Employee.CreatedDate = DateTime.Now;
-                        viewModel.Employee.CreatedBy = User.Identity.GetUserId();
+                        viewModel.Employee.RecCreatedDt = DateTime.Now;
+                        viewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
                         var employeeToSave = viewModel.Employee.CreateFrom();
 
                         if (oEmployeeService.AddEmployee(employeeToSave))

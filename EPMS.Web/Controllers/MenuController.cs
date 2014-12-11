@@ -6,11 +6,9 @@ using System.Web.Mvc;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels;
 using EPMS.Models.MenuModels;
 using EPMS.Web.ViewModels.Common;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace EPMS.Web.Controllers

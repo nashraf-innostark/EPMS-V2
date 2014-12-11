@@ -1,18 +1,9 @@
-﻿using System.Data.Entity;
-using System.Globalization;
-using System.Web.Security;
-using EPMS.Implementation.Identity;
+﻿using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels;
 using EPMS.Models.IdentityModels.ViewModels;
-using EPMS.Models.MenuModels;
-using EPMS.Repository.BaseRepository;
-using EPMS.Repository.Repositories;
-using EPMS.Web.Controllers;
 using EPMS.Web.Models;
 using IdentitySample.Models;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -26,7 +17,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Collections.Generic;
-using EPMS.Models.IdentityModels;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Admin;
 

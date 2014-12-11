@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 
 namespace EPMS.Interfaces.IServices

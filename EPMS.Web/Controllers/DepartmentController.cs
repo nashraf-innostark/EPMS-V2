@@ -12,17 +12,17 @@ namespace EPMS.Web.Controllers
     /// </summary>
     public class DepartmentController : BaseController
     {
-        private readonly IDepartmentService oDepartmentService;
+        private readonly IDepartmentService DepartmentService;
 
         /// <summary>
         /// Cosntructor
         /// </summary>
-        /// <param name="oDepartmentService"></param>
+        /// <param name="departmentService"></param>
         #region Constructor
 
-        public DepartmentController(IDepartmentService oDepartmentService)
+        public DepartmentController(IDepartmentService departmentService)
         {
-            this.oDepartmentService = oDepartmentService;
+            DepartmentService = departmentService;
         }
 
         #endregion
@@ -35,7 +35,7 @@ namespace EPMS.Web.Controllers
 
             return View(new DepartmentViewModel
             {
-                DepartmentList = oDepartmentService.LoadAll().Select(x=>x.CreateFrom())
+                DepartmentList = DepartmentService.LoadAll().Select(x=>x.CreateFrom())
             });
         }
     }

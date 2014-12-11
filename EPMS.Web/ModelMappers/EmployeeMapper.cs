@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 using EPMS.Models.DomainModels;
+using AreasModel = EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ModelMappers
 {
     public static class EmployeeMapper
     {
-        public static Employee CreateFrom(this Models.Employee source)
+        public static Employee CreateFrom(this AreasModel.Employee source)
         {
             var caseType = new Employee
             {
@@ -42,9 +38,9 @@ namespace EPMS.Web.ModelMappers
             };
             return caseType;
         }
-        public static Models.Employee CreateFrom(this Employee source)
+        public static AreasModel.Employee CreateFrom(this Employee source)
         {
-            return new Models.Employee
+            return new AreasModel.Employee
             {
                 //EmployeeId = source.EmployeeId,
                 //EmpFirstNameA = source.EmpFirstNameA ?? "",
@@ -78,9 +74,9 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        public static Models.Employee CreateFromWithImage(this Employee source, string UserName)
+        public static AreasModel.Employee CreateFromWithImage(this Employee source, string UserName)
         {
-            return new Models.Employee
+            return new AreasModel.Employee
             {
                 //EmployeeId = source.EmployeeId,
                 //EmpFirstNameA = source.EmpFirstNameA ?? "",

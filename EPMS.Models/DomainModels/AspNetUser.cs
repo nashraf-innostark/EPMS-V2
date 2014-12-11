@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.DomainModels
 {

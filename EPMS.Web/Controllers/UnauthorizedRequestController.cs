@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using IdentitySample.Controllers;
 
 namespace EPMS.Web.Controllers
 {

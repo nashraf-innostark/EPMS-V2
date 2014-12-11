@@ -7,9 +7,8 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.JobTitle;
-using Microsoft.AspNet.Identity;
+using AreasModel=EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.Controllers
 {
@@ -20,20 +19,20 @@ namespace EPMS.Web.Controllers
     public class JobTitleController : BaseController
     {
 
-        private readonly IJobTitleService jobTitleService;
+        private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
 
         /// <summary>
         /// Constructor 
         /// </summary>
-        /// <param name="oDepartmentService"></param>
+        /// <param name="departmentService"></param>
         /// <param name="jobTitleService"></param>
         #region Constructor
 
-        public JobTitleController(IDepartmentService DepartmentService, IJobTitleService jobTitleService)
+        public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService)
         {
-            this.DepartmentService = DepartmentService;
-            this.jobTitleService = jobTitleService;
+            DepartmentService = departmentService;
+            JobTitleService = jobTitleService;
         }
 
         #endregion
@@ -49,7 +48,7 @@ namespace EPMS.Web.Controllers
 
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
-            IEnumerable<JobTitle> jobList = jobTitleService.LoadAll().Select(x => x.CreateFrom());
+            IEnumerable<AreasModel.JobTitle> jobList = JobTitleService.LoadAll().Select(x => x.CreateFrom());
 
             return View(new JobTitleViewModel
             {
@@ -80,10 +79,10 @@ namespace EPMS.Web.Controllers
         }
         public int AddData(JobTitleViewModel viewModel)
         {
-            viewModel.JobTitle.CreatedDate = DateTime.Now;
-            viewModel.JobTitle.CreatedBy = User.Identity.Name;
+            viewModel.JobTitle.RecCreatedDt = DateTime.Now;
+            viewModel.JobTitle.RecCreatedBy = User.Identity.Name;
             var jobToSave = viewModel.JobTitle.CreateFrom();
-            if (jobTitleService.AddJob(jobToSave))
+            if (JobTitleService.AddJob(jobToSave))
             {
                 TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
                 return 1;

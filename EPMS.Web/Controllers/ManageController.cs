@@ -1,8 +1,6 @@
 ﻿using EPMS.Implementation.Identity;
 using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels;
 using EPMS.Models.IdentityModels.ViewModels;
-using IdentitySample.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -10,8 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
-using EPMS.Models.IdentityModels;
 
 namespace IdentitySample.Controllers
 {

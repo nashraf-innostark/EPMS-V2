@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using EPMS.Models.ResponseModels;
-using ApiModels = EPMS.Web.Models;
+﻿using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
+using AreasModel=EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -19,9 +15,9 @@ namespace EPMS.Web.ModelMappers
              };
         }
 
-        public static Models.JobTitle CreateFrom(this DomainModels.JobTitle source)
+        public static AreasModel.JobTitle CreateFrom(this DomainModels.JobTitle source)
         {
-            return new Models.JobTitle
+            return new AreasModel.JobTitle
             {
                 //JobId = source.JobId,
                 //JobTitleNameE = source.JobTitleNameE,
@@ -38,7 +34,7 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        public static DomainModels.JobTitle CreateFrom(this Models.JobTitle source)
+        public static DomainModels.JobTitle CreateFrom(this AreasModel.JobTitle source)
         {
             return new DomainModels.JobTitle
             {
