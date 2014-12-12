@@ -37,5 +37,35 @@ namespace EPMS.Models.ModelMapers
             //target.UpdatedBy = source.UpdatedBy;
             //target.UpdatedDate = source.UpdatedDate;
         }
+        public static Employee ServerToServer(this Employee source)
+        {
+            return new Employee
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeFirstName = source.EmployeeFirstName,
+                EmployeeMiddleName = source.EmployeeMiddleName,
+                EmployeeLastName = source.EmployeeLastName,
+                EmployeeFullName = source.EmployeeFirstName + " " + source.EmployeeMiddleName + " " + source.EmployeeLastName,
+                EmployeeImagePath = source.EmployeeImagePath,
+                JobTitleId = source.JobTitleId,
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeMobileNum = source.EmployeeMobileNum,
+                EmployeeLandlineNum = source.EmployeeLandlineNum,
+                MaritalStatus = source.MaritalStatus,
+                EmployeeDOB = source.EmployeeDOB,
+                EmpDateOfBirthArabic = source.EmpDateOfBirthArabic,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeeIqama = source.EmployeeIqama,
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt,
+                EmployeePassportNum = source.EmployeePassportNum,
+                EmployeePassportExpiryDt = source.EmployeePassportExpiryDt,
+                EmployeeDetails = source.EmployeeDetails,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+        }
     }
 }

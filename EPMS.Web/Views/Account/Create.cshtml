@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<link rel="stylesheet" type="text/css" href="~/Scripts/App/select2/select2.css" />
+<script type="text/javascript" src="~/Scripts/App/select2/select2.js"></script>
 <div class="mainbar">
 
     <!-- Page heading -->
@@ -60,7 +62,7 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Employee</label>
                                         <div class="col-lg-10" dir="ltr">
-                                            @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "Id", "Name"), new { @class = "form-control textAlignLeft" })
+                                            @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullName"), new { @class = "form-control searchable" })
                                         </div>
                                     </div>
                                     <div class="form-group" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">
@@ -106,6 +108,9 @@
     $(function () {
 
         $("[readonly='false']").removeAttr("readonly");
-
+        searchable$('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
     });
 </script>

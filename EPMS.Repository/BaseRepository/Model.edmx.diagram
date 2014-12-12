@@ -5,29 +5,28 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1929de3b43634b9f83fbfc9a6b07e3e6" Name="Diagram1">
-        <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="5.75" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="9.75" PointY="6" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="14.25" PointY="7.125" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="14.25" PointY="4.625" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="12" PointY="5" />
-        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="9" />
-        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="9.375" />
-        <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="11.625" />
-        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="7.5" PointY="1.75" />
-        <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="5.25" PointY="1.75" />
-        <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="3" PointY="8.625" />
-        <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="9.75" PointY="1" />
-        <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="12" PointY="1.875" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.5" PointY="16" />
-        <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="9.75" PointY="11" />
+        <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="0.75" PointY="13.125" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9.75" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="6.375" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="3" PointY="9.875" />
+        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="7.75" PointY="1.375" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="0.75" PointY="6" />
+        <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="14.5" PointY="1" />
+        <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="12.25" PointY="1.125" />
+        <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="10" PointY="1.125" />
+        <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="8" PointY="7" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="5.25" PointY="14.75" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" />
         <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
         <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" />
-        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
-        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" />
         <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" />
         <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" />

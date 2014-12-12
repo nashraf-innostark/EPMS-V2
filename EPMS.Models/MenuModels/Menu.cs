@@ -49,7 +49,7 @@ namespace EPMS.Models.MenuModels
         /// </summary>
         public bool IsMenuItem { get; set; }
 
-        public int? ParentItem_MenuId { get; set; }
+        public int? ParentItemMenu { get; set; }
         /// <summary>
         /// Menu Parent Item
         /// </summary>
