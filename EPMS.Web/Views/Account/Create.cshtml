@@ -38,26 +38,12 @@
                         <div class="widget-content">
                             <div class="padd">
 
-                                @using (Html.BeginForm("RegisterLVAddEdit", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                @using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                 {
                                     @Html.AntiForgeryToken()
 
                                     @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
                                     @Html.HiddenFor(m => m.UserId)
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">First Name</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control ltr", placeholder = "Enter First Name", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
-                                            @Html.ValidationMessageFor(m => m.FirstName)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Last Name</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control ltr", placeholder = "Enter Last Name", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
-                                            @Html.ValidationMessageFor(m => m.LastName)
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Email</label>
                                         <div class="col-lg-10">
@@ -65,17 +51,16 @@
                                             @Html.ValidationMessageFor(m => m.Email)
                                         </div>
                                     </div>
-                                    <div class="form-group" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">
-                                        <label class="col-lg-2 control-label textAlignLeft">Confirm Email</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(m => m.ConfirmEmail, new { @dir = "ltr", @class = "form-control textAlignLeft", placeholder = "Confirm Email" })
-                                            @Html.ValidationMessageFor(m => m.ConfirmEmail)
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Role</label>
                                         <div class="col-lg-10" dir="ltr">
                                             @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), new { @class = "form-control textAlignLeft" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Employee</label>
+                                        <div class="col-lg-10" dir="ltr">
+                                            @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "Id", "Name"), new { @class = "form-control textAlignLeft" })
                                         </div>
                                     </div>
                                     <div class="form-group" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">

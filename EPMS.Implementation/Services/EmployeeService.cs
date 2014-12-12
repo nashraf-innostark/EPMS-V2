@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -9,7 +10,7 @@ namespace EPMS.Implementation.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IEmployeeRepository iRepository;
+        private readonly IEmployeeRepository repository;
 
         #region Constructor
         /// <summary>
@@ -18,20 +19,25 @@ namespace EPMS.Implementation.Services
         /// <param name="xRepository"></param>
         public EmployeeService(IEmployeeRepository xRepository)
         {
-            iRepository = xRepository;
+            repository = xRepository;
         }
 
         #endregion
 
         public EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset)
         {
-            return iRepository.GetAllEmployees(employeeSearchRequset);
+            return repository.GetAllEmployees(employeeSearchRequset);
         }
 
         public Employee FindEmployeeById(long? id)
         {
-            return iRepository.FindEmployeeById(id);
+            return repository.FindEmployeeById(id);
         }
+
+        public IEnumerable<Employee> LoadAllEmployees()
+        {
+            return repository.GetAll();
+        } 
 
         /// <summary>
         /// Update Employee
@@ -42,8 +48,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                iRepository.Update(employee);
-                iRepository.SaveChanges();
+                repository.Update(employee);
+                repository.SaveChanges();
                 return true;
             }
             catch (Exception e)
@@ -58,8 +64,8 @@ namespace EPMS.Implementation.Services
         /// <param name="employee">Employee to be Deleted</param>
         public void DeleteEmployee(Employee employee)
         {
-            iRepository.Delete(employee);
-            iRepository.SaveChanges();
+            repository.Delete(employee);
+            repository.SaveChanges();
         }
 
         /// <summary>
@@ -71,8 +77,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                iRepository.Add(employee);
-                iRepository.SaveChanges();
+                repository.Add(employee);
+                repository.SaveChanges();
                 return true;
             }
             catch (Exception exception)

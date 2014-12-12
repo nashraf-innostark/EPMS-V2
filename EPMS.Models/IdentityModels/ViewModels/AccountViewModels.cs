@@ -68,27 +68,29 @@ namespace EPMS.Models.IdentityModels.ViewModels
 
         public string UserId { get; set; }
 
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-        public string UserName { get; set; }
-        [Required]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
+        //[Required]
+        //[Display(Name = "First Name")]
+        //public string FirstName { get; set; }
+        //[Required]
+        //[Display(Name = "Last name")]
+        //public string LastName { get; set; }
 
         public string SelectedRole { get; set; }
-        public List<AspNetRole> Roles { get; set; }  
+        public List<AspNetRole> Roles { get; set; }
+        public string SelectedEmployee { get; set; }
+        public List<Employee> Employees { get; set; }
 
+        public string UserName { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         
-        [EmailAddress]
-        [Display(Name = "Confirm Email")]
-        [Compare("Email", ErrorMessage = "The Email and confirmation Email do not match.")]
-        public string ConfirmEmail { get; set; }
+        //[EmailAddress]
+        //[Display(Name = "Confirm Email")]
+        //[Compare("Email", ErrorMessage = "The Email and confirmation Email do not match.")]
+        //public string ConfirmEmail { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

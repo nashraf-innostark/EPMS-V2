@@ -30,6 +30,7 @@ namespace IdentitySample.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private IMenuRightsService menuRightService;
+        private IEmployeeService employeeService;
 
 
         /// <summary>
@@ -285,7 +286,7 @@ namespace IdentitySample.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
-        public ActionResult RegisterLVAddEdit(string email)
+        public ActionResult Create(string email)
         {
             RegisterViewModel oResult = new RegisterViewModel();
             if (!string.IsNullOrEmpty(email))
@@ -294,9 +295,8 @@ namespace IdentitySample.Controllers
                 oResult = new RegisterViewModel
                 {
                     UserId = userToEdit.Id,
-                    FirstName = userToEdit.Employee.EmployeeFirstName,
-                    LastName = userToEdit.Employee.EmployeeLastName,
-                    SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id
+                    SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
+                    Employees = employeeService.LoadAllEmployees().ToList()
 
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
@@ -306,7 +306,7 @@ namespace IdentitySample.Controllers
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
             oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-
+            oResult.Employees = employeeService.LoadAllEmployees().ToList();
             return View(oResult);
         }
 
@@ -351,7 +351,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
-        public async Task<ActionResult> RegisterLVAddEdit(RegisterViewModel model)
+        public async Task<ActionResult> Create(RegisterViewModel model)
         {
 
             if (!string.IsNullOrEmpty(model.UserId))

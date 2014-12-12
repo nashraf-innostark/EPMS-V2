@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
@@ -9,10 +10,10 @@ namespace EPMS.Interfaces.IServices
     /// </summary>
     public interface IEmployeeService
     {
-        bool AddEmployee(Employee employee);
         EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset);
-
         Employee FindEmployeeById(long? id);
+        IEnumerable<Employee> LoadAllEmployees(); 
+        bool AddEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);
         void DeleteEmployee(Employee employee);
     }
