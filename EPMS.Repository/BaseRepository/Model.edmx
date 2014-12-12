@@ -817,8 +817,7 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
           <Property Name="ParentItem_MenuId" Type="Int32" />
           <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Menu1" Relationship="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu" ToRole="Menu1" />
-          <NavigationProperty Name="Menu2" Relationship="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="ParentItem" Relationship="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="MenuRights" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
         </EntityType>
         <EntityType Name="MenuRight">
