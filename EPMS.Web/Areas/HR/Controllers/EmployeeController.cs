@@ -16,7 +16,7 @@ using EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class EmployeeController : BaseController
     {
         private readonly IEmployeeService EmployeeService;
