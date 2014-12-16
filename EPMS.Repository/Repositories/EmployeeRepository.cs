@@ -62,11 +62,11 @@ namespace EPMS.Repository.Repositories
             int toRow = employeeSearchRequset.PageSize;
 
             Expression<Func<Employee, bool>> query =
-                s => (((employeeSearchRequset.EmployeeId == 0) || s.EmployeeId == employeeSearchRequset.EmployeeId
-                    || s.EmployeeId.Equals(employeeSearchRequset.EmployeeId)) &&
-                    ((string.IsNullOrEmpty(employeeSearchRequset.EmployeeFirstName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeFirstName)))
-                    || (s.EmployeeMiddleName.Contains(employeeSearchRequset.EmployeeMiddleName)) || (s.EmployeeLastName.Contains(employeeSearchRequset.EmployeeLastName))) &&
-                    ((employeeSearchRequset.EmployeeJobId == "") || (s.EmployeeJobId == employeeSearchRequset.EmployeeJobId)));
+                s => ((employeeSearchRequset.EmployeeId == 0 || s.EmployeeId == employeeSearchRequset.EmployeeId || s.EmployeeId.Equals(employeeSearchRequset.EmployeeId)) 
+                    && ((string.IsNullOrEmpty(employeeSearchRequset.EmployeeFirstName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeFirstName)))
+                    || (string.IsNullOrEmpty(employeeSearchRequset.EmployeeMiddleName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeMiddleName)))
+                    || (string.IsNullOrEmpty(employeeSearchRequset.EmployeeLastName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeLastName)))) &&
+                    (employeeSearchRequset.JobTitleId == 0 || s.JobTitleId == employeeSearchRequset.JobTitleId));
 
             IEnumerable<Employee> employees = employeeSearchRequset.IsAsc ?
                 DbSet

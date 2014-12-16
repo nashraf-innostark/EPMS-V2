@@ -47,12 +47,13 @@ namespace EPMS.Web.Areas.HR.Controllers
 
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
-            return View(new EmployeeViewModel
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 DepartmentList = DepartmentService.GetAll(),
                 JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
                 SearchRequest = employeeSearchRequest ?? new EmployeeSearchRequset()
-            });
+            };
+            return View(employeeViewModel);
         }
         /// <summary>
         /// Get All Employees and return to View
@@ -63,6 +64,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult Employees(EmployeeSearchRequset employeeSearchRequest)
         {
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
+            var emp = EmployeeService.GetAll();
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromWithImage(User.Identity.Name)).ToList();
