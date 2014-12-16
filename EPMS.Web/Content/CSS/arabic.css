@@ -1,0 +1,187 @@
+/* --------------------------------------------------------------
+
+-------------------------------------------------------------- */
+
+form { direction: rtl; }
+
+.form-horizontal .control-label {
+ float:right;
+}
+
+header{direction:rtl;}
+header small{
+right: 82px;
+left: 0;
+}
+header .icon-big-notepad {
+margin-left: 10px;
+margin-right: 30px;
+float: right;
+}
+.table{
+ direction:rtl;
+}
+.table th, .table td{
+	text-align:right;
+}
+.dataTables_length{
+ float:right;
+}
+.dataTables_filter{
+ text-align:left;
+}
+.dataTables_wrapper .table thead th{
+ padding:0px 10px 0px 20px;
+}
+.sorting{ 
+background:url('../../images/photon/sort_both.png') no-repeat center left;
+}
+.sorting_asc{
+background:url('../../images/photon/sort_asc.png') no-repeat center left;
+}
+.sorting_desc{
+background:url('../../images/photon/sort_desc.png') no-repeat center left;
+}
+.dataTables_info{
+float:right;
+}
+
+.dataTables_paginate{
+float:left;
+}
+.row-fluid [class*="span"]{
+ float:right;
+}
+@media (min-width: 1200px) {
+
+ .row-fluid [class*="span"] {
+  float:right;
+ }
+}
+
+
+@media screen and (max-width: 767px) {
+.nav-side-menu > li > a{
+text-align:right;
+}
+
+.nav-side-menu [class^="icon-"], .nav-side-menu [class*=" icon-"]{
+float:right;
+}
+.nav-side-menu .sub-nav-container .icon-menu-arrow{
+ left:0px;
+ background-image:url('../../images/photon/arrow_menu_exp.png');
+}
+
+.nav-side-menu .sub-nav .nav > li > a{
+ padding:0px 58px 0px 0px;
+ text-align:right;
+}
+.nav-user-menu .user-sub-menu > li > a{
+ text-align:right;
+
+}
+
+.btn-mobile-menus{
+right:20px;
+left:auto;
+}
+
+.btn-mobile-menus .btn{
+	float:right;
+}
+
+.btn-mobile-menus.btn-toolbar .btn-user-menu{
+	margin-right:18px;
+}
+}
+@media screen and (min-width: 768px) {
+
+}
+.alert {
+	padding-left:0px;
+	padding-right:40px;
+	direction:rtl;
+}
+.icon-alert{
+	left:auto;
+	right:10px;
+}
+.alert .close{
+	float:left;
+}
+.scroll-top-wrapper{
+	right:auto;
+	left:50px;
+}
+
+.widget-front a{
+	float:right;
+}
+.widget-head div{
+	float:left;
+}
+
+.widget-area ul div{
+	float:left;
+}
+
+.widget-area.widget-back .widget-savehead{
+	float:left;
+}
+
+.widget-area.widget-back .widget-settings .row-fluid [class*="span"]{
+	text-align:right;
+}
+
+.widget-latest-users ul .avatar-image{
+	float:right;
+	margin-left:10px;
+	margin-right:0px;
+}
+.task-completion ul li{
+	float:right;
+}
+.widget-front a{
+ float:right;
+}
+
+.ui-pnotify-icon, .ui-pnotify-icon span{
+	float: right;
+margin-left: .2em;
+	
+}
+
+.ui-pnotify-closer, .ui-pnotify-sticker {
+float: left;
+margin-left: .2em;
+}
+
+.modal.fade.in{
+	direction:rtl;
+}
+
+.close{
+	float:left;
+}
+
+.modal-footer{
+	text-align:left;
+}
+
+.widget-head .opc1{
+	margin-right:5px;
+}
+.widget-head img{
+	margin-right:5px;
+}
+/* Typography with RTL support */
+body h1,body h2,body h3,
+body h4,body h5,body h6 { font-family: Arial, sans-serif; }
+html body { font-family: Arial, sans-serif;  }
+body pre,body code,body tt { font-family: monospace; }
+
+/* Mirror floats and margins on typographic elements */
+body p img { float: right; margin: 1.5em 0 1.5em 1.5em; }
+body dd, body ul, body ol { margin-left: 0; margin-right: 1.5em;}
+body td, body th { text-align:right; }
