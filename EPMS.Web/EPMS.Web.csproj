@@ -1717,6 +1717,8 @@
     <Content Include="Views\Employee\DDL.cshtml" />
     <Content Include="Views\JobTitle\ComboBox.cshtml" />
     <Content Include="Views\JobTitle\AddEdit.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_Alert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
