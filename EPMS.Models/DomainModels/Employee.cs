@@ -9,6 +9,7 @@ namespace EPMS.Models.DomainModels
         public string EmployeeFirstName { get; set; }
         public string EmployeeMiddleName { get; set; }
         public string EmployeeLastName { get; set; }
+        public string EmployeeFullName { get; set; }
         public string EmployeeImagePath { get; set; }
         public long? JobTitleId { get; set; }
         public string EmployeeJobId { get; set; }
@@ -34,5 +35,6 @@ namespace EPMS.Models.DomainModels
         public virtual JobTitle JobTitle { get; set; }
         public virtual ICollection<EmployeeRequest> EmployeeRequests { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

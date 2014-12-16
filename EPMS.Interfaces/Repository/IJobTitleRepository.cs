@@ -11,11 +11,7 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IJobTitleRepository : IBaseRepository<JobTitle, int>
     {
-        IEnumerable<JobTitle> LoadAll();
         List<JobTitle> GetJobTitlesByDepartmentId(long deptId); 
         JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);
-
-        JobTitle FindJobTitleById(int? id);
-
     }
 }

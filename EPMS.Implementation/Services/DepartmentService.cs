@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -13,7 +10,7 @@ namespace EPMS.Implementation.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmentRepository iRepository;
+        private readonly IDepartmentRepository repository;
 
         #region Constructor
         /// <summary>
@@ -22,24 +19,63 @@ namespace EPMS.Implementation.Services
         /// <param name="xRepository"></param>
         public DepartmentService(IDepartmentRepository xRepository)
         {
-            iRepository = xRepository;
+            repository = xRepository;
         }
 
         #endregion
 
 
-        public IEnumerable<Department> LoadAll()
+        public IEnumerable<Department> GetAll()
         {
-            return iRepository.LoadAll();
+            return repository.GetAll();
         }
         public DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest)
         {
-            return iRepository.GetAllDepartment(departmentSearchRequest);
+            return repository.GetAllDepartment(departmentSearchRequest);
         }
 
-        public Department FindDepartmentById(int? id)
+        public Department FindDepartmentById(int id)
         {
-            return iRepository.FindDepartmentById(id);
+            return repository.Find(id);
+        }
+
+        public bool AddDepartment(Department department)
+        {
+            try
+            {
+                repository.Add(department);
+                repository.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
+        public bool UpdateDepartment(Department department)
+        {
+            try
+            {
+                repository.Update(department);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public void DeleteDepartment(Department department)
+        {
+            try
+            {
+                repository.Delete(department);
+                repository.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

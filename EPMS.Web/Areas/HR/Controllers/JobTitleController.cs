@@ -43,11 +43,11 @@ namespace EPMS.Web.Areas.HR.Controllers
 
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
-            IEnumerable<JobTitle> jobList = jobTitleService.LoadAll().Select(x => x.CreateFrom());
+            IEnumerable<JobTitle> jobList = jobTitleService.GetAll().Select(x => x.CreateFrom());
 
             return View(new JobTitleViewModel
             {
-                DepartmentList = DepartmentService.LoadAll().Select(x => x.CreateFrom()),
+                DepartmentList = DepartmentService.GetAll().Select(x => x.CreateFrom()),
                 JobTitleList = jobList,
                 SearchRequest = jobTitleSearchRequest ?? new JobTitleSearchRequest()
             });

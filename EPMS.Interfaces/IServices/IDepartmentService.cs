@@ -10,9 +10,13 @@ namespace EPMS.Interfaces.IServices
     /// </summary>
     public interface IDepartmentService
     {
-        IEnumerable<Department> LoadAll();
+        IEnumerable<Department> GetAll();
         DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
 
-        Department FindDepartmentById(int? id);
+        Department FindDepartmentById(int id);
+
+        bool AddDepartment(Department department);
+        bool UpdateDepartment(Department department);
+        void DeleteDepartment(Department department);
     }
 }

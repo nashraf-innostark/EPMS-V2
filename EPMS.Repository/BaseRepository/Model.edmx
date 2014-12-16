@@ -75,7 +75,8 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="SystemUserId" Type="bigint" />
+          <Property Name="EmployeeId" Type="bigint" />
+          <Property Name="CustomerId" Type="bigint" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -198,17 +199,11 @@
           <Property Name="Menu_MenuId" Type="int" />
           <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMS.dbo.Notification' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Notification">
           <Key>
             <PropertyRef Name="NotificationId" />
-            <PropertyRef Name="NotificationName" />
-            <PropertyRef Name="NotificationCategory" />
-            <PropertyRef Name="AlertTime" />
-            <PropertyRef Name="IsNotified" />
           </Key>
-          <Property Name="NotificationId" Type="bigint" Nullable="false" />
+          <Property Name="NotificationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NotificationName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="NotificationCategory" Type="smallint" Nullable="false" />
           <Property Name="AlertTime" Type="datetime" Nullable="false" />
@@ -218,18 +213,11 @@ warning 6002: The table/view 'EPMS.dbo.Notification' does not have a primary key
           <Property Name="Email" Type="nvarchar" MaxLength="200" />
           <Property Name="IsNotified" Type="bit" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RequestDetails">
           <Key>
             <PropertyRef Name="RequestDetailId" />
-            <PropertyRef Name="RequestId" />
-            <PropertyRef Name="RequestDesc" />
-            <PropertyRef Name="IsReplied" />
-            <PropertyRef Name="IsApproved" />
-            <PropertyRef Name="RowVersion" />
           </Key>
-          <Property Name="RequestDetailId" Type="bigint" Nullable="false" />
+          <Property Name="RequestDetailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestId" Type="bigint" Nullable="false" />
           <Property Name="RequestDesc" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="LoanAmount" Type="float" />
@@ -254,6 +242,18 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
               <PropertyRef Name="EmployeeId" />
             </Principal>
             <Dependent Role="Allowance">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
               <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -350,18 +350,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="*" />
@@ -410,18 +398,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Notification_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RequestDetails_EmployeeRequests">
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="1" />
           <End Role="RequestDetails" Type="Self.RequestDetails" Multiplicity="*" />
@@ -449,42 +425,15 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Notification" EntityType="Self.Notification" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Notification].[NotificationId] AS [NotificationId], 
-    [Notification].[NotificationName] AS [NotificationName], 
-    [Notification].[NotificationCategory] AS [NotificationCategory], 
-    [Notification].[AlertTime] AS [AlertTime], 
-    [Notification].[NotificationTime] AS [NotificationTime], 
-    [Notification].[EmployeeId] AS [EmployeeId], 
-    [Notification].[MobileNumber] AS [MobileNumber], 
-    [Notification].[Email] AS [Email], 
-    [Notification].[IsNotified] AS [IsNotified]
-    FROM [dbo].[Notification] AS [Notification]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [RequestDetails].[RequestDetailId] AS [RequestDetailId], 
-    [RequestDetails].[RequestId] AS [RequestId], 
-    [RequestDetails].[RequestDesc] AS [RequestDesc], 
-    [RequestDetails].[LoanAmount] AS [LoanAmount], 
-    [RequestDetails].[LoanDate] AS [LoanDate], 
-    [RequestDetails].[InstallmentAmount] AS [InstallmentAmount], 
-    [RequestDetails].[FirstInstallmentDate] AS [FirstInstallmentDate], 
-    [RequestDetails].[LastInstallmentDate] AS [LastInstallmentDate], 
-    [RequestDetails].[NumberOfMonths] AS [NumberOfMonths], 
-    [RequestDetails].[IsReplied] AS [IsReplied], 
-    [RequestDetails].[IsApproved] AS [IsApproved], 
-    [RequestDetails].[RowVersion] AS [RowVersion], 
-    [RequestDetails].[RecCreatedBy] AS [RecCreatedBy], 
-    [RequestDetails].[RecCreatedDt] AS [RecCreatedDt], 
-    [RequestDetails].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
-    [RequestDetails].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
-    FROM [dbo].[RequestDetails] AS [RequestDetails]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -514,10 +463,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             <End Role="Menu" EntitySet="Menu" />
             <End Role="MenuRight" EntitySet="MenuRight" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitle" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -533,10 +478,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="JobTitle" EntitySet="JobTitle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Notification" EntitySet="Notification" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -579,21 +520,17 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Employee" Association="EPMSModel.FK_AspNetUsers_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="EPMSModel.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="JobTitle" EntitySet="JobTitles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="EPMSModel.FK_Employee_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="EPMSModel.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="EPMSModel.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
@@ -687,9 +624,11 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="SystemUserId" Type="Int64" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <Property Name="CustomerId" Type="Int64" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="EPMSModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="Department">
@@ -732,9 +671,8 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Allowances" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
-          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
           <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
-          <NavigationProperty Name="Notifications" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -799,7 +737,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Department" Relationship="EPMSModel.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
-          <NavigationProperty Name="Employees" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
           <NavigationProperty Name="JobOffereds" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
         </EntityType>
         <EntityType Name="Menu">
@@ -815,7 +752,7 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <Property Name="MenuFunction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PermissionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
-          <Property Name="ParentItem_MenuId" Type="Int32" />
+          <Property Name="ParentItemMenu" Type="Int32" />
           <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ParentItem" Relationship="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="MenuRights" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
@@ -833,12 +770,8 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
         <EntityType Name="Notification">
           <Key>
             <PropertyRef Name="NotificationId" />
-            <PropertyRef Name="NotificationName" />
-            <PropertyRef Name="NotificationCategory" />
-            <PropertyRef Name="AlertTime" />
-            <PropertyRef Name="IsNotified" />
           </Key>
-          <Property Name="NotificationId" Type="Int64" Nullable="false" />
+          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NotificationName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="NotificationCategory" Type="Int16" Nullable="false" />
           <Property Name="AlertTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -847,18 +780,12 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <Property Name="MobileNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsNotified" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
         </EntityType>
         <EntityType Name="RequestDetail">
           <Key>
             <PropertyRef Name="RequestDetailId" />
-            <PropertyRef Name="RequestId" />
-            <PropertyRef Name="RequestDesc" />
-            <PropertyRef Name="IsReplied" />
-            <PropertyRef Name="IsApproved" />
-            <PropertyRef Name="RowVersion" />
           </Key>
-          <Property Name="RequestDetailId" Type="Int64" Nullable="false" />
+          <Property Name="RequestDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestId" Type="Int64" Nullable="false" />
           <Property Name="RequestDesc" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="LoanAmount" Type="Double" />
@@ -928,6 +855,18 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetUsers_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobTitle_Department">
           <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
           <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="*" />
@@ -940,18 +879,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="0..1" />
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="EPMSModel.EmployeeRequest" Role="EmployeeRequest" Multiplicity="*" />
@@ -960,18 +887,6 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
               <PropertyRef Name="EmployeeId" />
             </Principal>
             <Dependent Role="EmployeeRequest">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notification_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Notification">
               <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1020,7 +935,7 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
               <PropertyRef Name="MenuId" />
             </Principal>
             <Dependent Role="Menu1">
-              <PropertyRef Name="ParentItem_MenuId" />
+              <PropertyRef Name="ParentItemMenu" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1040,7 +955,7 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1099,7 +1014,8 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="SystemUserId" ColumnName="SystemUserId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
@@ -1220,7 +1136,7 @@ warning 6002: The table/view 'EPMS.dbo.RequestDetails' does not have a primary k
             <EntityTypeMapping TypeName="EPMSModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
-                <ScalarProperty Name="ParentItem_MenuId" ColumnName="ParentItem_MenuId" />
+                <ScalarProperty Name="ParentItemMenu" ColumnName="ParentItem_MenuId" />
                 <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
                 <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
                 <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />

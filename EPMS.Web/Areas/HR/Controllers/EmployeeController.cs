@@ -49,7 +49,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
             return View(new EmployeeViewModel
             {
-                DepartmentList = DepartmentService.LoadAll(),
+                DepartmentList = DepartmentService.GetAll(),
                 JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
                 SearchRequest = employeeSearchRequest ?? new EmployeeSearchRequset()
             });
@@ -97,7 +97,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        public ActionResult AddEdit(int? id)
+        public ActionResult AddEdit(long? id)
         {
             EmployeeViewModel viewModel = new EmployeeViewModel();
             JobTitleSearchRequest jobTitleSearchRequest = new JobTitleSearchRequest();

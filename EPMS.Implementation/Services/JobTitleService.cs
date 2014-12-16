@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -13,7 +10,7 @@ namespace EPMS.Implementation.Services
 {
     public class JobTitleService : IJobTitleService
     {
-        private readonly IJobTitleRepository iRepository;
+        private readonly IJobTitleRepository repository;
 
         #region Constructor
         /// <summary>
@@ -22,41 +19,68 @@ namespace EPMS.Implementation.Services
         /// <param name="xRepository"></param>
         public JobTitleService(IJobTitleRepository xRepository)
         {
-            iRepository = xRepository;
+            repository = xRepository;
         }
 
         #endregion
 
         public List<JobTitle> GetJobTitlesByDepartmentId(long deptId)
         {
-            return iRepository.GetJobTitlesByDepartmentId(deptId);
+            return repository.GetJobTitlesByDepartmentId(deptId);
         }
         public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
         {
-            return iRepository.GetAllJobTitle(jobTitleSearchRequest);
+            return repository.GetAllJobTitle(jobTitleSearchRequest);
         }
 
-        public JobTitle FindJobTitleById(int? id)
+        public JobTitle FindJobTitleById(int id)
         {
-            return iRepository.FindJobTitleById(id);
+            return repository.Find(id);
         }
 
-        public IEnumerable<JobTitle> LoadAll()
+        public IEnumerable<JobTitle> GetAll()
         {
-            return iRepository.LoadAll();
+            return repository.GetAll();
         }
 
         public bool AddJob(JobTitle jobTitle)
         {
             try
             {
-                iRepository.Add(jobTitle);
-                iRepository.SaveChanges();
+                repository.Add(jobTitle);
+                repository.SaveChanges();
                 return true;
             }
             catch (Exception exception)
             {
                 return false;
+            }
+        }
+
+        public bool UpdateJob(JobTitle jobTitle)
+        {
+            try
+            {
+                repository.Update(jobTitle);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public void DeleteJob(JobTitle jobTitle)
+        {
+            try
+            {
+                repository.Delete(jobTitle);
+                repository.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                throw exception;
             }
         }
     }

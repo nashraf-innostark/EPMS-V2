@@ -67,31 +67,20 @@ namespace EPMS.Models.IdentityModels.ViewModels
     {
 
         public string UserId { get; set; }
-
-        //[Required]
-        //[Display(Name = "First Name")]
-        //public string FirstName { get; set; }
-        //[Required]
-        //[Display(Name = "Last name")]
-        //public string LastName { get; set; }
-
+        [Required(ErrorMessage = "Must Select Role")]
         public string SelectedRole { get; set; }
         public List<AspNetRole> Roles { get; set; }
+        [Required(ErrorMessage = "Must Select Employee")]
         public string SelectedEmployee { get; set; }
         public List<Employee> Employees { get; set; }
 
+        [Required(ErrorMessage = "Username field is required")]
         public string UserName { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
         
-        //[EmailAddress]
-        //[Display(Name = "Confirm Email")]
-        //[Compare("Email", ErrorMessage = "The Email and confirmation Email do not match.")]
-        //public string ConfirmEmail { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -134,30 +123,35 @@ namespace EPMS.Models.IdentityModels.ViewModels
     }
     public class ProfileViewModel
     {
-        [Required]
-        [Display(Name = "First Name")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string FirstName { get; set; }
-        [Required]
-        [Display(Name = "Last name")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string LastName { get; set; }
+        //[Required]
+        //[Display(Name = "First Name")]
+        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        //public string FirstName { get; set; }
+        //[Required]
+        //[Display(Name = "Last name")]
+        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        //public string LastName { get; set; }
 
+        [Required]
+        [Display(Name = "User name")]
+        [StringLength(100, ErrorMessage = "UserName is required")]
+        public string UserName { get; set; }
         [Display(Name = "Email")]
-
         public string Email { get; set; }
-        [Display(Name = "Phone Number")]
-        [StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string PhoneNumber { get; set; }
-        [Display(Name = "Address")]
-        [StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string Address { get; set; }
+
+        //[Display(Name = "Phone Number")]
+        //[StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        //public string PhoneNumber { get; set; }
+
+        //[Display(Name = "Address")]
+        //[StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
+        //public string Address { get; set; }
        
         [Display(Name = "Date of Birth")]
         public DateTime ? DateOfBirth { get; set; }
 
-        [Display(Name = "Qualification")]
-        public string Qualification{ get; set; }
+        //[Display(Name = "Qualification")]
+        //public string Qualification{ get; set; }
 
         [Display(Name = "Image")]
         public string ImageName { get; set; }
