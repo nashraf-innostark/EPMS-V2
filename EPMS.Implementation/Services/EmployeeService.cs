@@ -31,14 +31,32 @@ namespace EPMS.Implementation.Services
 
         public Employee FindEmployeeById(long? id)
         {
-            return repository.FindEmployeeById(id);
+            return repository.Find(Convert.ToInt32(id));
         }
 
-        public IEnumerable<Employee> LoadAllEmployees()
+        public IEnumerable<Employee> GetAll()
         {
             return repository.GetAll();
-        } 
+        }
 
+        /// <summary>
+        /// Add Employee to DB
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>true if added/false if error</returns>
+        public bool AddEmployee(Employee employee)
+        {
+            try
+            {
+                repository.Add(employee);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception exception)
+            {
+                return false;
+            }
+        }
         /// <summary>
         /// Update Employee
         /// </summary>
@@ -64,26 +82,14 @@ namespace EPMS.Implementation.Services
         /// <param name="employee">Employee to be Deleted</param>
         public void DeleteEmployee(Employee employee)
         {
-            repository.Delete(employee);
-            repository.SaveChanges();
-        }
-
-        /// <summary>
-        /// Add Employee to DB
-        /// </summary>
-        /// <param name="employee"></param>
-        /// <returns>true if added/false if error</returns>
-        public bool AddEmployee(Employee employee)
-        {
             try
             {
-                repository.Add(employee);
+                repository.Delete(employee);
                 repository.SaveChanges();
-                return true;
             }
-            catch (Exception exception)
-            {
-                return false;
+            catch (Exception)
+            {   
+                throw;
             }
         }
     }

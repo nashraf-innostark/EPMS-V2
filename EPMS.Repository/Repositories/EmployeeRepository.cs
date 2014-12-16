@@ -76,15 +76,5 @@ namespace EPMS.Repository.Repositories
                                            .Where(query).OrderByDescending(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new EmployeeResponse { Employeess = employees, TotalCount = DbSet.Count(query) };
         }
-
-        /// <summary>
-        /// Find Employee By Employee ID
-        /// </summary>
-        /// <param name="id">EMployee ID</param>
-        /// <returns></returns>
-        public Employee FindEmployeeById(long? id)
-        {
-            return DbSet.FirstOrDefault(employeeId => employeeId.EmployeeId == id);
-        }
     }
 }

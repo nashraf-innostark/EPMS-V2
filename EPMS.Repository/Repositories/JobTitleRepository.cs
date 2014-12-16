@@ -78,16 +78,6 @@ namespace EPMS.Repository.Repositories
         }
 
         /// <summary>
-        /// Find Job by Job ID
-        /// </summary>
-        /// <param name="id">Job ID</param>
-        /// <returns></returns>
-        public JobTitle FindJobTitleById(int? id)
-        {
-            return DbSet.FirstOrDefault(jobId => jobId.JobTitleId == id);
-        }
-
-        /// <summary>
         /// Find Job by Department ID
         /// </summary>
         /// <param name="deptId">Department ID</param>
@@ -95,11 +85,6 @@ namespace EPMS.Repository.Repositories
         public List<JobTitle> GetJobTitlesByDepartmentId(long deptId)
         {
             return DbSet.Where(s => s.DepartmentId == deptId).ToList();
-        }
-
-        public IEnumerable<JobTitle> LoadAll()
-        {
-            return DbSet.ToList();
         }
     }
 }

@@ -9,11 +9,8 @@ using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IDepartmentRepository
+    public interface IDepartmentRepository : IBaseRepository<Department, int>
     {
-        IEnumerable<Department> LoadAll(); 
         DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
-
-        Department FindDepartmentById(int? id);
     }
 }

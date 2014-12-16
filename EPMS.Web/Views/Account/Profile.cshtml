@@ -46,25 +46,18 @@
 
                                     @Html.ValidationSummary(true)
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">First Name</label>
+                                        <label class="col-lg-2 control-label textAlignLeft">User Name</label>
                                         <div class="col-lg-5">
-                                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control mandatory ltr", @placeholder = "First Name" })
-                                            @Html.ValidationMessageFor(m => m.FirstName)
+                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control mandatory ltr", @placeholder = "First Name" })
+                                            @Html.ValidationMessageFor(m => m.UserName)
                                         </div>
-                                        <div class="col-lg-5" style="position: absolute; left: 50%; ">
+                                        @*<div class="col-lg-5" style="position: absolute; left: 50%; ">
                                             @Html.HiddenFor(model => model.ImageName)
                                             <img class="DisplayImage" src="@Url.Content(Model.ImagePath)" alt="" />
-                                        </div>
+                                        </div>*@
                                     </div>
                                     <div class="clearfix"></div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Last Name</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control mandatory ltr", @placeholder = "Last Name" })
-                                            @Html.ValidationMessageFor(m => m.LastName)
-                                        </div>
-                                    </div>
-
+                                    
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Email</label>
                                         <div class="col-lg-10">
@@ -73,32 +66,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Phone Number</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control mandatory ltr", @placeholder = "Phone Number" })
-                                            @Html.ValidationMessageFor(m => m.PhoneNumber)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Address</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control mandatory ltr", @placeholder = "Address" })
-                                            @Html.ValidationMessageFor(m => m.Address)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Qualification</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control mandatory", @placeholder = "Qualification" })
-                                            @Html.ValidationMessageFor(m => m.Qualification)
-                                        </div>
-                                    </div>
+                                    
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Date of Birth</label>
                                         <div class="col-lg-10">
                                             @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control mandatory cursorHand textAlignRight", @placeholder = "Date of Birth" })
-                                            @Html.ValidationMessageFor(m => m.FirstName)
+                                            @Html.ValidationMessageFor(m => m.DateOfBirth)
                                             @*<input type="text" id="DateOfBirth" data-value="التاريخ" />*@
                                         </div>
                                     </div>

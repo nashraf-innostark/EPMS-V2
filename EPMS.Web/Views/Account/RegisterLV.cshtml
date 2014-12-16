@@ -4,6 +4,7 @@
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 2;
+    ViewBag.MessageVM = TempData["message"];
 }
 <div class="mainbar" >
     <!-- Page heading -->
@@ -68,7 +69,7 @@
                     <div class="customwidget">
                         <div class="customwidget-head">
                             @*                            <input type="button" class="btn green titleButton" value="Create New">*@
-                            <a href="RegisterLVAddEdit">
+                            <a href="Create">
 
                                 <div class="pull-right"><input type="button" class="btn btn-primary" value="Create New" /></div>
                             </a>

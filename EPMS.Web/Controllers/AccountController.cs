@@ -244,7 +244,7 @@ namespace IdentitySample.Controllers
                 {
                     UserId = userToEdit.Id,
                     SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                    Employees = employeeService.LoadAllEmployees().ToList()
+                    Employees = employeeService.GetAll().ToList()
 
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
@@ -254,7 +254,7 @@ namespace IdentitySample.Controllers
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
             oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-            oResult.Employees = employeeService.LoadAllEmployees().Select(x => x.ServerToServer()).ToList();
+            oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
             return View(oResult);
         }
@@ -327,7 +327,8 @@ namespace IdentitySample.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new AspNetUser { UserName = model.Email, Email = model.Email };
+                var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -352,6 +353,7 @@ namespace IdentitySample.Controllers
                 }
                 AddErrors(result);
                 //model.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
+                model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
                 model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
 
             }
@@ -674,8 +676,7 @@ namespace IdentitySample.Controllers
             var ProfileViewModel = new ProfileViewModel
             {
                 Email = result.Email,
-                FirstName = result.Employee.EmployeeFirstName,
-                LastName = result.Employee.EmployeeLastName
+                UserName = result.UserName
             };
             ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
             return View(ProfileViewModel);
@@ -702,8 +703,8 @@ namespace IdentitySample.Controllers
             //Updating Data
             try
             {
-                result.Employee.EmployeeFirstName = profileViewModel.FirstName;
-                result.Employee.EmployeeLastName = profileViewModel.LastName;
+                result.UserName = profileViewModel.UserName;
+                //result.Employee.EmployeeLastName = profileViewModel.LastName;
                 result.Email = profileViewModel.Email;
                 if (profileViewModel.ImageName != null)
                 {

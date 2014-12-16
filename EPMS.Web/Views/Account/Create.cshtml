@@ -5,6 +5,14 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<style>
+    .select2-choices {
+        margin-top: -7px !important;
+        width: 108% !important;
+        margin-left: -12px !important;
+    }
+</style>
+
 <link rel="stylesheet" type="text/css" href="~/Scripts/App/select2/select2.css" />
 <script type="text/javascript" src="~/Scripts/App/select2/select2.js"></script>
 <div class="mainbar">
@@ -47,6 +55,13 @@
                                     @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
                                     @Html.HiddenFor(m => m.UserId)
                                     <div class="form-group">
+                                        <label class="col-lg-2 control-label textAlignLeft">Username</label>
+                                        <div class="col-lg-10">
+                                            @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", @class = "form-control textAlignLeft", placeholder = "Enter Username" })
+                                            @Html.ValidationMessageFor(m => m.UserName)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Email</label>
                                         <div class="col-lg-10">
                                             @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", @class = "form-control textAlignLeft", placeholder = "Enter Email", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
@@ -56,13 +71,15 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Role</label>
                                         <div class="col-lg-10" dir="ltr">
-                                            @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), new { @class = "form-control textAlignLeft" })
+                                            @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"),"Select Role" , new { @class = "form-control textAlignLeft" })
+                                            @Html.ValidationMessageFor(m => m.SelectedRole)
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label textAlignLeft">Employee</label>
-                                        <div class="col-lg-10" dir="ltr">
-                                            @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullName"), new { @class = "form-control searchable" })
+                                        <div class="col-lg-10">
+                                            @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullName"), "Select Employee", new { @class = "input-large form-control select2me" })
+                                            @Html.ValidationMessageFor(m => m.SelectedEmployee)
                                         </div>
                                     </div>
                                     <div class="form-group" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">
@@ -108,7 +125,7 @@
     $(function () {
 
         $("[readonly='false']").removeAttr("readonly");
-        searchable$('.select2me').select2({
+        $('.select2me').select2({
             placeholder: "Select",
             allowClear: true
         });

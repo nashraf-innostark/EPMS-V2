@@ -12,7 +12,7 @@ namespace EPMS.Interfaces.IServices
     {
         EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset);
         Employee FindEmployeeById(long? id);
-        IEnumerable<Employee> LoadAllEmployees(); 
+        IEnumerable<Employee> GetAll(); 
         bool AddEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);
         void DeleteEmployee(Employee employee);
