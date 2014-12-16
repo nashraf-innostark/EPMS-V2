@@ -263,7 +263,7 @@ namespace IdentitySample.Controllers
 
         [AllowAnonymous]
         [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "User")]
-        public ActionResult RegisterLV()
+        public ActionResult Users()
         {
             //if (Session["LoginID"] == null)
             //{
