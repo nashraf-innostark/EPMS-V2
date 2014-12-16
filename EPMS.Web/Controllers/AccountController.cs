@@ -4,6 +4,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using EPMS.Web.Models;
 using IdentitySample.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -274,7 +275,7 @@ namespace IdentitySample.Controllers
                 oVM.Data = new List<SystemUser>();
                 foreach (var item in oList)
                 {
-                    if (!string.IsNullOrEmpty(item.Employee.EmployeeFirstName))
+                    if (item.SystemUserId>0)
                     {
                         oVM.Data.Add(new SystemUser
                         {
