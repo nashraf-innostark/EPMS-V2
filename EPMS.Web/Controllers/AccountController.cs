@@ -302,7 +302,6 @@ namespace IdentitySample.Controllers
         [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
         public async Task<ActionResult> Create(RegisterViewModel model)
         {
-
             if (!string.IsNullOrEmpty(model.UserId))
             {
                 //means update case
@@ -325,6 +324,7 @@ namespace IdentitySample.Controllers
                 return RedirectToAction("RegisterLV");
             }
 
+            // Add new User
             if (ModelState.IsValid)
             {
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };

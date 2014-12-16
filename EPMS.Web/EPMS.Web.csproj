@@ -820,6 +820,7 @@
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\PMS\Views\web.config" />
     <Content Include="Areas\Notification\Views\web.config" />
+    <Content Include="Areas\HR\Views\Employee\Employees.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
@@ -1047,7 +1048,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\HR\Views\Department\" />
-    <Folder Include="Areas\HR\Views\Employee\" />
     <Folder Include="Areas\HR\Views\JobTitle\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />

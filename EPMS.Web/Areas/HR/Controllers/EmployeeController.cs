@@ -39,7 +39,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Employee ListView Action Method
         /// </summary>
         /// <returns></returns>
-        public ActionResult EmployeeLV()
+        public ActionResult Employees()
         {
             EmployeeSearchRequset employeeSearchRequest = Session["PageMetaData"] as EmployeeSearchRequset;
 
@@ -60,7 +60,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable<Employee> of All Employees</returns>
         [HttpPost]
-        public ActionResult EmployeeLV(EmployeeSearchRequset employeeSearchRequest)
+        public ActionResult Employees(EmployeeSearchRequset employeeSearchRequest)
         {
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
