@@ -16,11 +16,6 @@
                     <i class="icon-photon home"></i>
                 </a>
             </li>
-            <li>
-                <a href="Employees(Admin)En.html">
-                    User Management
-                </a>
-            </li>
             <li class="current">
                 <a href="javascript:;">@ViewBag.Title</a>
 
@@ -73,14 +68,14 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control mandatory ltr", @placeholder = "First Name" })
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control mandatory ltr",@readonly="readonly", @placeholder = "First Name" })
                             @Html.ValidationMessageFor(m => m.UserName)
                         </div>
                     </div>
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="email">Email</label>
+                        <label class="control-label" for="Email">Email</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -89,31 +84,82 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label textAlignLeft">Date of Birth</label>
-                    <div class="col-lg-10">
-                        @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control mandatory cursorHand textAlignRight", @placeholder = "Date of Birth" })
-                        @Html.ValidationMessageFor(m => m.DateOfBirth)
-                        @*<input type="text" id="DateOfBirth" data-value="التاريخ" />*@
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Address">Address</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Address)
+                            @Html.ValidationMessageFor(m => m.Address)
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-lg-2 control-label textAlignLeft">Photo</label>
-                    <div class="col-lg-10">
-                        @Html.TextBoxFor(model => model.UploadImage, new { type = "file", accept = ".jpg,.jpeg,.png" })
-                        @Html.ValidationMessageFor(model => model.UploadImage, null, new { @class = "Error" })
+                <!--Drag And Drop Upload begin-->
+                <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputField">
+                            Photo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                        </label>
                     </div>
+                    <div class="span9 row-fluid">
+                        <div class="upload-boxes row-fluid">
+                            @*@Html.TextBoxFor(model => model.UploadImage, new {@id="upload"})
+                            @Html.ValidationMessageFor(model => model.UploadImage, null, new { @class = "Error" })*@
+                            <div class="span3" id="upload"></div>
+                            <div class="span9" id="uploaded"></div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                        $().ready(function () {
+
+                            var errors = "";
+
+                            $('#upload').mfupload({
+                                type: 'jpg,png,tif,jpeg',   // type: '', for all types
+                                maxsize: 1, //file size in MBs
+                                post_upload: "UploadUserPhoto",
+                                folder: "./",
+                                ini_text: "Drag your file here or click (max: 1MB)",
+                                over_text: "Drop Here",
+                                over_col: '#666666',
+                                over_bkcol: '#f0f0f0',
+
+                                init: function () {
+                                    $("#uploaded").empty();
+                                },
+
+                                start: function (result) {
+                                    $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+                                },
+
+                                loaded: function (result) {
+                                    $("#PRO" + result.fileno).remove();
+                                    $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                                },
+
+                                progress: function (result) {
+                                    $("#PRO" + result.fileno).css("width", result.perc + "%");
+                                },
+
+                                error: function (error) {
+                                    errors += error.filename + ": " + error.err_des + "\n";
+                                },
+
+                                completed: function () {
+                                    if (errors != "") {
+                                        alert(errors);
+                                        errors = "";
+                                    }
+                                }
+                            });
+                        })
+                    </script>
                 </div>
-
-                <hr />
-                <div class="form-group">
-
-
-                    <div class="col-lg-6">
-                        <button type="submit" class="btn btn-circle blue">Update</button>
-
+                <!--Drag And Drop Upload end-->
+                <div class="control-group row-fluid">
+                    <div class="span12 span-inset">
+                        <button type="submit" class="btn">Update</button>
                     </div>
                 </div>
             </div>
@@ -148,7 +194,10 @@
                                 "date": {
                                     date: true
                                 }
-                            }
-                        });
+                                }
+                            });
+
+                        $('#DateOfBirth').mask('99/99/9999');
+                        $("#DateOfBirth").datepicker();
                     });
     </script>   

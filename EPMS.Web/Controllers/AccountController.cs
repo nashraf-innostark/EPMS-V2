@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Admin;
 using EPMS.Models.ModelMapers;
+using System.Net;
 
 namespace IdentitySample.Controllers
 {
@@ -675,11 +676,13 @@ namespace IdentitySample.Controllers
         [Authorize]
         public ActionResult Profile()
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var ProfileViewModel = new ProfileViewModel
             {
                 Email = result.Email,
-                UserName = result.UserName
+                UserName = result.UserName,
+                ImageName = (result.ImageName != null && result.ImageName != string.Empty) ? result.ImageName : string.Empty,
+                ImagePath = ConfigurationManager.AppSettings["ProfileImage"].ToString() + result.ImageName
             };
             ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
             return View(ProfileViewModel);
@@ -688,42 +691,17 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [Authorize]
         [ValidateInput(false)]
-        public ActionResult Profile(ProfileViewModel profileViewModel)
+        public ActionResult Profile(ProfileViewModel profileViewModel, HttpPostedFileBase file)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
-            string savedFileName = "";
-            //Save image to Folder
-            if ((profileViewModel.UploadImage != null))
-            {
-                var filename = profileViewModel.UploadImage.FileName;
-                var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ProfileImage"]);
-                savedFileName = Path.Combine(filePathOriginal, filename);
-                profileViewModel.ImageName = filename;
-
-                profileViewModel.UploadImage.SaveAs(savedFileName);
-            }
-
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            
             //Updating Data
             try
             {
-                result.UserName = profileViewModel.UserName;
-                //result.Employee.EmployeeLastName = profileViewModel.LastName;
                 result.Email = profileViewModel.Email;
-                if (profileViewModel.ImageName != null)
-                {
-                    //result.ImageName = profileViewModel.ImageName;
-                    profileViewModel.ImagePath = ConfigurationManager.AppSettings["ProfileImage"] as string + profileViewModel.ImageName;
-                }
-                else
-                {
-                    //profileViewModel.ImagePath = ConfigurationManager.AppSettings["ProfileImage"] as string + result.ImageName;
-                }
+                result.Address = profileViewModel.Address;
                 var updationResult = UserManager.UpdateAsync(result);
                 ViewBag.MessageVM = new MessageViewModel { Message = "Profile has been updated", IsUpdated = true };
-
-
-                //BaseController oBaseController = new BaseController();
-                //oBaseController.SetUserDetail();
                 updateSessionValues(result);
             }
             catch (Exception e)
@@ -732,6 +710,30 @@ namespace IdentitySample.Controllers
             return View(profileViewModel);
         }
 
+        public ActionResult UploadUserPhoto()
+        {
+            HttpPostedFileBase userPhoto = Request.Files[0];
+            try
+            {
+                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+                string savedFileName = "";
+                //Save image to Folder
+                if ((userPhoto != null))
+                {
+                    var filename = userPhoto.FileName;
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ProfileImage"]);
+                    savedFileName = Path.Combine(filePathOriginal, filename);
+                    userPhoto.SaveAs(savedFileName);
+                    result.ImageName = filename;
+                    var updationResult = UserManager.UpdateAsync(result);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { filename = userPhoto.FileName, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         private async Task SaveAccessToken(EPMS.Models.DomainModels.AspNetUser user, ClaimsIdentity identity)
@@ -812,7 +814,7 @@ namespace IdentitySample.Controllers
         #endregion
         private void updateSessionValues(AspNetUser user)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
             Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
             Session["LoginID"] = result.Id;
