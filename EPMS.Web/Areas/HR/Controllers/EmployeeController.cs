@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web.Http;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
@@ -60,7 +61,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable<Employee> of All Employees</returns>
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult Employees(EmployeeSearchRequset employeeSearchRequest)
         {
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
@@ -87,7 +88,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="deptId">Department ID</param>
         /// <returns>List<JobTitle> in JsonResult fromat</returns>
-        [HttpGet]
+        [System.Web.Mvc.HttpGet]
         public JsonResult GetJobTitles(long deptId)
         {
             var jobTitles = JobTitleService.GetJobTitlesByDepartmentId(deptId).Select(j => j.CreateFromDropDown());
@@ -117,7 +118,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         public ActionResult AddEdit(EmployeeViewModel viewModel)
         {
             var filePath = Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/");
