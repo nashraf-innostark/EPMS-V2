@@ -43,15 +43,14 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
 
         [Required]
@@ -96,8 +95,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
 
         [Required]
@@ -117,8 +115,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "UserName")]
         public string Email { get; set; }
     }
     public class ProfileViewModel
