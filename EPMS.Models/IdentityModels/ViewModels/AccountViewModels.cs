@@ -43,15 +43,14 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
 
         [Required]
@@ -96,8 +95,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
 
         [Required]
@@ -117,21 +115,11 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "UserName")]
         public string Email { get; set; }
     }
     public class ProfileViewModel
     {
-        //[Required]
-        //[Display(Name = "First Name")]
-        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        //public string FirstName { get; set; }
-        //[Required]
-        //[Display(Name = "Last name")]
-        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        //public string LastName { get; set; }
-
         [Required]
         [Display(Name = "User name")]
         [StringLength(100, ErrorMessage = "UserName is required")]
@@ -139,25 +127,9 @@ namespace EPMS.Models.IdentityModels.ViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        //[Display(Name = "Phone Number")]
-        //[StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        //public string PhoneNumber { get; set; }
-
-        //[Display(Name = "Address")]
-        //[StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        //public string Address { get; set; }
-       
-        [Display(Name = "Date of Birth")]
-        public DateTime ? DateOfBirth { get; set; }
-
-        //[Display(Name = "Qualification")]
-        //public string Qualification{ get; set; }
-
-        [Display(Name = "Image")]
+        [Display(Name = "Photo")]
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
-
-        public HttpPostedFileBase UploadImage { get; set; }
-    
+        public string Address { get; set; }
     }
 }
