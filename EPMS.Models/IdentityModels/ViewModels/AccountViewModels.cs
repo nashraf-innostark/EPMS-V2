@@ -71,9 +71,9 @@ namespace EPMS.Models.IdentityModels.ViewModels
         public string SelectedRole { get; set; }
         public List<AspNetRole> Roles { get; set; }
         [Required(ErrorMessage = "Must Select Employee")]
-        public string SelectedEmployee { get; set; }
+        public long SelectedEmployee { get; set; }
+        public Employee Employee { get; set; }
         public List<Employee> Employees { get; set; }
-
         [Required(ErrorMessage = "Username field is required")]
         public string UserName { get; set; }
         [Required]

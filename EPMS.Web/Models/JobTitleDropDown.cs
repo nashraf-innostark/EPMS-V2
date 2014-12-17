@@ -7,8 +7,8 @@ namespace EPMS.Web.Models
 {
     public class JobTitleDropDown
     {
-        public long JobId { get; set; }
-        public string JobTitleNameE { get; set; }
+        public long JobTitleId { get; set; }
+        public string JobTitleName { get; set; }
         
     }
 }

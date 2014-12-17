@@ -10,8 +10,8 @@ namespace EPMS.Web.ModelMappers
         {
             return new ApiModels.JobTitleDropDown
              {
-                 //JobId = source.JobId,
-                 //JobTitleNameE = source.JobTitleNameE,
+                 JobTitleId = source.JobTitleId,
+                 JobTitleName = source.JobTitleName,
              };
         }
 

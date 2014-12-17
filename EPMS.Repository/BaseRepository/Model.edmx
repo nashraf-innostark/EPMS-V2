@@ -350,6 +350,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="*" />
@@ -463,6 +475,10 @@
             <End Role="Menu" EntitySet="Menu" />
             <End Role="MenuRight" EntitySet="MenuRight" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitle" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -555,6 +571,10 @@
           <AssociationSet Name="AspNetUserRoles" Association="EPMSModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="EPMSModel.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Allowance">
@@ -673,6 +693,7 @@
           <NavigationProperty Name="Allowances" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
           <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
           <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
+          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -738,6 +759,7 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Department" Relationship="EPMSModel.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
           <NavigationProperty Name="JobOffereds" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
+          <NavigationProperty Name="Employees" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -954,6 +976,18 @@
         <Association Name="AspNetUserRoles">
           <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="0..1" />
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
