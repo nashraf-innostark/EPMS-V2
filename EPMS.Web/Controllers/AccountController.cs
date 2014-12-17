@@ -88,14 +88,14 @@ namespace IdentitySample.Controllers
         }
 
         #region Change Password
-        public ActionResult Manage()
+        public ActionResult ChangePassword()
         {
             return View();
         }
-        // POST: /Account/Manage
+        // POST: /Account/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Manage(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -265,7 +265,7 @@ namespace IdentitySample.Controllers
 
         [AllowAnonymous]
         [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "User")]
-        public ActionResult RegisterLV()
+        public ActionResult Users()
         {
             //if (Session["LoginID"] == null)
             //{

@@ -3,31 +3,33 @@
     ViewBag.Title = "Index";
 }
 
-
+    <!-- Navigation Bar -->
     <div class="breadcrumb-container">
-        <ul class="xbreadcrumbs">
-                <li>
-                    <a href="dashboard(Employee)En.html">
-                        <i class="icon-photon home"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="DepartmentsList(Admin)En.html">
-                        Home
-                    </a>
-                </li>
-                <li class="current">
-                    <a href="javascript:;">
-                       Index
-                    </a>
-                </li>
+         <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard(Employee)En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="DepartmentsList(Admin)En.html">
+                Home
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">
+                @ViewBag.Title
+            </a>
+        </li>
 
-            </ul>
+    </ul>
     </div>
+    <!-- Page heading -->
     <header>
         <i class="icon-big-notepad"></i>
         <h2><small>@ViewBag.Title</small></h2>
     </header>
     <!--Notifications begin-->
     @Html.Partial("_Alert")
-    <!--Notifications end-->
+
+    <!-- Form starts from here.  -->
