@@ -245,11 +245,13 @@ namespace IdentitySample.Controllers
                 {
                     UserId = userToEdit.Id,
                     SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                    Employees = employeeService.GetAll().ToList()
-
+                    SelectedEmployee = employeeService.GetAll().ToList()[0].EmployeeId,
+                    UserName = userToEdit.UserName,
+                    Email = userToEdit.Email,
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
                 oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+                oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
                 return View(oResult);
             }
@@ -329,7 +331,7 @@ namespace IdentitySample.Controllers
             if (ModelState.IsValid)
             {
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
-                //user.EmployeeId = model.SelectedEmployee;
+                user.EmployeeId = model.SelectedEmployee;
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)

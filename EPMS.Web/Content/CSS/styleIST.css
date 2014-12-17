@@ -1,2 +1,6 @@
 ﻿.select2me {
     width: 128% !important;
+}
+.required {
+    color: #e02222;
+}
