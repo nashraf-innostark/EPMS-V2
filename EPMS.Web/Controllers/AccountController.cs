@@ -197,13 +197,14 @@ namespace IdentitySample.Controllers
                             shouldLockout: false);
 
 
-                SetUserPermissions(model.Email);
+               
 
 
                 switch (result)
                 {
                     case SignInStatus.Success:
                         {
+                            SetUserPermissions(user.Email);
                             //return RedirectToAction("Index", "Admin");
                             return RedirectToLocal(returnUrl);
                         }
@@ -539,7 +540,7 @@ namespace IdentitySample.Controllers
         }
 
         //
-        // GET: /Account/ForgotPassword
+        // GET: /Account/`Password
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
@@ -567,7 +568,7 @@ namespace IdentitySample.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code },
                     protocol: Request.Url.Scheme);
                 await
-                    UserManager.SendEmailAsync(model.Email, "Reset Password",
+                    UserManager.SendEmailAsync(user.Email, "Reset Password",
                         "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
                 ViewBag.Link = callbackUrl;
                 TempData["message"] = new MessageViewModel { Message = "An email with Password link has been sent.", IsUpdated = true };
