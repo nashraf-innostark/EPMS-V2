@@ -78,7 +78,7 @@
     <script type="text/javascript" src="~/Scripts/plugins/mfupload.js"></script>
     <script type="text/javascript" src="~/Scripts/common.js"></script>
 </head>
-    <body class="body-inner">
+    <body class="body-dashboard">
         
         <div class="btn-toolbar btn-mobile-menus">
             <button class="btn btn-main-menu"></button>
@@ -141,7 +141,7 @@
 
         <!-- Page content starts -->
         <div class="main-content">
-            @RenderBody()
+                @RenderBody()
         </div>
         @if (ViewBag.MessageVM != null)
         {
@@ -162,7 +162,7 @@
                     if ($('.breadcrumb-container').length) {
                         var scrollState = $(window).scrollTop();
                         if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
-                        else $('.nav-fixed-topright').removeClass('nav-released')
+                        else $('.nav-fixed-topright').removeClass('nav-released');
                     }
                 });
                 $('.user-sub-menu-container').on('click', function () {
@@ -188,6 +188,8 @@
                     }
                 });
             });
+
+
             $(function () {
 
                 $(document).on('scroll', function () {
