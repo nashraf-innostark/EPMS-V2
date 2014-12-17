@@ -26,7 +26,8 @@
     <!-- Page heading -->
     <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
+        <h2><small>@ViewBag.Title</small></h2>
+        <img class="employeeImg" src="@Url.Content(ViewBag.FilePath)" alt="user" />
     </header>
     <!--Notifications begin-->
     @Html.Partial("_Alert")
