@@ -1,125 +1,100 @@
-﻿@*@model IdentitySample.Models.RegisterViewModel*@
-@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
+﻿@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
     ViewBag.Title = "Register User";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .select2-choices {
-        margin-top: -7px !important;
-        width: 108% !important;
-        margin-left: -12px !important;
-    }
-</style>
-
-<link rel="stylesheet" type="text/css" href="~/Scripts/App/select2/select2.css" />
+@*<link rel="stylesheet" type="text/css" href="~/Scripts/App/select2/select2.css" />*@
 <script type="text/javascript" src="~/Scripts/App/select2/select2.js"></script>
-<div class="mainbar">
 
-    <!-- Page heading -->
-    <div class="page-head">
-        <h2 class="pull-left">Register New User</h2>
+<div class="">
 
-        <div class="clearfix"></div>
+    @using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
 
-
-        <div class="clearfix"></div>
-
-    </div>
-    <!-- Page heading ends -->
-    <!-- Matter -->
-
-    <div class="matter">
-        <div class="container">
-            <!-- Dashboard Graph starts -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget">
-                        <div class="widget-head">
-                            <div class="pull-left"> User Info</div>
-                            <div class="widget-icons pull-right">
-                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
-
-                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="widget-content">
-                            <div class="padd">
-
-                                @using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                                {
-                                    @Html.AntiForgeryToken()
-
-                                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-                                    @Html.HiddenFor(m => m.UserId)
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Username</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", @class = "form-control textAlignLeft", placeholder = "Enter Username" })
-                                            @Html.ValidationMessageFor(m => m.UserName)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Email</label>
-                                        <div class="col-lg-10">
-                                            @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", @class = "form-control textAlignLeft", placeholder = "Enter Email", @readonly = (@Model == null || string.IsNullOrEmpty(@Model.UserId)) ? false : true })
-                                            @Html.ValidationMessageFor(m => m.Email)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Role</label>
-                                        <div class="col-lg-10" dir="ltr">
-                                            @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"),"Select Role" , new { @class = "form-control textAlignLeft" })
-                                            @Html.ValidationMessageFor(m => m.SelectedRole)
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 control-label textAlignLeft">Employee</label>
-                                        <div class="col-lg-10">
-                                            @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullName"), "Select Employee", new { @class = "input-large form-control select2me" })
-                                            @Html.ValidationMessageFor(m => m.SelectedEmployee)
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">
-                                        <label class="col-lg-2 control-label textAlignLeft">Password</label>
-                                        <div class="col-lg-10">
-                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password" })
-                                            @Html.ValidationMessageFor(m => m.Password)
-                                        </div>
-                                    </div>
-                                    <div class="form-group" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">
-                                        <label class="col-lg-2 control-label textAlignLeft">Confirm Password</label>
-                                        <div class="col-lg-10">
-                                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password" })
-                                            @Html.ValidationMessageFor(m => m.ConfirmPassword)
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-lg-6">
-                                            <button id="signupuser" type="submit" class="btn btn-success btn-block FontSize16">Save</button>
-                                        </div>
-                                        <a href="RegisterLV">
-                                            <div class="col-lg-6">
-                                                <button id="signupuser" type="button" class="btn btn-primary btn-block FontSize16">Cancel</button>
-                                            </div>
-                                        </a>
-                                    </div>
-                                }
-
-                            </div>
-                        </div>
-
-                    </div>
-
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        @Html.HiddenFor(m => m.UserId)
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="UserName">Username</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Matter ends -->
-
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="useremail">Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = " useremail ", placeholder = "Enter Email", @readonly = (@Model != null && !string.IsNullOrEmpty(@Model.UserId)) })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        if (Model != null)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="roleId">Role</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { id = "roleId" })
+                        @Html.ValidationMessageFor(m => m.SelectedRole, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="employeeId">Employee</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullName"), "Select Employee", new { @class = "select2me", id = " employeeId " })
+                        @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="password">Password</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid" style="display: @(string.IsNullOrEmpty(@Model.UserId) ? "block" : "none")">
+                <div class="span3">
+                    <label class="control-label" for="confirmPassword">Confirm Password</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password", id = "confirmPassword" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="control-group row-fluid">
+            <div class="span12 span-inset">
+                <button id="signupuser" type="submit" class="btn btn-success">Save</button>
+                <a href="RegisterLV">
+                    <div class="col-lg-6">
+                        <button id="Cancel" type="button" class="btn btn-primary">Cancel</button>
+                    </div>
+                </a>
+            </div>
+        </div>
+    }
 </div>
 <script>
     $(function () {

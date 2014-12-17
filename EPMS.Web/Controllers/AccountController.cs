@@ -296,11 +296,11 @@ namespace IdentitySample.Controllers
 
 
         //
-        // POST: /Account/Register
+        // POST: /Account/Create
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
+        //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
         public async Task<ActionResult> Create(RegisterViewModel model)
         {
             if (!string.IsNullOrEmpty(model.UserId))
@@ -329,7 +329,7 @@ namespace IdentitySample.Controllers
             if (ModelState.IsValid)
             {
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
-
+                //user.EmployeeId = model.SelectedEmployee;
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
