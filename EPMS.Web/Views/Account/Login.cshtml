@@ -71,9 +71,9 @@
                     </div>
                     <div class="widget-foot">
                         @Html.ActionLink("Forgot Password?", "ForgotPassword")
-                        <span style="margin-left: 20px;">
+                        @*<span style="margin-left: 20px;">
                             @Html.ActionLink("Register", "Create")
-                        </span>
+                        </span>*@
                         
                     </div>
                 </div>
@@ -84,12 +84,11 @@
 
 
     </div>
-    <div class="col-md-4">
+    @*<div class="col-md-4">
         <section id="socialLoginForm">
-            @*@Html.Partial("_ExternalLoginsListPartial", new IdentitySample.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
             @Html.Partial("_ExternalLoginsListPartial")
         </section>
-    </div>
+    </div>*@
 </div>
 
 
@@ -99,7 +98,7 @@
 
 @*<style>
     body {
-        background-image: url("Content/Images/Embassy_Logo.png");
+        background-image: url("Images/photon/body_bck.jpg");
         background-size: 300px 300px;
         background-position: center;
     }

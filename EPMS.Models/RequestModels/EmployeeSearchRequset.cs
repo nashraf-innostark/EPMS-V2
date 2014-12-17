@@ -12,7 +12,7 @@ namespace EPMS.Models.RequestModels
         public string EmployeeMiddleName { get; set; }
         public string EmployeeLastName { get; set; }
         public string EmployeeImagePath { get; set; }
-        public long? JobTitleId { get; set; }
+        public long JobTitleId { get; set; }
         public string EmployeeJobId { get; set; }
         public string EmployeeMobileNum { get; set; }
         public string EmployeeLandlineNum { get; set; }
@@ -26,6 +26,7 @@ namespace EPMS.Models.RequestModels
         public string EmployeePassportNum { get; set; }
         public DateTime? EmployeePassportExpiryDt { get; set; }
         public string EmployeeDetails { get; set; }
+        public string EmployeeFullName { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

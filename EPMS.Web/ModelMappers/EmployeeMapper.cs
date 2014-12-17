@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using EPMS.Models.DomainModels;
 using AreasModel = EPMS.Web.Areas.HR.Models;
 
@@ -74,37 +75,35 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        public static AreasModel.Employee CreateFromWithImage(this Employee source, string UserName)
+        public static AreasModel.Employee CreateFromWithImage(this Employee source, string userName)
         {
             return new AreasModel.Employee
             {
-                //EmployeeId = source.EmployeeId,
-                //EmpFirstNameA = source.EmpFirstNameA ?? "",
-                //EmpFirstNameE = source.EmpFirstNameE ?? "",
-                //EmpMiddleNameA = source.EmpMiddleNameA ?? "",
-                //EmpMiddleNameE = source.EmpMiddleNameE ?? "",
-                //EmpLastNameA = source.EmpLastNameA ?? "",
-                //EmpLastNameE = source.EmpLastNameE ?? "",
-                //EmpImage = source.EmpImage == null ? "" : ImageUrl(UserName, source.EmpImage),
-                //EmpIqama = source.EmpIqama ?? 0,
-                //IqamaIssueDate = source.IqamaIssueDate ?? DateTime.Now,
-                //IqamaExpiryDate = source.IqamaExpiryDate ?? DateTime.Now,
-                //EmpDateOfBirth = source.EmpDateOfBirth.ToShortDateString(),
-                //EmpLandlineNumber = source.EmpLandlineNumber ?? "",
-                //EmpMaritalStatus = source.EmpMaritalStatus ?? "",
-                //EmpMobileNumber = source.EmpMobileNumber ?? "",
-                //JobId = source.JobId,
-                //Nationality = source.Nationality,
-                //PassportId = source.PassportId ?? 0,
-                //PassportExpiryDate = source.PassportExpiryDate ?? DateTime.Now,
-                //ExtraInfo = source.ExtraInfo,
-                //JobTitle = source.JobTitle.JobTitleNameE ?? "",
-                //Department = source.JobTitle.Department.DepartmentNameE ?? "",
-                //CreatedBy = source.CreatedBy ?? "",
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy ?? "",
-                //UpdatedDate = source.UpdatedDate,
-                //EmpFullName = source.EmpFirstNameE + " " + source.EmpMiddleNameE + " " + source.EmpLastNameE
+                EmployeeId = source.EmployeeId,
+                EmployeeFirstName = source.EmployeeFirstName ?? "",
+                EmployeeMiddleName = source.EmployeeMiddleName?? "",
+                EmployeeLastName = source.EmployeeLastName?? "",
+                ImagePath = source.EmployeeImagePath== null ? "" : ImageUrl(userName, source.EmployeeImagePath),
+                EmployeeIqama = source.EmployeeIqama?? 0,
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt ?? DateTime.Now,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt ?? DateTime.Now,
+                EmployeeDOB = source.EmployeeDOB,
+                EmpDateOfBirthArabic = source.EmpDateOfBirthArabic,
+                EmployeeLandlineNum = source.EmployeeLandlineNum?? "",
+                MaritalStatus = source.MaritalStatus,
+                EmployeeMobileNum = source.EmployeeMobileNum?? "",
+                JobTitleId = source.JobTitleId,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeePassportNum = source.EmployeePassportNum ?? "",
+                EmployeePassportExpiryDt = source.EmployeePassportExpiryDt ?? DateTime.Now,
+                EmployeeDetails = source.EmployeeDetails,
+                JobTitleName = source.JobTitle.JobTitleName ?? "",
+                DepartmentName = source.JobTitle.Department.DepartmentName ?? "",
+                RecCreatedBy = source.RecCreatedBy ?? "",
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                EmployeeFullName = source.EmployeeFirstName + " " + source.EmployeeMiddleName + " " + source.EmployeeLastName
             };
 
         }

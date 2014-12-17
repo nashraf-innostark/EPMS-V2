@@ -165,6 +165,7 @@
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -1303,6 +1304,7 @@
     <Content Include="Areas\PMS\Views\web.config" />
     <Content Include="Areas\Notification\Views\web.config" />
     <Content Include="Images\photon\entypo.eot" />
+    <Content Include="Areas\HR\Views\Employee\Employees.cshtml" />
     <Content Include="Images\photon\entypo.ttf" />
     <Content Include="Images\photon\entypo.woff" />
     <Content Include="Images\photon\iconic_stroke.eot" />
@@ -1726,7 +1728,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\HR\Views\Department\" />
-    <Folder Include="Areas\HR\Views\Employee\" />
     <Folder Include="Areas\HR\Views\JobTitle\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />

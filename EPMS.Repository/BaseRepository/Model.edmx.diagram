@@ -33,6 +33,7 @@
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
+        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

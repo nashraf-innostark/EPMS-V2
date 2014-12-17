@@ -48,6 +48,8 @@ namespace EPMS.Web.Areas.HR.Models
         public DateTime? EmployeePassportExpiryDt { get; set; }
         public string EmployeeDetails { get; set; }
         public string EmployeeFullName { get; set; }
+        public string JobTitleName { get; set; }
+        public string DepartmentName { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
