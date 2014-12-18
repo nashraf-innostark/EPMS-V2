@@ -1,6 +1,5 @@
 ﻿using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
-using AreasModel=EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -15,9 +14,9 @@ namespace EPMS.Web.ModelMappers
              };
         }
 
-        public static AreasModel.JobTitle CreateFrom(this DomainModels.JobTitle source)
+        public static Models.JobTitle CreateFrom(this DomainModels.JobTitle source)
         {
-            return new AreasModel.JobTitle
+            return new Models.JobTitle
             {
                 //JobId = source.JobId,
                 //JobTitleNameE = source.JobTitleNameE,
@@ -34,7 +33,7 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        public static DomainModels.JobTitle CreateFrom(this AreasModel.JobTitle source)
+        public static DomainModels.JobTitle CreateFrom(this Models.JobTitle source)
         {
             return new DomainModels.JobTitle
             {

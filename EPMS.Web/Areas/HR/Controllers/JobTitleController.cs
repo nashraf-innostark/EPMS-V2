@@ -8,7 +8,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobTitle;
-using EPMS.Web.Areas.HR.Models;
+using EPMS.Web.Models;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
