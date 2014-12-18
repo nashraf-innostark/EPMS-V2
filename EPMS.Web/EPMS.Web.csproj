@@ -280,9 +280,11 @@
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
+    <Compile Include="Models\EmployeeRequest.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitleAndDepartment.cs" />
     <Compile Include="Models\JobTitleDropDown.cs" />
+    <Compile Include="Models\RequestDetail.cs" />
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\ESDS.Designer.cs">

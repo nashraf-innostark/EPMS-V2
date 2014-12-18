@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="0.75" PointY="13.125" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="9.75" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="6.375" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="3" PointY="9.875" />
         <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="7.75" PointY="1.375" />
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="0.75" PointY="6" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="3" PointY="15.25" />
@@ -22,9 +21,6 @@
         <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="5.25" PointY="14.75" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
         <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" />
@@ -32,8 +28,12 @@
         <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
-        <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
         <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="8" PointY="13.25" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
+        <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

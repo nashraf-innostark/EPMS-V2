@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web;
 using EPMS.Models.DomainModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EPMS.Models.IdentityModels.ViewModels
 {
@@ -120,16 +117,20 @@ namespace EPMS.Models.IdentityModels.ViewModels
     }
     public class ProfileViewModel
     {
-        [Required]
         [Display(Name = "User name")]
-        [StringLength(100, ErrorMessage = "UserName is required")]
+        [StringLength(100, ErrorMessage = "User Name is required")]
         public string UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Display(Name = "Photo")]
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
+
+        [StringLength(200, ErrorMessage = "Address length should not exceed 200 characters.")]
         public string Address { get; set; }
     }
 }
