@@ -4,7 +4,6 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web.Http;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
@@ -13,7 +12,7 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
-using EPMS.Web.Areas.HR.Models;
+using EPMS.Web.Models;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
