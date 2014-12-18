@@ -4,154 +4,118 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
 
 
-    <!-- Navigation Bar -->
-    <div class="breadcrumb-container">
-        <ul class="xbreadcrumbs">
-            <li>
-                <a href="dashboard-En.html">
-                    <i class="icon-photon home"></i>
-                </a>
-            </li>
-            <li class="current">
-                <a href="javascript:;">@ViewBag.Title</a>
-
-
-            </li>
-        </ul>
-    </div>
-    <!-- Page heading -->
-    <header>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
     <i class="icon-big-notepad"></i>
-        <h2><small>@ViewBag.Title</small></h2>
-        <img class="employeeImg" src='@Url.Content(ViewBag.FilePath)' alt="user" />
-    </header>
-    <!--Notifications begin-->
-    @Html.Partial("_Alert")
-    
-        <!-- Form starts.  -->
-        @using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-        {
-            <div class="container-fluid">
-                @*<div class="row">
-                        <div class="col-md-12">
-                            <div class="widget">
-                                <div class="widget-head">
-                                    <div class="pull-left"> You're logged in as <strong>@User.Identity.GetUserName()</strong></div>
-                                    <div class="widget-icons pull-right">
-                                        <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+    <h2><small>@ViewBag.Title</small></h2>
+    <img class="employeeImg" src='@Url.Content(ViewBag.FilePath)' alt="user" />
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
 
-                                        <a href="#" class="wclose"><i class="fa fa-times"></i></a>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="widget-content">
-                                    <div class="padd">
+<!-- Form starts.  -->
+@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div class="widget">
+                        <div class="widget-head">
+                            <div class="pull-left"> You're logged in as <strong>@User.Identity.GetUserName()</strong></div>
+                            <div class="widget-icons pull-right">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
 
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd">
 
-                                    </div>
-                                </div>
 
                             </div>
+                        </div>
 
-                        </div>
-                    </div>*@
-                @Html.AntiForgeryToken()
+                    </div>
 
-                @Html.ValidationSummary(true)
-                <!--Input Field begin-->
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label" for="inputField">User Name</label>
-                    </div>
-                    <div class="span9">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.UserName, new { @readonly="readonly", @placeholder = "First Name" })
-                            @Html.ValidationMessageFor(m => m.UserName)
-                        </div>
-                    </div>
                 </div>
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label" for="Email">Email</label>
-                    </div>
-                    <div class="span9">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.Email)
-                            @Html.ValidationMessageFor(m => m.Email)
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label" for="Address">Address</label>
-                    </div>
-                    <div class="span9">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.Address)
-                            @Html.ValidationMessageFor(m => m.Address)
-                        </div>
-                    </div>
-                </div>
-                <!--Drag And Drop Upload begin-->
-                <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label" for="inputField">
-                            Photo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
-                        </label>
-                    </div>
-                    <div class="span9 row-fluid">
-                        <div class="upload-boxes row-fluid">
-                            <div class="span3" id="upload"></div>
-                            <div class="span9" id="uploaded"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--Drag And Drop Upload end-->
-                <div class="control-group row-fluid">
-                    <div class="span12 span-inset">
-                        <button type="submit" class="btn">Update</button>
-                    </div>
+            </div>*@
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true)
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">User Name</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.UserName, new { @readonly = "readonly", @placeholder = "First Name" })
+                    @Html.ValidationMessageFor(m => m.UserName)
                 </div>
             </div>
-        }
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Email">Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Email)
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Address">Address</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Address)
+                    @Html.ValidationMessageFor(m => m.Address)
+                </div>
+            </div>
+        </div>
+        <!--Drag And Drop Upload begin-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">
+                    Photo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+        </div>
+        <!--Drag And Drop Upload end-->
+        <div class="control-group row-fluid">
+            <div class="span12 span-inset">
+                <button type="submit" class="btn">Update</button>
+            </div>
+        </div>
+    </div>
+}
 
-
-
-
-
-    <link rel="stylesheet" href="~/Content/css/zebra.css" type="text/css" media="screen">
-    <script type="text/javascript" src="~/Scripts/App/zebra_datepicker.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("#validation_form").validate({
-                errorElement: "span",
-                errorClass: "error",
-                onclick: true,
-                rules: {
-                    "req": {
-                        required: true
-                    },
-                    "numbers": {
-                        required: false,
-                        digits: true
-                    },
-                    "email": {
-                        email: true
-                    },
-                    "url": {
-                        url: true
-                    }, 
-                    "date": {
-                        date: true
-                    }
-                    }
-                });
-
-            $('#DateOfBirth').mask('99/99/9999');
-            $("#DateOfBirth").datepicker();
-        });
+<script>
         $().ready(function() {
 
             var errors = "";
@@ -195,4 +159,4 @@
                 }
             });
         });
-    </script>   
+</script>

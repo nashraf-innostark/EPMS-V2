@@ -125,7 +125,7 @@
     </Compile>
     <Compile Include="Identity\IdentityOperation.cs" />
     <Compile Include="Services\DepartmentService.cs" />
-    <Compile Include="Services\EmployeeRequestRepository.cs" />
+    <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\JobTitleService.cs" />
     <Compile Include="Services\LoggerService.cs" />

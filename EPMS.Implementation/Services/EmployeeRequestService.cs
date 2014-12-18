@@ -5,7 +5,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Implementation.Services
 {
-    public class EmployeeRequestRepository:IEmployeeRequestService
+    public class EmployeeRequestService:IEmployeeRequestService
     {
         private readonly IEmployeeRequestRepository repository;
         #region Constructor
@@ -13,7 +13,7 @@ namespace EPMS.Implementation.Services
         /// Constructor
         /// </summary>
         /// <param name="xRepository"></param>
-        public EmployeeRequestRepository(IEmployeeRequestRepository xRepository)
+        public EmployeeRequestService(IEmployeeRequestRepository xRepository)
         {
             repository = xRepository;
         }

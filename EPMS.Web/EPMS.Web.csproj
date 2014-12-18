@@ -244,6 +244,7 @@
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\HR\Controllers\JobTitleController.cs" />
+    <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -331,6 +333,7 @@
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\Request\EmployeeRequestViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -1412,6 +1415,7 @@
     <Content Include="Content\plugins\uniform.default.less" />
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="Areas\HR\Views\Request\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
