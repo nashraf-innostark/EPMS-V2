@@ -1410,6 +1410,7 @@
     <Content Include="Content\plugins\uniform.default.less" />
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
@@ -1734,6 +1735,7 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
+    <Folder Include="Images\Employee\" />
     <Folder Include="Images\HomeSlider\" />
     <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />
