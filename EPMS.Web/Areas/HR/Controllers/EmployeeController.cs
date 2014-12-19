@@ -99,11 +99,11 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        public ActionResult AddEdit(long? id)
+        public ActionResult Create(long? id)
         {
             EmployeeViewModel viewModel = new EmployeeViewModel();
             JobTitleSearchRequest jobTitleSearchRequest = new JobTitleSearchRequest();
-            viewModel.JobTitleList = JobTitleService.GetAllJobTitle(jobTitleSearchRequest).JobTitles;
+            viewModel.JobTitleList = JobTitleService.GetAll();
             viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
             if (id != null)
             {
@@ -118,7 +118,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
         [System.Web.Mvc.HttpPost]
-        public ActionResult AddEdit(EmployeeViewModel viewModel)
+        public ActionResult Create(EmployeeViewModel viewModel)
         {
             var filePath = Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/");
             if (ModelState.IsValid)
@@ -148,7 +148,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         if (EmployeeService.UpdateEmployee(employeeToUpdate))
                         {
                             TempData["message"] = new MessageViewModel { Message = "Employee has been Updated", IsUpdated = true };
-                            return RedirectToAction("EmployeeLV");
+                            return RedirectToAction("Employees");
                         }
                     }
                     #endregion
@@ -165,7 +165,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         {
                             TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
                             viewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
-                            return RedirectToAction("EmployeeLV");
+                            return RedirectToAction("Employees");
                         }
                     }
 
