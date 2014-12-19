@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -118,6 +118,7 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="EmployeeRequests">
           <Key>
@@ -352,6 +353,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="*" />
@@ -465,6 +478,10 @@
             <End Role="Menu" EntitySet="Menu" />
             <End Role="MenuRight" EntitySet="MenuRight" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitle" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -486,83 +503,11 @@
             <End Role="RequestDetails" EntitySet="RequestDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="EPMSEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Allowances" EntityType="EPMSModel.Allowance" />
-          <EntitySet Name="AspNetRoles" EntityType="EPMSModel.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="EPMSModel.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="EPMSModel.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="EPMSModel.AspNetUser" />
-          <EntitySet Name="Departments" EntityType="EPMSModel.Department" />
-          <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
-          <EntitySet Name="EmployeeRequests" EntityType="EPMSModel.EmployeeRequest" />
-          <EntitySet Name="JobApplicants" EntityType="EPMSModel.JobApplicant" />
-          <EntitySet Name="JobOffereds" EntityType="EPMSModel.JobOffered" />
-          <EntitySet Name="JobTitles" EntityType="EPMSModel.JobTitle" />
-          <EntitySet Name="Menus" EntityType="EPMSModel.Menu" />
-          <EntitySet Name="MenuRights" EntityType="EPMSModel.MenuRight" />
-          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
-          <EntitySet Name="RequestDetails" EntityType="EPMSModel.RequestDetail" />
-          <AssociationSet Name="FK_Allowance_Employee" Association="EPMSModel.FK_Allowance_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Allowance" EntitySet="Allowances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="MenuRight" EntitySet="MenuRights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Employee" Association="EPMSModel.FK_AspNetUsers_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobTitle_Department" Association="EPMSModel.FK_JobTitle_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="JobTitle" EntitySet="JobTitles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="EPMSModel.FK_EmployeeRequests_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="EPMSModel.FK_RequestDetails_EmployeeRequests">
-            <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
-            <End Role="RequestDetail" EntitySet="RequestDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="EPMSModel.FK_JobApplicants_JobOffered">
-            <End Role="JobOffered" EntitySet="JobOffereds" />
-            <End Role="JobApplicant" EntitySet="JobApplicants" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobOffered_JobTitle" Association="EPMSModel.FK_JobOffered_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="JobOffered" EntitySet="JobOffereds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="Menu1" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="MenuRight" EntitySet="MenuRights" />
-          </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="EPMSModel.AspNetUserRoles">
-            <End Role="AspNetRole" EntitySet="AspNetRoles" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="EPMSModel.FK_Employee_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -584,26 +529,26 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MenuRights" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="AspNetRole" ToRole="MenuRight" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="AspNetRoles" ToRole="MenuRight" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -611,16 +556,16 @@
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -629,36 +574,37 @@
           <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmployeeId" Type="Int64" />
           <Property Name="CustomerId" Type="Int64" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
-          <NavigationProperty Name="AspNetRoles" Relationship="EPMSModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
           </Key>
           <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DepartmentDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobTitles" Relationship="EPMSModel.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
+          <NavigationProperty Name="JobTitles" Relationship="Self.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeFirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeFirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmployeeMiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmployeeImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleId" Type="Int64" />
           <Property Name="EmployeeJobId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -677,10 +623,11 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Allowances" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
-          <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
-          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Allowances" Relationship="Self.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUsers" />
+          <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <NavigationProperty Name="EmployeeRequests" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequests" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -695,25 +642,25 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
-          <NavigationProperty Name="RequestDetails" Relationship="EPMSModel.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequest" ToRole="RequestDetail" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="EmployeeRequests" ToRole="Employee" />
+          <NavigationProperty Name="RequestDetails" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequests" ToRole="RequestDetails" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
             <PropertyRef Name="ApplicantId" />
           </Key>
           <Property Name="ApplicantId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApplicantName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantMobile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApplicantMobile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ApplicantEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="JobOfferedId" Type="Int64" Nullable="false" />
           <Property Name="ApplicantAge" Type="Int32" />
-          <Property Name="ApplicantCvPath" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantCvPath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobOffered" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
+          <NavigationProperty Name="JobOffered" Relationship="Self.FK_JobApplicants_JobOffered" FromRole="JobApplicants" ToRole="JobOffered" />
         </EntityType>
         <EntityType Name="JobOffered">
           <Key>
@@ -721,22 +668,22 @@
           </Key>
           <Property Name="JobOfferedId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="JobTitleId" Type="Int64" Nullable="false" />
-          <Property Name="JobDescription" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="JobDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ShowBasicSalary" Type="Boolean" Nullable="false" />
           <Property Name="IsOpen" Type="Boolean" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobApplicants" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
-          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
+          <NavigationProperty Name="JobApplicants" Relationship="Self.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicants" />
+          <NavigationProperty Name="JobTitle" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
             <PropertyRef Name="JobTitleId" />
           </Key>
           <Property Name="JobTitleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobTitleName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="JobTitleDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DepartmentId" Type="Int64" Nullable="false" />
           <Property Name="BasicSalary" Type="Double" />
@@ -744,9 +691,9 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Department" Relationship="EPMSModel.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
-          <NavigationProperty Name="JobOffereds" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
-          <NavigationProperty Name="Employees" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+          <NavigationProperty Name="JobOffereds" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -763,8 +710,8 @@
           <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
           <Property Name="ParentItemMenu" Type="Int32" />
           <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ParentItem" Relationship="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
-          <NavigationProperty Name="MenuRights" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
+          <NavigationProperty Name="ParentItem" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -773,15 +720,15 @@
           <Property Name="MenuRightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Menu_MenuId" Type="Int32" />
           <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetRole" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRole" />
-          <NavigationProperty Name="Menu" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
+          <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
             <PropertyRef Name="NotificationId" />
           </Key>
           <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NotificationName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NotificationCategory" Type="Int16" Nullable="false" />
           <Property Name="AlertTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NotificationTime" Type="DateTime" Precision="3" />
@@ -796,7 +743,7 @@
           </Key>
           <Property Name="RequestDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RequestId" Type="Int64" Nullable="false" />
-          <Property Name="RequestDesc" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RequestDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoanAmount" Type="Double" />
           <Property Name="LoanDate" Type="DateTime" Precision="0" />
           <Property Name="InstallmentAmount" Type="Double" />
@@ -810,11 +757,11 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeRequest" Relationship="EPMSModel.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetail" ToRole="EmployeeRequest" />
+          <NavigationProperty Name="EmployeeRequest" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetails" ToRole="EmployeeRequests" />
         </EntityType>
         <Association Name="FK_Allowance_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.Allowance" Role="Allowance" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
@@ -825,10 +772,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
-          <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="0..1" />
-          <End Type="EPMSModel.MenuRight" Role="MenuRight" Multiplicity="*" />
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="0..1" />
+          <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetRole">
+            <Principal Role="AspNetRoles">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="MenuRight">
@@ -837,48 +784,48 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="EPMSModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserClaim">
+            <Dependent Role="AspNetUserClaims">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="EPMSModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUser">
+            <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AspNetUserLogin">
+            <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AspNetUsers_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
             </Principal>
-            <Dependent Role="AspNetUser">
+            <Dependent Role="AspNetUsers">
               <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_JobTitle_Department">
-          <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
-          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="*" />
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentId" />
@@ -888,45 +835,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.EmployeeRequest" Role="EmployeeRequest" Multiplicity="*" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeRequests" Type="Self.EmployeeRequest" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
             </Principal>
-            <Dependent Role="EmployeeRequest">
+            <Dependent Role="EmployeeRequests">
               <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RequestDetails_EmployeeRequests">
-          <End Type="EPMSModel.EmployeeRequest" Role="EmployeeRequest" Multiplicity="1" />
-          <End Type="EPMSModel.RequestDetail" Role="RequestDetail" Multiplicity="*" />
+          <End Role="EmployeeRequests" Type="Self.EmployeeRequest" Multiplicity="1" />
+          <End Role="RequestDetails" Type="Self.RequestDetail" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EmployeeRequest">
+            <Principal Role="EmployeeRequests">
               <PropertyRef Name="RequestId" />
             </Principal>
-            <Dependent Role="RequestDetail">
+            <Dependent Role="RequestDetails">
               <PropertyRef Name="RequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_JobApplicants_JobOffered">
-          <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="1" />
-          <End Type="EPMSModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
+          <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="1" />
+          <End Role="JobApplicants" Type="Self.JobApplicant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="JobOffered">
               <PropertyRef Name="JobOfferedId" />
             </Principal>
-            <Dependent Role="JobApplicant">
+            <Dependent Role="JobApplicants">
               <PropertyRef Name="JobOfferedId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_JobOffered_JobTitle">
-          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="1" />
-          <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="*" />
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+          <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="JobTitle">
               <PropertyRef Name="JobTitleId" />
@@ -937,8 +896,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
-          <End Type="EPMSModel.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="EPMSModel.Menu" Role="Menu1" Multiplicity="*" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
               <PropertyRef Name="MenuId" />
@@ -949,8 +908,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
-          <End Type="EPMSModel.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="EPMSModel.MenuRight" Role="MenuRight" Multiplicity="*" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
+          <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
               <PropertyRef Name="MenuId" />
@@ -961,22 +920,83 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="AspNetUserRoles">
-          <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="0..1" />
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+        <EntityContainer Name="EPMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Allowances" EntityType="Self.Allowance" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequest" />
+          <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
+          <EntitySet Name="JobOffereds" EntityType="Self.JobOffered" />
+          <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
+          <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
+          <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Allowance" EntitySet="Allowances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="MenuRight" EntitySet="MenuRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="JobTitle" EntitySet="JobTitles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
+            <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
+            <End Role="RequestDetails" EntitySet="RequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="Self.FK_JobApplicants_JobOffered">
+            <End Role="JobOffered" EntitySet="JobOffereds" />
+            <End Role="JobApplicants" EntitySet="JobApplicants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOffered_JobTitle" Association="Self.FK_JobOffered_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="JobOffered" EntitySet="JobOffereds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu1" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="MenuRight" EntitySet="MenuRights" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -985,244 +1005,246 @@
           <EntitySetMapping Name="Allowances">
             <EntityTypeMapping TypeName="EPMSModel.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="Allowance5" ColumnName="Allowance5" />
-                <ScalarProperty Name="AllowanceDesc5" ColumnName="AllowanceDesc5" />
-                <ScalarProperty Name="Allowance4" ColumnName="Allowance4" />
-                <ScalarProperty Name="AllowanceDesc4" ColumnName="AllowanceDesc4" />
-                <ScalarProperty Name="Allowance3" ColumnName="Allowance3" />
-                <ScalarProperty Name="AllowanceDesc3" ColumnName="AllowanceDesc3" />
-                <ScalarProperty Name="Allowance2" ColumnName="Allowance2" />
-                <ScalarProperty Name="AllowanceDesc2" ColumnName="AllowanceDesc2" />
-                <ScalarProperty Name="Allowance1" ColumnName="Allowance1" />
-                <ScalarProperty Name="AllowanceDesc1" ColumnName="AllowanceDesc1" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="AllowanceId" ColumnName="AllowanceId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="AllowanceDesc1" ColumnName="AllowanceDesc1" />
+                <ScalarProperty Name="Allowance1" ColumnName="Allowance1" />
+                <ScalarProperty Name="AllowanceDesc2" ColumnName="AllowanceDesc2" />
+                <ScalarProperty Name="Allowance2" ColumnName="Allowance2" />
+                <ScalarProperty Name="AllowanceDesc3" ColumnName="AllowanceDesc3" />
+                <ScalarProperty Name="Allowance3" ColumnName="Allowance3" />
+                <ScalarProperty Name="AllowanceDesc4" ColumnName="AllowanceDesc4" />
+                <ScalarProperty Name="Allowance4" ColumnName="Allowance4" />
+                <ScalarProperty Name="AllowanceDesc5" ColumnName="AllowanceDesc5" />
+                <ScalarProperty Name="Allowance5" ColumnName="Allowance5" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="EPMSModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
             <EntityTypeMapping TypeName="EPMSModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
             <EntityTypeMapping TypeName="EPMSModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="EPMSModel.Department">
               <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="EPMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="EmployeeDetails" ColumnName="EmployeeDetails" />
-                <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
-                <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
-                <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
-                <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
-                <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
-                <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
-                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
-                <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
-                <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
-                <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
-                <ScalarProperty Name="EmployeeMiddleName" ColumnName="EmployeeMiddleName" />
-                <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
+                <ScalarProperty Name="EmployeeMiddleName" ColumnName="EmployeeMiddleName" />
+                <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+                <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
+                <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
+                <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
+                <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
+                <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
+                <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
+                <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
+                <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
+                <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
+                <ScalarProperty Name="EmployeeDetails" ColumnName="EmployeeDetails" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRequests">
             <EntityTypeMapping TypeName="EPMSModel.EmployeeRequest">
               <MappingFragment StoreEntitySet="EmployeeRequests">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="IsMonetary" ColumnName="IsMonetary" />
-                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-                <ScalarProperty Name="RequestTopic" ColumnName="RequestTopic" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="RequestTopic" ColumnName="RequestTopic" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="IsMonetary" ColumnName="IsMonetary" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobApplicants">
             <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicants">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="ApplicantCvPath" ColumnName="ApplicantCvPath" />
-                <ScalarProperty Name="ApplicantAge" ColumnName="ApplicantAge" />
-                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
-                <ScalarProperty Name="ApplicantEmail" ColumnName="ApplicantEmail" />
-                <ScalarProperty Name="ApplicantMobile" ColumnName="ApplicantMobile" />
-                <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+                <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
+                <ScalarProperty Name="ApplicantMobile" ColumnName="ApplicantMobile" />
+                <ScalarProperty Name="ApplicantEmail" ColumnName="ApplicantEmail" />
+                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
+                <ScalarProperty Name="ApplicantAge" ColumnName="ApplicantAge" />
+                <ScalarProperty Name="ApplicantCvPath" ColumnName="ApplicantCvPath" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobOffereds">
             <EntityTypeMapping TypeName="EPMSModel.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
-                <ScalarProperty Name="ShowBasicSalary" ColumnName="ShowBasicSalary" />
-                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="JobDescription" ColumnName="JobDescription" />
+                <ScalarProperty Name="ShowBasicSalary" ColumnName="ShowBasicSalary" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitles">
             <EntityTypeMapping TypeName="EPMSModel.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="JobTitleDesc" ColumnName="JobTitleDesc" />
-                <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
+                <ScalarProperty Name="JobTitleDesc" ColumnName="JobTitleDesc" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="EPMSModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
-                <ScalarProperty Name="ParentItemMenu" ColumnName="ParentItem_MenuId" />
-                <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
-                <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
-                <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
-                <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
-                <ScalarProperty Name="MenuTargetController" ColumnName="MenuTargetController" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
-                <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
+                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="MenuTargetController" ColumnName="MenuTargetController" />
+                <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
+                <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
+                <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
+                <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
+                <ScalarProperty Name="ParentItemMenu" ColumnName="ParentItem_MenuId" />
+                <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
             <EntityTypeMapping TypeName="EPMSModel.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
-                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
-                <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
                 <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
+                <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="EPMSModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="IsNotified" ColumnName="IsNotified" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
-                <ScalarProperty Name="AlertTime" ColumnName="AlertTime" />
-                <ScalarProperty Name="NotificationCategory" ColumnName="NotificationCategory" />
-                <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
+                <ScalarProperty Name="NotificationCategory" ColumnName="NotificationCategory" />
+                <ScalarProperty Name="AlertTime" ColumnName="AlertTime" />
+                <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsNotified" ColumnName="IsNotified" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestDetails">
             <EntityTypeMapping TypeName="EPMSModel.RequestDetail">
               <MappingFragment StoreEntitySet="RequestDetails">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
-                <ScalarProperty Name="NumberOfMonths" ColumnName="NumberOfMonths" />
-                <ScalarProperty Name="LastInstallmentDate" ColumnName="LastInstallmentDate" />
-                <ScalarProperty Name="FirstInstallmentDate" ColumnName="FirstInstallmentDate" />
-                <ScalarProperty Name="InstallmentAmount" ColumnName="InstallmentAmount" />
-                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
-                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
-                <ScalarProperty Name="RequestDesc" ColumnName="RequestDesc" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="RequestDesc" ColumnName="RequestDesc" />
+                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="InstallmentAmount" ColumnName="InstallmentAmount" />
+                <ScalarProperty Name="FirstInstallmentDate" ColumnName="FirstInstallmentDate" />
+                <ScalarProperty Name="LastInstallmentDate" ColumnName="LastInstallmentDate" />
+                <ScalarProperty Name="NumberOfMonths" ColumnName="NumberOfMonths" />
+                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="EPMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
+            <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

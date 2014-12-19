@@ -326,7 +326,7 @@ namespace IdentitySample.Controllers
 
                 //UserManager.RemoveFromRoleAsync(User.Id, roleName);
 
-                return RedirectToAction("RegisterLV");
+                return RedirectToAction("Users");
             }
 
             // Add new User
@@ -334,6 +334,7 @@ namespace IdentitySample.Controllers
             {
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
                 user.EmployeeId = model.SelectedEmployee;
+                user.EmailConfirmed = true;
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -345,16 +346,8 @@ namespace IdentitySample.Controllers
                     UserManager.AddToRole(user.Id, roleName);
                     //UserManager.AddToRoleAsync(user.Id, roleName);
 
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-                        protocol: Request.Url.Scheme);
-                    await
-                        UserManager.SendEmailAsync(model.Email, "Confirm your account",
-                            "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
-                            "\">link</a><br>Your Password is:" + model.Password);
-                    ViewBag.Link = callbackUrl;
-                    TempData["message"] = new MessageViewModel { Message = "Registeration Confirmation email send to the user.", IsSaved = true };
-                    return RedirectToAction("RegisterLV");
+                    TempData["message"] = new MessageViewModel { Message = "User has been Registered", IsSaved = true };
+                    return RedirectToAction("Users");
                 }
                 AddErrors(result);
                 //model.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
@@ -682,10 +675,12 @@ namespace IdentitySample.Controllers
             {
                 Email = result.Email,
                 UserName = result.UserName,
+                Address = result.Address,
                 ImageName = (result.ImageName != null && result.ImageName != string.Empty) ? result.ImageName : string.Empty,
                 ImagePath = ConfigurationManager.AppSettings["ProfileImage"].ToString() + result.ImageName
             };
             ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(ProfileViewModel);
         }
 
@@ -701,14 +696,14 @@ namespace IdentitySample.Controllers
             {
                 result.Email = profileViewModel.Email;
                 result.Address = profileViewModel.Address;
-                var updationResult = UserManager.UpdateAsync(result);
-                ViewBag.MessageVM = new MessageViewModel { Message = "Profile has been updated", IsUpdated = true };
+                var updationResult = UserManager.Update(result);
                 updateSessionValues(result);
+                TempData["message"] = new MessageViewModel { Message = "Profile has been updated", IsUpdated = true };
             }
             catch (Exception e)
             {
             }
-            return View(profileViewModel);
+            return RedirectToAction("Profile");
         }
 
         public ActionResult UploadUserPhoto()
@@ -716,7 +711,7 @@ namespace IdentitySample.Controllers
             HttpPostedFileBase userPhoto = Request.Files[0];
             try
             {
-                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
                 string savedFileName = "";
                 //Save image to Folder
                 if ((userPhoto != null))
@@ -726,7 +721,7 @@ namespace IdentitySample.Controllers
                     savedFileName = Path.Combine(filePathOriginal, filename);
                     userPhoto.SaveAs(savedFileName);
                     result.ImageName = filename;
-                    var updationResult = UserManager.UpdateAsync(result);
+                    var updationResult = UserManager.Update(result);
                 }
             }
             catch (Exception exp)
@@ -817,7 +812,7 @@ namespace IdentitySample.Controllers
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
-            Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
+            //Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
             Session["LoginID"] = result.Id;
             Session["RoleName"] = role;
         }

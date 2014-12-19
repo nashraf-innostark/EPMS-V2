@@ -11,6 +11,7 @@ namespace EPMS.Web.ModelMappers
              {
                  JobTitleId = source.JobTitleId,
                  JobTitleName = source.JobTitleName,
+                 BasicSalary = source.BasicSalary ?? 0,
              };
         }
 

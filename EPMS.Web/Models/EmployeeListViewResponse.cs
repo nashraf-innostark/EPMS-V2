@@ -2,9 +2,6 @@
 
 namespace EPMS.Web.Models
 {
-    /// <summary>
-    /// Employee List View Response
-    /// </summary>
     public class EmployeeListViewResponse
     {
         /// <summary>

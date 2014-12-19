@@ -1,0 +1,111 @@
+﻿@model  EPMS.Web.ViewModels.Request.EmployeeRequestViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Request/Index">
+                Requests List
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+<!-- Form starts.  -->
+@using (Html.BeginForm("Create", "Request", FormMethod.Post, new {@class = "form-horizontal", role = "form", enctype = "multipart/form-data"}))
+{
+    <div class="container-fluid">
+
+        <div class="form-legend" id="Input_Field">Input Fields</div>
+
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">Name</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeName, new { @readonly = "readonly"})
+                    @Html.ValidationMessageFor(model => model.EmployeeName)
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="department">Employee ID</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeRequest.EmployeeId, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.EmployeeId)
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="jobTitle">Department</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeDepartment, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeDepartment)
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Topic">Topic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestTopic)
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestTopic)
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Description">Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestDetails)
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestDetails)
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+
+        </div>
+
+    </div>
+}
