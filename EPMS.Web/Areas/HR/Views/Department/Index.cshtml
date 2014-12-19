@@ -33,8 +33,8 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Case Status Name</th>
-                                <th>Case Status Description</th>
+                                <th>Department Name</th>
+                                <th>Department Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,25 +56,25 @@
 
 <script>
     $(document).ready(function () {
-        $('#DepartmentList').dataTable({
-            "sPaginationType": "full_numbers",
-            "bFilter": true,
-             "aoColumnDefs": [
-                {
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-        });
-        //$('#UserList').dataTable({
+        //$('#DepartmentList').dataTable({
         //    "sPaginationType": "bootstrap",
-        //    "fnInitComplete": function () {
-        //        $(".dataTables_wrapper select").select2({
-        //            dropdownCssClass: 'noSearch'
-        //        });
-        //    }
+        //    "bFilter": true,
+        //     "aoColumnDefs": [
+        //        {
+        //            "targets": [0],
+        //            "visible": false,
+        //            "searchable": false
+        //        }
+        //    ],
         //});
+        $('#DepartmentList').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
         $("#simpleSelectBox").select2({
             dropdownCssClass: 'noSearch'
         });
