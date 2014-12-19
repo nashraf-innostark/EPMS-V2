@@ -54,10 +54,42 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
+        var siteUrl = $('#siteURL').val();
+        var oTable = $('#employeeTable').dataTable({
+            "bProcessing": true,
+            "bServerSide": true,
+            "columns": [
+                { "mData": "EmployeeImagePath" },
+                { "mData": "EmployeeFullName" },
+                { "mData": "JobTitleId" },
+                { "mData": "JobTitleName" },
+                { "mData": "DepartmentName" }
+                ],
+            "fnServerData": function (sSource, aaData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": siteUrl + "/Employee/Employees",
+                    "data": aaData,
+                    "success": fnCallback,
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        alert(err.Message);
+                    }
+                });
+            }
+        });
+        
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
         //var oTable = $('#employeeTable').dataTable({
-        //    "bProcessing": true,
-        //    "bServerSide": true,
+        //    "iDisplayLength": 11,
+        //    "displayStart": start || 0,
+        //    "bFilter": false,
+        //    "bLengthChange": false,
+        //    "aaSorting": [sortBy],
         //    "columns": [
         //        { "data": "EmployeeImagePath" },
         //        { "data": "EmployeeFullName" },
@@ -71,70 +103,33 @@
 
         //        }
         //    ],
-        //    "fnServerData": function (sSource, aaData, fnCallback) {
-        //        $.ajax({
-        //            "dataType": 'json',
-        //            "type": "POST",
-        //            "url": siteUrl + "/Employee/Employees",
-        //            "data": aaData,
-        //            "success": fnCallback,
-        //            error: function (xhr, status, error) {
-        //                var err = eval("(" + xhr.responseText + ")");
-        //                alert(err.Message);
+        //    "processing": true,
+        //    "serverSide": true,
+        //    "ajax": {
+        //        url: siteUrl + "/Employee/Employees",
+        //        type: "POST",
+        //        dataType: "json",
+        //        error: callError,
+        //        data: function(params) {
+        //            params.PageNo = Math.ceil(params.start / params.length) + 1;
+        //            if (params.PageNo === 0) {
+        //                params.PageNo = 1;
         //            }
-        //        });
+        //            params.PageSize = params.length;
+        //            params.SortBy = params.order[0].column;
+        //            if (params.SortBy === 0) {
+        //                params.SortBy = 1;
+        //            }
+        //            params.IsAsc = params.order[0].dir === "asc";
+        //            params.EmplpoyeeId = $('#EmployeeId').val();
+        //            //params.EmpFirstNameE = $('#EmpFirstNameE').val();
+        //            //params.EmpMobileNumber = $('#EmpMobileNumber').val();
+        //            //params.JobId = $("#SearchRequest_JobId").val();
+        //            //params.departmentId = $("#Department_DepartmentId").val();
+
+        //        }
         //    }
         //});
-        var siteUrl = $('#siteURL').val();
-        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
-        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
-        var oTable = $('#employeeTable').dataTable({
-            "iDisplayLength": 11,
-            "displayStart": start || 0,
-            "bFilter": false,
-            "bLengthChange": false,
-            "aaSorting": [sortBy],
-            "columns": [
-                { "data": "EmployeeImagePath" },
-                { "data": "EmployeeFullName" },
-                { "data": "JobTitleId" },
-                { "data": "JobTitleName" },
-                { "data": "DepartmentName" },
-                {
-                    "orderable": false,
-                    "data": null,
-                    "defaultContent": '<div class="btn-group"><button type="button" id="edit" class="btn" style="margin-right: 2px;">Edit</button></div>'
-
-                }
-            ],
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                url: siteUrl + "/Employee/Employees",
-                type: "POST",
-                dataType: "json",
-                error: callError,
-                data: function(params) {
-                    params.PageNo = Math.ceil(params.start / params.length) + 1;
-                    if (params.PageNo === 0) {
-                        params.PageNo = 1;
-                    }
-                    params.PageSize = params.length;
-                    params.SortBy = params.order[0].column;
-                    if (params.SortBy === 0) {
-                        params.SortBy = 1;
-                    }
-                    params.IsAsc = params.order[0].dir === "asc";
-                    params.EmplpoyeeId = $('#EmployeeId').val();
-                    //params.EmpFirstNameE = $('#EmpFirstNameE').val();
-                    //params.EmpMobileNumber = $('#EmpMobileNumber').val();
-                    //params.JobId = $("#SearchRequest_JobId").val();
-                    //params.departmentId = $("#Department_DepartmentId").val();
-
-                }
-            }
-        });
 
         function callError() {
         }

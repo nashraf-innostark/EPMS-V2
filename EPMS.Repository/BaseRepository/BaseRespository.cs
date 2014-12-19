@@ -6,7 +6,6 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.BaseRepository

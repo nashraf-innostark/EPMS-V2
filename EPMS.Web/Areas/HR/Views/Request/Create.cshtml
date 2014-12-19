@@ -1,6 +1,14 @@
 ﻿@model  EPMS.Web.ViewModels.Request.EmployeeRequestViewModel
 @{
-    ViewBag.Title = "Create";
+    if (Model.EmployeeRequest.RequestId > 0)
+    {
+        ViewBag.Title = "Update Request";
+    }
+    else
+    {
+        ViewBag.Title = "Create Request";
+    }
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Navigation Bar -->
@@ -24,7 +32,7 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
+    <h2><small>@ViewBag.Title </small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -43,8 +51,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeName, new { @readonly = "readonly"})
-                    @Html.ValidationMessageFor(model => model.EmployeeName)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeFullName, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeFullName)
                 </div>
             </div>
         </div>
@@ -55,8 +63,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.EmployeeId, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.EmployeeId)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeId, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeId)
                 </div>
             </div>
         </div>
@@ -67,8 +75,8 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeDepartment, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeDepartment)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentName)
                 </div>
             </div>
 
@@ -92,12 +100,22 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestDetails)
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestDetails)
+                    @Html.TextBoxFor(model => model.EmployeeRequestDetail.RequestDesc)
+                    @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.RequestDesc)
                 </div>
             </div>
         </div>
-
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Description">Monetary</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.CheckBoxFor(model => model.EmployeeRequest.IsMonetary)
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.IsMonetary)
+                </div>
+            </div>
+        </div>
 
 
         <div class="control-group row-fluid">

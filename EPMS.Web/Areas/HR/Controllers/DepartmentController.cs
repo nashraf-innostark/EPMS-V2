@@ -46,9 +46,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
-        [HttpPost]
-
-        public ActionResult AddEdit(int? id)
+       public ActionResult AddEdit(int? id)
         {
             DepartmentViewModel viewModel = new DepartmentViewModel();
             if (id != null)

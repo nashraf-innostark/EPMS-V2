@@ -16,8 +16,7 @@ namespace EPMS.Web.ModelMappers
                RecCreatedBy = source.RecCreatedBy,
                RecCreatedDt = source.RecCreatedDt,
                RecLastUpdatedBy = source.RecLastUpdatedBy,
-               RecLastUpdatedDt = source.RecLastUpdatedDt,
-               Employee = source.Employee
+               RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
 
@@ -33,8 +32,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
-                Employee = source.Employee
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
     }
