@@ -46,7 +46,7 @@ namespace EPMS.Web.Controllers
                 AspNetUser result =
                     HttpContext.GetOwinContext()
                         .GetUserManager<ApplicationUserManager>()
-                        .FindByEmail(User.Identity.Name);
+                        .FindById(User.Identity.GetUserId());
                 string role =
                     HttpContext.GetOwinContext()
                         .Get<ApplicationRoleManager>()
@@ -57,7 +57,7 @@ namespace EPMS.Web.Controllers
 
                 menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
 
-                AspNetUser userResult = UserManager.FindByEmail(User.Identity.Name);
+                AspNetUser userResult = UserManager.FindById(User.Identity.GetUserId());
                 List<AspNetRole> roles = userResult.AspNetRoles.ToList();
                 IList<MenuRight> userRights =
                     menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();

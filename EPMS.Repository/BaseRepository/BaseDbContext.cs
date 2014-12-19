@@ -77,5 +77,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<Department> Departments { get; set; }
         public DbSet<JobTitle> JobTitleses { get; set; }
         public DbSet<Allowance> Allowances { get; set; }
+        public DbSet<EmployeeRequest> EmployeeRequests { get; set; }
+        public DbSet<RequestDetail> RequestDetails { get; set; }
     }
 }

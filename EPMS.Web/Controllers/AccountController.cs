@@ -675,10 +675,12 @@ namespace IdentitySample.Controllers
             {
                 Email = result.Email,
                 UserName = result.UserName,
+                Address = result.Address,
                 ImageName = (result.ImageName != null && result.ImageName != string.Empty) ? result.ImageName : string.Empty,
                 ImagePath = ConfigurationManager.AppSettings["ProfileImage"].ToString() + result.ImageName
             };
             ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(ProfileViewModel);
         }
 
@@ -694,14 +696,14 @@ namespace IdentitySample.Controllers
             {
                 result.Email = profileViewModel.Email;
                 result.Address = profileViewModel.Address;
-                var updationResult = UserManager.UpdateAsync(result);
-                ViewBag.MessageVM = new MessageViewModel { Message = "Profile has been updated", IsUpdated = true };
+                var updationResult = UserManager.Update(result);
                 updateSessionValues(result);
+                TempData["message"] = new MessageViewModel { Message = "Profile has been updated", IsUpdated = true };
             }
             catch (Exception e)
             {
             }
-            return View(profileViewModel);
+            return RedirectToAction("Profile");
         }
 
         public ActionResult UploadUserPhoto()
@@ -709,7 +711,7 @@ namespace IdentitySample.Controllers
             HttpPostedFileBase userPhoto = Request.Files[0];
             try
             {
-                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(User.Identity.Name);
+                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
                 string savedFileName = "";
                 //Save image to Folder
                 if ((userPhoto != null))
@@ -719,7 +721,7 @@ namespace IdentitySample.Controllers
                     savedFileName = Path.Combine(filePathOriginal, filename);
                     userPhoto.SaveAs(savedFileName);
                     result.ImageName = filename;
-                    var updationResult = UserManager.UpdateAsync(result);
+                    var updationResult = UserManager.Update(result);
                 }
             }
             catch (Exception exp)
@@ -810,7 +812,7 @@ namespace IdentitySample.Controllers
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
-            Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
+            //Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
             Session["LoginID"] = result.Id;
             Session["RoleName"] = role;
         }
