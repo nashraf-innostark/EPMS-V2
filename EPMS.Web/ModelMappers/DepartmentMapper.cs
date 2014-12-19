@@ -6,27 +6,27 @@ namespace EPMS.Web.ModelMappers
     {
         public static Department CreateFrom(this Models.Department source)
         {
-            var caseType = new Department
+            var department = new Department
             {
-                //DepartmentId = source.DepartmentId ?? 0,
-                //DepartmentNameE = source.DepartmentNameE,
+                DepartmentId = source.DepartmentId,
+                DepartmentName = source.DepartmentName,
+                DepartmentDesc = source.DepartmentDesc,
                 //DepartmentNameA = source.DepartmentNameA,
-                //DepartmentDesc = source.DepartmentDesc,
                 //CreatedBy = source.CreatedBy,
                 //CreatedDate = source.CreatedDate,
                 //UpdatedBy = source.UpdatedBy,
                 //UpdatedDate = source.UpdatedDate
             };
-            return caseType;
+            return department;
         }
         public static Models.Department CreateFrom(this Department source)
         {
             return new Models.Department
             {
-                //DepartmentId = source.DepartmentId,
-                //DepartmentNameE = source.DepartmentNameE,
+                DepartmentId = source.DepartmentId,
+                DepartmentName = source.DepartmentName,
+                DepartmentDesc = source.DepartmentDesc,
                 //DepartmentNameA = source.DepartmentNameA,
-                //DepartmentDesc = source.DepartmentDesc,
                 //CreatedBy = source.CreatedBy,
                 //CreatedDate = source.CreatedDate,
                 //UpdatedBy = source.UpdatedBy,
