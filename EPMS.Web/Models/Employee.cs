@@ -53,6 +53,8 @@ namespace EPMS.Web.Models
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public string Email { get; set; }
+
 
         //[Display(Name = "Image")]
         public string ImageName { get; set; }

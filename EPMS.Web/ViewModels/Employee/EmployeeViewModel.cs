@@ -9,6 +9,7 @@ namespace EPMS.Web.ViewModels.Employee
 
         public Models.JobTitle JobTitle { get; set; }
         public Models.Department Department { get; set; }
+        public Models.Allowance Allowance { get; set; }
 
         public IEnumerable<EPMS.Models.DomainModels.Department> DepartmentList { get; set; }
         public IEnumerable<EPMS.Models.DomainModels.JobTitle> JobTitleList { get; set; }

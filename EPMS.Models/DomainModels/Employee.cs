@@ -30,6 +30,8 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+        public string Email { get; set; }
+
     
         public virtual ICollection<Allowance> Allowances { get; set; }
         public virtual JobTitle JobTitle { get; set; }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace EPMS.Web.Models
+﻿namespace EPMS.Web.Models
 {
     public class JobTitleAndDepartment
     {
@@ -11,5 +6,6 @@ namespace EPMS.Web.Models
         public string JobTitle{ get; set; }
         public long DeptId { get; set; }
         public string DeptName { get; set; }
+        public double BasicSalary { get; set; }
     }
 }

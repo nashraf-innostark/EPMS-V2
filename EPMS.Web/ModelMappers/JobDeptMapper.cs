@@ -1,4 +1,5 @@
-﻿using DomainModels = EPMS.Models.DomainModels;
+﻿using System;
+using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -13,10 +14,11 @@ namespace EPMS.Web.ModelMappers
         {
             return new Models.JobTitleAndDepartment
             {
-                //JobId = source.JobId,
-                //JobTitle = source.JobTitleNameE,
-                //DeptId = source.Department.DepartmentId ?? 0,
-                //DeptName = source.Department.DepartmentNameE
+                JobId = source.JobTitleId,
+                JobTitle = source.JobTitleName,
+                DeptId = source.Department.DepartmentId,
+                DeptName = source.Department.DepartmentName,
+                BasicSalary = source.BasicSalary ?? 0,
             };
         }
     }

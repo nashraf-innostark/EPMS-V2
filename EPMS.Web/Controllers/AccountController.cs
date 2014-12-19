@@ -326,7 +326,7 @@ namespace IdentitySample.Controllers
 
                 //UserManager.RemoveFromRoleAsync(User.Id, roleName);
 
-                return RedirectToAction("RegisterLV");
+                return RedirectToAction("Users");
             }
 
             // Add new User
@@ -334,6 +334,7 @@ namespace IdentitySample.Controllers
             {
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
                 user.EmployeeId = model.SelectedEmployee;
+                user.EmailConfirmed = true;
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -345,16 +346,8 @@ namespace IdentitySample.Controllers
                     UserManager.AddToRole(user.Id, roleName);
                     //UserManager.AddToRoleAsync(user.Id, roleName);
 
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-                        protocol: Request.Url.Scheme);
-                    await
-                        UserManager.SendEmailAsync(model.Email, "Confirm your account",
-                            "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
-                            "\">link</a><br>Your Password is:" + model.Password);
-                    ViewBag.Link = callbackUrl;
-                    TempData["message"] = new MessageViewModel { Message = "Registeration Confirmation email send to the user.", IsSaved = true };
-                    return RedirectToAction("RegisterLV");
+                    TempData["message"] = new MessageViewModel { Message = "User has been Registered", IsSaved = true };
+                    return RedirectToAction("Users");
                 }
                 AddErrors(result);
                 //model.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
