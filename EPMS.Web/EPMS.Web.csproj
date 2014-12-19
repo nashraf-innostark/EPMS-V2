@@ -1410,6 +1410,8 @@
     <Content Include="Content\plugins\uniform.default.less" />
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="Areas\HR\Views\Department\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Department\AddEdit.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
@@ -1724,7 +1726,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\HR\Models\" />
-    <Folder Include="Areas\HR\Views\Department\" />
     <Folder Include="Areas\HR\Views\JobTitle\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />
