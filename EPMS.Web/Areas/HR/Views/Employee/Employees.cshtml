@@ -54,38 +54,34 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
-
-        //var oTable = $('#employeeTable').dataTable({
-        //    "bProcessing": true,
-        //    "bServerSide": true,
-        //    "columns": [
-        //        { "data": "EmployeeImagePath" },
-        //        { "data": "EmployeeFullName" },
-        //        { "data": "JobTitleId" },
-        //        { "data": "JobTitleName" },
-        //        { "data": "DepartmentName" },
-        //        {
-        //            "orderable": false,
-        //            "data": null,
-        //            "defaultContent": '<div class="btn-group"><button type="button" id="edit" class="btn" style="margin-right: 2px;">Edit</button></div>'
-
-        //        }
-        //    ],
-        //    "fnServerData": function (sSource, aaData, fnCallback) {
-        //        $.ajax({
-        //            "dataType": 'json',
-        //            "type": "POST",
-        //            "url": siteUrl + "/Employee/Employees",
-        //            "data": aaData,
-        //            "success": fnCallback,
-        //            error: function (xhr, status, error) {
-        //                var err = eval("(" + xhr.responseText + ")");
-        //                alert(err.Message);
-        //            }
-        //        });
-        //    }
-        //});
         var siteUrl = $('#siteURL').val();
+        var oTable = $('#employeeTable').dataTable({
+            "bProcessing": true,
+            "bServerSide": true,
+            "columns": [
+                { "aaData": "EmployeeImagePath" },
+                { "aaData": "EmployeeFullName" },
+                { "aaData": "JobTitleId" },
+                { "aaData": "JobTitleName" },
+                { "aaData": "DepartmentName" }
+            ],
+            "fnServerData": function (sSource, aaData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": siteUrl + "/Employee/Employees",
+                    "data": aaData,
+                    "success": function (data) {
+                        fnCallback(data.aaData);
+                    },
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        alert(err.Message);
+                    }
+                });
+            }
+        });
+        @*var siteUrl = $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
@@ -134,7 +130,7 @@
 
                 }
             }
-        });
+        });*@
 
         function callError() {
         }

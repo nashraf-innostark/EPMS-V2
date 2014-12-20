@@ -21,6 +21,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IJobTitleService, JobTitleService>();
             unityContainer.RegisterType<IDepartmentService, DepartmentService>();
             unityContainer.RegisterType<IEmployeeRequestService, EmployeeRequestService>();
+            unityContainer.RegisterType<IAllowanceService, AllowanceService>();
 
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
         }

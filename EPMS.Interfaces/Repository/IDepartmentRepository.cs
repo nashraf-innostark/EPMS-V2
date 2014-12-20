@@ -9,7 +9,7 @@ using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IDepartmentRepository : IBaseRepository<Department, int>
+    public interface IDepartmentRepository : IBaseRepository<Department, long>
     {
         DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
     }

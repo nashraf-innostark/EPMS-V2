@@ -4,3 +4,17 @@
 .required {
     color: #e02222;
 }
+.datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .PassportExpiryDateAr{
+    width: 125px;
+    margin-right: 10px;
+}
+.calendars-month-year {
+    width: 100%;
+    margin: 0 0;
+}
+.calendars-month-header {
+    display: flex !important;
+}
+.datepicker .datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .inline-font-icons-list .PassportExpiryDateAr {
+    width: 10px !important;
+}

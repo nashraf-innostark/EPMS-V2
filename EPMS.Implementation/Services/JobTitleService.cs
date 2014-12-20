@@ -33,7 +33,7 @@ namespace EPMS.Implementation.Services
             return repository.GetAllJobTitle(jobTitleSearchRequest);
         }
 
-        public JobTitle FindJobTitleById(int id)
+        public JobTitle FindJobTitleById(long id)
         {
             return repository.Find(id);
         }
