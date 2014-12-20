@@ -13,5 +13,8 @@ namespace EPMS.Web.ViewModels.Employee
         public Models.Allowance Allowance { get; set; }
 
         public IEnumerable<EPMS.Models.DomainModels.JobTitle> JobTitleList { get; set; }
+        public IEnumerable<Models.JobTitleAndDepartment> JobTitleDeptList { get; set; }
+        public string ImageName { get; set; }
+        public string ImagePath { get; set; }
     }
 }

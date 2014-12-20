@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        public ActionResult AddEdit(int? id)
+        public ActionResult AddEdit(long? id)
         {
             JobTitleViewModel viewModel = new JobTitleViewModel();
             //if (id != null)

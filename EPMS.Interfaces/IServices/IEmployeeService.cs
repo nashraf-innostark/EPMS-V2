@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
     public interface IEmployeeService
     {
         EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset);
-        Employee FindEmployeeById(long id);
+        Employee FindEmployeeById(long? id);
 
         IEnumerable<Employee> GetAll(); 
         long AddEmployee(Employee employee);
