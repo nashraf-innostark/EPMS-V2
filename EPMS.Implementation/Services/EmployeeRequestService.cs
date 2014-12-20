@@ -19,17 +19,32 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
-        public bool AddRequest(EmployeeRequest request)
+        public long AddRequest(EmployeeRequest request)
         {
             try
             {
                 repository.Add(request);
                 repository.SaveChanges();
-                return true;
+                return request.RequestId;
             }
             catch (Exception exception)
             {
-                return false;
+                return 0;
+            }
+        }
+
+        public long AddRequestDetail(RequestDetail requestDetail)
+        {
+            try
+            {
+                //repository.Add(requestDetail);
+                //repository.SaveChanges();
+                //return requestDetail.RequestId;
+                return 1;
+            }
+            catch (Exception exception)
+            {
+                return 0;
             }
         }
     }

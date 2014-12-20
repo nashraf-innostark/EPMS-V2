@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Repository\IDepartmentRepository.cs" />
     <Compile Include="Repository\IEmployeeRepository.cs" />
+    <Compile Include="Repository\IEmployeeRequestDetailRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestRepository.cs" />
     <Compile Include="Repository\IJobTitleRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
