@@ -9,7 +9,7 @@ using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IJobTitleRepository : IBaseRepository<JobTitle, int>
+    public interface IJobTitleRepository : IBaseRepository<JobTitle, long>
     {
         List<JobTitle> GetJobTitlesByDepartmentId(long deptId); 
         JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);

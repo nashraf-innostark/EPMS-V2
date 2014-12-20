@@ -46,7 +46,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeFirstName = source.EmployeeFirstName ?? "",
                 EmployeeMiddleName = source.EmployeeMiddleName ?? "",
                 EmployeeLastName = source.EmployeeLastName ?? "",
-                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"].ToString(CultureInfo.InvariantCulture) + source.EmployeeImagePath,
+                EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama ?? 0,
                 EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt ?? DateTime.Now,
                 EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt ?? DateTime.Now,

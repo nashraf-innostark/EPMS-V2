@@ -266,6 +266,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="ModelMappers\AllownaceMapper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
@@ -332,6 +333,7 @@
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
     <Compile Include="ViewModels\Department\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
+    <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
     <Compile Include="ViewModels\Request\EmployeeRequestViewModel.cs" />
@@ -1421,6 +1423,7 @@
     <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\Request\Create.cshtml" />
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Details.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
