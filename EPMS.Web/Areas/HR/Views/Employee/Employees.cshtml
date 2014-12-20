@@ -58,28 +58,50 @@
         var oTable = $('#employeeTable').dataTable({
             "bProcessing": true,
             "bServerSide": true,
-            "columns": [
-                { "aaData": "EmployeeImagePath" },
-                { "aaData": "EmployeeFullName" },
-                { "aaData": "JobTitleId" },
-                { "aaData": "JobTitleName" },
-                { "aaData": "DepartmentName" }
-            ],
-            "fnServerData": function (sSource, aaData, fnCallback) {
-                $.ajax({
-                    "dataType": 'json',
-                    "type": "POST",
-                    "url": siteUrl + "/Employee/Employees",
-                    "data": aaData,
-                    "success": fnCallback,
-                    error: function (xhr, status, error) {
-                        var err = eval("(" + xhr.responseText + ")");
-                        alert(err.Message);
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["EmployeeImagePath"];
+                    },
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["EmployeeFullName"];
                     }
-                });
-            }
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["JobTitleId"];
+                    }
+                },
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["JobTitleName"];
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["DepartmentName"];
+                    }
+                }
+            ],
+            "sAjaxSource": siteUrl + "/Employee/Employees",
+            "sServerMethod": "POST"
         });
-
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+        
         @*var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];

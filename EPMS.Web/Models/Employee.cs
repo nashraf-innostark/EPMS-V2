@@ -42,7 +42,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Iqama Expiry Date is required.")]
         public DateTime? EmployeeIqamaExpiryDt { get; set; }
         public DateTime? EmployeeIqamaExpiryDtAr { get; set; }
-        [Required(ErrorMessage = "Passport ID is required.")]
+        [Required(ErrorMessage = "Passport Number is required.")]
         public string EmployeePassportNum { get; set; }
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public DateTime? EmployeePassportExpiryDt { get; set; }

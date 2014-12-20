@@ -1,5 +1,4 @@
-﻿@using EPMS.Web.ViewModels.Employee
-@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
+﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
 @{
     ViewBag.Title = "Add New Employee";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -42,9 +41,6 @@
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
-
-        @*@Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })*@
-        @Html.HiddenFor(model => model.Employee.EmployeeId)
         @Html.HiddenFor(model => model.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">
@@ -175,11 +171,12 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmpDateOfBirthArabic, new { @class = "col-lg-2 datepickerArabic form-control ", onchange = "HijriToGregorianDOB(this,'EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
+                    @Html.TextBoxFor(model => model.Employee.EmpDateOfBirthArabic, new { @class = "datepickerArabic", onchange = "HijriToGregorianDOB(this,'EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
                     @Html.TextBoxFor(model => model.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control ", @id = "EmployeeDOB" })
                     @Html.ValidationMessageFor(m => m.Employee.EmployeeDOB)
                 </div>
             </div>
+
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
@@ -402,6 +399,7 @@
             } else {
                 $("#DepartmentName").val(jobId);
                 $("#JobID").val(jobId);
+                $("#BasicSalary").val(jobId);
             }
         });
         // Gregorian Date Picker
@@ -486,7 +484,7 @@
                 $('#PassportExpiryDateAr').val(newDate);
             }
         });
-        FormatDateFields();
+        //FormatDateFields();
     });
     function FormatDateFields() {
         var fields = $(".datepicker, .datepickerArabic, .IqamaIssueDateAr, .IqamaExpiryDateAr, .PassportExpiryDateAr");
