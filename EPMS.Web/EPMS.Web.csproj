@@ -1418,6 +1418,8 @@
     <Content Include="Content\plugins\uniform.default.less" />
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="Areas\HR\Views\Department\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Department\AddEdit.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\Request\Create.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Details.cshtml" />
@@ -1735,7 +1737,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\HR\Models\" />
-    <Folder Include="Areas\HR\Views\Department\" />
     <Folder Include="Areas\HR\Views\JobTitle\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />

@@ -5,6 +5,12 @@ namespace EPMS.Web.Models
 {
     public class EmployeeRequest
     {
+        public EmployeeRequest()
+        {
+            Employee = new Employee();
+            RequestDetails = new List<RequestDetail>();
+        }
+
         public long RequestId { get; set; }
         public long EmployeeId { get; set; }
         public string RequestTopic { get; set; }
@@ -15,7 +21,7 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
 
-        public virtual EPMS.Models.DomainModels.Employee Employee { get; set; }
-        public virtual ICollection<RequestDetail> RequestDetails { get; set; }
+        public Employee Employee { get; set; }
+        public IEnumerable<RequestDetail> RequestDetails { get; set; }
     }
 }

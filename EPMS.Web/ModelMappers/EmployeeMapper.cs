@@ -11,7 +11,7 @@ namespace EPMS.Web.ModelMappers
         {
             var caseType = new Employee
             {
-                EmployeeId = source.EmployeeId ?? 0,
+                EmployeeId = source.EmployeeId,
                 EmployeeFirstName = source.EmployeeFirstName ?? "",
                 EmployeeMiddleName = source.EmployeeMiddleName ?? "",
                 EmployeeLastName = source.EmployeeLastName ?? "",

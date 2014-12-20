@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable<Employee> of All Employees</returns>
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public ActionResult Employees(EmployeeSearchRequset employeeSearchRequest)
         {
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);

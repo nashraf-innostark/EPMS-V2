@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IServices\IAllowanceService.cs" />
-    <Compile Include="IServices\IAspNetUsersService.cs" />
+    <Compile Include="IServices\IAspNetUserService.cs" />
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\IEmployeeRequestService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
@@ -69,12 +69,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
-    <Compile Include="Repository\IAspNetUsersRepository.cs" />
+    <Compile Include="Repository\IAspNetUserRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Repository\IDepartmentRepository.cs" />
     <Compile Include="Repository\IEmployeeRepository.cs" />
+    <Compile Include="Repository\IEmployeeRequestDetailRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestRepository.cs" />
     <Compile Include="Repository\IJobTitleRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />

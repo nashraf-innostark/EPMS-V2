@@ -9,7 +9,7 @@ namespace EPMS.Web.Models
 {
     public class Employee
     {
-        public long? EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
         [Required(ErrorMessage = "First Name is required.")]
         public string EmployeeFirstName { get; set; }
         [Required(ErrorMessage = "Middle Name is required.")]

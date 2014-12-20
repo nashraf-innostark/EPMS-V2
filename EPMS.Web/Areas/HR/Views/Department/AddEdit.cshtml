@@ -1,0 +1,28 @@
+﻿@model EPMS.Web.ViewModels.Department.DepartmentViewModel
+
+@{
+    ViewBag.Title = "AddEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddEdit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>DepartmentViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
