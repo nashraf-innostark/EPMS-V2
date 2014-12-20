@@ -46,12 +46,12 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
-       public ActionResult AddEdit(int? id)
+       public ActionResult AddEdit(long? id)
         {
             DepartmentViewModel viewModel = new DepartmentViewModel();
             if (id != null)
             {
-                viewModel.Department = oService.FindDepartmentById(id).CreateFrom();
+                viewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
 
             }
             return View(viewModel);

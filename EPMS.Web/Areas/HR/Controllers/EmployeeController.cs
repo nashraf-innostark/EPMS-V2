@@ -102,14 +102,14 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        public ActionResult Create(long id)
+        public ActionResult Create(long? id)
         {
             EmployeeViewModel viewModel = new EmployeeViewModel();
             viewModel.JobTitleList = JobTitleService.GetAll();
             //viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
             if (id > 0)
             {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+                viewModel.Employee = EmployeeService.FindEmployeeById((long)id).CreateFrom();
             }
             return View(viewModel);
         }
@@ -134,7 +134,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.Employee.RecLastUpdatedDt = DateTime.Now;
                         viewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
                         // Set Values for Allownace
-                        viewModel.Allowance.EmployeeId = viewModel.Employee.EmployeeId ?? 0;
+                        viewModel.Allowance.EmployeeId = viewModel.Employee.EmployeeId;
                         viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Update Employee and Allowance

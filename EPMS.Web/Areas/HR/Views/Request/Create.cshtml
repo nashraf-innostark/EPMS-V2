@@ -139,7 +139,9 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate)
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "datepickerArabic", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')" })
+                        @Html.TextBox("Loan Date", null, new { @class = "datepickerGregorian", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')" })
+                        @*@Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate)*@
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanDate)
                     </div>
                 </div>
@@ -216,4 +218,6 @@
             $(divToBeAffected).hide();
         }
     }
+    
+
 </script>

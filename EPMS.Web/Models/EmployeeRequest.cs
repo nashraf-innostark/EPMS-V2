@@ -14,6 +14,7 @@ namespace EPMS.Web.Models
 
         public long RequestId { get; set; }
         public long EmployeeId { get; set; }
+        [Required]
         [Display(Name = "Topic")]
         public string RequestTopic { get; set; }
         [Display(Name = "Request Date")]

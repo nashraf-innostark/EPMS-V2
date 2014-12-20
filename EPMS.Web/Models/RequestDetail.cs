@@ -7,18 +7,23 @@ namespace EPMS.Web.Models
     {
         public long RequestDetailId { get; set; }
         public long RequestId { get; set; }
+        [Required]
         [Display(Name = "Description")]
         public string RequestDesc { get; set; }
+        [Required]
         [Display(Name="Loan Amount")]
         public double? LoanAmount { get; set; }
+        [Required]
         [Display(Name = "Loan Date")]
         public DateTime? LoanDate { get; set; }
+        [Required]
         [Display(Name = "Installment Amount")]
         public double? InstallmentAmount { get; set; }
         [Display(Name = "First Installment Date")]
         public DateTime? FirstInstallmentDate { get; set; }
         [Display(Name = "Last Installment Date")]
         public DateTime? LastInstallmentDate { get; set; }
+        [Required]
         [Display(Name = "Number of Months")]
         public int? NumberOfMonths { get; set; }
         [Display(Name = "Replied")]

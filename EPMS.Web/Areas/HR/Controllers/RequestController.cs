@@ -71,8 +71,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                         requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
                         requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
                         requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
+                        requestViewModel.EmployeeRequestDetail.RowVersion++;
                         employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
-                        TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = "Request has been updated.", IsUpdated = true };
                     }
                 }
                 // create new
