@@ -8,14 +8,16 @@ namespace EPMS.Implementation.Services
     public class EmployeeRequestService:IEmployeeRequestService
     {
         private readonly IEmployeeRequestRepository repository;
+        private readonly IEmployeeRequestDetailRepository repositoryRequestDetail;
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="xRepository"></param>
-        public EmployeeRequestService(IEmployeeRequestRepository xRepository)
+        public EmployeeRequestService(IEmployeeRequestRepository xRepository, IEmployeeRequestDetailRepository xRepositoryRequestDetail)
         {
             repository = xRepository;
+            repositoryRequestDetail = xRepositoryRequestDetail;
         }
 
         #endregion
@@ -37,15 +39,24 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                //repository.Add(requestDetail);
-                //repository.SaveChanges();
-                //return requestDetail.RequestId;
-                return 1;
+                repositoryRequestDetail.Add(requestDetail);
+                repositoryRequestDetail.SaveChanges();
+                return requestDetail.RequestId;
             }
             catch (Exception exception)
             {
                 return 0;
             }
+        }
+
+        public EmployeeRequest Find(long id)
+        {
+            return repository.Find(id);
+        }
+
+        public RequestDetail GetRequestDetailByRequestId(long requestId)
+        {
+            return repositoryRequestDetail.LoadRequestDetailByRequestId(requestId);
         }
     }
 }

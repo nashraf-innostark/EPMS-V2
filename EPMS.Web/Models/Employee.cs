@@ -48,6 +48,7 @@ namespace EPMS.Web.Models
         public DateTime? EmployeePassportExpiryDt { get; set; }
         public DateTime? EmployeePassportExpiryDtAr { get; set; }
         public string EmployeeDetails { get; set; }
+        [Display(Name = "Full Name")]
         public string EmployeeFullName { get; set; }
         public string JobTitleName { get; set; }
         public string DepartmentName { get; set; }

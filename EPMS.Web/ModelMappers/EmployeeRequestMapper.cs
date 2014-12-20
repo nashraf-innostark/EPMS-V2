@@ -4,36 +4,86 @@ namespace EPMS.Web.ModelMappers
 {
     public static class EmployeeRequestMapper
     {
-        public static EmployeeRequest MapClientToServer(this Models.EmployeeRequest source)
-        {
-            return new EmployeeRequest
+        #region Employee Request Mappers
+            public static EmployeeRequest CreateFromClientToServer(this Models.EmployeeRequest source)
             {
-               RequestId = source.RequestId,
-               EmployeeId = source.EmployeeId,
-               IsMonetary = source.IsMonetary,
-               RequestTopic = source.RequestTopic,
-               RequestDate = source.RequestDate,
-               RecCreatedBy = source.RecCreatedBy,
-               RecCreatedDt = source.RecCreatedDt,
-               RecLastUpdatedBy = source.RecLastUpdatedBy,
-               RecLastUpdatedDt = source.RecLastUpdatedDt
-            };
-        }
+                return new EmployeeRequest
+                {
+                    RequestId = source.RequestId,
+                    EmployeeId = source.EmployeeId,
+                    IsMonetary = source.IsMonetary,
+                    RequestTopic = source.RequestTopic,
+                    RequestDate = source.RequestDate,
+                    RecCreatedBy = source.RecCreatedBy,
+                    RecCreatedDt = source.RecCreatedDt,
+                    RecLastUpdatedBy = source.RecLastUpdatedBy,
+                    RecLastUpdatedDt = source.RecLastUpdatedDt
+                };
+            }
 
-        public static Models.EmployeeRequest MapServerToClient(this EmployeeRequest source)
-        {
-            return new Models.EmployeeRequest
+            public static Models.EmployeeRequest CreateFromServerToClient(this EmployeeRequest source)
             {
-                RequestId = source.RequestId,
-                EmployeeId = source.EmployeeId,
-                IsMonetary = source.IsMonetary,
-                RequestTopic = source.RequestTopic,
-                RequestDate = source.RequestDate,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
-            };
-        }
+                return new Models.EmployeeRequest
+                {
+                    RequestId = source.RequestId,
+                    EmployeeId = source.EmployeeId,
+                    IsMonetary = source.IsMonetary,
+                    RequestTopic = source.RequestTopic,
+                    RequestDate = source.RequestDate,
+                    RecCreatedBy = source.RecCreatedBy,
+                    RecCreatedDt = source.RecCreatedDt,
+                    RecLastUpdatedBy = source.RecLastUpdatedBy,
+                    RecLastUpdatedDt = source.RecLastUpdatedDt
+                };
+            }
+        #endregion
+
+        #region Employee Request Detail Mappers
+            public static RequestDetail CreateFromClientToServer(this Models.RequestDetail source)
+            {
+                return new RequestDetail
+                {
+                    RequestDetailId = source.RequestDetailId,
+                    RequestId = source.RequestId,
+                    RequestDesc = source.RequestDesc,
+                    LoanAmount = source.LoanAmount,
+                    LoanDate = source.LoanDate,
+                    InstallmentAmount = source.InstallmentAmount,
+                    NumberOfMonths = source.NumberOfMonths,
+                    FirstInstallmentDate = source.FirstInstallmentDate,
+                    LastInstallmentDate = source.LastInstallmentDate,
+                    IsApproved = source.IsApproved,
+                    IsReplied = source.IsReplied,
+                    RowVersion = source.RowVersion,
+                    RecCreatedBy = source.RecCreatedBy,
+                    RecCreatedDt = source.RecCreatedDt,
+                    RecLastUpdatedBy = source.RecLastUpdatedBy,
+                    RecLastUpdatedDt = source.RecLastUpdatedDt
+                };
+            }
+
+            public static Models.RequestDetail CreateFromServerToClient(this RequestDetail source)
+            {
+                return new Models.RequestDetail
+                {
+                    RequestDetailId = source.RequestDetailId,
+                    RequestId = source.RequestId,
+                    RequestDesc = source.RequestDesc,
+                    LoanAmount = source.LoanAmount,
+                    LoanDate = source.LoanDate,
+                    InstallmentAmount = source.InstallmentAmount,
+                    NumberOfMonths = source.NumberOfMonths,
+                    FirstInstallmentDate = source.FirstInstallmentDate,
+                    LastInstallmentDate = source.LastInstallmentDate,
+                    IsApproved = source.IsApproved,
+                    IsReplied = source.IsReplied,
+                    RowVersion = source.RowVersion,
+                    RecCreatedBy = source.RecCreatedBy,
+                    RecCreatedDt = source.RecCreatedDt,
+                    RecLastUpdatedBy = source.RecLastUpdatedBy,
+                    RecLastUpdatedDt = source.RecLastUpdatedDt
+                };
+            }
+        #endregion
     }
 }

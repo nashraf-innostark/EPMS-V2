@@ -112,7 +112,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
             if (id != null)
             {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+                viewModel.Employee = EmployeeService.FindEmployeeById((long)id).CreateFrom();
             }
             return View(viewModel);
         }

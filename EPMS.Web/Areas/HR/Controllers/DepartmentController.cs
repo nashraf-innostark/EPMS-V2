@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             DepartmentViewModel viewModel = new DepartmentViewModel();
             if (id != null)
             {
-                viewModel.Department = oService.FindDepartmentById(id).CreateFrom();
+                viewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
 
             }
             return View(viewModel);

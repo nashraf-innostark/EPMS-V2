@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -13,8 +14,12 @@ namespace EPMS.Web.Models
 
         public long RequestId { get; set; }
         public long EmployeeId { get; set; }
+        [Required]
+        [Display(Name = "Topic")]
         public string RequestTopic { get; set; }
-        public System.DateTime RequestDate { get; set; }
+        [Display(Name = "Request Date")]
+        public DateTime RequestDate { get; set; }
+        [Display(Name = "Monetary")]
         public bool IsMonetary { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
