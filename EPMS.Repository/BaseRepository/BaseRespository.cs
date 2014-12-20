@@ -93,6 +93,13 @@ namespace EPMS.Repository.BaseRepository
             return DbSet.Find(id);
         }
         /// <summary>
+        /// Find Entity by Id
+        /// </summary>
+        public TDomainClass Find(long id)
+        {
+            return DbSet.Find(id);
+        }
+        /// <summary>
         /// Get All Entites 
         /// </summary>
         /// <returns></returns>
