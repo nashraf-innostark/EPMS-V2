@@ -144,30 +144,30 @@
 
     $(document).ready(function () {
          //Data tables 1.10.2
-        $('#UserList').dataTable({
-            "sPaginationType": "full_numbers",
-            "bFilter": true,
-            "aoColumnDefs": [
-                {
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-        });
+        //$('#UserList').dataTable({
+        //    "sPaginationType": "full_numbers",
+        //    "bFilter": true,
+        //    "aoColumnDefs": [
+        //        {
+        //            "targets": [0],
+        //            "visible": false,
+        //            "searchable": false
+        //        }
+        //    ],
+        //});
 
         // Data tables 1.9.4
-        //$('#UserList').dataTable({
-        //    "sPaginationType": "bootstrap",
-        //    "fnInitComplete": function () {
-        //        $(".dataTables_wrapper select").select2({
-        //            dropdownCssClass: 'noSearch'
-        //        });
-        //    }
-        //});
-        $("#simpleSelectBox").select2({
-            dropdownCssClass: 'noSearch'
+        $('#UserList').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
         });
+        //$(".select2-choice").select2({
+        //    dropdownCssClass: 'noSearch'
+        //});
     });
 </script>
 @*<style type="text/css">

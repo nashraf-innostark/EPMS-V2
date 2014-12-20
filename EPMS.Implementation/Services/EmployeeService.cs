@@ -29,9 +29,13 @@ namespace EPMS.Implementation.Services
             return repository.GetAllEmployees(employeeSearchRequset);
         }
 
-        public Employee FindEmployeeById(long id)
+        public Employee FindEmployeeById(long? id)
         {
-            return repository.Find(id);
+            if (id != null)
+            {
+                return repository.Find((long) id);
+            }
+            return null;
         }
 
         public IEnumerable<Employee> GetAll()

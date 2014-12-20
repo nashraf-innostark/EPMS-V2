@@ -104,10 +104,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <returns></returns>
         public ActionResult Create(long? id)
         {
-            EmployeeViewModel viewModel = new EmployeeViewModel();
-            viewModel.JobTitleList = JobTitleService.GetAll();
-            //viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
-            if (id > 0)
+            EmployeeViewModel viewModel = new EmployeeViewModel
+            {
+                JobTitleList = JobTitleService.GetAll()
+            };
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            if (id != null)
             {
                 viewModel.Employee = EmployeeService.FindEmployeeById((long)id).CreateFrom();
             }
@@ -215,12 +217,13 @@ namespace EPMS.Web.Areas.HR.Controllers
             return Json(new { filename = imagename, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Details(long id)
+        public ActionResult Details(long? id)
         {
             EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
             {
-                JobTitleList = JobTitleService.GetAll()
+                JobTitleList = JobTitleService.GetAll(),
             };
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
             if (id > 0)
             {
                 viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
