@@ -29,14 +29,18 @@ namespace EPMS.Web.Areas.HR.Controllers
             return View();
         }
         // GET: HR/Request/Create
-        public ActionResult Create(int? id)
+        public ActionResult Create(long? id)
         {
             EmployeeRequestViewModel requestViewModel = new EmployeeRequestViewModel();
             if (User.Identity.GetUserId() != null)
             {
                 AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
-
-                if (currentUser.Employee != null)
+                if (id != null)
+                {
+                    requestViewModel.EmployeeRequest = employeeRequestService.Find((long)id).CreateFromServerToClient();
+                    requestViewModel.EmployeeRequestDetail = employeeRequestService.GetRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                }
+                if (currentUser.Employee.EmployeeId > 0)
                 {
                     requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFrom();
                     requestViewModel.EmployeeRequest.Employee.DepartmentName = currentUser.Employee.JobTitle.Department.DepartmentName;
@@ -54,13 +58,22 @@ namespace EPMS.Web.Areas.HR.Controllers
                 //update
                 if (requestViewModel.EmployeeRequest.RequestId > 0)
                 {
-                    //viewModel.Activity.UpdatedBy = User.Identity.GetUserId();
-                    //viewModel.Activity.UpdatedDate = DateTime.Now;
-                    //if (activityService.Update(viewModel.Activity.CreateFrom()))
-                    //{
-                    //    TempData["message"] = new MessageViewModel { Message = "Activity has been updated", IsUpdated = true };
-                    //    return RedirectToAction("Index");
-                    //}
+                    requestViewModel.EmployeeRequest.RecLastUpdatedBy = User.Identity.GetUserId();
+                    requestViewModel.EmployeeRequest.RecLastUpdatedDt = DateTime.Now;
+
+                    //Update to Db, and get RequestId
+                    requestViewModel.EmployeeRequest.RequestId = employeeRequestService.AddRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer());
+                    if (requestViewModel.EmployeeRequest.RequestId > 0)
+                    {
+                        //Add Request Detail
+                        requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
+                        requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
+                        requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
+                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
+                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
+                        employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
+                        TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
+                    }
                 }
                 // create new
                 else
@@ -73,15 +86,20 @@ namespace EPMS.Web.Areas.HR.Controllers
                     requestViewModel.EmployeeRequest.RecLastUpdatedDt = DateTime.Now;
 
                     //Add to Db, and get RequestId
-                    requestViewModel.EmployeeRequest.RequestId = employeeRequestService.AddRequest(requestViewModel.EmployeeRequest.MapClientToServer());
+                    requestViewModel.EmployeeRequest.RequestId = employeeRequestService.AddRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer());
                     if (requestViewModel.EmployeeRequest.RequestId > 0)
                     {
                         //Add Request Detail
-
-                        TempData["message"] = new MessageViewModel { Message = "New Request has been created", IsSaved = true };
-                        return RedirectToAction("Index");
+                        requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
+                        requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
+                        requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
+                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
+                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
+                        employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
+                        TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
                     }
                 }
+                return RedirectToAction("Index");
             }
             catch(Exception e)
             {

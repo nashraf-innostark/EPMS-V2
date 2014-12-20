@@ -44,10 +44,10 @@
 
         <div class="form-legend" id="Input_Field">Input Fields</div>
 
-        <!--Input Field begin-->
+        <!--Input Field of Request begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="inputField">Name</label>
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.EmployeeFullName, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
@@ -59,9 +59,9 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="department">Employee ID</label>
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.EmployeeId, new { @class = "control-label" })
             </div>
-            <div class="span9">
+            <div class="span2">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeId, new { @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeId)
@@ -71,9 +71,9 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="jobTitle">Department</label>
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @class = "control-label" })
             </div>
-            <div class="span2">
+            <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentName)
@@ -84,7 +84,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Topic">Topic</label>
+                @Html.LabelFor(model => model.EmployeeRequest.RequestTopic, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
@@ -96,7 +96,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Description">Description</label>
+                @Html.LabelFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
@@ -105,9 +105,10 @@
                 </div>
             </div>
         </div>
+
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Description">Monetary</label>
+                @Html.LabelFor(model => model.EmployeeRequest.IsMonetary, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
@@ -116,14 +117,103 @@
                 </div>
             </div>
         </div>
+        <!--End    --    Input Field of Request-->
 
+        <!--Input Field of RequestDetail begin-->
+        <div id="monetaryRequestControls" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "control-label" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanAmount)
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanAmount)
+                    </div>
+                </div>
+            </div>
 
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "control-label" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate)
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanDate)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "control-label" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.InstallmentAmount)
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.InstallmentAmount)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @class = "control-label" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths)
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.NumberOfMonths)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "control-label" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.FirstInstallmentDate)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "control-label" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LastInstallmentDate)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End    --    Input Field of RequestDetail-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="submit" class="btn">Submit</button>
             </div>
-
         </div>
-
     </div>
 }
+<script>
+    $(document).ready(function() {
+        MonetaryHideShow();
+    });
+    $('#EmployeeRequest_IsMonetary').change(function () {
+        MonetaryHideShow();
+    });
+    function MonetaryHideShow() {
+        var divToBeAffected = '#monetaryRequestControls';
+        if ($('#EmployeeRequest_IsMonetary').is(":checked")) {
+            $(divToBeAffected).show();
+        } else {
+            $(divToBeAffected).hide();
+        }
+    }
+</script>

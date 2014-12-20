@@ -46,6 +46,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public DateTime? EmployeePassportExpiryDt { get; set; }
         public string EmployeeDetails { get; set; }
+        [Display(Name = "Full Name")]
         public string EmployeeFullName { get; set; }
         public string JobTitleName { get; set; }
         public string DepartmentName { get; set; }

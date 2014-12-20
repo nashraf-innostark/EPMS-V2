@@ -6,5 +6,7 @@ namespace EPMS.Interfaces.IServices
     {
         long AddRequest(EmployeeRequest model);
         long AddRequestDetail(RequestDetail model);
+        EmployeeRequest Find(long id);
+        RequestDetail GetRequestDetailByRequestId(long requestId);
     }
 }
