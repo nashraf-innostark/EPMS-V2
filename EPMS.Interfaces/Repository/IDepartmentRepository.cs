@@ -11,6 +11,11 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IDepartmentRepository : IBaseRepository<Department, long>
     {
+        /// <summary>
+        /// Get All Departments
+        /// </summary>
+        /// <param name="departmentSearchRequest"></param>
+        /// <returns></returns>
         DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
     }
 }

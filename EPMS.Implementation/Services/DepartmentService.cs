@@ -37,7 +37,7 @@ namespace EPMS.Implementation.Services
             return departmentRepository.GetAllDepartment(departmentSearchRequest);
         }
 
-        public Department FindDepartmentById(long? id)
+        public Department FindDepartmentById(long id)
         {
             if (id != null) return departmentRepository.Find((long)id);
             return null;
@@ -49,12 +49,12 @@ namespace EPMS.Implementation.Services
             {
                 departmentRepository.Add(department);
                 departmentRepository.SaveChanges();
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
-            return false;
         }
         public bool UpdateDepartment(Department department)
         {
@@ -78,7 +78,7 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Finds Employees by Department ID
         /// </summary>
-        public IEnumerable<Employee> FindEmployeeByDeprtmentId(int depertmentId)
+        public IEnumerable<Employee> FindEmployeeByDeprtmentId(long depertmentId)
         {
             return employeeRepository.GetEmployeesByDepartmentId(depertmentId);
         }

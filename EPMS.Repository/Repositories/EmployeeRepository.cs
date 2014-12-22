@@ -80,7 +80,7 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Get all employees in a depertment
         /// </summary>
-        public IEnumerable<Employee> GetEmployeesByDepartmentId(int departmentId)
+        public IEnumerable<Employee> GetEmployeesByDepartmentId(long departmentId)
         {
             return DbSet.Where(employee => employee.JobTitle.DepartmentId == departmentId);
         }

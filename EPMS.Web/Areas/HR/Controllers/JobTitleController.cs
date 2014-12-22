@@ -7,7 +7,6 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Department;
 using EPMS.Web.ViewModels.JobTitle;
 using EPMS.Web.Models;
 
@@ -73,12 +72,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Create(JobTitleViewModel jobTitleViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                jobTitleViewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
+            //if (!ModelState.IsValid)
+            //{
+            //    jobTitleViewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
                 
-                return View(jobTitleViewModel);
-            }
+            //    return View(jobTitleViewModel);
+            //}
             try
             {
                 #region Update

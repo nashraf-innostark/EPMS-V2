@@ -49,23 +49,23 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleDesc">Job Title Description</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDesc, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDesc, "")
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
                 <label class="control-label" for="departmentId">Department</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentName"), "Select Department", new { @class = "select2me", id = " departmentId " })
                     @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleDesc">Job Title Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDesc, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDesc, "")
                 </div>
             </div>
         </div>
