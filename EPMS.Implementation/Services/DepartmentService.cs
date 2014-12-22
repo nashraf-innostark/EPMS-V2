@@ -39,7 +39,8 @@ namespace EPMS.Implementation.Services
 
         public Department FindDepartmentById(long id)
         {
-            return departmentRepository.Find(id);
+            if (id != null) return departmentRepository.Find((long)id);
+            return null;
         }
 
         public bool AddDepartment(Department department)

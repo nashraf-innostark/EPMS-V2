@@ -58,5 +58,33 @@ namespace EPMS.Implementation.Services
         {
             return repositoryRequestDetail.LoadRequestDetailByRequestId(requestId);
         }
+
+        public bool UpdateRequest(EmployeeRequest request)
+        {
+            try
+            {
+                repository.Update(request);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateRequestDetail(RequestDetail requestDetail)
+        {
+            try
+            {
+                repositoryRequestDetail.Update(requestDetail);
+                repositoryRequestDetail.SaveChanges();
+                return true;
+            }
+            catch (Exception exception)
+            {
+                return false;
+            }
+        }
     }
 }
