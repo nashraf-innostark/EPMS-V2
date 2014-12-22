@@ -59,12 +59,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        public ActionResult Create(int? id)
+        public ActionResult Create(long? id)
         {
             JobTitleViewModel viewModel = new JobTitleViewModel();
             if (id != null)
             {
-                viewModel.JobTitle = jobTitleService.FindJobTitleById(id).CreateFrom();
+                viewModel.JobTitle = jobTitleService.FindJobTitleById((long)id).CreateFrom();
             }
             viewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
             return View(viewModel);
