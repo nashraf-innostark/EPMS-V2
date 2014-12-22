@@ -6,7 +6,6 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.BaseRepository
@@ -83,6 +82,20 @@ namespace EPMS.Repository.BaseRepository
         /// Find Entity by Id
         /// </summary>
         public TDomainClass Find(int id)
+        {
+            return DbSet.Find(id);
+        }
+        /// <summary>
+        /// Find Entity by Id
+        /// </summary>
+        public TDomainClass Find(string id)
+        {
+            return DbSet.Find(id);
+        }
+        /// <summary>
+        /// Find Entity by Id
+        /// </summary>
+        public TDomainClass Find(long id)
         {
             return DbSet.Find(id);
         }

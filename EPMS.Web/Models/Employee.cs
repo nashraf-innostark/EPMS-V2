@@ -9,7 +9,7 @@ namespace EPMS.Web.Models
 {
     public class Employee
     {
-        public long? EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
         [Required(ErrorMessage = "First Name is required.")]
         public string EmployeeFirstName { get; set; }
         [Required(ErrorMessage = "Middle Name is required.")]
@@ -17,13 +17,12 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Last Name is required.")]
         public string EmployeeLastName { get; set; }
         public string EmployeeImagePath { get; set; }
+        [Required(ErrorMessage = "Job Title is required.")]
         public long? JobTitleId { get; set; }
         public string EmployeeJobId { get; set; }
-        [StringLength(20)]
         [Integer(ErrorMessage = "Mobile Number needs to be number")]
         [Required(ErrorMessage = "Mobile Number is required.")]
         public string EmployeeMobileNum { get; set; }
-        [StringLength(20)]
         [Integer(ErrorMessage = "LandLine Number needs to be number")]
         [Required(ErrorMessage = "LandLine Number is required.")]
         public string EmployeeLandlineNum { get; set; }
@@ -39,13 +38,17 @@ namespace EPMS.Web.Models
         public int? EmployeeIqama { get; set; }
         [Required(ErrorMessage = "Iqama Issue Date is required.")]
         public DateTime? EmployeeIqamaIssueDt { get; set; }
+        public DateTime? EmployeeIqamaIssueDtAr { get; set; }
         [Required(ErrorMessage = "Iqama Expiry Date is required.")]
         public DateTime? EmployeeIqamaExpiryDt { get; set; }
-        [Required(ErrorMessage = "Passport ID is required.")]
+        public DateTime? EmployeeIqamaExpiryDtAr { get; set; }
+        [Required(ErrorMessage = "Passport Number is required.")]
         public string EmployeePassportNum { get; set; }
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public DateTime? EmployeePassportExpiryDt { get; set; }
+        public DateTime? EmployeePassportExpiryDtAr { get; set; }
         public string EmployeeDetails { get; set; }
+        [Display(Name = "Full Name")]
         public string EmployeeFullName { get; set; }
         public string JobTitleName { get; set; }
         public string DepartmentName { get; set; }

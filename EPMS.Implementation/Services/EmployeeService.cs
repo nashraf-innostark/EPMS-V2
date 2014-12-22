@@ -31,7 +31,11 @@ namespace EPMS.Implementation.Services
 
         public Employee FindEmployeeById(long? id)
         {
-            return repository.Find(Convert.ToInt32(id));
+            if (id != null)
+            {
+                return repository.Find((long) id);
+            }
+            return null;
         }
 
         public IEnumerable<Employee> GetAll()
@@ -43,19 +47,12 @@ namespace EPMS.Implementation.Services
         /// Add Employee to DB
         /// </summary>
         /// <param name="employee"></param>
-        /// <returns>true if added/false if error</returns>
-        public bool AddEmployee(Employee employee)
+        /// <returns>EmployeeId</returns>
+        public long AddEmployee(Employee employee)
         {
-            try
-            {
-                repository.Add(employee);
-                repository.SaveChanges();
-                return true;
-            }
-            catch (Exception exception)
-            {
-                return false;
-            }
+            repository.Add(employee);
+            repository.SaveChanges();
+            return employee.EmployeeId;
         }
         /// <summary>
         /// Update Employee

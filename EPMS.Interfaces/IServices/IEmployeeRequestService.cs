@@ -4,6 +4,9 @@ namespace EPMS.Interfaces.IServices
 {
     public interface IEmployeeRequestService
     {
-        bool AddRequest(EmployeeRequest model);
+        long AddRequest(EmployeeRequest model);
+        long AddRequestDetail(RequestDetail model);
+        EmployeeRequest Find(long id);
+        RequestDetail GetRequestDetailByRequestId(long requestId);
     }
 }

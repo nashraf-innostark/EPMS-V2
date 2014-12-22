@@ -124,6 +124,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Identity\IdentityOperation.cs" />
+    <Compile Include="Services\AllowanceService.cs" />
+    <Compile Include="Services\AspNetUserService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />

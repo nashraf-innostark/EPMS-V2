@@ -51,7 +51,6 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
-
         public ActionResult Create(int? id)
         {
             DepartmentListViewModel listViewModel = new DepartmentListViewModel();

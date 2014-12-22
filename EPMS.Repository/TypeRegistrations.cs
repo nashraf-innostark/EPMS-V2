@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using EPMS.Interfaces.Repository;
 using EPMS.Repository.BaseRepository;
 using EPMS.Repository.Repositories;
@@ -18,6 +17,9 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IJobTitleRepository, JobTitleRepository>();
             unityContainer.RegisterType<IDepartmentRepository, DepartmentRepository>();
             unityContainer.RegisterType<IEmployeeRequestRepository, EmployeeRequestRepository>();
+            unityContainer.RegisterType<IAllowanceRepository, AllowanceRepository>();
+            unityContainer.RegisterType<IAspNetUserRepository, AspNetUserRepository>();
+            unityContainer.RegisterType<IEmployeeRequestDetailRepository, EmployeeRequestDetailRepository>();
             unityContainer.RegisterType<DbContext, BaseDbContext>(new PerRequestLifetimeManager());
         }
     }

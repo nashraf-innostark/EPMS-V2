@@ -11,7 +11,7 @@ namespace EPMS.Web.ModelMappers
         {
             var caseType = new Employee
             {
-                EmployeeId = source.EmployeeId ?? 0,
+                EmployeeId = source.EmployeeId,
                 EmployeeFirstName = source.EmployeeFirstName ?? "",
                 EmployeeMiddleName = source.EmployeeMiddleName ?? "",
                 EmployeeLastName = source.EmployeeLastName ?? "",
@@ -46,7 +46,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeFirstName = source.EmployeeFirstName ?? "",
                 EmployeeMiddleName = source.EmployeeMiddleName ?? "",
                 EmployeeLastName = source.EmployeeLastName ?? "",
-                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"].ToString(CultureInfo.InvariantCulture) + source.EmployeeImagePath,
+                EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama ?? 0,
                 EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt ?? DateTime.Now,
                 EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt ?? DateTime.Now,
@@ -71,7 +71,7 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        public static Models.Employee CreateFromWithImage(this Employee source, string userName)
+        public static Models.Employee CreateFromWithImage(this Employee source)
         {
             return new Models.Employee
             {
@@ -79,7 +79,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeFirstName = source.EmployeeFirstName ?? "",
                 EmployeeMiddleName = source.EmployeeMiddleName ?? "",
                 EmployeeLastName = source.EmployeeLastName ?? "",
-                ImagePath = source.EmployeeImagePath == null ? "" : ImageUrl(userName, source.EmployeeImagePath),
+                EmployeeImagePath = source.EmployeeImagePath == null ? "" : ImageUrl(source.EmployeeImagePath),
                 EmployeeIqama = source.EmployeeIqama ?? 0,
                 EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt ?? DateTime.Now,
                 EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt ?? DateTime.Now,
@@ -104,9 +104,9 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        private static string ImageUrl(string userName, string imageName)
+        private static string ImageUrl(string imageName)
         {
-            string path = (ConfigurationManager.AppSettings["SiteURL"] + ConfigurationManager.AppSettings["EmployeeImage"] + userName + "/" + imageName).Replace("~", "");
+            string path = (ConfigurationManager.AppSettings["SiteURL"] + ConfigurationManager.AppSettings["EmployeeImage"] + "/" + imageName);
 
             return "<img  data-mfp-src=" + path + " src=" + path + " class='mfp-image image-link cursorHand' height=70 width=100 />";
         }

@@ -188,6 +188,44 @@ function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
     var changedDate = calender.fromJD(dateToBeChanged.toJD());
     return calender.formatDate("mm/dd/yyyy", changedDate);
 }
+function HijriToGregorian(arabicCalendar, englishCalendar) {
+    if ($(arabicCalendar).val() == "") {
+        $(englishCalendar).val("");
+    }
+    else {
+        var splittedDate = $(arabicCalendar).val().split('/');
+        $(arabicCalendar).val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
+        var dateToBeChanged = $(arabicCalendar).val();
+        var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
+        $(englishCalendar).val(newDate);
+    }
+}
+function GregorianToHijri(englishCalendar,arabicCalendar) {
+    if ($(englishCalendar).val() == "") {
+        $(arabicCalendar).val("");
+    }
+    else {
+        var dateToBeChanged = $(englishCalendar).val();
+        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+        $(arabicCalendar).val(newDate);
+    }
+}
+$(document).ready(function() {
+    $(".datepickerGregorian").mask('99/99/9999');
+    $(".datepickerGregorian").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
+    // Arabic Date Picker
+    var calendar = $.calendars.instance('islamic');
+    $('.datepickerArabic').calendarsPicker({
+        calendar: calendar,
+        onSelect: function () {
+            $(this).change();
+        }
+    });
+});
+
 
 
 

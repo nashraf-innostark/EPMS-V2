@@ -2,7 +2,7 @@
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IAspNetUsersRepository : IBaseRepository<AspNetUser, int>
+    public interface IAspNetUserRepository : IBaseRepository<AspNetUser, string>
     {
     }
 }

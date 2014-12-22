@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
@@ -22,15 +23,17 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IEmployeeService EmployeeService;
         private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
+        private readonly IAllowanceService AllowanceService;
 
 
         #region Constructor
 
-        public EmployeeController(IEmployeeService EmployeeService, IDepartmentService DepartmentService, IJobTitleService JobTitleService)
+        public EmployeeController(IEmployeeService EmployeeService, IDepartmentService DepartmentService, IJobTitleService JobTitleService, IAllowanceService AllowanceService)
         {
             this.EmployeeService = EmployeeService;
             this.DepartmentService = DepartmentService;
             this.JobTitleService = JobTitleService;
+            this.AllowanceService = AllowanceService;
         }
 
         #endregion
@@ -60,20 +63,21 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable<Employee> of All Employees</returns>
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public ActionResult Employees(EmployeeSearchRequset employeeSearchRequest)
         {
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
             var emp = EmployeeService.GetAll();
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
-                employees.Employeess.Select(x => x.CreateFromWithImage(User.Identity.Name)).ToList();
+                employees.Employeess.Select(x => x.CreateFromWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 FilePath = (ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/"),
-                data = employeeList,
-                recordsTotal = employees.TotalCount,
-                recordsFiltered = employees.TotalCount
+                aaData = employeeList,
+                iTotalRecords = employees.TotalCount,
+                iTotalDisplayRecords = employeeList.Count(),
+                sEcho = employeeList.Count(),
             };
 
             // Keep Search Request in Session
@@ -101,13 +105,14 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <returns></returns>
         public ActionResult Create(long? id)
         {
-            EmployeeViewModel viewModel = new EmployeeViewModel();
-            JobTitleSearchRequest jobTitleSearchRequest = new JobTitleSearchRequest();
-            viewModel.JobTitleList = JobTitleService.GetAll();
+            EmployeeViewModel viewModel = new EmployeeViewModel
+            {
+                JobTitleList = JobTitleService.GetAll()
+            };
             viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
             if (id != null)
             {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+                viewModel.Employee = EmployeeService.FindEmployeeById((long)id).CreateFrom();
             }
             return View(viewModel);
         }
@@ -120,32 +125,25 @@ namespace EPMS.Web.Areas.HR.Controllers
         [System.Web.Mvc.HttpPost]
         public ActionResult Create(EmployeeViewModel viewModel)
         {
-            var filePath = Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/");
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //Create Folder for the current user/sponsor
-                    if (!Directory.Exists(filePath)) Directory.CreateDirectory(filePath);
-                    //Save image to Folder if Posting to Fb
-                    if (viewModel.Employee.UploadImage != null)
-                    {
-                        var fileOldName = (viewModel.Employee.UploadImage.FileName);
-                        //Rename Image file with time stamp
-                        var filename = (DateTime.Now.ToString().Replace(".", "") + fileOldName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
-
-                        viewModel.Employee.EmployeeImagePath = filename;
-                        var savedFileName = Path.Combine(filePath, filename);
-                        viewModel.Employee.UploadImage.SaveAs(savedFileName);
-                    }
                     #region Update
 
                     if (viewModel.Employee.EmployeeId > 0)
                     {
+                        // Set Employee Values
                         viewModel.Employee.RecLastUpdatedDt = DateTime.Now;
-                        viewModel.Employee.RecLastUpdatedBy = User.Identity.GetUserId();
+                        viewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
+                        // Set Values for Allownace
+                        viewModel.Allowance.EmployeeId = viewModel.Employee.EmployeeId;
+                        viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                        // Update Employee and Allowance
                         var employeeToUpdate = viewModel.Employee.CreateFrom();
-                        if (EmployeeService.UpdateEmployee(employeeToUpdate))
+                        var allowanceToTpdate = viewModel.Allowance.CreateFrom();
+                        if (EmployeeService.UpdateEmployee(employeeToUpdate) && AllowanceService.UpdateAllowance(allowanceToTpdate))
                         {
                             TempData["message"] = new MessageViewModel { Message = "Employee has been Updated", IsUpdated = true };
                             return RedirectToAction("Employees");
@@ -157,11 +155,20 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     else
                     {
+                        // Set Employee Values
                         viewModel.Employee.RecCreatedDt = DateTime.Now;
-                        viewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
+                        viewModel.Employee.RecCreatedBy = User.Identity.Name;
                         var employeeToSave = viewModel.Employee.CreateFrom();
+                        long employeeId = EmployeeService.AddEmployee(employeeToSave);
 
-                        if (EmployeeService.AddEmployee(employeeToSave))
+                        // Set Values for Allownace
+                        viewModel.Allowance.EmployeeId = employeeId;
+                        viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+
+                        var allowanceToSave = viewModel.Allowance.CreateFrom();
+
+                        if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
                         {
                             TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
                             viewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
@@ -174,12 +181,57 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 catch (Exception e)
                 {
+                    TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
                     return View(viewModel);
                 }
             }
-
+            viewModel.JobTitleList = JobTitleService.GetAll();
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            TempData["message"] = new MessageViewModel { Message = "Please Fill the required Fields", IsError = true };
             return View(viewModel);
         }
+
+        /// <summary>
+        /// Upload Employee Photo
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UploadEmployeePhoto()
+        {
+            string imagename = "";
+            HttpPostedFileBase userPhoto = Request.Files[0];
+            try
+            {
+                string savedFileName = "";
+                //Save image to Folder
+                if ((userPhoto != null))
+                {
+                    imagename = (DateTime.Now.ToString().Replace(".", "") + userPhoto.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"]);
+                    savedFileName = Path.Combine(filePathOriginal, imagename);
+                    userPhoto.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { filename = imagename, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Details(long? id)
+        {
+            EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
+            {
+                JobTitleList = JobTitleService.GetAll(),
+            };
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            if (id > 0)
+            {
+                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+            }
+            return View(viewModel);
+        }
+
 
         /// <summary>
         /// Delete Employee Data from DB

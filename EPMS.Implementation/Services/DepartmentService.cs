@@ -37,9 +37,9 @@ namespace EPMS.Implementation.Services
             return departmentRepository.GetAllDepartment(departmentSearchRequest);
         }
 
-        public Department FindDepartmentById(int? id)
+        public Department FindDepartmentById(long? id)
         {
-            if (id != null) return departmentRepository.Find((int)id);
+            if (id != null) return repository.Find((long)id);
             return null;
         }
 

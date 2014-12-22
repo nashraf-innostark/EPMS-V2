@@ -1,27 +1,28 @@
 ﻿using System.Data.Entity;
+using EPMS.Repository.BaseRepository;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    public sealed class EmployeeRequestRepository : BaseRepository<EmployeeRequest>, IEmployeeRequestRepository
+    public sealed class AllowanceRepository : BaseRepository<Allowance>, IAllowanceRepository
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public EmployeeRequestRepository(IUnityContainer container) : base(container)
+        public AllowanceRepository(IUnityContainer container)
+            : base(container)
         {
         }
 
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<EmployeeRequest> DbSet
+        protected override IDbSet<Allowance> DbSet
         {
-            get { return db.EmployeeRequests; }
+            get { return db.Allowances; }
         }
 
         #endregion

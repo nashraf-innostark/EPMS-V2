@@ -8,30 +8,33 @@ namespace EPMS.Web.ViewModels.Employee
         public Models.Employee Employee { get; set; }
 
         public Models.JobTitle JobTitle { get; set; }
-        public Models.Department Department { get; set; }
+        //public Models.Department Department { get; set; }
         public Models.Allowance Allowance { get; set; }
 
         public IEnumerable<EPMS.Models.DomainModels.Department> DepartmentList { get; set; }
         public IEnumerable<EPMS.Models.DomainModels.JobTitle> JobTitleList { get; set; }
         public IEnumerable<Models.JobTitleAndDepartment> JobTitleDeptList { get; set; }
-        public IEnumerable<Models.Employee> data { get; set; }
+        public IEnumerable<Models.Employee> aaData { get; set; }
 
         public EmployeeSearchRequset SearchRequest { get; set; }
 
         /// <summary>
         /// Total Records in DB
         /// </summary>
-        public int recordsTotal;
+        public int iTotalRecords;
 
         /// <summary>
         /// Total Records Filtered
         /// </summary>
-        public int recordsFiltered;
+        public int iTotalDisplayRecords;
+        
+        public int sEcho;
+
 
         /// <summary>
         /// Search Request
         /// </summary>
-        public EmployeeSearchRequset EmployeeSearchRequest { get; set; }
+        //public EmployeeSearchRequset EmployeeSearchRequest { get; set; }
         public string FilePath { get; set; }
     }
 }
