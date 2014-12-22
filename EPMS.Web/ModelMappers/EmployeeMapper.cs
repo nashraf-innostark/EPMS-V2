@@ -68,6 +68,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 EmployeeFullName = source.EmployeeFirstName + " " + source.EmployeeMiddleName + " " + source.EmployeeLastName,
                 Email = source.Email,
+                JobTitle = source.JobTitle.CreateFrom(),
             };
 
         }

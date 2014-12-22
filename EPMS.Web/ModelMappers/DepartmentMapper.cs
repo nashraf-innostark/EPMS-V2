@@ -11,11 +11,10 @@ namespace EPMS.Web.ModelMappers
                 DepartmentId = source.DepartmentId,
                 DepartmentName = source.DepartmentName,
                 DepartmentDesc = source.DepartmentDesc,
-                //DepartmentNameA = source.DepartmentNameA,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
             return department;
         }
@@ -26,11 +25,10 @@ namespace EPMS.Web.ModelMappers
                 DepartmentId = source.DepartmentId,
                 DepartmentName = source.DepartmentName,
                 DepartmentDesc = source.DepartmentDesc,
-                //DepartmentNameA = source.DepartmentNameA,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
         }

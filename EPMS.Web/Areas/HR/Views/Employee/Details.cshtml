@@ -152,11 +152,13 @@
                 <label class="control-label" for="EmployeeDOB">Date of Birth (Arabic-Gregorian)</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmpDateOfBirthArabic, new { @class = "col-lg-2 datepickerArabic form-control ", onchange = "HijriToGregorianDOB(this,'EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
-                    @Html.TextBoxFor(model => model.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control ", @id = "EmployeeDOB" })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeDOB)
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmpDateOfBirthArabic, new { @class = "col-lg-2 datepickerArabic form-control ", onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
                 </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control ", @id = "EmployeeDOB" })
+                </div>
+                @Html.ValidationMessageFor(m => m.Employee.EmployeeDOB)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -186,11 +188,13 @@
                 <label class="control-label" for="IqamaIssueDate">Iqama Issue Date Or National ID Issue Date</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaIssueDtAr, new { @id = "IqamaIssueDateAr", onchange = "HijriToGregorianIID(this,'IqamaIssueDate')", @class = "col-lg-2 IqamaIssueDateAr form-control " })
-                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaIssueDt, new { @id = "IqamaIssueDate", @class = "col-lg-2 datepicker form-control " })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeIqamaIssueDt)
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaIssueDtAr, new { @id = "IqamaIssueDateAr", onchange = "HijriToGregorian(this,'#IqamaIssueDate')", @class = "col-lg-2 datepickerArabic form-control " })
                 </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaIssueDt, new { @id = "IqamaIssueDate", @class = "col-lg-2 datepicker form-control " })
+                </div>
+                @Html.ValidationMessageFor(m => m.Employee.EmployeeIqamaIssueDt)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -198,11 +202,13 @@
                 <label class="control-label" for="IqamaExpiryDate">Iqama Expiry Date Or National ID Expiry Date</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", onchange = "HijriToGregorianIED(this,'IqamaExpiryDate')", @class = "col-lg-2 IqamaExpiryDateAr form-control " })
-                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control " })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeIqamaExpiryDt)
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "col-lg-2 datepickerArabic form-control " })
                 </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control " })
+                </div>
+                @Html.ValidationMessageFor(m => m.Employee.EmployeeIqamaExpiryDt)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -221,11 +227,13 @@
                 <label class="control-label" for="PassportExpiryDate">Passport Expiry Date</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", onchange = "HijriToGregorianPED(this,'PassportExpiryDate')", @class = "col-lg-2 PassportExpiryDateAr form-control " })
-                    @Html.TextBoxFor(model => model.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control " })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeePassportExpiryDt)
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "col-lg-2 datepickerArabic form-control " })
                 </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control " })
+                </div>
+                @Html.ValidationMessageFor(m => m.Employee.EmployeePassportExpiryDt)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -245,7 +253,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobTitle.BasicSalary, new { @disabled = true, @id = "BasicSalary" })
+                    @Html.TextBoxFor(model => model.Employee.JobTitle.BasicSalary, new { @disabled = true, @id = "BasicSalary" })
                     @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary)
                 </div>
             </div>
@@ -292,6 +300,14 @@
                 </table>
             </div>
         </div>
+        <div class="control-group row-fluid" style="display: none">
+            <div class="span3 span-inset">
+                <button type="button" class="btn">Save Changes</button>
+            </div>
+            <div class="span3 span-inset">
+                <button type="button" class="btn">Deactivate Employee</button>
+            </div>
+        </div>
     </div>
 }
 <script>
@@ -324,15 +340,10 @@
                 });
             }
         });
+
         // Gregorian Date Picker
-        $("#EmployeeDOB").mask('99/99/9999');
-        $("#EmployeeDOB").datepicker();
-        $("#IqamaIssueDate").mask('99/99/9999');
-        $("#IqamaIssueDate").datepicker();
-        $("#IqamaExpiryDate").mask('99/99/9999');
-        $("#IqamaExpiryDate").datepicker();
-        $("#PassportExpiryDate").mask('99/99/9999');
-        $("#PassportExpiryDate").datepicker();
+        $(".datepicker").mask('99/99/9999');
+        $(".datepicker").datepicker();
         // Arabic Date Picker for DOB
         var calendar = $.calendars.instance('islamic');
         $('.datepickerArabic').calendarsPicker({
@@ -341,31 +352,7 @@
                 $(this).change();
             }
         });
-        // Arabic Date Picker for Iqama Issue Date
-        var calendar = $.calendars.instance('islamic');
-        $('.IqamaIssueDateAr').calendarsPicker({
-            calendar: calendar,
-            onSelect: function () {
-                $(this).change();
-            }
-        });
-        // Arabic Date Picker for Iqama Expiry Date
-        var calendar = $.calendars.instance('islamic');
-        $('.IqamaExpiryDateAr').calendarsPicker({
-            calendar: calendar,
-            onSelect: function () {
-                $(this).change();
-            }
-        });
-        // Arabic Date Picker for Passport Expirt Date
-        var calendar = $.calendars.instance('islamic');
-        $('.PassportExpiryDateAr').calendarsPicker({
-            calendar: calendar,
-            onSelect: function () {
-                $(this).change();
-            }
-        });
-
+        ConvertGregorianToIslamic();
         // Date from Gregorian to Islamic Starts
         $("#EmployeeDOB").on("change", function () {
             if ($('#EmployeeDOB').val() == "") {
@@ -409,55 +396,25 @@
         });
         // Date from Gregorian to Islamic Ends
     });
-    function HijriToGregorianDOB() {
-        if ($('#EmpDateOfBirthArabic').val() == "") {
-            $('#EmployeeDOB').val("");
-        }
-        else {
-            var splittedDate = $('#EmpDateOfBirthArabic').val().split('/');
-            $('#EmpDateOfBirthArabic').val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
-            var dateToBeChanged = $('#EmpDateOfBirthArabic').val();
-            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
-            $('#EmployeeDOB').val(newDate);
-        }
-    }
-    function HijriToGregorianIID() {
-        if ($('#IqamaIssueDateAr').val() == "") {
-            $('#IqamaIssueDate').val("");
-        }
-        else {
-            var splittedDate = $('#IqamaIssueDateAr').val().split('/');
-            $('#IqamaIssueDateAr').val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
-            var dateToBeChanged = $('#IqamaIssueDateAr').val();
-            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
-            $('#IqamaIssueDate').val(newDate);
-        }
-    }
-    function HijriToGregorianIED() {
-        if ($('#IqamaExpiryDateAr').val() == "") {
-            $('#IqamaExpiryDate').val("");
-        }
-        else {
-            var splittedDate = $('#IqamaExpiryDateAr').val().split('/');
-            $('#IqamaExpiryDateAr').val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
-            var dateToBeChanged = $('#IqamaExpiryDateAr').val();
-            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
-            $('#IqamaExpiryDate').val(newDate);
-        }
-    }
-    function HijriToGregorianPED() {
-        if ($('#PassportExpiryDateAr').val() == "") {
-            $('#PassportExpiryDate').val("");
-        }
-        else {
-            var splittedDate = $('#PassportExpiryDateAr').val().split('/');
-            $('#PassportExpiryDateAr').val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
-            var dateToBeChanged = $('#PassportExpiryDateAr').val();
-            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
-            $('#PassportExpiryDate').val(newDate);
-        }
-    }
 
+    function ConvertGregorianToIslamic() {
+        $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
+        $("#IqamaIssueDateAr").val(ConvertDates($("#IqamaIssueDate").val(), "gregorian", "islamic"));
+        $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
+        $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
+    }
+    function HijriToGregorian(currElement, toValue) {
+        if ($(currElement).val() == "") {
+            $(toValue).val("");
+        }
+        else {
+            var splittedDate = $(currElement).val().split('/');
+            $(currElement).val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
+            var dateToBeChanged = $(currElement).val();
+            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
+            $(toValue).val(newDate);
+        }
+    }
     function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
         var calender = $.calendars.instance(fromCalender);
         var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);

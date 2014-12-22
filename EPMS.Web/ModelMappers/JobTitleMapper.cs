@@ -19,18 +19,16 @@ namespace EPMS.Web.ModelMappers
         {
             return new Models.JobTitle
             {
-                //JobId = source.JobId,
-                //JobTitleNameE = source.JobTitleNameE,
-                //JobTitleNameA = source.JobTitleNameA,
-                //JobDescriptionE = source.JobDescriptionE,
-                //JobDescriptionA = source.JobDescriptionA,
-                //DepartmentId = source.DepartmentId,
-                //BasicSalary = source.BasicSalary,
-                //Department = source.Department.CreateFrom(),
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                JobTitleId = source.JobTitleId,
+                JobTitleName = source.JobTitleName,
+                JobTitleDesc = source.JobTitleDesc,
+                DepartmentId = source.DepartmentId,
+                BasicSalary = source.BasicSalary,
+                Department = source.Department.CreateFrom(),
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
         }
@@ -38,17 +36,16 @@ namespace EPMS.Web.ModelMappers
         {
             return new DomainModels.JobTitle
             {
-                //JobId = source.JobId,
-                //JobTitleNameE = source.JobTitleNameE,
-                //JobTitleNameA = source.JobTitleNameA,
-                //JobDescriptionE = source.JobDescriptionE,
-                //JobDescriptionA = source.JobDescriptionA,
-                //DepartmentId = source.DepartmentId,
-                //BasicSalary = source.BasicSalary,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                JobTitleId = source.JobTitleId,
+                JobTitleName = source.JobTitleName,
+                JobTitleDesc = source.JobTitleDesc,
+                DepartmentId = source.DepartmentId,
+                BasicSalary = source.BasicSalary,
+                //Department = source.Department.CreateFrom(),
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
         }
