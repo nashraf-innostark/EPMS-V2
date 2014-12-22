@@ -9,7 +9,6 @@ namespace EPMS.Web.Models
         public long DepartmentId { get; set; }
         [Required(ErrorMessage = "Department Name is required.")]
         public string DepartmentName { get; set; }
-        [Required(ErrorMessage = "Department Description is required.")]
         public string DepartmentDesc { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }

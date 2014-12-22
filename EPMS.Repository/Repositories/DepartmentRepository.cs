@@ -73,5 +73,11 @@ namespace EPMS.Repository.Repositories
                                            .Where(query).OrderByDescending(departmentClause[departmentSearchRequest.DepapartmentByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new DepartmentResponse { Departments  = departments, TotalCount = DbSet.Count(query) };
         }
+
+        public IQueryable<Department> GetEmployeesByDepartment(int id)
+        {
+            return
+                DbSet.Where(x => x.DepartmentId == id);
+        }
     }
 }

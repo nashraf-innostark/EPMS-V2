@@ -70,13 +70,14 @@ namespace EPMS.Web.Areas.HR.Controllers
             var emp = EmployeeService.GetAll();
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
-                employees.Employeess.Select(x => x.CreateFromWithImage(User.Identity.Name)).ToList();
+                employees.Employeess.Select(x => x.CreateFromWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 FilePath = (ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/"),
                 aaData = employeeList,
                 iTotalRecords = employees.TotalCount,
-                iTotalDisplayRecords = employees.TotalCount
+                iTotalDisplayRecords = employeeList.Count(),
+                sEcho = employeeList.Count(),
             };
 
             // Keep Search Request in Session
@@ -185,7 +186,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
             }
             viewModel.JobTitleList = JobTitleService.GetAll();
-            //viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
             TempData["message"] = new MessageViewModel { Message = "Please Fill the required Fields", IsError = true };
             return View(viewModel);
         }

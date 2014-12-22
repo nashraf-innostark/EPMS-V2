@@ -27,6 +27,9 @@ namespace EPMS.Web.ViewModels.Employee
         /// Total Records Filtered
         /// </summary>
         public int iTotalDisplayRecords;
+        
+        public int sEcho;
+
 
         /// <summary>
         /// Search Request

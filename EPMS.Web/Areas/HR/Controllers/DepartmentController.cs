@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Department;
+using EPMS.Web.ViewModels.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : BaseController
     {
         private readonly IDepartmentService oService;
+        private readonly IEmployeeService empService;
 
         #region Constructor
 
@@ -39,37 +44,41 @@ namespace EPMS.Web.Areas.HR.Controllers
 
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
-            return View(new DepartmentViewModel
+            return View(new DepartmentListViewModel
             {
                 DepartmentList = oService.GetAll().Select(x => x.CreateFrom()),
                 SearchRequest = departmentSearchRequest ?? new DepartmentSearchRequest()
             });
         }
 
-       public ActionResult AddEdit(long? id)
+        public ActionResult Create(int? id)
         {
-            DepartmentViewModel viewModel = new DepartmentViewModel();
+            DepartmentListViewModel listViewModel = new DepartmentListViewModel();
             if (id != null)
             {
-                viewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
+                listViewModel.Department = oService.FindDepartmentById(id).CreateFrom();
 
             }
-            return View(viewModel);
+
+            return View(listViewModel);
         }
 
-        [Authorize]
         [HttpPost]
-        public ActionResult AddEdit(DepartmentViewModel departmentViewModel)
+        public ActionResult Create(DepartmentListViewModel departmentListViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(departmentListViewModel);
+            }
             try
             {
                 #region Update
 
-                if (departmentViewModel.Department.DepartmentId > 0)
+                if (departmentListViewModel.Department.DepartmentId > 0)
                 {
-                    var departmentStatusToUpdate = departmentViewModel.Department.CreateFrom();
-                    departmentViewModel.Department.RecLastUpdatedDt = DateTime.Now;
-                    if (oService.UpdateDepartment(departmentStatusToUpdate))
+                    var departmentToUpdate = departmentListViewModel.Department.CreateFrom();
+                    departmentListViewModel.Department.RecLastUpdatedDt = DateTime.Now;
+                    if (oService.UpdateDepartment(departmentToUpdate))
                     {
                         return RedirectToAction("Index");
                     }
@@ -80,12 +89,12 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 else
                 {
-                    departmentViewModel.Department.RecCreatedDt = DateTime.Now;
-                    var modelToSave = departmentViewModel.Department.CreateFrom();
+                    departmentListViewModel.Department.RecCreatedDt = DateTime.Now;
+                    var modelToSave = departmentListViewModel.Department.CreateFrom();
 
                     if (oService.AddDepartment(modelToSave))
                     {
-                        departmentViewModel.Department.DepartmentId = modelToSave.DepartmentId;
+                        departmentListViewModel.Department.DepartmentId = modelToSave.DepartmentId;
                         return RedirectToAction("Index");
                     }
                 }
@@ -95,9 +104,22 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("AddEdit");
+                return RedirectToAction("Create");
             }
-            return View(departmentViewModel);
+            return View(departmentListViewModel);
+        }
+
+        public ActionResult Details(int? id)
+        {
+            DepartmentListViewModel detailViewModel = new DepartmentListViewModel();
+            if (id != null)
+            {
+                detailViewModel.Department = oService.FindDepartmentById(id).CreateFrom();
+                detailViewModel.EmployeeList =
+                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFrom());
+
+            }
+            return View(detailViewModel);
         }
 
     }

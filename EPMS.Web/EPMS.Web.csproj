@@ -306,6 +306,16 @@
     <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
       <DependentUpon>PrisonerReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Resource1.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -331,7 +341,7 @@
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Department\DepartmentViewModel.cs" />
+    <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
@@ -1419,11 +1429,14 @@
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
     <Content Include="Areas\HR\Views\Department\Index.cshtml" />
-    <Content Include="Areas\HR\Views\Department\AddEdit.cshtml" />
+    <Content Include="Areas\HR\Views\Department\Create.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\Request\Create.cshtml" />
+    <Content Include="Areas\HR\Views\Department\Details.cshtml" />
+    <Content Include="Areas\HR\Views\JobTitle\Index.cshtml" />
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Details.cshtml" />
+    <Content Include="Areas\HR\Views\JobTitle\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
@@ -1445,6 +1458,11 @@
     <Content Include="Scripts\App\select2\release.sh" />
     <Content Include="Scripts\App\select2\select2.jquery.json" />
     <Content Include="Scripts\App\select2\select2_locale_en.js.template" />
+    <EmbeddedResource Include="Resources\Resource1.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap\application.js" />
     <Content Include="Scripts\bootstrap\bootstrap-affix.js" />
@@ -1785,6 +1803,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Reports\PrisonerInfo.rdlc" />
     <EmbeddedResource Include="Reports\PrisonerReport.rdlc" />
+    <EmbeddedResource Include="Resources\Resource1.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.ar.Designer.cs</LastGenOutput>
@@ -1792,6 +1814,7 @@
     <EmbeddedResource Include="Resources\Shared\Common.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Products\Product.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

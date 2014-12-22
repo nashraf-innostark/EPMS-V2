@@ -19,13 +19,12 @@ namespace EPMS.Web.ModelMappers
         {
             return new Models.JobTitle
             {
-                //JobId = source.JobId,
-                //JobTitleNameE = source.JobTitleNameE,
-                //JobTitleNameA = source.JobTitleNameA,
-                //JobDescriptionE = source.JobDescriptionE,
-                //JobDescriptionA = source.JobDescriptionA,
-                //DepartmentId = source.DepartmentId,
-                //BasicSalary = source.BasicSalary,
+                JobTitleId = source.JobTitleId,
+                JobTitleName = source.JobTitleName,
+                JobTitleDesc = source.JobTitleDesc,
+                DepartmentId = source.DepartmentId,
+                BasicSalary = source.BasicSalary,
+                Department = source.Department.CreateFrom()
                 //Department = source.Department.CreateFrom(),
                 //CreatedBy = source.CreatedBy,
                 //CreatedDate = source.CreatedDate,
@@ -38,6 +37,11 @@ namespace EPMS.Web.ModelMappers
         {
             return new DomainModels.JobTitle
             {
+                JobTitleId = source.JobTitleId,
+                JobTitleName = source.JobTitleName,
+                JobTitleDesc = source.JobTitleDesc,
+                DepartmentId = source.DepartmentId,
+                BasicSalary = source.BasicSalary,
                 //JobId = source.JobId,
                 //JobTitleNameE = source.JobTitleNameE,
                 //JobTitleNameA = source.JobTitleNameA,

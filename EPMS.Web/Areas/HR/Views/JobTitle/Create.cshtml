@@ -1,0 +1,112 @@
+﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
+
+@{
+    ViewBag.Title = "Create Job Title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/Jobtitle/">
+                Job Title
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+@using (Html.BeginForm("Create", "JobTitle", FormMethod.Post, new { @id = "JobTitleForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.JobTitle.JobTitleId)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleName">Job Title Name</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleName, new { @dir = "ltr", placeholder = "Enter Job Title Name", id = "JobTitleName" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleName, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleDesc">Job Title Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDesc, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDesc, "")
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="departmentId">Department</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentName"), "Select Department", new { @class = "select2me", id = " departmentId " })
+                    @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="BasicSalary">Basic Salary</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { @dir = "ltr", placeholder = "Enter Basic Salary", id = "BasicSalary" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary, "")
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+    $(function () {
+
+        $("[readonly='false']").removeAttr("readonly");
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
+        //$("#signupuser").click(function (e) {
+
+        //    alert($("#employeeId option:selected").val());
+        //    if ($('#employeeId :selected').val() == "") {
+        //        toastr.error("Please select an Employee");
+        //        return false;
+        //    }
+        //    return true;
+        //});
+    });
+</script>
