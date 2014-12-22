@@ -1318,7 +1318,7 @@
     <Content Include="Areas\PMS\Views\web.config" />
     <Content Include="Areas\Notification\Views\web.config" />
     <Content Include="Images\photon\entypo.eot" />
-    <Content Include="Areas\HR\Views\Employee\Employees.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Index.cshtml" />
     <Content Include="Images\photon\entypo.ttf" />
     <Content Include="Images\photon\entypo.woff" />
     <Content Include="Images\photon\iconic_stroke.eot" />
@@ -1756,7 +1756,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\HR\Models\" />
-    <Folder Include="Areas\HR\Views\JobTitle\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />
     <Folder Include="Areas\Notification\Models\" />

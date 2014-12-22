@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
@@ -43,7 +44,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Employee ListView Action Method
         /// </summary>
         /// <returns></returns>
-        public ActionResult Employees()
+        public ActionResult Index()
         {
             EmployeeSearchRequset employeeSearchRequest = Session["PageMetaData"] as EmployeeSearchRequset;
 
@@ -65,7 +66,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable of All Employee</returns>
         [HttpPost]
-        public ActionResult Employees(EmployeeSearchRequset employeeSearchRequest)
+        public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
             //string rawSearch = HttpContext.Current.Request.Params["sSearch"];
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
@@ -108,7 +109,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        public ActionResult Create(long? id)
+        public ActionResult Details(long? id)
         {
             EmployeeViewModel viewModel = new EmployeeViewModel
             {
@@ -128,58 +129,75 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
         [HttpPost]
-        public ActionResult Create(EmployeeViewModel viewModel)
+        public ActionResult Details(EmployeeViewModel viewModel)
         {
             try
             {
-                #region Update
-
-                if (viewModel.Employee.EmployeeId > 0)
+                if (Roles.IsUserInRole("Admin"))
                 {
-                    // Set Employee Values
-                    viewModel.Employee.RecLastUpdatedDt = DateTime.Now;
-                    viewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
-                    // Set Values for Allownace
-                    viewModel.Allowance.EmployeeId = viewModel.Employee.EmployeeId;
-                    viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
-                    viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
-                    // Update Employee and Allowance
-                    var employeeToUpdate = viewModel.Employee.CreateFrom();
-                    var allowanceToTpdate = viewModel.Allowance.CreateFrom();
-                    if (EmployeeService.UpdateEmployee(employeeToUpdate) && AllowanceService.UpdateAllowance(allowanceToTpdate))
+                    #region Update
+
+                    if (viewModel.Employee.EmployeeId > 0)
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Employee has been Updated", IsUpdated = true };
-                        return RedirectToAction("Employees");
+                        // Set Employee Values
+                        viewModel.Employee.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
+                        // Set Values for Allownace
+                        viewModel.Allowance.EmployeeId = viewModel.Employee.EmployeeId;
+                        viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                        // Update Employee and Allowance
+                        var employeeToUpdate = viewModel.Employee.CreateFrom();
+                        var allowanceToTpdate = viewModel.Allowance.CreateFrom();
+                        if (EmployeeService.UpdateEmployee(employeeToUpdate) &&
+                            AllowanceService.UpdateAllowance(allowanceToTpdate))
+                        {
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = "Employee has been Updated",
+                                IsUpdated = true
+                            };
+                            return RedirectToAction("Index");
+                        }
                     }
+
+                    #endregion
+
+                    #region Add
+
+                    else
+                    {
+                        // Set Employee Values
+                        viewModel.Employee.RecCreatedDt = DateTime.Now;
+                        viewModel.Employee.RecCreatedBy = User.Identity.Name;
+                        var employeeToSave = viewModel.Employee.CreateFrom();
+                        long employeeId = EmployeeService.AddEmployee(employeeToSave);
+
+                        // Set Values for Allownace
+                        viewModel.Allowance.EmployeeId = employeeId;
+                        viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+
+                        var allowanceToSave = viewModel.Allowance.CreateFrom();
+
+                        if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
+                        {
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = "Employee has been Added",
+                                IsSaved = true
+                            };
+                            viewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
+                            return RedirectToAction("Index");
+                        }
+                    }
+
+                    #endregion
                 }
-                #endregion
-
-                #region Add
-
-                else
+                else if (Roles.IsUserInRole("Employee") || Roles.IsUserInRole("PM"))
                 {
-                    // Set Employee Values
-                    viewModel.Employee.RecCreatedDt = DateTime.Now;
-                    viewModel.Employee.RecCreatedBy = User.Identity.Name;
-                    var employeeToSave = viewModel.Employee.CreateFrom();
-                    long employeeId = EmployeeService.AddEmployee(employeeToSave);
-
-                    // Set Values for Allownace
-                    viewModel.Allowance.EmployeeId = employeeId;
-                    viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
-                    viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
-
-                    var allowanceToSave = viewModel.Allowance.CreateFrom();
-
-                    if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
-                    {
-                        TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
-                        viewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
-                        return RedirectToAction("Employees");
-                    }
+                    
                 }
-
-                #endregion
             }
             catch (Exception)
             {
@@ -197,7 +215,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Upload Employee Photo
         /// </summary>
         /// <returns></returns>
-       
+
         public ActionResult UploadEmployeePhoto()
         {
             string imagename = "";
@@ -221,26 +239,26 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         #endregion
 
-        #region Employee Detail Page
-        /// <summary>
-        /// Show Details of Employee
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>View</returns>
-        public ActionResult Details(long? id)
-        {
-            EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
-            {
-                JobTitleList = JobTitleService.GetAll(),
-            };
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
-            if (id != null)
-            {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
-            }
-            return View(viewModel);
-        }
-        #endregion
+        //#region Employee Detail Page
+        ///// <summary>
+        ///// Show Details of Employee
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns>View</returns>
+        //public ActionResult Details(long? id)
+        //{
+        //    EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
+        //    {
+        //        JobTitleList = JobTitleService.GetAll(),
+        //    };
+        //    viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+        //    if (id != null)
+        //    {
+        //        viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+        //    }
+        //    return View(viewModel);
+        //}
+        //#endregion
 
         /// <summary>
         /// Delete Employee Data from DB

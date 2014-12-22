@@ -405,7 +405,10 @@
         });
         // Gregorian Date Picker
         $(".datepicker").mask('99/99/9999');
-        $(".datepicker").datepicker();
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
         
         // Arabic Date Picker for DOB
         var calendar = $.calendars.instance('islamic');

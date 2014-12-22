@@ -1,5 +1,5 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.Employee.EmployeeDetailViewModel
+@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
 @{
     ViewBag.Title = "My Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -258,6 +258,84 @@
                 </div>
             </div>
         </div>
+        @if (Roles.IsUserInRole("Admin"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Allownce1">Allownce1</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Allowance.Allowance1, new { @id = "Allownce1" })
+                        @Html.ValidationMessageFor(m => m.Allowance.Allowance1)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Allownce2">Allownce2</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Allowance.Allowance2, new { @id = "Allownce2" })
+                        @Html.ValidationMessageFor(m => m.Allowance.Allowance2)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Allownce3">Allownce3</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Allowance.Allowance3, new { @id = "Allownce3" })
+                        @Html.ValidationMessageFor(m => m.Allowance.Allowance3)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Allownce4">Allownce4</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Allowance.Allowance4, new { @id = "Allownce4" })
+                        @Html.ValidationMessageFor(m => m.Allowance.Allowance4)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Allownce5">Allownce5</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Allowance.Allowance5, new { @id = "Allownce5" })
+                        @Html.ValidationMessageFor(m => m.Allowance.Allowance5)
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Deduction1">Deduction1</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Deduction2">Deduction2</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+
+                    </div>
+                </div>
+            </div>
+        }
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for=""><a>Payroll Page</a></label>
@@ -308,6 +386,17 @@
                 <button type="button" class="btn">Deactivate Employee</button>
             </div>
         </div>
+        @if (Roles.IsUserInRole("Admin"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn">Save Changes</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button type="button" class="btn">Deactivate Employee</button>
+                </div>
+            </div>
+        }
     </div>
 }
 <script>
@@ -343,7 +432,10 @@
 
         // Gregorian Date Picker
         $(".datepicker").mask('99/99/9999');
-        $(".datepicker").datepicker();
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
         // Arabic Date Picker for DOB
         var calendar = $.calendars.instance('islamic');
         $('.datepickerArabic').calendarsPicker({
