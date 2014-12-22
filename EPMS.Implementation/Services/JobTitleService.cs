@@ -33,9 +33,10 @@ namespace EPMS.Implementation.Services
             return repository.GetAllJobTitle(jobTitleSearchRequest);
         }
 
-        public JobTitle FindJobTitleById(int id)
+        public JobTitle FindJobTitleById(int? id)
         {
-            return repository.Find(id);
+            if (id != null) return repository.Find((int)id);
+            return null;
         }
 
         public IEnumerable<JobTitle> GetAll()

@@ -10,16 +10,19 @@ namespace EPMS.Implementation.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmentRepository repository;
+        private readonly IEmployeeRepository employeeRepository;
+        private readonly IDepartmentRepository departmentRepository;
 
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="xRepository"></param>
-        public DepartmentService(IDepartmentRepository xRepository)
+        public DepartmentService(IDepartmentRepository xDepartmentRepository, IEmployeeRepository employeeRepository)
         {
-            repository = xRepository;
+            if (xDepartmentRepository == null) throw new ArgumentNullException("xDepartmentRepository");
+            if (employeeRepository == null) throw new ArgumentNullException("employeeRepository");
+            this.employeeRepository = employeeRepository;
+            departmentRepository = xDepartmentRepository;
         }
 
         #endregion
@@ -27,16 +30,16 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<Department> GetAll()
         {
-            return repository.GetAll();
+            return departmentRepository.GetAll();
         }
         public DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest)
         {
-            return repository.GetAllDepartment(departmentSearchRequest);
+            return departmentRepository.GetAllDepartment(departmentSearchRequest);
         }
 
         public Department FindDepartmentById(int? id)
         {
-            if (id != null) return repository.Find((int)id);
+            if (id != null) return departmentRepository.Find((int)id);
             return null;
         }
 
@@ -44,8 +47,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                repository.Add(department);
-                repository.SaveChanges();
+                departmentRepository.Add(department);
+                departmentRepository.SaveChanges();
             }
             catch (Exception)
             {
@@ -57,8 +60,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                repository.Update(department);
-                repository.SaveChanges();
+                departmentRepository.Update(department);
+                departmentRepository.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -68,15 +71,16 @@ namespace EPMS.Implementation.Services
         }
         public void DeleteDepartment(Department department)
         {
-            try
-            {
-                repository.Delete(department);
-                repository.SaveChanges();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            departmentRepository.Delete(department);
+            departmentRepository.SaveChanges();
+        }
+
+        /// <summary>
+        /// Finds Employees by Department ID
+        /// </summary>
+        public IEnumerable<Employee> FindEmployeeByDeprtmentId(int depertmentId)
+        {
+            return employeeRepository.GetEmployeesByDepartmentId(depertmentId);
         }
     }
 }

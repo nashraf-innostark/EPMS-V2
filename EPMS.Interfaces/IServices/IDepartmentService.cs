@@ -18,5 +18,7 @@ namespace EPMS.Interfaces.IServices
         bool AddDepartment(Department department);
         bool UpdateDepartment(Department department);
         void DeleteDepartment(Department department);
+
+        IEnumerable<Employee> FindEmployeeByDeprtmentId(int depertmentId);
     }
 }

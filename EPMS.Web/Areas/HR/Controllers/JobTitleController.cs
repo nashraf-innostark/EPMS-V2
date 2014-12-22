@@ -7,6 +7,7 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
+using EPMS.Web.ViewModels.Department;
 using EPMS.Web.ViewModels.JobTitle;
 using EPMS.Web.Models;
 
@@ -15,7 +16,7 @@ namespace EPMS.Web.Areas.HR.Controllers
     public class JobTitleController : BaseController
     {
         private readonly IJobTitleService jobTitleService;
-        private readonly IDepartmentService DepartmentService;
+        private readonly IDepartmentService departmentService;
 
         /// <summary>
         /// Constructor 
@@ -26,7 +27,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService)
         {
-            this.DepartmentService = departmentService;
+            this.departmentService = departmentService;
             this.jobTitleService = jobTitleService;
         }
 
@@ -35,7 +36,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
 
         // GET: JobTitles ListView Action Method
-        public ActionResult JobTitleLV()
+        public ActionResult Index()
         {
             JobTitleSearchRequest jobTitleSearchRequest = Session["PageMetaData"] as JobTitleSearchRequest;
 
@@ -47,15 +48,10 @@ namespace EPMS.Web.Areas.HR.Controllers
 
             return View(new JobTitleViewModel
             {
-                DepartmentList = DepartmentService.GetAll().Select(x => x.CreateFrom()),
+                DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom()),
                 JobTitleList = jobList,
-                SearchRequest = jobTitleSearchRequest ?? new JobTitleSearchRequest()
+                SearchRequest = jobTitleSearchRequest ?? new JobTitleSearchRequest(),
             });
-        }
-
-        public ActionResult ComboBox()
-        {
-            return View();
         }
 
         /// <summary>
@@ -63,26 +59,77 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        public ActionResult AddEdit(int? id)
+        public ActionResult Create(int? id)
         {
             JobTitleViewModel viewModel = new JobTitleViewModel();
-            //if (id != null)
-            //{
-            //    viewModel.Employee = oEmployeeService.FindEmployeeById(id).CreateFrom();
-            //}
+            if (id != null)
+            {
+                viewModel.JobTitle = jobTitleService.FindJobTitleById(id).CreateFrom();
+            }
+            viewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
             return View(viewModel);
         }
-        public int AddData(JobTitleViewModel viewModel)
+
+        [HttpPost]
+        public ActionResult Create(JobTitleViewModel jobTitleViewModel)
         {
-            viewModel.JobTitle.RecCreatedDt = DateTime.Now;
-            viewModel.JobTitle.RecCreatedBy = User.Identity.Name;
-            var jobToSave = viewModel.JobTitle.CreateFrom();
-            if (jobTitleService.AddJob(jobToSave))
+            if (!ModelState.IsValid)
             {
-                TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
-                return 1;
+                jobTitleViewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
+                
+                return View(jobTitleViewModel);
             }
-            return 0;
+            try
+            {
+                #region Update
+
+                if (jobTitleViewModel.JobTitle.JobTitleId > 0)
+                {
+                    var jobTitleToUpdate = jobTitleViewModel.JobTitle.CreateFrom();
+                    jobTitleViewModel.JobTitle.RecLastUpdatedDt = DateTime.Now;
+                    if (jobTitleService.UpdateJob(jobTitleToUpdate))
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                #endregion
+
+                #region Add
+
+                else
+                {
+                    jobTitleViewModel.JobTitle.RecCreatedDt = DateTime.Now;
+                    var modelToSave = jobTitleViewModel.JobTitle.CreateFrom();
+
+                    if (jobTitleService.AddJob(modelToSave))
+                    {
+                        jobTitleViewModel.JobTitle.JobTitleId = modelToSave.JobTitleId;
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                #endregion
+
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Create");
+            }
+            
+            return View(jobTitleViewModel);
         }
+
+        //public int AddData(JobTitleViewModel viewModel)
+        //{
+        //    viewModel.JobTitle.RecCreatedDt = DateTime.Now;
+        //    viewModel.JobTitle.RecCreatedBy = User.Identity.Name;
+        //    var jobToSave = viewModel.JobTitle.CreateFrom();
+        //    if (jobTitleService.AddJob(jobToSave))
+        //    {
+        //        TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
+        //        return 1;
+        //    }
+        //    return 0;
+        //}
     }
 }
