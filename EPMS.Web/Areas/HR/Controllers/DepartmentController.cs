@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
-using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Department;
-using EPMS.Web.ViewModels.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -51,12 +45,12 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
-        public ActionResult Create(int? id)
+        public ActionResult Create(long? id)
         {
             DepartmentListViewModel listViewModel = new DepartmentListViewModel();
             if (id != null)
             {
-                listViewModel.Department = oService.FindDepartmentById(id).CreateFrom();
+                listViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
 
             }
 
@@ -66,10 +60,10 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Create(DepartmentListViewModel departmentListViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(departmentListViewModel);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(departmentListViewModel);
+            //}
             try
             {
                 #region Update
@@ -109,12 +103,12 @@ namespace EPMS.Web.Areas.HR.Controllers
             return View(departmentListViewModel);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(long? id)
         {
             DepartmentListViewModel detailViewModel = new DepartmentListViewModel();
             if (id != null)
             {
-                detailViewModel.Department = oService.FindDepartmentById(id).CreateFrom();
+                detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
                 detailViewModel.EmployeeList =
                     oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFrom());
 
