@@ -14,7 +14,7 @@ namespace EPMS.Web.Models
         [Display(Name="Loan Amount")]
         public double? LoanAmount { get; set; }
         [Required]
-        [Display(Name = "Loan Date")]
+        [Display(Name = "Loan Date (Gregorian)")]
         public DateTime? LoanDate { get; set; }
         [Required]
         [Display(Name = "Installment Amount")]

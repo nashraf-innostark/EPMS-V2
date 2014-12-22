@@ -1,30 +1,29 @@
-﻿@{
-    ViewBag.Title = "Requests";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- Navigation Bar -->
+
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="~/Dashboard/Index">
+            <a href="/Home/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
-        <li class="current">
-            <a href="javascript:;">@ViewBag.Title</a>
+        <li>
+            <a href="">
+                Job Titles' List
+            </a>
         </li>
     </ul>
 </div>
-<!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/HR/Request/Create">Create New Request</a></small></h3>
+    <h3> <small><a href="~/HR/JobTitle/Create">Add New Job Title</a></small></h3>
 </header>
-<!--Notifications begin-->
-@Html.Partial("_Alert")
-
 
 <div id="English" class="container-fluid">
     <form class="form-horizontal">
@@ -92,8 +91,3 @@
         });
     });
 </script>
-
-
-
-
-

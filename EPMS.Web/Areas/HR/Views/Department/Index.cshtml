@@ -1,7 +1,7 @@
-﻿@model EPMS.Web.ViewModels.Department.DepartmentViewModel
+﻿@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "All Departments";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -22,7 +22,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/HR/Department/AddEdit">Add New Department</a></small></h3>
+    <h3> <small><a href="~/HR/Department/Create">Add New Department</a></small></h3>
 </header>
 
 <div class="container-fluid">
@@ -33,8 +33,8 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Case Status Name</th>
-                                <th>Case Status Description</th>
+                                <th>Department Name</th>
+                                <th>Department Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +42,8 @@
                                 {
                                     <tr>
                                         <td>@item.DepartmentId</td>
-                                        <td>@item.DepartmentName</td>
+                                        <td>@Html.ActionLink(@item.DepartmentName, "Details", new { id = item.DepartmentId }) </td>
+                                        @*<td>@item.DepartmentName</td>*@
                                         <td>@item.DepartmentDesc</td>
 
                                     </tr>
@@ -67,8 +68,21 @@
         //        }
         //    ],
         //});
+        //    "bFilter": true,
+        //     "aoColumnDefs": [
+        //        {
+        //            "targets": [0],
+        //            "visible": false,
+        //            "searchable": false
+        //        }
+        //    ],
         $('#DepartmentList').dataTable({
             "sPaginationType": "bootstrap",
+            "aoColumns": [
+                { "bVisible": false }, // cloumn to be hide
+                  null, // not hide
+                  null
+            ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
