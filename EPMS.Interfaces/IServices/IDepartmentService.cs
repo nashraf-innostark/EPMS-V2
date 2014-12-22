@@ -13,12 +13,12 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Department> GetAll();
         DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
 
-        Department FindDepartmentById(long? id);
+        Department FindDepartmentById(long id);
 
         bool AddDepartment(Department department);
         bool UpdateDepartment(Department department);
         void DeleteDepartment(Department department);
 
-        IEnumerable<Employee> FindEmployeeByDeprtmentId(int depertmentId);
+        IEnumerable<Employee> FindEmployeeByDeprtmentId(long depertmentId);
     }
 }

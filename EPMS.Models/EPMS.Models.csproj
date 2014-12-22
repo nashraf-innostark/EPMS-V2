@@ -136,10 +136,12 @@
     <Compile Include="RequestModels\DepartmentSearchRequest.cs" />
     <Compile Include="RequestModels\EmployeeSearchRequset.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
+    <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
+    <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
   </ItemGroup>
   <ItemGroup>
