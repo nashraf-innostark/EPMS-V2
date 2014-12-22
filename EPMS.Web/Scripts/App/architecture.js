@@ -1,5 +1,6 @@
 ﻿//show toast on new item created or updated based on url parameter
 $(function () {
+    debugger
     var messageVm = $("#Message").val();
     if ($("#IsSaved").val()) {
         if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {
@@ -18,6 +19,13 @@ $(function () {
     else if ($("#IsError").val()) {
         if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {
             var m = $(".alert-error");
+            m.children("span").text(messageVm);
+            m.show();
+        }
+    }
+    else if ($("#IsInfo").val()) {
+        if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {
+            var m = $(".alert-info");
             m.children("span").text(messageVm);
             m.show();
         }

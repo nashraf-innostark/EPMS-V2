@@ -8,5 +8,7 @@ namespace EPMS.Interfaces.IServices
         long AddRequestDetail(RequestDetail model);
         EmployeeRequest Find(long id);
         RequestDetail GetRequestDetailByRequestId(long requestId);
+        bool UpdateRequest(EmployeeRequest request);
+        bool UpdateRequestDetail(RequestDetail requestDetail);
     }
 }

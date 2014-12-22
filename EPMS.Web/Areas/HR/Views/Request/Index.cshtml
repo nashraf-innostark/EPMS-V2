@@ -1,5 +1,31 @@
 ﻿@{
+    ViewBag.Title = "Requests";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+
+
+
 
 

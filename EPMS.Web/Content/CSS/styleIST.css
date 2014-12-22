@@ -18,3 +18,6 @@
 .datepicker .datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .inline-font-icons-list .PassportExpiryDateAr {
     width: 10px !important;
 }
+.cursorHand {
+    cursor: pointer !important;
+}

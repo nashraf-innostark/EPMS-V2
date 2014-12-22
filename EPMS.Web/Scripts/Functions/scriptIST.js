@@ -211,6 +211,7 @@ function GregorianToHijri(englishCalendar,arabicCalendar) {
     }
 }
 $(document).ready(function() {
+    $(".datepickerArabic").mask('99/99/9999');
     $(".datepickerGregorian").mask('99/99/9999');
     $(".datepickerGregorian").datepicker({
         changeMonth: true,

@@ -96,6 +96,7 @@
     <script src="~/Scripts/JqueryCalendar/jquery.calendars.islamic.js"></script>
     <!--Calendar Ends-->
     <script src="~/Scripts/Functions/scriptIST.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
 </head>
 <body class="body-inner">
 
@@ -174,6 +175,7 @@
         <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
         <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
         <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+        <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
     }
     <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
 

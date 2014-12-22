@@ -26,6 +26,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         // GET: HR/Request
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
         }
         // GET: HR/Request/Create
@@ -46,6 +47,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                     requestViewModel.EmployeeRequest.Employee.DepartmentName = currentUser.Employee.JobTitle.Department.DepartmentName;
                 }
             }
+            if (requestViewModel.EmployeeRequestDetail.IsApproved)
+                ViewBag.MessageVM = new MessageViewModel { Message = "Your request has been approved by the Administrator, now you are unable to make changes in this request.", IsInfo = true };
             return View(requestViewModel);
         }
         // Post: HR/Request/Create
@@ -60,12 +63,10 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     requestViewModel.EmployeeRequest.RecLastUpdatedBy = User.Identity.GetUserId();
                     requestViewModel.EmployeeRequest.RecLastUpdatedDt = DateTime.Now;
-
-                    //Update to Db, and get RequestId
-                    requestViewModel.EmployeeRequest.RequestId = employeeRequestService.AddRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer());
-                    if (requestViewModel.EmployeeRequest.RequestId > 0)
+                    //Update Request
+                    if (employeeRequestService.UpdateRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer()))
                     {
-                        //Add Request Detail
+                        //Add RequestDetail
                         requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
                         requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
                         requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
@@ -86,11 +87,11 @@ namespace EPMS.Web.Areas.HR.Controllers
                     requestViewModel.EmployeeRequest.RecLastUpdatedBy = User.Identity.GetUserId();
                     requestViewModel.EmployeeRequest.RecLastUpdatedDt = DateTime.Now;
 
-                    //Add to Db, and get RequestId
+                    //Add Request to Db, and get RequestId
                     requestViewModel.EmployeeRequest.RequestId = employeeRequestService.AddRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer());
                     if (requestViewModel.EmployeeRequest.RequestId > 0)
                     {
-                        //Add Request Detail
+                        //Add RequestDetail
                         requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
                         requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
                         requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
@@ -100,13 +101,12 @@ namespace EPMS.Web.Areas.HR.Controllers
                         TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
                     }
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
             catch(Exception e)
             {
+                return View(requestViewModel);
             }
-
-            return View();
         }
     }
 }
