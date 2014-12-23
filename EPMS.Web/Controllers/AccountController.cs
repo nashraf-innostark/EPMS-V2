@@ -237,12 +237,12 @@ namespace IdentitySample.Controllers
         // GET: /Account/Register
         [AllowAnonymous]
         [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
-        public ActionResult Create(string email)
+        public ActionResult Create(string userName)
         {
             RegisterViewModel oResult = new RegisterViewModel();
-            if (!string.IsNullOrEmpty(email))
+            if (!string.IsNullOrEmpty(userName))
             {
-                AspNetUser userToEdit = UserManager.FindByEmail(email);
+                AspNetUser userToEdit = UserManager.FindByName(userName);
                 oResult = new RegisterViewModel
                 {
                     UserId = userToEdit.Id,
@@ -291,6 +291,7 @@ namespace IdentitySample.Controllers
                         FirstName = item.Employee.EmployeeFirstName,
                         KeyId = item.Id,
                         LastName = item.Employee.EmployeeLastName,
+                        UserName = item.UserName,
                         Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name
                     });
                 }

@@ -1,15 +1,14 @@
 ﻿@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
-    string btnText;
-    if (!string.IsNullOrEmpty(Model.UserId))
+    string btnText = "Save";
+    ViewBag.Title = "Register User";
+    if (Model != null)
     {
-        ViewBag.Title = "Update User";
-        btnText = "Update";
-    }
-    else
-    {
-        ViewBag.Title = "Register User";
-        btnText = "Save";
+        if (!string.IsNullOrEmpty(Model.UserId))
+        {
+            ViewBag.Title = "Update User";
+            btnText = "Update";
+        }
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }

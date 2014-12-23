@@ -47,7 +47,7 @@
                         @foreach (var item in Model.Data.ToList())
                         {
                             <tr>
-                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { email = item.Email }) </td>
+                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName}) </td>
                                 @*<td>@item.FirstName @item.LastName</td>*@
                                 <td>@item.Email</td>
                                 <td>@item.Telephone</td>

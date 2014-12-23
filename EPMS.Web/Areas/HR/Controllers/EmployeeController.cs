@@ -26,15 +26,19 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
         private readonly IAllowanceService AllowanceService;
+        private readonly IAspNetUserService AspNetUserService;
+
+
 
         #region Constructor
 
-        public EmployeeController(IEmployeeService employeeService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService)
+        public EmployeeController(IEmployeeService employeeService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService)
         {
             EmployeeService = employeeService;
             DepartmentService = departmentService;
             JobTitleService = jobTitleService;
             AllowanceService = allowanceService;
+            AspNetUserService = aspNetUserService;
         }
 
         #endregion
@@ -44,19 +48,29 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Employee ListView Action Method
         /// </summary>
         /// <returns></returns>
+        
         public ActionResult Index()
         {
-            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
-
-            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
-
-            EmployeeViewModel employeeViewModel = new EmployeeViewModel
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel();
+            if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("PM"))
             {
-                DepartmentList = DepartmentService.GetAll(),
-                JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
-                SearchRequest = employeeSearchRequest ?? new EmployeeSearchRequset()
-            };
-            return View(employeeViewModel);
+                EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
+                ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+
+                employeeViewModel = new EmployeeViewModel
+                {
+                    DepartmentList = DepartmentService.GetAll(),
+                    JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
+                    SearchRequest = employeeSearchRequest,
+                };
+                return View(employeeViewModel);
+            }
+            if (Roles.IsUserInRole("Employee"))
+            {
+                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+                return RedirectToAction("Create", new { id = id});
+            }
+            return null;
         }
         /// <summary>
         /// Get All Employees and return to View
@@ -73,7 +87,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
-                FilePath = (ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/"),
                 aaData = employeeList,
                 iTotalRecords = employees.TotalCount,
                 iTotalDisplayRecords = employeeList.Count(),
@@ -104,18 +117,48 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
+        
         public ActionResult Create(long? id)
         {
-            EmployeeViewModel viewModel = new EmployeeViewModel
+            if (id == null)
             {
-                JobTitleList = JobTitleService.GetAll()
-            };
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-            if (id != null)
-            {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                EmployeeViewModel viewModel = new EmployeeViewModel
+                {
+                    JobTitleList = JobTitleService.GetAll()
+                };
+                viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                viewModel.EmployeeName = "Add New Employee";
+                viewModel.BtnText = "Save Employee";
+                viewModel.PageTitle = "Employee Addition";
+                return View(viewModel);
             }
-            return View(viewModel);
+            long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+            if (id > 0 && id == empId)
+            {
+                EmployeeViewModel viewModel = new EmployeeViewModel
+                {
+                    JobTitleList = JobTitleService.GetAll()
+                };
+                viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                if (id > 0 && Roles.IsUserInRole("Admin"))
+                {
+                    viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                    viewModel.EmployeeName = viewModel.Employee.EmployeeFullName;
+                    viewModel.PageTitle = "Employee's List";
+                    viewModel.BtnText = "Update Changes";
+                    viewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + viewModel.Employee.EmployeeImagePath;
+                }
+                if (id > 0 && (Roles.IsUserInRole("Employee") || Roles.IsUserInRole("PM")))
+                {
+                    viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                    viewModel.EmployeeName = viewModel.Employee.EmployeeFullName;
+                    viewModel.PageTitle = "My Profile";
+                    viewModel.BtnText = "Update Changes";
+                    viewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + viewModel.Employee.EmployeeImagePath;
+                }
+                return View(viewModel);
+            }
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         /// <summary>
@@ -234,26 +277,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         #endregion
 
-        //#region Employee Detail Page
-        ///// <summary>
-        ///// Show Details of Employee
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns>View</returns>
-        //public ActionResult Details(long? id)
-        //{
-        //    EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
-        //    {
-        //        JobTitleList = JobTitleService.GetAll(),
-        //    };
-        //    viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
-        //    if (id != null)
-        //    {
-        //        viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
-        //    }
-        //    return View(viewModel);
-        //}
-        //#endregion
 
         /// <summary>
         /// Delete Employee Data from DB

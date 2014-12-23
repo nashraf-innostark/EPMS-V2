@@ -8,6 +8,7 @@ namespace EPMS.Web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Telephone { get; set; }
+        public string UserName { get; set; }
         public string Address { get; set; }
         public string ImageName { get; set; }
         public DateTime? DateOfBirth { get; set; }
