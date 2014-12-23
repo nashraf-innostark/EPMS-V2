@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
@@ -10,6 +12,7 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Request;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -42,16 +45,21 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
         {
             EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
-
-            if (Roles.IsUserInRole("Admin"))
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
+            if (userRole != null && userRole.Name == "Admin")
             {
-                viewModel.EmployeeRequests = employeeRequestService.LoadAllRequests("Admin").Select(x => x.CreateFromServerToClient());
+                searchRequest.Requester = "Admin";
             }
             else
             {
-                var employeeId = aspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
-                viewModel.EmployeeRequests = employeeRequestService.LoadAllRequests(employeeId).Select(x => x.CreateFromServerToClient());
+                searchRequest.Requester = aspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
             }
+            var employeeRequestResponse = employeeRequestService.LoadAllRequests(searchRequest);
+            viewModel.aaData = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+            viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
+            viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+            viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
             // Keep Search Request in Session
             Session["PageMetaData"] = searchRequest;
             return Json(viewModel, JsonRequestBehavior.AllowGet);

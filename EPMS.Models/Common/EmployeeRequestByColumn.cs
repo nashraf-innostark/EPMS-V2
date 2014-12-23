@@ -2,8 +2,12 @@
 {
     public enum EmployeeRequestByColumn
     {
-        EmployeeId=1,
-        RequestTopic=2,
-        IsMonetary=3
+        RequestId = 0,
+        EmployeeName = 1,
+        RequestTopic = 2,
+        IsMonetary = 3,
+        RequestDate = 4,
+        IsReplied = 5,
+        IsApproved = 6
     }
 }

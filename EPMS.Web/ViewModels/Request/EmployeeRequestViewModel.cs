@@ -17,5 +17,17 @@ namespace EPMS.Web.ViewModels.Request
         public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
         public RequestDetail EmployeeRequestDetail { get; set; }
         public string RequestDescription { get; set; }
+        public IEnumerable<EmployeeRequest> aaData { get; set; }
+        /// <summary>
+        /// Total Records in DB
+        /// </summary>
+        public int iTotalRecords;
+
+        /// <summary>
+        /// Total Records Filtered
+        /// </summary>
+        public int iTotalDisplayRecords;
+
+        public int sEcho;
     }
 }

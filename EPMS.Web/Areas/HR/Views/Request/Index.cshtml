@@ -38,6 +38,8 @@
                             <th>Request Topic</th>
                             <th>Monetary</th>
                             <th>Request Date</th>
+                            <th>Replied</th>
+                            <th>Approved</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -56,7 +58,7 @@
             "iDisplayLength": 20,
             "iDisplayStart": start || 0,
             "aaSorting": [sortBy],
-            //"bProcessing": true,
+            "bProcessing": true,
             "bServerSide": true,
             "bFilter": true,
             "aoColumns": [
@@ -72,17 +74,18 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var val = full["Employee.EmployeeName"];
-                        var empId = full["EmployeeId"];
-                        var element = '<a href="Create/' + empId + '">' + val + '</a>';
-                        return element;
+                        var employee = full["Employee"];
+                        return employee.EmployeeFullName;
                     }
                 },
                 {
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["RequestTopic"];
+                        var val = full["RequestTopic"];
+                        var Id = full["RequestId"];
+                        var element = '<a href="Create/' + Id + '">' + val + '</a>';
+                        return element;
                     }
                 },
                 {
@@ -96,7 +99,23 @@
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["RequestDate"];
+                        return full["RequestDateString"];
+                    }
+                },
+                {
+                    "aTargets": [5],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var RequestDetails = full["RequestDetails"];
+                        return RequestDetails[RequestDetails.length - 1].IsReplied ? "Yes" : "No";
+                    }
+                },
+                {
+                    "aTargets": [6],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var RequestDetails = full["RequestDetails"];
+                        return RequestDetails[RequestDetails.length-1].IsApproved ? "Yes" : "No";
                     }
                 }
             ],
