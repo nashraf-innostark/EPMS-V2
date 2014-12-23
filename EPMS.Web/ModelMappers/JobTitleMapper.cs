@@ -5,7 +5,7 @@ namespace EPMS.Web.ModelMappers
 {
     public static class JobTitleMapper
     {
-        public static ApiModels.JobTitleDropDown CreateFromDropDown(this DomainModels.JobTitle source)
+        public static ApiModels.JobTitleDropDown CreateForDropDown(this DomainModels.JobTitle source)
         {
             return new ApiModels.JobTitleDropDown
              {
@@ -24,12 +24,11 @@ namespace EPMS.Web.ModelMappers
                 JobTitleDesc = source.JobTitleDesc,
                 DepartmentId = source.DepartmentId,
                 BasicSalary = source.BasicSalary,
-                Department = source.Department.CreateFrom()
-                //Department = source.Department.CreateFrom(),
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                Department = source.Department.CreateFrom(),
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
         }
@@ -42,17 +41,11 @@ namespace EPMS.Web.ModelMappers
                 JobTitleDesc = source.JobTitleDesc,
                 DepartmentId = source.DepartmentId,
                 BasicSalary = source.BasicSalary,
-                //JobId = source.JobId,
-                //JobTitleNameE = source.JobTitleNameE,
-                //JobTitleNameA = source.JobTitleNameA,
-                //JobDescriptionE = source.JobDescriptionE,
-                //JobDescriptionA = source.JobDescriptionA,
-                //DepartmentId = source.DepartmentId,
-                //BasicSalary = source.BasicSalary,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                //Department = source.Department.CreateFrom(),
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
         }

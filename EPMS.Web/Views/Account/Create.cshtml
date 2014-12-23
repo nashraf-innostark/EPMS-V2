@@ -1,7 +1,15 @@
-﻿@using Microsoft.AspNet.Identity
-@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
+﻿@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
+    string btnText = "Save";
     ViewBag.Title = "Register User";
+    if (Model != null)
+    {
+        if (!string.IsNullOrEmpty(Model.UserId))
+        {
+            ViewBag.Title = "Update User";
+            btnText = "Update";
+        }
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -118,9 +126,8 @@
         </div>
         }
         <div class="control-group row-fluid">
-
             <div class="span3 span-inset">
-                <button type="submit" class="btn">Edit</button>
+                <button type="submit" class="btn">@btnText</button>
             </div>
         </div>
     </div>

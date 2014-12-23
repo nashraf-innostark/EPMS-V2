@@ -41,10 +41,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                     requestViewModel.EmployeeRequest = employeeRequestService.Find((long)id).CreateFromServerToClient();
                     requestViewModel.EmployeeRequestDetail = employeeRequestService.GetRequestDetailByRequestId((long)id).CreateFromServerToClient();
                 }
-                if (currentUser.Employee.EmployeeId > 0)
+                if (currentUser.Employee != null)
                 {
-                    requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFrom();
+                    if (currentUser.Employee.EmployeeId > 0)
+                    {
+                        requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
                     requestViewModel.EmployeeRequest.Employee.DepartmentName = currentUser.Employee.JobTitle.Department.DepartmentNameE;
+                    }
                 }
             }
             if (requestViewModel.EmployeeRequestDetail.IsApproved)

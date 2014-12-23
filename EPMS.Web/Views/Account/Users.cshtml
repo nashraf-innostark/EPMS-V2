@@ -46,7 +46,7 @@
                         @foreach (var item in Model.Data.ToList())
                         {
                             <tr>
-                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { email = item.Email }) </td>
+                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName}) </td>
                                 <td>@item.Username</td>
                                 <td>@item.Email</td>
                                 <td>@item.Role</td>
@@ -69,7 +69,7 @@
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
-            }
+            },
         });
     });
 </script>

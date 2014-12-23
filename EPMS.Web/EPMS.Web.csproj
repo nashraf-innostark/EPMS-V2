@@ -1318,7 +1318,7 @@
     <Content Include="Areas\PMS\Views\web.config" />
     <Content Include="Areas\Notification\Views\web.config" />
     <Content Include="Images\photon\entypo.eot" />
-    <Content Include="Areas\HR\Views\Employee\Employees.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Index.cshtml" />
     <Content Include="Images\photon\entypo.ttf" />
     <Content Include="Images\photon\entypo.woff" />
     <Content Include="Images\photon\iconic_stroke.eot" />
@@ -1434,7 +1434,7 @@
     <Content Include="Areas\HR\Views\Department\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Index.cshtml" />
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
-    <Content Include="Areas\HR\Views\Employee\Details.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">

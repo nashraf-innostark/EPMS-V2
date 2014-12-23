@@ -7,7 +7,7 @@ namespace EPMS.Web.ModelMappers
 {
     public static class EmployeeMapper
     {
-        public static Employee CreateFrom(this Models.Employee source)
+        public static Employee CreateFromClientToServer(this Models.Employee source)
         {
             var caseType = new Employee
             {
@@ -38,7 +38,7 @@ namespace EPMS.Web.ModelMappers
             };
             return caseType;
         }
-        public static Models.Employee CreateFrom(this Employee source)
+        public static Models.Employee CreateFromServerToClient(this Employee source)
         {
             return new Models.Employee
             {
@@ -68,10 +68,11 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 EmployeeFullName = source.EmployeeFirstName + " " + source.EmployeeMiddleName + " " + source.EmployeeLastName,
                 Email = source.Email,
+                JobTitle = source.JobTitle.CreateFrom(),
             };
 
         }
-        public static Models.Employee CreateFromWithImage(this Employee source)
+        public static Models.Employee CreateFromServerToClientWithImage(this Employee source)
         {
             return new Models.Employee
             {
