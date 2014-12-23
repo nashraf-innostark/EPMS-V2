@@ -5,7 +5,7 @@ namespace EPMS.Web.ModelMappers
 {
     public static class JobTitleMapper
     {
-        public static ApiModels.JobTitleDropDown CreateFromDropDown(this DomainModels.JobTitle source)
+        public static ApiModels.JobTitleDropDown CreateForDropDown(this DomainModels.JobTitle source)
         {
             return new ApiModels.JobTitleDropDown
              {

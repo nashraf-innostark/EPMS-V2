@@ -46,9 +46,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            EmployeeSearchRequset employeeSearchRequest = Session["PageMetaData"] as EmployeeSearchRequset;
-
-            Session["PageMetaData"] = null;
+            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
 
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
@@ -72,7 +70,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
-                employees.Employeess.Select(x => x.CreateFromWithImage()).ToList();
+                employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 FilePath = (ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/"),
@@ -81,9 +79,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                 iTotalDisplayRecords = employeeList.Count(),
                 sEcho = employeeList.Count(),
             };
-
-            // Keep Search Request in Session
-            Session["PageMetaData"] = employeeSearchRequest;
 
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
@@ -98,7 +93,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpGet]
         public JsonResult GetJobTitles(long deptId)
         {
-            var jobTitles = JobTitleService.GetJobTitlesByDepartmentId(deptId).Select(j => j.CreateFromDropDown());
+            var jobTitles = JobTitleService.GetJobTitlesByDepartmentId(deptId).Select(j => j.CreateForDropDown());
             return Json(jobTitles, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -109,16 +104,16 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        public ActionResult Details(long? id)
+        public ActionResult Create(long? id)
         {
             EmployeeViewModel viewModel = new EmployeeViewModel
             {
                 JobTitleList = JobTitleService.GetAll()
             };
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             if (id != null)
             {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
             }
             return View(viewModel);
         }
@@ -129,7 +124,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
         [HttpPost]
-        public ActionResult Details(EmployeeViewModel viewModel)
+        public ActionResult Create(EmployeeViewModel viewModel)
         {
             try
             {
@@ -147,8 +142,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Update Employee and Allowance
-                        var employeeToUpdate = viewModel.Employee.CreateFrom();
-                        var allowanceToTpdate = viewModel.Allowance.CreateFrom();
+                        var employeeToUpdate = viewModel.Employee.CreateFromClientToServer();
+                        var allowanceToTpdate = viewModel.Allowance.CreateFromClientToServer();
                         if (EmployeeService.UpdateEmployee(employeeToUpdate) &&
                             AllowanceService.UpdateAllowance(allowanceToTpdate))
                         {
@@ -170,7 +165,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         // Set Employee Values
                         viewModel.Employee.RecCreatedDt = DateTime.Now;
                         viewModel.Employee.RecCreatedBy = User.Identity.Name;
-                        var employeeToSave = viewModel.Employee.CreateFrom();
+                        var employeeToSave = viewModel.Employee.CreateFromClientToServer();
                         long employeeId = EmployeeService.AddEmployee(employeeToSave);
 
                         // Set Values for Allownace
@@ -178,7 +173,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
 
-                        var allowanceToSave = viewModel.Allowance.CreateFrom();
+                        var allowanceToSave = viewModel.Allowance.CreateFromClientToServer();
 
                         if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
                         {
@@ -204,7 +199,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             }
             viewModel.JobTitleList = JobTitleService.GetAll();
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
         }

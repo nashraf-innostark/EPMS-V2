@@ -110,7 +110,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
                 detailViewModel.EmployeeList =
-                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFrom());
+                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFromServerToClient());
 
             }
             return View(detailViewModel);
