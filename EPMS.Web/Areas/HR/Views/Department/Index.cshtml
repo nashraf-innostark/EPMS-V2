@@ -4,7 +4,7 @@
     ViewBag.Title = "All Departments";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
@@ -19,11 +19,15 @@
         </li>
     </ul>
 </div>
+<!-- Navigation Bar End-->
+
+<!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
     <h3> <small><a href="~/HR/Department/Create">Add New Department</a></small></h3>
 </header>
+<!-- Page Heading End-->
 
 <div class="container-fluid">
     <form class="form-horizontal">
@@ -34,6 +38,7 @@
                             <tr>
                                 <th></th>
                                 <th>Department Name</th>
+                                @*<th>Department Name</th>*@
                                 <th>Department Description</th>
                             </tr>
                         </thead>
@@ -42,8 +47,8 @@
                                 {
                                     <tr>
                                         <td>@item.DepartmentId</td>
-                                        <td>@Html.ActionLink(@item.DepartmentName, "Details", new { id = item.DepartmentId }) </td>
-                                        @*<td>@item.DepartmentName</td>*@
+                                        <td>@Html.ActionLink(@item.DepartmentNameE, "Create", new { id = item.DepartmentId }) </td>
+                                        @*<td>@Html.ActionLink(@item.DepartmentNameA, "Create", new { id = item.DepartmentId }) </td>*@
                                         <td>@item.DepartmentDesc</td>
 
                                     </tr>
@@ -57,31 +62,12 @@
 
 <script>
     $(document).ready(function () {
-        //$('#DepartmentList').dataTable({
-        //    "sPaginationType": "full_numbers",
-        //    "bFilter": true,
-        //     "aoColumnDefs": [
-        //        {
-        //            "targets": [0],
-        //            "visible": false,
-        //            "searchable": false
-        //        }
-        //    ],
-        //});
-        //    "bFilter": true,
-        //     "aoColumnDefs": [
-        //        {
-        //            "targets": [0],
-        //            "visible": false,
-        //            "searchable": false
-        //        }
-        //    ],
         $('#DepartmentList').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                { "bVisible": false }, // cloumn to be hide
+                { "bVisible": false }, // cloumn to hide
                   null, // not hide
-                  null
+                  null // not hide
             ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
@@ -89,8 +75,6 @@
                 });
             }
         });
-        $("#simpleSelectBox").select2({
-            dropdownCssClass: 'noSearch'
-        });
+            
     });
 </script>

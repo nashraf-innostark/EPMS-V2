@@ -35,25 +35,22 @@
                 <table id="UserList" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Telephone</th>
+                            <th>Employee</th>
+                            <th>User Name</th>
+                            <th>Registered Email</th>
                             <th>Role</th>
-                            <th>Email Confirmed?</th>
-                            @*<th></th>*@
+                            <th>Address</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Data.ToList())
                         {
                             <tr>
-                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { email = item.Email }) </td>
-                                @*<td>@item.FirstName @item.LastName</td>*@
+                                <td>@Html.ActionLink(@item.FirstName + " " + @item.LastName, "Create", new { userName = item.UserName}) </td>
+                                <td>@item.Username</td>
                                 <td>@item.Email</td>
-                                <td>@item.Telephone</td>
                                 <td>@item.Role</td>
-                                <td>@item.EmailConfirmed</td>
-                                @*<td>@Html.ActionLink("Edit", "Create", new { email = item.Email }) </td>*@
+                                <td>@item.Address</td>
 
                             </tr>
                         }
@@ -66,97 +63,6 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-        var serviceURL = "HomeSliderDelete";
-
-        var oTable = $('#kaluAna').dataTable({
-            "sPaginationType": "full_numbers",
-            "iDisplayLength": 10,
-            "bFilter": true,
-            "bLengthChange": false,
-            "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [6] },
-                {
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ],
-
-        });
-
-        $('#btnFltr').on('click', function (e) {
-
-
-            var searchN = $('#txtSearchTitle').val();
-            oTable.fnFilter(searchN);
-
-
-
-        });
-        $('#btnResetFltr').on('click', function (e) {
-            $('#txtSearchTitle').val('');
-            oTable.fnFilter('');
-        });
-        $('#kaluAna').on('click', '.delete', function (e) {
-            e.preventDefault();
-
-            if (confirm("Are you sure to delete this row ?") == false) {
-                return;
-            }
-
-            var nRow = $(this).parents('tr')[0];
-            var aData = oTable.fnGetData(nRow);
-            $.ajax({
-                type: "POST",
-                url: serviceURL,
-                data: "{id:" + aData[0] + "}",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: successFunc,
-                error: errorFunc
-            });
-
-            function successFunc(data, status) {
-
-                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
-
-                    displayLength = oTable.fnSettings()._iDisplayLength,
-                    displayStart = oTable.fnSettings()._iDisplayStart;
-
-                oTable.fnDeleteRow(nRow, null, false);
-                var page = Math.ceil(displayStart / displayLength);
-
-                if (totalRcd > page * displayLength)
-                    oTable.fnPageChange(page);
-                else
-                    oTable.fnPageChange(page - 1);
-            }
-
-            function errorFunc(e, status) {
-
-                alert('error');
-            }
-
-
-        });
-    });
-
-    $(document).ready(function () {
-        //Data tables 1.10.2
-        //$('#UserList').dataTable({
-        //    "sPaginationType": "full_numbers",
-        //    "bFilter": true,
-        //    "aoColumnDefs": [
-        //        {
-        //            "targets": [0],
-        //            "visible": false,
-        //            "searchable": false
-        //        }
-        //    ],
-        //});
-
-        // Data tables 1.9.4
         $('#UserList').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {
@@ -165,9 +71,6 @@
                 });
             },
         });
-        //$(".select2-choice").select2({
-        //    dropdownCssClass: 'noSearch'
-        //});
     });
 </script>
 @*<style type="text/css">

@@ -57,6 +57,7 @@ namespace EPMS.Web.Models
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public string Email { get; set; }
+        
 
 
         //[Display(Name = "Image")]
@@ -64,9 +65,9 @@ namespace EPMS.Web.Models
         public string ImagePath { get; set; }
         public HttpPostedFileBase UploadImage { get; set; }
 
-        public virtual ICollection<Allowance> Allowances { get; set; }
-        public virtual JobTitle JobTitle { get; set; }
-        public virtual ICollection<EmployeeRequest> EmployeeRequests { get; set; }
-        public virtual ICollection<Notification> Notifications { get; set; }
+        public ICollection<Allowance> Allowances { get; set; }
+        public JobTitle JobTitle { get; set; }
+        public ICollection<EmployeeRequest> EmployeeRequests { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
     }
 }

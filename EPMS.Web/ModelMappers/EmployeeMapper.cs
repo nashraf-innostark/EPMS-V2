@@ -7,7 +7,7 @@ namespace EPMS.Web.ModelMappers
 {
     public static class EmployeeMapper
     {
-        public static Employee CreateFrom(this Models.Employee source)
+        public static Employee CreateFromClientToServer(this Models.Employee source)
         {
             var caseType = new Employee
             {
@@ -38,7 +38,7 @@ namespace EPMS.Web.ModelMappers
             };
             return caseType;
         }
-        public static Models.Employee CreateFrom(this Employee source)
+        public static Models.Employee CreateFromServerToClient(this Employee source)
         {
             return new Models.Employee
             {
@@ -61,7 +61,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeePassportExpiryDt = source.EmployeePassportExpiryDt ?? DateTime.Now,
                 EmployeeDetails = source.EmployeeDetails,
                 JobTitleName = source.JobTitle.JobTitleName ?? "",
-                DepartmentName = source.JobTitle.Department.DepartmentName ?? "",
+                DepartmentName = source.JobTitle.Department.DepartmentNameE ?? "",
                 RecCreatedBy = source.RecCreatedBy ?? "",
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
@@ -72,7 +72,7 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-        public static Models.Employee CreateFromWithImage(this Employee source)
+        public static Models.Employee CreateFromServerToClientWithImage(this Employee source)
         {
             return new Models.Employee
             {
@@ -95,7 +95,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeePassportExpiryDt = source.EmployeePassportExpiryDt ?? DateTime.Now,
                 EmployeeDetails = source.EmployeeDetails,
                 JobTitleName = source.JobTitle.JobTitleName ?? "",
-                DepartmentName = source.JobTitle.Department.DepartmentName ?? "",
+                DepartmentName = source.JobTitle.Department.DepartmentNameE ?? "",
                 RecCreatedBy = source.RecCreatedBy ?? "",
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",

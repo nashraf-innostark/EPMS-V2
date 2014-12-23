@@ -4,13 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4445364fdeef4eb799cb6c590a54dd7d" Name="Diagram1">
+      <Diagram DiagramId="4445364fdeef4eb799cb6c590a54dd7d" Name="Diagram1" ZoomLevel="96">
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="7.5" PointY="19.625" IsExpanded="true" />
@@ -25,7 +24,6 @@
         <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
@@ -34,6 +32,8 @@
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="9.75" />
+        <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

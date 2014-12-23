@@ -8,7 +8,7 @@ namespace EPMS.Web.ModelMappers
 {
     public static class AllownaceMapper
     {
-        public static Allowance CreateFrom(this Models.Allowance source)
+        public static Allowance CreateFromClientToServer(this Models.Allowance source)
         {
             var caseType = new Allowance
             {
@@ -27,7 +27,7 @@ namespace EPMS.Web.ModelMappers
             };
             return caseType;
         }
-        public static Models.Allowance CreateFrom(this Allowance source)
+        public static Models.Allowance CreateFromServerToClient(this Allowance source)
         {
             return new Models.Allowance
             {

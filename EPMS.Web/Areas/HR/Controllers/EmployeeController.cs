@@ -26,39 +26,50 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
         private readonly IAllowanceService AllowanceService;
+        private readonly IAspNetUserService AspNetUserService;
 
         #region Constructor
 
-        public EmployeeController(IEmployeeService employeeService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService)
+        public EmployeeController(IEmployeeService employeeService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService)
         {
             EmployeeService = employeeService;
             DepartmentService = departmentService;
             JobTitleService = jobTitleService;
             AllowanceService = allowanceService;
+            AspNetUserService = aspNetUserService;
         }
 
         #endregion
+
+        #region Public
 
         #region Employee List View
         /// <summary>
         /// Employee ListView Action Method
         /// </summary>
         /// <returns></returns>
+        
         public ActionResult Index()
         {
-            EmployeeSearchRequset employeeSearchRequest = Session["PageMetaData"] as EmployeeSearchRequset;
-
-            Session["PageMetaData"] = null;
-
-            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
-
-            EmployeeViewModel employeeViewModel = new EmployeeViewModel
+            if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("PM"))
             {
-                DepartmentList = DepartmentService.GetAll(),
-                JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
-                SearchRequest = employeeSearchRequest ?? new EmployeeSearchRequset()
-            };
-            return View(employeeViewModel);
+                EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
+                ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+
+                EmployeeViewModel employeeViewModel = new EmployeeViewModel
+                {
+                    DepartmentList = DepartmentService.GetAll(),
+                    JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
+                    SearchRequest = employeeSearchRequest,
+                };
+                return View(employeeViewModel);
+            }
+            if (Roles.IsUserInRole("Employee"))
+            {
+                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+                return RedirectToAction("Create", new { id = id});
+            }
+            return null;
         }
         /// <summary>
         /// Get All Employees and return to View
@@ -68,28 +79,23 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
-            //string rawSearch = HttpContext.Current.Request.Params["sSearch"];
-            employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
+            employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
-                employees.Employeess.Select(x => x.CreateFromWithImage()).ToList();
+                employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
-                FilePath = (ConfigurationManager.AppSettings["EmployeeImage"] + User.Identity.Name + "/"),
                 aaData = employeeList,
                 iTotalRecords = employees.TotalCount,
                 iTotalDisplayRecords = employeeList.Count(),
                 sEcho = employeeList.Count(),
             };
 
-            // Keep Search Request in Session
-            Session["PageMetaData"] = employeeSearchRequest;
-
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
-        #region Get JobTitle
+        #region Get Job Titles
         /// <summary>
         /// Get all job titles from DB
         /// </summary>
@@ -98,7 +104,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpGet]
         public JsonResult GetJobTitles(long deptId)
         {
-            var jobTitles = JobTitleService.GetJobTitlesByDepartmentId(deptId).Select(j => j.CreateFromDropDown());
+            var jobTitles = JobTitleService.GetJobTitlesByDepartmentId(deptId).Select(j => j.CreateForDropDown());
             return Json(jobTitles, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -109,18 +115,48 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        public ActionResult Details(long? id)
+        
+        public ActionResult Create(long? id)
         {
-            EmployeeViewModel viewModel = new EmployeeViewModel
+            if (id == null)
             {
-                JobTitleList = JobTitleService.GetAll()
-            };
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
-            if (id != null)
-            {
-                viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
+                EmployeeViewModel viewModel = new EmployeeViewModel
+                {
+                    JobTitleList = JobTitleService.GetAll()
+                };
+                viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                viewModel.EmployeeName = "Add New Employee";
+                viewModel.BtnText = "Save Employee";
+                viewModel.PageTitle = "Employee Addition";
+                return View(viewModel);
             }
-            return View(viewModel);
+            long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+            if (id > 0 && id == empId)
+            {
+                EmployeeViewModel viewModel = new EmployeeViewModel
+                {
+                    JobTitleList = JobTitleService.GetAll()
+                };
+                viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                if (id > 0 && Roles.IsUserInRole("Admin"))
+                {
+                    viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                    viewModel.EmployeeName = viewModel.Employee.EmployeeFullName;
+                    viewModel.PageTitle = "Employee's List";
+                    viewModel.BtnText = "Update Changes";
+                    viewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + viewModel.Employee.EmployeeImagePath;
+                }
+                if (id > 0 && (Roles.IsUserInRole("Employee") || Roles.IsUserInRole("PM")))
+                {
+                    viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                    viewModel.EmployeeName = viewModel.Employee.EmployeeFullName;
+                    viewModel.PageTitle = "My Profile";
+                    viewModel.BtnText = "Update Changes";
+                    viewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + viewModel.Employee.EmployeeImagePath;
+                }
+                return View(viewModel);
+            }
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         /// <summary>
@@ -129,7 +165,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
         [HttpPost]
-        public ActionResult Details(EmployeeViewModel viewModel)
+        public ActionResult Create(EmployeeViewModel viewModel)
         {
             try
             {
@@ -147,8 +183,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Update Employee and Allowance
-                        var employeeToUpdate = viewModel.Employee.CreateFrom();
-                        var allowanceToTpdate = viewModel.Allowance.CreateFrom();
+                        var employeeToUpdate = viewModel.Employee.CreateFromClientToServer();
+                        var allowanceToTpdate = viewModel.Allowance.CreateFromClientToServer();
                         if (EmployeeService.UpdateEmployee(employeeToUpdate) &&
                             AllowanceService.UpdateAllowance(allowanceToTpdate))
                         {
@@ -170,7 +206,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         // Set Employee Values
                         viewModel.Employee.RecCreatedDt = DateTime.Now;
                         viewModel.Employee.RecCreatedBy = User.Identity.Name;
-                        var employeeToSave = viewModel.Employee.CreateFrom();
+                        var employeeToSave = viewModel.Employee.CreateFromClientToServer();
                         long employeeId = EmployeeService.AddEmployee(employeeToSave);
 
                         // Set Values for Allownace
@@ -178,7 +214,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
 
-                        var allowanceToSave = viewModel.Allowance.CreateFrom();
+                        var allowanceToSave = viewModel.Allowance.CreateFromClientToServer();
 
                         if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
                         {
@@ -204,7 +240,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             }
             viewModel.JobTitleList = JobTitleService.GetAll();
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
+            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
         }
@@ -239,27 +275,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         #endregion
 
-        //#region Employee Detail Page
-        ///// <summary>
-        ///// Show Details of Employee
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns>View</returns>
-        //public ActionResult Details(long? id)
-        //{
-        //    EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
-        //    {
-        //        JobTitleList = JobTitleService.GetAll(),
-        //    };
-        //    viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromJob());
-        //    if (id != null)
-        //    {
-        //        viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFrom();
-        //    }
-        //    return View(viewModel);
-        //}
-        //#endregion
-
+        #region Delete Employee
         /// <summary>
         /// Delete Employee Data from DB
         /// </summary>
@@ -289,5 +305,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         }, JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
+
+        #endregion
     }
 }
