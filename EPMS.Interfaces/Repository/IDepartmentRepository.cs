@@ -16,6 +16,6 @@ namespace EPMS.Interfaces.Repository
         /// </summary>
         /// <param name="departmentSearchRequest"></param>
         /// <returns></returns>
-        DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
+        //DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
     }
 }

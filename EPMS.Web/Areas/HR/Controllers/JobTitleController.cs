@@ -37,19 +37,10 @@ namespace EPMS.Web.Areas.HR.Controllers
         // GET: JobTitles ListView Action Method
         public ActionResult Index()
         {
-            JobTitleSearchRequest jobTitleSearchRequest = Session["PageMetaData"] as JobTitleSearchRequest;
-
-            Session["PageMetaData"] = null;
-
-            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
-
-            IEnumerable<JobTitle> jobList = jobTitleService.GetAll().Select(x => x.CreateFrom());
-
             return View(new JobTitleViewModel
             {
                 DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom()),
-                JobTitleList = jobList,
-                SearchRequest = jobTitleSearchRequest ?? new JobTitleSearchRequest(),
+                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom())
             });
         }
 
@@ -117,18 +108,5 @@ namespace EPMS.Web.Areas.HR.Controllers
             
             return View(jobTitleViewModel);
         }
-
-        //public int AddData(JobTitleViewModel viewModel)
-        //{
-        //    viewModel.JobTitle.RecCreatedDt = DateTime.Now;
-        //    viewModel.JobTitle.RecCreatedBy = User.Identity.Name;
-        //    var jobToSave = viewModel.JobTitle.CreateFrom();
-        //    if (jobTitleService.AddJob(jobToSave))
-        //    {
-        //        TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
-        //        return 1;
-        //    }
-        //    return 0;
-        //}
     }
 }

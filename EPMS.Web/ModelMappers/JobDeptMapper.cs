@@ -17,7 +17,8 @@ namespace EPMS.Web.ModelMappers
                 JobId = source.JobTitleId,
                 JobTitle = source.JobTitleName,
                 DeptId = source.Department.DepartmentId,
-                DeptName = source.Department.DepartmentName,
+                DeptNameE = source.Department.DepartmentNameE,
+                DeptNameA = source.Department.DepartmentNameA,
                 BasicSalary = source.BasicSalary ?? 0,
             };
         }

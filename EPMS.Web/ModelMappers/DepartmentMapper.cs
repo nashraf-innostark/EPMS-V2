@@ -9,7 +9,8 @@ namespace EPMS.Web.ModelMappers
             var department = new Department
             {
                 DepartmentId = source.DepartmentId,
-                DepartmentName = source.DepartmentName,
+                DepartmentNameE = source.DepartmentNameE,
+                DepartmentNameA = source.DepartmentNameA,
                 DepartmentDesc = source.DepartmentDesc,
                 //DepartmentNameA = source.DepartmentNameA,
                 //CreatedBy = source.CreatedBy,
@@ -24,7 +25,8 @@ namespace EPMS.Web.ModelMappers
             return new Models.Department
             {
                 DepartmentId = source.DepartmentId,
-                DepartmentName = source.DepartmentName,
+                DepartmentNameE = source.DepartmentNameE,
+                DepartmentNameA = source.DepartmentNameA,
                 DepartmentDesc = source.DepartmentDesc,
                 //DepartmentNameA = source.DepartmentNameA,
                 //CreatedBy = source.CreatedBy,
