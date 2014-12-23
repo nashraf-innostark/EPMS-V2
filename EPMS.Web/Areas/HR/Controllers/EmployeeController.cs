@@ -28,8 +28,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IAllowanceService AllowanceService;
         private readonly IAspNetUserService AspNetUserService;
 
-
-
         #region Constructor
 
         public EmployeeController(IEmployeeService employeeService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService)
@@ -42,6 +40,8 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         #endregion
+
+        #region Public
 
         #region Employee List View
         /// <summary>
@@ -95,7 +95,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         #endregion
 
-        #region Get JobTitle
+        #region Get Job Titles
         /// <summary>
         /// Get all job titles from DB
         /// </summary>
@@ -275,7 +275,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         #endregion
 
-
+        #region Delete Employee
         /// <summary>
         /// Delete Employee Data from DB
         /// </summary>
@@ -305,5 +305,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         }, JsonRequestBehavior.AllowGet);
             }
         }
+        #endregion
+
+        #endregion
     }
 }
