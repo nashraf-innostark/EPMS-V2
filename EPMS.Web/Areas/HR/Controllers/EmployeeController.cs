@@ -51,13 +51,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         
         public ActionResult Index()
         {
-            EmployeeViewModel employeeViewModel = new EmployeeViewModel();
             if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("PM"))
             {
                 EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
                 ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
-                employeeViewModel = new EmployeeViewModel
+                EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
                     DepartmentList = DepartmentService.GetAll(),
                     JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
