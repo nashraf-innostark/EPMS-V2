@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Request;
 using Microsoft.AspNet.Identity;
-using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -26,8 +27,34 @@ namespace EPMS.Web.Areas.HR.Controllers
         // GET: HR/Request
         public ActionResult Index()
         {
+            EmployeeRequestSearchRequest searchRequest = Session["PageMetaData"] as EmployeeRequestSearchRequest;
+
+            Session["PageMetaData"] = null;
+
+            EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
+            
+            viewModel.SearchRequest = searchRequest ?? new EmployeeRequestSearchRequest();
+            
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View();
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
+        {
+            EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
+
+            if (Roles.IsUserInRole("Admin"))
+            {
+                viewModel.EmployeeRequests = employeeRequestService.LoadAllRequests("Admin").Select(x => x.CreateFromServerToClient());
+            }
+            else
+            {
+                var employeeId = aspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
+                viewModel.EmployeeRequests = employeeRequestService.LoadAllRequests(employeeId).Select(x => x.CreateFromServerToClient());
+            }
+            // Keep Search Request in Session
+            Session["PageMetaData"] = searchRequest;
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         // GET: HR/Request/Create
         public ActionResult Create(long? id)
@@ -39,7 +66,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 if (id != null)
                 {
                     requestViewModel.EmployeeRequest = employeeRequestService.Find((long)id).CreateFromServerToClient();
-                    requestViewModel.EmployeeRequestDetail = employeeRequestService.GetRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                    requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
                 }
                 if (currentUser.Employee != null)
                 {
