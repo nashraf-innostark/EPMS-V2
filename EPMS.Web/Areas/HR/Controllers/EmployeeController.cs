@@ -79,8 +79,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
-            //string rawSearch = HttpContext.Current.Request.Params["sSearch"];
-            employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());//Guid.Parse(Session["LoginID"] as string);
+            employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
