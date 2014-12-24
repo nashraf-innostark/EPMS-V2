@@ -15,7 +15,8 @@ namespace EPMS.Web.ModelMappers
             return new Models.JobTitleAndDepartment
             {
                 JobId = source.JobTitleId,
-                JobTitle = source.JobTitleNameE,
+                JobTitleE = source.JobTitleNameE,
+                JobTitleA = source.JobTitleNameA,
                 DeptId = source.Department.DepartmentId,
                 DeptNameE = source.Department.DepartmentNameE,
                 DeptNameA = source.Department.DepartmentNameA,
