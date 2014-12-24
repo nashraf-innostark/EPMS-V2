@@ -13,8 +13,10 @@ namespace EPMS.Web.Models
         }
         public long JobTitleId { get; set; }
         [Required(ErrorMessage = "Job Title is required.")]
-        public string JobTitleName { get; set; }
-        public string JobTitleDesc { get; set; }
+        public string JobTitleNameE { get; set; }
+        public string JobTitleDescE { get; set; }
+        public string JobTitleNameA { get; set; }
+        public string JobTitleDescA { get; set; }
         [Required(ErrorMessage = "Department is Required")]
         public long DepartmentId { get; set; }
         [Integer(ErrorMessage = "Basic Salary needs to be number")]

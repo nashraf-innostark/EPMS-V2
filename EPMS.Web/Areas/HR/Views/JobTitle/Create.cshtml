@@ -38,12 +38,23 @@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleName">Job Title Name</label>
+                <label class="control-label" for="JobTitleName">Job Title Name Englis</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleName, new { @dir = "ltr", placeholder = "Enter Job Title Name", id = "JobTitleName" })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleName, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameE, new { @dir = "ltr", placeholder = "Enter Job Title Name", id = "JobTitleName" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameE, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleName">Job Title Name Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { @dir = "ltr", placeholder = "Enter Job Title Name", id = "JobTitleName" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameA, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -53,19 +64,30 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentName"), "Select Department", new { @class = "select2me", id = " departmentId " })
+                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), "Select Department", new { @class = "select2me", id = " departmentId " })
                     @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleDesc">Job Title Description</label>
+                <label class="control-label" for="JobTitleDesc">Job Title Description English</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDesc, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDesc, "")
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "")
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleDesc">Job Title Description Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescA, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "")
                 </div>
             </div>
         </div>
