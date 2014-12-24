@@ -68,9 +68,9 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult Create(long? id)
         {
             EmployeeRequestViewModel requestViewModel = new EmployeeRequestViewModel();
+            AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
             if (User.Identity.GetUserId() != null)
             {
-                AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
                 if (id != null)
                 {
                     var employeeRequest = employeeRequestService.Find((long)id);
@@ -80,6 +80,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         requestViewModel.EmployeeRequest = employeeRequest.CreateFromServerToClient();
                         requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
                     }
+                    ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
                 }
                 if (currentUser.Employee != null)
                 {
