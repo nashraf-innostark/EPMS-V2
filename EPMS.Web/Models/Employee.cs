@@ -51,7 +51,8 @@ namespace EPMS.Web.Models
         [Display(Name = "Full Name")]
         public string EmployeeFullName { get; set; }
         public string JobTitleName { get; set; }
-        public string DepartmentName { get; set; }
+        public string DepartmentNameE { get; set; }
+        public string DepartmentNameA { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }

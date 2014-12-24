@@ -81,7 +81,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                     if (currentUser.Employee.EmployeeId > 0)
                     {
                         requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
-                    requestViewModel.EmployeeRequest.Employee.DepartmentName = currentUser.Employee.JobTitle.Department.DepartmentNameE;
+                        requestViewModel.EmployeeRequest.Employee.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
+                        requestViewModel.EmployeeRequest.Employee.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
                     }
                 }
             }

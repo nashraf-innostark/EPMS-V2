@@ -48,7 +48,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
                 detailViewModel.EmployeeList = id.HasValue ?
-                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFrom()) : new Collection<Employee>();
+                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFromServerToClient()) : new Collection<Employee>();
 
             }
             return View(detailViewModel);

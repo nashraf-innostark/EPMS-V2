@@ -36,7 +36,7 @@ namespace EPMS.Web.ModelMappers
                     RecCreatedDt = source.RecCreatedDt,
                     RecLastUpdatedBy = source.RecLastUpdatedBy,
                     RecLastUpdatedDt = source.RecLastUpdatedDt,
-                    Employee = source.Employee.CreateFrom(),
+                    Employee = source.Employee.CreateFromServerToClient(),
                     RequestDetails = source.RequestDetails.Select(x=>x.CreateFromServerToClient())
                 };
             }

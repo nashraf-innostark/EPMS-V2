@@ -58,7 +58,7 @@
             "iDisplayLength": 20,
             "iDisplayStart": start || 0,
             "aaSorting": [sortBy],
-            "bProcessing": true,
+            //"bProcessing": true,
             "bServerSide": true,
             "bFilter": true,
             "aoColumns": [
@@ -123,7 +123,11 @@
             "sServerMethod": "POST",
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "more_data", "value": "my_value" });
-            }
+            },
+            "oLanguage": {
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found"
+            },
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
