@@ -122,12 +122,10 @@
             ],
             "sAjaxSource": siteUrl + "/Request/Index",
             "sServerMethod": "POST",
-            "fnServerParams": function (aoData) {
-                aoData.push({ "name": "more_data", "value": "my_value" });
-            },
             "oLanguage": {
+                "sProcessing": "DataTables is fetching record(s)",
                 "sInfoEmpty": "No matching record(s) found",
-                "sEmptyTable": "No record(s) found"
+                "sEmptyTable": "No record(s) found",
             },
         });
         $(".dataTables_length select").select2({

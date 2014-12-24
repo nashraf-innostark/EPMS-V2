@@ -13,6 +13,7 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Request;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using WebModel=EPMS.Web.Models;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -56,10 +57,21 @@ namespace EPMS.Web.Areas.HR.Controllers
                 searchRequest.Requester = aspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
             }
             var employeeRequestResponse = employeeRequestService.LoadAllRequests(searchRequest);
-            viewModel.aaData = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
-            viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
-            viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
-            viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
+            var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+            if (data.Any())
+            {
+                viewModel.aaData = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+                viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
+                viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
+            }
+            else
+            {
+                viewModel.aaData = Enumerable.Empty<WebModel.EmployeeRequest>();
+                viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
+                viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                viewModel.sEcho = 1;
+            }
             // Keep Search Request in Session
             Session["PageMetaData"] = searchRequest;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
