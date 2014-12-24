@@ -22,6 +22,7 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Admin;
 using EPMS.Models.ModelMapers;
 using System.Net;
+using EPMS.Web.ModelMappers;
 
 namespace IdentitySample.Controllers
 {
@@ -35,7 +36,7 @@ namespace IdentitySample.Controllers
         private IMenuRightsService menuRightService;
         private IEmployeeService employeeService;
         private ApplicationRoleManager _roleManager;
-
+        private IAspNetUserService AspNetUserService;
 
         /// <summary>
         /// Set User Permission
@@ -66,10 +67,11 @@ namespace IdentitySample.Controllers
 
         #region Constructor
 
-        public AccountController(IMenuRightsService menuRightService, IEmployeeService employeeService)
+        public AccountController(IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
+            this.AspNetUserService = aspNetUserService;
         }
 
         #endregion
@@ -197,7 +199,7 @@ namespace IdentitySample.Controllers
                             shouldLockout: false);
 
 
-               
+
 
 
                 switch (result)
@@ -282,7 +284,7 @@ namespace IdentitySample.Controllers
             oVM.Data = new List<SystemUser>();
             foreach (var item in oList)
             {
-                if (item.EmployeeId>0)
+                if (item.EmployeeId > 0)
                 {
                     oVM.Data.Add(new SystemUser
                     {
@@ -310,22 +312,66 @@ namespace IdentitySample.Controllers
         {
             if (!string.IsNullOrEmpty(model.UserId))
             {
-                //means update case
+                //Means Update
+
+                // Get role
                 var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
                 var roleName = roleManager.FindById(model.SelectedRole).Name;
-                AspNetUser userResult = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByEmail(model.Email);
+                AspNetUser userResult = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
                 string userrRoleID = userResult.AspNetRoles.ToList()[0].Id;
                 string userRoleName = roleManager.FindById(userrRoleID).Name;
+                // Check if role has been changed
                 if (userrRoleID != model.SelectedRole)
-                {//meanse change the role
+                {
+                    // Update User Role
                     UserManager.RemoveFromRole(model.UserId, userRoleName);
-
                     UserManager.AddToRole(model.UserId, roleName);
                     TempData["message"] = new MessageViewModel { Message = "User has been updated.", IsUpdated = true };
-
                 }
+                // Password Reset
+                if (!String.IsNullOrEmpty(model.Password))
+                {
+                    var token = await UserManager.GeneratePasswordResetTokenAsync(User.Identity.GetUserId());
+                    var resetPwdResults = await UserManager.ResetPasswordAsync(model.UserId, token, model.Password);
 
-                //UserManager.RemoveFromRoleAsync(User.Id, roleName);
+                    if (resetPwdResults.Succeeded)
+                    {
+                        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                        if (user != null)
+                        {
+                            await SignInAsync(user, isPersistent: false);
+                        }
+                        ViewBag.MessageVM = new MessageViewModel
+                        {
+                            Message = "Password has been updated.",
+                            IsUpdated = true
+                        };
+                    }
+                }
+                // Get user by UserId to Update User
+                AspNetUser userToUpdate = UserManager.FindById(User.Identity.GetUserId());
+                if (userToUpdate.Email != model.Email || userToUpdate.EmployeeId != model.SelectedEmployee)
+                {
+                    AspNetUser currUser = new AspNetUser
+                    {
+                        Email = model.Email,
+                        EmailConfirmed = true,
+                        EmployeeId = model.SelectedEmployee,
+                    };
+                    if (userToUpdate != null)
+                    {
+                        userToUpdate.UpdateUserTo(currUser);
+                    }
+                    var updateUserResult = await UserManager.UpdateAsync(userToUpdate);
+                    if (updateUserResult.Succeeded)
+                    {
+                        ViewBag.MessageVM = new MessageViewModel
+                        {
+                            Message = "User has been updated.",
+                            IsUpdated = true
+                        };
+                    }
+                }
 
                 return RedirectToAction("Users");
             }
@@ -333,6 +379,14 @@ namespace IdentitySample.Controllers
             // Add new User
             if (ModelState.IsValid)
             {
+                var empId = AspNetUserService.GetAllUsers().Select(x => x.EmployeeId);
+                if (empId.Contains(model.SelectedEmployee))
+                {
+                    model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                    model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+                    TempData["message"] = new MessageViewModel { Message = "Employee you selected has been assigned already.", IsError = true };
+                    return View(model);
+                }
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
                 user.EmployeeId = model.SelectedEmployee;
                 user.EmailConfirmed = true;
@@ -341,17 +395,14 @@ namespace IdentitySample.Controllers
                 if (result.Succeeded)
                 {
                     //Setting role
-                    //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
                     var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                     var roleName = roleManager.FindById(model.SelectedRole).Name;
                     UserManager.AddToRole(user.Id, roleName);
-                    //UserManager.AddToRoleAsync(user.Id, roleName);
 
                     TempData["message"] = new MessageViewModel { Message = "User has been Registered", IsSaved = true };
                     return RedirectToAction("Users");
                 }
                 AddErrors(result);
-                //model.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
                 model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
                 model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
 
@@ -691,7 +742,7 @@ namespace IdentitySample.Controllers
         public ActionResult Profile(ProfileViewModel profileViewModel, HttpPostedFileBase file)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            
+
             //Updating Data
             try
             {
