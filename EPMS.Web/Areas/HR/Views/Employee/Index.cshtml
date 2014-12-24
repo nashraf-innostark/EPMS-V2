@@ -62,7 +62,7 @@
             "iDisplayLength": 11,
             "iDisplayStart": start || 0,
             "aaSorting": [sortBy],
-            //"bProcessing": true,
+            "bProcessing": true,
             "bServerSide": true,
             "bFilter": true,
             "aoColumns": [
@@ -102,14 +102,14 @@
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["JobTitleName"];
+                        return full["JobTitleNameE"];
                     }
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["DepartmentName"];
+                        return full["DepartmentNameE"];
                     }
                 }
             ],

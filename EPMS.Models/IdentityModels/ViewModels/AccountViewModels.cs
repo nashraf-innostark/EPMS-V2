@@ -65,6 +65,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
         public string UserId { get; set; }
         [Required(ErrorMessage = "Must Select Role")]
         public string SelectedRole { get; set; }
+        public string oldRole { get; set; }
         public List<AspNetRole> Roles { get; set; }
         public AspNetUser Users { get; set; }
         [Required(ErrorMessage = "Must Select Employee")]
