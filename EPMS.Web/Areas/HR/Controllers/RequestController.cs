@@ -64,7 +64,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             Session["PageMetaData"] = searchRequest;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
-        // GET: HR/Request/Create
+        // GET: HR/Request/Create/RequestId
         public ActionResult Create(long? id)
         {
             EmployeeRequestViewModel requestViewModel = new EmployeeRequestViewModel();
@@ -73,8 +73,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                 AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
                 if (id != null)
                 {
-                    requestViewModel.EmployeeRequest = employeeRequestService.Find((long)id).CreateFromServerToClient();
-                    requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                    var employeeRequest = employeeRequestService.Find((long)id);
+                    //Check if current request is related to logedin user.
+                    if (employeeRequest.EmployeeId == currentUser.EmployeeId || currentUser.AspNetRoles.FirstOrDefault().Name=="Admin")
+                    {
+                        requestViewModel.EmployeeRequest = employeeRequest.CreateFromServerToClient();
+                        requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                    }
                 }
                 if (currentUser.Employee != null)
                 {
@@ -140,7 +145,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
                     }
                 }
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
             catch(Exception e)
             {
