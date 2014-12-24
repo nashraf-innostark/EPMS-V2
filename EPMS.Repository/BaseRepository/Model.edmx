@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -85,7 +85,8 @@
             <PropertyRef Name="DepartmentId" />
           </Key>
           <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DepartmentName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DepartmentNameE" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DepartmentNameA" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="DepartmentDesc" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDt" Type="datetime" />
@@ -169,14 +170,16 @@
             <PropertyRef Name="JobTitleId" />
           </Key>
           <Property Name="JobTitleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="JobTitleName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="JobTitleDesc" Type="nvarchar" MaxLength="1000" />
+          <Property Name="JobTitleNameE" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="JobTitleDescE" Type="nvarchar" MaxLength="1000" />
           <Property Name="DepartmentId" Type="bigint" Nullable="false" />
           <Property Name="BasicSalary" Type="float" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="JobTitleNameA" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="JobTitleDescA" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -353,18 +356,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="*" />
@@ -478,10 +469,6 @@
             <End Role="Menu" EntitySet="Menu" />
             <End Role="MenuRight" EntitySet="MenuRight" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitle" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -503,11 +490,10 @@
             <End Role="RequestDetails" EntitySet="RequestDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -583,19 +569,6 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-        </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="DepartmentId" />
-          </Key>
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DepartmentDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobTitles" Relationship="Self.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -683,17 +656,19 @@
             <PropertyRef Name="JobTitleId" />
           </Key>
           <Property Name="JobTitleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobTitleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="JobTitleDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="DepartmentId" Type="Int64" Nullable="false" />
           <Property Name="BasicSalary" Type="Double" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
           <NavigationProperty Name="JobOffereds" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
+          <NavigationProperty Name="Department" Relationship="DomainModels.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
+          <Property Name="JobTitleNameE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleDescE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleNameA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -823,18 +798,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JobTitle_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="JobTitle">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Employee_JobTitle">
           <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -923,13 +886,12 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="EPMSEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BaseDbContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Allowances" EntityType="Self.Allowance" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequest" />
           <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
@@ -958,10 +920,6 @@
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="JobTitle" EntitySet="JobTitles" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
@@ -995,15 +953,46 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Departments" EntityType="DomainModels.Department" />
+          <AssociationSet Name="FK_JobTitle_Department" Association="DomainModels.FK_JobTitle_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="JobTitle" EntitySet="JobTitles" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentNameE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentNameA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobTitles" Relationship="DomainModels.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
+        </EntityType>
+        <Association Name="FK_JobTitle_Department">
+          <End Type="DomainModels.Department" Role="Department" Multiplicity="1" />
+          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="JobTitle">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="EPMSEntities">
+        <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="BaseDbContext">
           <EntitySetMapping Name="Allowances">
-            <EntityTypeMapping TypeName="EPMSModel.Allowance">
+            <EntityTypeMapping TypeName="DomainModels.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
                 <ScalarProperty Name="AllowanceId" ColumnName="AllowanceId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1026,7 +1015,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetRole">
+            <EntityTypeMapping TypeName="DomainModels.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1034,7 +1023,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="DomainModels.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1044,7 +1033,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="DomainModels.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -1053,7 +1042,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
+            <EntityTypeMapping TypeName="DomainModels.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -1072,21 +1061,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="EPMSModel.Department">
-              <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="EPMSModel.Employee">
+            <EntityTypeMapping TypeName="DomainModels.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
@@ -1115,7 +1091,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRequests">
-            <EntityTypeMapping TypeName="EPMSModel.EmployeeRequest">
+            <EntityTypeMapping TypeName="DomainModels.EmployeeRequest">
               <MappingFragment StoreEntitySet="EmployeeRequests">
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1130,7 +1106,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobApplicants">
-            <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
+            <EntityTypeMapping TypeName="DomainModels.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicants">
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
@@ -1147,7 +1123,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobOffereds">
-            <EntityTypeMapping TypeName="EPMSModel.JobOffered">
+            <EntityTypeMapping TypeName="DomainModels.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
                 <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
@@ -1162,11 +1138,13 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitles">
-            <EntityTypeMapping TypeName="EPMSModel.JobTitle">
+            <EntityTypeMapping TypeName="DomainModels.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
+                <ScalarProperty Name="JobTitleDescA" ColumnName="JobTitleDescA" />
+                <ScalarProperty Name="JobTitleNameA" ColumnName="JobTitleNameA" />
+                <ScalarProperty Name="JobTitleDescE" ColumnName="JobTitleDescE" />
+                <ScalarProperty Name="JobTitleNameE" ColumnName="JobTitleNameE" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="JobTitleName" ColumnName="JobTitleName" />
-                <ScalarProperty Name="JobTitleDesc" ColumnName="JobTitleDesc" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -1177,7 +1155,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="EPMSModel.Menu">
+            <EntityTypeMapping TypeName="DomainModels.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
@@ -1194,7 +1172,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
-            <EntityTypeMapping TypeName="EPMSModel.MenuRight">
+            <EntityTypeMapping TypeName="DomainModels.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
                 <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
                 <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
@@ -1203,7 +1181,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="EPMSModel.Notification">
+            <EntityTypeMapping TypeName="DomainModels.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
@@ -1218,7 +1196,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestDetails">
-            <EntityTypeMapping TypeName="EPMSModel.RequestDetail">
+            <EntityTypeMapping TypeName="DomainModels.RequestDetail">
               <MappingFragment StoreEntitySet="RequestDetails">
                 <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
@@ -1239,7 +1217,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EPMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -1247,6 +1225,20 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="DomainModels.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
+                <ScalarProperty Name="DepartmentNameA" ColumnName="DepartmentNameA" />
+                <ScalarProperty Name="DepartmentNameE" ColumnName="DepartmentNameE" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

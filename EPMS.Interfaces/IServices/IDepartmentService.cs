@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
     public interface IDepartmentService
     {
         IEnumerable<Department> GetAll();
-        DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
+        //DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
 
         Department FindDepartmentById(long id);
 
@@ -19,6 +19,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateDepartment(Department department);
         void DeleteDepartment(Department department);
 
-        IEnumerable<Employee> FindEmployeeByDeprtmentId(long depertmentId);
+        IEnumerable<Employee> FindEmployeeByDeprtmentId(long? depertmentId);
     }
 }

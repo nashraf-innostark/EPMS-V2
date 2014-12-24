@@ -1,7 +1,8 @@
-﻿@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
+﻿@using iTextSharp.text.pdf
+@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
 
 @{
-    ViewBag.Title = "Create Department";
+    ViewBag.Title = "Department Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,21 +31,30 @@
     <h2><small>@ViewBag.Title</small></h2>
 </header>
 
-@using (Html.BeginForm("Create", "Department", FormMethod.Post, new { @id = "departmentForm", @class = "form-horizontal", role = "form"  }))
+@using (Html.BeginForm("Create", "Department", FormMethod.Post, new { @id = "departmentForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
-        @Html.AntiForgeryToken()
-
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         @Html.HiddenFor(m => m.Department.DepartmentId)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentName">Department Name</label>
+                <label class="control-label" for="DepartmentName">Department Name English</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentName, new { @dir = "ltr", placeholder = "Enter Department Name", id = "DeptName" })
-                    @Html.ValidationMessageFor(m => m.Department.DepartmentName, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Department.DepartmentNameE, new { @dir = "ltr", id = "DeptName", @class ="tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Department.DepartmentNameE, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentName">Department Name Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Department.DepartmentNameA, new { @dir = "ltr", id = "DeptName", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Department.DepartmentNameA, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -54,18 +64,101 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @dir = "ltr", placeholder = "Enter Department Description", id = "DeptDesc" })
-                    @Html.ValidationMessageFor(m => m.Department.DepartmentDesc, "")
+                    @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @dir = "ltr", @class ="tbdisable", id = "DeptDesc", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Department.DepartmentDesc, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div id="EmpLabel">
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-striped table-responsive" id="tableSortableResMed">
+                        <thead class="cf sorthead">
+                            <tr>
+                                <th>Employee</th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table id="EmpList" class="table table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (@Model.Department != null)
+                            {
+                                foreach (var item in Model.EmployeeList.ToList())
+                                {
+                                <tr>
+                                    <td>@item.EmployeeFirstName @item.EmployeeMiddleName @item.EmployeeLastName</td>
+
+                                </tr>
+                                }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">Save</button>
+                    <button id="edit" class="btn">Edit</button>
+                    <button id="savebtn" class="btn" type="submit">Save</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href='/HR/Department/Index'">Cancel</button>
                 </div>
             </div>
         </div>
 
     </div>
 }
+
+<script>
+    $(document).ready(function () {
+        var id = $('#Department_DepartmentId').val();
+        if (id == "") {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#EmpLabel").hide();
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+            event.preventDefault();
+        } else {
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#EmpLabel").show();
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+            event.preventDefault();
+        }
+    });
+    $("#edit").click(function () {
+        $('.' + 'tbdisable' + ':input').attr('disabled', false);
+        $("#EmpLabel").hide();
+        $("#savebtn").show();
+        $("#cancel").show();
+        $("#edit").hide();
+        event.preventDefault();
+    });
+
+    //$('#EmpList').dataTable({
+    //    "sPaginationType": "bootstrap",
+    //    "fnInitComplete": function () {
+    //        $(".dataTables_wrapper select").select2({
+    //            dropdownCssClass: 'noSearch'
+    //        });
+    //    }
+    //});
+
+</script>

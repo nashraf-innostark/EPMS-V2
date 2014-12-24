@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Request;
 using Microsoft.AspNet.Identity;
-using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -26,8 +30,39 @@ namespace EPMS.Web.Areas.HR.Controllers
         // GET: HR/Request
         public ActionResult Index()
         {
+            EmployeeRequestSearchRequest searchRequest = Session["PageMetaData"] as EmployeeRequestSearchRequest;
+
+            Session["PageMetaData"] = null;
+
+            EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
+            
+            viewModel.SearchRequest = searchRequest ?? new EmployeeRequestSearchRequest();
+            
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View();
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
+        {
+            EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
+            if (userRole != null && userRole.Name == "Admin")
+            {
+                searchRequest.Requester = "Admin";
+            }
+            else
+            {
+                searchRequest.Requester = aspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
+            }
+            var employeeRequestResponse = employeeRequestService.LoadAllRequests(searchRequest);
+            viewModel.aaData = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+            viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
+            viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+            viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
+            // Keep Search Request in Session
+            Session["PageMetaData"] = searchRequest;
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         // GET: HR/Request/Create
         public ActionResult Create(long? id)
@@ -39,14 +74,15 @@ namespace EPMS.Web.Areas.HR.Controllers
                 if (id != null)
                 {
                     requestViewModel.EmployeeRequest = employeeRequestService.Find((long)id).CreateFromServerToClient();
-                    requestViewModel.EmployeeRequestDetail = employeeRequestService.GetRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                    requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
                 }
                 if (currentUser.Employee != null)
                 {
                     if (currentUser.Employee.EmployeeId > 0)
                     {
                         requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
-                        requestViewModel.EmployeeRequest.Employee.DepartmentName = currentUser.Employee.JobTitle.Department.DepartmentName;
+                        requestViewModel.EmployeeRequest.Employee.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
+                        requestViewModel.EmployeeRequest.Employee.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
                     }
                 }
             }

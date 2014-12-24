@@ -13,7 +13,7 @@
             </a>
         </li>
         <li>
-            <a href="~/Request/Index">
+            <a href="~/HR/Request/Index">
                 Requests List
             </a>
         </li>
@@ -66,12 +66,12 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @class = "control-label" })
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.DepartmentNameE, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentName)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentNameE, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentNameE)
                 </div>
             </div>
 
@@ -105,10 +105,9 @@
             <div class="span3">
                 @Html.LabelFor(model => model.EmployeeRequest.IsMonetary, new { @class = "control-label" })
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.CheckBoxFor(model => model.EmployeeRequest.IsMonetary)
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.IsMonetary)
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.EmployeeRequest.IsMonetary, new { @id = "IsMonetary" })
                 </div>
             </div>
         </div>
@@ -167,7 +166,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths)
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @id = "NumberOfMonths" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.NumberOfMonths)
                     </div>
                 </div>
@@ -179,7 +178,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand", @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand", @readonly = "readonly", @id = "FirstInstallmentDate" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.FirstInstallmentDate)
                     </div>
                 </div>
@@ -191,7 +190,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand", @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand", @readonly = "readonly", @id = "LastInstallmentDate" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LastInstallmentDate)
                     </div>
                 </div>
@@ -210,24 +209,24 @@
 <script>
     $(document).ready(function () {
         MonetaryHideShow();
-        $('#EmployeeRequestDetail_LastInstallmentDate').mask('99/99/9999');
+        $('#LastInstallmentDate').mask('99/99/9999');
         $("#LoanDateAr").val(ConvertDates($("#LoanDateEn").val(), "gregorian", "islamic"));
     });
-    $('#EmployeeRequest_IsMonetary').change(function () {
+    $('#IsMonetary').change(function () {
         MonetaryHideShow();
     });
     function MonetaryHideShow() {
         var divToBeAffected = '#monetaryRequestControls';
-        if ($('#EmployeeRequest_IsMonetary').is(":checked")) {
+        if ($('#IsMonetary').is(":checked")) {
             $(divToBeAffected).show();
         } else {
             $(divToBeAffected).hide();
         }
     }
-    $('#EmployeeRequestDetail_FirstInstallmentDate').change(function () {
-        $('#EmployeeRequestDetail_LastInstallmentDate').val(moment($('#EmployeeRequestDetail_FirstInstallmentDate').val()).add($('#EmployeeRequestDetail_NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+    $('#FirstInstallmentDate').change(function () {
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
     });
-    $('#EmployeeRequestDetail_NumberOfMonths').change(function () {
-        $('#EmployeeRequestDetail_LastInstallmentDate').val(moment($('#EmployeeRequestDetail_FirstInstallmentDate').val()).add($('#EmployeeRequestDetail_NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+    $('#NumberOfMonths').change(function () {
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
     });
 </script>

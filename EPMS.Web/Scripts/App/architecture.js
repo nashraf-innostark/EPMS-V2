@@ -1,6 +1,5 @@
 ﻿//show toast on new item created or updated based on url parameter
 $(function () {
-    debugger
     var messageVm = $("#Message").val();
     if ($("#IsSaved").val()) {
         if (messageVm !== '' && messageVm !== "" && messageVm !== null && messageVm !== undefined) {

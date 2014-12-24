@@ -33,8 +33,11 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>@EPMS.Web.Resources.Resource1.Name</th>
-                            <th>Job Title Description</th>
+                            @*<th>@EPMS.Web.Resources.Resource1.Name</th>*@
+                            <th>Job Title Name Eng</th>
+                            @*<th>Job Title Name Ar</th>*@
+                            <th>Job Title Description Eng</th>
+                            @*<th>Job Title Description Ar</th>*@
                             <th>Basic Salary</th>
                             <th>Department</th>
                         </tr>
@@ -44,10 +47,12 @@
                         {
                             <tr>
                                 <td>@item.JobTitleId</td>
-                                <td>@Html.ActionLink(@item.JobTitleName, "Create", new { id = item.JobTitleId }) </td>
-                                <td>@item.JobTitleDesc</td>
+                                <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new { id = item.JobTitleId }) </td>
+                                @*<td>@Html.ActionLink(@item.JobTitleNameA, "Create", new { id = item.JobTitleId }) </td>*@
+                                <td>@item.JobTitleDescE</td>
+                                @*<td>@item.JobTitleDescA</td>*@
                                 <td>@item.BasicSalary</td>
-                                <td>@item.Department.DepartmentName</td>
+                                <td>@item.Department.DepartmentNameE</td>
 
                             </tr>
                         }
@@ -60,17 +65,6 @@
 
 <script>
     $(document).ready(function () {
-        //$('#DepartmentList').dataTable({
-        //    "sPaginationType": "bootstrap",
-        //    "bFilter": true,
-        //     "aoColumnDefs": [
-        //        {
-        //            "targets": [0],
-        //            "visible": false,
-        //            "searchable": false
-        //        }
-        //    ],
-        //});
         $('#JobTitle').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [

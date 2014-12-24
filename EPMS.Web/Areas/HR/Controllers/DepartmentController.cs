@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
@@ -12,8 +11,12 @@ namespace EPMS.Web.Areas.HR.Controllers
 {
     public class DepartmentController : BaseController
     {
+        #region Private
+
         private readonly IDepartmentService oService;
         private readonly IEmployeeService empService;
+
+        #endregion
 
         #region Constructor
 
@@ -24,37 +27,28 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #endregion
 
+        #region Public
         // GET: HR/Department
         public ActionResult Index()
         {
-            if (Request.UrlReferrer == null || Request.UrlReferrer.AbsolutePath == "/Areas/HR/Department/Index")
-            {
-                Session["PageMetaData"] = null;
-            }
-
-            DepartmentSearchRequest departmentSearchRequest = Session["PageMetaData"] as DepartmentSearchRequest;
-
-            Session["PageMetaData"] = null;
-
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
 
             return View(new DepartmentListViewModel
             {
                 DepartmentList = oService.GetAll().Select(x => x.CreateFrom()),
-                SearchRequest = departmentSearchRequest ?? new DepartmentSearchRequest()
             });
         }
 
         public ActionResult Create(long? id)
         {
-            DepartmentListViewModel listViewModel = new DepartmentListViewModel();
+            DepartmentListViewModel detailViewModel = new DepartmentListViewModel();
             if (id != null)
             {
-                listViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
+                detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
+                detailViewModel.EmployeeList = oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFromServerToClient());
 
             }
-
-            return View(listViewModel);
+            return View(detailViewModel);
         }
 
         [HttpPost]
@@ -102,19 +96,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             return View(departmentListViewModel);
         }
-
-        public ActionResult Details(long? id)
-        {
-            DepartmentListViewModel detailViewModel = new DepartmentListViewModel();
-            if (id != null)
-            {
-                detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
-                detailViewModel.EmployeeList =
-                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFromServerToClient());
-
-            }
-            return View(detailViewModel);
-        }
+        #endregion
 
     }
 }

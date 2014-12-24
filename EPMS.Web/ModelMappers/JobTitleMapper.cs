@@ -10,7 +10,7 @@ namespace EPMS.Web.ModelMappers
             return new ApiModels.JobTitleDropDown
              {
                  JobTitleId = source.JobTitleId,
-                 JobTitleName = source.JobTitleName,
+                 JobTitleName = source.JobTitleNameE,
                  BasicSalary = source.BasicSalary ?? 0,
              };
         }
@@ -20,8 +20,10 @@ namespace EPMS.Web.ModelMappers
             return new Models.JobTitle
             {
                 JobTitleId = source.JobTitleId,
-                JobTitleName = source.JobTitleName,
-                JobTitleDesc = source.JobTitleDesc,
+                JobTitleNameE = source.JobTitleNameE,
+                JobTitleNameA = source.JobTitleNameA,
+                JobTitleDescE = source.JobTitleDescE,
+                JobTitleDescA = source.JobTitleDescA,
                 DepartmentId = source.DepartmentId,
                 BasicSalary = source.BasicSalary,
                 Department = source.Department.CreateFrom(),
@@ -37,8 +39,10 @@ namespace EPMS.Web.ModelMappers
             return new DomainModels.JobTitle
             {
                 JobTitleId = source.JobTitleId,
-                JobTitleName = source.JobTitleName,
-                JobTitleDesc = source.JobTitleDesc,
+                JobTitleNameE = source.JobTitleNameE,
+                JobTitleNameA = source.JobTitleNameA,
+                JobTitleDescE = source.JobTitleDescE,
+                JobTitleDescA = source.JobTitleDescA,
                 DepartmentId = source.DepartmentId,
                 BasicSalary = source.BasicSalary,
                 //Department = source.Department.CreateFrom(),

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -54,7 +57,17 @@ namespace EPMS.Implementation.Services
             return repository.Find(id);
         }
 
-        public RequestDetail GetRequestDetailByRequestId(long requestId)
+        public EmployeeRequestResponse LoadAllRequests(EmployeeRequestSearchRequest searchRequset)
+        {
+            return repository.GetAllRequests(searchRequset);
+        }
+
+        public IEnumerable<EmployeeRequest> LoadAllRequests(string requester)
+        {
+            return requester == "Admin" ? repository.GetAll() : repository.GetAllRequests(Convert.ToInt64(requester));
+        }
+
+        public RequestDetail LoadRequestDetailByRequestId(long requestId)
         {
             return repositoryRequestDetail.LoadRequestDetailByRequestId(requestId);
         }

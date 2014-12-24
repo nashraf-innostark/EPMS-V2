@@ -114,9 +114,13 @@ namespace IdentitySample.Controllers
                 }
                 //return RedirectToAction("Index", new { Message = IdentitySample.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess });
                 //return RedirectToAction("Index", "Dashboard");
-                ViewBag.MessageVM = new MessageViewModel { Message = "Password has been updated.", IsUpdated = true };
+                ViewBag.MessageVM = new MessageViewModel {Message = "Password has been updated.", IsUpdated = true};
 
                 return View();
+            }
+            else
+            {
+                ViewBag.MessageVM = new MessageViewModel { Message = "Incorrect old Password", IsError = true };
             }
             AddErrors(result);
             return View(model);
@@ -293,8 +297,8 @@ namespace IdentitySample.Controllers
                         FirstName = item.Employee.EmployeeFirstName,
                         KeyId = item.Id,
                         LastName = item.Employee.EmployeeLastName,
-                        UserName = item.UserName,
-                        Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name
+                        Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name,
+                        Username = item.UserName
                     });
                 }
             }
@@ -616,7 +620,7 @@ namespace IdentitySample.Controllers
                     UserManager.SendEmailAsync(user.Email, "Reset Password",
                         "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
                 ViewBag.Link = callbackUrl;
-                TempData["message"] = new MessageViewModel { Message = "An email with Password link has been sent.", IsUpdated = true };
+                TempData["message"] = new MessageViewModel { Message = ": An email with Password link has been sent.", IsUpdated = true };
                 return RedirectToAction("Login");
                 //return View("Login");
             }

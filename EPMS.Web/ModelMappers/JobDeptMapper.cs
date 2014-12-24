@@ -15,9 +15,11 @@ namespace EPMS.Web.ModelMappers
             return new Models.JobTitleAndDepartment
             {
                 JobId = source.JobTitleId,
-                JobTitle = source.JobTitleName,
+                JobTitleE = source.JobTitleNameE,
+                JobTitleA = source.JobTitleNameA,
                 DeptId = source.Department.DepartmentId,
-                DeptName = source.Department.DepartmentName,
+                DeptNameE = source.Department.DepartmentNameE,
+                DeptNameA = source.Department.DepartmentNameA,
                 BasicSalary = source.BasicSalary ?? 0,
             };
         }

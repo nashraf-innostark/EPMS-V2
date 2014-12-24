@@ -1430,9 +1430,9 @@
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
     <Content Include="Areas\HR\Views\Department\Index.cshtml" />
-    <Content Include="Areas\HR\Views\Department\Create.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\Request\Create.cshtml" />
-    <Content Include="Areas\HR\Views\Department\Details.cshtml" />
+    <Content Include="Areas\HR\Views\Department\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Index.cshtml" />
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
