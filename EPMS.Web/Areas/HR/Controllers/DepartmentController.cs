@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Department;
 
@@ -47,8 +45,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (id != null)
             {
                 detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
-                detailViewModel.EmployeeList = id.HasValue ?
-                    oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFrom()) : new Collection<Employee>();
+                detailViewModel.EmployeeList = oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFromServerToClient());
 
             }
             return View(detailViewModel);
