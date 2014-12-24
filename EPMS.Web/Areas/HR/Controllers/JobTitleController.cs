@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobTitle;
-using EPMS.Web.Models;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
     public class JobTitleController : BaseController
     {
+        #region Private
+
         private readonly IJobTitleService jobTitleService;
         private readonly IDepartmentService departmentService;
+
+        #endregion
+        
+        #region Constructor
 
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="departmentService"></param>
         /// <param name="jobTitleService"></param>
-        #region Constructor
-
         public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService)
         {
             this.departmentService = departmentService;
@@ -32,7 +32,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #endregion
 
-
+        #region Public
 
         // GET: JobTitles ListView Action Method
         public ActionResult Index()
@@ -108,5 +108,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             
             return View(jobTitleViewModel);
         }
+
+        #endregion
     }
 }

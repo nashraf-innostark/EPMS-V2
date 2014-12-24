@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
@@ -46,8 +44,6 @@ namespace EPMS.Repository.Repositories
             new Dictionary<JobTitleByColumn, Func<JobTitle, object>>
                     {
                         { JobTitleByColumn.JobTitleId, c => c.JobTitleId},
-                        { JobTitleByColumn.JobTitleName,  c => c.JobTitleName},
-                        { JobTitleByColumn.JobTitleDesc, c => c.JobTitleDesc},
                         { JobTitleByColumn.BasicSalary, c => c.BasicSalary}
                     };
         #endregion
@@ -66,7 +62,7 @@ namespace EPMS.Repository.Repositories
                 s => (((jobTitleSearchRequest.JobTitleId == 0) || s.JobTitleId == jobTitleSearchRequest.JobTitleId
                     || s.JobTitleId.Equals(jobTitleSearchRequest.JobTitleId)) &&
                     (string.IsNullOrEmpty(jobTitleSearchRequest.JobTitleName)
-                    || (s.JobTitleName.Contains(jobTitleSearchRequest.JobTitleName))));
+                    || (s.JobTitleNameE.Contains(jobTitleSearchRequest.JobTitleName))));
 
             IEnumerable<JobTitle> jobTitles = jobTitleSearchRequest.IsAsc ?
                 DbSet
