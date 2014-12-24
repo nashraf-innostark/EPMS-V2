@@ -272,6 +272,7 @@
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\Department.cs" />

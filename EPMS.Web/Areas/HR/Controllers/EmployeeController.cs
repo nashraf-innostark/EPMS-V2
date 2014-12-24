@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return View(viewModel);
             }
             long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-            if (id > 0 && id == empId)
+            if (id > 0 && (id == empId || Roles.IsUserInRole("Admin")))
             {
                 EmployeeViewModel viewModel = new EmployeeViewModel
                 {
@@ -309,4 +309,4 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #endregion
     }
-}
+} 
