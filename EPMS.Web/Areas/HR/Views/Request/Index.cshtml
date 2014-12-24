@@ -92,7 +92,8 @@
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["IsMonetary"];
+                        var IsMonetary = full["IsMonetary"];
+                        return IsMonetary ? "Yes" : "No";
                     }
                 },
                 {
