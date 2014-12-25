@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Linq;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -30,10 +31,13 @@ namespace EPMS.Web.ModelMappers
                     IsMonetary = source.IsMonetary,
                     RequestTopic = source.RequestTopic,
                     RequestDate = source.RequestDate,
+                    RequestDateString = source.RequestDate.ToShortDateString(),
                     RecCreatedBy = source.RecCreatedBy,
                     RecCreatedDt = source.RecCreatedDt,
                     RecLastUpdatedBy = source.RecLastUpdatedBy,
-                    RecLastUpdatedDt = source.RecLastUpdatedDt
+                    RecLastUpdatedDt = source.RecLastUpdatedDt,
+                    Employee = source.Employee.CreateFromServerToClient(),
+                    RequestDetails = source.RequestDetails.Select(x=>x.CreateFromServerToClient())
                 };
             }
         #endregion

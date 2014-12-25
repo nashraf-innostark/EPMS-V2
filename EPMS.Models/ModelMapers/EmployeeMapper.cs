@@ -12,10 +12,8 @@ namespace EPMS.Models.ModelMapers
         public static void UpdateTo(this Employee source, Employee target)
         {
             target.EmployeeId = source.EmployeeId;
-            target.EmployeeFirstName = source.EmployeeFirstName;
-            target.EmployeeMiddleName = source.EmployeeMiddleName;
-            target.EmployeeLastName = source.EmployeeLastName;
-            target.EmployeeFullName = source.EmployeeFirstName + " " + source.EmployeeMiddleName + " " + source.EmployeeLastName;
+            target.EmployeeNameE = source.EmployeeNameE;
+            target.EmployeeNameA = source.EmployeeNameA;
             target.EmployeeImagePath = source.EmployeeImagePath;
             target.JobTitleId = source.JobTitleId;
             target.EmployeeJobId = source.EmployeeJobId;
@@ -23,14 +21,14 @@ namespace EPMS.Models.ModelMapers
             target.EmployeeLandlineNum = source.EmployeeLandlineNum;
             target.MaritalStatus = source.MaritalStatus;
             target.EmployeeDOB = source.EmployeeDOB;
-            target.EmpDateOfBirthArabic = source.EmpDateOfBirthArabic;
             target.EmployeeNationality = source.EmployeeNationality;
             target.EmployeeIqama = source.EmployeeIqama;
             target.EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt;
             target.EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt;
             target.EmployeePassportNum = source.EmployeePassportNum;
             target.EmployeePassportExpiryDt = source.EmployeePassportExpiryDt;
-            target.EmployeeDetails = source.EmployeeDetails;
+            target.EmployeeDetailsE = source.EmployeeDetailsE;
+            target.EmployeeDetailsA = source.EmployeeDetailsA;
             target.RecCreatedBy = source.RecCreatedBy;
             target.RecCreatedDt = source.RecCreatedDt;
             target.RecLastUpdatedBy = source.RecLastUpdatedBy;
@@ -41,10 +39,8 @@ namespace EPMS.Models.ModelMapers
             return new Employee
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeFirstName = source.EmployeeFirstName,
-                EmployeeMiddleName = source.EmployeeMiddleName,
-                EmployeeLastName = source.EmployeeLastName,
-                EmployeeFullName = source.EmployeeFirstName + " " + source.EmployeeMiddleName + " " + source.EmployeeLastName,
+                EmployeeNameE = source.EmployeeNameE,
+                EmployeeNameA = source.EmployeeNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 JobTitleId = source.JobTitleId,
                 EmployeeJobId = source.EmployeeJobId,
@@ -52,14 +48,14 @@ namespace EPMS.Models.ModelMapers
                 EmployeeLandlineNum = source.EmployeeLandlineNum,
                 MaritalStatus = source.MaritalStatus,
                 EmployeeDOB = source.EmployeeDOB,
-                EmpDateOfBirthArabic = source.EmpDateOfBirthArabic,
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeeIqama = source.EmployeeIqama,
                 EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt,
                 EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt,
                 EmployeePassportNum = source.EmployeePassportNum,
                 EmployeePassportExpiryDt = source.EmployeePassportExpiryDt,
-                EmployeeDetails = source.EmployeeDetails,
+                EmployeeDetailsE = source.EmployeeDetailsE,
+                EmployeeDetailsA = source.EmployeeDetailsA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,

@@ -1,7 +1,6 @@
 ﻿@model  EPMS.Web.ViewModels.Request.EmployeeRequestViewModel
 @{
     ViewBag.Title = Model.EmployeeRequest.RequestId > 0 ? "Update Request" : "Create Request";
-
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Navigation Bar -->
@@ -13,7 +12,7 @@
             </a>
         </li>
         <li>
-            <a href="~/Request/Index">
+            <a href="~/HR/Request/Index">
                 Requests List
             </a>
         </li>
@@ -34,11 +33,8 @@
 @using (Html.BeginForm("Create", "Request", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.EmployeeRequest.RequestId)
-
-    <div class="container-fluid">
-
-        <div class="form-legend" id="Input_Field">Input Fields</div>
-
+    <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
+    <div class="container-fluid request">
         <!--Input Field of Request begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -66,12 +62,12 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @class = "control-label" })
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.DepartmentNameE, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentName, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentName)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentNameE, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentNameE)
                 </div>
             </div>
 
@@ -83,7 +79,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestTopic)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestTopic, new { @class = "toBeDisabled" })
                     @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestTopic)
                 </div>
             </div>
@@ -95,7 +91,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequestDetail.RequestDesc)
+                    @Html.TextBoxFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "toBeDisabled" })
                     @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.RequestDesc)
                 </div>
             </div>
@@ -105,10 +101,9 @@
             <div class="span3">
                 @Html.LabelFor(model => model.EmployeeRequest.IsMonetary, new { @class = "control-label" })
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.CheckBoxFor(model => model.EmployeeRequest.IsMonetary)
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.IsMonetary)
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.EmployeeRequest.IsMonetary, new { @id = "IsMonetary", @class = "toBeDisabled" })
                 </div>
             </div>
         </div>
@@ -119,9 +114,9 @@
                 <div class="span3">
                     @Html.LabelFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "control-label" })
                 </div>
-                <div class="span9">
+                <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanAmount)
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "toBeDisabled" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanAmount)
                     </div>
                 </div>
@@ -133,7 +128,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
+                        @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeDisabled", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
                     </div>
                 </div>
             </div>
@@ -143,7 +138,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanDate)
                     </div>
                 </div>
@@ -155,7 +150,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.InstallmentAmount)
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "toBeDisabled" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.InstallmentAmount)
                     </div>
                 </div>
@@ -167,7 +162,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths)
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeDisabled" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.NumberOfMonths)
                     </div>
                 </div>
@@ -179,7 +174,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand", @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @readonly = "readonly", @id = "FirstInstallmentDate" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.FirstInstallmentDate)
                     </div>
                 </div>
@@ -191,43 +186,169 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand", @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeDisabled", @readonly = "readonly", @id = "LastInstallmentDate" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LastInstallmentDate)
                     </div>
                 </div>
             </div>
         </div>
-        <!--End    --    Input Field of RequestDetail-->
-        @if(!@Model.EmployeeRequestDetail.IsApproved){
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">Submit</button>
+        @if (!@Model.EmployeeRequestDetail.IsApproved)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn toBeDisabled">Submit</button>
+                </div>
             </div>
-        </div>
         }
+        <!--End    --    Input Field of RequestDetail-->
+    </div>
+    
+        <!--Input Field of Request Reply begin-->
+    <div id="requestReplyControls" style="display: none">
+        <header>
+            <i class="icon-big-notepad"></i>
+            <h2><small>Request Reply </small></h2>
+        </header>
+        <div class="container-fluid requestReply">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "control-label" })
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "toBeDisabled" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanAmount)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">Loan Date (Hijri)</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeDisabled", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "control-label" })
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanDate)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "control-label" })
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "toBeDisabled" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.InstallmentAmount)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @class = "control-label" })
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeDisabled" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.NumberOfMonths)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "control-label" })
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @readonly = "readonly", @id = "FirstInstallmentDate" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.FirstInstallmentDate)
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    @Html.LabelFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "control-label" })
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeDisabled", @readonly = "readonly", @id = "LastInstallmentDate" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LastInstallmentDate)
+                    </div>
+                </div>
+            </div>
+            @if (!@Model.EmployeeRequestDetail.IsApproved)
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn">Submit</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <!--End    --    Input Field of Request Reply-->
     </div>
 }
 <script>
     $(document).ready(function () {
         MonetaryHideShow();
-        $('#EmployeeRequestDetail_LastInstallmentDate').mask('99/99/9999');
-        $("#LoanDateAr").val(ConvertDates($("#LoanDateEn").val(), "gregorian", "islamic"));
+        $('#LastInstallmentDate').mask('99/99/9999');
+        if ($("#LoanDateEn").val() != null && $("#LoanDateEn").val() != "") {
+            $("#LoanDateAr").val(ConvertDates($("#LoanDateEn").val(), "gregorian", "islamic"));
+        }
+        if ($("#UserRole").val() == "Admin") {
+            $('.request .toBeDisabled:input').attr('disabled', true);
+            $("#requestReplyControls").show();
+        }
+        else
+        {
+            $('.requestReply .toBeDisabled:input').attr('disabled', true);
+            $("#requestReplyControls").hide();
+        }
     });
-    $('#EmployeeRequest_IsMonetary').change(function () {
+    $('#IsMonetary').change(function () {
         MonetaryHideShow();
     });
     function MonetaryHideShow() {
         var divToBeAffected = '#monetaryRequestControls';
-        if ($('#EmployeeRequest_IsMonetary').is(":checked")) {
+        if ($('#IsMonetary').is(":checked")) {
             $(divToBeAffected).show();
         } else {
             $(divToBeAffected).hide();
         }
     }
-    $('#EmployeeRequestDetail_FirstInstallmentDate').change(function () {
-        $('#EmployeeRequestDetail_LastInstallmentDate').val(moment($('#EmployeeRequestDetail_FirstInstallmentDate').val()).add($('#EmployeeRequestDetail_NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+    //function DiableFields() {
+    //    var fieldsList = $('.toBeDisabled');
+    //        for (var i = 0; i < fieldsList.length; i++) {
+    //            var control = fieldsList[i];
+    //            var fieldvalue = $(control).val();
+    //            if (fieldvalue == null || fieldvalue == "" || fieldvalue == "Select State") {
+    //                $(control).prop('placeholder', 'required');
+    //                $(control).addClass("Error");
+
+    //            } else {
+    //                $(control).removeClass("Error");
+    //            }
+    //        }
+    //}
+    $('#FirstInstallmentDate').change(function () {
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
     });
-    $('#EmployeeRequestDetail_NumberOfMonths').change(function () {
-        $('#EmployeeRequestDetail_LastInstallmentDate').val(moment($('#EmployeeRequestDetail_FirstInstallmentDate').val()).add($('#EmployeeRequestDetail_NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+    $('#NumberOfMonths').change(function () {
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
     });
 </script>

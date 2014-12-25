@@ -8,14 +8,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
-using EPMS.Web.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Employee = EPMS.Web.Models.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -51,7 +54,9 @@ namespace EPMS.Web.Areas.HR.Controllers
         
         public ActionResult Index()
         {
-            if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("PM"))
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
+            if (userRole != null && (userRole.Name == "Admin" || userRole.Name == "PM"))
             {
                 EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
                 ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
@@ -131,7 +136,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return View(viewModel);
             }
             long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-            if (id > 0 && id == empId)
+            if (id > 0 && (id == empId || Roles.IsUserInRole("Admin")))
             {
                 EmployeeViewModel viewModel = new EmployeeViewModel
                 {
@@ -309,4 +314,4 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #endregion
     }
-}
+} 

@@ -27,5 +27,10 @@ namespace EPMS.Implementation.Services
         {
             return repository.Find(id);
         }
+
+        public IEnumerable<AspNetUser> GetAllUsers()
+        {
+            return repository.GetAll();
+        }
     }
 }

@@ -272,6 +272,7 @@
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\Department.cs" />
@@ -1429,13 +1430,12 @@
     <Content Include="Content\plugins\xbreadcrumbs.less" />
     <Content Include="Content\variables.less" />
     <Content Include="Areas\HR\Views\Department\Index.cshtml" />
-    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\Request\Create.cshtml" />
     <Content Include="Areas\HR\Views\Department\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Index.cshtml" />
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
-    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Create.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
@@ -1594,6 +1594,7 @@
     <Content Include="Scripts\plugins\jquery.clock.js" />
     <Content Include="Scripts\plugins\jquery.cookie.js" />
     <Content Include="Scripts\plugins\jquery.countdown.js" />
+    <Content Include="Scripts\plugins\jquery.dataTables-1.9.4.js" />
     <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
     <Content Include="Scripts\plugins\jquery.flot.js" />
     <Content Include="Scripts\plugins\jquery.flot.pie.js" />

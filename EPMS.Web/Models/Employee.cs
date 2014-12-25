@@ -10,12 +10,12 @@ namespace EPMS.Web.Models
     public class Employee
     {
         public long EmployeeId { get; set; }
-        [Required(ErrorMessage = "First Name is required.")]
-        public string EmployeeFirstName { get; set; }
-        [Required(ErrorMessage = "Middle Name is required.")]
-        public string EmployeeMiddleName { get; set; }
-        [Required(ErrorMessage = "Last Name is required.")]
-        public string EmployeeLastName { get; set; }
+        [Required(ErrorMessage = "Employee Name is required.")]
+        [Display(Name = "Employee Name English")]
+        public string EmployeeNameE { get; set; }
+        [Required(ErrorMessage = "Employee Name is required.")]
+        [Display(Name = "Employee Name Arabic")]
+        public string EmployeeNameA { get; set; }
         public string EmployeeImagePath { get; set; }
         [Required(ErrorMessage = "Job Title is required.")]
         public long? JobTitleId { get; set; }
@@ -47,17 +47,21 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public DateTime? EmployeePassportExpiryDt { get; set; }
         public DateTime? EmployeePassportExpiryDtAr { get; set; }
-        public string EmployeeDetails { get; set; }
+        [Display(Name = "Extra Information English")]
+        public string EmployeeDetailsE { get; set; }
         [Display(Name = "Full Name")]
         public string EmployeeFullName { get; set; }
-        public string JobTitleName { get; set; }
-        public string DepartmentName { get; set; }
+        public string JobTitleNameA { get; set; }
+        public string JobTitleNameE { get; set; }
+        public string DepartmentNameE { get; set; }
+        public string DepartmentNameA { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public string Email { get; set; }
-        
+        [Display(Name = "Extra Information Arabic")]
+        public string EmployeeDetailsA { get; set; }
 
 
         //[Display(Name = "Image")]
@@ -69,5 +73,6 @@ namespace EPMS.Web.Models
         public JobTitle JobTitle { get; set; }
         public ICollection<EmployeeRequest> EmployeeRequests { get; set; }
         public ICollection<Notification> Notifications { get; set; }
+        public ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }
