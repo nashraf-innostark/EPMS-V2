@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
+    @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
+    {
+        <link rel="stylesheet" href="~/Content/css/arabic.css" media="all" />
+    }
     <link href="~/Content/CSS/styleIST.css" rel="stylesheet" media="all" />
     <!-- Calendar -->
     <link rel="stylesheet" href="~/Content/CSS/Admin/style/fullcalendar.css">
