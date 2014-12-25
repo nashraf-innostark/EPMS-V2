@@ -108,6 +108,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         // Post: HR/Request/Create
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(EmployeeRequestViewModel requestViewModel)
         {
             try

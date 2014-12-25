@@ -89,11 +89,11 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "control-label", @id="RequestDesc" })
+                @Html.LabelFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "toBeDisabled" })
+                    @Html.TextAreaFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "toBeDisabled", @id = "RequestDesc" })
                     @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.RequestDesc)
                 </div>
             </div>
@@ -211,11 +211,11 @@
         <div class="container-fluid requestReply">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "control-label", @id = "RequestReply" })
+                    @Html.LabelFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "control-label" })
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "toBeDisabled" })
+                        @Html.TextAreaFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "toBeDisabled", @id = "RequestReply" })
                         @Html.ValidationMessageFor(model => model.EmployeeRequestReply.RequestDesc)
                     </div>
                 </div>
