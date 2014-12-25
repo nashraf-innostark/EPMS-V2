@@ -33,17 +33,19 @@
 @using (Html.BeginForm("Create", "Request", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.EmployeeRequest.RequestId)
+    @Html.HiddenFor(model => model.EmployeeRequest.RecCreatedBy)
+    @Html.HiddenFor(model => model.EmployeeRequest.RecCreatedDt)
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     <div class="container-fluid request">
         <!--Input Field of Request begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.EmployeeFullName, new { @class = "control-label" })
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.EmployeeNameE, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeFullName, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeFullName)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeNameE, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeNameE)
                 </div>
             </div>
         </div>
@@ -62,12 +64,12 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.DepartmentNameE, new { @class = "control-label" })
+                @Html.LabelFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.DepartmentNameE, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.DepartmentNameE)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE)
                 </div>
             </div>
 
@@ -87,7 +89,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "control-label" })
+                @Html.LabelFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "control-label", @id="RequestDesc" })
             </div>
             <div class="span9">
                 <div class="controls">
@@ -192,14 +194,11 @@
                 </div>
             </div>
         </div>
-        @if (!@Model.EmployeeRequestDetail.IsApproved)
-        {
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn toBeDisabled">Submit</button>
-                </div>
+        <div class="control-group row-fluid requestBtn">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn toBeDisabled">@ViewBag.Title</button>
             </div>
-        }
+        </div>
         <!--End    --    Input Field of RequestDetail-->
     </div>
     
@@ -212,120 +211,152 @@
         <div class="container-fluid requestReply">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "control-label" })
+                    @Html.LabelFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "control-label", @id = "RequestReply" })
                 </div>
-                <div class="span2">
+                <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "toBeDisabled" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanAmount)
+                        @Html.TextBoxFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "toBeDisabled" })
+                        @Html.ValidationMessageFor(model => model.EmployeeRequestReply.RequestDesc)
                     </div>
                 </div>
             </div>
-
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">Loan Date (Hijri)</label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeDisabled", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "control-label" })
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanDate)
-                    </div>
-                </div>
-            </div>
-
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "control-label" })
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "toBeDisabled" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.InstallmentAmount)
-                    </div>
-                </div>
-            </div>
-
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @class = "control-label" })
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeDisabled" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.NumberOfMonths)
-                    </div>
-                </div>
-            </div>
-
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "control-label" })
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @readonly = "readonly", @id = "FirstInstallmentDate" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.FirstInstallmentDate)
-                    </div>
-                </div>
-            </div>
-
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "control-label" })
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeDisabled", @readonly = "readonly", @id = "LastInstallmentDate" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LastInstallmentDate)
-                    </div>
-                </div>
-            </div>
-            @if (!@Model.EmployeeRequestDetail.IsApproved)
-            {
+            <div id="monetaryRequestReplyControls" style="display: none">
                 <div class="control-group row-fluid">
-                    <div class="span3 span-inset">
-                        <button type="submit" class="btn">Submit</button>
+                    <div class="span3">
+                        @Html.LabelFor(model => model.EmployeeRequestReply.LoanAmount, new { @class = "control-label" })
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanAmount, new { @class = "toBeDisabled" })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanAmount)
+                        </div>
                     </div>
                 </div>
-            }
+
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Loan Date (Hijri)</label>
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeDisabled", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        @Html.LabelFor(model => model.EmployeeRequestReply.LoanDate, new { @class = "control-label" })
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanDate)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        @Html.LabelFor(model => model.EmployeeRequestReply.InstallmentAmount, new { @class = "control-label" })
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.EmployeeRequestReply.InstallmentAmount, new { @class = "toBeDisabled" })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.InstallmentAmount)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        @Html.LabelFor(model => model.EmployeeRequestReply.NumberOfMonths, new { @class = "control-label" })
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.EmployeeRequestReply.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeDisabled" })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.NumberOfMonths)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        @Html.LabelFor(model => model.EmployeeRequestReply.FirstInstallmentDate, new { @class = "control-label" })
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.EmployeeRequestReply.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @readonly = "readonly", @id = "FirstInstallmentDate" })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.FirstInstallmentDate)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        @Html.LabelFor(model => model.EmployeeRequestReply.LastInstallmentDate, new { @class = "control-label" })
+                    </div>
+                    <div class="span2">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.EmployeeRequestReply.LastInstallmentDate, new { @class = "cursorHand toBeDisabled", @readonly = "readonly", @id = "LastInstallmentDate" })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LastInstallmentDate)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid replyBtn">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn toBeDisabled">Reply</button>
+                </div>
+            </div>
         </div>
         <!--End    --    Input Field of Request Reply-->
     </div>
 }
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        MonetaryHideShow();
+        CKEDITOR.replace('RequestDesc');
+        CKEDITOR.replace('RequestReply');
+        DivHideShow('IsMonetary', 'monetaryRequestControls');
+        DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
+        //Set date format, remove time from date
         $('#LastInstallmentDate').mask('99/99/9999');
+        //Convert Gregorian to Hijri
         if ($("#LoanDateEn").val() != null && $("#LoanDateEn").val() != "") {
             $("#LoanDateAr").val(ConvertDates($("#LoanDateEn").val(), "gregorian", "islamic"));
         }
-        if ($("#UserRole").val() == "Admin") {
+       
+        //If request has been approved, either by employee, or by admin, disable all fields, and just show records
+        if ('@Model.EmployeeRequestDetail.IsApproved'=='True') {
             $('.request .toBeDisabled:input').attr('disabled', true);
-            $("#requestReplyControls").show();
-        }
-        else
-        {
-            $('.requestReply .toBeDisabled:input').attr('disabled', true);
             $("#requestReplyControls").hide();
+            $(".requestBtn").hide();
         }
+            //If user is Admin, Disable Request and enable Reply Fields
+        else if ($("#UserRole").val() == "Admin") {
+                $('.request .toBeDisabled:input').attr('disabled', true);
+                $("#requestReplyControls").show();
+                $(".requestBtn").hide();
+        }
+        else {
+                $("#requestReplyControls").hide();
+                $(".requestBtn").show();
+            }
+        
+        
+    });
+    $('#FirstInstallmentDate').change(function () {
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+    });
+    $('#NumberOfMonths').change(function () {
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
     });
     $('#IsMonetary').change(function () {
-        MonetaryHideShow();
+        DivHideShow('IsMonetary', 'monetaryRequestControls');
     });
-    function MonetaryHideShow() {
-        var divToBeAffected = '#monetaryRequestControls';
-        if ($('#IsMonetary').is(":checked")) {
+    function DivHideShow(chk, div) {
+        var divToBeAffected = '#' + div;
+        if ($('#' + chk).is(":checked")) {
             $(divToBeAffected).show();
         } else {
             $(divToBeAffected).hide();
@@ -345,10 +376,4 @@
     //            }
     //        }
     //}
-    $('#FirstInstallmentDate').change(function () {
-        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
-    });
-    $('#NumberOfMonths').change(function () {
-        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
-    });
 </script>

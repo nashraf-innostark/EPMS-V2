@@ -92,22 +92,18 @@ namespace EPMS.Web.Areas.HR.Controllers
                     if (employeeRequest.EmployeeId == currentUser.EmployeeId || currentUser.AspNetRoles.FirstOrDefault().Name=="Admin")
                     {
                         requestViewModel.EmployeeRequest = employeeRequest.CreateFromServerToClient();
-                        requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                        requestViewModel.EmployeeRequestDetail = employeeRequest.RequestDetails.Where(x => x.RequestId == id).OrderByDescending(x => x.RowVersion).FirstOrDefault().CreateFromServerToClient();
+                        //requestViewModel.EmployeeRequestReply = employeeRequest.RequestDetails.Where(x => x.RequestId == id).OrderByDescending(x => x.RowVersion).FirstOrDefault().CreateFromServerToClient();
                     }
                     ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
                 }
-                if (currentUser.Employee != null)
+                else if (currentUser.EmployeeId > 0)
                 {
-                    if (currentUser.Employee.EmployeeId > 0)
-                    {
-                        requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
-                        requestViewModel.EmployeeRequest.Employee.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
-                        requestViewModel.EmployeeRequest.Employee.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
-                    }
+                    requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
                 }
             }
             if (requestViewModel.EmployeeRequestDetail.IsApproved)
-                ViewBag.MessageVM = new MessageViewModel { Message = "Your request has been approved by the Administrator, now you are unable to make changes in this request.", IsInfo = true };
+                ViewBag.MessageVM = new MessageViewModel { Message = "Your request has been accepted, now you are unable to make changes in this request.", IsInfo = true };
             return View(requestViewModel);
         }
         // Post: HR/Request/Create

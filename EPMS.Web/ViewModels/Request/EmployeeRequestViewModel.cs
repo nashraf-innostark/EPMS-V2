@@ -18,7 +18,6 @@ namespace EPMS.Web.ViewModels.Request
         public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
         public RequestDetail EmployeeRequestDetail { get; set; }
         public RequestDetail EmployeeRequestReply { get; set; }
-        public string RequestDescription { get; set; }
         public IEnumerable<EmployeeRequest> aaData { get; set; }
         /// <summary>
         /// Total Records in DB
