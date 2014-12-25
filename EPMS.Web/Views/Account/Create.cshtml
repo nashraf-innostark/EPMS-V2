@@ -2,12 +2,14 @@
 @{
     ViewBag.Title = "Register User";
     string btnText = "Save";
+    var setDiasble = "false";
     if (Model != null)
     {
         if (!string.IsNullOrEmpty(Model.UserId))
         {
             ViewBag.Title = "Update User";
             btnText = "Update";
+            setDiasble = "readonly";
         }
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -50,20 +52,21 @@
 <!-- Page heading ends -->
 
 <!-- Form starts.  -->
-@using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return validateUserPassword();" }))
+@using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         @Html.HiddenFor(m => m.UserId)
+        @Html.HiddenFor(m => m.oldRole)
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="UserName">Username</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = (@Model != null && !string.IsNullOrEmpty(@Model.UserId))})
+                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble})
                     @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
                 </div>
             </div>
@@ -110,7 +113,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "required" })
+                    <label id="passAuth" class="required"></label>
                 </div>
             </div>
         </div>
@@ -128,7 +131,7 @@
         }
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@btnText</button>
+                <button type="submit" class="btn" onclick="validateUserPassword();">@btnText</button>
             </div>
         </div>
     </div>
@@ -152,14 +155,22 @@
         //    }
         //    return true;
         //});
+        
     });
-
     function validateUserPassword() {
         var userPassword = $("#password").val();
-        if (userPassword == null || userPassword == "") {
-            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "required" })
+        var model = @(Model.UserId == null ? "true" : "false");
+        if ((userPassword == null || userPassword == "") && model) {
+            $("#passAuth").text("Password Field is required");
             return false;
+        } else if (userPassword.length < 6 && model) {
+            $("#passAuth").text("Password must contain 6 characters");
+            return false;
+        }
+        else {
+            $("#passAuth").text("");
         }
         return true;
     }
+    
 </script>

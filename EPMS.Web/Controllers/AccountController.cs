@@ -256,6 +256,7 @@ namespace IdentitySample.Controllers
                     SelectedEmployee = employeeService.GetAll().ToList()[0].EmployeeId,
                     UserName = userToEdit.UserName,
                     Email = userToEdit.Email,
+                    //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
                 oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
@@ -319,11 +320,11 @@ namespace IdentitySample.Controllers
                 //Means Update
 
                 // Get role
-                var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
-                var roleName = roleManager.FindById(model.SelectedRole).Name;
-                AspNetUser userResult = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+                var roleName = RoleManager.FindById(model.SelectedRole).Name;
+                AspNetUser userResult = UserManager.FindById(model.UserId);
                 string userrRoleID = userResult.AspNetRoles.ToList()[0].Id;
-                string userRoleName = roleManager.FindById(userrRoleID).Name;
+                string userRoleName = RoleManager.FindById(userrRoleID).Name;
+
                 // Check if role has been changed
                 if (userrRoleID != model.SelectedRole)
                 {

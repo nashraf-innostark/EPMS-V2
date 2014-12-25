@@ -11,6 +11,7 @@ namespace EPMS.Web.Models
     {
         public long EmployeeId { get; set; }
         [Required(ErrorMessage = "First Name is required.")]
+        [Display(Name = "Employee Name English")]
         public string EmployeeFirstName { get; set; }
         [Required(ErrorMessage = "Middle Name is required.")]
         public string EmployeeMiddleName { get; set; }
