@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -28,10 +26,10 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetJobTitlesByDepartmentId(deptId);
         }
-        public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
-        {
-            return repository.GetAllJobTitle(jobTitleSearchRequest);
-        }
+        //public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
+        //{
+        //    return repository.GetAllJobTitle(jobTitleSearchRequest);
+        //}
 
         public JobTitle FindJobTitleById(long id)
         {
@@ -46,30 +44,24 @@ namespace EPMS.Implementation.Services
 
         public bool AddJob(JobTitle jobTitle)
         {
-            try
-            {
+                if (repository.JobTitleExists(jobTitle))
+                {
+                    throw new InvalidOperationException("Job Title with same name already exists.");
+                }
                 repository.Add(jobTitle);
                 repository.SaveChanges();
                 return true;
-            }
-            catch (Exception exception)
-            {
-                return false;
-            }
         }
 
         public bool UpdateJob(JobTitle jobTitle)
         {
-            try
+            if (repository.JobTitleExists(jobTitle))
             {
-                repository.Update(jobTitle);
-                repository.SaveChanges();
-                return true;
+                throw new InvalidOperationException("Job Title with same name already exists.");
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            repository.Update(jobTitle);
+            repository.SaveChanges();
+            return true;
         }
 
         public void DeleteJob(JobTitle jobTitle)

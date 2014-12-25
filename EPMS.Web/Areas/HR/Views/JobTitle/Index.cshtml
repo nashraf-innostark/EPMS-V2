@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 
 <div class="breadcrumb-container">
@@ -25,6 +26,10 @@
     <h3> <small><a href="~/HR/JobTitle/Create">Add New Job Title</a></small></h3>
 </header>
 
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
 <div id="English" class="container-fluid">
     <form class="form-horizontal">
         <div class="row-fluid">
@@ -33,13 +38,13 @@
                     <thead>
                         <tr>
                             <th></th>
-                            @*<th>@EPMS.Web.Resources.Resource1.Name</th>*@
-                            <th>Job Title Name Eng</th>
+                            <th>@EPMS.Web.Resources.HR.JobTitle.Name</th>
+                            @*<th>Job Title Name Eng</th>*@
                             @*<th>Job Title Name Ar</th>*@
-                            <th>Job Title Description Eng</th>
+                            <th>@EPMS.Web.Resources.HR.JobTitle.Description</th>
                             @*<th>Job Title Description Ar</th>*@
-                            <th>Basic Salary</th>
-                            <th>Department</th>
+                            <th>@EPMS.Web.Resources.HR.JobTitle.BasicSalary</th>
+                            <th>@EPMS.Web.Resources.HR.JobTitle.Department</th>
                         </tr>
                     </thead>
                     <tbody>

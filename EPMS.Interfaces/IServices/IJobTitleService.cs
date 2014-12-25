@@ -9,7 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<JobTitle> GetAll();
         List<JobTitle> GetJobTitlesByDepartmentId(long deptId);
-        JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);
+        //JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);
 
         JobTitle FindJobTitleById(long id);
 

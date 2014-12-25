@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New Job Title AR</value>
+  </data>
+  <data name="BasicSalary" xml:space="preserve">
+    <value>Basic Salary AR</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department AR</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Job Title Description AR</value>
+  </data>
   <data name="Name" xml:space="preserve">
-    <value>Employee Name</value>
+    <value>Job Title Name AR</value>
   </data>
 </root>

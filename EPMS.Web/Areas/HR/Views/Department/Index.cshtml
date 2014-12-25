@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "All Departments";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -28,6 +29,10 @@
     <h3> <small><a href="~/HR/Department/Create">Add New Department</a></small></h3>
 </header>
 <!-- Page Heading End-->
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 
 <div class="container-fluid">
     <form class="form-horizontal">

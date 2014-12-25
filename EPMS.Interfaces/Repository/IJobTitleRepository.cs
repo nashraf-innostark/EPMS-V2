@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -23,5 +19,10 @@ namespace EPMS.Interfaces.Repository
         /// <param name="jobTitleSearchRequest"></param>
         /// <returns></returns>
         JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest);
+
+        /// <summary>
+        /// Checks if Job Title with Arabic and English Name already exists
+        /// </summary>
+        bool JobTitleExists(JobTitle jobTitle);
     }
 }
