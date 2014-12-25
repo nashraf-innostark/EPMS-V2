@@ -90,18 +90,16 @@ namespace EPMS.Web.Areas.HR.Controllers
                     if (employeeRequest.EmployeeId == currentUser.EmployeeId || currentUser.AspNetRoles.FirstOrDefault().Name=="Admin")
                     {
                         requestViewModel.EmployeeRequest = employeeRequest.CreateFromServerToClient();
-                        requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
+                        requestViewModel.EmployeeRequestDetail = employeeRequest.RequestDetails.Where(x => x.RequestId == id).OrderByDescending(x => x.RowVersion).FirstOrDefault().CreateFromServerToClient();
+                        //requestViewModel.EmployeeRequestDetail = employeeRequestService.LoadRequestDetailByRequestId((long)id).CreateFromServerToClient();
                     }
                     ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
                 }
-                if (currentUser.Employee != null)
+                if (currentUser.EmployeeId > 0)
                 {
-                    if (currentUser.Employee.EmployeeId > 0)
-                    {
-                        requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
-                        requestViewModel.EmployeeRequest.Employee.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
-                        requestViewModel.EmployeeRequest.Employee.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
-                    }
+                    requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
+                    requestViewModel.EmployeeRequest.Employee.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
+                    requestViewModel.EmployeeRequest.Employee.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
                 }
             }
             if (requestViewModel.EmployeeRequestDetail.IsApproved)
