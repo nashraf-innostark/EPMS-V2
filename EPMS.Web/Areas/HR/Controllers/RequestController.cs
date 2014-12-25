@@ -14,7 +14,7 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Request;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using WebModel=EPMS.Web.Models;
+using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -59,7 +59,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             var employeeRequestResponse = employeeRequestService.LoadAllRequests(searchRequest);
             var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
-            var employeeRequests = data as IList<WebModel.EmployeeRequest> ?? data.ToList();
+            var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
             if (employeeRequests.Any())
             {
                 viewModel.aaData = employeeRequests;
@@ -69,7 +69,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<WebModel.EmployeeRequest>();
+                viewModel.aaData = Enumerable.Empty<EmployeeRequest>();
                 viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
                 viewModel.sEcho = 1;

@@ -24,7 +24,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3><small><a href="~/HR/Employee/Create">Add New</a></small></h3>
+    <h3><small><a href="~/HR/Employee/Create">@EPMS.Web.Resources.HR.Employee.AddNew</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -39,11 +39,11 @@
                     <thead class="cf sorthead">
                         <tr>
                             <th></th>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Job Id</th>
-                            <th>Job Title</th>
-                            <th>Department</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.Image</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.Name</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.JobTitle</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.Department</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -85,7 +85,7 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var val = full["EmployeeFullName"];
+                        var val = full["EmployeeNameE"];
                         var empId = full["EmployeeId"];
                         var element = '<a href="Create/'+empId+'">'+val+'</a>';
                         return element;
@@ -115,8 +115,10 @@
             ],
             "sAjaxSource": siteUrl + "/Employee/Index",
             "sServerMethod": "POST",
-            "fnServerParams": function (aoData) {
-                aoData.push({ "name": "more_data", "value": "my_value" });
+            "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
             }
         });
         $(".dataTables_length select").select2({
