@@ -65,34 +65,23 @@
         @Html.HiddenFor(model => model.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.Employee.EmployeeFirstName, new { @class = "control-label" })
+                @Html.LabelFor(model => model.Employee.EmployeeNameE, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeFirstName, new { @id = "EmployeeFirstName" })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeFirstName)
+                    @Html.TextBoxFor(model => model.Employee.EmployeeNameE, new { @id = "EmployeeFirstName" })
+                    @Html.ValidationMessageFor(m => m.Employee.EmployeeNameE)
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="EmployeeMiddleName">Middle Name</label>
+                @Html.LabelFor(model => model.Employee.EmployeeNameA, new { @class = "control-label" })
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeMiddleName, new { @id = "EmployeeMiddleName" })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeMiddleName)
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="EmployeeLastName">Last Name</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeLastName, new { @id = "EmployeeLastName" })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeLastName)
+                    @Html.TextBoxFor(model => model.Employee.EmployeeNameA, new { @id = "EmployeeMiddleName" })
+                    @Html.ValidationMessageFor(m => m.Employee.EmployeeNameA)
                 </div>
             </div>
         </div>
@@ -166,7 +155,7 @@
             </div>
             <div class="span9">
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.Employee.EmpDateOfBirthArabic, new { @class = "col-lg-2 datepickerArabic form-control ", onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
+                    @Html.TextBoxFor(model => model.Employee.EmployeeDOB, new { @class = "col-lg-2 datepickerArabic form-control ", onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
                 </div>
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control ", @id = "EmployeeDOB" })
@@ -251,12 +240,23 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="ExtraInformation">Extra Information</label>
+                <label class="control-label" for="ExtraInformation">Extra Information English</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeDetails, new { @id = "ExtraInformation" })
-                    @Html.ValidationMessageFor(m => m.Employee.EmployeeDetails)
+                    @Html.TextBoxFor(model => model.Employee.EmployeeDetailsE, new { @id = "ExtraInformation" })
+                    @Html.ValidationMessageFor(m => m.Employee.EmployeeDetailsE)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">Extra Information Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Employee.EmployeeDetailsA, new { @id = "ExtraInformation" })
+                    @Html.ValidationMessageFor(m => m.Employee.EmployeeDetailsA)
                 </div>
             </div>
         </div>

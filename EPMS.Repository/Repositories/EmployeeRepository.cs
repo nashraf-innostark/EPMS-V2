@@ -44,9 +44,8 @@ namespace EPMS.Repository.Repositories
             new Dictionary<EmployeeByColumn, Func<Employee, object>>
                     {
                         { EmployeeByColumn.EmployeeId, c => c.EmployeeId},
-                        { EmployeeByColumn.EmployeeFirstName,  c => c.EmployeeFirstName},
-                        { EmployeeByColumn.EmployeeMiddleName, c => c.EmployeeMiddleName},
-                        { EmployeeByColumn.EmployeeLastName, c => c.EmployeeLastName},
+                        { EmployeeByColumn.EmployeeNameE,  c => c.EmployeeNameE},
+                        { EmployeeByColumn.EmployeeNameA, c => c.EmployeeNameA},
                         { EmployeeByColumn.EmployeeJobId, c => c.EmployeeJobId}
                     };
         #endregion
@@ -63,9 +62,8 @@ namespace EPMS.Repository.Repositories
 
             Expression<Func<Employee, bool>> query =
                 s => ((employeeSearchRequset.EmployeeId == 0 || s.EmployeeId == employeeSearchRequset.EmployeeId || s.EmployeeId.Equals(employeeSearchRequset.EmployeeId)) 
-                    && ((string.IsNullOrEmpty(employeeSearchRequset.EmployeeFirstName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeFirstName)))
-                    || (string.IsNullOrEmpty(employeeSearchRequset.EmployeeMiddleName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeMiddleName)))
-                    || (string.IsNullOrEmpty(employeeSearchRequset.EmployeeLastName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeLastName)))) &&
+                    && ((string.IsNullOrEmpty(employeeSearchRequset.EmployeeNameE) || (s.EmployeeNameE.Contains(employeeSearchRequset.EmployeeNameE)))
+                    || (string.IsNullOrEmpty(employeeSearchRequset.EmployeeNameA) || (s.EmployeeNameA.Contains(employeeSearchRequset.EmployeeNameA)))) &&
                     (employeeSearchRequset.JobTitleId == 0 || s.JobTitleId == employeeSearchRequset.JobTitleId));
 
             IEnumerable<Employee> employees = employeeSearchRequset.IsAsc ?

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -98,9 +98,8 @@
             <PropertyRef Name="EmployeeId" />
           </Key>
           <Property Name="EmployeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EmployeeFirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="EmployeeMiddleName" Type="nvarchar" MaxLength="100" />
-          <Property Name="EmployeeLastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeNameA" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmployeeImagePath" Type="nvarchar" MaxLength="400" />
           <Property Name="JobTitleId" Type="bigint" />
           <Property Name="EmployeeJobId" Type="nvarchar" MaxLength="200" />
@@ -114,12 +113,13 @@
           <Property Name="EmployeeIqamaExpiryDt" Type="date" />
           <Property Name="EmployeePassportNum" Type="nvarchar" MaxLength="200" />
           <Property Name="EmployeePassportExpiryDt" Type="date" />
-          <Property Name="EmployeeDetails" Type="nvarchar" MaxLength="1000" />
+          <Property Name="EmployeeDetailsE" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmployeeDetailsA" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="EmployeeRequests">
           <Key>
@@ -356,6 +356,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="*" />
@@ -401,6 +413,18 @@
             </Principal>
             <Dependent Role="JobTitle">
               <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,6 +493,10 @@
             <End Role="Menu" EntitySet="Menu" />
             <End Role="MenuRight" EntitySet="MenuRight" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitle" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -484,6 +512,10 @@
           <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="JobTitle" EntitySet="JobTitle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Notification" EntitySet="Notification" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -515,7 +547,7 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -567,40 +599,8 @@
           <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-        </EntityType>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="EmployeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeFirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmployeeMiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmployeeImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="JobTitleId" Type="Int64" />
-          <Property Name="EmployeeJobId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeMobileNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLandlineNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MaritalStatus" Type="Byte" />
-          <Property Name="EmployeeDOB" Type="DateTime" Precision="0" />
-          <Property Name="EmployeeNationality" Type="Int16" />
-          <Property Name="EmployeeIqama" Type="Int32" />
-          <Property Name="EmployeeIqamaIssueDt" Type="DateTime" Precision="0" />
-          <Property Name="EmployeeIqamaExpiryDt" Type="DateTime" Precision="0" />
-          <Property Name="EmployeePassportNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeePassportExpiryDt" Type="DateTime" Precision="0" />
-          <Property Name="EmployeeDetails" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Allowances" Relationship="Self.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUsers" />
-          <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
-          <NavigationProperty Name="EmployeeRequests" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequests" />
+          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -615,8 +615,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="EmployeeRequests" ToRole="Employee" />
           <NavigationProperty Name="RequestDetails" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequests" ToRole="RequestDetails" />
+          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -662,13 +662,13 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
           <NavigationProperty Name="JobOffereds" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
           <NavigationProperty Name="Department" Relationship="DomainModels.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
           <Property Name="JobTitleNameE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleDescE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleNameA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -698,20 +698,6 @@
           <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRoles" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
         </EntityType>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="NotificationId" />
-          </Key>
-          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NotificationName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NotificationCategory" Type="Int16" Nullable="false" />
-          <Property Name="AlertTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NotificationTime" Type="DateTime" Precision="3" />
-          <Property Name="EmployeeId" Type="Int64" />
-          <Property Name="MobileNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsNotified" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="RequestDetail">
           <Key>
             <PropertyRef Name="RequestDetailId" />
@@ -734,18 +720,6 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmployeeRequest" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetails" ToRole="EmployeeRequests" />
         </EntityType>
-        <Association Name="FK_Allowance_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Allowance">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="0..1" />
           <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
@@ -783,42 +757,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUsers_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="AspNetUsers">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeRequests_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="EmployeeRequests" Type="Self.EmployeeRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmployeeRequests">
-              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -892,19 +830,13 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequest" />
           <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
           <EntitySet Name="JobOffereds" EntityType="Self.JobOffered" />
           <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
-          <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
-          <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Allowance" EntitySet="Allowances" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="MenuRight" EntitySet="MenuRights" />
@@ -916,18 +848,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -958,7 +878,29 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="JobTitle" EntitySet="JobTitles" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Employees" EntityType="DomainModels.Employee" />
+          <EntitySet Name="Notifications" EntityType="DomainModels.Notification" />
+          <AssociationSet Name="FK_Allowance_Employee" Association="DomainModels.FK_Allowance_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Allowance" EntitySet="Allowances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Employee" Association="DomainModels.FK_AspNetUsers_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="DomainModels.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="DomainModels.FK_EmployeeRequests_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Employee" Association="DomainModels.FK_Notification_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -985,7 +927,115 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleId" Type="Int64" />
+          <Property Name="EmployeeJobId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeMobileNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLandlineNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MaritalStatus" Type="Byte" />
+          <Property Name="EmployeeDOB" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeNationality" Type="Int16" />
+          <Property Name="EmployeeIqama" Type="Int32" />
+          <Property Name="EmployeeIqamaIssueDt" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeIqamaExpiryDt" Type="DateTime" Precision="0" />
+          <Property Name="EmployeePassportNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeePassportExpiryDt" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeDetailsE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeDetailsA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Allowances" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
+          <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
+          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <NavigationProperty Name="EmployeeRequests" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
+          <NavigationProperty Name="Notifications" Relationship="DomainModels.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationCategory" Type="Int16" Nullable="false" />
+          <Property Name="AlertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotificationTime" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <Property Name="MobileNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsNotified" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Allowance_Employee">
+          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="DomainModels.Allowance" Role="Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Allowance">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Employee">
+          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="0..1" />
+          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeRequests_Employee">
+          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="DomainModels.EmployeeRequest" Role="EmployeeRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeRequest">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Employee">
+          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="DomainModels.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1058,35 +1108,6 @@
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="DomainModels.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
-                <ScalarProperty Name="EmployeeMiddleName" ColumnName="EmployeeMiddleName" />
-                <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
-                <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
-                <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
-                <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
-                <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
-                <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
-                <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
-                <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
-                <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
-                <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
-                <ScalarProperty Name="EmployeeDetails" ColumnName="EmployeeDetails" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1180,21 +1201,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="DomainModels.Notification">
-              <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-                <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
-                <ScalarProperty Name="NotificationCategory" ColumnName="NotificationCategory" />
-                <ScalarProperty Name="AlertTime" ColumnName="AlertTime" />
-                <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="IsNotified" ColumnName="IsNotified" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RequestDetails">
             <EntityTypeMapping TypeName="DomainModels.RequestDetail">
               <MappingFragment StoreEntitySet="RequestDetails">
@@ -1236,6 +1242,50 @@
                 <ScalarProperty Name="DepartmentNameA" ColumnName="DepartmentNameA" />
                 <ScalarProperty Name="DepartmentNameE" ColumnName="DepartmentNameE" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="DomainModels.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeDetailsA" ColumnName="EmployeeDetailsA" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="EmployeeDetailsE" ColumnName="EmployeeDetailsE" />
+                <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
+                <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
+                <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
+                <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
+                <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
+                <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
+                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
+                <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
+                <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
+                <ScalarProperty Name="EmployeeNameA" ColumnName="EmployeeNameA" />
+                <ScalarProperty Name="EmployeeNameE" ColumnName="EmployeeNameE" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="DomainModels.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="IsNotified" ColumnName="IsNotified" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="NotificationTime" ColumnName="NotificationTime" />
+                <ScalarProperty Name="AlertTime" ColumnName="AlertTime" />
+                <ScalarProperty Name="NotificationCategory" ColumnName="NotificationCategory" />
+                <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

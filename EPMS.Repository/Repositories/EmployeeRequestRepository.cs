@@ -44,7 +44,7 @@ namespace EPMS.Repository.Repositories
                         { EmployeeRequestByColumn.RequestId, c => c.RequestId},
                         { EmployeeRequestByColumn.IsMonetary,  c => c.IsMonetary},
                         { EmployeeRequestByColumn.RequestTopic, c => c.RequestTopic},
-                        { EmployeeRequestByColumn.EmployeeName, c => c.Employee.EmployeeFirstName},
+                        { EmployeeRequestByColumn.EmployeeName, c => c.Employee.EmployeeNameE},
                         { EmployeeRequestByColumn.RequestDate,  c => c.RequestDate}//,
                         //{ EmployeeRequestByColumn.IsReplied, c => c.RequestDetails},
                         //{ EmployeeRequestByColumn.EmployeeName, c => c.Employee.EmployeeFirstName}
@@ -63,13 +63,13 @@ namespace EPMS.Repository.Repositories
             if (searchRequset.Requester == "Admin")
             {
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeFirstName.Contains(searchRequset.EmployeeName))));
+                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeNameE.Contains(searchRequset.EmployeeName))));
             }
             else
             {
                 long employeeId = Convert.ToInt64(searchRequset.Requester);
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeFirstName.Contains(searchRequset.EmployeeName))) && 
+                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeNameE.Contains(searchRequset.EmployeeName))) && 
                     (s.EmployeeId.Equals(employeeId)));
             }
             

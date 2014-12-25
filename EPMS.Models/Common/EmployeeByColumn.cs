@@ -9,9 +9,8 @@ namespace EPMS.Models.Common
     public enum EmployeeByColumn
     {
         EmployeeId = 1,
-        EmployeeFirstName = 2,
-        EmployeeMiddleName = 3,
-        EmployeeLastName = 4,
-        EmployeeJobId = 5
+        EmployeeNameE = 2,
+        EmployeeNameA = 3,
+        EmployeeJobId = 4
     }
 }
