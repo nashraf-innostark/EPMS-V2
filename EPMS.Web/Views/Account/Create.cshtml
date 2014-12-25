@@ -101,7 +101,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullName"), "Select Employee", new { @class = "select2me", id = " employeeId " })
+                    @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = " employeeId " })
                     @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "required" })
                 </div>
             </div>

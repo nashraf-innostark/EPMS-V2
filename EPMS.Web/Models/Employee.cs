@@ -11,10 +11,10 @@ namespace EPMS.Web.Models
     {
         public long EmployeeId { get; set; }
         [Required(ErrorMessage = "Employee Name is required.")]
-        [Display(Name = "Employee Name English")]
+        [Display(Name = "Employee Name")]
         public string EmployeeNameE { get; set; }
         [Required(ErrorMessage = "Employee Name is required.")]
-        [Display(Name = "Employee Name Arabic")]
+        [Display(Name = "Employee Name")]
         public string EmployeeNameA { get; set; }
         public string EmployeeImagePath { get; set; }
         [Required(ErrorMessage = "Job Title is required.")]
