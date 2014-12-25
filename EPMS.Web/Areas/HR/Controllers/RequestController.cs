@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -58,9 +59,10 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             var employeeRequestResponse = employeeRequestService.LoadAllRequests(searchRequest);
             var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
-            if (data.Any())
+            var employeeRequests = data as IList<WebModel.EmployeeRequest> ?? data.ToList();
+            if (employeeRequests.Any())
             {
-                viewModel.aaData = data;
+                viewModel.aaData = employeeRequests;
                 viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
                 viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();

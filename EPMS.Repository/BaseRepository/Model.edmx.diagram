@@ -10,22 +10,16 @@
         <EntityTypeShape EntityType="DomainModels.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="9.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.AspNetUser" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.Employee" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.EmployeeRequest" Width="1.5" PointX="7.5" PointY="15.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.JobApplicant" Width="1.5" PointX="7.5" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.JobOffered" Width="1.5" PointX="5.25" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.JobTitle" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.MenuRight" Width="1.5" PointX="10.5" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.Notification" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="14.875" IsExpanded="true" />
-        <AssociationConnector Association="DomainModels.FK_Allowance_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_AspNetUsers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_Employee_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_JobOffered_JobTitle" ManuallyRouted="false" />
@@ -34,6 +28,13 @@
         <AssociationConnector Association="DomainModels.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DomainModels.Department" Width="1.5" PointX="0.75" PointY="9.75" />
         <AssociationConnector Association="DomainModels.FK_JobTitle_Department" />
+        <EntityTypeShape EntityType="DomainModels.Employee" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="DomainModels.Notification" Width="1.5" PointX="1.125" PointY="5.625" />
+        <AssociationConnector Association="DomainModels.FK_Allowance_Employee" />
+        <AssociationConnector Association="DomainModels.FK_AspNetUsers_Employee" />
+        <AssociationConnector Association="DomainModels.FK_Employee_JobTitle" />
+        <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" />
+        <AssociationConnector Association="DomainModels.FK_Notification_Employee" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

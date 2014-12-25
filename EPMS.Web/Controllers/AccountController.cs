@@ -295,9 +295,8 @@ namespace IdentitySample.Controllers
                     {
                         EmailConfirmed = item.EmailConfirmed,
                         Email = item.Email,
-                        FirstName = item.Employee.EmployeeFirstName,
+                        FirstName = item.Employee.EmployeeNameE,
                         KeyId = item.Id,
-                        LastName = item.Employee.EmployeeLastName,
                         Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name,
                         Username = item.UserName
                     });
