@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4445364fdeef4eb799cb6c590a54dd7d" Name="Diagram1" ZoomLevel="96">
+      <Diagram DiagramId="4445364fdeef4eb799cb6c590a54dd7d" Name="Diagram1" ZoomLevel="101">
         <EntityTypeShape EntityType="DomainModels.Allowance" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.AspNetRole" Width="1.5" PointX="5.25" PointY="13.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="9.875" IsExpanded="true" />
@@ -16,11 +16,9 @@
         <EntityTypeShape EntityType="DomainModels.JobTitle" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.MenuRight" Width="1.5" PointX="10.5" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="14.875" IsExpanded="true" />
         <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_JobOffered_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
@@ -35,6 +33,8 @@
         <AssociationConnector Association="DomainModels.FK_Employee_JobTitle" />
         <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" />
         <AssociationConnector Association="DomainModels.FK_Notification_Employee" />
+        <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="14.875" />
+        <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

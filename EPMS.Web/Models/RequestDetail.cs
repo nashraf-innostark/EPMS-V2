@@ -10,6 +10,7 @@ namespace EPMS.Web.Models
         [Required]
         [Display(Name = "Description")]
         public string RequestDesc { get; set; }
+        public string RequestReply { get; set; }
         [Required]
         [Display(Name="Loan Amount")]
         public double? LoanAmount { get; set; }

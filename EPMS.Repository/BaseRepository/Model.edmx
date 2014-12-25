@@ -225,7 +225,8 @@
           </Key>
           <Property Name="RequestDetailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RequestId" Type="bigint" Nullable="false" />
-          <Property Name="RequestDesc" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="RequestDesc" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RequestReply" Type="nvarchar(max)" />
           <Property Name="LoanAmount" Type="float" />
           <Property Name="LoanDate" Type="date" />
           <Property Name="InstallmentAmount" Type="float" />
@@ -615,8 +616,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="RequestDetails" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequests" ToRole="RequestDetails" />
           <NavigationProperty Name="Employee" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
+          <NavigationProperty Name="RequestDetails" Relationship="DomainModels.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequest" ToRole="RequestDetail" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -669,6 +670,12 @@
           <Property Name="JobTitleNameA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employees" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+          <Property Name="JobTitleName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleNameE1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleDescE1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleNameA1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleDescA1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -697,28 +704,6 @@
           <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRoles" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
-        </EntityType>
-        <EntityType Name="RequestDetail">
-          <Key>
-            <PropertyRef Name="RequestDetailId" />
-          </Key>
-          <Property Name="RequestDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RequestId" Type="Int64" Nullable="false" />
-          <Property Name="RequestDesc" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoanAmount" Type="Double" />
-          <Property Name="LoanDate" Type="DateTime" Precision="0" />
-          <Property Name="InstallmentAmount" Type="Double" />
-          <Property Name="FirstInstallmentDate" Type="DateTime" Precision="0" />
-          <Property Name="LastInstallmentDate" Type="DateTime" Precision="0" />
-          <Property Name="NumberOfMonths" Type="Int32" />
-          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
-          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
-          <Property Name="RowVersion" Type="Int32" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeRequest" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetails" ToRole="EmployeeRequests" />
         </EntityType>
         <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="0..1" />
@@ -757,18 +742,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RequestDetails_EmployeeRequests">
-          <End Role="EmployeeRequests" Type="Self.EmployeeRequest" Multiplicity="1" />
-          <End Role="RequestDetails" Type="Self.RequestDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeRequests">
-              <PropertyRef Name="RequestId" />
-            </Principal>
-            <Dependent Role="RequestDetails">
-              <PropertyRef Name="RequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -836,7 +809,6 @@
           <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
-          <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
           <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="MenuRight" EntitySet="MenuRights" />
@@ -848,10 +820,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
-            <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
-            <End Role="RequestDetails" EntitySet="RequestDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApplicants_JobOffered" Association="Self.FK_JobApplicants_JobOffered">
             <End Role="JobOffered" EntitySet="JobOffereds" />
@@ -899,6 +867,11 @@
           <AssociationSet Name="FK_Notification_Employee" Association="DomainModels.FK_Notification_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <EntitySet Name="RequestDetails" EntityType="DomainModels.RequestDetail" />
+          <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="DomainModels.FK_RequestDetails_EmployeeRequests">
+            <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
+            <End Role="RequestDetail" EntitySet="RequestDetails" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Department">
@@ -959,6 +932,14 @@
           <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
           <NavigationProperty Name="EmployeeRequests" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
           <NavigationProperty Name="Notifications" Relationship="DomainModels.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
+          <Property Name="EmployeeFirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeMiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeDetails" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeNameE1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeNameA1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeDetailsE1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeDetailsA1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -1032,6 +1013,41 @@
             </Principal>
             <Dependent Role="Notification">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RequestDetail">
+          <Key>
+            <PropertyRef Name="RequestDetailId" />
+          </Key>
+          <Property Name="RequestDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestId" Type="Int64" Nullable="false" />
+          <Property Name="RequestDesc" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequestReply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LoanAmount" Type="Double" />
+          <Property Name="LoanDate" Type="DateTime" Precision="0" />
+          <Property Name="InstallmentAmount" Type="Double" />
+          <Property Name="FirstInstallmentDate" Type="DateTime" Precision="0" />
+          <Property Name="LastInstallmentDate" Type="DateTime" Precision="0" />
+          <Property Name="NumberOfMonths" Type="Int32" />
+          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
+          <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="EmployeeRequest" Relationship="DomainModels.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetail" ToRole="EmployeeRequest" />
+        </EntityType>
+        <Association Name="FK_RequestDetails_EmployeeRequests">
+          <End Type="DomainModels.EmployeeRequest" Role="EmployeeRequest" Multiplicity="1" />
+          <End Type="DomainModels.RequestDetail" Role="RequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRequest">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="RequestDetail">
+              <PropertyRef Name="RequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1161,10 +1177,10 @@
           <EntitySetMapping Name="JobTitles">
             <EntityTypeMapping TypeName="DomainModels.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
-                <ScalarProperty Name="JobTitleDescA" ColumnName="JobTitleDescA" />
-                <ScalarProperty Name="JobTitleNameA" ColumnName="JobTitleNameA" />
-                <ScalarProperty Name="JobTitleDescE" ColumnName="JobTitleDescE" />
-                <ScalarProperty Name="JobTitleNameE" ColumnName="JobTitleNameE" />
+                <ScalarProperty Name="JobTitleDescA1" ColumnName="JobTitleDescA" />
+                <ScalarProperty Name="JobTitleNameA1" ColumnName="JobTitleNameA" />
+                <ScalarProperty Name="JobTitleDescE1" ColumnName="JobTitleDescE" />
+                <ScalarProperty Name="JobTitleNameE1" ColumnName="JobTitleNameE" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
@@ -1201,28 +1217,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RequestDetails">
-            <EntityTypeMapping TypeName="DomainModels.RequestDetail">
-              <MappingFragment StoreEntitySet="RequestDetails">
-                <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
-                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
-                <ScalarProperty Name="RequestDesc" ColumnName="RequestDesc" />
-                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
-                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
-                <ScalarProperty Name="InstallmentAmount" ColumnName="InstallmentAmount" />
-                <ScalarProperty Name="FirstInstallmentDate" ColumnName="FirstInstallmentDate" />
-                <ScalarProperty Name="LastInstallmentDate" ColumnName="LastInstallmentDate" />
-                <ScalarProperty Name="NumberOfMonths" ColumnName="NumberOfMonths" />
-                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -1248,13 +1242,15 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="DomainModels.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="EmployeeDetailsA" ColumnName="EmployeeDetailsA" />
+                <ScalarProperty Name="EmployeeDetailsA1" ColumnName="EmployeeDetailsA" />
+                <ScalarProperty Name="EmployeeDetailsE1" ColumnName="EmployeeDetailsE" />
+                <ScalarProperty Name="EmployeeNameA1" ColumnName="EmployeeNameA" />
+                <ScalarProperty Name="EmployeeNameE1" ColumnName="EmployeeNameE" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="EmployeeDetailsE" ColumnName="EmployeeDetailsE" />
                 <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
                 <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
                 <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
@@ -1268,8 +1264,6 @@
                 <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
-                <ScalarProperty Name="EmployeeNameA" ColumnName="EmployeeNameA" />
-                <ScalarProperty Name="EmployeeNameE" ColumnName="EmployeeNameE" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1286,6 +1280,29 @@
                 <ScalarProperty Name="NotificationCategory" ColumnName="NotificationCategory" />
                 <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestDetails">
+            <EntityTypeMapping TypeName="DomainModels.RequestDetail">
+              <MappingFragment StoreEntitySet="RequestDetails">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
+                <ScalarProperty Name="NumberOfMonths" ColumnName="NumberOfMonths" />
+                <ScalarProperty Name="LastInstallmentDate" ColumnName="LastInstallmentDate" />
+                <ScalarProperty Name="FirstInstallmentDate" ColumnName="FirstInstallmentDate" />
+                <ScalarProperty Name="InstallmentAmount" ColumnName="InstallmentAmount" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+                <ScalarProperty Name="RequestReply" ColumnName="RequestReply" />
+                <ScalarProperty Name="RequestDesc" ColumnName="RequestDesc" />
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
