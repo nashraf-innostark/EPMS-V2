@@ -16,9 +16,11 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
+using EPMS.Models.ResponseModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Employee = EPMS.Web.Models.Employee;
+using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -30,16 +32,18 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IDepartmentService DepartmentService;
         private readonly IAllowanceService AllowanceService;
         private readonly IAspNetUserService AspNetUserService;
+        private readonly IEmployeeRequestService EmployeeRequestService;
 
         #region Constructor
 
-        public EmployeeController(IEmployeeService employeeService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService)
+        public EmployeeController(IEmployeeService employeeService, IEmployeeRequestService employeeRequestService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService)
         {
             EmployeeService = employeeService;
             DepartmentService = departmentService;
             JobTitleService = jobTitleService;
             AllowanceService = allowanceService;
             AspNetUserService = aspNetUserService;
+            EmployeeRequestService = employeeRequestService;
         }
 
         #endregion
@@ -51,7 +55,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Employee ListView Action Method
         /// </summary>
         /// <returns></returns>
-        
+
         public ActionResult Index()
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
@@ -72,7 +76,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (Roles.IsUserInRole("Employee"))
             {
                 long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-                return RedirectToAction("Create", new { id = id});
+                return RedirectToAction("Create", new { id = id });
             }
             return null;
         }
@@ -115,49 +119,78 @@ namespace EPMS.Web.Areas.HR.Controllers
         #endregion
 
         #region Add/Update Employee
+
         /// <summary>
         /// Add or Update Employee Action Method
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        
         public ActionResult Create(long? id)
         {
             if (id == null)
             {
-                EmployeeViewModel viewModel = new EmployeeViewModel
+                EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
-                    JobTitleList = JobTitleService.GetAll()
+                    EmployeeViewModel = {JobTitleList = JobTitleService.GetAll()}
                 };
-                viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                viewModel.EmployeeName = "Add New Employee";
-                viewModel.BtnText = "Save Employee";
-                viewModel.PageTitle = "Employee Addition";
+                viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
+                viewModel.EmployeeViewModel.BtnText = "Save Employee";
+                viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
                 return View(viewModel);
             }
             long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-            if (id > 0 && (id == empId || Roles.IsUserInRole("Admin")))
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
+            if (id > 0 && (id == empId || (userRole !=null && userRole.Name == "Admin")))
             {
-                EmployeeViewModel viewModel = new EmployeeViewModel
+                EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
-                    JobTitleList = JobTitleService.GetAll()
+                    EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
                 };
-                viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                if (id > 0 && Roles.IsUserInRole("Admin"))
+                viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                // Get User Role
+                
+                if (userRole != null)
                 {
-                    viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
-                    viewModel.EmployeeName = viewModel.Employee.EmployeeFullName;
-                    viewModel.PageTitle = "Employee's List";
-                    viewModel.BtnText = "Update Changes";
-                    viewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + viewModel.Employee.EmployeeImagePath;
-                }
-                if (id > 0 && (Roles.IsUserInRole("Employee") || Roles.IsUserInRole("PM")))
-                {
-                    viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
-                    viewModel.EmployeeName = viewModel.Employee.EmployeeFullName;
-                    viewModel.PageTitle = "My Profile";
-                    viewModel.BtnText = "Update Changes";
-                    viewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + viewModel.Employee.EmployeeImagePath;
+                    if (id > 0 && userRole.Name == "Admin")
+                    {
+                        viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                        viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
+                        viewModel.EmployeeViewModel.PageTitle = "Employee's List";
+                        viewModel.EmployeeViewModel.BtnText = "Update Changes";
+                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
+                                              viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
+                    }
+                    if (id > 0 && (userRole.Name == "Employee" || userRole.Name == "PM"))
+                    {
+                        viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                        viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
+                        viewModel.EmployeeViewModel.PageTitle = "My Profile";
+                        viewModel.EmployeeViewModel.BtnText = "Update Changes";
+                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
+                                              viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
+                    }
+                    //if (userRole.Name == "Employee" || userRole.Name == "PM")
+                    //{
+                    //    var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(new EmployeeRequestSearchRequest());
+                    //    var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+                    //    var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
+                    //    if (employeeRequests.Any())
+                    //    {
+                    //        viewModel.aaData1 = employeeRequests;
+                    //        viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
+                    //        viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                    //        viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
+                    //    }
+                    //    else
+                    //    {
+                    //        viewModel.aaData1 = Enumerable.Empty<EmployeeRequest>();
+                    //        viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
+                    //        viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                    //        viewModel.sEcho = 1;
+                    //    }
+                    //}
                 }
                 return View(viewModel);
             }
@@ -237,7 +270,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 else if (Roles.IsUserInRole("Employee") || Roles.IsUserInRole("PM"))
                 {
-                    
+
                 }
             }
             catch (Exception)
@@ -314,4 +347,4 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #endregion
     }
-} 
+}

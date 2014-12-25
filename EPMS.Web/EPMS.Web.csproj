@@ -307,6 +307,11 @@
     <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
       <DependentUpon>PrisonerReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HR\Employee.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employee.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\JobTitle.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1454,6 +1459,12 @@
     <Content Include="Scripts\App\select2\release.sh" />
     <Content Include="Scripts\App\select2\select2.jquery.json" />
     <Content Include="Scripts\App\select2\select2_locale_en.js.template" />
+    <EmbeddedResource Include="Resources\HR\Employee.ar.resx" />
+    <EmbeddedResource Include="Resources\HR\Employee.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Employee.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobTitle.Designer.cs</LastGenOutput>

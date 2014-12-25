@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using EPMS.Web.ViewModels.Request;
 
 namespace EPMS.Web.ViewModels.Employee
 {
     public class EmployeeDetailViewModel
     {
-        public Models.Employee Employee { get; set; }
+        public EmployeeDetailViewModel()
+        {
+            EmployeeViewModel = new EmployeeViewModel();
+            EmployeeRequestViewModel = new EmployeeRequestViewModel();
+        }
+        public EmployeeViewModel EmployeeViewModel { get; set; }
 
-        public Models.JobTitle JobTitle { get; set; }
-        public Models.Allowance Allowance { get; set; }
-
-        public IEnumerable<EPMS.Models.DomainModels.JobTitle> JobTitleList { get; set; }
-        public IEnumerable<Models.JobTitleAndDepartment> JobTitleDeptList { get; set; }
-        public string ImageName { get; set; }
-        public string ImagePath { get; set; }
+        public EmployeeRequestViewModel EmployeeRequestViewModel { get; set; }
+        
     }
 }
