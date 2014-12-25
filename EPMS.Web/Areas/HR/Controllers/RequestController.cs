@@ -60,7 +60,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
             if (data.Any())
             {
-                viewModel.aaData = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+                viewModel.aaData = data;
                 viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
                 viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
