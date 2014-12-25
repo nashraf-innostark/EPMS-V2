@@ -40,29 +40,23 @@ namespace EPMS.Implementation.Services
 
         public bool AddDepartment(Department department)
         {
-            try
+            if (departmentRepository.DepartmentExists(department))
             {
-                departmentRepository.Add(department);
-                departmentRepository.SaveChanges();
-                return true;
+                throw new InvalidOperationException("Depatment with the same name already exists.");
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            departmentRepository.Add(department);
+            departmentRepository.SaveChanges();
+            return true;
         }
         public bool UpdateDepartment(Department department)
         {
-            try
+            if (departmentRepository.DepartmentExists(department))
             {
-                departmentRepository.Update(department);
-                departmentRepository.SaveChanges();
-                return true;
+                throw new InvalidOperationException("Depatment with the same name already exists.");
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            departmentRepository.Update(department);
+            departmentRepository.SaveChanges();
+            return true;
         }
         public void DeleteDepartment(Department department)
         {

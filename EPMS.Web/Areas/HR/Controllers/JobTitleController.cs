@@ -4,7 +4,9 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobTitle;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -63,22 +65,18 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Create(JobTitleViewModel jobTitleViewModel)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    jobTitleViewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
-                
-            //    return View(jobTitleViewModel);
-            //}
             try
             {
                 #region Update
 
                 if (jobTitleViewModel.JobTitle.JobTitleId > 0)
                 {
-                    var jobTitleToUpdate = jobTitleViewModel.JobTitle.CreateFrom();
+                    jobTitleViewModel.JobTitle.RecLastUpdatedBy = User.Identity.GetUserId();
                     jobTitleViewModel.JobTitle.RecLastUpdatedDt = DateTime.Now;
+                    var jobTitleToUpdate = jobTitleViewModel.JobTitle.CreateFrom();
                     if (jobTitleService.UpdateJob(jobTitleToUpdate))
                     {
+                        TempData["message"] = new MessageViewModel { Message = "Job Title has been updated.", IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -88,11 +86,13 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 else
                 {
+                    jobTitleViewModel.JobTitle.RecCreatedBy = User.Identity.GetUserId();
                     jobTitleViewModel.JobTitle.RecCreatedDt = DateTime.Now;
                     var modelToSave = jobTitleViewModel.JobTitle.CreateFrom();
 
                     if (jobTitleService.AddJob(modelToSave))
                     {
+                        TempData["message"] = new MessageViewModel { Message = "Job Title has been saved.", IsSaved = true };
                         jobTitleViewModel.JobTitle.JobTitleId = modelToSave.JobTitleId;
                         return RedirectToAction("Index");
                     }
@@ -103,7 +103,8 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Create");
+                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                return RedirectToAction("Create", e);
             }
             
             return View(jobTitleViewModel);

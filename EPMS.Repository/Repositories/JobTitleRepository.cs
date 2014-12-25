@@ -82,5 +82,23 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(s => s.DepartmentId == deptId).ToList();
         }
+
+        /// <summary>
+        /// Checks if Job Title Arabic and English Name already exists
+        /// </summary>
+        public bool JobTitleExists(JobTitle jobTitle)
+        {
+            if (jobTitle.JobTitleId > 0) //Alread saved in system
+            {
+                return DbSet.Any(
+                    jt =>
+                        jobTitle.JobTitleId != jt.JobTitleId &&
+                        (jt.JobTitleNameE == jobTitle.JobTitleNameE || jt.JobTitleNameA == jobTitle.JobTitleNameA) && (jt.DepartmentId == jobTitle.DepartmentId));
+            }
+
+            return DbSet.Any(
+                    jt =>
+                        (jt.JobTitleNameE == jobTitle.JobTitleNameE || jt.JobTitleNameA == jobTitle.JobTitleNameA) && (jt.DepartmentId == jobTitle.DepartmentId));
+        }
     }
 }

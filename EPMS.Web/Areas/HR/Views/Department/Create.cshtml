@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Department Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 
 <div class="breadcrumb-container">
@@ -30,6 +31,10 @@
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
 </header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 
 @using (Html.BeginForm("Create", "Department", FormMethod.Post, new { @id = "departmentForm", @class = "form-horizontal", role = "form" }))
 {
@@ -98,7 +103,7 @@
                                 foreach (var item in Model.EmployeeList.ToList())
                                 {
                                 <tr>
-                                    <td>@item.EmployeeFirstName @item.EmployeeMiddleName @item.EmployeeLastName</td>
+                                    <td>@item.EmployeeNameE</td>
 
                                 </tr>
                                 }
@@ -116,7 +121,7 @@
                     <button id="savebtn" class="btn" type="submit">Save</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href='/HR/Department/Index'">Cancel</button>
+                    <button id="cancel" class="btn" onclick="window.location.href='/HR/Department/Index'" type="reset">Cancel</button>
                 </div>
             </div>
         </div>

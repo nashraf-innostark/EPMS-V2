@@ -307,15 +307,15 @@
     <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
       <DependentUpon>PrisonerReport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Resource1.Designer.cs">
+    <Compile Include="Resources\HR\JobTitle.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
+      <DependentUpon>JobTitle.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Resource1.ar.Designer.cs">
+    <Compile Include="Resources\HR\JobTitle.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.ar.resx</DependentUpon>
+      <DependentUpon>JobTitle.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1784,9 +1784,6 @@
     <Content Include="Reports\ESDS.xss">
       <DependentUpon>ESDS.xsd</DependentUpon>
     </Content>
-    <Content Include="Resources\OP.pdf" />
-    <Content Include="Resources\PMSLease.pdf" />
-    <Content Include="Resources\OP1.pdf" />
     <Content Include="Scripts\App\select2\bower.json" />
     <Content Include="Scripts\App\select2\component.json" />
     <Content Include="Scripts\App\select2\composer.json" />
@@ -1796,9 +1793,13 @@
     <Content Include="Scripts\App\select2\release.sh" />
     <Content Include="Scripts\App\select2\select2.jquery.json" />
     <Content Include="Scripts\App\select2\select2_locale_en.js.template" />
-    <EmbeddedResource Include="Resources\Resource1.ar.resx">
+    <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.ar.Designer.cs</LastGenOutput>
+      <LastGenOutput>JobTitle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobTitle.ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobTitle.ar.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="RichTextEditor\CHANGES.md" />
@@ -2153,10 +2154,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Reports\PrisonerInfo.rdlc" />
     <EmbeddedResource Include="Reports\PrisonerReport.rdlc" />
-    <EmbeddedResource Include="Resources\Resource1.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.ar.Designer.cs</LastGenOutput>

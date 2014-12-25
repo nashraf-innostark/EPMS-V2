@@ -12,10 +12,10 @@ namespace EPMS.Interfaces.Repository
     public interface IDepartmentRepository : IBaseRepository<Department, long>
     {
         /// <summary>
-        /// Get All Departments
+        /// Check if Department already exists with the English or Arabic name
         /// </summary>
-        /// <param name="departmentSearchRequest"></param>
+        /// <param name="department"></param>
         /// <returns></returns>
-        //DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
+        bool DepartmentExists(Department department);
     }
 }

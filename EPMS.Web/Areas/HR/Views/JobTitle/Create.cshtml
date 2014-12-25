@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Create Job Title";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 
 <div class="breadcrumb-container">
@@ -30,19 +31,25 @@
     <h2><small>@ViewBag.Title</small></h2>
 </header>
 
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
 @using (Html.BeginForm("Create", "JobTitle", FormMethod.Post, new { @id = "JobTitleForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.JobTitle.JobTitleId)
+        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedBy)
+        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedDt)
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleName">Job Title Name Englis</label>
+                <label class="control-label" for="JobTitleName">Job Title Name English</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameE, new { @dir = "ltr", placeholder = "Enter Job Title Name", id = "JobTitleName" })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameE, new { @dir = "ltr", id = "JobTitleNameE", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameE, "", new { @class = "required" })
                 </div>
             </div>
@@ -53,7 +60,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { @dir = "ltr", placeholder = "Enter Job Title Name", id = "JobTitleName" })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { @dir = "ltr", id = "JobTitleNameA", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameA, "", new { @class = "required" })
                 </div>
             </div>
@@ -64,7 +71,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), "Select Department", new { @class = "select2me", id = " departmentId " })
+                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), "Select Department", new { @class = "select2me", id = "departmentId" })
                     @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
                 </div>
             </div>
@@ -75,7 +82,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "")
                 </div>
             </div>
@@ -86,7 +93,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescA, new { @dir = "ltr", placeholder = "Enter Job Title Description", id = "JobTitleDesc" })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescA, new { @dir = "ltr", id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "")
                 </div>
             </div>
@@ -97,7 +104,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { @dir = "ltr", placeholder = "Enter Basic Salary", id = "BasicSalary" })
+                    @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { @dir = "ltr", id = "BasicSalary", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary, "")
                 </div>
             </div>
@@ -105,7 +112,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">Save</button>
+                    <button id="edit" class="btn">Edit</button>
+                    <button id="savebtn" class="btn" type="submit">Save</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href='/HR/JobTitle/Index'" type="reset">Cancel</button>
                 </div>
             </div>
         </div>
@@ -114,21 +125,37 @@
 }
 
 <script>
-    $(function () {
-
+    $(document).ready(function () {
+        var id = $('#JobTitle_JobTitleId').val();
         $("[readonly='false']").removeAttr("readonly");
         $('.select2me').select2({
             placeholder: "Select",
-            allowClear: true
+            allowClear: true,
+            
         });
-        //$("#signupuser").click(function (e) {
+        if (id == "") {
+            $('#departmentId').select2('enable');
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $('#departmentId').select2('disable');
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+        }
+        
+    });
 
-        //    alert($("#employeeId option:selected").val());
-        //    if ($('#employeeId :selected').val() == "") {
-        //        toastr.error("Please select an Employee");
-        //        return false;
-        //    }
-        //    return true;
-        //});
+    $("#edit").click(function () {
+        $('#departmentId').select2('enable');
+        $('.' + 'tbdisable' + ':input').attr('disabled', false);
+        $("#savebtn").show();
+        $("#cancel").show();
+        $("#edit").hide();
+        
+        event.preventDefault();
     });
 </script>

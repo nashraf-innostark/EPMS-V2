@@ -39,5 +39,20 @@ namespace EPMS.Repository.Repositories
             return
                 DbSet.Where(x => x.DepartmentId == id);
         }
+
+        public bool DepartmentExists(Department department)
+        {
+            if (department.DepartmentId > 0) //Alread saved in system
+            {
+                return DbSet.Any(
+                    dept =>
+                        department.DepartmentId != dept.DepartmentId &&
+                        (dept.DepartmentNameE == department.DepartmentNameE || dept.DepartmentNameA == department.DepartmentNameA));
+            }
+            // New Department
+            return DbSet.Any(
+                    dept =>
+                        (dept.DepartmentNameE == department.DepartmentNameE || dept.DepartmentNameA == department.DepartmentNameA));
+        }
     }
 }

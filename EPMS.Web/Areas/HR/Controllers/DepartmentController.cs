@@ -6,6 +6,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Department;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -64,10 +65,12 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 if (departmentListViewModel.Department.DepartmentId > 0)
                 {
-                    var departmentToUpdate = departmentListViewModel.Department.CreateFrom();
+                    departmentListViewModel.Department.RecLastUpdatedBy = User.Identity.GetUserId();
                     departmentListViewModel.Department.RecLastUpdatedDt = DateTime.Now;
+                    var departmentToUpdate = departmentListViewModel.Department.CreateFrom();
                     if (oService.UpdateDepartment(departmentToUpdate))
                     {
+                        TempData["message"] = new MessageViewModel { Message = "Department has been updated.", IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -77,11 +80,13 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 else
                 {
+                    departmentListViewModel.Department.RecCreatedBy = User.Identity.GetUserId();
                     departmentListViewModel.Department.RecCreatedDt = DateTime.Now;
                     var modelToSave = departmentListViewModel.Department.CreateFrom();
 
                     if (oService.AddDepartment(modelToSave))
                     {
+                        TempData["message"] = new MessageViewModel { Message = "Department has been saved.", IsSaved = true };
                         departmentListViewModel.Department.DepartmentId = modelToSave.DepartmentId;
                         return RedirectToAction("Index");
                     }
@@ -92,7 +97,8 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Create");
+                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                return RedirectToAction("Create", e);
             }
             return View(departmentListViewModel);
         }
