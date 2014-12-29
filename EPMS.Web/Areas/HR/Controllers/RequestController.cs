@@ -99,6 +99,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 else if (currentUser.EmployeeId > 0)
                 {
+                    requestViewModel.EmployeeRequest.RequestDate = DateTime.Now;
                     requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
                 }
             }
@@ -122,15 +123,49 @@ namespace EPMS.Web.Areas.HR.Controllers
                     //Update Request
                     if (employeeRequestService.UpdateRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer()))
                     {
-                        //Add RequestDetail
-                        requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
-                        requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
-                        requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
-                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
-                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
-                        requestViewModel.EmployeeRequestDetail.RowVersion++;
-                        employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
-                        TempData["message"] = new MessageViewModel { Message = "Request has been updated.", IsUpdated = true };
+                        if (requestViewModel.EmployeeRequestReply.IsApproved)
+                        {
+                            //Just update the last row of RequestDetail with IsApprove=true
+                            requestViewModel.EmployeeRequestDetail.IsApproved = true;
+                            requestViewModel.EmployeeRequestDetail.IsReplied = true;
+                            requestViewModel.EmployeeRequestDetail.RequestDesc = requestViewModel.EmployeeRequestReply.RequestReply;
+                            requestViewModel.EmployeeRequestDetail.RequestDetailId = requestViewModel.EmployeeRequestDetail.RequestDetailId;
+                            requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
+                            requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
+                            requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
+                            employeeRequestService.UpdateRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
+                        }
+                        else if (!string.IsNullOrEmpty(requestViewModel.EmployeeRequestReply.RequestDesc) ||
+                                 requestViewModel.EmployeeRequestReply.LoanAmount > 0)
+                        {
+                            requestViewModel.EmployeeRequestReply.IsApproved = false;
+                            requestViewModel.EmployeeRequestReply.IsReplied = true;
+                            requestViewModel.EmployeeRequestReply.RequestId = requestViewModel.EmployeeRequest.RequestId;
+                            requestViewModel.EmployeeRequestReply.RecCreatedBy = User.Identity.GetUserId();
+                            requestViewModel.EmployeeRequestReply.RecCreatedDt = DateTime.Now;
+                            requestViewModel.EmployeeRequestReply.RecLastUpdatedBy = User.Identity.GetUserId();
+                            requestViewModel.EmployeeRequestReply.RecLastUpdatedDt = DateTime.Now;
+                            requestViewModel.EmployeeRequestReply.RowVersion++;
+                            employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestReply.CreateFromClientToServer());
+
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = "Request has been replied.",
+                                IsUpdated = true
+                            };
+                        }
+                        else
+                        {
+                            requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
+                            requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
+                            requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
+                            requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
+                            requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
+                            requestViewModel.EmployeeRequestDetail.RowVersion++;
+                            employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
+
+                            TempData["message"] = new MessageViewModel { Message = "Request has been updated.", IsUpdated = true };
+                        }
                     }
                 }
                 // create new

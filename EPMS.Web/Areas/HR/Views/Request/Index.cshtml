@@ -75,7 +75,7 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var employee = full["Employee"];
-                        return employee.EmployeeFullName;
+                        return employee.EmployeeNameE;
                     }
                 },
                 {
@@ -107,26 +107,26 @@
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var RequestDetails = full["RequestDetails"];
-                        return RequestDetails[RequestDetails.length - 1].IsReplied ? "Yes" : "No";
+                        var RequestDetail = full["RequestDetail"];
+                        return RequestDetail.IsReplied ? "Yes" : "No";
                     }
                 },
                 {
                     "aTargets": [6],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var RequestDetails = full["RequestDetails"];
-                        return RequestDetails[RequestDetails.length-1].IsApproved ? "Yes" : "No";
+                        var RequestDetail = full["RequestDetail"];
+                        return RequestDetail.IsApproved ? "Yes" : "No";
                     }
                 }
             ],
             "sAjaxSource": siteUrl + "/Request/Index",
             "sServerMethod": "POST",
-            //"oLanguage": {
-            //    "sProcessing": "DataTables is fetching record(s)",
-            //    "sInfoEmpty": "No matching record(s) found",
-            //    "sEmptyTable": "No record(s) found",
-            //},
+            "oLanguage": {
+                "sProcessing": "DataTables is fetching record(s)",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            }
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'

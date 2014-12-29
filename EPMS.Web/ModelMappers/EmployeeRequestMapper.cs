@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -37,15 +38,15 @@ namespace EPMS.Web.ModelMappers
                     RecLastUpdatedBy = source.RecLastUpdatedBy,
                     RecLastUpdatedDt = source.RecLastUpdatedDt,
                     Employee = source.Employee.CreateFromServerToClient(),
-                    RequestDetails = source.RequestDetails.Select(x=>x.CreateFromServerToClient())
+                    RequestDetail = source.RequestDetails.OrderByDescending(x=>x.RowVersion).FirstOrDefault().CreateFromServerToClient()
                 };
             }
         #endregion
 
         #region Employee Request Detail Mappers
-            public static RequestDetail CreateFromClientToServer(this Models.RequestDetail source)
+            public static Models.RequestDetail CreateFromServerToClient(this RequestDetail source)
             {
-                return new RequestDetail
+                return new Models.RequestDetail
                 {
                     RequestDetailId = source.RequestDetailId,
                     RequestId = source.RequestId,
@@ -65,14 +66,14 @@ namespace EPMS.Web.ModelMappers
                     RecLastUpdatedDt = source.RecLastUpdatedDt
                 };
             }
-
-            public static Models.RequestDetail CreateFromServerToClient(this RequestDetail source)
+            public static RequestDetail CreateFromClientToServer(this Models.RequestDetail source)
             {
-                return new Models.RequestDetail
+                return new RequestDetail
                 {
                     RequestDetailId = source.RequestDetailId,
                     RequestId = source.RequestId,
                     RequestDesc = source.RequestDesc,
+                    RequestReply = source.RequestReply,
                     LoanAmount = source.LoanAmount,
                     LoanDate = source.LoanDate,
                     InstallmentAmount = source.InstallmentAmount,

@@ -1,10 +1,12 @@
 ﻿@model  EPMS.Web.ViewModels.Request.EmployeeRequestViewModel
 @{
-    ViewBag.Title = Model.EmployeeRequest.RequestId > 0 ? "Update Request" : "Create Request";
+    ViewBag.Title = Model.EmployeeRequest.RequestId > 0 ? EPMS.Web.Resources.HR.Request.UpdatePageTitle : EPMS.Web.Resources.HR.Request.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
-<div class="breadcrumb-container">
+<div class="breadcrumb-container" dir="ltr">
     <ul class="xbreadcrumbs">
         <li>
             <a href="~/Dashboard/Index">
@@ -13,7 +15,7 @@
         </li>
         <li>
             <a href="~/HR/Request/Index">
-                Requests List
+                @EPMS.Web.Resources.HR.Request.Label
             </a>
         </li>
         <li class="current">
@@ -35,49 +37,77 @@
     @Html.HiddenFor(model => model.EmployeeRequest.RequestId)
     @Html.HiddenFor(model => model.EmployeeRequest.RecCreatedBy)
     @Html.HiddenFor(model => model.EmployeeRequest.RecCreatedDt)
+    @Html.HiddenFor(model => model.EmployeeRequestDetail.IsReplied)
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     <div class="container-fluid request">
         <!--Input Field of Request begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.EmployeeNameE, new { @class = "control-label" })
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.EmployeeName</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeNameE, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeNameE)
-                </div>
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeNameE, new {@readonly = "readonly"})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeNameA, new { @readonly = "readonly" })
+                    </div>
+                }
             </div>
         </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.EmployeeId, new { @class = "control-label" })
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.EmployeeId</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeId, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.EmployeeId)
                 </div>
             </div>
         </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE, new { @class = "control-label" })
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.DepartmentName</label>
+            </div>
+            <div class="span9">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE, new { @readonly = "readonly" })
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameA, new { @readonly = "readonly" })
+                    </div>
+                }
+            </div>
+
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestDate</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE)
+                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestDate, new { @class = "toBeDisabled" })
+                    @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestDate)
                 </div>
             </div>
-
         </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.RequestTopic, new { @class = "control-label" })
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestTopic</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -89,7 +119,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "control-label" })
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestDesc</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -101,7 +131,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                @Html.LabelFor(model => model.EmployeeRequest.IsMonetary, new { @class = "control-label" })
+                <label class="control-label">@EPMS.Web.Resources.HR.Request.Monetary</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -114,7 +144,7 @@
         <div id="monetaryRequestControls" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanAmount</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -126,7 +156,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">Loan Date (Hijri)</label>
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateHj</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -136,7 +166,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateGr</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -148,7 +178,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.InstallmentAmount</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -160,7 +190,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.NumberOfMonths</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -172,7 +202,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.FirstInstallmentDate</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -184,7 +214,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LastInstallmentDate</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -208,104 +238,117 @@
             <i class="icon-big-notepad"></i>
             <h2><small>Request Reply </small></h2>
         </header>
-        <div class="container-fluid requestReply">
+
+        <div class="container-fluid">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    @Html.LabelFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "control-label" })
+                    <label class="control-label">@EPMS.Web.Resources.HR.Request.Approved</label>
                 </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(model => model.EmployeeRequestReply.RequestDesc, new { @class = "toBeDisabled", @id = "RequestReply" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestReply.RequestDesc)
-                    </div>
-                </div>
-            </div>
-            <div id="monetaryRequestReplyControls" style="display: none">
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        @Html.LabelFor(model => model.EmployeeRequestReply.LoanAmount, new { @class = "control-label" })
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanAmount, new { @class = "toBeDisabled" })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanAmount)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label">Loan Date (Hijri)</label>
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeDisabled", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        @Html.LabelFor(model => model.EmployeeRequestReply.LoanDate, new { @class = "control-label" })
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanDate)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        @Html.LabelFor(model => model.EmployeeRequestReply.InstallmentAmount, new { @class = "control-label" })
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeRequestReply.InstallmentAmount, new { @class = "toBeDisabled" })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.InstallmentAmount)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        @Html.LabelFor(model => model.EmployeeRequestReply.NumberOfMonths, new { @class = "control-label" })
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeRequestReply.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeDisabled" })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.NumberOfMonths)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        @Html.LabelFor(model => model.EmployeeRequestReply.FirstInstallmentDate, new { @class = "control-label" })
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeRequestReply.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @readonly = "readonly", @id = "FirstInstallmentDate" })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.FirstInstallmentDate)
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        @Html.LabelFor(model => model.EmployeeRequestReply.LastInstallmentDate, new { @class = "control-label" })
-                    </div>
-                    <div class="span2">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeRequestReply.LastInstallmentDate, new { @class = "cursorHand toBeDisabled", @readonly = "readonly", @id = "LastInstallmentDate" })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LastInstallmentDate)
-                        </div>
+                <div class="span9 span-inset">
+                    <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                        @Html.CheckBoxFor(model => model.EmployeeRequestReply.IsApproved, new { @id = "RequestApproved"})
                     </div>
                 </div>
             </div>
+            <div id="requestDetailReplyControls">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">@EPMS.Web.Resources.HR.Request.ReplyDesc</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextAreaFor(model => model.EmployeeRequestReply.RequestReply, new { @class = "toBeDisabled", @id = "RequestReply" })
+                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.RequestReply)
+                        </div>
+                    </div>
+                </div>
+                <div id="monetaryRequestReplyControls" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanAmount</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanAmount, new { @class = "toBeDisabled" })
+                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanAmount)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateHj</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeDisabled", @id = "LoanDateArREPLY", onchange = "HijriToGregorian(this,'#LoanDateEnREPLY')", @readonly = true })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateGr</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @id = "LoanDateEnREPLY", onchange = "GregorianToHijri(this,'#LoanDateArREPLY')", @readonly = true })
+                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanDate)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.InstallmentAmount</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.EmployeeRequestReply.InstallmentAmount, new { @class = "toBeDisabled" })
+                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.InstallmentAmount)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.NumberOfMonths</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.EmployeeRequestReply.NumberOfMonths, new { @id = "NumberOfMonthsREPLY", @class = "toBeDisabled" })
+                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.NumberOfMonths)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.FirstInstallmentDate</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.EmployeeRequestReply.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeDisabled", @readonly = "readonly", @id = "FirstInstallmentDateREPLY" })
+                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.FirstInstallmentDate)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LastInstallmentDate</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.EmployeeRequestReply.LastInstallmentDate, new { @class = "cursorHand toBeDisabled", @readonly = "readonly", @id = "LastInstallmentDateREPLY" })
+                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LastInstallmentDate)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
             <div class="control-group row-fluid replyBtn">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn toBeDisabled">Reply</button>
+                    <button type="submit" class="btn toBeDisabled">@EPMS.Web.Resources.HR.Request.ReplyBtn</button>
                 </div>
             </div>
         </div>
@@ -319,40 +362,60 @@
         CKEDITOR.replace('RequestReply');
         DivHideShow('IsMonetary', 'monetaryRequestControls');
         DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
-        //Set date format, remove time from date
-        $('#LastInstallmentDate').mask('99/99/9999');
-        //Convert Gregorian to Hijri
-        if ($("#LoanDateEn").val() != null && $("#LoanDateEn").val() != "") {
-            $("#LoanDateAr").val(ConvertDates($("#LoanDateEn").val(), "gregorian", "islamic"));
-        }
        
         //If request has been approved, either by employee, or by admin, disable all fields, and just show records
         if ('@Model.EmployeeRequestDetail.IsApproved'=='True') {
-            $('.request .toBeDisabled:input').attr('disabled', true);
+            $('.request .toBeDisabled:input').attr('readonly', true);
             $("#requestReplyControls").hide();
             $(".requestBtn").hide();
         }
             //If user is Admin, Disable Request and enable Reply Fields
         else if ($("#UserRole").val() == "Admin") {
-                $('.request .toBeDisabled:input').attr('disabled', true);
+            $('.request .toBeDisabled:input').attr('readonly', true);
                 $("#requestReplyControls").show();
                 $(".requestBtn").hide();
         }
         else {
                 $("#requestReplyControls").hide();
                 $(".requestBtn").show();
-            }
-        
-        
+        }
+
+        //Set date format, remove time from date
+        $('#LastInstallmentDate').mask('99/99/9999');
+        //Convert Gregorian to Hijri
+        if ($("#LoanDateEn").val() != null && $("#LoanDateEn").val() != "") {
+            $("#LoanDateAr").val(ConvertDates($("#LoanDateEn").val(), "gregorian", "islamic"));
+        }
+
+        // REPLY DATES   Set date format, remove time from date
+        $('#LastInstallmentDateREPLY').mask('99/99/9999');
+        //Convert Gregorian to Hijri
+        if ($("#LoanDateEnREPLY").val() != null && $("#LoanDateEnREPLY").val() != "") {
+            $("#LoanDateArREPLY").val(ConvertDates($("#LoanDateEnREPLY").val(), "gregorian", "islamic"));
+        }
     });
     $('#FirstInstallmentDate').change(function () {
-        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "MM/DD/YYYY").add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
     });
     $('#NumberOfMonths').change(function () {
-        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val()).add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "MM/DD/YYYY").add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+    });
+    // REPLY DATES   
+    $('#FirstInstallmentDateREPLY').change(function () {
+        $('#LastInstallmentDateREPLY').val(moment($('#FirstInstallmentDateREPLY').val(), "MM/DD/YYYY").add($('#NumberOfMonthsREPLY').val(), 'months').format('MM/DD/YYYY'));
+    });
+    $('#NumberOfMonthsREPLY').change(function () {
+        $('#LastInstallmentDateREPLY').val(moment($('#FirstInstallmentDateREPLY').val(), "MM/DD/YYYY").add($('#NumberOfMonthsREPLY').val(), 'months').format('MM/DD/YYYY'));
     });
     $('#IsMonetary').change(function () {
         DivHideShow('IsMonetary', 'monetaryRequestControls');
+    });
+    $('#RequestApproved').change(function () {
+        if ($('#RequestApproved').is(":checked")) {
+            $("#monetaryRequestReplyControls").hide();
+        } else {
+            DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
+        }
     });
     function DivHideShow(chk, div) {
         var divToBeAffected = '#' + div;
@@ -362,18 +425,4 @@
             $(divToBeAffected).hide();
         }
     }
-    //function DiableFields() {
-    //    var fieldsList = $('.toBeDisabled');
-    //        for (var i = 0; i < fieldsList.length; i++) {
-    //            var control = fieldsList[i];
-    //            var fieldvalue = $(control).val();
-    //            if (fieldvalue == null || fieldvalue == "" || fieldvalue == "Select State") {
-    //                $(control).prop('placeholder', 'required');
-    //                $(control).addClass("Error");
-
-    //            } else {
-    //                $(control).removeClass("Error");
-    //            }
-    //        }
-    //}
 </script>
