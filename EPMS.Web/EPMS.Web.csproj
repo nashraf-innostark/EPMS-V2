@@ -724,6 +724,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Employee\25122014.jpg" />
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\Gallery\download-brochure.png" />
     <Content Include="Images\News\35.jpg" />
@@ -2137,7 +2138,6 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
-    <Folder Include="Images\Employee\" />
     <Folder Include="Images\HomeSlider\" />
     <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />

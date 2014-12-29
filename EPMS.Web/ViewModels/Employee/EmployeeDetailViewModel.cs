@@ -12,6 +12,6 @@ namespace EPMS.Web.ViewModels.Employee
         public EmployeeViewModel EmployeeViewModel { get; set; }
 
         public EmployeeRequestViewModel EmployeeRequestViewModel { get; set; }
-        
+        public string Role { get; set; }
     }
 }

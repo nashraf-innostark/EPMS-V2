@@ -16,7 +16,6 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
-using EPMS.Models.ResponseModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Employee = EPMS.Web.Models.Employee;
@@ -71,15 +70,17 @@ namespace EPMS.Web.Areas.HR.Controllers
                     JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
                     SearchRequest = employeeSearchRequest,
                 };
+                employeeViewModel.Role = userRole.Name;
                 return View(employeeViewModel);
             }
-            if (Roles.IsUserInRole("Employee"))
+            if (userRole != null && userRole.Name == "Employee")
             {
                 long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-                return RedirectToAction("Create", new { id = id });
+                return RedirectToAction("Create", new { id });
             }
             return null;
         }
+
         /// <summary>
         /// Get All Employees and return to View
         /// </summary>
@@ -88,6 +89,8 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
@@ -99,6 +102,10 @@ namespace EPMS.Web.Areas.HR.Controllers
                 iTotalDisplayRecords = employeeList.Count(),
                 sEcho = employeeList.Count(),
             };
+            if (userRole != null)
+            {
+                employeeViewModel.Role = userRole.Name;
+            }
 
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
@@ -131,7 +138,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
-                    EmployeeViewModel = {JobTitleList = JobTitleService.GetAll()}
+                    EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                 viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
@@ -142,19 +149,20 @@ namespace EPMS.Web.Areas.HR.Controllers
             long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
-            if (id > 0 && (id == empId || (userRole !=null && userRole.Name == "Admin")))
+            if (id > 0 && (id == empId || (userRole != null && userRole.Name == "Admin")))
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
                     EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                // Get User Role
                 
                 if (userRole != null)
                 {
+                    viewModel.Role = userRole.Name;
                     if (id > 0 && userRole.Name == "Admin")
                     {
+
                         viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
                         viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
                         viewModel.EmployeeViewModel.PageTitle = "Employee's List";
@@ -171,26 +179,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
                                               viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
                     }
-                    //if (userRole.Name == "Employee" || userRole.Name == "PM")
-                    //{
-                    //    var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(new EmployeeRequestSearchRequest());
-                    //    var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
-                    //    var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
-                    //    if (employeeRequests.Any())
-                    //    {
-                    //        viewModel.aaData1 = employeeRequests;
-                    //        viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
-                    //        viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
-                    //        viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
-                    //    }
-                    //    else
-                    //    {
-                    //        viewModel.aaData1 = Enumerable.Empty<EmployeeRequest>();
-                    //        viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
-                    //        viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
-                    //        viewModel.sEcho = 1;
-                    //    }
-                    //}
+
                 }
                 return View(viewModel);
             }
@@ -203,26 +192,29 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
         [HttpPost]
-        public ActionResult Create(EmployeeViewModel viewModel)
+        public ActionResult Create(EmployeeDetailViewModel viewModel)
         {
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
             try
             {
-                if (Roles.IsUserInRole("Admin"))
+                if (userRole != null && userRole.Name == "Admin")
                 {
                     #region Update
 
-                    if (viewModel.Employee.EmployeeId > 0)
+                    viewModel.Role = userRole.Name;
+                    if (viewModel.EmployeeViewModel.Employee.EmployeeId > 0)
                     {
                         // Set Employee Values
-                        viewModel.Employee.RecLastUpdatedDt = DateTime.Now;
-                        viewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.EmployeeViewModel.Employee.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.EmployeeViewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
                         // Set Values for Allownace
-                        viewModel.Allowance.EmployeeId = viewModel.Employee.EmployeeId;
-                        viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
-                        viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
+                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Update Employee and Allowance
-                        var employeeToUpdate = viewModel.Employee.CreateFromClientToServer();
-                        var allowanceToTpdate = viewModel.Allowance.CreateFromClientToServer();
+                        var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
+                        var allowanceToTpdate = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
                         if (EmployeeService.UpdateEmployee(employeeToUpdate) &&
                             AllowanceService.UpdateAllowance(allowanceToTpdate))
                         {
@@ -242,17 +234,17 @@ namespace EPMS.Web.Areas.HR.Controllers
                     else
                     {
                         // Set Employee Values
-                        viewModel.Employee.RecCreatedDt = DateTime.Now;
-                        viewModel.Employee.RecCreatedBy = User.Identity.Name;
-                        var employeeToSave = viewModel.Employee.CreateFromClientToServer();
+                        viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
+                        viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.Name;
+                        var employeeToSave = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
                         long employeeId = EmployeeService.AddEmployee(employeeToSave);
 
                         // Set Values for Allownace
-                        viewModel.Allowance.EmployeeId = employeeId;
-                        viewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
-                        viewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
+                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
 
-                        var allowanceToSave = viewModel.Allowance.CreateFromClientToServer();
+                        var allowanceToSave = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
 
                         if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
                         {
@@ -261,24 +253,24 @@ namespace EPMS.Web.Areas.HR.Controllers
                                 Message = "Employee has been Added",
                                 IsSaved = true
                             };
-                            viewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
+                            viewModel.EmployeeViewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
                             return RedirectToAction("Index");
                         }
                     }
 
                     #endregion
                 }
-                else if (Roles.IsUserInRole("Employee") || Roles.IsUserInRole("PM"))
+                else if (userRole != null && (userRole.Name == "Employee" || userRole.Name == "PM"))
                 {
-
+                    viewModel.Role = userRole.Name;
                 }
             }
             catch (Exception)
             {
                 TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             }
-            viewModel.JobTitleList = JobTitleService.GetAll();
-            viewModel.JobTitleDeptList = viewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+            viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
+            viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
         }
@@ -311,6 +303,53 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             return Json(new { filename = imagename, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Get Employee Requests
+
+        public ActionResult GetEmployeeRequests(EmployeeRequestSearchRequest searchRequest)
+        {
+            IEnumerable<EmployeeRequest> aaData;
+            int iTotalRecords;
+            int iTotalDisplayRecords;
+            int sEcho;
+            try
+            {
+                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+                var userRole = result.AspNetRoles.FirstOrDefault();
+                if (userRole != null && userRole.Name == "Admin")
+                {
+                    searchRequest.Requester = "Admin";
+                }
+                else
+                {
+                    searchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
+                }
+                var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(searchRequest);
+                var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+                var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
+                if (employeeRequests.Any())
+                {
+                    aaData = employeeRequests;
+                    iTotalRecords = employeeRequestResponse.TotalCount;
+                    iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                    sEcho = employeeRequestResponse.EmployeeRequests.Count();
+                }
+                else
+                {
+                    aaData = Enumerable.Empty<EmployeeRequest>();
+                    iTotalRecords = employeeRequestResponse.TotalCount;
+                    iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                    sEcho = 1;
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to load.", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { aaData, iTotalRecords, iTotalDisplayRecords, sEcho, response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Delete Employee

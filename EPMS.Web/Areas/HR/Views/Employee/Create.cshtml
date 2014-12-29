@@ -13,7 +13,7 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
-        @if (Roles.IsUserInRole("Admin"))
+        @if (Model.Role == "Admin")
         {
             <li>
                 <a href="~/HR/Employee/Index">
@@ -102,7 +102,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.DepartmentNameE, new { @id = "DepartmentName", @disabled = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.Department.DepartmentNameE, new { @id = "DepartmentName", @disabled = true })
                 </div>
             </div>
         </div>
@@ -271,7 +271,7 @@
                 </div>
             </div>
         </div>
-        @if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("PM"))
+        @if (Model.Role == "Admin" || Model.Role == "PM")
         {
             <div class="control-group row-fluid">
                 <div class="span3">
@@ -328,7 +328,7 @@
                     </div>
                 </div>
             </div>
-            if (Model.EmployeeViewModel.Employee != null && Roles.IsUserInRole("Admin"))
+            if (Model.EmployeeViewModel.Employee != null && Model.Role == "Admin")
             {
                 <div class="control-group row-fluid">
                     <div class="span3">
@@ -354,7 +354,7 @@
         }
         @if (Model.EmployeeViewModel.Employee != null)
         {
-            if (Roles.IsUserInRole("Employee"))
+            if (Model.Role == "Employee")
             {
                 <div class="control-group row-fluid">
                     <div class="span3">
@@ -365,6 +365,13 @@
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>Requests History</strong>
+            </div>
+            <div>
+                <header>
+                    <i class="icon-big-notepad"></i>
+                    <h2><small>Requests</small></h2>
+                    <h3> <small><a href="~/HR/Request/Create">Create New Request</a></small></h3>
+                </header>
             </div>
             <!--Sortable Responsive Table begin-->
             <div class="row-fluid">
@@ -401,7 +408,7 @@
                 </div>
             </div>
         }
-        @if ((Roles.IsUserInRole("Admin")) && Model.EmployeeViewModel.Employee != null)
+        @if ((Model.Role == "Admin") && Model.EmployeeViewModel.Employee != null)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -412,7 +419,7 @@
                 </div>
             </div>
         }
-        else if (Roles.IsUserInRole("Admin"))
+        else if (Model.Role == "Admin")
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -453,10 +460,9 @@
             }
         });
         var siteUrl = $('#siteURL').val();
-        var oTable = $('#tableRequsts').dataTable({
+        $('#tableRequsts').dataTable({
             "iDisplayLength": 20,
             "iDisplayStart": 0,
-            "aaSorting": ['asc'],
             "bProcessing": true,
             "bServerSide": true,
             "bFilter": true,
@@ -474,13 +480,13 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var val = full["RequestTopic"];
-                        var Id = full["RequestId"];
-                        var element = '<a href="Create/' + Id + '">' + val + '</a>';
+                        var id = full["RequestId"];
+                        var element = '<a href="Create/' + id + '">' + val + '</a>';
                         return element;
                     }
                 }
             ],
-            "sAjaxSource": siteUrl + "/Request/Index",
+            "sAjaxSource": siteUrl + "/Employee/GetEmployeeRequests",
             "sServerMethod": "POST",
             "oLanguage": {
                 "sProcessing": "Fetching record(s)",
@@ -549,6 +555,7 @@
             }
         });
         // Date from Gregorian to Islamic Ends
+
     });
 
     function ConvertGregorianToIslamic() {
