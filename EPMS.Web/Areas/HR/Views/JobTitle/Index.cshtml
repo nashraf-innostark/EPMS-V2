@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = EPMS.Web.Resources.HR.JobTitle.IndexLabel;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -15,7 +15,7 @@
         </li>
         <li>
             <a href="">
-                Job Titles' List
+                @EPMS.Web.Resources.HR.JobTitle.Label
             </a>
         </li>
     </ul>

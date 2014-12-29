@@ -1,7 +1,8 @@
 ﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
 
 @{
-    ViewBag.Title = "Create Job Title";
+    //ViewBag.Title = "Create Job Title";
+    ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -15,7 +16,7 @@
         </li>
         <li>
             <a href="~/HR/Jobtitle/">
-                Job Title
+                @EPMS.Web.Resources.HR.JobTitle.Label
             </a>
         </li>
         <li class="current">
@@ -45,7 +46,7 @@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleName">Job Title Name English</label>
+                <label class="control-label" for="JobTitleName">@EPMS.Web.Resources.HR.JobTitle.NameOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -56,7 +57,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleName">Job Title Name Arabic</label>
+                <label class="control-label" for="JobTitleName">@EPMS.Web.Resources.HR.JobTitle.NameOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -67,18 +68,18 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="departmentId">Department</label>
+                <label class="control-label" for="departmentId">@EPMS.Web.Resources.HR.JobTitle.DepartmentOnCreate</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), "Select Department", new { @class = "select2me", id = "departmentId" })
+                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
                     @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleDesc">Job Title Description English</label>
+                <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -89,7 +90,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleDesc">Job Title Description Arabic</label>
+                <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -100,7 +101,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="BasicSalary">Basic Salary</label>
+                <label class="control-label" for="BasicSalary">@EPMS.Web.Resources.HR.JobTitle.BasicSalaryOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -112,11 +113,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">Edit</button>
-                    <button id="savebtn" class="btn" type="submit">Save</button>
+                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href='/HR/JobTitle/Index'" type="reset">Cancel</button>
+                    <button id="cancel" class="btn" onclick="window.location.href='/HR/JobTitle/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -133,7 +134,7 @@
             allowClear: true,
             
         });
-        if (id == "") {
+        if (id == 0) {
             $('#departmentId').select2('enable');
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();
