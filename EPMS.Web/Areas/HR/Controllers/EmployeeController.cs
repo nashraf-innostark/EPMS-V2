@@ -76,7 +76,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (userRole != null && userRole.Name == "Employee")
             {
                 long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-                return RedirectToAction("Create", new { id = id });
+                return RedirectToAction("Create", new { id });
             }
             return null;
         }
