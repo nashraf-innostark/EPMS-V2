@@ -35,6 +35,7 @@ namespace EPMS.Web.ViewModels.Employee
         /// </summary>
         //public EmployeeSearchRequset EmployeeSearchRequest { get; set; }
         public string ImagePath { get; set; }
+        public string Role { get; set; }
         public string EmployeeName { get; set; }
         public string BtnText { get; set; }
         public string PageTitle { get; set; }
