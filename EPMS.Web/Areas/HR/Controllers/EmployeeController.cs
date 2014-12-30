@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
@@ -62,8 +61,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (userRole != null && (userRole.Name == "Admin" || userRole.Name == "PM"))
             {
                 EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
-                ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
-
+                
                 EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
                     DepartmentList = DepartmentService.GetAll(),

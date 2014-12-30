@@ -1,7 +1,5 @@
 ﻿using System;
 //using EPMS.Models.RequestModels;
-using EPMS.WebBase.UnityConfiguration;
-using Microsoft.Practices.Unity;
 using Microsoft.Reporting.WebForms;
 
 namespace EPMS.Web.Reports

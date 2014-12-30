@@ -1,5 +1,4 @@
 ﻿using EPMS.Implementation.Identity;
-using EPMS.Models.IdentityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -7,10 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using IdentitySample.Models;
 using Owin;
 using System;
-using EPMS.Models.IdentityModels;
 using EPMS.Models.DomainModels;
-using System.Threading.Tasks;
-using System.Configuration;
 
 namespace IdentitySample
 {

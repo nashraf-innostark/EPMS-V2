@@ -1,5 +1,4 @@
-﻿using System;
-using DomainModels = EPMS.Models.DomainModels;
+﻿using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {

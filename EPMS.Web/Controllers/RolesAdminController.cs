@@ -1,5 +1,4 @@
-﻿using System;
-using EPMS.Implementation.Identity;
+﻿using EPMS.Implementation.Identity;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using Microsoft.AspNet.Identity;

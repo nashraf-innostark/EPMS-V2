@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using EPMS.Models.RequestModels;
 
 namespace EPMS.Web.ViewModels.Payroll
 {
     public class PayrollViewModel
     {
+        public PayrollSearchRequest SearchRequest { get; set; }
     }
 }
