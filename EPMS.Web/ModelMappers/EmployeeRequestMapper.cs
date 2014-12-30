@@ -40,6 +40,18 @@ namespace EPMS.Web.ModelMappers
                     RequestDetails = source.RequestDetails.Select(x=>x.CreateFromServerToClient())
                 };
             }
+            public static Models.Payroll CreateFromServerToClientPayroll(this EmployeeRequest source)
+            {
+                return new Models.Payroll
+                {
+                    RequestId = source.RequestId,
+                    EmployeeId = source.EmployeeId,
+                    IsMonetary = source.IsMonetary,
+                    RequestTopic = source.RequestTopic,
+                    RequestDate = source.RequestDate,
+                    RequestDetails = source.RequestDetails.Select(x => x.CreateFromServerToClient())
+                };
+            }
         #endregion
 
         #region Employee Request Detail Mappers

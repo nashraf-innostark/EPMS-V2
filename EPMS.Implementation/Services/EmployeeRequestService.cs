@@ -61,6 +61,10 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetAllRequests(searchRequset);
         }
+        public IEnumerable<EmployeeRequest> LoadAllMonetaryRequests()
+        {
+            return repository.GetAllMonetaryRequests();
+        }
 
         public IEnumerable<EmployeeRequest> LoadAllRequests(string requester)
         {
