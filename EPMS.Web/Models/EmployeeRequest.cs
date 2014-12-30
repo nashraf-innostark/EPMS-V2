@@ -9,7 +9,7 @@ namespace EPMS.Web.Models
         public EmployeeRequest()
         {
             Employee = new Employee();
-            RequestDetails = new List<RequestDetail>();
+            RequestDetail = new RequestDetail();
         }
 
         public long RequestId { get; set; }
@@ -27,6 +27,6 @@ namespace EPMS.Web.Models
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RequestDateString { get; set; }
         public Employee Employee { get; set; }
-        public IEnumerable<RequestDetail> RequestDetails { get; set; }
+        public RequestDetail RequestDetail { get; set; }
     }
 }

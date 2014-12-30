@@ -324,6 +324,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobTitle.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HR\Request.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Request.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Request.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Request.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2169,6 +2179,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Reports\PrisonerInfo.rdlc" />
     <EmbeddedResource Include="Reports\PrisonerReport.rdlc" />
+    <EmbeddedResource Include="Resources\HR\Request.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Request.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.ar.Designer.cs</LastGenOutput>

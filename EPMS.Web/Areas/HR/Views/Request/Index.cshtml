@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Requests";
+    ViewBag.Title = EPMS.Web.Resources.HR.Request.Label;
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -20,7 +20,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/HR/Request/Create">Create New Request</a></small></h3>
+    <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -32,15 +32,27 @@
             <div class="span12">
                 <table id="dataTable" class="table table-striped table-responsive">
                     <thead class="cf sorthead">
-                        <tr>
-                            <th></th>
-                            <th>Employee Name</th>
-                            <th>Request Topic</th>
-                            <th>Monetary</th>
-                            <th>Request Date</th>
-                            <th>Replied</th>
-                            <th>Approved</th>
-                        </tr>
+                        @if (ViewBag.UserRole == "Admin")
+                        {
+                            <tr>
+                                <th></th>
+                                <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
+                                <th>@EPMS.Web.Resources.HR.Request.EmployeeName</th>
+                                <th>@EPMS.Web.Resources.HR.Request.EmployeeJobId</th>
+                                <th>@EPMS.Web.Resources.HR.Request.DepartmentName</th>
+                                <th>@EPMS.Web.Resources.HR.Request.RequestDate</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Status</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Replied</th>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <th></th>
+                                <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Status</th>
+                            </tr>
+                        }
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -54,80 +66,124 @@
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
-        var oTable = $('#dataTable').dataTable({
-            "iDisplayLength": 20,
-            "iDisplayStart": start || 0,
-            "aaSorting": [sortBy],
-            "bProcessing": true,
-            "bServerSide": true,
-            "bFilter": true,
-            "aoColumns": [
-                {
-                    "aTargets": [0],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["RequestId"];
+        if ('@ViewBag.UserRole' == "Admin") {
+            var oTable = $('#dataTable').dataTable({
+                "iDisplayLength": 20,
+                "iDisplayStart": start || 0,
+                "aaSorting": [sortBy],
+                "bProcessing": true,
+                "bServerSide": true,
+                "bFilter": true,
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["RequestId"];
+                        },
+                        "bVisible": false,
                     },
-                    "bVisible": false,
-                },
-                {
-                    "aTargets": [1],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var employee = full["Employee"];
-                        return employee.EmployeeNameE;
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var val = full["RequestTopic"];
+                            var id = full["RequestId"];
+                            var element = '<a href="Create/' + id + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var employee = full["Employee"];
+                            return employee.EmployeeNameE;
+                        }
+                    },
+                    {
+                        "aTargets": [3],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var employee = full["Employee"];
+                            return employee.EmployeeJobId;
+                        }
+                    },
+                    {
+                        "aTargets": [4],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var employee = full["Employee"];
+                            return employee.JobTitle.Department.DepartmentNameE;
+                        }
+                    },
+                    {
+                        "aTargets": [6],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["RequestDateString"];
+                        }
+                    },
+                    {
+                        "aTargets": [7],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var requestDetail = full["RequestDetail"];
+                            return requestDetail.IsApproved ? "Approved" : "Declined";
+                        }
+                    },
+                    {
+                        "aTargets": [8],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var requestDetail = full["RequestDetail"];
+                            return requestDetail.IsReplied ? "Yes" : "No";
+                        }
                     }
-                },
-                {
-                    "aTargets": [2],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var val = full["RequestTopic"];
-                        var Id = full["RequestId"];
-                        var element = '<a href="Create/' + Id + '">' + val + '</a>';
-                        return element;
+                ],
+                "sAjaxSource": siteUrl + "/Request/Index",
+                "sServerMethod": "POST"
+            });
+        } else {
+            var oTable = $('#dataTable').dataTable({
+                "iDisplayLength": 20,
+                "iDisplayStart": start || 0,
+                "aaSorting": [sortBy],
+                "bProcessing": true,
+                "bServerSide": true,
+                "bFilter": true,
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            return full["RequestId"];
+                        },
+                        "bVisible": false,
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var val = full["RequestTopic"];
+                            var Id = full["RequestId"];
+                            var element = '<a href="Create/' + Id + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var RequestDetail = full["RequestDetail"];
+                            return RequestDetail.IsApproved ? "Approved" : "Declined";
+                        }
                     }
-                },
-                {
-                    "aTargets": [3],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var IsMonetary = full["IsMonetary"];
-                        return IsMonetary ? "Yes" : "No";
-                    }
-                },
-                {
-                    "aTargets": [4],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["RequestDateString"];
-                    }
-                },
-                {
-                    "aTargets": [5],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var RequestDetails = full["RequestDetails"];
-                        return RequestDetails[RequestDetails.length - 1].IsReplied ? "Yes" : "No";
-                    }
-                },
-                {
-                    "aTargets": [6],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var RequestDetails = full["RequestDetails"];
-                        return RequestDetails[RequestDetails.length-1].IsApproved ? "Yes" : "No";
-                    }
-                }
-            ],
-            "sAjaxSource": siteUrl + "/Request/Index",
-            "sServerMethod": "POST",
-            //"oLanguage": {
-            //    "sProcessing": "DataTables is fetching record(s)",
-            //    "sInfoEmpty": "No matching record(s) found",
-            //    "sEmptyTable": "No record(s) found",
-            //},
-        });
+                ],
+                "sAjaxSource": siteUrl + "/Request/Index",
+                "sServerMethod": "POST"
+            });
+        }
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
