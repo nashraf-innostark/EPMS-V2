@@ -1,21 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using EPMS.Models.Common;
 
 namespace EPMS.Models.RequestModels
 {
-    public class EmployeeSearchRequset : GetPagedListRequest
+    public class PayrollSearchRequest : GetPagedListRequest
     {
         public Guid UserId { get; set; }
         public long EmployeeId { get; set; }
-        public string EmployeeNameE { get; set; }
-        public string EmployeeNameA { get; set; }
         public long JobTitleId { get; set; }
-        
-        public EmployeeByColumn EmployeeByColumn
+        public PayrollByColumn EmployeeByColumn
         {
             get
             {
-                return (EmployeeByColumn)SortBy;
+                return (PayrollByColumn)SortBy;
             }
             set
             {

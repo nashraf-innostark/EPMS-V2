@@ -4,9 +4,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using EPMS.Web.Models;
 using IdentitySample.Models;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
@@ -20,9 +18,9 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Admin;
-using EPMS.Models.ModelMapers;
 using System.Net;
 using EPMS.Web.ModelMappers;
+using EPMS.Models.ModelMapers;
 
 namespace IdentitySample.Controllers
 {

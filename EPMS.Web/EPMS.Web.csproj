@@ -244,6 +244,7 @@
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\HR\Controllers\JobTitleController.cs" />
+    <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
@@ -362,6 +363,7 @@
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Request\EmployeeRequestViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
@@ -1791,6 +1793,7 @@
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Create.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
+    <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>

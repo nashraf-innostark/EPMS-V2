@@ -100,6 +100,7 @@
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
+    <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
+    <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
