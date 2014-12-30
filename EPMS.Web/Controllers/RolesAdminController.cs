@@ -1,4 +1,5 @@
-﻿using EPMS.Implementation.Identity;
+﻿using System;
+using EPMS.Implementation.Identity;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using EPMS.Models.MenuModels;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.ViewModels.RightsManagement;
+using EPMS.Web.ViewModels.Common;
 
 namespace IdentitySample.Controllers
 {
@@ -66,7 +68,9 @@ namespace IdentitySample.Controllers
         // GET: /Roles/
         public ActionResult Index()
         {
-            return View(RoleManager.Roles);
+            RoleViewModel roleViewModel = new RoleViewModel();
+            roleViewModel.Roles = RoleManager.Roles.ToList();
+            return View(roleViewModel);
         }
 
         //
@@ -110,11 +114,26 @@ namespace IdentitySample.Controllers
             if (ModelState.IsValid)
             {
                 var role = new AspNetRole();
-                var roleresult = await RoleManager.CreateAsync(role);
-                if (!roleresult.Succeeded)
+                role.Name = roleViewModel.Name;
+                int rolesCount = RoleManager.Roles.Count() + 1;
+                role.Id = rolesCount.ToString();
+                if (!RoleManager.RoleExists(role.Name))
                 {
-                    ModelState.AddModelError("", roleresult.Errors.First());
-                    return View();
+                    var roleresult = await RoleManager.CreateAsync(role);
+                    if (!roleresult.Succeeded)
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Error in creating role",
+                            IsError = true
+                        };
+                        return View();
+                    }
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = "Role has been created successfully",
+                        IsSaved = true
+                    };
                 }
                 return RedirectToAction("Index");
             }
