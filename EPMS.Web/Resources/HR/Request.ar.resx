@@ -117,17 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Approved" xml:space="preserve">
-    <value>Approved Ar</value>
-  </data>
   <data name="CreatePageTitle" xml:space="preserve">
     <value>Create Request Ar</value>
+  </data>
+  <data name="DeclineBtn" xml:space="preserve">
+    <value>Decline Ar</value>
   </data>
   <data name="DepartmentName" xml:space="preserve">
     <value>Department Name Ar</value>
   </data>
-  <data name="EmployeeId" xml:space="preserve">
-    <value>Employee Id Ar</value>
+  <data name="EmployeeJobId" xml:space="preserve">
+    <value>Job Id Ar</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
     <value>Employee Name Ar</value>
@@ -176,6 +176,9 @@
   </data>
   <data name="RequestTopic" xml:space="preserve">
     <value>Request Topic Ar</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status Ar</value>
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>Update Request Ar</value>

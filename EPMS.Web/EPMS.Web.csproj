@@ -2182,6 +2182,7 @@
     <EmbeddedResource Include="Resources\HR\Request.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Request.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

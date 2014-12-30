@@ -24,8 +24,6 @@
         <AssociationConnector Association="DomainModels.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DomainModels.Department" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="DomainModels.Notification" Width="1.5" PointX="1.125" PointY="5.625" />
-        <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="14.875" />
-        <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" />
         <EntityTypeShape EntityType="DomainModels.Employee" Width="1.5" PointX="5.25" PointY="6.75" />
         <EntityTypeShape EntityType="DomainModels.JobTitle" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="DomainModels.FK_Allowance_Employee" />
@@ -35,6 +33,8 @@
         <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" />
         <AssociationConnector Association="DomainModels.FK_Notification_Employee" />
         <AssociationConnector Association="DomainModels.FK_JobOffered_JobTitle" />
+        <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="14.875" />
+        <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

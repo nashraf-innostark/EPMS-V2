@@ -61,15 +61,6 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you approve the above request?.
-        /// </summary>
-        public static string Approved {
-            get {
-                return ResourceManager.GetString("Approved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create Request.
         /// </summary>
         public static string CreatePageTitle {
@@ -79,7 +70,25 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Department Name.
+        ///   Looks up a localized string similar to Create New Request.
+        /// </summary>
+        public static string CreateRequest {
+            get {
+                return ResourceManager.GetString("CreateRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decline.
+        /// </summary>
+        public static string DeclineBtn {
+            get {
+                return ResourceManager.GetString("DeclineBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department.
         /// </summary>
         public static string DepartmentName {
             get {
@@ -88,16 +97,16 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Id.
+        ///   Looks up a localized string similar to Job ID.
         /// </summary>
-        public static string EmployeeId {
+        public static string EmployeeJobId {
             get {
-                return ResourceManager.GetString("EmployeeId", resourceCulture);
+                return ResourceManager.GetString("EmployeeJobId", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Name.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string EmployeeName {
             get {
@@ -124,7 +133,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requests&apos; List.
+        ///   Looks up a localized string similar to Request List.
         /// </summary>
         public static string Label {
             get {
@@ -214,7 +223,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Date.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string RequestDate {
             get {
@@ -232,7 +241,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request Topic.
+        ///   Looks up a localized string similar to Topic.
         /// </summary>
         public static string RequestTopic {
             get {
@@ -241,7 +250,16 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Request.
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Detail.
         /// </summary>
         public static string UpdatePageTitle {
             get {

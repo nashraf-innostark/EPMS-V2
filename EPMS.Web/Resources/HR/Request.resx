@@ -117,20 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Approved" xml:space="preserve">
-    <value>Do you approve the above request?</value>
-  </data>
   <data name="CreatePageTitle" xml:space="preserve">
     <value>Create Request</value>
   </data>
-  <data name="DepartmentName" xml:space="preserve">
-    <value>Department Name</value>
+  <data name="CreateRequest" xml:space="preserve">
+    <value>Create New Request</value>
   </data>
-  <data name="EmployeeId" xml:space="preserve">
-    <value>Employee Id</value>
+  <data name="DeclineBtn" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="DepartmentName" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="EmployeeJobId" xml:space="preserve">
+    <value>Job ID</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
-    <value>Employee Name</value>
+    <value>Name</value>
   </data>
   <data name="FirstInstallmentDate" xml:space="preserve">
     <value>First Installment Date</value>
@@ -139,7 +142,7 @@
     <value>Monthly Istallment</value>
   </data>
   <data name="Label" xml:space="preserve">
-    <value>Requests' List</value>
+    <value>Request List</value>
   </data>
   <data name="LastInstallmentDate" xml:space="preserve">
     <value>Last Installment Date</value>
@@ -169,15 +172,18 @@
     <value>Reply Description</value>
   </data>
   <data name="RequestDate" xml:space="preserve">
-    <value>Request Date</value>
+    <value>Date</value>
   </data>
   <data name="RequestDesc" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="RequestTopic" xml:space="preserve">
-    <value>Request Topic</value>
+    <value>Topic</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
-    <value>Update Request</value>
+    <value>Request Detail</value>
   </data>
 </root>

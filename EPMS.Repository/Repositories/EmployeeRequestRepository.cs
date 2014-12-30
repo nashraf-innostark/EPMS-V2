@@ -41,13 +41,11 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<EmployeeRequestByColumn, Func<EmployeeRequest, object>>
                     {
-                        { EmployeeRequestByColumn.RequestId, c => c.RequestId},
-                        { EmployeeRequestByColumn.IsMonetary,  c => c.IsMonetary},
                         { EmployeeRequestByColumn.RequestTopic, c => c.RequestTopic},
-                        { EmployeeRequestByColumn.EmployeeName, c => c.Employee.EmployeeNameE},
-                        { EmployeeRequestByColumn.RequestDate,  c => c.RequestDate}//,
-                        //{ EmployeeRequestByColumn.IsReplied, c => c.RequestDetails},
-                        //{ EmployeeRequestByColumn.EmployeeName, c => c.Employee.EmployeeFirstName}
+                        { EmployeeRequestByColumn.EmployeeName,  c => c.Employee.EmployeeNameE},
+                        { EmployeeRequestByColumn.JobId, c => c.Employee.EmployeeJobId},
+                        { EmployeeRequestByColumn.Department, c => c.Employee.JobTitle.Department.DepartmentNameE},
+                        { EmployeeRequestByColumn.Date,  c => c.RequestDate}
                     };
         #endregion
         public IEnumerable<EmployeeRequest> GetAllRequests(long employeeId)
