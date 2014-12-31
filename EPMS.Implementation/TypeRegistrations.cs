@@ -23,7 +23,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IEmployeeRequestService, EmployeeRequestService>();
             unityContainer.RegisterType<IAllowanceService, AllowanceService>();
             unityContainer.RegisterType<IAspNetUserService, AspNetUserService>();
-
+            unityContainer.RegisterType<IRecruitmentService, RecruitmentService>();
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
         }
     }
