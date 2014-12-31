@@ -32,6 +32,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
+                EmployeeJobId = source.EmployeeJobId
             };
             return caseType;
         }
@@ -62,6 +63,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
                 JobTitle = source.JobTitle.CreateFrom(),
+                EmployeeJobId = source.EmployeeJobId
             };
 
         }
@@ -91,6 +93,8 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
+                EmployeeJobId = source.EmployeeJobId,
+                JobTitle = source.JobTitle.CreateFrom(),
             };
 
         }
