@@ -12,6 +12,7 @@ namespace EPMS.Models.RequestModels
         public Guid UserId { get; set; }
         public long EmployeeId { get; set; }
         public long JobTitleId { get; set; }
+        public string Requester { get; set; }
         public PayrollByColumn EmployeeByColumn
         {
             get

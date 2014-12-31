@@ -132,6 +132,8 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <returns></returns>
         public ActionResult Create(long? id)
         {
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
             if (id == null)
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
@@ -139,14 +141,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                     EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                if (userRole != null) viewModel.Role = userRole.Name;
                 viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
                 viewModel.EmployeeViewModel.BtnText = "Save Employee";
                 viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
                 return View(viewModel);
             }
             long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
             if (id > 0 && (id == empId || (userRole != null && userRole.Name == "Admin")))
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
@@ -234,6 +235,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         // Set Employee Values
                         viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
                         viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.Name;
+                        string employeeJobId = GetEmployeeJobId();
+                        viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
                         var employeeToSave = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
                         long employeeId = EmployeeService.AddEmployee(employeeToSave);
 
@@ -271,6 +274,42 @@ namespace EPMS.Web.Areas.HR.Controllers
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
+        }
+        #endregion
+
+        #region Employee Job ID
+
+        string GetEmployeeJobId()
+        {
+            string year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture);
+            var result = EmployeeService.GetAll();
+            var userRole = result.LastOrDefault();
+            if (userRole != null)
+            {
+                string jId = userRole.EmployeeJobId;
+                jId = jId.Substring(Math.Max(0, jId.Length - 4));
+                int id = Convert.ToInt32(jId) + 1;
+                int len = id.ToString().Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "000";
+                        break;
+                    case 2:
+                        zeros = "00";
+                        break;
+                    case 3:
+                        zeros = "0";
+                        break;
+                    case 4:
+                        zeros = "";
+                        break;
+                }
+                string jobId = year + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return jobId;
+            }
+            return String.Empty;
         }
         #endregion
 

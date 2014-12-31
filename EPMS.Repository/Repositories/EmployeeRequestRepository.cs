@@ -30,7 +30,7 @@ namespace EPMS.Repository.Repositories
         {
             get { return db.EmployeeRequests; }
         }
-
+        
         #endregion
         #region Private
 
@@ -51,6 +51,11 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<EmployeeRequest> GetAllRequests(long employeeId)
         {
             return DbSet.Where(x => x.EmployeeId == employeeId);
+        }
+
+        public IEnumerable<EmployeeRequest> GetAllMonetaryRequests()
+        {
+            return DbSet.Where(x => x.IsMonetary);
         }
 
         public EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset)
