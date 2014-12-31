@@ -16,8 +16,8 @@
             </a>
         </li>
         <li>
-            <a href="~/HR/Jobtitle/">
-                @EPMS.Web.Resources.HR.JobTitle.Label
+            <a href="~/HR/JobOffered/">
+                @EPMS.Web.Resources.HR.JobOffered.Label
             </a>
         </li>
         <li class="current">
@@ -36,7 +36,7 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Create", "JobTitle", FormMethod.Post, new { @id = "JobTitleForm", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "JobOffered", FormMethod.Post, new { @id = "JobOfferedForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
@@ -81,7 +81,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.Department.DepartmentNameE, new { @id = "NoOfVacancies", @class = "select2me", })
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.Department.DepartmentNameE, new { @id = "NoOfVacancies" })
                 </div>
             </div>
         </div>

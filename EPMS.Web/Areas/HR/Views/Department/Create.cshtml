@@ -46,7 +46,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentNameE, new { @dir = "ltr", id = "DeptName", @class ="tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.Department.DepartmentNameE, new { id = "DeptName", @class ="tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Department.DepartmentNameE, "", new { @class = "required" })
                 </div>
             </div>
@@ -57,7 +57,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentNameA, new { @dir = "ltr", id = "DeptName", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.Department.DepartmentNameA, new { id = "DeptName", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Department.DepartmentNameA, "", new { @class = "required" })
                 </div>
             </div>
@@ -68,7 +68,17 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @dir = "ltr", @class ="tbdisable", id = "DeptDesc", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @class ="tbdisable", id = "DeptDesc", @ViewBag.Disabled })
+                </div>
+            </div>
+        </div>
+        <div id="EmployeeCount" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentDesc"># of Employees</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.EmployeeList.ToList().Count, new { @class = "tbdisable", @ViewBag.Disabled })
                 </div>
             </div>
         </div>
@@ -155,6 +165,7 @@
         $("#savebtn").show();
         $("#cancel").show();
         $("#edit").hide();
+        $("#EmployeeCount").hide();
         event.preventDefault();
     });
 

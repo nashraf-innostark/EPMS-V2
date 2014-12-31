@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobOffered;
 using EPMS.Web.ViewModels.JobTitle;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -48,7 +51,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             JobOfferedViewModel jobOfferedViewModel = new JobOfferedViewModel();
             if (id != null)
             {
-                jobOfferedViewModel.JobTitle = jobTitleService.FindJobTitleById((long)id).CreateFrom();
+                jobOfferedViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
             }
             jobOfferedViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
             return View(jobOfferedViewModel);
@@ -57,9 +60,51 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Create(JobOfferedViewModel jobOfferedViewModel)
         {
+            try
+            {
+                #region Update
+
+                if (jobOfferedViewModel.JobOffered.JobOfferedId > 0)
+                {
+                    jobOfferedViewModel.JobOffered.RecLastUpdatedBy = User.Identity.GetUserId();
+                    jobOfferedViewModel.JobOffered.RecLastUpdatedDt = DateTime.Now;
+                    var jobOffereToUpdate = jobOfferedViewModel.JobOffered.CreateFrom();
+                    if (jobOfferedService.UpdateJobOffered(jobOffereToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = "Job Offer has been updated.", IsUpdated = true };
+                        return RedirectToAction("Index");
+                    }
+                }
+                #endregion
+
+                #region Add
+
+                else
+                {
+                    jobOfferedViewModel.JobOffered.RecCreatedBy = User.Identity.GetUserId();
+                    jobOfferedViewModel.JobOffered.RecCreatedDt = DateTime.Now;
+                    var modelToSave = jobOfferedViewModel.JobOffered.CreateFrom();
+
+                    if (jobOfferedService.AddJobOffered(modelToSave))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = "Job Offer has been saved.", IsSaved = true };
+                        jobOfferedViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                #endregion
+
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                return RedirectToAction("Create", e);
+            }
+            
             return View(jobOfferedViewModel);
+        }
         }
 
         #endregion
-    }
 }
