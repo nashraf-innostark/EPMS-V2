@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using EPMS.Models.DomainModels;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EPMS.Models.IdentityModels.ViewModels
 {
-    public class RoleViewModel
+    public class RoleViewModel : IdentityDbContext
     {
         public string Id { get; set; }
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "RoleName")]
+        [Display(Name = "Role Name")]
         public string Name { get; set; }
+
+// ReSharper disable once CSharpWarnings::CS0108
+        public IEnumerable<AspNetRole> Roles { get; set; }
     }
 
     public class EditUserViewModel

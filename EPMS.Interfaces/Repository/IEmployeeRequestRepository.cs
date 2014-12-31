@@ -9,5 +9,6 @@ namespace EPMS.Interfaces.Repository
     {
         IEnumerable<EmployeeRequest> GetAllRequests(long employeeId);
         EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset);
+        IEnumerable<EmployeeRequest> GetAllMonetaryRequests();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Identity.EntityFramework;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.Repository

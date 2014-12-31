@@ -2,12 +2,12 @@
 {
     public enum EmployeeRequestByColumn
     {
-        RequestId = 0,
-        EmployeeName = 1,
-        RequestTopic = 2,
-        IsMonetary = 3,
-        RequestDate = 4,
-        IsReplied = 5,
-        IsApproved = 6
+        RequestTopic = 1,
+        EmployeeName = 2,
+        JobId = 3,
+        Department = 4,
+        Date = 5,
+        Status = 6,
+        Replied=7
     }
 }

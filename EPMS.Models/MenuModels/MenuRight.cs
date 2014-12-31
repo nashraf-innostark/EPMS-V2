@@ -1,5 +1,4 @@
 ﻿using EPMS.Models.DomainModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace EPMS.Models.MenuModels
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using EPMS.Models.DomainModels;
+﻿using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {

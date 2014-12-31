@@ -21,3 +21,7 @@
 .cursorHand {
     cursor: pointer !important;
 }
+
+.text-align-center {
+    text-align: center !important;
+}

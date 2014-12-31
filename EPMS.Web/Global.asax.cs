@@ -2,13 +2,10 @@
 using System.IO;
 using EPMS.WebBase;
 using EPMS.WebBase.UnityConfiguration;
-using IdentitySample.Models;
-using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Mvc;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Microsoft.Practices.EnterpriseLibrary.Logging;

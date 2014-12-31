@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace EPMS.Web.Files
+﻿namespace EPMS.Web.Files
 {
     public abstract class PDFFieldType
     {

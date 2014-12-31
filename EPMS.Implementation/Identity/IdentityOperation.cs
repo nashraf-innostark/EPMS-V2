@@ -1,14 +1,9 @@
-﻿using System;
-using System.Configuration;
-using System.Net;
-using System.Net.Mail;
+﻿using System.Configuration;
 using System.Threading.Tasks;
 using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels;
 using EPMS.Repository.BaseRepository;
 using EPMS.Repository.Repositories;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Practices.Unity;
