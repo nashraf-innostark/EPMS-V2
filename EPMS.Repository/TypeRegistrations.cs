@@ -21,6 +21,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IAspNetUserRepository, AspNetUserRepository>();
             unityContainer.RegisterType<IEmployeeRequestDetailRepository, EmployeeRequestDetailRepository>();
             unityContainer.RegisterType<DbContext, BaseDbContext>(new PerRequestLifetimeManager());
+            unityContainer.RegisterType<IJobOfferedRepository, JobOfferedRepository>();
         }
     }
 }

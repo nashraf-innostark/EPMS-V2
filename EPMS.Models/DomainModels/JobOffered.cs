@@ -11,9 +11,9 @@ namespace EPMS.Models.DomainModels
         public bool ShowBasicSalary { get; set; }
         public bool IsOpen { get; set; }
         public string RecCreatedBy { get; set; }
-        public Nullable<System.DateTime> RecCreatedDt { get; set; }
+        public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public Nullable<System.DateTime> RecLastUpdatedDt { get; set; }
+        public DateTime? RecLastUpdatedDt { get; set; }
 
         public virtual ICollection<JobApplicant> JobApplicants { get; set; }
         public virtual JobTitle JobTitle { get; set; }

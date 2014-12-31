@@ -1,0 +1,142 @@
+﻿@using System.Web.UI.WebControls
+@model EPMS.Web.ViewModels.JobOffered.JobOfferedViewModel
+
+@{
+    //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
+    ViewBag.Title = "Add New Job";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/Jobtitle/">
+                @EPMS.Web.Resources.HR.JobTitle.Label
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "JobTitle", FormMethod.Post, new { @id = "JobTitleForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.JobTitle.JobTitleId)
+        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedBy)
+        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedDt)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="departmentId">Title Name</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(x => x.JobOffered.JobTitleId, new SelectList(Model.JobTitleList, "JobTitleId", "JobTitleNameE"), EPMS.Web.Resources.HR.JobOffered.SelectJobTitle, new { @class = "select2me", id = "jobTitle" })
+                    @Html.ValidationMessageFor(m => m.JobOffered.JobTitleId, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentName">Job Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleDescE, new { @disabled = true, @id = "jobTitleDesc" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentName">Department</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.Department.DepartmentNameE, new { @disabled = true, @id = "departmentName", @class = "select2me", })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentName">Number Of Open Vacancies</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.Department.DepartmentNameE, new { @id = "NoOfVacancies", @class = "select2me", })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentName">Basic Salary</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.BasicSalary, new { @disabled = true, @id = "basicSalary" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    @*<button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>*@
+                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+
+    $(document).ready(function() {
+        $("#jobTitle").on("change", function() {
+            var selectedVal = $(this).val();
+            debugger
+            if (selectedVal != "") {
+                //$("#jobTitleDesc").val(selectedVal);
+                var jobtitlelist = '@Html.Raw(Json.Encode(Model.JobTitleList))';
+                var parsed = JSON.parse(jobtitlelist);
+
+                $.each(parsed, function (key, value) {
+                    if (value.JobTitleId == selectedVal) {
+                        $("#jobTitleDesc").val(value.JobTitleDescE);
+                        $("#basicSalary").val(value.BasicSalary);
+                        $('#departmentName').val(value.Department.DepartmentNameE);
+                    }
+                });
+            }
+            else {
+                $("#jobTitleDesc").val(selectedVal);
+                $("#basicSalary").val(selectedVal);
+                $('#departmentName').val(selectedVal);
+            }
+      
+        });
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true,
+
+        });
+    })
+</script>

@@ -11,7 +11,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IJobOfferedRepository : IBaseRepository<JobOffered, long>
     {
-        List<JobOffered> GetJobsOfferedByJobTitleId(long deptId);
-        JobOfferedResponse GetAllJobsOffered(JobOfferedSearchRequest jobOfferedSearchRequest);
+        List<JobOffered> GetJobsOfferedByJobTitleId(long jobTitleId);
     }
 }

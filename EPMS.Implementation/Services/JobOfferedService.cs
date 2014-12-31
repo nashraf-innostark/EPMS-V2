@@ -28,11 +28,6 @@ namespace EPMS.Implementation.Services
             return jobOfferedRepository.GetAll();
         }
 
-        public JobOfferedResponse GetAllJobTitle(JobOfferedSearchRequest jobOfferedSearchRequest)
-        {
-            return jobOfferedRepository.GetAllJobsOffered(jobOfferedSearchRequest);
-        }
-
         public JobOffered FindJobOfferedById(long id)
         {
             if (id != null) return jobOfferedRepository.Find((int)id);
