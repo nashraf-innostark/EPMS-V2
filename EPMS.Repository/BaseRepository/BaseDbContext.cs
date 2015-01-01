@@ -80,5 +80,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<EmployeeRequest> EmployeeRequests { get; set; }
         public DbSet<RequestDetail> RequestDetails { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<JobOffered> JobOffereds { get; set; }
+        public DbSet<JobApplicant> JobApplicants { get; set; }
     }
 }

@@ -15,5 +15,6 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecLastUpdatedDt { get; set; }
 
         public virtual ICollection<JobTitle> JobTitles { get; set; }
+        public virtual ICollection<JobOffered> JobOffereds { get; set; }
     }
 }

@@ -7,14 +7,13 @@ using EPMS.Repository.BaseRepository;
 
 namespace EPMS.Repository.Repositories
 {
-    public class EmployeeRequestDetailRepository: BaseRepository<RequestDetail>, IEmployeeRequestDetailRepository
+    public class EmployeeRequestDetailRepository : BaseRepository<RequestDetail>, IEmployeeRequestDetailRepository
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public EmployeeRequestDetailRepository(IUnityContainer container)
-            : base(container)
+        public EmployeeRequestDetailRepository(IUnityContainer container) : base(container)
         {
         }
 
