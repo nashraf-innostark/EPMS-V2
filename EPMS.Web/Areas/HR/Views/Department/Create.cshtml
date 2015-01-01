@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
 
 @{
-    ViewBag.Title = "Department Detail";
+    ViewBag.Title = Model.Department.DepartmentId > 0 ? EPMS.Web.Resources.HR.Department.UpdatePageTitle : EPMS.Web.Resources.HR.Department.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -15,7 +15,7 @@
         </li>
         <li>
             <a href="~/HR/Department/">
-                Department
+                @EPMS.Web.Resources.HR.Department.Label
             </a>
         </li>
         <li class="current">
@@ -42,34 +42,43 @@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentName">Department Name English</label>
+                <label class="control-label" for="DepartmentName">@EPMS.Web.Resources.HR.Department.NameOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentNameE, new { @dir = "ltr", id = "DeptName", @class ="tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.Department.DepartmentNameE, new { id = "DeptName", @class ="tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Department.DepartmentNameE, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentName">Department Name Arabic</label>
+                <label class="control-label" for="DepartmentName">@EPMS.Web.Resources.HR.Department.NameOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentNameA, new { @dir = "ltr", id = "DeptName", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.Department.DepartmentNameA, new { id = "DeptName", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Department.DepartmentNameA, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentDesc">Department Description</label>
+                <label class="control-label" for="DepartmentDesc">@EPMS.Web.Resources.HR.Department.DescriptionOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @dir = "ltr", @class ="tbdisable", id = "DeptDesc", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.Department.DepartmentDesc, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @class ="tbdisable", id = "DeptDesc", @ViewBag.Disabled })
+                </div>
+            </div>
+        </div>
+        <div id="EmployeeCount" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DepartmentDesc"># of Employees</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.EmployeeList.ToList().Count, new { @class = "tbdisable", @ViewBag.Disabled })
                 </div>
             </div>
         </div>
@@ -79,7 +88,7 @@
                     <table class="table table-striped table-responsive" id="tableSortableResMed">
                         <thead class="cf sorthead">
                             <tr>
-                                <th>Employee</th>
+                                <th>@EPMS.Web.Resources.HR.Department.Employee</th>
 
                             </tr>
                         </thead>
@@ -99,14 +108,17 @@
                             <tbody>
                                 @if (@Model.Department != null)
                             {
-                                foreach (var item in Model.EmployeeList.ToList())
+                                if (Model.EmployeeList != null)
                                 {
-                                <tr>
-                                    <td>@item.EmployeeNameE</td>
+                                    foreach (var item in Model.EmployeeList.ToList())
+                                    {
+                                        <tr>
+                                            <td>@item.EmployeeNameE</td>
 
-                                </tr>
+                                        </tr>
+                                    }
                                 }
-                                }
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -116,11 +128,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">Edit</button>
-                    <button id="savebtn" class="btn" type="submit">Save</button>
+                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.Department.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.Department.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href='/HR/Department/Index'" type="reset">Cancel</button>
+                    <button id="cancel" class="btn" onclick="window.location.href='/HR/Department/Index'" type="reset">@EPMS.Web.Resources.HR.Department.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -131,7 +143,7 @@
 <script>
     $(document).ready(function () {
         var id = $('#Department_DepartmentId').val();
-        if (id == "") {
+        if (id == 0) {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#EmpLabel").hide();
             $("#savebtn").show();
@@ -153,16 +165,8 @@
         $("#savebtn").show();
         $("#cancel").show();
         $("#edit").hide();
+        $("#EmployeeCount").hide();
         event.preventDefault();
     });
-
-    //$('#EmpList').dataTable({
-    //    "sPaginationType": "bootstrap",
-    //    "fnInitComplete": function () {
-    //        $(".dataTables_wrapper select").select2({
-    //            dropdownCssClass: 'noSearch'
-    //        });
-    //    }
-    //});
 
 </script>

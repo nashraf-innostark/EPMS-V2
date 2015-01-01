@@ -24,7 +24,6 @@
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="DomainModels.FK_AspNetUsers_Employee" />
-        <AssociationConnector Association="DomainModels.FK_JobOffered_Department" />
         <AssociationConnector Association="DomainModels.FK_JobTitle_Department" />
         <AssociationConnector Association="DomainModels.FK_Employee_JobTitle" />
         <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" />
@@ -36,6 +35,7 @@
         <EntityTypeShape EntityType="DomainModels.Menu" Width="1.5" PointX="7.375" PointY="1" />
         <AssociationConnector Association="DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
+        <AssociationConnector Association="DomainModels.FK_JobOffered_JobTitle" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

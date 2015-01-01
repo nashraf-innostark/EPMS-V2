@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
 
 @{
-    ViewBag.Title = "All Departments";
+    ViewBag.Title = EPMS.Web.Resources.HR.Department.IndexLabel;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -15,7 +15,7 @@
         </li>
         <li>
             <a href="">
-                Departments' List
+                @EPMS.Web.Resources.HR.Department.Label
             </a>
         </li>
     </ul>
@@ -26,7 +26,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/HR/Department/Create">Add New Department</a></small></h3>
+    <h3> <small><a href="~/HR/Department/Create">@EPMS.Web.Resources.HR.Department.AddDepartment</a></small></h3>
 </header>
 <!-- Page Heading End-->
 
@@ -42,9 +42,8 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Department Name</th>
-                                @*<th>Department Name</th>*@
-                                <th>Department Description</th>
+                                <th>@EPMS.Web.Resources.HR.Department.Name</th>
+                                <th>@EPMS.Web.Resources.HR.Department.Description</th>
                             </tr>
                         </thead>
                         <tbody>

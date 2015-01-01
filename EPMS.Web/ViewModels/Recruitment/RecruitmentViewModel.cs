@@ -7,9 +7,9 @@ namespace EPMS.Web.ViewModels.Recruitment
     {
         public RecruitmentViewModel()
         {
-            JobOffered=new JobOffered();
+            JobOffered = new Models.JobOffered();
         }
-        public JobOffered JobOffered { get; set; }
-        public IEnumerable<JobOffered> JobsOffered { get; set; }
+        public Models.JobOffered JobOffered { get; set; }
+        public IEnumerable<Models.JobOffered> JobsOffered { get; set; }
     }
 }

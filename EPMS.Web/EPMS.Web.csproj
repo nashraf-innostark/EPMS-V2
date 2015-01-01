@@ -243,6 +243,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\HR\Controllers\JobOfferedController.cs" />
     <Compile Include="Areas\HR\Controllers\JobTitleController.cs" />
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RecruitmentController.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
+    <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -312,10 +314,25 @@
     <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
       <DependentUpon>PrisonerReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HR\Department.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Department.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Department.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Department.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\Employee.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Employee.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobOffered.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobOffered.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\JobTitle.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -366,6 +383,7 @@
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
@@ -1798,7 +1816,9 @@
     <Content Include="Areas\HR\Views\Request\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobTitle\Create.cshtml" />
     <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
+    <Content Include="Areas\HR\Views\JobOffered\Index.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
+    <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
     <Content Include="Areas\HR\Views\Recruitment\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -1818,11 +1838,20 @@
     <Content Include="Scripts\App\select2\release.sh" />
     <Content Include="Scripts\App\select2\select2.jquery.json" />
     <Content Include="Scripts\App\select2\select2_locale_en.js.template" />
+    <EmbeddedResource Include="Resources\HR\Department.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Department.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Employee.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Employee.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Employee.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobOffered.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobOffered.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1845,6 +1874,11 @@
     <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="RichTextEditor\samples\sample_posteddata.php" />
     <Content Include="RichTextEditor\skins\moono\readme.md" />
+    <EmbeddedResource Include="Resources\HR\Department.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Department.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap\application.js" />
     <Content Include="Scripts\bootstrap\bootstrap-affix.js" />
