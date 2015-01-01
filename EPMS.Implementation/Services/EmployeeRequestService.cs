@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -55,6 +56,34 @@ namespace EPMS.Implementation.Services
         public EmployeeRequest Find(long id)
         {
             return repository.Find(id);
+        }
+
+        public bool DeleteRequest(long requestId)
+        {
+            try
+            {
+                EmployeeRequest request = Find(requestId);
+                if (request != null)
+                {
+                    if (request.RequestDetails.Any())
+                    {
+                        int count = request.RequestDetails.Count();
+                        for (int i = 0; i < count; i++)
+                        {
+                            repositoryRequestDetail.Delete(request.RequestDetails.FirstOrDefault(x => x.RowVersion == i));
+                            repositoryRequestDetail.SaveChanges();
+                        }
+                    }
+                    repository.Delete(request);
+                    repository.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
         }
 
         public EmployeeRequestResponse LoadAllRequests(EmployeeRequestSearchRequest searchRequset)

@@ -129,7 +129,13 @@
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             var requestDetail = full["RequestDetail"];
-                            return requestDetail.IsApproved ? "Approved" : "Declined";
+                            var status = "";
+                            if (requestDetail.IsReplied) {
+                                status = requestDetail.IsApproved ? "Approved" : "Declined";
+                            } else {
+                                status = "Pending";
+                            }
+                            return status;
                         }
                     },
                     {
@@ -175,8 +181,14 @@
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var RequestDetail = full["RequestDetail"];
-                            return RequestDetail.IsApproved ? "Approved" : "Declined";
+                            var requestDetail = full["RequestDetail"];
+                            var status = "";
+                            if (requestDetail.IsReplied) {
+                                status = requestDetail.IsApproved ? "Approved" : "Declined";
+                            } else {
+                                status = "Pending";
+                            }
+                            return status;
                         }
                     }
                 ],

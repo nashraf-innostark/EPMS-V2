@@ -166,5 +166,17 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return View(requestViewModel);
             }
         }
+        public ActionResult Delete(long? id)
+        {
+            if (id > 0)
+            {
+                bool deleted = employeeRequestService.DeleteRequest((long)id);
+                if (deleted)
+                {
+                    TempData["message"] = new MessageViewModel { Message = "The request has been deleted.", IsInfo = true };
+                }
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

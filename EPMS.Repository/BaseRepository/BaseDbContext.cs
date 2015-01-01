@@ -82,5 +82,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<AspNetUser> AspNetUsers { get; set; }
 
         public DbSet<JobOffered> JobsOffered { get; set; }
+        public DbSet<JobOffered> JobOffereds { get; set; }
+        public DbSet<JobApplicant> JobApplicants { get; set; }
     }
 }

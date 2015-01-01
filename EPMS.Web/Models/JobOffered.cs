@@ -7,15 +7,20 @@ namespace EPMS.Web.Models
     {
         public long JobOfferedId { get; set; }
         public long JobTitleId { get; set; }
-        public string JobDescription { get; set; }
-        public bool ShowBasicSalary { get; set; }
+        public string TitleE { get; set; }
+        public string TitleA { get; set; }
+        public string DescriptionE { get; set; }
+        public string DescriptionA { get; set; }
+        public long BasicSalary { get; set; }
         public bool IsOpen { get; set; }
+        public int NoOfPosts { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
 
-        public virtual ICollection<JobApplicant> JobApplicants { get; set; }
+        public ICollection<JobApplicant> JobApplicants { get; set; }
         public JobTitle JobTitle { get; set; }
+        public Department Department { get; set; }
     }
 }
