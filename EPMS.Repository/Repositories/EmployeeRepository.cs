@@ -43,10 +43,10 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<EmployeeByColumn, Func<Employee, object>>
                     {
-                        { EmployeeByColumn.EmployeeId, c => c.EmployeeId},
                         { EmployeeByColumn.EmployeeNameE,  c => c.EmployeeNameE},
-                        { EmployeeByColumn.EmployeeNameA, c => c.EmployeeNameA},
-                        { EmployeeByColumn.EmployeeJobId, c => c.EmployeeJobId}
+                        { EmployeeByColumn.EmployeeJobId, c => c.JobTitleId},
+                        { EmployeeByColumn.EmployeeJobTitle, c => c.JobTitle.JobTitleNameE},
+                        { EmployeeByColumn.EmployeeDepartment, c => c.JobTitle.Department.DepartmentNameE}
                     };
         #endregion
 
@@ -59,12 +59,21 @@ namespace EPMS.Repository.Repositories
         {
             int fromRow = (employeeSearchRequset.PageNo - 1) * employeeSearchRequset.PageSize;
             int toRow = employeeSearchRequset.PageSize;
-
+            //long jobTItleId = 0;
+            //if (!String.IsNullOrEmpty(employeeSearchRequset.SearchStr))
+            //{
+            //    int i = 0;
+            //    bool result = int.TryParse(employeeSearchRequset.SearchStr, out i);
+            //    if (result)
+            //    {
+            //        jobTItleId = Convert.ToInt64(employeeSearchRequset.SearchStr.ToString());
+            //    }
+            //}
             Expression<Func<Employee, bool>> query =
-                s => ((employeeSearchRequset.EmployeeId == 0 || s.EmployeeId == employeeSearchRequset.EmployeeId || s.EmployeeId.Equals(employeeSearchRequset.EmployeeId)) 
-                    && ((string.IsNullOrEmpty(employeeSearchRequset.EmployeeNameE) || (s.EmployeeNameE.Contains(employeeSearchRequset.EmployeeNameE)))
-                    || (string.IsNullOrEmpty(employeeSearchRequset.EmployeeNameA) || (s.EmployeeNameA.Contains(employeeSearchRequset.EmployeeNameA)))) &&
-                    (employeeSearchRequset.JobTitleId == 0 || s.JobTitleId == employeeSearchRequset.JobTitleId));
+                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchStr)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchStr)) || 
+                    (s.EmployeeNameA.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchStr)) || 
+                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchStr)) || (s.EmployeeJobId == employeeSearchRequset.SearchStr) || 
+                    (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchStr)));
 
             IEnumerable<Employee> employees = employeeSearchRequset.IsAsc ?
                 DbSet
