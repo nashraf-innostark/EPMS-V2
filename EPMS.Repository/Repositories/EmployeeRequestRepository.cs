@@ -53,9 +53,9 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.EmployeeId == employeeId);
         }
 
-        public IEnumerable<EmployeeRequest> GetAllMonetaryRequests()
+        public IEnumerable<EmployeeRequest> GetAllMonetaryRequests(DateTime currentMonth, long id)
         {
-            return DbSet.Where(x => x.IsMonetary);
+            return DbSet.Where(x => (x.IsMonetary) && (x.EmployeeId == id) && (x.RequestDetails.Count(y => (y.IsApproved))>0) && (x.RequestDetails.Count(z => ((currentMonth >= z.FirstInstallmentDate) && (currentMonth <= z.LastInstallmentDate))) > 0));
         }
 
         public EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset)
