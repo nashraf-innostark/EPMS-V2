@@ -1,7 +1,6 @@
 ﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
 
 @{
-    //ViewBag.Title = "Create Job Title";
     ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];

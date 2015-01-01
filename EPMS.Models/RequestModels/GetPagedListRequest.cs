@@ -8,7 +8,7 @@
         public GetPagedListRequest()
         {
             IsAsc = true;
-            SortBy = 1;
+            SortBy = 2;
             PageNo = 1;
             PageSize = 5;
         }

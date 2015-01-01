@@ -8,6 +8,10 @@ namespace EPMS.Web.ViewModels.Department
     /// </summary>
     public class DepartmentListViewModel
     {
+        public DepartmentListViewModel()
+        {
+            Department = new Models.Department();
+        }
         public Models.Department Department { get; set; }
         public IEnumerable<Models.Department> DepartmentList { get; set; }
 

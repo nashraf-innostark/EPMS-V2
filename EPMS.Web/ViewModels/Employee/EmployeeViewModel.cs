@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Models;
 
 namespace EPMS.Web.ViewModels.Employee
 {
     public class EmployeeViewModel
     {
-
+        public EmployeeViewModel()
+        {
+            Employee = new Models.Employee();
+            JobTitle = new Models.JobTitle();
+            Allowance = new Allowance();
+            SearchRequest = new EmployeeSearchRequset();
+        }
         public Models.Employee Employee { get; set; }
         public Models.JobTitle JobTitle { get; set; }
         public Models.Allowance Allowance { get; set; }

@@ -90,15 +90,16 @@ namespace EPMS.Web.Areas.HR.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
+            employeeSearchRequest.SearchStr = Request["search"].ToString();
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 aaData = employeeList,
-                iTotalRecords = employees.TotalCount,
-                iTotalDisplayRecords = employeeList.Count(),
-                sEcho = employeeList.Count(),
+                iTotalRecords = Convert.ToInt32(employees.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(employeeList.Count()),
+                sEcho = Convert.ToInt32(employeeList.Count()),
             };
             if (userRole != null)
             {

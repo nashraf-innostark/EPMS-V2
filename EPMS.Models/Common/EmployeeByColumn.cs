@@ -2,9 +2,9 @@
 {
     public enum EmployeeByColumn
     {
-        EmployeeId = 1,
         EmployeeNameE = 2,
-        EmployeeNameA = 3,
-        EmployeeJobId = 4
+        EmployeeJobId = 3,
+        EmployeeJobTitle = 4,
+        EmployeeDepartment = 5
     }
 }

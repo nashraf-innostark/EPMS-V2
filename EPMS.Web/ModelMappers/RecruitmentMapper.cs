@@ -10,7 +10,7 @@ namespace EPMS.Web.ModelMappers
             return new JobOffered
             {
                 JobOfferedId = source.JobOfferedId,
-                DepartmentId = source.DepartmentId,
+                JobTitleId = source.JobTitleId,
                 TitleE = source.TitleE,
                 TitleA = source.TitleA,
                 DescriptionE = source.DescriptionE,
@@ -30,7 +30,7 @@ namespace EPMS.Web.ModelMappers
             return new Models.JobOffered
             {
                 JobOfferedId = source.JobOfferedId,
-                DepartmentId = source.DepartmentId,
+                JobTitleId = source.JobTitleId,
                 TitleE = source.TitleE,
                 TitleA = source.TitleA,
                 DescriptionE = source.DescriptionE,

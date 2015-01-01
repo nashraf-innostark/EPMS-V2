@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -160,7 +160,7 @@
             <PropertyRef Name="JobOfferedId" />
           </Key>
           <Property Name="JobOfferedId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DepartmentId" Type="bigint" Nullable="false" />
+          <Property Name="JobTitleId" Type="bigint" Nullable="false" />
           <Property Name="TitleE" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="TitleA" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="DescriptionE" Type="nvarchar(max)" Nullable="false" />
@@ -401,15 +401,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JobOffered_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+        <Association Name="FK_JobOffered_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
           <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
             </Principal>
             <Dependent Role="JobOffered">
-              <PropertyRef Name="DepartmentId" />
+              <PropertyRef Name="JobTitleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,8 +514,8 @@
             <End Role="JobOffered" EntitySet="JobOffered" />
             <End Role="JobApplicants" EntitySet="JobApplicants" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobOffered_Department" Association="Self.FK_JobOffered_Department">
-            <End Role="Department" EntitySet="Department" />
+          <AssociationSet Name="FK_JobOffered_JobTitle" Association="Self.FK_JobOffered_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitle" />
             <End Role="JobOffered" EntitySet="JobOffered" />
           </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
@@ -570,10 +570,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobOffered_Department" Association="DomainModels.FK_JobOffered_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="JobOffered" EntitySet="JobOffereds" />
-          </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="DomainModels.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="JobTitle" EntitySet="JobTitles" />
@@ -614,6 +610,10 @@
           <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="MenuRight" EntitySet="MenuRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobOffered_JobTitle" Association="DomainModels.FK_JobOffered_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="JobOffered" EntitySet="JobOffereds" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Allowance">
@@ -704,7 +704,6 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobOffereds" Relationship="DomainModels.FK_JobOffered_Department" FromRole="Department" ToRole="JobOffered" />
           <NavigationProperty Name="JobTitles" Relationship="DomainModels.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="Employee">
@@ -782,7 +781,6 @@
             <PropertyRef Name="JobOfferedId" />
           </Key>
           <Property Name="JobOfferedId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
           <Property Name="TitleE" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="TitleA" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DescriptionE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -794,8 +792,9 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Department" Relationship="DomainModels.FK_JobOffered_Department" FromRole="JobOffered" ToRole="Department" />
           <NavigationProperty Name="JobApplicants" Relationship="DomainModels.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
+          <Property Name="JobTitleId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -814,6 +813,7 @@
           <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Department" Relationship="DomainModels.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
           <NavigationProperty Name="Employees" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+          <NavigationProperty Name="JobOffereds" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -924,18 +924,6 @@
             </Principal>
             <Dependent Role="AspNetUser">
               <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobOffered_Department">
-          <End Type="DomainModels.Department" Role="Department" Multiplicity="1" />
-          <End Type="DomainModels.JobOffered" Role="JobOffered" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="JobOffered">
-              <PropertyRef Name="DepartmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1066,6 +1054,18 @@
             </Principal>
             <Dependent Role="MenuRight">
               <PropertyRef Name="Menu_MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOffered_JobTitle">
+          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
+          <End Type="DomainModels.JobOffered" Role="JobOffered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="JobOffered">
+              <PropertyRef Name="JobTitleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1227,6 +1227,7 @@
           <EntitySetMapping Name="JobOffereds">
             <EntityTypeMapping TypeName="DomainModels.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
@@ -1238,7 +1239,6 @@
                 <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
                 <ScalarProperty Name="TitleA" ColumnName="TitleA" />
                 <ScalarProperty Name="TitleE" ColumnName="TitleE" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
               </MappingFragment>
             </EntityTypeMapping>
