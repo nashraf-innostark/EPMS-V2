@@ -33,6 +33,7 @@
 
 <form class="form-horizontal">
     <div class="container-fluid">
+        @Html.HiddenFor(model => model.SearchRequest.SearchStr, new { id = "searchString" });
         <div class="row-fluid">
             <div class="span12">
                 <table id="employeeTable" class="table table-striped table-responsive">
@@ -59,9 +60,10 @@
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#employeeTable').dataTable({
-            "iDisplayLength": 11,
+            "iDisplayLength": -1,
             "iDisplayStart": start || 0,
             "aaSorting": [sortBy],
+            "iSortCol_0": '@Model.SearchRequest.SortBy',
             "bProcessing": true,
             "bServerSide": true,
             "bFilter": true,
@@ -69,54 +71,70 @@
                 {
                     "aTargets": [0],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
+                    "mRender": function(data, type, full) {
                         return full["EmployeeId"];
                     },
                     "bVisible": false,
+                    "bSortable": false
                 },
                 {
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
+                    "mRender": function(data, type, full) {
                         return full["EmployeeImagePath"];
                     },
+                    "bSortable": false
                 },
                 {
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
+                    "mRender": function(data, type, full) {
                         var val = full["EmployeeNameE"];
                         var empId = full["EmployeeId"];
-                        var element = '<a href="Create/'+empId+'">'+val+'</a>';
+                        var element = '<a href="Create/' + empId + '">' + val + '</a>';
                         return element;
-                    }
+                    },
+                    "bSortable": false
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
+                    "mRender": function(data, type, full) {
                         return full["JobTitleId"];
-                    }
+                    },
+                    "bSortable": false
                 },
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["JobTitleNameE"];
-                    }
+                    "mRender": function(data, type, full) {
+                        var jobTItle = full["JobTitle"];
+                        return jobTItle.JobTitleNameE;
+                    },
+                    "bSortable": true
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["DepartmentNameE"];
-                    }
+                    "mRender": function(data, type, full) {
+                        var jobTitle = full["JobTitle"];
+                        var dept = jobTitle.Department;
+                        return dept.DepartmentNameE;
+                    },
+                    "bSortable": false
                 }
             ],
+            "fnDrawCallback": function( oSettings ) {
+                alert( 'DataTables has redrawn the table' );
+            },
+            "fnServerParams": function(aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
             "sAjaxSource": siteUrl + "/Employee/Index",
+            //"aaSorting": [[2, 'asc'], [3, 'asc'], [4, 'asc'], [5, 'asc']],
             "sServerMethod": "POST",
             "oLanguage": {
-                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "Fetching record(s)",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
             }
@@ -124,7 +142,24 @@
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
-        
+
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    //oTable.fnClearTable();
+                    //$('#employeeTable').empty();
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+
+
 
         //$('#btnFltr').on('click', function () {
         //    oTable.fnDraw();

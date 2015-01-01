@@ -6,6 +6,7 @@ namespace EPMS.Models.RequestModels
     public class EmployeeSearchRequset : GetPagedListRequest
     {
         public Guid UserId { get; set; }
+        public string SearchStr { get; set; }
         public long EmployeeId { get; set; }
         public string EmployeeNameE { get; set; }
         public string EmployeeNameA { get; set; }
