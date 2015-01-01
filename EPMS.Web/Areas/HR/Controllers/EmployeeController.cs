@@ -26,12 +26,15 @@ namespace EPMS.Web.Areas.HR.Controllers
     [Authorize]
     public class EmployeeController : BaseController
     {
+        #region Private
+
         private readonly IEmployeeService EmployeeService;
         private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
         private readonly IAllowanceService AllowanceService;
         private readonly IAspNetUserService AspNetUserService;
         private readonly IEmployeeRequestService EmployeeRequestService;
+        #endregion
 
         #region Constructor
 

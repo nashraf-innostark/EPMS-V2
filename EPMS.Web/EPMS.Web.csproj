@@ -1820,6 +1820,7 @@
     <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
     <Content Include="Areas\HR\Views\Recruitment\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>

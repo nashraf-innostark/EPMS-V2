@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace EPMS.Web.Resources.HR {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -118,7 +121,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Name.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name
         {

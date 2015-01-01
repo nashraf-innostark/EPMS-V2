@@ -1,0 +1,32 @@
+﻿@model EPMS.Web.ViewModels.Payroll.PayrollViewModel
+
+@{
+    ViewBag.Title = Model.Employee.EmployeeNameE + " Payroll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/Payroll/Index">
+                Payroll List
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>Payroll</small></h2>
+    <h3><small>@Model.Employee.EmployeeNameE</small></h3>
+</header>
+<!-- Page heading ends -->
