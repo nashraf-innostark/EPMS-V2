@@ -100,7 +100,7 @@
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function(data, type, full) {
-                        return full["JobTitleId"];
+                        return full["EmployeeJobId"];
                     },
                     "bSortable": false
                 },
@@ -124,9 +124,6 @@
                     "bSortable": false
                 }
             ],
-            "fnDrawCallback": function( oSettings ) {
-                alert( 'DataTables has redrawn the table' );
-            },
             "fnServerParams": function(aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
