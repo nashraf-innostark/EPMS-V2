@@ -58,7 +58,7 @@ namespace EPMS.Web.Controllers
             string userName = HttpContext.User.Identity.Name;
             if (!String.IsNullOrEmpty(userName))
             {
-                AspNetUser userResult = UserManager.FindByEmail(userName);
+                AspNetUser userResult = UserManager.FindByName(userName);
                 if (userResult != null)
                 {
                     IList<AspNetRole> roles = userResult.AspNetRoles.ToList();   
