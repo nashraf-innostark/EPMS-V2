@@ -161,17 +161,17 @@
           </Key>
           <Property Name="JobOfferedId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="JobTitleId" Type="bigint" Nullable="false" />
-          <Property Name="TitleE" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="TitleA" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="DescriptionE" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="DescriptionA" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="BasicSalary" Type="bigint" />
+          <Property Name="TitleE" Type="nvarchar" MaxLength="250" />
+          <Property Name="TitleA" Type="nvarchar" MaxLength="250" />
+          <Property Name="DescriptionE" Type="nvarchar(max)" />
+          <Property Name="DescriptionA" Type="nvarchar(max)" />
+          <Property Name="ShowBasicSalary" Type="bit" Nullable="false" />
           <Property Name="IsOpen" Type="bit" Nullable="false" />
           <Property Name="NoOfPosts" Type="int" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDt" Type="datetime" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -194,16 +194,16 @@
             <PropertyRef Name="MenuId" />
           </Key>
           <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MenuKey" Type="int" Nullable="false" />
           <Property Name="MenuTitle" Type="nvarchar(max)" />
+          <Property Name="MenuKey" Type="int" Nullable="false" />
+          <Property Name="IsRootItem" Type="bit" Nullable="false" />
+          <Property Name="IsMenuItem" Type="bit" Nullable="false" />
+          <Property Name="ParentItem_MenuId" Type="int" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
           <Property Name="MenuTargetController" Type="nvarchar(max)" />
-          <Property Name="MenuImagePath" Type="nvarchar(max)" />
           <Property Name="MenuFunction" Type="nvarchar(max)" />
           <Property Name="PermissionKey" Type="nvarchar(max)" />
-          <Property Name="IsRootItem" Type="bit" Nullable="false" />
-          <Property Name="ParentItem_MenuId" Type="int" />
-          <Property Name="IsMenuItem" Type="bit" Nullable="false" />
+          <Property Name="MenuImagePath" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -781,20 +781,20 @@
             <PropertyRef Name="JobOfferedId" />
           </Key>
           <Property Name="JobOfferedId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TitleE" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="TitleA" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="BasicSalary" Type="Int64" />
+          <Property Name="TitleE" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TitleA" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsOpen" Type="Boolean" Nullable="false" />
           <Property Name="NoOfPosts" Type="Int32" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="JobApplicants" Relationship="DomainModels.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
           <Property Name="JobTitleId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
+          <Property Name="ShowBasicSalary" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -1227,6 +1227,7 @@
           <EntitySetMapping Name="JobOffereds">
             <EntityTypeMapping TypeName="DomainModels.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
+                <ScalarProperty Name="ShowBasicSalary" ColumnName="ShowBasicSalary" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -1234,7 +1235,6 @@
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="NoOfPosts" ColumnName="NoOfPosts" />
                 <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
-                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
                 <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
                 <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
                 <ScalarProperty Name="TitleA" ColumnName="TitleA" />

@@ -3,7 +3,7 @@
 
 @{
     //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
-    ViewBag.Title = "Add New Job";
+    ViewBag.Title = "Job Opening";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
@@ -49,22 +49,20 @@
             <div class="span3">
                 <label class="control-label" for="departmentId">Title Name</label>
             </div>
-            <div class="span2">
+            <div class="span9">
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.JobOffered.JobTitleId, new SelectList(Model.JobTitleList, "JobTitleId", "JobTitleNameE"), EPMS.Web.Resources.HR.JobOffered.SelectJobTitle, new { @class = "select2me", id = "jobTitle" })
-                        @Html.ValidationMessageFor(m => m.JobOffered.JobTitleId, "", new { @class = "required" })
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleNameE, new { @disabled = true, @id = "jobTitleDesc" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.JobOffered.JobTitleId, new SelectList(Model.JobTitleList, "JobTitleId", "JobTitleNameA"), EPMS.Web.Resources.HR.JobOffered.SelectJobTitle, new { @class = "select2me", id = "jobTitle" })
-                        @Html.ValidationMessageFor(m => m.JobOffered.JobTitleId, "", new { @class = "required" })
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleNameA, new { @disabled = true, @id = "jobTitleDesc" })
                     </div>
                 }
-                
+
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -84,7 +82,7 @@
                         @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleDescA, new { @disabled = true, @id = "jobTitleDesc" })
                     </div>
                 }
-                
+
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -97,27 +95,22 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        @if (Model.JobOffered.NoOfPosts != null)
+        {
+          <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">Number Of Open Vacancies</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.NoOfPosts, new { @id = "NoOfVacancies" })
+                    @Html.TextBoxFor(model => model.JobOffered.NoOfPosts, new { @disabled = true, @id = "NoOfVacancies" })
                 </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">Show Basic Salary?</label>
-            </div>
-            <div class="span9 span-inset">
-                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
-                    @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "IsOpen" })
-                </div>
-            </div>
-        </div>
-        <div id="basicSal" class="control-group row-fluid" style="display: none">
+        </div>  
+        }
+        @if (Model.JobOffered.ShowBasicSalary)
+        {
+            <div id="basicSal" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">Basic Salary</label>
             </div>
@@ -128,11 +121,13 @@
 
             </div>
         </div>
+        }
+        
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
                     @*<button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>*@
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                    <button id="savebtn" class="btn" type="submit">Apply</button>
                 </div>
             </div>
         </div>
@@ -142,47 +137,5 @@
 
 <script>
 
-    $(document).ready(function () {
-        DivHideShow('IsOpen', 'basicSal');
-        $("#jobTitle").on("change", function() {
-            var selectedVal = $(this).val();
-            debugger;
-            if (selectedVal != "") {
-                //$("#jobTitleDesc").val(selectedVal);
-                var jobtitlelist = '@Html.Raw(Json.Encode(Model.JobTitleList))';
-                var parsed = JSON.parse(jobtitlelist);
 
-                $.each(parsed, function (key, value) {
-                    if (value.JobTitleId == selectedVal) {
-                        $("#jobTitleDesc").val(value.JobTitleDescE);
-                        $("#basicSalary").val(value.BasicSalary);
-                        $('#departmentName').val(value.Department.DepartmentNameE);
-                    }
-                });
-            }
-            else {
-                $("#jobTitleDesc").val(selectedVal);
-                $("#basicSalary").val(selectedVal);
-                $('#departmentName').val(selectedVal);
-            }
-      
-        });
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true,
-
-        });
-    });
-    //GENERAL FUNCTIONS
-    function DivHideShow(chk, div) {
-        var divToBeAffected = '#' + div;
-        if ($('#' + chk).is(":checked")) {
-            $(divToBeAffected).show();
-        } else {
-            $(divToBeAffected).hide();
-        }
-    };
-    $('#IsOpen').change(function () {
-        DivHideShow('IsOpen', 'basicSal');
-    });
 </script>

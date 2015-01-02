@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
+    [Authorize]
     public class JobOfferedController : BaseController
     {
         #region Private
@@ -33,7 +34,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         #endregion
-        
+
         #region Public
 
         // GET: Job Offered ListView Action Method
@@ -101,10 +102,30 @@ namespace EPMS.Web.Areas.HR.Controllers
                 TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
                 return RedirectToAction("Create", e);
             }
-            
+
             return View(jobOfferedViewModel);
         }
+
+        public ActionResult Jobs()
+        {
+            return View(new JobOfferedViewModel
+            {
+                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom()),
+                JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
+            });
+        }
+
+        public ActionResult Apply(long? id)
+        {
+            JobOfferedViewModel jobOfferedViewModel = new JobOfferedViewModel();
+            if (id != null)
+            {
+                jobOfferedViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
+            }
+            jobOfferedViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
+            return View(jobOfferedViewModel);
         }
 
         #endregion
+    }
 }

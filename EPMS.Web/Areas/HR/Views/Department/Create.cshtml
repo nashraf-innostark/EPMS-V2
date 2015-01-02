@@ -42,7 +42,7 @@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentName">@EPMS.Web.Resources.HR.Department.NameOnCreate</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.Department.NameOnCreateEng</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -53,7 +53,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentName">@EPMS.Web.Resources.HR.Department.NameOnCreate</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.Department.NameOnCreateAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -62,19 +62,21 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        @*<div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentDesc">@EPMS.Web.Resources.HR.Department.DescriptionOnCreate</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.Department.DescriptionOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.Department.DepartmentDesc, new { @class ="tbdisable", id = "DeptDesc", @ViewBag.Disabled })
                 </div>
             </div>
-        </div>
-        <div id="EmployeeCount" class="control-group row-fluid">
+        </div>*@
+        @if (Model.Department.DepartmentId > 0)
+        {
+            <div id="EmployeeCount" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentDesc"># of Employees</label>
+                <label class="control-label"># of Employees</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -82,6 +84,7 @@
                 </div>
             </div>
         </div>
+        }
         <div id="EmpLabel">
             <div class="row-fluid">
                 <div class="span12">
@@ -89,7 +92,6 @@
                         <thead class="cf sorthead">
                             <tr>
                                 <th>@EPMS.Web.Resources.HR.Department.Employee</th>
-
                             </tr>
                         </thead>
                         <tbody></tbody>

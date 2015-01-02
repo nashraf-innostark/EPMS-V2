@@ -11,8 +11,10 @@ namespace EPMS.Web.ModelMappers
             {
                 JobOfferedId = source.JobOfferedId,
                 JobTitleId = source.JobTitleId,
-                BasicSalary = source.BasicSalary,
+                ShowBasicSalary = source.ShowBasicSalary,
                 IsOpen = source.IsOpen,
+                NoOfPosts = source.NoOfPosts,
+                JobTitle = source.JobTitle.CreateFrom(),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -26,8 +28,9 @@ namespace EPMS.Web.ModelMappers
             {
                 JobOfferedId = source.JobOfferedId,
                 JobTitleId = source.JobTitleId,
-                BasicSalary = source.BasicSalary,
+                ShowBasicSalary = source.ShowBasicSalary,
                 IsOpen = source.IsOpen,
+                NoOfPosts = source.NoOfPosts,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,

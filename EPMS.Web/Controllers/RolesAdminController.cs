@@ -16,7 +16,7 @@ using EPMS.Web.ViewModels.Common;
 
 namespace IdentitySample.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class RolesAdminController : Controller
     {
         private IMenuRightsService menuRightsService;

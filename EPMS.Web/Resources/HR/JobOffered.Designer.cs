@@ -115,6 +115,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Open?.
+        /// </summary>
+        public static string IsOpen {
+            get {
+                return ResourceManager.GetString("IsOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Job Description.
         /// </summary>
         public static string JobDescription {
@@ -138,6 +147,15 @@ namespace EPMS.Web.Resources.HR {
         public static string Label {
             get {
                 return ResourceManager.GetString("Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Of Posts.
+        /// </summary>
+        public static string NoOfPosts {
+            get {
+                return ResourceManager.GetString("NoOfPosts", resourceCulture);
             }
         }
         

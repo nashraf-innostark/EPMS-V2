@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
+    [Authorize]
     public class JobTitleController : BaseController
     {
         #region Private
