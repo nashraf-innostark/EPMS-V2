@@ -8,11 +8,10 @@ namespace EPMS.Web.ViewModels.Payroll
         public PayrollViewModel()
         {
             Payroll = new Models.Payroll();
-            Employee = new Models.Employee();
         }
         //public IEnumerable<Models.Payroll> Requests { get; set; }
         public IEnumerable<Models.RequestDetail> Deduction { get; set; }
         public Models.Payroll Payroll { get; set; }
-        public Models.Employee Employee { get; set; }
+        public IEnumerable<Models.Employee> Employee { get; set; }
     }
 }

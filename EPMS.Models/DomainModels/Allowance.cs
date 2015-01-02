@@ -17,7 +17,7 @@ namespace EPMS.Models.DomainModels
         public string AllowanceDesc5 { get; set; }
         public Nullable<double> Allowance5 { get; set; }
         public int RowVersion { get; set; }
-        public string AllowanceDate { get; set; }
+        public DateTime? AllowanceDate { get; set; }
         public string RecCreatedBy { get; set; }
         public Nullable<System.DateTime> RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
