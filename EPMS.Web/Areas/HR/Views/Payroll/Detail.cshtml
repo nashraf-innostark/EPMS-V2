@@ -41,7 +41,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Date" type="text" name="inputField" class="datepicker" disabled>
+                    <input id="Date" type="text" name="inputField" class="datepicker">
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeId, new { @id = "Employeeid", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Payroll.EmployeeId, new { @id = "Employeeid", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameE, new { @id = "JobTitle", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Payroll.JobTitle, new { @id = "JobTitle", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.JobTitle.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Payroll.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -164,7 +164,7 @@
 }
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $(".datepicker").mask('99/99/9999');
         $(".datepicker").datepicker({
             changeMonth: true,
@@ -199,8 +199,26 @@
                 $("#Allowance5").val(0);
             }
         });
+        
+        var deductionList = '@Html.Raw(Json.Encode(Model.Deduction))';
+        var deducts = JSON.parse(deductionList);
         debugger
-        var deductionList = '@Html.Raw(Json.Encode(Model.Requests))';
-        var allow = JSON.parse(deductionList);
+        if (deducts) {
+            var deduc1 = deducts[0].InstallmentAmount.toFixed(2);
+            var deduc2 = deducts[1].InstallmentAmount.toFixed(2);
+            if (deduc1 > 0) {
+                $("#Deduction1").val(deduc1);
+            }
+            if (deduc2 > 0) {
+                $("#Deduction2").val(deduc2);
+            }
+        } else {
+            $("#Deduction1").val(0);
+            $("#Deduction2").val(0);
+        }
+
+        // Total Salary
+        var totalSalary = (parseFloat($("#BasicSalary").val()) + parseFloat($("#Allowance1").val()) + parseFloat($("#Allowance2").val()) + parseFloat($("#Allowance3").val()) + parseFloat($("#Allowance4").val()) + parseFloat($("#Allowance5").val())) - (parseFloat($("#Deduction1").val()) + parseFloat($("#Deduction2").val()));
+        $("#Total").val(totalSalary.toFixed(2));
     });
 </script>

@@ -49,7 +49,7 @@ namespace EPMS.Web.ModelMappers
                     IsMonetary = source.IsMonetary,
                     RequestTopic = source.RequestTopic,
                     RequestDate = source.RequestDate,
-                    RequestDetails = source.RequestDetails.Select(x => x.CreateFromServerToClient())
+                    RequestDetails = source.RequestDetails.Select(x => x.CreateFromServerToClientPayroll())
                 };
             }
         #endregion
@@ -75,6 +75,15 @@ namespace EPMS.Web.ModelMappers
                     RecCreatedDt = source.RecCreatedDt,
                     RecLastUpdatedBy = source.RecLastUpdatedBy,
                     RecLastUpdatedDt = source.RecLastUpdatedDt
+                };
+            }
+            public static Models.RequestDetail CreateFromServerToClientPayroll(this RequestDetail source)
+            {
+                return new Models.RequestDetail
+                {
+                    RequestDetailId = source.RequestDetailId,
+                    RequestId = source.RequestId,
+                    InstallmentAmount = source.InstallmentAmount,
                 };
             }
             public static RequestDetail CreateFromClientToServer(this Models.RequestDetail source)

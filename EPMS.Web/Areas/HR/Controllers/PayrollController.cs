@@ -99,17 +99,22 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 searchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
             }
+            PayrollViewModel viewModel = new PayrollViewModel();
+            // get employee requests
             var employeeRequestsResponse = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now,id);
             var requests = employeeRequestsResponse.Select(x => x.CreateFromServerToClientPayroll());
-            PayrollViewModel viewModel = new PayrollViewModel
+            // get employee
+            viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+            viewModel.Payroll.EmployeeId = viewModel.Employee.EmployeeId;
+            viewModel.Payroll.JobTitle = viewModel.Employee.JobTitle.JobTitleNameE;
+            viewModel.Payroll.BasicSalary = viewModel.Employee.JobTitle.BasicSalary;
+            // get employee request details
+            foreach (var payroll in requests)
             {
-                SearchRequest = searchRequest,
-                Requests = requests,
-                Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient()
-            };
+                viewModel.Deduction = payroll.RequestDetails;
+            }
             return View(viewModel);
         }
-
         #endregion
     }
 }
