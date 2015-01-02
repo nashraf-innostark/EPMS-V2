@@ -147,7 +147,10 @@
   <data name="Name" xml:space="preserve">
     <value>Department Name</value>
   </data>
-  <data name="NameOnCreate" xml:space="preserve">
+  <data name="NameOnCreateAr" xml:space="preserve">
+    <value>Department Name arabic</value>
+  </data>
+  <data name="NameOnCreateEng" xml:space="preserve">
     <value>Department Name</value>
   </data>
   <data name="SaveButton" xml:space="preserve">

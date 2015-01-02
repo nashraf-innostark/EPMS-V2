@@ -17,6 +17,7 @@ namespace EPMS.Web.Models
         public string AllowanceDesc5 { get; set; }
         public double? Allowance5 { get; set; }
         public int RowVersion { get; set; }
+        public DateTime? AllowanceDate { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

@@ -6,6 +6,7 @@ namespace EPMS.Web.ViewModels.JobOffered
     {
         public JobOfferedViewModel()
         {
+            JobOffered = new Models.JobOffered();
             JobTitle = new Models.JobTitle();
         }
         public Models.JobOffered JobOffered { get; set; }

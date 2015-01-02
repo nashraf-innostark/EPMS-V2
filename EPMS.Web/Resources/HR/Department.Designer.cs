@@ -151,11 +151,20 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department Name arabic.
+        /// </summary>
+        public static string NameOnCreateAr {
+            get {
+                return ResourceManager.GetString("NameOnCreateAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Department Name.
         /// </summary>
-        public static string NameOnCreate {
+        public static string NameOnCreateEng {
             get {
-                return ResourceManager.GetString("NameOnCreate", resourceCulture);
+                return ResourceManager.GetString("NameOnCreateEng", resourceCulture);
             }
         }
         

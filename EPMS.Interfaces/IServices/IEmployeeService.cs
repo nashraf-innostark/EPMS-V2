@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -12,6 +13,7 @@ namespace EPMS.Interfaces.IServices
     {
         EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset);
         Employee FindEmployeeById(long? id);
+        IEnumerable<Employee> FindEmployeeForPayroll(long? id, DateTime currTime);
 
         IEnumerable<Employee> GetAll(); 
         long AddEmployee(Employee employee);

@@ -53,6 +53,7 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
+        debugger 
         var siteUrl = $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";

@@ -11,9 +11,9 @@ namespace EPMS.Models.DomainModels
         public string TitleA { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
-        public long BasicSalary { get; set; }
+        public bool ShowBasicSalary { get; set; }
         public bool IsOpen { get; set; }
-        public int NoOfPosts { get; set; }
+        public int? NoOfPosts { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

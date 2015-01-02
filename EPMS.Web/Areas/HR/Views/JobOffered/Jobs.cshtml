@@ -1,5 +1,4 @@
-﻿@using iTextSharp.text.pdf
-@model EPMS.Web.ViewModels.JobOffered.JobOfferedViewModel
+﻿@model EPMS.Web.ViewModels.JobOffered.JobOfferedViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.HR.JobOffered.IndexLabel;
@@ -22,15 +21,12 @@
     </ul>
 </div>
 <!-- Navigation Bar End-->
-
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/HR/JobOffered/Create">@EPMS.Web.Resources.HR.JobOffered.AddNew</a></small></h3>
 </header>
 <!-- Page Heading End-->
-
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
@@ -47,28 +43,29 @@
                             <th>@EPMS.Web.Resources.HR.JobOffered.JobDescription</th>
                             <th>@EPMS.Web.Resources.HR.JobOffered.BasicSalaray</th>
                             <th>@EPMS.Web.Resources.HR.JobOffered.NoOfPosts</th>
-                            <th>@EPMS.Web.Resources.HR.JobOffered.IsOpen</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.JobOfferedList.ToList())
                         {
-                            <tr>
-                                <td>@item.JobOfferedId</td>
-                                @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
-                                {
-                                    <td>@Html.ActionLink(@item.JobTitle.JobTitleNameA, "Create", new { id = item.JobOfferedId }) </td>
-                                    <td>@item.JobTitle.JobTitleDescA</td>
-                                }
-                                else
-                                {
-                                    <td>@Html.ActionLink(@item.JobTitle.JobTitleNameE, "Create", new { id = item.JobOfferedId }) </td>
-                                    <td>@item.JobTitle.JobTitleDescE</td>
-                                }
-                                <td>@if (item.ShowBasicSalary) { @item.JobTitle.BasicSalary }</td>
-                                <td>@item.NoOfPosts</td>
-                                <td>@item.IsOpen</td>
-                            </tr>
+                            if (item.IsOpen)
+                            {
+                                <tr>
+                                    <td>@item.JobOfferedId</td>
+                                    @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
+                                    {
+                                        <td>@Html.ActionLink(@item.JobTitle.JobTitleNameA, "Apply", new {id = item.JobOfferedId}) </td>
+                                        <td>@item.JobTitle.JobTitleDescA</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Html.ActionLink(@item.JobTitle.JobTitleNameE, "Apply", new { id = item.JobOfferedId }) </td>
+                                        <td>@item.JobTitle.JobTitleDescE</td>
+                                    }
+                                    <td>@if (item.ShowBasicSalary) { @item.JobTitle.BasicSalary }</td>
+                                    <td>@item.NoOfPosts</td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -86,7 +83,6 @@
             "aoColumns": [
                 { "bVisible": false }, // cloumn to hide
                 null, // not hide
-                null,
                 null,
                 null,
                 null
