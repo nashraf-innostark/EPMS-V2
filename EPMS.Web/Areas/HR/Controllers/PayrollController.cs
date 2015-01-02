@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Implementation.Identity;
-using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Models;
+using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.Payroll;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -40,20 +42,53 @@ namespace EPMS.Web.Areas.HR.Controllers
             var userRole = result.AspNetRoles.FirstOrDefault();
             if (userRole != null && userRole.Name == "Admin")
             {
-                PayrollSearchRequest payrollSearchRequest = new PayrollSearchRequest();
-                PayrollViewModel viewModel = new PayrollViewModel
+                EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
-                    SearchRequest = payrollSearchRequest
+                    SearchRequest = new EmployeeSearchRequset(),
                 };
-                return View(viewModel);
+                employeeViewModel.Role = userRole.Name;
+                return View(employeeViewModel);
             }
-            return RedirectToAction("Index", "Home", new { area = "" });
+            if (userRole != null && userRole.Name == "Employee")
+            {
+                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+                return RedirectToAction("Detail", new { id });
+            }
+            return null;
         }
 
         [HttpPost]
-        public ActionResult Index(PayrollSearchRequest searchRequest)
+        public ActionResult Index(JQueryDataTableParamModel param)
         {
-            searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
+            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var userRole = result.AspNetRoles.FirstOrDefault();
+            employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
+// ReSharper disable once SpecifyACultureInStringConversionExplicitly
+            employeeSearchRequest.SearchStr = Request["search"].ToString();
+            var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
+            IEnumerable<Models.Employee> employeeList =
+                employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel
+            {
+                aaData = employeeList,
+                iTotalRecords = Convert.ToInt32(employees.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(employeeList.Count()),
+                sEcho = param.sEcho,
+            };
+            if (userRole != null)
+            {
+                employeeViewModel.Role = userRole.Name;
+            }
+            return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Detail(long id)
+        {
+            PayrollSearchRequest searchRequest = new PayrollSearchRequest
+            {
+                UserId = Guid.Parse(User.Identity.GetUserId())
+            };
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             if (userRole != null && userRole.Name == "Admin")
@@ -64,16 +99,22 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 searchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
             }
-            var employeeRequestResponse = EmployeeRequestService.LoadAllMonetaryRequests();
-            var requests = employeeRequestResponse.Select(x => x.CreateFromServerToClientPayroll());
-            PayrollViewModel viewModel = new PayrollViewModel
+            PayrollViewModel viewModel = new PayrollViewModel();
+            // get employee requests
+            var employeeRequestsResponse = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now,id);
+            var requests = employeeRequestsResponse.Select(x => x.CreateFromServerToClientPayroll());
+            // get employee
+            viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+            viewModel.Payroll.EmployeeId = viewModel.Employee.EmployeeId;
+            viewModel.Payroll.JobTitle = viewModel.Employee.JobTitle.JobTitleNameE;
+            viewModel.Payroll.BasicSalary = viewModel.Employee.JobTitle.BasicSalary;
+            // get employee request details
+            foreach (var payroll in requests)
             {
-                SearchRequest = searchRequest,
-                aaData = requests
-            };
+                viewModel.Deduction = payroll.RequestDetails;
+            }
             return View(viewModel);
         }
-
         #endregion
     }
 }

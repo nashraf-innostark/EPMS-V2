@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -9,6 +10,6 @@ namespace EPMS.Interfaces.Repository
     {
         IEnumerable<EmployeeRequest> GetAllRequests(long employeeId);
         EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset);
-        IEnumerable<EmployeeRequest> GetAllMonetaryRequests();
+        IEnumerable<EmployeeRequest> GetAllMonetaryRequests(DateTime currentMonth, long id);
     }
 }

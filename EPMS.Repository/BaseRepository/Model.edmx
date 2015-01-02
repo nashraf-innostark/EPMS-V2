@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -26,6 +26,7 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="AllowanceDate" Type="datetime" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -536,7 +537,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="BaseDbContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Allowances" EntityType="DomainModels.Allowance" />
           <EntitySet Name="AspNetRoles" EntityType="DomainModels.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="DomainModels.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="DomainModels.AspNetUserLogin" />
@@ -545,15 +545,10 @@
           <EntitySet Name="Employees" EntityType="DomainModels.Employee" />
           <EntitySet Name="EmployeeRequests" EntityType="DomainModels.EmployeeRequest" />
           <EntitySet Name="JobApplicants" EntityType="DomainModels.JobApplicant" />
-          <EntitySet Name="JobOffereds" EntityType="DomainModels.JobOffered" />
           <EntitySet Name="JobTitles" EntityType="DomainModels.JobTitle" />
           <EntitySet Name="MenuRights" EntityType="DomainModels.MenuRight" />
           <EntitySet Name="Notifications" EntityType="DomainModels.Notification" />
           <EntitySet Name="RequestDetails" EntityType="DomainModels.RequestDetail" />
-          <AssociationSet Name="FK_Allowance_Employee" Association="DomainModels.FK_Allowance_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Allowance" EntitySet="Allowances" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="MenuRight" EntitySet="MenuRights" />
@@ -590,10 +585,6 @@
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
             <End Role="RequestDetail" EntitySet="RequestDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="DomainModels.FK_JobApplicants_JobOffered">
-            <End Role="JobOffered" EntitySet="JobOffereds" />
-            <End Role="JobApplicant" EntitySet="JobApplicants" />
-          </AssociationSet>
           <AssociationSet Name="FK_JobTitle_JobTitle" Association="DomainModels.FK_JobTitle_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobTitle1" EntitySet="JobTitles" />
@@ -611,34 +602,21 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="MenuRight" EntitySet="MenuRights" />
           </AssociationSet>
+          <EntitySet Name="Allowances" EntityType="DomainModels.Allowance" />
+          <AssociationSet Name="FK_Allowance_Employee" Association="DomainModels.FK_Allowance_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Allowance" EntitySet="Allowances" />
+          </AssociationSet>
+          <EntitySet Name="JobOffereds" EntityType="DomainModels.JobOffered" />
+          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="DomainModels.FK_JobApplicants_JobOffered">
+            <End Role="JobOffered" EntitySet="JobOffereds" />
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
+          </AssociationSet>
           <AssociationSet Name="FK_JobOffered_JobTitle" Association="DomainModels.FK_JobOffered_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobOffered" EntitySet="JobOffereds" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Allowance">
-          <Key>
-            <PropertyRef Name="AllowanceId" />
-          </Key>
-          <Property Name="AllowanceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
-          <Property Name="AllowanceDesc1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Allowance1" Type="Double" />
-          <Property Name="AllowanceDesc2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Allowance2" Type="Double" />
-          <Property Name="AllowanceDesc3" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Allowance3" Type="Double" />
-          <Property Name="AllowanceDesc4" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Allowance4" Type="Double" />
-          <Property Name="AllowanceDesc5" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Allowance5" Type="Double" />
-          <Property Name="RowVersion" Type="Int32" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -733,11 +711,11 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeDetailsA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Allowances" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
           <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
           <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
           <NavigationProperty Name="EmployeeRequests" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
           <NavigationProperty Name="Notifications" Relationship="DomainModels.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
+          <NavigationProperty Name="Allowances" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -776,15 +754,7 @@
           <Property Name="DrivingLicense" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="JobOffered" Relationship="DomainModels.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
         </EntityType>
-        <EntityType Name="JobOffered">
-          <Key>
-            <PropertyRef Name="JobOfferedId" />
-          </Key>
-          <Property Name="JobOfferedId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TitleE" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="TitleA" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BasicSalary" Type="Int64" />
           <Property Name="IsOpen" Type="Boolean" Nullable="false" />
           <Property Name="NoOfPosts" Type="Int32" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -795,7 +765,6 @@
           <Property Name="JobTitleId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
           <Property Name="ShowBasicSalary" Type="Boolean" Nullable="false" />
-        </EntityType>
         <EntityType Name="JobTitle">
           <Key>
             <PropertyRef Name="JobTitleId" />
@@ -1057,6 +1026,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Allowance">
+          <Key>
+            <PropertyRef Name="AllowanceId" />
+          </Key>
+          <Property Name="AllowanceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
+          <Property Name="AllowanceDesc1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Allowance1" Type="Double" />
+          <Property Name="AllowanceDesc2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Allowance2" Type="Double" />
+          <Property Name="AllowanceDesc3" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Allowance3" Type="Double" />
+          <Property Name="AllowanceDesc4" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Allowance4" Type="Double" />
+          <Property Name="AllowanceDesc5" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Allowance5" Type="Double" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="AllowanceDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Allowance_Employee">
+          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="DomainModels.Allowance" Role="Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Allowance">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="JobOffered">
+          <Key>
+            <PropertyRef Name="JobOfferedId" />
+          </Key>
+          <Property Name="JobOfferedId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobTitleId" Type="Int64" Nullable="false" />
+          <Property Name="TitleE" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="TitleA" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ShowBasicSalary" Type="Boolean" Nullable="false" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
+          <Property Name="NoOfPosts" Type="Int32" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobApplicants" Relationship="DomainModels.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
+          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
+        </EntityType>
+        <Association Name="FK_JobApplicants_JobOffered">
+          <End Type="DomainModels.JobOffered" Role="JobOffered" Multiplicity="1" />
+          <End Type="DomainModels.JobApplicant" Role="JobApplicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOffered">
+              <PropertyRef Name="JobOfferedId" />
+            </Principal>
+            <Dependent Role="JobApplicant">
+              <PropertyRef Name="JobOfferedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobOffered_JobTitle">
           <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
           <End Type="DomainModels.JobOffered" Role="JobOffered" Multiplicity="*" />
@@ -1228,21 +1265,6 @@
             <EntityTypeMapping TypeName="DomainModels.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
                 <ScalarProperty Name="ShowBasicSalary" ColumnName="ShowBasicSalary" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="NoOfPosts" ColumnName="NoOfPosts" />
-                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
-                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
-                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
-                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
-                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
-                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="JobTitles">
             <EntityTypeMapping TypeName="DomainModels.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
@@ -1329,6 +1351,49 @@
                 <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
                 <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Allowances">
+            <EntityTypeMapping TypeName="DomainModels.Allowance">
+              <MappingFragment StoreEntitySet="Allowance">
+                <ScalarProperty Name="AllowanceDate" ColumnName="AllowanceDate" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Allowance5" ColumnName="Allowance5" />
+                <ScalarProperty Name="AllowanceDesc5" ColumnName="AllowanceDesc5" />
+                <ScalarProperty Name="Allowance4" ColumnName="Allowance4" />
+                <ScalarProperty Name="AllowanceDesc4" ColumnName="AllowanceDesc4" />
+                <ScalarProperty Name="Allowance3" ColumnName="Allowance3" />
+                <ScalarProperty Name="AllowanceDesc3" ColumnName="AllowanceDesc3" />
+                <ScalarProperty Name="Allowance2" ColumnName="Allowance2" />
+                <ScalarProperty Name="AllowanceDesc2" ColumnName="AllowanceDesc2" />
+                <ScalarProperty Name="Allowance1" ColumnName="Allowance1" />
+                <ScalarProperty Name="AllowanceDesc1" ColumnName="AllowanceDesc1" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="AllowanceId" ColumnName="AllowanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobOffereds">
+            <EntityTypeMapping TypeName="DomainModels.JobOffered">
+              <MappingFragment StoreEntitySet="JobOffered">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="NoOfPosts" ColumnName="NoOfPosts" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="ShowBasicSalary" ColumnName="ShowBasicSalary" />
+                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
+                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
+                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
+                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

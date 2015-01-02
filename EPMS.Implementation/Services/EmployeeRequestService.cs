@@ -90,9 +90,9 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetAllRequests(searchRequset);
         }
-        public IEnumerable<EmployeeRequest> LoadAllMonetaryRequests()
+        public IEnumerable<EmployeeRequest> LoadAllMonetaryRequests(DateTime currentMonth, long id)
         {
-            return repository.GetAllMonetaryRequests();
+            return repository.GetAllMonetaryRequests(currentMonth,id);
         }
 
         public IEnumerable<EmployeeRequest> LoadAllRequests(string requester)

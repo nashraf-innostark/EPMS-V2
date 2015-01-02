@@ -34,7 +34,7 @@ namespace EPMS.Web.ViewModels.Employee
         /// </summary>
         public int iTotalDisplayRecords;
         
-        public int sEcho;
+        public string sEcho;
 
 
         /// <summary>

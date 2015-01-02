@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using System.Linq;
 using EPMS.Models.DomainModels;
+using EPMS.Web.ModelMappers;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -32,7 +34,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
-                EmployeeJobId = source.EmployeeJobId
+                EmployeeJobId = source.EmployeeJobId,
             };
             return caseType;
         }
@@ -63,7 +65,9 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
                 JobTitle = source.JobTitle.CreateFrom(),
-                EmployeeJobId = source.EmployeeJobId
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
             };
 
         }
@@ -95,6 +99,8 @@ namespace EPMS.Web.ModelMappers
                 Email = source.Email,
                 EmployeeJobId = source.EmployeeJobId,
                 JobTitle = source.JobTitle.CreateFrom(),
+                EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
             };
 
         }

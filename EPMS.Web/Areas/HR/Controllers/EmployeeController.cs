@@ -13,6 +13,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
@@ -25,12 +26,15 @@ namespace EPMS.Web.Areas.HR.Controllers
     [Authorize]
     public class EmployeeController : BaseController
     {
+        #region Private
+
         private readonly IEmployeeService EmployeeService;
         private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
         private readonly IAllowanceService AllowanceService;
         private readonly IAspNetUserService AspNetUserService;
         private readonly IEmployeeRequestService EmployeeRequestService;
+        #endregion
 
         #region Constructor
 
@@ -83,10 +87,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Get All Employees and return to View
         /// </summary>
         /// <param name="employeeSearchRequest">Employee Search Requset</param>
+        /// <param name="param"></param>
         /// <returns>IEnumerable of All Employee</returns>
         [HttpPost]
-        public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
+        public ActionResult Index(JQueryDataTableParamModel param)
         {
+            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
@@ -99,7 +105,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 aaData = employeeList,
                 iTotalRecords = Convert.ToInt32(employees.TotalCount),
                 iTotalDisplayRecords = Convert.ToInt32(employeeList.Count()),
-                sEcho = Convert.ToInt32(employeeList.Count()),
+                sEcho = param.sEcho,
             };
             if (userRole != null)
             {

@@ -47,7 +47,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public DateTime? EmployeePassportExpiryDt { get; set; }
         public DateTime? EmployeePassportExpiryDtAr { get; set; }
-        [Display(Name = "Extra Information English")]
+        [Display(Name = "Extra Information")]
         public string EmployeeDetailsE { get; set; }
         [Display(Name = "Full Name")]
         public string EmployeeFullName { get; set; }
@@ -56,7 +56,7 @@ namespace EPMS.Web.Models
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public string Email { get; set; }
-        [Display(Name = "Extra Information Arabic")]
+        [Display(Name = "Extra Information")]
         public string EmployeeDetailsA { get; set; }
 
 
@@ -65,9 +65,9 @@ namespace EPMS.Web.Models
         public string ImagePath { get; set; }
         public HttpPostedFileBase UploadImage { get; set; }
 
-        public ICollection<Allowance> Allowances { get; set; }
+        public IEnumerable<Allowance> Allowances { get; set; }
         public JobTitle JobTitle { get; set; }
-        public ICollection<EmployeeRequest> EmployeeRequests { get; set; }
+        public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
         public ICollection<Notification> Notifications { get; set; }
         public ICollection<AspNetUser> AspNetUsers { get; set; }
     }
