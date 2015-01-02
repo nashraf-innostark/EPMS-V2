@@ -48,7 +48,7 @@
                 <div class="control-group row-fluid area">
                     <div class="span3 areaItem">
                         @Html.CheckBoxFor(m => item.IsSelected, new { value = item.MenuId, @class = "parentCheckbox" })
-                        <h4 class="areaLabel">@item.MenuTitle</h4>
+                        <h5 class="areaLabel">@item.MenuTitle</h5>
                         @*<label style="padding-left:10px;font-weight: 700">@item.MenuTitle</label>*@
                     </div>
 
@@ -58,7 +58,7 @@
                             <div class="span12">
                                 @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
                                 @*<label class="controllerLabel">@childItems.MenuTitle</label>*@
-                                <h5 class="controllerLabel">@childItems.MenuTitle</h5>
+                                <h6 class="controllerLabel">@childItems.MenuTitle</h6>
                             </div>
 
                             <div class="control-group row-fluid childItem">
