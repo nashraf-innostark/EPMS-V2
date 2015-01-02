@@ -91,5 +91,9 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(employee => employee.JobTitle.DepartmentId == departmentId);
         }
+        public IEnumerable<Employee> FindForPayroll(long employeeId, DateTime currTime)
+        {
+            return DbSet.Where(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
+        }
     }
 }

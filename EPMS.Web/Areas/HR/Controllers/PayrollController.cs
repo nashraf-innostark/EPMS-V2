@@ -104,10 +104,10 @@ namespace EPMS.Web.Areas.HR.Controllers
             var employeeRequestsResponse = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now,id);
             var requests = employeeRequestsResponse.Select(x => x.CreateFromServerToClientPayroll());
             // get employee
-            viewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
-            viewModel.Payroll.EmployeeId = viewModel.Employee.EmployeeId;
-            viewModel.Payroll.JobTitle = viewModel.Employee.JobTitle.JobTitleNameE;
-            viewModel.Payroll.BasicSalary = viewModel.Employee.JobTitle.BasicSalary;
+            viewModel.Employee = EmployeeService.FindEmployeeForPayroll(id,DateTime.Now).Select(x=>x.CreateFromServerToClient());
+            //viewModel.Payroll.EmployeeId = viewModel.Employee.EmployeeId;
+            //viewModel.Payroll.JobTitle = viewModel.Employee.JobTitle.JobTitleNameE;
+            //viewModel.Payroll.BasicSalary = viewModel.Employee.JobTitle.BasicSalary;
             // get employee request details
             foreach (var payroll in requests)
             {
