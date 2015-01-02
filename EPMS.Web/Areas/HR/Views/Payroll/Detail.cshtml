@@ -171,25 +171,5 @@
             changeMonth: true,
             changeYear: true
         });
-        @*debugger
-        var deductionList = '@Html.Raw(Json.Encode(Model.Deduction))';
-        var deducts = JSON.parse(deductionList);
-        if (deducts) {
-            var deduc1 = deducts[0].InstallmentAmount.toFixed(2);
-            var deduc2 = deducts[1].InstallmentAmount.toFixed(2);
-            if (deduc1 > 0) {
-                $("#Deduction1").val(deduc1);
-            }
-            if (deduc2 > 0) {
-                $("#Deduction2").val(deduc2);
-            }
-        } else {
-            $("#Deduction1").val(0);
-            $("#Deduction2").val(0);
-        }
-
-        // Total Salary
-        var totalSalary = (parseFloat($("#BasicSalary").val()) + parseFloat($("#Allowance1").val()) + parseFloat($("#Allowance2").val()) + parseFloat($("#Allowance3").val()) + parseFloat($("#Allowance4").val()) + parseFloat($("#Allowance5").val())) - (parseFloat($("#Deduction1").val()) + parseFloat($("#Deduction2").val()));
-        $("#Total").val(totalSalary.toFixed(2));*@
     });
 </script>
