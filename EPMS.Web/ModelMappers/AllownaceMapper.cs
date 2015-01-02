@@ -19,7 +19,8 @@ namespace EPMS.Web.ModelMappers
                 AllowanceDesc4 = source.AllowanceDesc4,
                 AllowanceDesc5 = source.AllowanceDesc5,
                 EmployeeId = source.EmployeeId,
-                AllowanceId = source.AllowanceId
+                AllowanceId = source.AllowanceId,
+                AllowanceDate = source.AllowanceDate
             };
             return caseType;
         }
@@ -38,7 +39,8 @@ namespace EPMS.Web.ModelMappers
                 AllowanceDesc4 = source.AllowanceDesc4,
                 AllowanceDesc5 = source.AllowanceDesc5,
                 EmployeeId = source.EmployeeId,
-                AllowanceId = source.AllowanceId
+                AllowanceId = source.AllowanceId,
+                AllowanceDate = source.AllowanceDate
             };
         }
     }

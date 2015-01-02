@@ -4,8 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4445364fdeef4eb799cb6c590a54dd7d" Name="Diagram1" ZoomLevel="96">
-        <EntityTypeShape EntityType="DomainModels.Allowance" Width="1.5" PointX="7.5" PointY="9.5" />
+      <Diagram DiagramId="4445364fdeef4eb799cb6c590a54dd7d" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="DomainModels.AspNetRole" Width="1.5" PointX="5.25" PointY="20.25" />
         <EntityTypeShape EntityType="DomainModels.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="11.5" />
         <EntityTypeShape EntityType="DomainModels.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="14.875" />
@@ -14,12 +13,10 @@
         <EntityTypeShape EntityType="DomainModels.Employee" Width="1.5" PointX="5.25" PointY="13" />
         <EntityTypeShape EntityType="DomainModels.EmployeeRequest" Width="1.5" PointX="7.5" PointY="20.625" />
         <EntityTypeShape EntityType="DomainModels.JobApplicant" Width="1.5" PointX="5.25" PointY="4.625" />
-        <EntityTypeShape EntityType="DomainModels.JobOffered" Width="1.5" PointX="3" PointY="4.75" />
         <EntityTypeShape EntityType="DomainModels.JobTitle" Width="1.5" PointX="3" PointY="14.25" />
         <EntityTypeShape EntityType="DomainModels.MenuRight" Width="1.5" PointX="10" PointY="8.5" />
         <EntityTypeShape EntityType="DomainModels.Notification" Width="1.5" PointX="7.5" PointY="25.25" />
         <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="20" />
-        <AssociationConnector Association="DomainModels.FK_Allowance_Employee" />
         <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
@@ -29,12 +26,15 @@
         <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" />
         <AssociationConnector Association="DomainModels.FK_Notification_Employee" />
         <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" />
-        <AssociationConnector Association="DomainModels.FK_JobApplicants_JobOffered" />
         <AssociationConnector Association="DomainModels.FK_JobTitle_JobTitle" />
         <AssociationConnector Association="DomainModels.AspNetUserRoles" />
         <EntityTypeShape EntityType="DomainModels.Menu" Width="1.5" PointX="7.375" PointY="1" />
         <AssociationConnector Association="DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
+        <EntityTypeShape EntityType="DomainModels.Allowance" Width="1.5" PointX="7.5" PointY="8.875" />
+        <AssociationConnector Association="DomainModels.FK_Allowance_Employee" />
+        <EntityTypeShape EntityType="DomainModels.JobOffered" Width="1.5" PointX="3.25" PointY="5.375" />
+        <AssociationConnector Association="DomainModels.FK_JobApplicants_JobOffered" />
         <AssociationConnector Association="DomainModels.FK_JobOffered_JobTitle" />
       </Diagram>
     </edmx:Diagrams>
