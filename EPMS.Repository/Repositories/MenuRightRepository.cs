@@ -35,12 +35,12 @@ namespace EPMS.Repository.Repositories
         /// </summary>
         public IQueryable<MenuRight> GetMenuByRole(string roleId)
         {
-            //return
-            //    DbSet.Where(menu => menu.AspNetRole.Id == roleId)
-            //        .Include(menu => menu.Menu)
-            //        .Include(menu => menu.Menu.ParentItem)
-                    
-            //        .Include(menu => menu.AspNetRole);
+            if (roleId == "1")
+            {
+                return
+                DbSet.Include(menu => menu.Menu)
+                    .Include(menu => menu.Menu.ParentItem);
+            }
             return
                 DbSet.Where(menu => menu.Role_Id == roleId)
                     .Include(menu => menu.Menu)

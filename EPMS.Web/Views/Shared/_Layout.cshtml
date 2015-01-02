@@ -158,7 +158,7 @@
         </ul>
     </div>
     <!--- Sidebar navigation -->
-    @Html.Partial("_Menu")
+    @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
 
 
     <!-- Page content starts -->

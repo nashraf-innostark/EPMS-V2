@@ -5,57 +5,49 @@
 @{
     Layout = null;
 }
-<ul id="nav" class="nav nav-side-menu">
-    <li class="shadow-layer"></li>
-    @{
-        if (Model.MenuRights != null)
-        {
-            // loop through menu headers one by one and populate childs
-            foreach (MenuRight header in Model.MenuHeaders.ToList())
-            {
-                // get child items with respect to menu header
-                IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId).ToList();
-                <li>
-                    <a href="@(String.IsNullOrEmpty(header.Menu.MenuTargetController) ? "#" : "/"+header.Menu.MenuTargetController +"/"+header.Menu.MenuFunction)">
-                        <i class="icon-photon @header.Menu.MenuImagePath"></i>
-                        <span class="nav-selection">@header.Menu.MenuTitle</span>
-                        @if (menuRightchildList.Any())
-                        {
-                            <i class="icon-menu-arrow"></i>
-                        }
-                    </a>
-                    <div class="sub-nav">
-                        <ul class="nav">
-                            @{
-                foreach (MenuRight menuRight in menuRightchildList)
+<div class="nav-fixed-left" style="visibility: hidden" dir="ltr">
+    <div class="nav-fixed-left" style="visibility: hidden">
+        <ul class="nav nav-side-menu">
+            <li class="shadow-layer"></li>
+            @{
+                if (Model.MenuRights != null)
                 {
-                    // display childs
-                    <li>
-                        @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
-                    </li>
+                    // loop through menu headers one by one and populate childs
+                    foreach (MenuRight header in Model.MenuHeaders.ToList())
+                    {
+                        // get child items with respect to menu header
+                        IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId).ToList();
+                        <li>
+                            <a href="@(String.IsNullOrEmpty(header.Menu.MenuTargetController) ? "#" : "/"+header.Menu.MenuTargetController +"/"+header.Menu.MenuFunction)">
+                                <i class="icon-photon @header.Menu.MenuImagePath"></i>
+                                <span class="nav-selection">@header.Menu.MenuTitle</span>
+                                @if (menuRightchildList.Any())
+                                {
+                                    <i class="icon-menu-arrow"></i>
+                                }
+                            </a>
+                            <div class="sub-nav">
+                                <ul class="nav">
+                                    @{
+                        foreach (MenuRight menuRight in menuRightchildList)
+                        {
+                            // display childs
+                            <li>
+                                @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                            </li>
+                        }
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    }
                 }
-                            }
-                        </ul>
-                    </div>
-                </li>
             }
-        }
-    }
-    <li class="nav-logout">
-        <a href="/Account/LogOff">
-            <i class="icon-photon key_stroke"></i><span class="nav-selection">Logout</span>
-        </a>
-    </li>
-</ul>
-
-@*<script>
-
-    $(document).ready(function () {
-
-        var anchor = $('.innerSelected').closest('ul').closest('li').find('a').first();
-        anchor.addClass('open subdrop');
-        anchor.find('i.fa-chevron-left').removeClass('fa-chevron-left').addClass('fa-chevron-down');
-    });
-
-</script>*@
-
+            <li class="nav-logout">
+                <a href="~/Account/Logoff">
+                    <i class="icon-photon key_stroke"></i><span class="nav-selection">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

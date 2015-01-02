@@ -68,7 +68,7 @@ namespace IdentitySample.Controllers
         public ActionResult Index()
         {
             RoleViewModel roleViewModel = new RoleViewModel();
-            roleViewModel.Roles = RoleManager.Roles.ToList();
+            roleViewModel.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).ToList();
             return View(roleViewModel);
         }
 
@@ -243,6 +243,7 @@ namespace IdentitySample.Controllers
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
 
@@ -265,7 +266,12 @@ namespace IdentitySample.Controllers
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
             viewModel.SelectedRoleId = roleValue;
-            return View("RightsManagement", viewModel);
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "Record has been updated.",
+                IsUpdated = true
+            };
+            return RedirectToAction("RightsManagement");
 
         }
         [HttpPost]
