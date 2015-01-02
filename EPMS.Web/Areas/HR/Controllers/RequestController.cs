@@ -11,13 +11,14 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Request;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
-    [Authorize]
+    
     public class RequestController : BaseController
     {
         private readonly IEmployeeRequestService employeeRequestService;
@@ -29,6 +30,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         // GET: HR/Request
+        [SiteAuthorize(PermissionKey = "RequestIndex")]
         public ActionResult Index()
         {
             EmployeeRequestSearchRequest searchRequest = Session["PageMetaData"] as EmployeeRequestSearchRequest;
@@ -79,6 +81,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         // GET: HR/Request/Create/RequestId
+        [SiteAuthorize(PermissionKey = "RequestCreate")]
         public ActionResult Create(long? id)
         {
             EmployeeRequestViewModel requestViewModel = new EmployeeRequestViewModel();
@@ -166,6 +169,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return View(requestViewModel);
             }
         }
+        [SiteAuthorize(PermissionKey = "RequestDelete")]
         public ActionResult Delete(long? id)
         {
             if (id > 0)
