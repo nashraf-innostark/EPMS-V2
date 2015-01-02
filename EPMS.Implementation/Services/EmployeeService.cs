@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -37,11 +38,22 @@ namespace EPMS.Implementation.Services
             }
             return null;
         }
-        public IEnumerable<Employee> FindEmployeeForPayroll(long? id, DateTime currTime)
+
+        public PayrollResponse FindEmployeeForPayroll(long? id, DateTime currTime)
         {
+            PayrollResponse response = new PayrollResponse();
             if (id != null)
             {
-                return repository.FindForPayroll((long)id, currTime);
+                response.Employee = repository.Find((long)id);
+                if (response.Employee.Allowances.Count > 0)
+                {
+                    response.Allowance = response.Employee.Allowances.LastOrDefault(x => x.AllowanceDate != null && x.AllowanceDate.Value.Month == currTime.Month && x.AllowanceDate.Value.Year == currTime.Year);
+                }
+                if (response.Employee.EmployeeRequests.Count > 0)
+                {
+                    response.Requests = response.Employee.EmployeeRequests.Where(x => x.IsMonetary && (x.EmployeeId == id) && (x.RequestDetails.Count(y => (y.IsApproved)) > 0) && (x.RequestDetails.Count(z => ((currTime >= z.FirstInstallmentDate) && (currTime <= z.LastInstallmentDate))) > 0));
+                }
+                return response;
             }
             return null;
         }

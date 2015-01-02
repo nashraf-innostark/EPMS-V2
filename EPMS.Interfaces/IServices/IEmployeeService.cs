@@ -13,7 +13,7 @@ namespace EPMS.Interfaces.IServices
     {
         EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset);
         Employee FindEmployeeById(long? id);
-        IEnumerable<Employee> FindEmployeeForPayroll(long? id, DateTime currTime);
+        PayrollResponse FindEmployeeForPayroll(long? id, DateTime currTime);
 
         IEnumerable<Employee> GetAll(); 
         long AddEmployee(Employee employee);

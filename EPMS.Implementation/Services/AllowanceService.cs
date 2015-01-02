@@ -72,5 +72,14 @@ namespace EPMS.Implementation.Services
                 throw;
             }
         }
+
+        public IEnumerable<Allowance> FindEmployeeForPayroll(long? id, DateTime currTime)
+        {
+            if (id != null)
+            {
+                return repository.FindForPayroll((long)id, currTime);
+            }
+            return null;
+        }
     }
 }

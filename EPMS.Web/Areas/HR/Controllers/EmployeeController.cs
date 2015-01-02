@@ -218,6 +218,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
                         // Update Employee and Allowance
                         var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
                         var allowanceToTpdate = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
@@ -251,6 +252,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                        viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
 
                         var allowanceToSave = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
 

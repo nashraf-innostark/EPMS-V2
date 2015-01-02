@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.IServices
@@ -11,5 +12,6 @@ namespace EPMS.Interfaces.IServices
         bool AddAllowance(Allowance allowance);
         bool UpdateAllowance(Allowance allowance);
         void DeleteAllowance(Allowance allowance);
+        IEnumerable<Allowance> FindEmployeeForPayroll(long? id, DateTime currTime);
     }
 }

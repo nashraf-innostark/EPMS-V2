@@ -51,7 +51,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Payroll.EmployeeId, new { @id = "Employeeid", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Employee.EmployeeId, new { @id = "Employeeid", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Payroll.JobTitle, new { @id = "JobTitle", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameE, new { @id = "JobTitle", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Payroll.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Employee.JobTitle.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -81,7 +81,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Allowance1" type="text" name="inputField" disabled>
+                    @*<input id="Allowance1" type="text" name="inputField" disabled>*@
+                    @Html.TextBoxFor(model => model.Allowances.Allowance1, new { @id = "Allowance1", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -91,7 +92,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Allowance2" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Allowances.Allowance2, new { @id = "Allowance2", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -101,7 +102,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Allowance3" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Allowances.Allowance3, new { @id = "Allowance3", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -111,7 +112,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Allowance4" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Allowances.Allowance4, new { @id = "Allowance4", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -121,7 +122,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Allowance5" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Allowances.Allowance5, new { @id = "Allowance5", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -131,7 +132,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Deduction1" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Deduction1, new { @id = "Deduction1", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -141,7 +142,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Deduction2" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Deduction2, new { @id = "Deduction2", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -151,7 +152,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Total" type="text" name="inputField" disabled>
+                    @Html.TextBoxFor(model => model.Total, new { @id = "Total", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -170,39 +171,9 @@
             changeMonth: true,
             changeYear: true
         });
-        var allowList = '@Html.Raw(Json.Encode(Model.Employee.Allowances))';
-        var allows = JSON.parse(allowList);
-        $.each(allows, function (key, value) {
-            if (value.Allowance1 != null) {
-                $("#Allowance1").val(value.Allowance1);
-            } else {
-                $("#Allowance1").val(0);
-            }
-            if (value.Allowance2 != null) {
-                $("#Allowance2").val(value.Allowance2);
-            } else {
-                $("#Allowance2").val(0);
-            }
-            if (value.Allowance2 != null) {
-                $("#Allowance3").val(value.Allowance3);
-            } else {
-                $("#Allowance3").val(0);
-            }
-            if (value.Allowance4 != null) {
-                $("#Allowance4").val(value.Allowance4);
-            } else {
-                $("#Allowance4").val(0);
-            }
-            if (value.Allowance5 != null) {
-                $("#Allowance5").val(value.Allowance5);
-            } else {
-                $("#Allowance5").val(0);
-            }
-        });
-        
+        @*debugger
         var deductionList = '@Html.Raw(Json.Encode(Model.Deduction))';
         var deducts = JSON.parse(deductionList);
-        debugger
         if (deducts) {
             var deduc1 = deducts[0].InstallmentAmount.toFixed(2);
             var deduc2 = deducts[1].InstallmentAmount.toFixed(2);
@@ -219,6 +190,6 @@
 
         // Total Salary
         var totalSalary = (parseFloat($("#BasicSalary").val()) + parseFloat($("#Allowance1").val()) + parseFloat($("#Allowance2").val()) + parseFloat($("#Allowance3").val()) + parseFloat($("#Allowance4").val()) + parseFloat($("#Allowance5").val())) - (parseFloat($("#Deduction1").val()) + parseFloat($("#Deduction2").val()));
-        $("#Total").val(totalSalary.toFixed(2));
+        $("#Total").val(totalSalary.toFixed(2));*@
     });
 </script>

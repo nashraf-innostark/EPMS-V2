@@ -7,12 +7,14 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.Payroll;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using EPMS.Web.ModelMappers;
+using Employee = EPMS.Models.DomainModels.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -21,14 +23,16 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IEmployeeRequestService EmployeeRequestService;
         private readonly IEmployeeService EmployeeService;
         private readonly IAspNetUserService AspNetUserService;
+        private readonly IAllowanceService AllowanceService;
 
         #region Constructor
 
-        public PayrollController(IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, IAspNetUserService aspNetUserService)
+        public PayrollController(IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, IAllowanceService allowanceService)
         {
             EmployeeRequestService = employeeRequestService;
             EmployeeService = employeeService;
             AspNetUserService = aspNetUserService;
+            AllowanceService = allowanceService;
         }
 
         #endregion
@@ -49,12 +53,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                 employeeViewModel.Role = userRole.Name;
                 return View(employeeViewModel);
             }
-            if (userRole != null && userRole.Name == "Employee")
-            {
-                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-                return RedirectToAction("Detail", new { id });
-            }
-            return null;
+            long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+            return RedirectToAction("Detail", new { id });
         }
 
         [HttpPost]
@@ -89,30 +89,43 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 UserId = Guid.Parse(User.Identity.GetUserId())
             };
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
-            if (userRole != null && userRole.Name == "Admin")
-            {
-                searchRequest.Requester = "Admin";
-            }
-            else
-            {
-                searchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
-            }
             PayrollViewModel viewModel = new PayrollViewModel();
-            // get employee requests
-            var employeeRequestsResponse = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now,id);
-            var requests = employeeRequestsResponse.Select(x => x.CreateFromServerToClientPayroll());
-            // get employee
-            viewModel.Employee = EmployeeService.FindEmployeeForPayroll(id,DateTime.Now).Select(x=>x.CreateFromServerToClient());
-            //viewModel.Payroll.EmployeeId = viewModel.Employee.EmployeeId;
-            //viewModel.Payroll.JobTitle = viewModel.Employee.JobTitle.JobTitleNameE;
-            //viewModel.Payroll.BasicSalary = viewModel.Employee.JobTitle.BasicSalary;
-            // get employee request details
-            foreach (var payroll in requests)
+            // get Employee
+            PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, DateTime.Now);
+            if (response.Employee != null)
             {
-                viewModel.Deduction = payroll.RequestDetails;
+                viewModel.Employee = response.Employee.CreateFromServerToClient();
             }
+            if (response.Allowance != null)
+            {
+                viewModel.Allowances = response.Allowance.CreateFromServerToClient();
+            }
+            // get employee requests
+            if (response.Requests != null)
+            {
+                var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll());
+                // get Employee request details
+                foreach (var reqDetail in requests)
+                {
+                    var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
+                    if (firstOrDefault != null)
+                        viewModel.Deduction1 = firstOrDefault.InstallmentAmount ?? 0;
+                    var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
+                    if (lastOrDefault != null)
+                        viewModel.Deduction2 = lastOrDefault.InstallmentAmount ?? 0;
+                }
+            }
+            double basicSalary=0;
+            double allowances=0;
+            if (viewModel.Employee != null)
+            {
+                basicSalary = viewModel.Employee.JobTitle.BasicSalary ?? 0;
+            }
+            if (viewModel.Allowances != null)
+            {
+                allowances = viewModel.Allowances.Allowance1 + viewModel.Allowances.Allowance2 + viewModel.Allowances.Allowance3 + viewModel.Allowances.Allowance4 + viewModel.Allowances.Allowance5 ?? 0;
+            }
+            viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
             return View(viewModel);
         }
         #endregion

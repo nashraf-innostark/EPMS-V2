@@ -746,7 +746,7 @@
           <Property Name="MenuKey" Type="Int32" Nullable="false" />
           <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
           <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
-          <Property Name="ParentItem_Menu" Type="Int32" />
+          <Property Name="ParentItemMenu" Type="Int32" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <Property Name="MenuTargetController" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MenuFunction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -959,7 +959,7 @@
               <PropertyRef Name="MenuId" />
             </Principal>
             <Dependent Role="Menu1">
-              <PropertyRef Name="ParentItem_Menu" />
+              <PropertyRef Name="ParentItemMenu" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1256,7 +1256,7 @@
                 <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
                 <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
                 <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
-                <ScalarProperty Name="ParentItem_Menu" ColumnName="ParentItem_MenuId" />
+                <ScalarProperty Name="ParentItemMenu" ColumnName="ParentItem_MenuId" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="MenuTargetController" ColumnName="MenuTargetController" />
                 <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
