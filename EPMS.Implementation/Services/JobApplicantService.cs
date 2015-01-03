@@ -1,33 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
+using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Implementation.Services
 {
-    public class JobApplicantService : IJobApplyService
+    public class JobApplicantService : IJobApplicantService
     {
+        private readonly IJobApplicantRepository jobApplicantRepository;
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="jobApplicantRepository"></param>
+        public JobApplicantService(IJobApplicantRepository jobApplicantRepository)
+        {
+            this.jobApplicantRepository = jobApplicantRepository;
+        }
+
+        #endregion
+
         public IEnumerable<JobApplicant> GetAll()
         {
-            throw new NotImplementedException();
+            return jobApplicantRepository.GetAll();
         }
 
         public JobApplicant FindJobApplicantById(long id)
         {
-            throw new NotImplementedException();
+            return jobApplicantRepository.Find((int)id);
         }
 
-        public bool AddJobApplicant(JobApplicant jobTitle)
+        public bool AddJobApplicant(JobApplicant jobApplicant)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<JobApplicant> GetJobsOfferedByJobTitleId(long jobTitleId)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                jobApplicantRepository.Add(jobApplicant);
+                jobApplicantRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception exception)
+            {
+                return false;
+            }
         }
     }
 }

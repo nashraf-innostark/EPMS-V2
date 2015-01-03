@@ -7,7 +7,7 @@ using EPMS.Repository.BaseRepository;
 
 namespace EPMS.Repository.Repositories
 {
-    public class DepartmentRepository : BaseRepository<Department>, IDepartmentRepository
+    public sealed class DepartmentRepository : BaseRepository<Department>, IDepartmentRepository
     {
         #region Constructor
         /// <summary>

@@ -1,0 +1,149 @@
+﻿@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
+
+@{
+    //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
+    ViewBag.Title = "Job Opening";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="container-fluid dashboard dashboard-title">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1>
+                @*@Model.JobOffered.JobTitle.JobTitleNameE*@
+            </h1>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Apply", "JobApplicant", FormMethod.Post, new { @id = "JobOfferedForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        @Html.AntiForgeryToken()
+        @Html.TextBoxFor(model => model.JobOffered.JobOfferedId, new { style = "display: none;", @id = "departmentName", })
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">Applicant Name</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantName, new { @id = "applicantName" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Department</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.Department.DepartmentNameE, new { @disabled = true, @id = "departmentName" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Description">Job Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleDescE, new { @disabled = true, @id = "jobTitleDesc" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="age">Age</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantAge, new { @id = "applicantAge" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="mobile">Mobile Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantMobile, new { @id = "applicantMobile" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="email">Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantEmail, new { @id = "applicantEmail" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">Marital Status </label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.MaritalStatus, new { @id = "applicantMaritalStatus" })
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">Nationality </label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.Nationality, new { @id = "applicantNationality" })
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="idNumber">Iqama or National ID Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.IqamaOrNationalIdNo, new { @id = "applicantIqama" })
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="driving">Driving License</label>
+            </div>
+            <div class="span9 span-inset ">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobApplicant.DrivingLicense, new { @id = "applicantIqama" })
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    @*<button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>*@
+                    <button id="savebtn" class="btn" type="submit">Apply</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+
+
+</script>
+ No newline at end of file
