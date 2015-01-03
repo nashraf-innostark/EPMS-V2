@@ -60,7 +60,7 @@
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\IEmployeeRequestService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
-    <Compile Include="IServices\IJobApplyService.cs" />
+    <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
     <Compile Include="IServices\ILogger.cs">
@@ -80,6 +80,7 @@
     <Compile Include="Repository\IEmployeeRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestDetailRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestRepository.cs" />
+    <Compile Include="Repository\IJobApplicantRepository.cs" />
     <Compile Include="Repository\IJobOfferedRepository.cs" />
     <Compile Include="Repository\IJobTitleRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
