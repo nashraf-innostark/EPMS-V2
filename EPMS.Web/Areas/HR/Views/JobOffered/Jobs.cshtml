@@ -31,7 +31,7 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 
-@*<div class="container-fluid">
+<div class="container-fluid">
     <form class="form-horizontal">
         <div class="row-fluid">
             <div class="span12">
@@ -50,49 +50,21 @@
                         {
                             if (item.IsOpen)
                             {
-                                <div class="widget-holder applyJobWidget">
-                                    <div class="widget-flipper">
-                                        <div class="widget-area widget-general-stats widget-front">
-                                            <div class="widget-head ">
-                                                <a href="MeetingsList(Admin,ProjectM)En.html" class="lightOrange">Administrator/Manager</a>
-                                                <div>
-
-
-                                                    <i class="icon-photon pen_alt2 opc1"></i>
-                                                </div>
-                                            </div>
-                                            <ul class="jobsOffred">
-                                                <li>
-                                                    <span>Department</span>
-                                                    <div>
-                                                        Imports and Exports
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <span>Job Description</span>
-                                                    <div class="jobDesc">
-
-                                                        Manage the movement of products/equipment/materials in and/or out of the country in accordance with organizational policy and procedure, and to comply with relevant local, country and international law and process.
-                                                        Manage the necessary documentation and online forms for the efficient, cost-effective and lawful execution of all import/export activities.
-                                                        Maintain and share with colleagues as appropriate, personal knowledge of all relevant import/export law and procedures; tariffs and duties; licences and restrictions.
-                                                        Manage financial and currency processes and transactions in accordance with policy and law, and to optimise cost-effectiveness of activities.
-
-                                                    </div>
-                                                </li>
-                                            </ul>
-
-                                            <div class="control-group row-fluid" style="clear:both;">
-                                                <div class="span3 span-inset">
-                                                    <button type="button" class="btn">Apply</button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="tempLoader" style="display:none;"></div>
-                                </div>
+                                <tr>
+                                    <td>@item.JobOfferedId</td>
+                                    @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
+                                    {
+                                        <td>@Html.ActionLink(@item.JobTitle.JobTitleNameA, "Apply", new {id = item.JobOfferedId}) </td>
+                                        <td>@item.JobTitle.JobTitleDescA</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@Html.ActionLink(@item.JobTitle.JobTitleNameE, "Apply", new { id = item.JobOfferedId }) </td>
+                                        <td>@item.JobTitle.JobTitleDescE</td>
+                                    }
+                                    <td>@if (item.ShowBasicSalary) { @item.JobTitle.BasicSalary }</td>
+                                    <td>@item.NoOfPosts</td>
+                                </tr>
                             }
                         }
                     </tbody>
@@ -101,49 +73,6 @@
             </div>
         </div>
     </form>
-</div>*@
-<div class="widget-holder applyJobWidget">
-    <div class="widget-flipper">
-        <div class="widget-area widget-general-stats widget-front">
-            <div class="widget-head ">
-                <a href="MeetingsList(Admin,ProjectM)En.html" class="lightOrange">Administrator/Manager</a>
-                <div>
-
-
-                    <i class="icon-photon pen_alt2 opc1"></i>
-                </div>
-            </div>
-            <ul class="jobsOffred">
-                <li>
-                    <span>Department</span>
-                    <div>
-                        Imports and Exports
-
-                    </div>
-                </li>
-                <li>
-                    <span>Job Description</span>
-                    <div class="jobDesc">
-
-                        Manage the movement of products/equipment/materials in and/or out of the country in accordance with organizational policy and procedure, and to comply with relevant local, country and international law and process.
-                        Manage the necessary documentation and online forms for the efficient, cost-effective and lawful execution of all import/export activities.
-                        Maintain and share with colleagues as appropriate, personal knowledge of all relevant import/export law and procedures; tariffs and duties; licences and restrictions.
-                        Manage financial and currency processes and transactions in accordance with policy and law, and to optimise cost-effectiveness of activities.
-
-                    </div>
-                </li>
-            </ul>
-
-            <div class="control-group row-fluid" style="clear:both;">
-                <div class="span3 span-inset">
-                    <button type="button" class="btn">Apply</button>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    <div class="tempLoader" style="display:none;"></div>
 </div>
 
 <script>

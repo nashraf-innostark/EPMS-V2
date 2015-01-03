@@ -26,7 +26,6 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IJobOfferedService, JobOfferedService>();
             unityContainer.RegisterType<IRecruitmentService, RecruitmentService>();
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
-            unityContainer.RegisterType<IJobApplicantService, JobApplicantService>();
         }
     }
 }

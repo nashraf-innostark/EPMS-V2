@@ -5,7 +5,6 @@ using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.JobApplicant;
 using EPMS.Web.ViewModels.JobOffered;
 using EPMS.Web.ViewModels.JobTitle;
 using Microsoft.AspNet.Identity;
@@ -104,6 +103,26 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return RedirectToAction("Create", e);
             }
 
+            return View(jobOfferedViewModel);
+        }
+
+        public ActionResult Jobs()
+        {
+            return View(new JobOfferedViewModel
+            {
+                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom()),
+                JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
+            });
+        }
+
+        public ActionResult Apply(long? id)
+        {
+            JobOfferedViewModel jobOfferedViewModel = new JobOfferedViewModel();
+            if (id != null)
+            {
+                jobOfferedViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
+            }
+            jobOfferedViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
             return View(jobOfferedViewModel);
         }
 

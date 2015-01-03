@@ -3,12 +3,13 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.IServices
 {
-    public interface IJobApplicantService
+    public interface IJobApplyService
     {
         IEnumerable<JobApplicant> GetAll();
         JobApplicant FindJobApplicantById(long id);
-        bool AddJobApplicant(JobApplicant jobApplicant);
+        bool AddJobApplicant(JobApplicant jobTitle);
 
         //bool UpdateJobOffered(JobApplicant jobTitle);
+        List<JobApplicant> GetJobsOfferedByJobTitleId(long jobTitleId);
     }
 }
