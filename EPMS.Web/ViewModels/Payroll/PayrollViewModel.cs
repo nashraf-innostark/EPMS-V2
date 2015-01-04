@@ -11,10 +11,8 @@ namespace EPMS.Web.ViewModels.Payroll
             Employee = new Models.Employee();
             Allowances = new Allowance();
         }
-        public IEnumerable<Models.RequestDetail> Deduction { get; set; }
         public Models.Payroll Payroll { get; set; }
         public Models.Employee Employee { get; set; }
-        public IEnumerable<Models.Employee> EmployeeList { get; set; }
         public Models.Allowance Allowances { get; set; }
         public double Total { get; set; }
         public double Deduction1 { get; set; }

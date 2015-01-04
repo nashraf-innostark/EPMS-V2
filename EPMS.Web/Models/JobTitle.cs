@@ -20,7 +20,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Department is Required")]
         public long DepartmentId { get; set; }
         [Integer(ErrorMessage = "Basic Salary needs to be number")]
-        public double? BasicSalary { get; set; }
+        public double BasicSalary { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

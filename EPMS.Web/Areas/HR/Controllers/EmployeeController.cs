@@ -27,7 +27,6 @@ namespace EPMS.Web.Areas.HR.Controllers
     public class EmployeeController : BaseController
     {
         #region Private
-
         private readonly IEmployeeService EmployeeService;
         private readonly IJobTitleService JobTitleService;
         private readonly IDepartmentService DepartmentService;
@@ -92,20 +91,23 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Index(JQueryDataTableParamModel param)
         {
+            param.iDisplayStart = 0;
+            param.iDisplayLength = 25;
             EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
-            employeeSearchRequest.SearchStr = Request["search"].ToString();
+            employeeSearchRequest.SearchStr = Request["search"];
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
                 aaData = employeeList,
-                iTotalRecords = Convert.ToInt32(employees.TotalCount),
-                iTotalDisplayRecords = Convert.ToInt32(employeeList.Count()),
+                iTotalRecords = Convert.ToInt32(employees.TotalRecords),
+                iTotalDisplayRecords = Convert.ToInt32(employees.TotalDisplayRecords),
                 sEcho = param.sEcho,
+                Param = param,
             };
             if (userRole != null)
             {

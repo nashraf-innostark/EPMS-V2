@@ -11,6 +11,7 @@ using EPMS.Models.ResponseModels;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.Payroll;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using EPMS.Web.ModelMappers;
@@ -39,6 +40,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #region Public
 
+        //[SiteAuthorize(PermissionKey = "PayrollIndex")]
         // GET: HR/Payroll
         public ActionResult Index()
         {
@@ -83,49 +85,51 @@ namespace EPMS.Web.Areas.HR.Controllers
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Detail(long id)
+        public ActionResult Detail(long? id)
         {
-            PayrollSearchRequest searchRequest = new PayrollSearchRequest
-            {
-                UserId = Guid.Parse(User.Identity.GetUserId())
-            };
             PayrollViewModel viewModel = new PayrollViewModel();
-            // get Employee
-            PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, DateTime.Now);
-            if (response.Employee != null)
+            if (id != null)
             {
-                viewModel.Employee = response.Employee.CreateFromServerToClient();
-            }
-            if (response.Allowance != null)
-            {
-                viewModel.Allowances = response.Allowance.CreateFromServerToClient();
-            }
-            // get employee requests
-            if (response.Requests != null)
-            {
-                var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll());
-                // get Employee request details
-                foreach (var reqDetail in requests)
+                // get Employee
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, DateTime.Now);
+            
+                if (response.Employee != null)
                 {
-                    var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
-                    if (firstOrDefault != null)
-                        viewModel.Deduction1 = firstOrDefault.InstallmentAmount ?? 0;
-                    var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
-                    if (lastOrDefault != null)
-                        viewModel.Deduction2 = lastOrDefault.InstallmentAmount ?? 0;
+                    viewModel.Employee = response.Employee.CreateFromServerToClient();
                 }
+                if (response.Allowance != null)
+                {
+                    viewModel.Allowances = response.Allowance.CreateFromServerToClient();
+                }
+                // get employee requests
+                if (response.Requests != null)
+                {
+                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll());
+                    // get Employee request details
+                    foreach (var reqDetail in requests)
+                    {
+                        var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
+                        if (firstOrDefault != null)
+                            viewModel.Deduction1 = Math.Truncate(firstOrDefault.InstallmentAmount ?? 0);
+                        var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
+                        if (lastOrDefault != null)
+                            viewModel.Deduction2 = Math.Truncate(lastOrDefault.InstallmentAmount ?? 0);
+                    }
+                }
+                double basicSalary = 0;
+                double allowances = 0;
+                if (viewModel.Employee != null)
+                {
+                    basicSalary = viewModel.Employee.JobTitle.BasicSalary;
+                }
+                if (viewModel.Allowances != null)
+                {
+                    allowances = viewModel.Allowances.Allowance1 + viewModel.Allowances.Allowance2 +
+                                 viewModel.Allowances.Allowance3 + viewModel.Allowances.Allowance4 +
+                                 viewModel.Allowances.Allowance5;
+                }
+                viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
             }
-            double basicSalary=0;
-            double allowances=0;
-            if (viewModel.Employee != null)
-            {
-                basicSalary = viewModel.Employee.JobTitle.BasicSalary ?? 0;
-            }
-            if (viewModel.Allowances != null)
-            {
-                allowances = viewModel.Allowances.Allowance1 + viewModel.Allowances.Allowance2 + viewModel.Allowances.Allowance3 + viewModel.Allowances.Allowance4 + viewModel.Allowances.Allowance5 ?? 0;
-            }
-            viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
             return View(viewModel);
         }
         #endregion

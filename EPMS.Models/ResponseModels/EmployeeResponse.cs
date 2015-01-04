@@ -16,5 +16,7 @@ namespace EPMS.Models.ResponseModels
         /// Total Count
         /// </summary>
         public int TotalCount { get; set; }
+        public int TotalRecords { get; set; }
+        public int TotalDisplayRecords { get; set; }
     }
 }

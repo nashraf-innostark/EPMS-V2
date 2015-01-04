@@ -245,13 +245,13 @@ namespace IdentitySample.Controllers
                     //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+                oResult.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
                 oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
                 return View(oResult);
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+            oResult.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
             oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
             return View(oResult);
