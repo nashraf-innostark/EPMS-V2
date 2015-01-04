@@ -1831,6 +1831,7 @@
     <Content Include="Areas\HR\Views\JobOffered\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>

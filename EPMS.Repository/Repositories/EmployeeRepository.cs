@@ -31,6 +31,10 @@ namespace EPMS.Repository.Repositories
         {
             get { return db.Employees; }
         }
+        protected IDbSet<Allowance> DbSetAllowances
+        {
+            get { return db.Allowances; }
+        }
 
         #endregion
 
@@ -91,9 +95,13 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(employee => employee.JobTitle.DepartmentId == departmentId);
         }
-        public IEnumerable<Employee> FindForPayroll(long employeeId, DateTime currTime)
+        public Employee FindForPayroll(long employeeId, DateTime currTime)
         {
-            return DbSet.Where(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
+            return DbSet.FirstOrDefault(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
+        }
+        public Allowance FindForAllownce(long employeeId, DateTime currTime)
+        {
+            return DbSetAllowances.FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate.Value.Month <= currTime.Month && allow.AllowanceDate.Value.Year <= currTime.Year));
         }
     }
 }

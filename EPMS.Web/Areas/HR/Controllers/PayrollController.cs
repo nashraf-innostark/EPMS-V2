@@ -14,6 +14,7 @@ using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using EPMS.Web.ModelMappers;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -66,7 +67,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
-// ReSharper disable once SpecifyACultureInStringConversionExplicitly
+            // ReSharper disable once SpecifyACultureInStringConversionExplicitly
             employeeSearchRequest.SearchStr = Request["search"].ToString();
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Models.Employee> employeeList =
@@ -87,13 +88,13 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         public ActionResult Detail(long? id)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            PayrollViewModel viewModel = new PayrollViewModel();
             if (id != null)
             {
                 // get Employee
                 PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, DateTime.Now);
-            
-            if (response.Employee != null)
+                
+                if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();
                 }
@@ -101,7 +102,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     viewModel.Allowances = response.Allowance.CreateFromServerToClient();
                 }
-            PayrollViewModel viewModel = new PayrollViewModel();
+                
                 // get employee requests
                 if (response.Requests != null)
                 {
