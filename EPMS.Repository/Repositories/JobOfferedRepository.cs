@@ -9,7 +9,7 @@ using EPMS.Repository.BaseRepository;
 
 namespace EPMS.Repository.Repositories
 {
-    class JobOfferedRepository : BaseRepository<JobOffered>, IJobOfferedRepository
+    public sealed class JobOfferedRepository : BaseRepository<JobOffered>, IJobOfferedRepository
     {
         #region Constructor
         /// <summary>

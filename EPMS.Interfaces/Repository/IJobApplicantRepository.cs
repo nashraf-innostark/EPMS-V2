@@ -2,8 +2,7 @@
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IAllowanceRepository : IBaseRepository<Allowance, int>
+    public interface IJobApplicantRepository : IBaseRepository<JobApplicant, long>
     {
-
     }
 }

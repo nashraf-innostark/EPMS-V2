@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Data.Entity;
 using EPMS.Repository.BaseRepository;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -29,10 +26,5 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
-
-        public IEnumerable<Allowance> FindForPayroll(long employeeId, DateTime currTime)
-        {
-            return DbSet.Where(allo => allo.EmployeeId == employeeId && (allo.AllowanceDate.Value.Month == currTime.Month && allo.AllowanceDate.Value.Year == currTime.Year));
-        }
     }
 }

@@ -134,6 +134,7 @@
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestDetailRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestRepository.cs" />
+    <Compile Include="Repositories\JobApplicantRepository.cs" />
     <Compile Include="Repositories\JobOfferedRepository.cs" />
     <Compile Include="Repositories\JobTitleRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />

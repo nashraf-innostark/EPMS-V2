@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EPMS.Web.Models;
+using EPMS.Models.RequestModels;
 
 namespace EPMS.Web.ViewModels.Payroll
 {
@@ -8,14 +8,9 @@ namespace EPMS.Web.ViewModels.Payroll
         public PayrollViewModel()
         {
             Payroll = new Models.Payroll();
-            Employee = new Models.Employee();
-            Allowances = new Allowance();
         }
+        //public IEnumerable<Models.Payroll> Requests { get; set; }
         public Models.Payroll Payroll { get; set; }
-        public Models.Employee Employee { get; set; }
-        public Models.Allowance Allowances { get; set; }
-        public double Total { get; set; }
-        public double Deduction1 { get; set; }
-        public double Deduction2 { get; set; }
+        public IEnumerable<Models.Employee> Employee { get; set; }
     }
 }

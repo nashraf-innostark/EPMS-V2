@@ -7,7 +7,6 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.Payroll;
@@ -15,7 +14,6 @@ using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using EPMS.Web.ModelMappers;
-using Employee = EPMS.Models.DomainModels.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -24,16 +22,14 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IEmployeeRequestService EmployeeRequestService;
         private readonly IEmployeeService EmployeeService;
         private readonly IAspNetUserService AspNetUserService;
-        private readonly IAllowanceService AllowanceService;
 
         #region Constructor
 
-        public PayrollController(IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, IAllowanceService allowanceService)
+        public PayrollController(IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, IAspNetUserService aspNetUserService)
         {
             EmployeeRequestService = employeeRequestService;
             EmployeeService = employeeService;
             AspNetUserService = aspNetUserService;
-            AllowanceService = allowanceService;
         }
 
         #endregion
@@ -55,8 +51,12 @@ namespace EPMS.Web.Areas.HR.Controllers
                 employeeViewModel.Role = userRole.Name;
                 return View(employeeViewModel);
             }
-            long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-            return RedirectToAction("Detail", new { id });
+            if (userRole != null && userRole.Name == "Employee")
+            {
+                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+                return RedirectToAction("Detail", new { id });
+            }
+            return null;
         }
 
         [HttpPost]
@@ -87,13 +87,13 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         public ActionResult Detail(long? id)
         {
-            PayrollViewModel viewModel = new PayrollViewModel();
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             if (id != null)
             {
                 // get Employee
                 PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, DateTime.Now);
             
-                if (response.Employee != null)
+            if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();
                 }
@@ -101,6 +101,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     viewModel.Allowances = response.Allowance.CreateFromServerToClient();
                 }
+            PayrollViewModel viewModel = new PayrollViewModel();
                 // get employee requests
                 if (response.Requests != null)
                 {
