@@ -1,0 +1,111 @@
+﻿@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
+
+@{
+    ViewBag.Title = EPMS.Web.Resources.HR.JobOffered.IndexLabel;
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+}
+
+<div class="container-fluid dashboard dashboard-title">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1>
+                Jobs offered
+            </h1>
+        </div>
+    </div>
+</div>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+@foreach (var item in Model.JobOfferedList)
+{
+    if (item.IsOpen)
+    {
+        <div class="widget-holder applyJobWidget">
+            <div class="widget-flipper">
+                <div class="widget-area widget-general-stats widget-front">
+                    <div class="widget-head ">
+                        <a href="#" class="lightOrange">@item.JobTitle.JobTitleNameE</a>
+                        <div>
+
+
+                            <i class="icon-photon pen_alt2 opc1"></i>
+                        </div>
+                    </div>
+                    <ul class="jobsOffred">
+                        <li>
+                            <span>Department</span>
+                            <div>
+                                @item.JobTitle.Department.DepartmentNameE
+
+                            </div>
+                        </li>
+                        @if (item.NoOfPosts != null)
+                        {
+                            <li>
+                                <span>Available Vacancies</span>
+                                <div>
+                                    @item.NoOfPosts
+                                </div>
+                            </li>
+                        }
+                        @if (item.ShowBasicSalary)
+                        {
+                            <li>
+                                <span>Basic Salary</span>
+                                <div>
+                                    @item.JobTitle.BasicSalary
+                                </div>
+                            </li>
+                        }
+
+
+                        <li>
+                            <span>Job Description</span>
+                            <div class="jobDesc">
+                                @item.JobTitle.JobTitleDescE
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="control-group row-fluid" style="clear:both;">
+                        <div class="span3 span-inset">
+                            <button type="button" class="btn" onclick="location.href = '/HR/JobApplicant/Apply/@item.JobOfferedId'">Apply</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="tempLoader" style="display:none;"></div>
+        </div>
+    }
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#JobsOfferedList').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                { "bVisible": false }, // cloumn to hide
+                null, // not hide
+                null,
+                null,
+                null
+            ],
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+        $(".widget-general-stats select").select2();
+    });
+</script>
+
+

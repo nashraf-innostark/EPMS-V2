@@ -76,6 +76,18 @@ namespace IdentitySample.Controllers
 
         #region Public
 
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get { return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>(); }
+            private set { _roleManager = value; }
+        }
+
         #region Change Password
         public ActionResult ChangePassword()
         {
@@ -245,13 +257,13 @@ namespace IdentitySample.Controllers
                     //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+                oResult.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
                 oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
                 return View(oResult);
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            oResult.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+            oResult.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
             oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
             return View(oResult);
@@ -487,41 +499,6 @@ namespace IdentitySample.Controllers
         #endregion
 
         #region Manage
-        private async Task SaveAccessToken(EPMS.Models.DomainModels.AspNetUser user, ClaimsIdentity identity)
-        {
-            var userclaims = await UserManager.GetClaimsAsync(user.Id);
-
-            foreach (var at in (
-                from claims in identity.Claims
-                where claims.Type.EndsWith("access_token")
-                select new Claim(claims.Type, claims.Value, claims.ValueType, claims.Issuer)))
-            {
-
-                if (!userclaims.Contains(at))
-                {
-                    await UserManager.AddClaimAsync(user.Id, at);
-                }
-            }
-        }
-        public ApplicationUserManager UserManager
-        {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
-        }
-
-        public ApplicationRoleManager RoleManager
-        {
-            get { return _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>(); }
-            private set { _roleManager = value; }
-        }
-        private void updateSessionValues(AspNetUser user)
-        {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
-            //Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
-            Session["LoginID"] = result.Id;
-            Session["RoleName"] = role;
-        }
         public ApplicationSignInManager SignInManager
         {
             get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
@@ -809,6 +786,23 @@ namespace IdentitySample.Controllers
         }
         #endregion
 
+        private async Task SaveAccessToken(EPMS.Models.DomainModels.AspNetUser user, ClaimsIdentity identity)
+        {
+            var userclaims = await UserManager.GetClaimsAsync(user.Id);
+
+            foreach (var at in (
+                from claims in identity.Claims
+                where claims.Type.EndsWith("access_token")
+                select new Claim(claims.Type, claims.Value, claims.ValueType, claims.Issuer)))
+            {
+
+                if (!userclaims.Contains(at))
+                {
+                    await UserManager.AddClaimAsync(user.Id, at);
+                }
+            }
+        }
+
         #endregion
 
         #region Helpers
@@ -868,5 +862,13 @@ namespace IdentitySample.Controllers
         }
 
         #endregion
+        private void updateSessionValues(AspNetUser user)
+        {
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
+            //Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
+            Session["LoginID"] = result.Id;
+            Session["RoleName"] = role;
+        }
     }
 }

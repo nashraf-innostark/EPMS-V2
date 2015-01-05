@@ -139,7 +139,7 @@ namespace EPMS.Repository.BaseRepository
 
         public IEnumerable<AspNetRole> Roles()
         {
-             return db.UserRoles.Where(r => !r.Name.Equals("SuperAdmin"));
+             return db.UserRoles.Where(r => !r.Name.Equals("Admin"));
             //return null;
         }
 

@@ -1,3 +1,4 @@
+﻿@@ -0,0 +1,262 @@
 ﻿@using System.Configuration
 <!DOCTYPE html>
 
@@ -36,7 +37,7 @@
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
-    
+
     <script type="text/javascript" src="~/Scripts/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/modernizr.custom.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/jquery.pnotify.min.js"></script>
@@ -100,7 +101,7 @@
     <script src="~/Scripts/Functions/scriptIST.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
 </head>
-<body class="body-inner">
+<body class="body-dashboard">
 
     <div class="btn-toolbar btn-mobile-menus">
         <button class="btn btn-main-menu"></button>
@@ -162,9 +163,14 @@
 
 
     <!-- Page content starts -->
-    <div class="main-content">
-        @RenderBody()
+    <div class="container-fluid dashboard dashboard-widget-group">
+        <div class="row-fluid">
+            <div id="photon_widgets" class="span12 ui-sortable">
+                @RenderBody()
+            </div>
+        </div>
     </div>
+    <div class="dashboard-watermark"></div>
     <div class="scroll-top-wrapper ">
         <span class="scroll-top-inner">
             <span class="arrow_up"></span>

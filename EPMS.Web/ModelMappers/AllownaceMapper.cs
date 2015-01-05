@@ -28,11 +28,11 @@ namespace EPMS.Web.ModelMappers
         {
             return new Models.Allowance
             {
-                Allowance1 = source.Allowance1,
-                Allowance2 = source.Allowance2,
-                Allowance3 = source.Allowance3,
-                Allowance4 = source.Allowance4,
-                Allowance5 = source.Allowance5,
+                Allowance1 = source.Allowance1 ?? 0,
+                Allowance2 = source.Allowance2 ?? 0,
+                Allowance3 = source.Allowance3 ?? 0,
+                Allowance4 = source.Allowance4 ?? 0,
+                Allowance5 = source.Allowance5 ?? 0,
                 AllowanceDesc1 = source.AllowanceDesc1,
                 AllowanceDesc2 = source.AllowanceDesc2,
                 AllowanceDesc3 = source.AllowanceDesc3,

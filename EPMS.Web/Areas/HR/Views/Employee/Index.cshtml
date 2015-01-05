@@ -53,16 +53,16 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
-        debugger 
+        debugger
         var siteUrl = $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#employeeTable').dataTable({
-            "iDisplayLength": -1,
+            "iDisplayLength": 25,
             "iDisplayStart": start || 0,
             "aaSorting": [sortBy],
-            "iSortCol_0": '@Model.SearchRequest.SortBy',
+            "iSortCol_0": [sortBy],
             "bProcessing": true,
             "bServerSide": true,
             "bFilter": true,
@@ -117,8 +117,8 @@
                     "sDefaultContent": "No Data",
                     "mRender": function(data, type, full) {
                         var jobTitle = full["JobTitle"];
-                        var dept = jobTitle.Department;
-                        return dept.DepartmentNameE;
+                        var dept = jobTitle.Department.DepartmentNameE;
+                        return dept;
                     },
                     "bSortable": false
                 }

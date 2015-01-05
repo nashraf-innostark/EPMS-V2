@@ -53,7 +53,7 @@
                             <tr>
                                 <td>@item.JobOfferedId</td>
                                 <td>@Html.ActionLink(@item.TitleE, "Create", new { id = item.JobOfferedId }) </td>
-                                <td>@Html.ActionLink(@item.Department.DepartmentNameE, "Create", new { id = item.DepartmentId }) </td>
+                                <td>@Html.ActionLink(@item.Department.DepartmentNameE, "Create", new { id = item.Department.DepartmentId }) </td>
                                 <td>@item.NoOfPosts</td>
                                 <td>@item.BasicSalary</td>
                                 <td>@item.IsOpen?"Yes":"No"</td>
