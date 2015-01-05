@@ -7,10 +7,6 @@ namespace EPMS.Web.Models
 {
     public class JobTitle
     {
-        public JobTitle()
-        {
-            Department=new Department();
-        }
         public long JobTitleId { get; set; }
         [Required(ErrorMessage = "Job Title is required.")]
         public string JobTitleNameE { get; set; }
@@ -25,9 +21,12 @@ namespace EPMS.Web.Models
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+        public string DepartmentNameE { get; set; }
+        public string DepartmentNameA { get; set; }
+        public long EmployeesCount { get; set; }
 
-        public Department Department { get; set; }
-        public ICollection<Employee> Employees { get; set; }
-        public ICollection<JobOffered> JobOffereds { get; set; }
+        //public Department Department { get; set; }
+        //public ICollection<Employee> Employees { get; set; }
+        //public ICollection<JobOffered> JobOffereds { get; set; }
     }
 }

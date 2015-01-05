@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.SqlServer.Server;
 
 namespace EPMS.Web.Models
 {
@@ -19,8 +20,17 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
 
-        public ICollection<JobApplicant> JobApplicants { get; set; }
-        public JobTitle JobTitle { get; set; }
-        public Department Department { get; set; }
+        public string DepartmentNameE { get; set; }
+        public string DepartmentNameA { get; set; }
+
+        public string JobTitleDescE { get; set; }
+        public string JobTitleDescA { get; set; }
+        public double? BasicSalary { get; set; }
+        public string JobTitleNameE { get; set; }
+        public string JobTitleNameA { get; set; }
+
+        //public ICollection<JobApplicant> JobApplicants { get; set; }
+        //public JobTitle JobTitle { get; set; }
+        //public Department Department { get; set; }
     }
 }

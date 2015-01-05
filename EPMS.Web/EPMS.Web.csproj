@@ -391,6 +391,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
+    <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />

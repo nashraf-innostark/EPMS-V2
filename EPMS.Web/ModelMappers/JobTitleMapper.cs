@@ -26,11 +26,14 @@ namespace EPMS.Web.ModelMappers
                 JobTitleDescA = source.JobTitleDescA,
                 DepartmentId = source.DepartmentId,
                 BasicSalary = source.BasicSalary ?? 0,
-                Department = source.Department.CreateFrom(),
+                DepartmentNameE = source.Department.DepartmentNameE,
+                DepartmentNameA = source.Department.DepartmentNameA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                EmployeesCount = source.Employees.Count
+
             };
 
         }
