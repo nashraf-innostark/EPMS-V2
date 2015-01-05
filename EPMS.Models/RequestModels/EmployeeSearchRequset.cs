@@ -18,6 +18,8 @@ namespace EPMS.Models.RequestModels
         public int iDisplayLength { get; set; }
 
         public int iDisplayStart { get; set; }
+        //public int sort { get; set; }
+
         public EmployeeByColumn EmployeeByColumn
         {
             get

@@ -3,7 +3,6 @@
     ViewBag.Title = Model.EmployeeViewModel.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -65,7 +64,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new { @id = "EmployeeNameE" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -76,7 +75,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameA, new { @id = "EmployeeNameA" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -87,7 +86,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "setDeptJobId", @id = "JobTitle" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitleId)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitleId, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -133,7 +132,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum, String.Empty, new { @class="required"})
                 </div>
             </div>
         </div>
@@ -144,7 +143,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLandlineNum, new { @id = "LandlineNumber" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLandlineNum)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLandlineNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -155,7 +154,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.MaritalStatus)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.MaritalStatus, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -166,11 +165,11 @@
             <div class="span9">
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmpDateOfBirthArabic, new { @class = "col-lg-2 datepickerArabic form-control ", onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control ", @id = "EmployeeDOB" })
                 </div>
-                @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -180,7 +179,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.EmployeeNationality, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Saudi Arabia", Value = "1" }, new SelectListItem { Text = "USA", Value = "2" } }, new { @id = "Nationality" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNationality)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNationality, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -191,7 +190,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqama, new { @id = "IqamaId" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqama)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqama, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -202,11 +201,12 @@
             <div class="span9">
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaIssueDtAr, new { @id = "IqamaIssueDateAr", onchange = "HijriToGregorian(this,'#IqamaIssueDate')", @class = "col-lg-2 datepickerArabic form-control " })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaIssueDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaIssueDt, new { @id = "IqamaIssueDate", @class = "col-lg-2 datepicker form-control " })
+                    
                 </div>
-                @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaIssueDt)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -216,11 +216,11 @@
             <div class="span9">
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "col-lg-2 datepickerArabic form-control " })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control " })
                 </div>
-                @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -230,7 +230,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportNum, new { @id = "PassportID" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportNum)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -241,11 +241,11 @@
             <div class="span9">
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "col-lg-2 datepickerArabic form-control " })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control " })
                 </div>
-                @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt)
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -338,7 +338,7 @@
                     </div>
                 </div>
             </div>
-            if (Model.EmployeeViewModel.Employee != null && Model.Role == "Admin")
+            if (Model.EmployeeViewModel.Employee != null && Model.Role == "Admin" && Model.EmployeeViewModel.Employee.EmployeeId > 0)
             {
                 <div class="control-group row-fluid">
                     <div class="span3">

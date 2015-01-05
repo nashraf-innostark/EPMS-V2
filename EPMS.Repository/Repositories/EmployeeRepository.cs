@@ -57,8 +57,9 @@ namespace EPMS.Repository.Repositories
         /// <returns>EmployeeRespone</returns>
         public EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset)
         {
-            int fromRow = (employeeSearchRequset.PageNo - 1) * employeeSearchRequset.PageSize;
-            int toRow = employeeSearchRequset.PageSize;
+            int fromRow = employeeSearchRequset.iDisplayStart;
+            int toRow = employeeSearchRequset.iDisplayStart + employeeSearchRequset.iDisplayLength;
+            //int toRow = employeeSearchRequset.PageSize;
             if (employeeSearchRequset.SortBy == 1)
             {
                 employeeSearchRequset.SortBy = 2;
