@@ -69,7 +69,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
-                viewModel.sLimit = searchRequest.iDisplayLength;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
             }
             else
             {
@@ -77,7 +77,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
-                viewModel.sLimit = searchRequest.iDisplayLength;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
             }
             // Keep Search Request in Session
             Session["PageMetaData"] = searchRequest;
