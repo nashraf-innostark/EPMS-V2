@@ -63,16 +63,10 @@ namespace EPMS.Repository.Repositories
         {
             int fromRow = (employeeSearchRequset.PageNo - 1) * employeeSearchRequset.PageSize;
             int toRow = employeeSearchRequset.PageSize;
-            //long jobTItleId = 0;
-            //if (!String.IsNullOrEmpty(employeeSearchRequset.SearchStr))
-            //{
-            //    int i = 0;
-            //    bool result = int.TryParse(employeeSearchRequset.SearchStr, out i);
-            //    if (result)
-            //    {
-            //        jobTItleId = Convert.ToInt64(employeeSearchRequset.SearchStr.ToString());
-            //    }
-            //}
+            if (employeeSearchRequset.SortBy == 1)
+            {
+                employeeSearchRequset.SortBy = 2;
+            }
             Expression<Func<Employee, bool>> query =
                 s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchStr)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchStr)) || 
                     (s.EmployeeNameA.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchStr)) || 

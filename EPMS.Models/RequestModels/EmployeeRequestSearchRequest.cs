@@ -6,6 +6,7 @@ namespace EPMS.Models.RequestModels
     {
         public string EmployeeName { get; set; }
         public string Requester { get; set; }
+        public string SearchStr { get; set; }
         public EmployeeRequestByColumn EmployeeRequestByColumn
         {
             get

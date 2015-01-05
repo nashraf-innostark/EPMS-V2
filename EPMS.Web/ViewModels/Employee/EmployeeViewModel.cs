@@ -46,7 +46,6 @@ namespace EPMS.Web.ViewModels.Employee
         public string EmployeeName { get; set; }
         public string BtnText { get; set; }
         public string PageTitle { get; set; }
-        public JQueryDataTableParamModel Param;
 
     }
 }

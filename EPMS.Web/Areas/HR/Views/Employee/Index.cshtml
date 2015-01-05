@@ -53,13 +53,12 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
-        debugger
         var siteUrl = $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#employeeTable').dataTable({
-            "iDisplayLength": 25,
+            "iDisplayLength": 10,
             "iDisplayStart": start || 0,
             "aaSorting": [sortBy],
             "iSortCol_0": [sortBy],

@@ -68,7 +68,7 @@
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         if ('@ViewBag.UserRole' == "Admin") {
             var oTable = $('#dataTable').dataTable({
-                "iDisplayLength": 20,
+                "iDisplayLength": 10,
                 "iDisplayStart": start || 0,
                 "aaSorting": [sortBy],
                 "bProcessing": true,
@@ -201,6 +201,21 @@
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
+        $(".dataTables_filter input").unbind()
+           .bind("input", function (e) {
+               // Bind our desired behavior
+               if (this.value.length >= 3 || e.keyCode == 13) {
+                   $("#searchString").val(this.value);
+                   //oTable.fnClearTable();
+                   //$('#employeeTable').empty();
+                   oTable.fnDraw();
+               }
+               if (this.value == "") {
+                   $("#searchString").val(this.value);
+                   oTable.fnDraw();
+               }
+               return;
+           });
     });
 </script>
 

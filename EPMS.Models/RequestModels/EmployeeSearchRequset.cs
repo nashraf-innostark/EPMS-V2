@@ -11,7 +11,13 @@ namespace EPMS.Models.RequestModels
         public string EmployeeNameE { get; set; }
         public string EmployeeNameA { get; set; }
         public long JobTitleId { get; set; }
-        
+        public string sEcho { get; set; }
+
+        public string sSearch { get; set; }
+
+        public int iDisplayLength { get; set; }
+
+        public int iDisplayStart { get; set; }
         public EmployeeByColumn EmployeeByColumn
         {
             get
