@@ -60,8 +60,8 @@ namespace EPMS.Repository.Repositories
 
         public EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset)
         {
-            int fromRow = (searchRequset.PageNo - 1) * searchRequset.PageSize;
-            int toRow = searchRequset.PageSize;
+            int fromRow = searchRequset.iDisplayStart;
+            int toRow = searchRequset.iDisplayStart+searchRequset.iDisplayLength;
             Expression<Func<EmployeeRequest, bool>> query;
             if (searchRequset.Requester == "Admin")
             {
@@ -87,7 +87,7 @@ namespace EPMS.Repository.Repositories
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new EmployeeRequestResponse { EmployeeRequests = employeeRequests, TotalCount = DbSet.Count() };
+            return new EmployeeRequestResponse { EmployeeRequests = employeeRequests, TotalCount = DbSet.Count(query) };
         }
     }
 }
