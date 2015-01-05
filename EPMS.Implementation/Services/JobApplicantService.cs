@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -25,6 +27,11 @@ namespace EPMS.Implementation.Services
         public IEnumerable<JobApplicant> GetAll()
         {
             return jobApplicantRepository.GetAll();
+        }
+
+        public JobApplicantResponse GetJobApplicantList(JobApplicantSearchRequest jobApplicantSearchRequest)
+        {
+            return jobApplicantRepository.GetAllJobApplicants(jobApplicantSearchRequest);
         }
 
         public JobApplicant FindJobApplicantById(long id)

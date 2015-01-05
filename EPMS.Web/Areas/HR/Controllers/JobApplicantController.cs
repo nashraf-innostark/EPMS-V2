@@ -1,13 +1,26 @@
 ﻿﻿using System;
+﻿using System.Collections.Generic;
+﻿using System.Configuration;
+﻿using System.Globalization;
+﻿using System.IO;
 ﻿using System.Linq;
+﻿using System.Net;
+﻿using System.Web;
 ﻿using System.Web.Mvc;
-using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
-using EPMS.Web.Controllers;
+﻿using EPMS.Implementation.Identity;
+﻿using EPMS.Implementation.Services;
+﻿using EPMS.Interfaces.IServices;
+﻿using EPMS.Models.DomainModels;
+﻿using EPMS.Models.RequestModels;
+﻿using EPMS.Models.ResponseModels;
+﻿using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
+﻿using EPMS.Web.Models;
+﻿using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobApplicant;
 ﻿using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity.Owin;
+﻿using JobApplicant = EPMS.Models.DomainModels.JobApplicant;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -64,6 +77,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     jobApplicantViewModel.JobApplicant.RecCreatedBy = User.Identity.GetUserId();
                     jobApplicantViewModel.JobApplicant.RecCreatedDt = DateTime.Now;
+                    jobApplicantViewModel.JobApplicant.RecLastUpdatedBy = User.Identity.GetUserId();
+                    jobApplicantViewModel.JobApplicant.RecLastUpdatedDt = DateTime.Now;
                     JobApplicant modelToSave = jobApplicantViewModel.JobApplicant.CreateFrom();
                     modelToSave.JobOfferedId = jobApplicantViewModel.JobOffered.JobOfferedId;
 
@@ -71,7 +86,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         TempData["message"] = new MessageViewModel { Message = "Job Applicant has been submitted.", IsSaved = true };
                         jobApplicantViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Jobs");
                     }
                 }
 
@@ -81,10 +96,62 @@ namespace EPMS.Web.Areas.HR.Controllers
             catch (Exception e)
             {
                 TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
-                return RedirectToAction("Jobs", e);
+                return RedirectToAction("Apply", e);
             }
 
             return View(jobApplicantViewModel);
+        }
+
+        public ActionResult JobApplicantList()
+        {
+            JobApplicantSearchRequest jobApplicantSearchRequest = new JobApplicantSearchRequest();
+            JobApplicantListViewModel jobApplicantListViewModel = new JobApplicantListViewModel
+            {
+                SearchRequest = jobApplicantSearchRequest
+            };
+            return View(jobApplicantListViewModel);
+        }
+        
+        [HttpPost]
+        public ActionResult JobApplicantList(JQueryDataTableParamModel param)
+        {
+            
+            JobApplicantSearchRequest jobApplicantSearchRequest = new JobApplicantSearchRequest();
+            jobApplicantSearchRequest.SearchString = Request["search"];
+            var jobApplicants = jobApplicantService.GetJobApplicantList(jobApplicantSearchRequest);
+
+            List<ApplicantModel> jobApplicantList =
+                jobApplicants.JobApplicants.Select(x => x.CreateFromApplicant()).ToList();
+
+            JobApplicantListViewModel jobApplicantListViewModel = new JobApplicantListViewModel
+            {
+                aaData = jobApplicantList,
+                iTotalRecords = Convert.ToInt32(jobApplicants.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(jobApplicantList.Count()),
+                sEcho = param.sEcho,
+            };
+            return Json(jobApplicantListViewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UploadUserPhoto()
+        {
+            HttpPostedFileBase userCv = Request.Files[0];
+            try
+            {
+                //Save File to Folder
+                if ((userCv != null))
+                {
+                    var filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userCv.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ApplicantCv"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    userCv.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { filename = userCv.FileName, size = userCv.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

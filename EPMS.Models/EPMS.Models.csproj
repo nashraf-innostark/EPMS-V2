@@ -99,6 +99,7 @@
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
+    <Compile Include="Common\JobApplicantByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="RequestModels\EmployeeRequestSearchRequest.cs" />
     <Compile Include="RequestModels\EmployeeSearchRequset.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
+    <Compile Include="RequestModels\JobApplicantSearchRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
+    <Compile Include="ResponseModels\JobApplicantResponse.cs" />
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
   </ItemGroup>
