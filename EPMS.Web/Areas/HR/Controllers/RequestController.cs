@@ -14,11 +14,11 @@ using EPMS.Web.ViewModels.Request;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
+using EmployeeRequest = EPMS.Web.Models.Request;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
-    
+    [Authorize]
     public class RequestController : BaseController
     {
         private readonly IEmployeeRequestService employeeRequestService;
@@ -38,7 +38,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
             Session["PageMetaData"] = null;
 
-            EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
+            RequestListViewModel viewModel = new RequestListViewModel();
             
             viewModel.SearchRequest = searchRequest ?? new EmployeeRequestSearchRequest();
             
@@ -46,9 +46,10 @@ namespace EPMS.Web.Areas.HR.Controllers
             return View(viewModel);
         }
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "RequestIndex")]
         public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
         {
-            EmployeeRequestViewModel viewModel = new EmployeeRequestViewModel();
+            RequestListViewModel viewModel = new RequestListViewModel();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             if (userRole != null && userRole.Name == "Admin")
@@ -59,21 +60,21 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 searchRequest.Requester = aspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
             }
-            var employeeRequestResponse = employeeRequestService.LoadAllRequests(searchRequest);
-            var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+            var requestResponse = employeeRequestService.LoadAllRequests(searchRequest);
+            var data = requestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
             var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
             if (employeeRequests.Any())
             {
                 viewModel.aaData = employeeRequests;
-                viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
-                viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
-                viewModel.sEcho = employeeRequestResponse.EmployeeRequests.Count();
+                viewModel.iTotalRecords = requestResponse.TotalCount;
+                viewModel.iTotalDisplayRecords = requestResponse.EmployeeRequests.Count();
+                viewModel.sEcho = 1;
             }
             else
             {
                 viewModel.aaData = Enumerable.Empty<EmployeeRequest>();
-                viewModel.iTotalRecords = employeeRequestResponse.TotalCount;
-                viewModel.iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
+                viewModel.iTotalRecords = requestResponse.TotalCount;
+                viewModel.iTotalDisplayRecords = requestResponse.EmployeeRequests.Count();
                 viewModel.sEcho = 1;
             }
             // Keep Search Request in Session
@@ -84,53 +85,60 @@ namespace EPMS.Web.Areas.HR.Controllers
         [SiteAuthorize(PermissionKey = "RequestCreate")]
         public ActionResult Create(long? id)
         {
-            EmployeeRequestViewModel requestViewModel = new EmployeeRequestViewModel();
+            RequestViewModel requestViewModel = new RequestViewModel();
+            var userId = User.Identity.GetUserId();
+            if (userId == null)
+                RedirectToAction("Login", "Account");
             AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
             ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
             if (User.Identity.GetUserId() != null)
             {
                 if (id != null)
                 {
-                    var employeeRequest = employeeRequestService.Find((long)id);
+                    var request = employeeRequestService.Find((long)id);
                     //Check if current request is related to logedin user.
-                    if (employeeRequest.EmployeeId == currentUser.EmployeeId || ViewBag.UserRole == "Admin")
+                    if (request.EmployeeId == currentUser.EmployeeId || ViewBag.UserRole == "Admin")
                     {
-                        requestViewModel.EmployeeRequest = employeeRequest.CreateFromServerToClient();
-                        requestViewModel.EmployeeRequestDetail = employeeRequest.RequestDetails.FirstOrDefault().CreateFromServerToClient();
-                        if(employeeRequest.RequestDetails.Count>1)
-                            requestViewModel.EmployeeRequestReply = employeeRequest.RequestDetails.Single(x => x.RowVersion == 1).CreateFromServerToClient();
+                        requestViewModel.Request = request.CreateFromServerToClient();
+                        requestViewModel.RequestDetail = request.RequestDetails.FirstOrDefault().CreateFromServerToClient();
+                        requestViewModel.RequestDesc = requestViewModel.RequestDetail.RequestDesc;
+                        if (request.RequestDetails.Count > 1)
+                            requestViewModel.RequestReply = request.RequestDetails.Single(x => x.RowVersion == 1).CreateFromServerToClient();
                     }
                 }
                 else if (currentUser.EmployeeId > 0)
                 {
-                    requestViewModel.EmployeeRequest.RequestDate = DateTime.Now;
-                    requestViewModel.EmployeeRequest.Employee = currentUser.Employee.CreateFromServerToClient();
+                    requestViewModel.Request.RequestDate = DateTime.Now;
+                    requestViewModel.Request.EmployeeId = Convert.ToInt64(currentUser.EmployeeId);
+                    requestViewModel.Request.EmployeeNameA = currentUser.Employee.EmployeeNameA;
+                    requestViewModel.Request.EmployeeNameE = currentUser.Employee.EmployeeNameE;
+                    requestViewModel.Request.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
+                    requestViewModel.Request.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
                 }
             }
-            if (requestViewModel.EmployeeRequestDetail.IsApproved)
+            if (requestViewModel.RequestDetail.IsApproved)
                 ViewBag.MessageVM = new MessageViewModel { Message = "The request has been accepted, now you are unable to make changes in this request.", IsInfo = true };
             return View(requestViewModel);
         }
         // Post: HR/Request/Create
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
-        public ActionResult Create(EmployeeRequestViewModel requestViewModel)
+        public ActionResult Create(RequestViewModel requestViewModel)
         {
             try
             {
-                requestViewModel.EmployeeRequest.EmployeeId = requestViewModel.EmployeeRequest.Employee.EmployeeId;
                 //update
-                if (requestViewModel.EmployeeRequest.RequestId > 0)
+                if (requestViewModel.Request.RequestId > 0)
                 {
-                    requestViewModel.EmployeeRequestReply.IsReplied = true;
-                    requestViewModel.EmployeeRequestReply.RequestId = requestViewModel.EmployeeRequest.RequestId;
-                    requestViewModel.EmployeeRequestReply.RequestDesc = requestViewModel.EmployeeRequestDetail.RequestDesc;
-                    requestViewModel.EmployeeRequestReply.RowVersion = requestViewModel.EmployeeRequestDetail.RowVersion+1;
-                    requestViewModel.EmployeeRequestReply.RecCreatedBy = User.Identity.GetUserId();
-                    requestViewModel.EmployeeRequestReply.RecCreatedDt = DateTime.Now;
-                    requestViewModel.EmployeeRequestReply.RecLastUpdatedBy = User.Identity.GetUserId();
-                    requestViewModel.EmployeeRequestReply.RecLastUpdatedDt = DateTime.Now;
-                    employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestReply.CreateFromClientToServer());
+                    requestViewModel.RequestReply.IsReplied = true;
+                    requestViewModel.RequestReply.RequestId = requestViewModel.Request.RequestId;
+                    requestViewModel.RequestReply.RequestDesc = requestViewModel.RequestDesc;
+                    requestViewModel.RequestReply.RowVersion = requestViewModel.RequestDetail.RowVersion + 1;
+                    requestViewModel.RequestReply.RecCreatedBy = User.Identity.GetUserId();
+                    requestViewModel.RequestReply.RecCreatedDt = DateTime.Now;
+                    requestViewModel.RequestReply.RecLastUpdatedBy = User.Identity.GetUserId();
+                    requestViewModel.RequestReply.RecLastUpdatedDt = DateTime.Now;
+                    employeeRequestService.AddRequestDetail(requestViewModel.RequestReply.CreateFromClientToServer());
 
                     TempData["message"] = new MessageViewModel
                     {
@@ -141,24 +149,24 @@ namespace EPMS.Web.Areas.HR.Controllers
                 // create new
                 else
                 {
-                    requestViewModel.EmployeeRequest.RequestDate = DateTime.Now;
+                    requestViewModel.Request.RequestDate = DateTime.Now;
 
-                    requestViewModel.EmployeeRequest.RecCreatedBy = User.Identity.GetUserId();
-                    requestViewModel.EmployeeRequest.RecCreatedDt = DateTime.Now;
-                    requestViewModel.EmployeeRequest.RecLastUpdatedBy = User.Identity.GetUserId();
-                    requestViewModel.EmployeeRequest.RecLastUpdatedDt = DateTime.Now;
+                    requestViewModel.Request.RecCreatedBy = User.Identity.GetUserId();
+                    requestViewModel.Request.RecCreatedDt = DateTime.Now;
+                    requestViewModel.Request.RecLastUpdatedBy = User.Identity.GetUserId();
+                    requestViewModel.Request.RecLastUpdatedDt = DateTime.Now;
 
                     //Add Request to Db, and get RequestId
-                    requestViewModel.EmployeeRequest.RequestId = employeeRequestService.AddRequest(requestViewModel.EmployeeRequest.CreateFromClientToServer());
-                    if (requestViewModel.EmployeeRequest.RequestId > 0)
+                    requestViewModel.Request.RequestId = employeeRequestService.AddRequest(requestViewModel.Request.CreateFromClientToServer());
+                    if (requestViewModel.Request.RequestId > 0)
                     {
                         //Add RequestDetail
-                        requestViewModel.EmployeeRequestDetail.RequestId = requestViewModel.EmployeeRequest.RequestId;
-                        requestViewModel.EmployeeRequestDetail.RecCreatedBy = User.Identity.GetUserId();
-                        requestViewModel.EmployeeRequestDetail.RecCreatedDt = DateTime.Now;
-                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
-                        requestViewModel.EmployeeRequestDetail.RecLastUpdatedDt = DateTime.Now;
-                        employeeRequestService.AddRequestDetail(requestViewModel.EmployeeRequestDetail.CreateFromClientToServer());
+                        requestViewModel.RequestDetail.RequestId = requestViewModel.Request.RequestId;
+                        requestViewModel.RequestDetail.RecCreatedBy = User.Identity.GetUserId();
+                        requestViewModel.RequestDetail.RecCreatedDt = DateTime.Now;
+                        requestViewModel.RequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
+                        requestViewModel.RequestDetail.RecLastUpdatedDt = DateTime.Now;
+                        employeeRequestService.AddRequestDetail(requestViewModel.RequestDetail.CreateFromClientToServer());
                         TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
                     }
                 }

@@ -7,11 +7,11 @@ namespace EPMS.Web.ViewModels.Employee
         public EmployeeDetailViewModel()
         {
             EmployeeViewModel = new EmployeeViewModel();
-            EmployeeRequestViewModel = new EmployeeRequestViewModel();
+            RequestViewModel = new RequestViewModel();
         }
         public EmployeeViewModel EmployeeViewModel { get; set; }
 
-        public EmployeeRequestViewModel EmployeeRequestViewModel { get; set; }
+        public RequestViewModel RequestViewModel { get; set; }
         public string Role { get; set; }
     }
 }

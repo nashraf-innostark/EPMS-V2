@@ -8,9 +8,9 @@
         public GetPagedListRequest()
         {
             IsAsc = true;
-            SortBy = 2;
+            SortBy = 1;
             PageNo = 1;
-            PageSize = 5;
+            PageSize = 10;
         }
 
         //user select page size or number of records to be displayed

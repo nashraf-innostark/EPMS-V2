@@ -19,7 +19,7 @@ using EPMS.Web.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Employee = EPMS.Web.Models.Employee;
-using EmployeeRequest = EPMS.Web.Models.EmployeeRequest;
+using EmployeeRequest = EPMS.Web.Models.Request;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {

@@ -97,24 +97,21 @@
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var employee = full["Employee"];
-                            return employee.EmployeeNameE;
+                            return full["EmployeeNameE"];
                         }
                     },
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var employee = full["Employee"];
-                            return employee.EmployeeJobId;
+                            return full["EmployeeJobId"];
                         }
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var employee = full["Employee"];
-                            return employee.JobTitle.Department.DepartmentNameE;
+                            return full["DepartmentNameE"];
                         }
                     },
                     {
@@ -193,7 +190,12 @@
                     }
                 ],
                 "sAjaxSource": siteUrl + "/Request/Index",
-                "sServerMethod": "POST"
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    //"sProcessing": "Fetching record(s)",
+                    "sInfoEmpty": "No record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                }
             });
         }
         $(".dataTables_length select").select2({

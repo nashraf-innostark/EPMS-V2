@@ -21,7 +21,6 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
-
         public virtual EmployeeRequest EmployeeRequest { get; set; }
     }
 }

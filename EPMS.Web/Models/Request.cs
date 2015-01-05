@@ -1,19 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
-    public class EmployeeRequest
+    public class Request
     {
-        public EmployeeRequest()
+        public Request()
         {
-            Employee = new Employee();
             RequestDetail = new RequestDetail();
         }
-
+        public string EmployeeNameE { get; set; }
+        public string EmployeeNameA { get; set; }
+        public string DepartmentNameE { get; set; }
+        public string DepartmentNameA { get; set; }
         public long RequestId { get; set; }
         public long EmployeeId { get; set; }
+        public string EmployeeJobId { get; set; }
         [Required]
         [Display(Name = "Topic")]
         public string RequestTopic { get; set; }
@@ -26,7 +28,6 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RequestDateString { get; set; }
-        public Employee Employee { get; set; }
         public RequestDetail RequestDetail { get; set; }
     }
 }
