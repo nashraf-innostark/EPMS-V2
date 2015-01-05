@@ -1,4 +1,5 @@
-﻿using ApiModels = EPMS.Web.Models;
+﻿using System.Web.Http.ModelBinding;
+using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -29,11 +30,27 @@ namespace EPMS.Web.ModelMappers
                 Nationality = source.Nationality,
                 IqamaOrNationalIdNo = source.IqamaOrNationalIdNo,
                 DrivingLicense = source.DrivingLicense,
+                ApplicantCvPath = source.ApplicantCvPath,
                 JobOfferedId = source.JobOfferedId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+        }
+
+        /// <summary>
+        /// To Convert Job Applicant Model in Applicant Model for Job Applicants List
+        /// </summary>
+        public static Models.ApplicantModel CreateFromApplicant(this DomainModels.JobApplicant source)
+        {
+            return new Models.ApplicantModel()
+            {
+                ApplicantName = source.ApplicantName,
+                ApplicantMobile = source.ApplicantMobile,
+                ApplicantEmail = source.ApplicantEmail,
+                JobOffered = source.JobOffered.JobTitle.JobTitleNameE,
+                DepartmentName = source.JobOffered.JobTitle.Department.DepartmentNameE
             };
         }
     }

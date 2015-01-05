@@ -282,11 +282,12 @@
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
+    <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
-    <Compile Include="Models\EmployeeRequest.cs" />
+    <Compile Include="Models\Request.cs" />
     <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitleAndDepartment.cs" />
@@ -385,12 +386,16 @@
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
-    <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs" />
+    <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
+    <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
-    <Compile Include="ViewModels\Request\EmployeeRequestViewModel.cs" />
+    <Compile Include="ViewModels\Request\RequestViewModel.cs" />
+    <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -1831,6 +1836,7 @@
     <Content Include="Areas\HR\Views\JobOffered\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -2179,6 +2185,7 @@
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApplicantCvs\" />
     <Folder Include="App_Data\ProfileImages\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />

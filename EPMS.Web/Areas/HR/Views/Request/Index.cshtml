@@ -97,24 +97,21 @@
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var employee = full["Employee"];
-                            return employee.EmployeeNameE;
+                            return full["EmployeeNameE"];
                         }
                     },
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var employee = full["Employee"];
-                            return employee.EmployeeJobId;
+                            return full["EmployeeJobId"];
                         }
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var employee = full["Employee"];
-                            return employee.JobTitle.Department.DepartmentNameE;
+                            return full["DepartmentNameE"];
                         }
                     },
                     {
@@ -193,12 +190,32 @@
                     }
                 ],
                 "sAjaxSource": siteUrl + "/Request/Index",
-                "sServerMethod": "POST"
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    //"sProcessing": "Fetching record(s)",
+                    "sInfoEmpty": "No record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                }
             });
         }
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
+        $(".dataTables_filter input").unbind()
+           .bind("input", function (e) {
+               // Bind our desired behavior
+               if (this.value.length >= 3 || e.keyCode == 13) {
+                   $("#searchString").val(this.value);
+                   //oTable.fnClearTable();
+                   //$('#employeeTable').empty();
+                   oTable.fnDraw();
+               }
+               if (this.value == "") {
+                   $("#searchString").val(this.value);
+                   oTable.fnDraw();
+               }
+               return;
+           });
     });
 </script>
 

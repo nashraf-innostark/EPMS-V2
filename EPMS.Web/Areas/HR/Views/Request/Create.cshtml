@@ -1,8 +1,8 @@
-﻿@model  EPMS.Web.ViewModels.Request.EmployeeRequestViewModel
+﻿@model  EPMS.Web.ViewModels.Request.RequestViewModel
 @{
-    ViewBag.Title = Model.EmployeeRequest.RequestId > 0 ? EPMS.Web.Resources.HR.Request.UpdatePageTitle : EPMS.Web.Resources.HR.Request.CreatePageTitle;
+    ViewBag.Title = Model.Request.RequestId > 0 ? EPMS.Web.Resources.HR.Request.UpdatePageTitle : EPMS.Web.Resources.HR.Request.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var requestToBe = Model.EmployeeRequest.RequestId > 0 ? "Updated" : "Created";
+    var requestToBe = Model.Request.RequestId > 0 ? "Updated" : "Created";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
@@ -34,12 +34,12 @@
 <!-- Form starts.  -->
 @using (Html.BeginForm("Create", "Request", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(model => model.EmployeeRequest.RequestId)
-    @Html.HiddenFor(model => model.EmployeeRequestDetail.RecCreatedBy)
-    @Html.HiddenFor(model => model.EmployeeRequestDetail.RecCreatedDt)
-    @Html.HiddenFor(model => model.EmployeeRequestDetail.IsReplied)
-    @Html.HiddenFor(model => model.EmployeeRequestDetail.RequestDesc)
-    @Html.HiddenFor(model => model.EmployeeRequestDetail.RowVersion)
+    @Html.HiddenFor(model => model.Request.RequestId)
+    @Html.HiddenFor(model => model.RequestDetail.RecCreatedBy)
+    @Html.HiddenFor(model => model.RequestDetail.RecCreatedDt)
+    @Html.HiddenFor(model => model.RequestDetail.IsReplied)
+    @Html.HiddenFor(model => model.RequestDesc)
+    @Html.HiddenFor(model => model.RequestDetail.RowVersion)
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     <div class="container-fluid request">
         <!--Input Field of Request begin-->
@@ -51,13 +51,13 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeNameE, new {@readonly = "readonly"})
+                        @Html.TextBoxFor(model => model.Request.EmployeeNameE, new {@readonly = "readonly"})
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeNameA, new { @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.Request.EmployeeNameA, new { @readonly = "readonly" })
                     </div>
                 }
             </div>
@@ -69,7 +69,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.Employee.EmployeeId, new { @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Request.EmployeeId, new { @readonly = "readonly" })
                 </div>
             </div>
         </div>
@@ -82,13 +82,13 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameE, new { @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.Request.DepartmentNameE, new { @readonly = "readonly" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequest.Employee.JobTitle.Department.DepartmentNameA, new { @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.Request.DepartmentNameA, new { @readonly = "readonly" })
                     </div>
                 }
             </div>
@@ -101,8 +101,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestDate, new { @class = "datepickerGregorian",@readonly="readonly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestDate)
+                    @Html.TextBoxFor(model => model.Request.RequestDate, new { @class = "datepickerGregorian",@readonly="readonly" })
+                    @Html.ValidationMessageFor(model => model.Request.RequestDate)
                 </div>
             </div>
         </div>
@@ -113,8 +113,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeRequest.RequestTopic, new { @class = "toBeReadOnly" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequest.RequestTopic)
+                    @Html.TextBoxFor(model => model.Request.RequestTopic, new { @class = "toBeReadOnly" })
+                    @Html.ValidationMessageFor(model => model.Request.RequestTopic)
                 </div>
             </div>
         </div>
@@ -125,8 +125,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(model => model.EmployeeRequestDetail.RequestDesc, new { @class = "toBeDisabled", @id = "RequestDesc" })
-                    @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.RequestDesc)
+                    @Html.TextAreaFor(model => model.RequestDetail.RequestDesc, new { @class = "RequestDescDisable", @id = "RequestDescCK" })
+                    @Html.ValidationMessageFor(model => model.RequestDetail.RequestDesc)
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
-                    @Html.CheckBoxFor(model => model.EmployeeRequest.IsMonetary, new { @id = "IsMonetary"})
+                    @Html.CheckBoxFor(model => model.Request.IsMonetary, new { @id = "IsMonetary"})
                 </div>
             </div>
         </div>
@@ -150,8 +150,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanAmount, new { @class = "toBeReadOnly", @id = "LoanAmount" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanAmount)
+                        @Html.TextBoxFor(model => model.RequestDetail.LoanAmount, new { @class = "toBeReadOnly", @id = "LoanAmount" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.LoanAmount)
                     </div>
                 </div>
             </div>
@@ -172,8 +172,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LoanDate)
+                        @Html.TextBoxFor(model => model.RequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.LoanDate)
                     </div>
                 </div>
             </div>
@@ -184,8 +184,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.InstallmentAmount, new { @class = "toBeReadOnly", @id = "InstallmentAmount" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.InstallmentAmount)
+                        @Html.TextBoxFor(model => model.RequestDetail.InstallmentAmount, new { @class = "toBeReadOnly", @id = "InstallmentAmount" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.InstallmentAmount)
                     </div>
                 </div>
             </div>
@@ -196,8 +196,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeReadOnly" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.NumberOfMonths)
+                        @Html.TextBoxFor(model => model.RequestDetail.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeReadOnly" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.NumberOfMonths)
                     </div>
                 </div>
             </div>
@@ -208,8 +208,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @readonly = "readonly", @id = "FirstInstallmentDate" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.FirstInstallmentDate)
+                        @Html.TextBoxFor(model => model.RequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @readonly = "readonly", @id = "FirstInstallmentDate" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.FirstInstallmentDate)
                     </div>
                 </div>
             </div>
@@ -220,18 +220,18 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeRequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeReadOnly datepickerGregorian", @readonly = "readonly", @id = "LastInstallmentDate" })
-                        @Html.ValidationMessageFor(model => model.EmployeeRequestDetail.LastInstallmentDate)
+                        @Html.TextBoxFor(model => model.RequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeReadOnly datepickerGregorian", @readonly = "readonly", @id = "LastInstallmentDate" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.LastInstallmentDate)
                     </div>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid requestBtn">
             <div class="span3 span-inset">
-                <button type="submit" class="btn toBeDisabled">@ViewBag.Title</button>
+                <button type="submit" class="btn toBeDisabled">Create Request</button>
             </div>
             <div class="span3 span-inset">
-                <a href="~/HR/Request/Delete/@Model.EmployeeRequest.RequestId" class="btn" id="requestDeleteBtn" style="display: none">Delete Request</a>
+                <a href="~/HR/Request/Delete/@Model.Request.RequestId" class="btn" id="requestDeleteBtn" style="display: none">Delete Request</a>
             </div>
         </div>
         <!--End    --    Input Field of RequestDetail-->
@@ -251,7 +251,7 @@
                 </div>
                 <div class="span9 span-inset">
                     <div data-on-label="Accept" data-off-label="Decline" class="switch switch-small" data-on="success" data-off="danger">
-                        @Html.CheckBoxFor(model => model.EmployeeRequestReply.IsApproved, new { @id = "RequestApproved", @onchange = "CopyRequestToReply()" })
+                        @Html.CheckBoxFor(model => model.RequestReply.IsApproved, new { @id = "RequestApproved", @onchange = "CopyRequestToReply()" })
                     </div>
                 </div>
             </div>
@@ -262,8 +262,8 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextAreaFor(model => model.EmployeeRequestReply.RequestReply, new { @class = "toBeDisabled", @id = "RequestReply" })
-                            @Html.ValidationMessageFor(model => model.EmployeeRequestReply.RequestReply)
+                            @Html.TextAreaFor(model => model.RequestReply.RequestReply, new { @class = "RequestDescDisable", @id = "RequestReplyCK" })
+                            @Html.ValidationMessageFor(model => model.RequestReply.RequestReply)
                         </div>
                     </div>
                 </div>
@@ -274,8 +274,8 @@
                         </div>
                         <div class="span2">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanAmount, new { @class = "toBeReadOnly", @id = "LoanAmountREPLY" })
-                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanAmount)
+                                @Html.TextBoxFor(model => model.RequestReply.LoanAmount, new { @class = "toBeReadOnly", @id = "LoanAmountREPLY" })
+                                @Html.ValidationMessageFor(model => model.RequestReply.LoanAmount)
                             </div>
                         </div>
                     </div>
@@ -296,8 +296,8 @@
                         </div>
                         <div class="span2">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.EmployeeRequestReply.LoanDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @id = "LoanDateEnREPLY", onchange = "GregorianToHijri(this,'#LoanDateArREPLY')", @readonly = true })
-                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LoanDate)
+                                @Html.TextBoxFor(model => model.RequestReply.LoanDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @id = "LoanDateEnREPLY", onchange = "GregorianToHijri(this,'#LoanDateArREPLY')", @readonly = true })
+                                @Html.ValidationMessageFor(model => model.RequestReply.LoanDate)
                             </div>
                         </div>
                     </div>
@@ -308,8 +308,8 @@
                         </div>
                         <div class="span2">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.EmployeeRequestReply.InstallmentAmount, new { @class = "toBeReadOnly", @id = "InstallmentAmountREPLY" })
-                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.InstallmentAmount)
+                                @Html.TextBoxFor(model => model.RequestReply.InstallmentAmount, new { @class = "toBeReadOnly", @id = "InstallmentAmountREPLY" })
+                                @Html.ValidationMessageFor(model => model.RequestReply.InstallmentAmount)
                             </div>
                         </div>
                     </div>
@@ -320,8 +320,8 @@
                         </div>
                         <div class="span2">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.EmployeeRequestReply.NumberOfMonths, new { @id = "NumberOfMonthsREPLY", @class = "toBeReadOnly" })
-                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.NumberOfMonths)
+                                @Html.TextBoxFor(model => model.RequestReply.NumberOfMonths, new { @id = "NumberOfMonthsREPLY", @class = "toBeReadOnly" })
+                                @Html.ValidationMessageFor(model => model.RequestReply.NumberOfMonths)
                             </div>
                         </div>
                     </div>
@@ -332,8 +332,8 @@
                         </div>
                         <div class="span2">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.EmployeeRequestReply.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @readonly = "readonly", @id = "FirstInstallmentDateREPLY" })
-                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.FirstInstallmentDate)
+                                @Html.TextBoxFor(model => model.RequestReply.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @readonly = "readonly", @id = "FirstInstallmentDateREPLY" })
+                                @Html.ValidationMessageFor(model => model.RequestReply.FirstInstallmentDate)
                             </div>
                         </div>
                     </div>
@@ -344,8 +344,8 @@
                         </div>
                         <div class="span2">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.EmployeeRequestReply.LastInstallmentDate, new { @class = "cursorHand toBeReadOnly datepickerGregorian", @readonly = "readonly", @id = "LastInstallmentDateREPLY" })
-                                @Html.ValidationMessageFor(model => model.EmployeeRequestReply.LastInstallmentDate)
+                                @Html.TextBoxFor(model => model.RequestReply.LastInstallmentDate, new { @class = "cursorHand toBeReadOnly datepickerGregorian", @readonly = "readonly", @id = "LastInstallmentDateREPLY" })
+                                @Html.ValidationMessageFor(model => model.RequestReply.LastInstallmentDate)
                             </div>
                         </div>
                     </div>
@@ -363,31 +363,41 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        CKEDITOR.replace('RequestDesc');
-        CKEDITOR.replace('RequestReply');
+        CKEDITOR.replace('RequestDescCK');
+        CKEDITOR.replace('RequestReplyCK');
         DivHideShow('IsMonetary', 'monetaryRequestControls');
         DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
         //If request has been approved by admin, disable all fields, and just show records
-        if ('@Model.EmployeeRequestReply.IsReplied'=='True') {
+        if ('@Model.RequestReply.IsReplied'=='True') {
             $('.toBeReadOnly:input').attr('readonly', true);
             $('.toBeDisabled:input').attr('disabled', true);
             $("#requestReplyControls").show();
             $(".requestBtn").hide();
             $(".replyBtn").hide();
+            $('.RequestDescDisable').attr('disabled', true);
         }
+
+            //If user is Admin, Disable Request and enable Reply Fields
         else if ($("#UserRole").val() == "Admin") {
             $('.request .toBeReadOnly:input').attr('readonly', true);
             $('.request .toBeDisabled:input').attr('disabled', true);
-            $("#requestReplyControls").show();
-            $(".replyBtn").show();
             $(".requestBtn").hide();
+            if (parseInt('@Model.Request.RequestId') > 0) {
+                $("#requestReplyControls").show();
+                $(".replyBtn").show();
+                $('#RequestDescCK').attr('disabled', true);
+            } else {
+                $('.request .toBeReadOnly:input').attr('readonly', false);
+                $('.request .toBeDisabled:input').attr('disabled', false);
+                $(".requestBtn").show();
+            }
         }
-            //If user is Admin, Disable Request and enable Reply Fields
-        else if ('@Model.EmployeeRequest.RequestId' > 0) {
+        else if (parseInt('@Model.Request.RequestId') > 0) {
             $('.request .toBeReadOnly:input').attr('readonly', true);
             $('.request .toBeDisabled:input').attr('disabled', true);
             $("#requestDeleteBtn").show();
             $(".replyBtn").hide();
+            $('.RequestDescDisable').attr('disabled', true);
         } else {
         }
         //Convert Gregorian to Hijri
@@ -476,7 +486,7 @@
     }
     function CopyRequestToReply() {
         if ($('#RequestApproved').is(":checked")) {
-            if ('@Model.EmployeeRequestReply.IsReplied' == 'False') {
+            if ('@Model.RequestReply.IsReplied' == 'False') {
                 $('#LoanAmountREPLY').val($('#LoanAmount').val());
                 $('#LoanDateArREPLY').val($('#LoanDateAr').val());
                 $('#LoanDateEnREPLY').val($('#LoanDateEn').val());
@@ -489,7 +499,7 @@
 
         } else {
             DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
-            if ('@Model.EmployeeRequestReply.IsReplied' == 'False') {
+            if ('@Model.RequestReply.IsReplied' == 'False') {
             $('#LoanAmountREPLY').val('');
             $('#LoanDateArREPLY').val('');
             $('#LoanDateEnREPLY').val('');

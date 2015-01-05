@@ -46,7 +46,6 @@ namespace EPMS.Web.ViewModels.Employee
         public string PageTitle { get; set; }
         public double Deduction1 { get; set; }
         public double Deduction2 { get; set; }
-        public JQueryDataTableParamModel Param;
 
     }
 }

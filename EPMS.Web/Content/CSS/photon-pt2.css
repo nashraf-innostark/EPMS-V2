@@ -901,6 +901,27 @@ a:active,
   float: left;
   margin-right: 10px;
 }
+.profile ul li:first-child{
+	height:80px !important;
+}
+.profile ul .avatar-image {
+  float: left;
+
+}
+.profile ul .avatar-image img{
+   position: relative;
+  border: 1px solid #293038;
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+  top: -1px;
+  width: 50px;
+	height: 60px;
+	margin:0px;
+}
+.profile ul li:first-child div{
+ line-height:80px;
+}
 .widget-latest-users ul .avatar-image img {
   position: relative;
   border: 1px solid #293038;
@@ -983,6 +1004,40 @@ a:active,
 .widget-latest-users .tooltip .tooltip-inner .text-section .user-info {
   color: #999999;
 }
+.applyJobWidget{
+ height:400px;
+}
+
+.csstransitions .applyJobWidget  .widget-flipper {
+height:400px;
+}
+.jobsOffred li:last-child{
+	height:175px;
+}
+.jobsOffred li:last-child span{
+
+  display:block;
+  clear:both;
+}
+.jobsOffred li .jobDesc{
+ display:block;
+ clear:both;
+ float:left;
+  height:120px;
+  overflow:scroll;
+  overflow-x:hidden;
+  padding:5px;
+  width: 270px;
+ 
+}
+.jobSectionButton{
+ float:left;
+}
+.applyJobWidget .btn{
+ position:absolute;
+ bottom:0px;
+ left:15px;
+}
 .task-completion .progress-info {
   background: rgba(53, 61, 72, 0.5) !important;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM1M2Q0OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyYTMxM2EiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -1004,7 +1059,7 @@ a:active,
 }
 .task-completion ul li {
   float: left;
-  width: 100px;
+  width: 150px;
   height: 60px;
   padding-top: 10px;
   border-left: 1px solid #5a6168;
@@ -1020,12 +1075,9 @@ a:active,
   height:80px;
 }
 .task-completion ul li:nth-child(3) {
-  border-right: 1px solid transparent;
-}
-
-.task-completion ul li:nth-child(4) {
   border-left: 1px solid transparent;
 }
+
 .task-completion ul li:nth-child(6) {
   border-right: 1px solid transparent;
 }
@@ -1043,6 +1095,22 @@ a:active,
 .task-completion ul li.processed-pct > div {
   float: none;
 }
+.task-completion ul li.processed-pct2 {
+  width: 100%;
+  text-align: center;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+.task-completion ul li.processed-pct2 span {
+  padding-top: 0;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+.task-completion ul li.processed-pct2 > div {
+  float: none;
+}
+
+
 .task-completion ul li span {
   padding-top: 10px;
   display: block;
@@ -1054,6 +1122,38 @@ a:active,
 	Height:100%;
 	cursor:pointer;
 	color:#d1d7df;
+}
+.hideIt{
+	display:none;
+}
+.dashBack{
+ display:none;
+ position:absolute;
+ margin:0px;
+ padding:0px !important;
+ width:20px !important;
+ height:120px !important;
+ top:50px;
+ left:0px;
+ border:none !important;
+}
+.dashNext{
+ display:none;
+ position:absolute;
+ padding:0px !important;
+ width:20px !important;
+ height:120px !important;
+ top:50px;
+ right:0px;
+  border:none !important;
+}
+
+.dashNext a  i{
+   
+   line-height: 114px;
+}
+.dashBack a  i{
+   line-height: 114px;
 }
 .overall-views-graph .tickLabel,
 .realtime-data-graph .tickLabel {
@@ -1394,8 +1494,8 @@ a:active,
   padding: 20px 0px;
 }
 .login-logo img {
-  width: 176px;
-  height: 44px;
+  width: 200px;
+  height: 100px;
 }
 .login-title {
   width: 100%;
@@ -9374,6 +9474,37 @@ li.L9 {
   
  
 }
+
+ .nav-side-menu > li.hrSys:hover a{
+background-color: rgba(115, 71, 34, 0.47) !important;
+}
+.nav-side-menu > li.mainBoard :hover a{
+
+}
+ .nav-side-menu > li.PrSys:hover a{
+background-color:rgba(97, 196, 239, 0.17) !important;
+}
+ .nav-side-menu > li.customerSer:hover a{
+background-color: rgba(39, 109, 126, 0.29) !important;
+}
+ .nav-side-menu > li.meetingsSectoin:hover a{
+background-color: rgba(239, 230, 63, 0.15) !important;
+}
+
+
+ .nav-side-menu > li.notiSys:hover a{
+background-color: rgba(240, 110, 110, 0.27) !important;
+}
+ .nav-side-menu > li.contactList:hover a{
+background-color:rgba(149, 239, 104, 0.28) !important;
+}
+.nav-side-menu > li.companyProf:hover a{
+background-color:rgba(164, 164, 252, 0.39) !important;
+}
+.nav-side-menu > li.helpSection:hover a{
+background-color:rgba(77, 132, 194, 0.32) !important;
+}
+
  .lightBlue{
 	color:rgb(97, 196, 239) !important;
   }
@@ -9395,11 +9526,20 @@ li.L9 {
   .lightYellow{
 	color:rgb(250, 250, 100) !important;
   }
-  
+  .darkGreen{
+	color:rgb(35, 182, 132)  !important;
+  }
+  .darkBlue{
+	color:rgb(77, 132, 194) !important;
+  }
   .employeeImg{
 	height: 100px;
 	margin: 5px;
 	border: 1px solid gray;
+  }
+  
+  .widget-area ul li.ok:hover{
+	
   }
   
   .scroll-top-wrapper {
@@ -9470,4 +9610,47 @@ li.L9 {
 }
 .widget-front a{
 	color: #d1d7df;
+}
+.deleteRow{
+margin-top: 20px;
+cursor:pointer;
+}
+.table{background: #eee;}
+.table.table - invoice {
+        border - top: 1px solid# bbb
+    }.table.table - invoice thead tr th {
+        text - align: left
+		
+    }.table.table - invoice thead tr th.tr {
+        text - align: right
+    }.table.table - invoice.total {
+        text - align: right
+    }.table.table - invoice.taxes {
+        border - left: 0;
+        text - align: right
+    }.table.table - invoice.taxes.light {
+        color: #777;margin-right:10px}.table.table-invoice .taxes .totalprice{font-weight:bold}.invoice-info{padding:10px;*zoom:1}.invoice-info:after{content:"";display:table;clear:both}.invoice-info .invoice-name{font-size:24px;margin-bottom:10px}.invoice-info .invoice-from,.invoice-info .invoice-to{float:left}.invoice-infos{float:right}.invoice-info .invoice-from span,.invoice-info .invoice-to span{font-weight:bold;color:# 777;
+        display: block
+    }
+	.companyInvImg{ height: 100px;margin:5px 5px 5px 10px;border: 1px solid gray;}
+	.invoice - info.invoice - from {
+        margin - right: 100px
+    }.invoice - info.invoice - infos {
+        float: right
+    }.invoice - info.invoice - infos table tr th {
+        text - align: right
+    }.invoice - info.invoice - infos table tr th: first - child {
+        width: 100px;
+        padding - right: 10px
+    }.invoice - payment span {
+        font - weight: bold;
+        color:
+            #777;margin-left:10px}.invoice-payment ul{list-style-type:none;*zoom:1;margin:10px;padding:0}.invoice-payment ul:after{content:"";display:table;clear:both}.invoice-payment ul li{float:left;margin-right:10px}.search-results ul{list-style-type:none;margin:0;padding:0;*zoom:1}.search-results ul:after{content:"";display:table;clear:both}.search-results ul li{*zoom:1;padding:15px;border-top:1px dotted # 999
+    }
+	.invoiceSub{
+		float:right !important;
+	}
+.centTitle{ text-align:center;}
+.print{
+	float:right;
 }

@@ -67,7 +67,7 @@ namespace EPMS.Web.Models
 
         public IEnumerable<Allowance> Allowances { get; set; }
         public JobTitle JobTitle { get; set; }
-        public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
+        public IEnumerable<Request> EmployeeRequests { get; set; }
         public ICollection<Notification> Notifications { get; set; }
         public ICollection<AspNetUser> AspNetUsers { get; set; }
     }
