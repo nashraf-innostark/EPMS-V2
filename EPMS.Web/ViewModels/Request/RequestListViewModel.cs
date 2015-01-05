@@ -19,6 +19,6 @@ namespace EPMS.Web.ViewModels.Request
         /// Total Records Filtered
         /// </summary>
         public int iTotalDisplayRecords;
-        public int sEcho;
+        public string sEcho;
     }
 }

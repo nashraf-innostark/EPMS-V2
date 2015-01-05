@@ -1,4 +1,5 @@
-﻿@{
+﻿@model EPMS.Web.ViewModels.Request.RequestListViewModel
+@{
     ViewBag.Title = EPMS.Web.Resources.HR.Request.Label;
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -27,10 +28,11 @@
 
 
 <form class="form-horizontal">
+    @Html.HiddenFor(model => model.SearchRequest.SearchStr, new { id = "searchString" });
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-                <table id="dataTable" class="table table-striped table-responsive">
+                <table id="dataTable" class="table table-responsive">
                     <thead class="cf sorthead">
                         @if (ViewBag.UserRole == "Admin")
                         {
@@ -74,6 +76,9 @@
                 "bProcessing": true,
                 "bServerSide": true,
                 "bFilter": true,
+                "bLengthChange": true,
+                "bPaginate": true,
+                "bAutoWidth": true,
                 "aoColumns": [
                     {
                         "aTargets": [0],
@@ -91,35 +96,40 @@
                             var id = full["RequestId"];
                             var element = '<a href="Create/' + id + '">' + val + '</a>';
                             return element;
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["EmployeeNameE"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["EmployeeJobId"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["DepartmentNameE"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [6],
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["RequestDateString"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [7],
@@ -133,7 +143,8 @@
                                 status = "Pending";
                             }
                             return status;
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [8],
@@ -141,15 +152,26 @@
                         "mRender": function(data, type, full) {
                             var requestDetail = full["RequestDetail"];
                             return requestDetail.IsReplied ? "Yes" : "No";
-                        }
+                        },
+                        "bSortable": false
                     }
                 ],
+                "fnServerParams": function (aoData) {
+                    debugger
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
                 "sAjaxSource": siteUrl + "/Request/Index",
-                "sServerMethod": "POST"
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    "sLoadingRecords": "Please wait - loading records...",
+                    "sZeroRecords": "No records to display.",
+                    "sProcessing": "Processing...",
+                    "sInfoEmpty": "No entries to display."
+                },
             });
         } else {
             var oTable = $('#dataTable').dataTable({
-                "iDisplayLength": 20,
+                "iDisplayLength": 10,
                 "iDisplayStart": start || 0,
                 "aaSorting": [sortBy],
                 "bProcessing": true,
@@ -172,7 +194,8 @@
                             var Id = full["RequestId"];
                             var element = '<a href="Create/' + Id + '">' + val + '</a>';
                             return element;
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [2],
@@ -186,16 +209,21 @@
                                 status = "Pending";
                             }
                             return status;
-                        }
+                        },
+                        "bSortable": false
                     }
                 ],
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
                 "sAjaxSource": siteUrl + "/Request/Index",
                 "sServerMethod": "POST",
                 "oLanguage": {
-                    //"sProcessing": "Fetching record(s)",
-                    "sInfoEmpty": "No record(s) found",
-                    "sEmptyTable": "No record(s) found",
-                }
+                    "sLoadingRecords": "Please wait - loading records...",
+                    "sZeroRecords": "No records to display.",
+                    "sProcessing": "Processing...",
+                    "sInfoEmpty": "No entries to display."
+                },
             });
         }
         $(".dataTables_length select").select2({

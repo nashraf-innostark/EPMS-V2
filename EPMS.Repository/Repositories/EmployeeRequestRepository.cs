@@ -66,13 +66,17 @@ namespace EPMS.Repository.Repositories
             if (searchRequset.Requester == "Admin")
             {
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeNameE.Contains(searchRequset.EmployeeName))));
+                s => ((string.IsNullOrEmpty(searchRequset.SearchStr)) || (s.RequestTopic.Contains(searchRequset.SearchStr)) ||
+                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchStr)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchStr)) ||
+                    (s.Employee.EmployeeJobId.Contains(searchRequset.SearchStr)) || 
+                    (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchStr)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchStr))
+                    );
             }
             else
             {
                 long employeeId = Convert.ToInt64(searchRequset.Requester);
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeNameE.Contains(searchRequset.EmployeeName))) && 
+                s => ((string.IsNullOrEmpty(searchRequset.SearchStr) || (s.RequestTopic.Contains(searchRequset.SearchStr))) && 
                     (s.EmployeeId.Equals(employeeId)));
             }
             
@@ -83,7 +87,7 @@ namespace EPMS.Repository.Repositories
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new EmployeeRequestResponse { EmployeeRequests = employeeRequests, TotalCount = DbSet.Count(query) };
+            return new EmployeeRequestResponse { EmployeeRequests = employeeRequests, TotalCount = DbSet.Count() };
         }
     }
 }
