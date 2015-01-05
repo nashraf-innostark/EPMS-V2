@@ -9,12 +9,10 @@ namespace EPMS.Web.ViewModels.Employee
         public EmployeeViewModel()
         {
             Employee = new Models.Employee();
-            JobTitle = new Models.JobTitle();
             Allowance = new Allowance();
             SearchRequest = new EmployeeSearchRequset();
         }
         public Models.Employee Employee { get; set; }
-        public Models.JobTitle JobTitle { get; set; }
         public Models.Allowance Allowance { get; set; }
 
         public IEnumerable<EPMS.Models.DomainModels.Department> DepartmentList { get; set; }
@@ -46,6 +44,8 @@ namespace EPMS.Web.ViewModels.Employee
         public string EmployeeName { get; set; }
         public string BtnText { get; set; }
         public string PageTitle { get; set; }
+        public double Deduction1 { get; set; }
+        public double Deduction2 { get; set; }
 
     }
 }

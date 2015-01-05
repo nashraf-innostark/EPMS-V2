@@ -16,6 +16,6 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<Employee> GetEmployeesByDepartmentId(long departmentId);
 
         Employee FindForPayroll(long id, DateTime currTime);
-        Allowance FindForAllownce(long employeeId, DateTime currTime);
+        
     }
 }

@@ -57,15 +57,15 @@
                                 <td>@item.JobOfferedId</td>
                                 @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
                                 {
-                                    <td>@Html.ActionLink(@item.JobTitle.JobTitleNameA, "Create", new { id = item.JobOfferedId }) </td>
-                                    <td>@item.JobTitle.JobTitleDescA</td>
+                                    <td>@Html.ActionLink(@item.JobTitleNameA, "Create", new { id = item.JobOfferedId }) </td>
+                                    <td>@item.JobTitleDescA</td>
                                 }
                                 else
                                 {
-                                    <td>@Html.ActionLink(@item.JobTitle.JobTitleNameE, "Create", new { id = item.JobOfferedId }) </td>
-                                    <td>@item.JobTitle.JobTitleDescE</td>
+                                    <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new { id = item.JobOfferedId }) </td>
+                                    <td>@item.JobTitleDescE</td>
                                 }
-                                <td>@if (item.ShowBasicSalary) { @item.JobTitle.BasicSalary }</td>
+                                <td>@if (item.ShowBasicSalary) { @item.BasicSalary }</td>
                                 <td>@item.NoOfPosts</td>
                                 <td>@item.IsOpen</td>
                             </tr>

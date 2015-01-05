@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNew" xml:space="preserve">
-    <value>Add New Job Title AR</value>
+    <value>انشاء جديد</value>
   </data>
   <data name="BasicSalary" xml:space="preserve">
     <value>Basic Salary AR</value>
@@ -133,7 +133,7 @@
     <value>Create Job Title AR</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>Department  AR</value>
+    <value>الادارة</value>
   </data>
   <data name="DepartmentOnCreate" xml:space="preserve">
     <value>Department AR</value>
@@ -148,16 +148,19 @@
     <value>Edit AR</value>
   </data>
   <data name="IndexLabel" xml:space="preserve">
-    <value>All Job Titles AR</value>
+    <value>قائمة الاسماء الوظيفية</value>
   </data>
   <data name="Label" xml:space="preserve">
     <value>Job Titles' List AR</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Job Title Name AR</value>
+    <value>اسم الوظيفي</value>
   </data>
   <data name="NameOnCreate" xml:space="preserve">
     <value>Job Title Name AR</value>
+  </data>
+  <data name="NoOfEmployees" xml:space="preserve">
+    <value>عدد الموظفين</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save AR</value>

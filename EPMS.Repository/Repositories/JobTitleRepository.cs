@@ -100,5 +100,11 @@ namespace EPMS.Repository.Repositories
                     jt =>
                         (jt.JobTitleNameE == jobTitle.JobTitleNameE || jt.JobTitleNameA == jobTitle.JobTitleNameA) && (jt.DepartmentId == jobTitle.DepartmentId));
         }
+
+        public IQueryable<JobTitle> GetEmployeesByDepartment(int id)
+        {
+            return
+                DbSet.Where(x => x.DepartmentId == id);
+        }
     }
 }

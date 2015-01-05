@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace EPMS.Web.Resources.HR {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -148,7 +151,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All Job Titles.
+        ///   Looks up a localized string similar to Job Titles List.
         /// </summary>
         public static string IndexLabel {
             get {
@@ -157,7 +160,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Job Titles&apos; List.
+        ///   Looks up a localized string similar to Job Titles List.
         /// </summary>
         public static string Label {
             get {
@@ -180,6 +183,15 @@ namespace EPMS.Web.Resources.HR {
         public static string NameOnCreate {
             get {
                 return ResourceManager.GetString("NameOnCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number Of Employees.
+        /// </summary>
+        public static string NoOfEmployees {
+            get {
+                return ResourceManager.GetString("NoOfEmployees", resourceCulture);
             }
         }
         

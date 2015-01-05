@@ -17,6 +17,6 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
 
-        public virtual ICollection<JobTitle> JobTitles { get; set; }
+        //public virtual ICollection<JobTitle> JobTitles { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace EPMS.Implementation.Services
     public class JobTitleService : IJobTitleService
     {
         private readonly IJobTitleRepository repository;
+        private readonly IEmployeeRepository employeeRepository;
 
         #region Constructor
         /// <summary>
@@ -75,6 +76,11 @@ namespace EPMS.Implementation.Services
             {
                 throw exception;
             }
+        }
+
+        public IEnumerable<Employee> FindEmployeeByJobTitleId(long? jobTitleId)
+        {
+            return employeeRepository.GetEmployeesByDepartmentId((long)jobTitleId);
         }
     }
 }

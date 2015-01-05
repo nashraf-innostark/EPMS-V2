@@ -70,7 +70,7 @@
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         if ('@ViewBag.UserRole' == "Admin") {
             var oTable = $('#dataTable').dataTable({
-                "iDisplayLength": 10,
+                "iDisplayLength": $(".dataTables_length select").val(),
                 "iDisplayStart": start || 0,
                 "aaSorting": [sortBy],
                 "bProcessing": true,

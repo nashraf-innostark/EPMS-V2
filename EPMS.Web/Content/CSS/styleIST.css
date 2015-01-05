@@ -25,3 +25,10 @@
 .text-align-center {
     text-align: center !important;
 }
+
+.dataTables_wrapper img {
+    max-height: 100px !important;
+}
+.table {
+    max-width: 100%;
+}

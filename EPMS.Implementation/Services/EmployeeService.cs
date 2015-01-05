@@ -11,6 +11,7 @@ namespace EPMS.Implementation.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository repository;
+        private readonly IAllowanceRepository AllowanceRepository;
         private readonly IEmployeeRequestRepository RequestRepository;
 
 
@@ -19,10 +20,11 @@ namespace EPMS.Implementation.Services
         /// Constructor
         /// </summary>
         /// <param name="xRepository"></param>
-        public EmployeeService(IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository)
+        public EmployeeService(IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository)
         {
             repository = xRepository;
             RequestRepository = requestRepository;
+            AllowanceRepository = allowanceRepository;
         }
 
         #endregion
@@ -45,8 +47,8 @@ namespace EPMS.Implementation.Services
             PayrollResponse response = new PayrollResponse();
             if (id != null)
             {
-                response.Employee = repository.FindForPayroll((long)id, currTime);
-                response.Allowance = repository.FindForAllownce((long) id, currTime);
+                response.Employee = repository.Find((long)id);
+                response.Allowance = AllowanceRepository.FindForAllownce((long) id, currTime);
                 response.Requests = RequestRepository.GetAllMonetaryRequests(currTime, (long)id);
                 return response;
             }

@@ -1,4 +1,6 @@
-﻿using EPMS.Web.Models;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
+using RequestDetail = EPMS.Web.Models.RequestDetail;
 
 namespace EPMS.Web.ViewModels.Request
 {

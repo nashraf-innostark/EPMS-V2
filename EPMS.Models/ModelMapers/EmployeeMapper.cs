@@ -28,6 +28,7 @@ namespace EPMS.Models.ModelMapers
             target.RecCreatedDt = source.RecCreatedDt;
             target.RecLastUpdatedBy = source.RecLastUpdatedBy;
             target.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            target.Email = source.Email;
         }
         public static Employee ServerToServer(this Employee source)
         {
@@ -54,7 +55,8 @@ namespace EPMS.Models.ModelMapers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Email = source.Email
             };
         }
     }

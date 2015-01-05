@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Repository.BaseRepository;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -26,5 +28,16 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        #region Public
+
+        public Allowance FindForAllownce(long employeeId, DateTime currTime)
+        {
+            return DbSet.FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate.Value.Month <= currTime.Month && allow.AllowanceDate.Value.Year <= currTime.Year));
+        }
+
+        #endregion
+
+
     }
 }
