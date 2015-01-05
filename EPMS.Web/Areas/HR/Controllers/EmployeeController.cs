@@ -196,17 +196,17 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
                         if (firstOrDefault != null)
-                            viewModel.EmployeeViewModel.Deduction1 = Math.Truncate(firstOrDefault.InstallmentAmount ?? 0);
+                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
                         var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
                         if (lastOrDefault != null)
-                            viewModel.EmployeeViewModel.Deduction2 = Math.Truncate(lastOrDefault.InstallmentAmount ?? 0);
+                            viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
                     }
                     var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
                     var data = employeeRequestResponse.Select(x => x.CreateFromServerToClient());
                     var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
                     if (employeeRequests.Any())
                     {
-                        viewModel.EmployeeRequestViewModel.EmployeeRequests = employeeRequests;
+                        viewModel.RequestListViewModel.aaData = employeeRequests;
                     }
                 }
                 return View(viewModel);
@@ -376,53 +376,54 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         public ActionResult GetEmployeeRequests(JQueryDataTableParamModel param, EmployeeDetailViewModel viewModel)
         {
-            IEnumerable<EmployeeRequest> aaData;
-            int iTotalRecords;
-            int iTotalDisplayRecords;
-            string sEcho;
-            try
-            {
-                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-                var userRole = result.AspNetRoles.FirstOrDefault();
-                if (userRole != null && userRole.Name == "Admin")
-                {
-                    viewModel.EmployeeRequestViewModel.SearchRequest.Requester = "Admin";
-                }
-                else
-                {
-                    viewModel.EmployeeRequestViewModel.SearchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
-                }
-                viewModel.EmployeeRequestViewModel.SearchRequest.SearchStr = Request["reqSearch"];
-                var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(viewModel.EmployeeRequestViewModel.SearchRequest);
-                var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
-                var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
+            //IEnumerable<EmployeeRequest> aaData;
+            //int iTotalRecords;
+            //int iTotalDisplayRecords;
+            //string sEcho;
+            //try
+            //{
+            //    AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            //    var userRole = result.AspNetRoles.FirstOrDefault();
+            //    if (userRole != null && userRole.Name == "Admin")
+            //    {
+            //        viewModel.RequestListViewModel.SearchRequest.Requester = "Admin";
+            //    }
+            //    else
+            //    {
+            //        viewModel.RequestListViewModel.SearchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
+            //    }
+            //    viewModel.RequestListViewModel.SearchRequest.SearchStr = Request["reqSearch"];
+            //    var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(viewModel.EmployeeRequestViewModel.SearchRequest);
+            //    var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
+            //    var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
                 
-                ////long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-                ////var employeeRequest = EmployeeRequestService.LoadAllRequestsForEmployee(empId);
-                ////var employeeRequests = employeeRequest as IList<EPMS.Models.DomainModels.EmployeeRequest> ?? employeeRequest.ToList();
-                ////var data = employeeRequests.Select(x => x.CreateFromServerToClient());
-                ////var enumerable = data as IList<EmployeeRequest> ?? data.ToList();
-                //if (enumerable.Any())
-                if (employeeRequests.Any())
-                {
-                    aaData = employeeRequests;
-                    iTotalRecords = employeeRequests.Count();
-                    iTotalDisplayRecords = employeeRequests.Count();
-                    sEcho = param.sEcho;
-                }
-                else
-                {
-                    aaData = Enumerable.Empty<EmployeeRequest>();
-                    iTotalRecords = 0;
-                    iTotalDisplayRecords = 0;
-                    sEcho = param.sEcho;
-                }
-            }
-            catch (Exception exp)
-            {
-                return Json(new { response = "Failed to load.", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new { aaData, iTotalRecords, iTotalDisplayRecords, sEcho, response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+            //    ////long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+            //    ////var employeeRequest = EmployeeRequestService.LoadAllRequestsForEmployee(empId);
+            //    ////var employeeRequests = employeeRequest as IList<EPMS.Models.DomainModels.EmployeeRequest> ?? employeeRequest.ToList();
+            //    ////var data = employeeRequests.Select(x => x.CreateFromServerToClient());
+            //    ////var enumerable = data as IList<EmployeeRequest> ?? data.ToList();
+            //    //if (enumerable.Any())
+            //    if (employeeRequests.Any())
+            //    {
+            //        aaData = employeeRequests;
+            //        iTotalRecords = employeeRequests.Count();
+            //        iTotalDisplayRecords = employeeRequests.Count();
+            //        sEcho = param.sEcho;
+            //    }
+            //    else
+            //    {
+            //        aaData = Enumerable.Empty<EmployeeRequest>();
+            //        iTotalRecords = 0;
+            //        iTotalDisplayRecords = 0;
+            //        sEcho = param.sEcho;
+            //    }
+            //}
+            //catch (Exception exp)
+            //{
+            //    return Json(new { response = "Failed to load.", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            //}
+            //return Json(new { aaData, iTotalRecords, iTotalDisplayRecords, sEcho, response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+            return Json(new { response = "Failed to load.", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

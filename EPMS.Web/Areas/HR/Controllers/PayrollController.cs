@@ -112,10 +112,10 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
                         if (firstOrDefault != null)
-                            viewModel.Deduction1 = Math.Truncate(firstOrDefault.InstallmentAmount ?? 0);
+                            viewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
                         var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
                         if (lastOrDefault != null)
-                            viewModel.Deduction2 = Math.Truncate(lastOrDefault.InstallmentAmount ?? 0);
+                            viewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
                     }
                 }
                 double basicSalary = 0;

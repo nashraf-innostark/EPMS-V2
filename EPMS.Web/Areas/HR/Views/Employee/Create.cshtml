@@ -372,7 +372,6 @@
                     </div>
                 </div>
             }
-            @Html.HiddenFor(model => model.EmployeeRequestViewModel.SearchRequest.SearchStr, new { id = "searchString" });
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>Requests History</strong>
@@ -395,9 +394,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model.EmployeeRequestViewModel.EmployeeRequests != null)
+                            @if (Model.RequestListViewModel.aaData != null)
                             {
-                                foreach (var item in Model.EmployeeRequestViewModel.EmployeeRequests.ToList())
+                                foreach (var item in Model.RequestListViewModel.aaData.ToList())
                                 {
                                     <tr>
                                         <td>@item.RequestId</td>

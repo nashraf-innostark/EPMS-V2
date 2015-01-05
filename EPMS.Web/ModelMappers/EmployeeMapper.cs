@@ -66,7 +66,7 @@ namespace EPMS.Web.ModelMappers
                 Email = source.Email,
                 JobTitle = source.JobTitle.CreateFrom(),
                 EmployeeJobId = source.EmployeeJobId,
-                EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
+                //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
             };
 
