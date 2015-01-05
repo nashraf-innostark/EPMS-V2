@@ -66,7 +66,7 @@ namespace EPMS.Web.ModelMappers
                 Email = source.Email,
                 JobTitle = source.JobTitle.CreateFrom(),
                 EmployeeJobId = source.EmployeeJobId,
-                EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
+                //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
             };
 
@@ -78,7 +78,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeId = source.EmployeeId,
                 EmployeeNameE = source.EmployeeNameE ?? "",
                 EmployeeNameA = source.EmployeeNameA ?? "",
-                EmployeeImagePath = source.EmployeeImagePath == null ? "" : ImageUrl(source.EmployeeImagePath),
+                EmployeeImagePath = ImageUrl(source.EmployeeImagePath),
                 EmployeeIqama = source.EmployeeIqama ?? 0,
                 EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt ?? DateTime.Now,
                 EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt ?? DateTime.Now,
@@ -99,13 +99,17 @@ namespace EPMS.Web.ModelMappers
                 Email = source.Email,
                 EmployeeJobId = source.EmployeeJobId,
                 JobTitle = source.JobTitle.CreateFrom(),
-                EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),
+                //EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
             };
 
         }
         private static string ImageUrl(string imageName)
         {
+            if (string.IsNullOrEmpty(imageName))
+            {
+                imageName = "profile.jpg";
+            }
             string path = (ConfigurationManager.AppSettings["SiteURL"] + ConfigurationManager.AppSettings["EmployeeImage"] + "/" + imageName);
 
             return "<img  data-mfp-src=" + path + " src=" + path + " class='mfp-image image-link cursorHand' height=70 width=100 />";

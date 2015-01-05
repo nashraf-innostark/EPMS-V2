@@ -15,6 +15,7 @@ namespace EPMS.Interfaces.IServices
         EmployeeRequestResponse LoadAllRequests(EmployeeRequestSearchRequest searchRequset);
         IEnumerable<EmployeeRequest> LoadAllMonetaryRequests(DateTime currentMonth, long id);
         IEnumerable<EmployeeRequest> LoadAllRequests(string requester);
+        IEnumerable<EmployeeRequest> LoadAllRequestsForEmployee(long requester);
         RequestDetail LoadRequestDetailByRequestId(long requestId);
         bool UpdateRequest(EmployeeRequest request);
         bool UpdateRequestDetail(RequestDetail requestDetail);

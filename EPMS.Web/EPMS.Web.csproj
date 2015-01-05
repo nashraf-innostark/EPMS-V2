@@ -287,7 +287,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
-    <Compile Include="Models\EmployeeRequest.cs" />
+    <Compile Include="Models\Request.cs" />
     <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitleAndDepartment.cs" />
@@ -395,7 +395,8 @@
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
-    <Compile Include="ViewModels\Request\EmployeeRequestViewModel.cs" />
+    <Compile Include="ViewModels\Request\RequestViewModel.cs" />
+    <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>

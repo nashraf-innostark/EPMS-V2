@@ -31,10 +31,6 @@ namespace EPMS.Repository.Repositories
         {
             get { return db.Employees; }
         }
-        protected IDbSet<Allowance> DbSetAllowances
-        {
-            get { return db.Allowances; }
-        }
 
         #endregion
 
@@ -63,16 +59,10 @@ namespace EPMS.Repository.Repositories
         {
             int fromRow = (employeeSearchRequset.PageNo - 1) * employeeSearchRequset.PageSize;
             int toRow = employeeSearchRequset.PageSize;
-            //long jobTItleId = 0;
-            //if (!String.IsNullOrEmpty(employeeSearchRequset.SearchStr))
-            //{
-            //    int i = 0;
-            //    bool result = int.TryParse(employeeSearchRequset.SearchStr, out i);
-            //    if (result)
-            //    {
-            //        jobTItleId = Convert.ToInt64(employeeSearchRequset.SearchStr.ToString());
-            //    }
-            //}
+            if (employeeSearchRequset.SortBy == 1)
+            {
+                employeeSearchRequset.SortBy = 2;
+            }
             Expression<Func<Employee, bool>> query =
                 s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchStr)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchStr)) || 
                     (s.EmployeeNameA.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchStr)) || 
@@ -98,10 +88,6 @@ namespace EPMS.Repository.Repositories
         public Employee FindForPayroll(long employeeId, DateTime currTime)
         {
             return DbSet.FirstOrDefault(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
-        }
-        public Allowance FindForAllownce(long employeeId, DateTime currTime)
-        {
-            return DbSetAllowances.FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate.Value.Month <= currTime.Month && allow.AllowanceDate.Value.Year <= currTime.Year));
         }
     }
 }
