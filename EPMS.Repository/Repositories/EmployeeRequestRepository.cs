@@ -60,19 +60,23 @@ namespace EPMS.Repository.Repositories
 
         public EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset)
         {
-            int fromRow = (searchRequset.PageNo - 1) * searchRequset.PageSize;
-            int toRow = searchRequset.PageSize;
+            int fromRow = searchRequset.iDisplayStart;
+            int toRow = searchRequset.iDisplayStart+searchRequset.iDisplayLength;
             Expression<Func<EmployeeRequest, bool>> query;
             if (searchRequset.Requester == "Admin")
             {
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.RequestTopic.Contains(searchRequset.SearchString))));
+                s => ((string.IsNullOrEmpty(searchRequset.SearchStr)) || (s.RequestTopic.Contains(searchRequset.SearchStr)) ||
+                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchStr)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchStr)) ||
+                    (s.Employee.EmployeeJobId.Contains(searchRequset.SearchStr)) || 
+                    (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchStr)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchStr))
+                    );
             }
             else
             {
                 long employeeId = Convert.ToInt64(searchRequset.Requester);
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.RequestTopic.Contains(searchRequset.SearchString))) && 
+                s => ((string.IsNullOrEmpty(searchRequset.SearchStr) || (s.RequestTopic.Contains(searchRequset.SearchStr))) && 
                     (s.EmployeeId.Equals(employeeId)));
             }
             

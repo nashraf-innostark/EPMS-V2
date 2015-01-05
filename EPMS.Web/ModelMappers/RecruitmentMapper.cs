@@ -42,7 +42,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                Department = source.Department.CreateFrom()
+                //Department = source.Department.CreateFrom()
             };
         }
         #endregion

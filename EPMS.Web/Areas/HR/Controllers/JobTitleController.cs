@@ -17,6 +17,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         private readonly IJobTitleService jobTitleService;
         private readonly IDepartmentService departmentService;
+        private readonly IEmployeeService employeeService;
 
         #endregion
         
@@ -27,10 +28,11 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="departmentService"></param>
         /// <param name="jobTitleService"></param>
-        public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService)
+        public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService, IEmployeeService employeeService)
         {
             this.departmentService = departmentService;
             this.jobTitleService = jobTitleService;
+            this.employeeService = employeeService;
         }
 
         #endregion
@@ -40,9 +42,8 @@ namespace EPMS.Web.Areas.HR.Controllers
         // GET: JobTitles ListView Action Method
         public ActionResult Index()
         {
-            return View(new JobTitleViewModel
+            return View(new JobTitleListViewModel
             {
-                DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom()),
                 JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom())
             });
         }

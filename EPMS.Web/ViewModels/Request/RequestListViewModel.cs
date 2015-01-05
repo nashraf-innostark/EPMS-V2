@@ -15,10 +15,11 @@ namespace EPMS.Web.ViewModels.Request
         /// Total Records in DB
         /// </summary>
         public int iTotalRecords;
+        public int sLimit;
         /// <summary>
         /// Total Records Filtered
         /// </summary>
         public int iTotalDisplayRecords;
-        public int sEcho;
+        public string sEcho;
     }
 }

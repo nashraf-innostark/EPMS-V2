@@ -16,6 +16,7 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+        
 
         public virtual Department Department { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }

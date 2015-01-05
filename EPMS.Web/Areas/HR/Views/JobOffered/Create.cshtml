@@ -75,13 +75,13 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleDescE, new { @disabled = true, @id = "jobTitleDesc" })
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitleDescE, new { @disabled = true, @id = "jobTitleDesc" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.JobTitle.JobTitleDescA, new { @disabled = true, @id = "jobTitleDesc" })
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitleDescA, new { @disabled = true, @id = "jobTitleDesc" })
                     </div>
                 }
                 
@@ -93,7 +93,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.Department.DepartmentNameE, new { @disabled = true, @id = "departmentName", @class = "select2me", })
+                    @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new { @disabled = true, @id = "departmentName", @class = "select2me", })
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
-                    @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "IsOpen" })
+                    @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "ShowBasicSalary" })
                 </div>
             </div>
         </div>
@@ -123,9 +123,19 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.JobTitle.BasicSalary, new { @disabled = true, @id = "basicSalary" })
+                    @Html.TextBoxFor(model => model.JobOffered.BasicSalary, new { @disabled = true, @id = "basicSalary" })
                 </div>
 
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Is Job Open?</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                    @Html.CheckBoxFor(model => model.JobOffered.IsOpen, new { @id = "IsOpen" })
+                </div>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -143,12 +153,11 @@
 <script>
 
     $(document).ready(function () {
-        DivHideShow('IsOpen', 'basicSal');
+        DivHideShow('ShowBasicSalary', 'basicSal');
         $("#jobTitle").on("change", function() {
             var selectedVal = $(this).val();
             debugger;
             if (selectedVal != "") {
-                //$("#jobTitleDesc").val(selectedVal);
                 var jobtitlelist = '@Html.Raw(Json.Encode(Model.JobTitleList))';
                 var parsed = JSON.parse(jobtitlelist);
 
@@ -182,7 +191,7 @@
             $(divToBeAffected).hide();
         }
     };
-    $('#IsOpen').change(function () {
-        DivHideShow('IsOpen', 'basicSal');
+    $('#ShowBasicSalary').change(function () {
+        DivHideShow('ShowBasicSalary', 'basicSal');
     });
 </script>

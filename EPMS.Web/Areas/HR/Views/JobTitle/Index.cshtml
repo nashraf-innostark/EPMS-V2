@@ -1,9 +1,10 @@
-﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
+﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleListViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.HR.JobTitle.IndexLabel;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -39,12 +40,8 @@
                         <tr>
                             <th></th>
                             <th>@EPMS.Web.Resources.HR.JobTitle.Name</th>
-                            @*<th>Job Title Name Eng</th>*@
-                            @*<th>Job Title Name Ar</th>*@
-                            <th>@EPMS.Web.Resources.HR.JobTitle.Description</th>
-                            @*<th>Job Title Description Ar</th>*@
-                            <th>@EPMS.Web.Resources.HR.JobTitle.BasicSalary</th>
                             <th>@EPMS.Web.Resources.HR.JobTitle.Department</th>
+                            <th>@EPMS.Web.Resources.HR.JobTitle.NoOfEmployees</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,12 +49,24 @@
                         {
                             <tr>
                                 <td>@item.JobTitleId</td>
-                                <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new { id = item.JobTitleId }) </td>
-                                @*<td>@Html.ActionLink(@item.JobTitleNameA, "Create", new { id = item.JobTitleId }) </td>*@
-                                <td>@item.JobTitleDescE</td>
-                                @*<td>@item.JobTitleDescA</td>*@
-                                <td>@item.BasicSalary</td>
-                                <td>@item.Department.DepartmentNameE</td>
+                                @if (direction == "ltr")
+                                {
+                                    <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new {id = item.JobTitleId}) </td>
+                                }
+                                else
+                                {
+                                    <td>@Html.ActionLink(@item.JobTitleNameA, "Create", new { id = item.JobTitleId }) </td>
+                                }   
+                                @if (direction == "ltr")
+                                {
+                                    <td>@item.DepartmentNameE</td>
+                                }
+                                else
+                                {
+                                    <td>@item.DepartmentNameA</td>
+                                }
+                                <td>@item.EmployeesCount</td>
+                                
 
                             </tr>
                         }
@@ -75,7 +84,6 @@
             "aoColumns": [
                 { "bVisible": false }, // cloumn to be hide
                   null, // not hide
-                  null,
                   null,
                   null
             ],

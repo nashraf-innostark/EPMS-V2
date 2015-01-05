@@ -48,6 +48,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [SiteAuthorize(PermissionKey = "RequestIndex")]
         public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
         {
+            searchRequest.SearchStr = Request["search"];
             RequestListViewModel viewModel = new RequestListViewModel();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
@@ -66,15 +67,17 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 viewModel.aaData = employeeRequests;
                 viewModel.iTotalRecords = requestResponse.TotalCount;
-                viewModel.iTotalDisplayRecords = requestResponse.EmployeeRequests.Count();
-                viewModel.sEcho = 1;
+                viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
+                viewModel.sEcho = searchRequest.sEcho;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
             }
             else
             {
                 viewModel.aaData = Enumerable.Empty<EmployeeRequest>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
-                viewModel.iTotalDisplayRecords = requestResponse.EmployeeRequests.Count();
-                viewModel.sEcho = 1;
+                viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
+                viewModel.sEcho = searchRequest.sEcho;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
             }
             // Keep Search Request in Session
             Session["PageMetaData"] = searchRequest;

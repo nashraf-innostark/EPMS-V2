@@ -148,16 +148,19 @@
     <value>Edit</value>
   </data>
   <data name="IndexLabel" xml:space="preserve">
-    <value>All Job Titles</value>
+    <value>Job Titles List</value>
   </data>
   <data name="Label" xml:space="preserve">
-    <value>Job Titles' List</value>
+    <value>Job Titles List</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Job Title Name</value>
   </data>
   <data name="NameOnCreate" xml:space="preserve">
     <value>Job Title Name</value>
+  </data>
+  <data name="NoOfEmployees" xml:space="preserve">
+    <value>Number Of Employees</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
