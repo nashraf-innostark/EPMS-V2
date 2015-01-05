@@ -151,6 +151,7 @@
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
+    <Compile Include="ResponseModels\PayrollResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

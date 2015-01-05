@@ -25,7 +25,7 @@ namespace EPMS.Web.ModelMappers
                 JobTitleDescE = source.JobTitleDescE,
                 JobTitleDescA = source.JobTitleDescA,
                 DepartmentId = source.DepartmentId,
-                BasicSalary = source.BasicSalary,
+                BasicSalary = source.BasicSalary ?? 0,
                 Department = source.Department.CreateFrom(),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
