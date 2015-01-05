@@ -66,13 +66,13 @@ namespace EPMS.Repository.Repositories
             if (searchRequset.Requester == "Admin")
             {
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeNameE.Contains(searchRequset.EmployeeName))));
+                s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.RequestTopic.Contains(searchRequset.SearchString))));
             }
             else
             {
                 long employeeId = Convert.ToInt64(searchRequset.Requester);
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.EmployeeName) || (s.Employee.EmployeeNameE.Contains(searchRequset.EmployeeName))) && 
+                s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.RequestTopic.Contains(searchRequset.SearchString))) && 
                     (s.EmployeeId.Equals(employeeId)));
             }
             

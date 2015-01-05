@@ -120,7 +120,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 double basicSalary = 0;
                 double allowances = 0;
-                if (viewModel.Employee != null)
+                if (viewModel.Employee.JobTitle != null)
                 {
                     basicSalary = viewModel.Employee.JobTitle.BasicSalary;
                 }

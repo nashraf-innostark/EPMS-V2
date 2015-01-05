@@ -11,6 +11,7 @@ namespace EPMS.Web.ViewModels.Request
             EmployeeRequest = new EmployeeRequest();
             EmployeeRequestDetail = new RequestDetail();
             EmployeeRequestReply = new RequestDetail();
+            SearchRequest = new EmployeeRequestSearchRequest();
         }
         //EmployeeRequest's Search Request data
         public EmployeeRequestSearchRequest SearchRequest { get; set; }

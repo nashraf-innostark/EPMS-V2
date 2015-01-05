@@ -23,17 +23,13 @@
         @if (Model.EmployeeViewModel.Employee != null)
         {
             <li>
-                <a href="">
-                    @Model.EmployeeViewModel.EmployeeName
-                </a>
+                @Model.EmployeeViewModel.EmployeeName
             </li>
         }
         else
         {
             <li>
-                <a href="">
-                    Add New Employee
-                </a>
+                Add New Employee
             </li>
         }
     </ul>
@@ -115,6 +111,21 @@
                 </div>
             </div>
         </div>
+        <!--Drag And Drop Upload begin-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">
+                    Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+        </div>
+        <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="MobileNumber">Mobile Number</label>
@@ -266,7 +277,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.BasicSalary, new { @disabled = true, @id = "BasicSalary" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.JobTitle.BasicSalary)
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitle.BasicSalary)
                 </div>
             </div>
         </div>
@@ -335,7 +346,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-
+                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1" })
                         </div>
                     </div>
                 </div>
@@ -345,7 +356,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-
+                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2" })
                         </div>
                     </div>
                 </div>
@@ -357,10 +368,11 @@
             {
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for=""><a>Payroll Page</a></label>
+                        <label class="control-label" for=""><a href="~/HR/Payroll/Detail/@Model.EmployeeViewModel.Employee.EmployeeId">Payroll Page</a></label>
                     </div>
                 </div>
             }
+            @Html.HiddenFor(model => model.EmployeeRequestViewModel.SearchRequest.SearchStr, new { id = "searchString" });
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>Requests History</strong>
@@ -382,7 +394,18 @@
                                 <th>Requests</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @if (Model.EmployeeRequestViewModel.EmployeeRequests != null)
+                            {
+                                foreach (var item in Model.EmployeeRequestViewModel.EmployeeRequests.ToList())
+                                {
+                                    <tr>
+                                        <td>@item.RequestId</td>
+                                        <td>@Html.ActionLink(@item.RequestTopic, "Create", "Request", new {id = item.RequestId}, null) </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -430,6 +453,48 @@
 }
 <script>
     $(document).ready(function () {
+        // upload Image
+        var errors = "";
+
+        $('#upload').mfupload({
+            type: '', //all types
+            maxsize: 1,
+            post_upload: "UploadEmployeePhoto",
+            folder: "./",
+            ini_text: "Drag your file here or click (max: 1MB)",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                $("#EmployeeImage").val(result.filename);
+            },
+
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
         // set JobId and Department Name
         $(".setDeptJobId").on("change", function () {
             var jobId = $(this).val();
@@ -458,45 +523,78 @@
                 });
             }
         });
-        var siteUrl = $('#siteURL').val();
-        $('#tableRequsts').dataTable({
-            "iDisplayLength": 20,
-            "iDisplayStart": 0,
-            "bProcessing": true,
-            "bServerSide": true,
-            "bFilter": true,
+        var oTable = $('#tableRequsts').dataTable({
+            "sPaginationType": "bootstrap",
+            "iDisplayLength": 5,
             "aoColumns": [
-                {
-                    "aTargets": [0],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["RequestId"];
-                    },
-                    "bVisible": false,
-                },
-                {
-                    "aTargets": [1],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var val = full["RequestTopic"];
-                        var id = full["RequestId"];
-                        var element = '<a href="Create/' + id + '">' + val + '</a>';
-                        return element;
-                    }
-                }
+                { "bVisible": false }, // cloumn to be hide
+                  null // not hide
             ],
-            "sAjaxSource": siteUrl + "/Employee/GetEmployeeRequests",
-            "sServerMethod": "POST",
-            "oLanguage": {
-                "sProcessing": "Fetching record(s)",
-                "sInfoEmpty": "No matching record(s) found",
-                "sEmptyTable": "No record(s) found",
-            },
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
         });
+        @*var id = '@Model.EmployeeViewModel.Employee.EmployeeId';
+        if (id > 0) {
+            var siteUrl = $('#siteURL').val();
+            var oTable = $('#tableRequsts').dataTable({
+                "sPaginationType": "bootstrap",
+                "iDisplayLength": 20,
+                "iDisplayStart": 0,
+                "bProcessing": true,
+                "bServerSide": true,
+                "bFilter": true,
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            return full["RequestId"];
+                        },
+                        "bVisible": false,
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var val = full["RequestTopic"];
+                            var id = full["RequestId"];
+                            var element = '<a href="Create/' + id + '">' + val + '</a>';
+                            return element;
+                        },
+                        "bSortable": false,
+                    }
+                ],
+                "sAjaxSource": siteUrl + "/Employee/GetEmployeeRequests",
+                "sServerMethod": "POST",
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "reqSearch", "value": $('input').val() });
+                },
+                "oLanguage": {
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+            });
+            $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length > 1 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+        }*@
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
-
+        
         // Gregorian Date Picker
         $(".datepicker").mask('99/99/9999');
         $(".datepicker").datepicker({

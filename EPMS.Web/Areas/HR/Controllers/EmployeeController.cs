@@ -89,11 +89,10 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="param"></param>
         /// <returns>IEnumerable of All Employee</returns>
         [HttpPost]
-        public ActionResult Index(JQueryDataTableParamModel param)
+        public ActionResult Index(JQueryDataTableParamModel param, EmployeeSearchRequset employeeSearchRequest)
         {
             param.iDisplayStart = 0;
             param.iDisplayLength = 25;
-            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
@@ -165,29 +164,53 @@ namespace EPMS.Web.Areas.HR.Controllers
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                 
-                if (userRole != null)
+                if (userRole != null && id > 0)
                 {
                     viewModel.Role = userRole.Name;
-                    if (id > 0 && userRole.Name == "Admin")
+                    // Get Employee
+                    viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                    // Set Employee Name for Header
+                    viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
+                    if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
                     {
-
-                        viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
-                        viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
+                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
+                                                                "profile.jpg";
+                    }
+                    else
+                    {
+                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
+                                              viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
+                    }
+                    if (userRole.Name == "Admin")
+                    {
                         viewModel.EmployeeViewModel.PageTitle = "Employee's List";
                         viewModel.EmployeeViewModel.BtnText = "Update Changes";
-                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
-                                              viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
                     }
-                    if (id > 0 && (userRole.Name == "Employee" || userRole.Name == "PM"))
+                    if (userRole.Name == "Employee" || userRole.Name == "PM")
                     {
-                        viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
-                        viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
                         viewModel.EmployeeViewModel.PageTitle = "My Profile";
                         viewModel.EmployeeViewModel.BtnText = "Update Changes";
-                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
-                                              viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
                     }
-
+                    // get Employee requests
+                    var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
+                    var requests = empRequests.Select(x => x.CreateFromServerToClientPayroll());
+                    // get Employee request details
+                    foreach (var reqDetail in requests)
+                    {
+                        var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
+                        if (firstOrDefault != null)
+                            viewModel.EmployeeViewModel.Deduction1 = Math.Truncate(firstOrDefault.InstallmentAmount ?? 0);
+                        var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
+                        if (lastOrDefault != null)
+                            viewModel.EmployeeViewModel.Deduction2 = Math.Truncate(lastOrDefault.InstallmentAmount ?? 0);
+                    }
+                    var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
+                    var data = employeeRequestResponse.Select(x => x.CreateFromServerToClient());
+                    var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
+                    if (employeeRequests.Any())
+                    {
+                        viewModel.EmployeeRequestViewModel.EmployeeRequests = employeeRequests;
+                    }
                 }
                 return View(viewModel);
             }
@@ -220,8 +243,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
-                        // Update Employee and Allowance
+                        // Update Employee
                         var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
+                        // Update Allowance
                         var allowanceToTpdate = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
                         if (EmployeeService.UpdateEmployee(employeeToUpdate) &&
                             AllowanceService.UpdateAllowance(allowanceToTpdate))
@@ -246,6 +270,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.Name;
                         string employeeJobId = GetEmployeeJobId();
                         viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
+                        // Add Employee
                         var employeeToSave = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
                         long employeeId = EmployeeService.AddEmployee(employeeToSave);
 
@@ -253,9 +278,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
-
+                        // Add Allowance
                         var allowanceToSave = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
-
                         if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
                         {
                             TempData["message"] = new MessageViewModel
@@ -353,40 +377,48 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #region Get Employee Requests
 
-        public ActionResult GetEmployeeRequests(EmployeeRequestSearchRequest searchRequest)
+        public ActionResult GetEmployeeRequests(JQueryDataTableParamModel param, EmployeeDetailViewModel viewModel)
         {
             IEnumerable<EmployeeRequest> aaData;
             int iTotalRecords;
             int iTotalDisplayRecords;
-            int sEcho;
+            string sEcho;
             try
             {
                 AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
                 var userRole = result.AspNetRoles.FirstOrDefault();
                 if (userRole != null && userRole.Name == "Admin")
                 {
-                    searchRequest.Requester = "Admin";
+                    viewModel.EmployeeRequestViewModel.SearchRequest.Requester = "Admin";
                 }
                 else
                 {
-                    searchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
+                    viewModel.EmployeeRequestViewModel.SearchRequest.Requester = AspNetUserService.FindById(User.Identity.GetUserId()).EmployeeId.ToString();
                 }
-                var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(searchRequest);
+                viewModel.EmployeeRequestViewModel.SearchRequest.SearchStr = Request["reqSearch"];
+                var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(viewModel.EmployeeRequestViewModel.SearchRequest);
                 var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
                 var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
+                
+                ////long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+                ////var employeeRequest = EmployeeRequestService.LoadAllRequestsForEmployee(empId);
+                ////var employeeRequests = employeeRequest as IList<EPMS.Models.DomainModels.EmployeeRequest> ?? employeeRequest.ToList();
+                ////var data = employeeRequests.Select(x => x.CreateFromServerToClient());
+                ////var enumerable = data as IList<EmployeeRequest> ?? data.ToList();
+                //if (enumerable.Any())
                 if (employeeRequests.Any())
                 {
                     aaData = employeeRequests;
-                    iTotalRecords = employeeRequestResponse.TotalCount;
-                    iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
-                    sEcho = employeeRequestResponse.EmployeeRequests.Count();
+                    iTotalRecords = employeeRequests.Count();
+                    iTotalDisplayRecords = employeeRequests.Count();
+                    sEcho = param.sEcho;
                 }
                 else
                 {
                     aaData = Enumerable.Empty<EmployeeRequest>();
-                    iTotalRecords = employeeRequestResponse.TotalCount;
-                    iTotalDisplayRecords = employeeRequestResponse.EmployeeRequests.Count();
-                    sEcho = 1;
+                    iTotalRecords = 0;
+                    iTotalDisplayRecords = 0;
+                    sEcho = param.sEcho;
                 }
             }
             catch (Exception exp)

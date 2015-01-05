@@ -99,6 +99,10 @@ namespace EPMS.Implementation.Services
         {
             return requester == "Admin" ? repository.GetAll() : repository.GetAllRequests(Convert.ToInt64(requester));
         }
+        public IEnumerable<EmployeeRequest> LoadAllRequestsForEmployee(long requester)
+        {
+            return repository.GetAllRequests(Convert.ToInt64(requester));
+        }
 
         public RequestDetail LoadRequestDetailByRequestId(long requestId)
         {
