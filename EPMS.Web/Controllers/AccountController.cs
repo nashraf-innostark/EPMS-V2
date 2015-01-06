@@ -392,24 +392,25 @@ namespace IdentitySample.Controllers
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
                 user.EmployeeId = model.SelectedEmployee;
                 user.EmailConfirmed = true;
-                var result = await UserManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
+                if (!String.IsNullOrEmpty(model.Password))
                 {
-                    //Setting role
-                    var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-                    var roleName = roleManager.FindById(model.SelectedRole).Name;
-                    UserManager.AddToRole(user.Id, roleName);
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        //Setting role
+                        var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                        var roleName = roleManager.FindById(model.SelectedRole).Name;
+                        UserManager.AddToRole(user.Id, roleName);
 
-                    TempData["message"] = new MessageViewModel { Message = "User has been Registered", IsSaved = true };
-                    return RedirectToAction("Users");
+                        TempData["message"] = new MessageViewModel { Message = "User has been Registered", IsSaved = true };
+                        return RedirectToAction("Users");
+                    }
                 }
-                AddErrors(result);
-                model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-                model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-
             }
             // If we got this far, something failed, redisplay form
+            model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+            model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+            TempData["message"] = new MessageViewModel { Message = "Please check the Mendatory fields", IsError = true };
             return View(model);
         }
         #endregion
