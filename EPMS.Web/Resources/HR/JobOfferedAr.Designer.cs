@@ -22,24 +22,24 @@ namespace EPMS.Web.Resources.HR {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class JobOffered {
+    internal class JobOfferedAr {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal JobOffered() {
+        internal JobOfferedAr() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.HR.JobOffered", typeof(JobOffered).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.HR.JobOfferedAr", typeof(JobOfferedAr).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace EPMS.Web.Resources.HR {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Add New Job.
         /// </summary>
-        public static string AddNew {
+        internal static string AddNew {
             get {
                 return ResourceManager.GetString("AddNew", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Basic Salaray.
         /// </summary>
-        public static string BasicSalaray {
+        internal static string BasicSalaray {
             get {
                 return ResourceManager.GetString("BasicSalaray", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string CancelButton {
+        internal static string CancelButton {
             get {
                 return ResourceManager.GetString("CancelButton", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Create Job Offered.
         /// </summary>
-        public static string CreateJob {
+        internal static string CreateJob {
             get {
                 return ResourceManager.GetString("CreateJob", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Department.
         /// </summary>
-        public static string Department {
+        internal static string Department {
             get {
                 return ResourceManager.GetString("Department", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        public static string EditButton {
+        internal static string EditButton {
             get {
                 return ResourceManager.GetString("EditButton", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to All Jobs Offered.
         /// </summary>
-        public static string IndexLabel {
+        internal static string IndexLabel {
             get {
                 return ResourceManager.GetString("IndexLabel", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
-        public static string IsOpen {
+        internal static string IsOpen {
             get {
                 return ResourceManager.GetString("IsOpen", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Job Description.
         /// </summary>
-        public static string JobDescription {
+        internal static string JobDescription {
             get {
                 return ResourceManager.GetString("JobDescription", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Job Title.
         /// </summary>
-        public static string JobTitle {
+        internal static string JobTitle {
             get {
                 return ResourceManager.GetString("JobTitle", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Jobs Offered List.
         /// </summary>
-        public static string Label {
+        internal static string Label {
             get {
                 return ResourceManager.GetString("Label", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to No Of Posts.
         /// </summary>
-        public static string NoOfPosts {
+        internal static string NoOfPosts {
             get {
                 return ResourceManager.GetString("NoOfPosts", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string SaveButton {
+        internal static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Select Job Title.
         /// </summary>
-        public static string SelectJobTitle {
+        internal static string SelectJobTitle {
             get {
                 return ResourceManager.GetString("SelectJobTitle", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Show Basic Salary?.
         /// </summary>
-        public static string ShowBasicSalary {
+        internal static string ShowBasicSalary {
             get {
                 return ResourceManager.GetString("ShowBasicSalary", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace EPMS.Web.Resources.HR {
         /// <summary>
         ///   Looks up a localized string similar to Update Job Offered.
         /// </summary>
-        public static string UpdateJob {
+        internal static string UpdateJob {
             get {
                 return ResourceManager.GetString("UpdateJob", resourceCulture);
             }

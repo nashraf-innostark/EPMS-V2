@@ -50,14 +50,12 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-
 <!-- Form starts.  -->
 @using (Html.BeginForm("Create", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         @Html.HiddenFor(m => m.UserId)
         @Html.HiddenFor(m => m.oldRole)
         <div class="control-group row-fluid">
@@ -66,7 +64,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble})
+                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble })
                     @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
                 </div>
             </div>
@@ -84,54 +82,54 @@
         </div>
         @if (Model != null)
         {
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="roleId">Role</label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { id = "roleId" })
-                    @Html.ValidationMessageFor(m => m.SelectedRole, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="roleId">Role</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { id = "roleId" })
+                        @Html.ValidationMessageFor(m => m.SelectedRole, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="employeeId">Employee</label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = " employeeId " })
-                    @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="employeeId">Employee</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = " employeeId " })
+                        @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="password">Password</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
-                    <label id="passAuth" class="required"></label>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="password">Password</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
+                        <label id="passAuth" class="required"></label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="confirmPassword">Confirm Password</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password", id = "confirmPassword" })
-                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="confirmPassword">Confirm Password</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password", id = "confirmPassword" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
-        </div>
         }
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="validateUserPassword();">@btnText</button>
+                <button type="submit" class="btn" onclick="return validateUserPassword();">@btnText</button>
             </div>
         </div>
     </div>
@@ -155,7 +153,7 @@
         //    }
         //    return true;
         //});
-        
+
     });
     function validateUserPassword() {
         var userPassword = $("#password").val();
@@ -172,5 +170,5 @@
         }
         return true;
     }
-    
+
 </script>

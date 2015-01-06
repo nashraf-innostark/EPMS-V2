@@ -60,7 +60,7 @@ namespace EPMS.Repository.Repositories
                     (s.ApplicantEmail.Contains(jobApplicantSearchRequest.SearchString)) || (s.ApplicantMobile.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.JobTitleNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.JobTitleNameA.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.Department.DepartmentNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.Department.DepartmentNameA.Contains(jobApplicantSearchRequest.SearchString)));
-            IEnumerable<JobApplicant> jobApplicants = jobApplicantSearchRequest.sSortDir_0=="Asc" ?
+            IEnumerable<JobApplicant> jobApplicants = jobApplicantSearchRequest.sSortDir_0=="asc" ?
                 DbSet
                 .Where(query).OrderBy(jobApplicantClause[jobApplicantSearchRequest.JobApplicantRequestByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :
