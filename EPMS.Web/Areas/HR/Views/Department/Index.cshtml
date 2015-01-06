@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.HR.Department.IndexLabel;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -49,8 +50,16 @@
                         {
                             <tr>
                                 <td>@item.DepartmentId</td>
-                                <td>@Html.ActionLink(@item.DepartmentNameE, "Create", new { id = item.DepartmentId }) </td>
-                                @*<td>@Html.ActionLink(@item.DepartmentNameA, "Create", new { id = item.DepartmentId }) </td>*@
+                                <td>
+                                    @if (direction == "ltr")
+                                    {
+                                        @Html.ActionLink(@item.DepartmentNameE, "Create", new {id = item.DepartmentId})
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink(@item.DepartmentNameA, "Create", new {id = item.DepartmentId})
+                                    }
+                                </td>
                                 @*<td>@item.DepartmentDesc</td*@>
 
                             </tr>
