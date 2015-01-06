@@ -15,18 +15,17 @@ namespace EPMS.Models.RequestModels
 
         public string sSearch { get; set; }
 
-        public int iDisplayLength { get; set; }
+        //public int iDisplayStart { get; set; }
 
-        public int iDisplayStart { get; set; }
         public EmployeeByColumn EmployeeByColumn
         {
             get
             {
-                return (EmployeeByColumn)SortBy;
+                return (EmployeeByColumn)iSortCol_0;
             }
             set
             {
-                SortBy = (short)value;
+                iSortCol_0 = (short)value;
             }
         }
     }

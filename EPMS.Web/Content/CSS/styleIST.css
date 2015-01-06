@@ -32,3 +32,27 @@
 .table {
     max-width: 100%;
 }
+.areaLabel {
+    margin-top: -36px;
+    margin-left: 15px;
+}
+.controllerLabel {
+    margin-top: -37px;
+    margin-left: 15px;
+}
+.controllerChek {
+    margin-left: 35px !important;
+}
+.actionChek {
+    margin-top: 5px !important;
+}
+.actionLabel {
+    margin-top: -32px;
+    margin-left: 5px;
+}
+.childItem {
+    margin-left: 35px !important;
+}
+.areaItem {
+    padding-top: 5px !important;
+}

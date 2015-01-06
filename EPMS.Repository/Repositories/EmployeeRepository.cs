@@ -57,11 +57,12 @@ namespace EPMS.Repository.Repositories
         /// <returns>EmployeeRespone</returns>
         public EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset)
         {
-            int fromRow = (employeeSearchRequset.PageNo - 1) * employeeSearchRequset.PageSize;
-            int toRow = employeeSearchRequset.PageSize;
-            if (employeeSearchRequset.SortBy == 1)
+            int fromRow = employeeSearchRequset.iDisplayStart;
+            int toRow = employeeSearchRequset.iDisplayStart + employeeSearchRequset.iDisplayLength;
+            //int toRow = employeeSearchRequset.PageSize;
+            if (employeeSearchRequset.iSortCol_0 == 0)
             {
-                employeeSearchRequset.SortBy = 2;
+                employeeSearchRequset.iSortCol_0 = 2;
             }
             Expression<Func<Employee, bool>> query =
                 s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchStr)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchStr)) || 
@@ -69,7 +70,7 @@ namespace EPMS.Repository.Repositories
                     (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchStr)) || (s.EmployeeJobId == employeeSearchRequset.SearchStr) || 
                     (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchStr)));
 
-            IEnumerable<Employee> employees = employeeSearchRequset.IsAsc ?
+            IEnumerable<Employee> employees = employeeSearchRequset.sSortDir_0=="asc" ?
                 DbSet
                 .Where(query).OrderBy(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :

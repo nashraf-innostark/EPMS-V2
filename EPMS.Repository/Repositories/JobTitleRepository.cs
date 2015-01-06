@@ -55,8 +55,8 @@ namespace EPMS.Repository.Repositories
         /// <returns>Job Response</returns>
         public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
         {
-            int fromRow = (jobTitleSearchRequest.PageNo - 1) * jobTitleSearchRequest.PageSize;
-            int toRow = jobTitleSearchRequest.PageSize;
+            int fromRow = jobTitleSearchRequest.iDisplayStart;
+            int toRow = jobTitleSearchRequest.iDisplayStart + jobTitleSearchRequest.iDisplayLength;
 
             Expression<Func<JobTitle, bool>> query =
                 s => (((jobTitleSearchRequest.JobTitleId == 0) || s.JobTitleId == jobTitleSearchRequest.JobTitleId
@@ -64,7 +64,7 @@ namespace EPMS.Repository.Repositories
                     (string.IsNullOrEmpty(jobTitleSearchRequest.JobTitleName)
                     || (s.JobTitleNameE.Contains(jobTitleSearchRequest.JobTitleName))));
 
-            IEnumerable<JobTitle> jobTitles = jobTitleSearchRequest.IsAsc ?
+            IEnumerable<JobTitle> jobTitles = jobTitleSearchRequest.sSortDir_0=="asc" ?
                 DbSet
                 .Where(query).OrderBy(jobTitleClause[jobTitleSearchRequest.JobTitleByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :

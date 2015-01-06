@@ -67,15 +67,17 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 viewModel.aaData = employeeRequests;
                 viewModel.iTotalRecords = requestResponse.TotalCount;
-                viewModel.iTotalDisplayRecords = requestResponse.EmployeeRequests.Count();
+                viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
             }
             else
             {
                 viewModel.aaData = Enumerable.Empty<EmployeeRequest>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
-                viewModel.iTotalDisplayRecords = requestResponse.EmployeeRequests.Count();
+                viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
             }
             // Keep Search Request in Session
             Session["PageMetaData"] = searchRequest;

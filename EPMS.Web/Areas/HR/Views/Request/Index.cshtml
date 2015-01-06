@@ -37,7 +37,7 @@
                         @if (ViewBag.UserRole == "Admin")
                         {
                             <tr>
-                                <th></th>
+                                <th>ID</th>
                                 <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
                                 <th>@EPMS.Web.Resources.HR.Request.EmployeeName</th>
                                 <th>@EPMS.Web.Resources.HR.Request.EmployeeJobId</th>
@@ -70,15 +70,9 @@
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         if ('@ViewBag.UserRole' == "Admin") {
             var oTable = $('#dataTable').dataTable({
-                "iDisplayLength": $(".dataTables_length select").val(),
-                "iDisplayStart": start || 0,
-                "aaSorting": [sortBy],
                 "bProcessing": true,
                 "bServerSide": true,
-                "bFilter": true,
-                "bLengthChange": true,
-                "bPaginate": true,
-                "bAutoWidth": true,
+                "sPaginationType": "bootstrap",
                 "aoColumns": [
                     {
                         "aTargets": [0],
@@ -157,7 +151,6 @@
                     }
                 ],
                 "fnServerParams": function (aoData) {
-                    debugger
                     aoData.push({ "name": "search", "value": $('input').val() });
                 },
                 "sAjaxSource": siteUrl + "/Request/Index",
@@ -171,12 +164,9 @@
             });
         } else {
             var oTable = $('#dataTable').dataTable({
-                "iDisplayLength": 10,
-                "iDisplayStart": start || 0,
-                "aaSorting": [sortBy],
                 "bProcessing": true,
                 "bServerSide": true,
-                "bFilter": true,
+                "sPaginationType": "bootstrap",
                 "aoColumns": [
                     {
                         "aTargets": [0],

@@ -15,11 +15,11 @@ namespace EPMS.Models.RequestModels
         {
             get
             {
-                return (EmployeeRequestByColumn)SortBy;
+                return (EmployeeRequestByColumn)iSortCol_0;
             }
             set
             {
-                SortBy = (short)value;
+                iSortCol_0 = (short)value;
             }
         }
     }

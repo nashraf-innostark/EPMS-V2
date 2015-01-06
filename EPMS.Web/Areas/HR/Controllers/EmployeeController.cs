@@ -226,7 +226,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             var userRole = result.AspNetRoles.FirstOrDefault();
             try
             {
-                if (userRole != null && userRole.Name == "Admin")
+                if (userRole != null && userRole.Name == "Admin" && ModelState.IsValid)
                 {
                     #region Update
 
