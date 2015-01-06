@@ -36,7 +36,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         #endregion
 
         #region Public
-
+        [SiteAuthorize(PermissionKey = "PayrollIndex")]
         //[SiteAuthorize(PermissionKey = "PayrollIndex")]
         // GET: HR/Payroll
         public ActionResult Index()
@@ -85,7 +85,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
-
+        [SiteAuthorize(PermissionKey = "PayrollDetail")]
         public ActionResult Detail(long? id)
         {
             PayrollViewModel viewModel = new PayrollViewModel();

@@ -16,6 +16,7 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Employee = EPMS.Web.Models.Employee;
@@ -56,7 +57,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// Employee ListView Action Method
         /// </summary>
         /// <returns></returns>
-
+        [SiteAuthorize(PermissionKey = "EmployeeIndex")]
         public ActionResult Index()
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
@@ -135,6 +136,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
+        [SiteAuthorize(PermissionKey = "")]
         public ActionResult Create(long? id)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
