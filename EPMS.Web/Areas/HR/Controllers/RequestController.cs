@@ -48,7 +48,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
         {
-            searchRequest.SearchStr = Request["search"];
+            searchRequest.SearchString = Request["search"];
             RequestListViewModel viewModel = new RequestListViewModel();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();

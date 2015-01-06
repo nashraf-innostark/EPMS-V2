@@ -28,7 +28,7 @@
 
 
 <form class="form-horizontal">
-    @Html.HiddenFor(model => model.SearchRequest.SearchStr, new { id = "searchString" });
+    @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" });
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
@@ -65,9 +65,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
-        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         if ('@ViewBag.UserRole' == "Admin") {
             var oTable = $('#dataTable').dataTable({
                 "bProcessing": true,
@@ -81,6 +78,7 @@
                             return full["RequestId"];
                         },
                         "bVisible": false,
+                        "bSortable": false
                     },
                     {
                         "aTargets": [1],
@@ -90,40 +88,35 @@
                             var id = full["RequestId"];
                             var element = '<a href="Create/' + id + '">' + val + '</a>';
                             return element;
-                        },
-                        "bSortable": false
+                        }
                     },
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["EmployeeNameE"];
-                        },
-                        "bSortable": false
+                        }
                     },
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["EmployeeJobId"];
-                        },
-                        "bSortable": false
+                        }
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["DepartmentNameE"];
-                        },
-                        "bSortable": false
+                        }
                     },
                     {
                         "aTargets": [6],
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["RequestDateString"];
-                        },
-                        "bSortable": false
+                        }
                     },
                     {
                         "aTargets": [7],
@@ -146,8 +139,7 @@
                         "mRender": function(data, type, full) {
                             var requestDetail = full["RequestDetail"];
                             return requestDetail.IsReplied ? "Yes" : "No";
-                        },
-                        "bSortable": false
+                        }
                     }
                 ],
                 "fnServerParams": function (aoData) {
@@ -175,6 +167,7 @@
                             return full["RequestId"];
                         },
                         "bVisible": false,
+                        "bSortable": false
                     },
                     {
                         "aTargets": [1],
@@ -184,8 +177,7 @@
                             var Id = full["RequestId"];
                             var element = '<a href="Create/' + Id + '">' + val + '</a>';
                             return element;
-                        },
-                        "bSortable": false
+                        }
                     },
                     {
                         "aTargets": [2],

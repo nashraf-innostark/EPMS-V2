@@ -65,10 +65,10 @@ namespace EPMS.Repository.Repositories
                 employeeSearchRequset.iSortCol_0 = 2;
             }
             Expression<Func<Employee, bool>> query =
-                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchStr)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchStr)) || 
-                    (s.EmployeeNameA.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchStr)) || 
-                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchStr)) || (s.EmployeeJobId == employeeSearchRequset.SearchStr) || 
-                    (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchStr)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchStr)));
+                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.EmployeeNameA.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchString)) || (s.EmployeeJobId == employeeSearchRequset.SearchString) ||
+                    (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchString)));
 
             IEnumerable<Employee> employees = employeeSearchRequset.sSortDir_0=="asc" ?
                 DbSet
