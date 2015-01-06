@@ -18,6 +18,7 @@ using EPMS.Web.ModelMappers;
 ﻿using EPMS.Web.Models;
 ﻿using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobApplicant;
+﻿using EPMS.WebBase.Mvc;
 ﻿using Microsoft.AspNet.Identity;
 ﻿using Microsoft.AspNet.Identity.Owin;
 ﻿using JobApplicant = EPMS.Models.DomainModels.JobApplicant;
@@ -102,6 +103,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             return View(jobApplicantViewModel);
         }
 
+        [SiteAuthorize(PermissionKey = "JobApplicant")]
         public ActionResult JobApplicantList()
         {
             JobApplicantSearchRequest jobApplicantSearchRequest = new JobApplicantSearchRequest();
@@ -113,12 +115,10 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         
         [HttpPost]
-        public ActionResult JobApplicantList(JQueryDataTableParamModel param)
+        public ActionResult JobApplicantList(JobApplicantSearchRequest jobApplicantSearchRequest)
         {
-            
-            JobApplicantSearchRequest jobApplicantSearchRequest = new JobApplicantSearchRequest();
             jobApplicantSearchRequest.SearchString = Request["search"];
-            var jobApplicants = jobApplicantService.GetJobApplicantList(jobApplicantSearchRequest);
+            var jobApplicants = jobApplicantService.GetJobApplicants(jobApplicantSearchRequest);
 
             List<ApplicantModel> jobApplicantList =
                 jobApplicants.JobApplicants.Select(x => x.CreateFromApplicant()).ToList();
@@ -128,7 +128,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 aaData = jobApplicantList,
                 iTotalRecords = Convert.ToInt32(jobApplicants.TotalCount),
                 iTotalDisplayRecords = Convert.ToInt32(jobApplicantList.Count()),
-                sEcho = param.sEcho,
+                sEcho = jobApplicantSearchRequest.sEcho,
             };
             return Json(jobApplicantListViewModel, JsonRequestBehavior.AllowGet);
         }

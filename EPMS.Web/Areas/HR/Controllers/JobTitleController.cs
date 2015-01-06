@@ -6,6 +6,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobTitle;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
@@ -40,6 +41,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         #region Public
 
         // GET: JobTitles ListView Action Method
+        [SiteAuthorize(PermissionKey = "JobTitleIndex")]
         public ActionResult Index()
         {
             return View(new JobTitleListViewModel
@@ -53,6 +55,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
+        [SiteAuthorize(PermissionKey = "JobTitleCreate")]
         public ActionResult Create(long? id)
         {
             JobTitleViewModel viewModel = new JobTitleViewModel();
