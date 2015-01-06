@@ -94,7 +94,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
-            searchRequest.SearchStr = Request["search"];
+            searchRequest.SearchString = Request["search"];
             var employees = EmployeeService.GetAllEmployees(searchRequest);
             IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();

@@ -66,22 +66,22 @@ namespace EPMS.Repository.Repositories
             if (searchRequset.Requester == "Admin")
             {
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchStr)) || (s.RequestTopic.Contains(searchRequset.SearchStr)) ||
-                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchStr)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchStr)) ||
-                    (s.Employee.EmployeeJobId.Contains(searchRequset.SearchStr)) || 
-                    (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchStr)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchStr))
+                s => ((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.RequestTopic.Contains(searchRequset.SearchString)) ||
+                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
+                    (s.Employee.EmployeeJobId.Contains(searchRequset.SearchString)) ||
+                    (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchString)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchString))
                     );
             }
             else
             {
                 long employeeId = Convert.ToInt64(searchRequset.Requester);
                 query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchStr) || (s.RequestTopic.Contains(searchRequset.SearchStr))) && 
+                s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.RequestTopic.Contains(searchRequset.SearchString))) && 
                     (s.EmployeeId.Equals(employeeId)));
             }
             
 
-            IEnumerable<EmployeeRequest> employeeRequests = searchRequset.sSortDir_0=="Asc" ?
+            IEnumerable<EmployeeRequest> employeeRequests = searchRequset.sSortDir_0=="asc" ?
                 DbSet
                 .Where(query).OrderBy(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :
