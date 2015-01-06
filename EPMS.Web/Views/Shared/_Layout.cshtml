@@ -158,8 +158,19 @@
         </ul>
     </div>
     <!--- Sidebar navigation -->
-    @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
-
+    <div class="nav-fixed-left" style="visibility: hidden" dir="ltr">
+        <div class="nav-fixed-left" style="visibility: hidden">
+            <ul class="nav nav-side-menu">
+                <li class="shadow-layer"></li>
+                @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
+                <li class="nav-logout">
+                    <a href="~/Account/Logoff">
+                        <i class="icon-photon key_stroke"></i><span class="nav-selection">Logout</span>
+                    </a>
+                </li>
+            </ul>
+</div>
+    </div>
 
     <!-- Page content starts -->
     <div class="main-content">
@@ -254,4 +265,5 @@
     </script>
 
 </body>
+
 </html>
