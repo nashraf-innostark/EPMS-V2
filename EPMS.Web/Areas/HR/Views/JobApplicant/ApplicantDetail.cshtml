@@ -3,7 +3,7 @@
 @{
     //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
     ViewBag.Title = "Job Opening";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -160,6 +160,7 @@
             <div class="span3">
                 <div class="span3 span-inset">
                     <button id="savebtn" class="btn" type="reset" onclick="location.href = '/HR/JobApplicant/JobApplicantList'">Back</button>
+                    <input type="button" onclick="printDiv('JobOfferedForm')" value="print a div!" />
                 </div>
             </div>
         </div>
@@ -168,6 +169,13 @@
 }
 
 <script>
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
     $().ready(function () {
         $('.' + 'tbdisable' + ':input').attr('disabled', true);
         var errors = "";
