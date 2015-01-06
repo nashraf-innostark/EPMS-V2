@@ -6,6 +6,10 @@
     public class ApplicantModel
     {
         /// <summary>
+        /// Job Applicant Id
+        /// </summary>
+        public long JobApplicantId { get; set; }
+        /// <summary>
         /// Job Applicant Name
         /// </summary>
         public string ApplicantName { get; set; }
