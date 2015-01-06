@@ -18,7 +18,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("Apply", "JobApplicant", FormMethod.Post, new { @id = "JobOfferedForm", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Apply", "JobApplicant", FormMethod.Post, new { @id = "JobOfferedForm", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
@@ -160,7 +160,7 @@
         $('#upload').mfupload({
             type: 'pdf,doc,docx,txt', // type: '', for all types
             maxsize: 1, //file size in MBs
-            post_upload: "UploadUserPhoto",
+            post_upload: "UploadApplicantCV",
             folder: "./",
             ini_text: "Drag your file here or click (max: 1MB)",
             over_text: "Drop Here",

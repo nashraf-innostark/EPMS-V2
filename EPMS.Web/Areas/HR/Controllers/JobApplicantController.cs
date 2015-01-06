@@ -133,7 +133,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             return Json(jobApplicantListViewModel, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult UploadUserPhoto()
+        public ActionResult UploadApplicantCV()
         {
             HttpPostedFileBase userCv = Request.Files[0];
             try
