@@ -68,7 +68,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            employeeSearchRequest.SearchStr = Request["search"].ToString();
+            employeeSearchRequest.SearchString = Request["search"].ToString();
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Models.Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();

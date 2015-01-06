@@ -30,6 +30,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         // GET: HR/Request
+        [SiteAuthorize(PermissionKey = "RequestIndex")]
         public ActionResult Index()
         {
             EmployeeRequestSearchRequest searchRequest = Session["PageMetaData"] as EmployeeRequestSearchRequest;
@@ -45,10 +46,9 @@ namespace EPMS.Web.Areas.HR.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        [SiteAuthorize(PermissionKey = "RequestIndex")]
         public ActionResult Index(EmployeeRequestSearchRequest searchRequest)
         {
-            searchRequest.SearchStr = Request["search"];
+            searchRequest.SearchString = Request["search"];
             RequestListViewModel viewModel = new RequestListViewModel();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
@@ -84,6 +84,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         // GET: HR/Request/Create/RequestId
+        [SiteAuthorize(PermissionKey = "RequestCreate")]
         public ActionResult Create(long? id)
         {
             RequestViewModel requestViewModel = new RequestViewModel();
@@ -178,6 +179,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return View(requestViewModel);
             }
         }
+        [SiteAuthorize(PermissionKey = "RequestDelete")]
         public ActionResult Delete(long? id)
         {
             if (id > 0)

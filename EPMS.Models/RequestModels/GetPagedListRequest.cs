@@ -17,7 +17,7 @@
         public int iDisplayLength { get; set; }
 
         public string SearchString { get; set; }
-
+        public string sEcho { get; set; }
         /// <summary>
         /// PageNo
         /// </summary>
@@ -47,8 +47,18 @@
         /// <summary>
         /// Order By Name
         /// </summary>
-
-        public short iSortCol_0 { get; set; }
+        private int _SortCol;
+        public int iSortCol_0
+        {
+            get
+            {
+                return _SortCol;
+            }
+            set
+            {
+                _SortCol = value == 0 ? 1 : value;
+            }
+        }
 
         /// <summary>
         /// Total Count
