@@ -27,7 +27,7 @@
         @Html.HiddenFor(model => model.JobApplicant.ApplicantCvPath, new { @id = "CvPath" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="inputField">Applicant Name</label>
+                <label class="control-label" for="inputField">@EPMS.Web.Resources.HR.JobApplicant.ApplicantName</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -37,27 +37,41 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Department</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.Department</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new { @disabled = true, @id = "departmentName" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new {@disabled = true, @id = "departmentNameE"})
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new {@disabled = true, @id = "departmentNameA"})
+                    }
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Description">Job Description</label>
+                <label class="control-label" for="Description">@EPMS.Web.Resources.HR.JobApplicant.JobDescription</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.JobTitleDescE, new { @disabled = true, @id = "jobTitleDesc" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitleDescE, new {@disabled = true, @id = "jobTitleDescE"})
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitleDescA, new { @disabled = true, @id = "jobTitleDescA" })
+                    }
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="age">Age</label>
+                <label class="control-label" for="age">@EPMS.Web.Resources.HR.JobApplicant.Age</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -67,7 +81,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="mobile">Mobile Number</label>
+                <label class="control-label" for="mobile">@EPMS.Web.Resources.HR.JobApplicant.MobileNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -77,7 +91,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="email">Email</label>
+                <label class="control-label" for="email">@EPMS.Web.Resources.HR.JobApplicant.Email</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -88,29 +102,41 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">Marital Status </label>
+                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.HR.JobApplicant.MaritalStatus</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.MaritalStatus, new { @id = "applicantMaritalStatus" })
+                    @Html.DropDownListFor(model => model.JobApplicant.MaritalStatus,
+                        new List<SelectListItem> {
+                            new SelectListItem { Value = "0" , Text = "Single" },
+                            new SelectListItem { Value = "1" , Text = "Married" },
+                        }, new { @id = "applicantMaritalStatus" })
                 </div>
             </div>
 
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">Nationality </label>
+                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.HR.JobApplicant.Nationality</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.Nationality, new { @id = "applicantNationality" })
+                    @Html.DropDownListFor(model => model.JobApplicant.Nationality,
+                        new List<SelectListItem> {
+                            new SelectListItem { Value = "0" , Text = "Saudi Arabia" },
+                            new SelectListItem { Value = "1" , Text = "Pakistan" },
+                            new SelectListItem { Value = "2" , Text = "UAE" },
+                            new SelectListItem { Value = "3" , Text = "USA" },
+                            new SelectListItem { Value = "4" , Text = "UK" },
+                        },
+                        new { @id = "applicantNationality" })
                 </div>
             </div>
 
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="idNumber">Iqama or National ID Number</label>
+                <label class="control-label" for="idNumber">@EPMS.Web.Resources.HR.JobApplicant.IqamaNo</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -121,11 +147,11 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="driving">Driving License</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.DrivingLicense</label>
             </div>
-            <div class="span9 span-inset ">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.DrivingLicense, new { @id = "applicantIqama" })
+            <div class="span1 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="height:24px !important">
+                    @Html.CheckBoxFor(model => model.JobApplicant.DrivingLicense, new { @id = "DrivingLicense" })
                 </div>
             </div>
         </div>

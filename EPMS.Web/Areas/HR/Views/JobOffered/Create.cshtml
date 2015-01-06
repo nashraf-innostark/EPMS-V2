@@ -156,7 +156,6 @@
         DivHideShow('ShowBasicSalary', 'basicSal');
         $("#jobTitle").on("change", function() {
             var selectedVal = $(this).val();
-            debugger;
             if (selectedVal != "") {
                 var jobtitlelist = '@Html.Raw(Json.Encode(Model.JobTitleList))';
                 var parsed = JSON.parse(jobtitlelist);

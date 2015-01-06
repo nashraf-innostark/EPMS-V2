@@ -68,6 +68,7 @@ namespace EPMS.Web.ModelMappers
                 Nationality = source.Nationality,
                 IqamaOrNationalIdNo = source.IqamaOrNationalIdNo,
                 DrivingLicense = source.DrivingLicense,
+                DrivingLicenseStatus = source.DrivingLicense?"Yes":"No",
                 ApplicantCvPath = source.ApplicantCvPath,
                 JobOfferedId = source.JobOfferedId,
                 RecCreatedBy = source.RecCreatedBy,

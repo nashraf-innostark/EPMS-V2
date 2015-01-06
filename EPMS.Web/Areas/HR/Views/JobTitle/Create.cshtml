@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a href="~/HR/Jobtitle/">
+            <a href="~/HR/Jobtitle/Index">
                 @EPMS.Web.Resources.HR.JobTitle.Label
             </a>
         </li>
@@ -82,7 +82,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "")
                 </div>
             </div>
@@ -93,7 +93,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleDescA, new { @dir = "ltr", id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { @dir = "ltr", id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "")
                 </div>
             </div>
@@ -123,7 +123,7 @@
 
     </div>
 }
-
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
         var id = $('#JobTitle_JobTitleId').val();
@@ -134,6 +134,8 @@
             
         });
         if (id == 0) {
+            CKEDITOR.replace('JobTitleDescE');
+            CKEDITOR.replace('JobTitleDescA');
             $('#departmentId').select2('enable');
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();
@@ -150,6 +152,8 @@
     });
 
     $("#edit").click(function () {
+        CKEDITOR.replace('JobTitleDescE');
+        CKEDITOR.replace('JobTitleDescA');
         $('#departmentId').select2('enable');
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         $("#savebtn").show();

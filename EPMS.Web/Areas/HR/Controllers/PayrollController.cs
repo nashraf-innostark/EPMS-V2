@@ -7,7 +7,6 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.Payroll;
 using EPMS.WebBase.Mvc;
@@ -20,15 +19,13 @@ namespace EPMS.Web.Areas.HR.Controllers
 {
     public class PayrollController : Controller
     {
-        private readonly IEmployeeRequestService EmployeeRequestService;
         private readonly IEmployeeService EmployeeService;
         private readonly IAspNetUserService AspNetUserService;
 
         #region Constructor
 
-        public PayrollController(IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, IAspNetUserService aspNetUserService)
+        public PayrollController(IEmployeeService employeeService, IAspNetUserService aspNetUserService)
         {
-            EmployeeRequestService = employeeRequestService;
             EmployeeService = employeeService;
             AspNetUserService = aspNetUserService;
         }
@@ -36,7 +33,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         #endregion
 
         #region Public
-
+        [SiteAuthorize(PermissionKey = "PayrollIndex")]
         //[SiteAuthorize(PermissionKey = "PayrollIndex")]
         // GET: HR/Payroll
         public ActionResult Index()
@@ -48,8 +45,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                 EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
                     SearchRequest = new EmployeeSearchRequset(),
+                    Role = userRole.Name,
                 };
-                employeeViewModel.Role = userRole.Name;
                 return View(employeeViewModel);
             }
             if (userRole != null && userRole.Name == "Employee")
@@ -61,14 +58,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(JQueryDataTableParamModel param)
+        public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
-            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
-            // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            employeeSearchRequest.SearchString = Request["search"].ToString();
+            employeeSearchRequest.SearchString = Request["search"];
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
             IEnumerable<Models.Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
@@ -77,7 +72,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 aaData = employeeList,
                 iTotalRecords = Convert.ToInt32(employees.TotalCount),
                 iTotalDisplayRecords = Convert.ToInt32(employeeList.Count()),
-                sEcho = param.sEcho,
+                sEcho = employeeSearchRequest.sEcho,
             };
             if (userRole != null)
             {
@@ -85,7 +80,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
-
+        [SiteAuthorize(PermissionKey = "PayrollDetail")]
         public ActionResult Detail(long? id)
         {
             PayrollViewModel viewModel = new PayrollViewModel();

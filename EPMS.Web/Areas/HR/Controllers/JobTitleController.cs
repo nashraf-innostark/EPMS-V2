@@ -68,6 +68,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(JobTitleViewModel jobTitleViewModel)
         {
             try
