@@ -152,11 +152,15 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult ApplicantDetail(long? id)
        {
             JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
-            if (id != null)
+            if (id != null && id>0)
             {
                 jobApplicantViewModel.JobApplicant = jobApplicantService.FindJobApplicantById((long)id).CreateJobApplicant();
                 //jobApplicantViewModel.JobApplicant.ApplicantCvPath =
                 //    Server.MapPath(jobApplicantViewModel.JobApplicant.ApplicantCvPath);
+            }
+            else
+            {
+                RedirectToAction("JobApplicantList");
             }
             return View(jobApplicantViewModel);
         }
