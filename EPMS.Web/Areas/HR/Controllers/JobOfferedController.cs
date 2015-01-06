@@ -44,7 +44,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             return View(new JobOfferedViewModel
             {
-                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom()),
                 JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
             });
         }

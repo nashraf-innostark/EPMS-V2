@@ -1870,6 +1870,7 @@
     <EmbeddedResource Include="Resources\HR\JobOffered.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobOffered.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
