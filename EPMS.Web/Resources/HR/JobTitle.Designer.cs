@@ -124,7 +124,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Job Title Description.
+        ///   Looks up a localized string similar to Job Description.
         /// </summary>
         public static string Description {
             get {
@@ -133,11 +133,20 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Job Title Description.
+        ///   Looks up a localized string similar to Job Description Arabic.
         /// </summary>
-        public static string DescriptionOnCreate {
+        public static string DescriptionOnCreateA {
             get {
-                return ResourceManager.GetString("DescriptionOnCreate", resourceCulture);
+                return ResourceManager.GetString("DescriptionOnCreateA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Description.
+        /// </summary>
+        public static string DescriptionOnCreateE {
+            get {
+                return ResourceManager.GetString("DescriptionOnCreateE", resourceCulture);
             }
         }
         
@@ -178,11 +187,20 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Job Title Name.
+        ///   Looks up a localized string similar to Title Name Arabic.
         /// </summary>
-        public static string NameOnCreate {
+        public static string NameOnCreateA {
             get {
-                return ResourceManager.GetString("NameOnCreate", resourceCulture);
+                return ResourceManager.GetString("NameOnCreateA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Name.
+        /// </summary>
+        public static string NameOnCreateE {
+            get {
+                return ResourceManager.GetString("NameOnCreateE", resourceCulture);
             }
         }
         
