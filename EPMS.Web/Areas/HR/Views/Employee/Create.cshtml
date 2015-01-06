@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = Model.EmployeeViewModel.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -62,21 +63,20 @@
                 <label class="control-label cultureE" for="EmployeeNameE">@EPMS.Web.Resources.HR.Employee.Name</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new { @id = "EmployeeNameE" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new { @class = "required" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label cultureA" for="EmployeeNameA">@EPMS.Web.Resources.HR.Employee.Name</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new {@id = "EmployeeNameE"})
+                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new {@class = "required"})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameA, new { @id = "EmployeeNameA" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA, String.Empty, new { @class = "required" })
                 </div>
+                }
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -253,21 +253,20 @@
                 <label class="control-label cultureE" for="ExtraInformationE">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @id = "ExtraInformationE" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsE)
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label cultureA" for="ExtraInformationA">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new {@id = "ExtraInformationE"})
+                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsE)
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsA, new { @id = "ExtraInformationA" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsA)
                 </div>
+                }
             </div>
         </div>
         <div class="control-group row-fluid">
