@@ -254,6 +254,7 @@
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -760,6 +761,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\Employee\25122014.jpg" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\Gallery\ajax-loader.gif" />
+    <Content Include="Images\Gallery\ajax_loader_red_512.gif" />
     <Content Include="Images\Gallery\download-brochure.png" />
     <Content Include="Images\News\35.jpg" />
     <Content Include="Images\News\Altaf-Hussain-Arabi-meme.jpg" />
@@ -1868,6 +1871,7 @@
     <EmbeddedResource Include="Resources\HR\JobOffered.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobOffered.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2181,6 +2185,7 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Alert.cshtml" />
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicantCvs\" />

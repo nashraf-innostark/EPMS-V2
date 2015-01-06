@@ -117,6 +117,8 @@
             "sAjaxSource": siteUrl + "/Employee/Index",
             "sServerMethod": "POST",
             "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
             },
@@ -124,7 +126,8 @@
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
-        //$(".dataTables_length select label").hide();
+
+        //$(".dataTables_processing").hide();
         //$(".dataTables_length label").text("");
 
         $(".dataTables_filter input").unbind()
