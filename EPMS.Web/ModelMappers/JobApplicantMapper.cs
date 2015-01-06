@@ -1,4 +1,5 @@
-﻿using System.Web.Http.ModelBinding;
+﻿using System.Configuration;
+using System.Web.Http.ModelBinding;
 using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -67,7 +68,7 @@ namespace EPMS.Web.ModelMappers
                 Nationality = source.Nationality,
                 IqamaOrNationalIdNo = source.IqamaOrNationalIdNo,
                 DrivingLicense = source.DrivingLicense,
-                ApplicantCvPath = source.ApplicantCvPath,
+                ApplicantCvPath = ConfigurationManager.AppSettings["ApplicantCv"]+source.ApplicantCvPath,
                 JobOfferedId = source.JobOfferedId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,

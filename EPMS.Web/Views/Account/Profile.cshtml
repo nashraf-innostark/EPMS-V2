@@ -29,7 +29,7 @@
 @Html.Partial("_Alert")
 
 <!-- Form starts.  -->
-@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()

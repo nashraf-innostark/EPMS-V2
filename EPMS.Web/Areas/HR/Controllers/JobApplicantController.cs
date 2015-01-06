@@ -69,6 +69,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Apply(JobApplicantViewModel jobApplicantViewModel)
         {
             try
@@ -102,7 +103,26 @@ namespace EPMS.Web.Areas.HR.Controllers
 
             return View(jobApplicantViewModel);
         }
-
+        public ActionResult UploadCv()
+        {
+            HttpPostedFileBase userCv = Request.Files[0];
+            try
+            {
+                //Save File to Folder
+                if ((userCv != null))
+                {
+                    var filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userCv.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ApplicantCv"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    userCv.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { filename = userCv.FileName, size = userCv.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
         [SiteAuthorize(PermissionKey = "JobApplicant")]
         public ActionResult JobApplicantList()
         {
@@ -132,28 +152,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             };
             return Json(jobApplicantListViewModel, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult UploadApplicantCV()
-        {
-            HttpPostedFileBase userCv = Request.Files[0];
-            try
-            {
-                //Save File to Folder
-                if ((userCv != null))
-                {
-                    var filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userCv.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
-                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ApplicantCv"]);
-                    string savedFileName = Path.Combine(filePathOriginal, filename);
-                    userCv.SaveAs(savedFileName);
-                }
-            }
-            catch (Exception exp)
-            {
-                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new { filename = userCv.FileName, size = userCv.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
-        }
-
+        
         public ActionResult ApplicantDetail(long? id)
        {
             JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
