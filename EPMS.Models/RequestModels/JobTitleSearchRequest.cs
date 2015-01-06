@@ -19,11 +19,11 @@ namespace EPMS.Models.RequestModels
         {
             get
             {
-                return (JobTitleByColumn)SortBy;
+                return (JobTitleByColumn)iSortCol_0;
             }
             set
             {
-                SortBy = (short)value;
+                iSortCol_0 = (short)value;
             }
         }
     }

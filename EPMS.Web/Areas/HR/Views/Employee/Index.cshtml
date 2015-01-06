@@ -84,16 +84,14 @@
                         var empId = full["EmployeeId"];
                         var element = '<a href="Create/' + empId + '">' + val + '</a>';
                         return element;
-                    },
-                    "bSortable": false
+                    }
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         return full["EmployeeJobId"];
-                    },
-                    "bSortable": false
+                    }
                 },
                 {
                     "aTargets": [4],
@@ -101,18 +99,16 @@
                     "mRender": function (data, type, full) {
                         var jobTItle = full["JobTitle"];
                         return jobTItle.JobTitleNameE;
-                    },
-                    "bSortable": false
+                    }
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var jobTitle = full["JobTitle"];
-                        var dept = jobTitle.Department.DepartmentNameE;
+                        var dept = jobTitle.DepartmentNameE;
                         return dept;
-                    },
-                    "bSortable": true
+                    }
                 }
             ],
             "fnServerParams": function (aoData) {
@@ -123,7 +119,7 @@
             "oLanguage": {
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
-            }
+            },
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'

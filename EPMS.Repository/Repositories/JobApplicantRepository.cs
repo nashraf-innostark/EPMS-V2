@@ -52,15 +52,15 @@ namespace EPMS.Repository.Repositories
 
         public JobApplicantResponse GetAllJobApplicants(JobApplicantSearchRequest jobApplicantSearchRequest)
         {
-            int fromRow = (jobApplicantSearchRequest.PageNo - 1) * jobApplicantSearchRequest.PageSize;
-            int toRow = jobApplicantSearchRequest.PageSize;
+            int fromRow = jobApplicantSearchRequest.iDisplayStart;
+            int toRow = jobApplicantSearchRequest.iDisplayStart+jobApplicantSearchRequest.iDisplayLength;
 
             Expression<Func<JobApplicant, bool>> query =
                 s => ((string.IsNullOrEmpty(jobApplicantSearchRequest.SearchString)) || (s.ApplicantName.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.ApplicantEmail.Contains(jobApplicantSearchRequest.SearchString)) || (s.ApplicantMobile.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.JobTitleNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.JobTitleNameA.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.Department.DepartmentNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.Department.DepartmentNameA.Contains(jobApplicantSearchRequest.SearchString)));
-            IEnumerable<JobApplicant> jobApplicants = jobApplicantSearchRequest.IsAsc ?
+            IEnumerable<JobApplicant> jobApplicants = jobApplicantSearchRequest.sSortDir_0=="Asc" ?
                 DbSet
                 .Where(query).OrderBy(jobApplicantClause[jobApplicantSearchRequest.JobApplicantRequestByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :
