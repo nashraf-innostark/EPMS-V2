@@ -4,6 +4,7 @@
     ViewBag.Title = "Employees";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -54,6 +55,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
+        var dir = '@direction';
         var oTable = $('#employeeTable').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
@@ -80,9 +82,18 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var val = full["EmployeeNameE"];
-                        var empId = full["EmployeeId"];
-                        var element = '<a href="Create/' + empId + '">' + val + '</a>';
+                        var element;
+                        var val;
+                        var empId;
+                        if (dir == "ltr") {
+                            val = full["EmployeeNameE"];
+                            empId = full["EmployeeId"];
+                            element = '<a href="Create/' + empId + '">' + val + '</a>';
+                        } else {
+                            val = full["EmployeeNameA"];
+                            empId = full["EmployeeId"];
+                            element = '<a href="Create/' + empId + '">' + val + '</a>';
+                        }
                         return element;
                     }
                 },
