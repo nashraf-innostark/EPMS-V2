@@ -59,13 +59,13 @@ namespace EPMS.Web.Areas.HR.Controllers
         
         public ActionResult Apply(long? id)
         {
-            JobApplicantViewModel jobOfferedViewModel = new JobApplicantViewModel();
+            JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
             if (id != null)
             {
-                jobOfferedViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
+                jobApplicantViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
             }
-            jobOfferedViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
-            return View(jobOfferedViewModel);
+            jobApplicantViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
+            return View(jobApplicantViewModel);
         }
 
         [HttpPost]
@@ -152,6 +152,16 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { filename = userCv.FileName, size = userCv.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ApplicantDetail(long? id)
+       {
+            JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
+            if (id != null)
+            {
+                jobApplicantViewModel.JobApplicant = jobApplicantService.FindJobApplicantById((long)id).CreateJobApplicant();
+            }
+            return View(jobApplicantViewModel);
         }
 
         #endregion

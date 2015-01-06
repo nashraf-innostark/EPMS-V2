@@ -47,10 +47,36 @@ namespace EPMS.Web.ModelMappers
             return new Models.ApplicantModel()
             {
                 ApplicantName = source.ApplicantName,
+                JobApplicantId = source.ApplicantId,
                 ApplicantMobile = source.ApplicantMobile,
                 ApplicantEmail = source.ApplicantEmail,
                 JobOffered = source.JobOffered.JobTitle.JobTitleNameE,
                 DepartmentName = source.JobOffered.JobTitle.Department.DepartmentNameE
+            };
+        }
+
+        public static Models.JobApplicant CreateJobApplicant(this DomainModels.JobApplicant source)
+        {
+            return new Models.JobApplicant
+            {
+                ApplicantName = source.ApplicantName,
+                ApplicantMobile = source.ApplicantMobile,
+                ApplicantEmail = source.ApplicantEmail,
+                ApplicantAge = source.ApplicantAge,
+                MaritalStatus = source.MaritalStatus,
+                Nationality = source.Nationality,
+                IqamaOrNationalIdNo = source.IqamaOrNationalIdNo,
+                DrivingLicense = source.DrivingLicense,
+                ApplicantCvPath = source.ApplicantCvPath,
+                JobOfferedId = source.JobOfferedId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                DepartmentNameE = source.JobOffered.JobTitle.Department.DepartmentNameE,
+                DepartmentNameA = source.JobOffered.JobTitle.Department.DepartmentNameA,
+                JobDescriptionE = source.JobOffered.JobTitle.JobTitleNameE,
+                JobDescriptionA = source.JobOffered.JobTitle.JobTitleNameA
             };
         }
     }

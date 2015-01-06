@@ -5,10 +5,10 @@
     /// </summary>
     public enum JobApplicantByColumn
     {
-        ApplicantName = 2,
-        ApplicantEmail = 3,
-        ApplicantMobile = 4,
-        JobOffered = 5,
-        Departemnt = 6
+        ApplicantName = 1,
+        ApplicantEmail = 2,
+        ApplicantMobile = 3,
+        JobOffered = 4,
+        Departemnt = 5
     }
 }

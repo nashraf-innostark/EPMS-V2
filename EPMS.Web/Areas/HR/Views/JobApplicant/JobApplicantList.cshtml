@@ -72,7 +72,10 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function(data, type, full) {
-                        return full["ApplicantName"];
+                        var name = full["ApplicantName"];
+                        var id = full["JobApplicantId"];
+                        var element = '<a href="ApplicantDetail/' + id + '">' + name + '</a>';
+                        return element;
                     },
                     "bSortable": false
                 },
@@ -82,7 +85,6 @@
                     "mRender": function(data, type, full) {
                         return full["ApplicantEmail"];
                     },
-                    "bSortable": false
                 },
                 {
                     "aTargets": [1],
@@ -90,27 +92,22 @@
                     "mRender": function(data, type, full) {
                         return full["ApplicantMobile"];
                     },
-                    "bSortable": false
                 },
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function(data, type, full) {
                         var jobOffered = full["JobOffered"];
-                        //var jobTitle = jobOffered.JobOffered;
                         return jobOffered;
                     },
-                    "bSortable": false
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function(data, type, full) {
                         var jobOffered = full["DepartmentName"];
-                        //var department = jobOffered.DepartmentName;
                         return jobOffered;
                     },
-                    "bSortable": false
                 }
             ],
             "fnServerParams": function (aoData) {

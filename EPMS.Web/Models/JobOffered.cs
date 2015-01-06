@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.SqlServer.Server;
 
 namespace EPMS.Web.Models
 {
@@ -14,6 +12,7 @@ namespace EPMS.Web.Models
         public string DescriptionA { get; set; }
         public bool ShowBasicSalary { get; set; }
         public bool IsOpen { get; set; }
+        public string IsOpenStatus { get; set; }
         public int? NoOfPosts { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
