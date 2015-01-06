@@ -50,18 +50,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
-        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#employeeTable').dataTable({
             "sPaginationType": "bootstrap",
-            "iDisplayLength": -1,
-            "iDisplayStart": start || 0,
-            "aaSorting": [sortBy],
-            "iSortCol_0": '@Model.SearchRequest.SortBy',
             "bProcessing": true,
             "bServerSide": true,
-            "bFilter": true,
             "aoColumns": [
                 {
                     "aTargets": [0],
@@ -123,10 +115,9 @@
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
             "sAjaxSource": siteUrl + "/Payroll/Index",
-            //"aaSorting": [[2, 'asc'], [3, 'asc'], [4, 'asc'], [5, 'asc']],
             "sServerMethod": "POST",
             "oLanguage": {
-                //"sProcessing": "Fetching record(s)",
+                "sProcessing": "Fetching record(s)",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
             }

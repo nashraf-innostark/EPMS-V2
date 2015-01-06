@@ -60,7 +60,7 @@ namespace EPMS.Repository.Repositories
             int fromRow = employeeSearchRequset.iDisplayStart;
             int toRow = employeeSearchRequset.iDisplayStart + employeeSearchRequset.iDisplayLength;
             //int toRow = employeeSearchRequset.PageSize;
-            if (employeeSearchRequset.iSortCol_0 == 0)
+            if (employeeSearchRequset.iSortCol_0 == 1)
             {
                 employeeSearchRequset.iSortCol_0 = 2;
             }
