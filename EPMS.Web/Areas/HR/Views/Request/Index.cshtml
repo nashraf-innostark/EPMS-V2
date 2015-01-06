@@ -139,7 +139,8 @@
                         "mRender": function(data, type, full) {
                             var requestDetail = full["RequestDetail"];
                             return requestDetail.IsReplied ? "Yes" : "No";
-                        }
+                        },
+                        "bSortable": false
                     }
                 ],
                 "fnServerParams": function (aoData) {
