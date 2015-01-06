@@ -15,6 +15,7 @@ namespace EPMS.Web.Models
         public string Nationality { get; set; }
         public string IqamaOrNationalIdNo { get; set; }
         public bool DrivingLicense { get; set; }
+        public string DrivingLicenseStatus { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

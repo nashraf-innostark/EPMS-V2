@@ -333,6 +333,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Employee.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HR\JobApplicant.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobApplicant.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobApplicantAr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobApplicantAr.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\JobOffered.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1867,6 +1877,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Employee.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobApplicant.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobApplicant.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobApplicantAr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobApplicantAr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobOffered.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
