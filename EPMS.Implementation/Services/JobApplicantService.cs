@@ -29,7 +29,7 @@ namespace EPMS.Implementation.Services
             return jobApplicantRepository.GetAll();
         }
 
-        public JobApplicantResponse GetJobApplicantList(JobApplicantSearchRequest jobApplicantSearchRequest)
+        public JobApplicantResponse GetJobApplicants(JobApplicantSearchRequest jobApplicantSearchRequest)
         {
             return jobApplicantRepository.GetAllJobApplicants(jobApplicantSearchRequest);
         }

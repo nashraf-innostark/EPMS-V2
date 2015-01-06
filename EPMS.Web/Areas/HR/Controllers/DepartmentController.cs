@@ -6,6 +6,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Department;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
@@ -31,6 +32,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #region Public
         // GET: HR/Department
+        [SiteAuthorize(PermissionKey = "DepartmentIndex")]
         public ActionResult Index()
         {
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
@@ -41,6 +43,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
+        [SiteAuthorize(PermissionKey = "DepartmentCreate")]
         public ActionResult Create(long? id)
         {
             DepartmentListViewModel detailViewModel = new DepartmentListViewModel();

@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
         /// <summary>
         /// Get all Job Applicants
         /// </summary>
-        JobApplicantResponse GetJobApplicantList(JobApplicantSearchRequest jobApplicantSearchRequest);
+        JobApplicantResponse GetJobApplicants(JobApplicantSearchRequest jobApplicantSearchRequest);
         JobApplicant FindJobApplicantById(long id);
         bool AddJobApplicant(JobApplicant jobApplicant);
 

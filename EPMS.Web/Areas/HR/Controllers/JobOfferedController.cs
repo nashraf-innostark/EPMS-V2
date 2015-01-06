@@ -7,6 +7,7 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobOffered;
 using EPMS.Web.ViewModels.JobTitle;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
@@ -38,6 +39,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         #region Public
 
         // GET: Job Offered ListView Action Method
+        [SiteAuthorize(PermissionKey = "RecruitmentIndex")]
         public ActionResult Index()
         {
             return View(new JobOfferedViewModel
@@ -47,6 +49,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
+        [SiteAuthorize(PermissionKey = "RecruitmentCreate")]
         public ActionResult Create(long? id)
         {
             JobOfferedViewModel jobOfferedViewModel = new JobOfferedViewModel();
@@ -103,26 +106,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return RedirectToAction("Create", e);
             }
 
-            return View(jobOfferedViewModel);
-        }
-
-        public ActionResult Jobs()
-        {
-            return View(new JobOfferedViewModel
-            {
-                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom()),
-                JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
-            });
-        }
-
-        public ActionResult Apply(long? id)
-        {
-            JobOfferedViewModel jobOfferedViewModel = new JobOfferedViewModel();
-            if (id != null)
-            {
-                jobOfferedViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
-            }
-            jobOfferedViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
             return View(jobOfferedViewModel);
         }
 
