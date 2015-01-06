@@ -1842,8 +1842,6 @@
     <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
     <Content Include="Areas\HR\Views\Recruitment\Index.cshtml" />
-    <Content Include="Areas\HR\Views\JobOffered\Apply.cshtml" />
-    <Content Include="Areas\HR\Views\JobOffered\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />

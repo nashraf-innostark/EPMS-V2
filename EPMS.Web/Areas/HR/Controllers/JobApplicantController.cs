@@ -81,7 +81,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobApplicantService.AddJobApplicant(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Job Applicant has been submitted.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = "Your Job Applicantion has been submitted. You will be contacted soon.", IsSaved = true };
                         jobApplicantViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
                         return RedirectToAction("Jobs");
                     }
@@ -148,21 +148,21 @@ namespace EPMS.Web.Areas.HR.Controllers
             };
             return Json(jobApplicantListViewModel, JsonRequestBehavior.AllowGet);
         }
-        
-        public ActionResult ApplicantDetail(long? id)
+        [SiteAuthorize(PermissionKey = "ApplicantDetail")]
+        public ActionResult ApplicantDetail(long id)
        {
             JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
-            if (id != null && id>0)
+            if (id>0)
             {
-                jobApplicantViewModel.JobApplicant = jobApplicantService.FindJobApplicantById((long)id).CreateJobApplicant();
-                //jobApplicantViewModel.JobApplicant.ApplicantCvPath =
-                //    Server.MapPath(jobApplicantViewModel.JobApplicant.ApplicantCvPath);
+                var applicant = jobApplicantService.FindJobApplicantById(id);
+                if (applicant != null)
+                {
+                    jobApplicantViewModel.JobApplicant = applicant.CreateJobApplicant();
+                    return View(jobApplicantViewModel);
+                }
             }
-            else
-            {
-                RedirectToAction("JobApplicantList");
-            }
-            return View(jobApplicantViewModel);
+            return RedirectToAction("JobApplicantList");
+            
         }
         public FileResult Download(string fileName)
         {
