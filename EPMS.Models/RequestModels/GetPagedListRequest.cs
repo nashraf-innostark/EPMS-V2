@@ -7,14 +7,14 @@
         /// </summary>
         public GetPagedListRequest()
         {
-            IsAsc = true;
-            SortBy = 1;
-            PageNo = 1;
-            PageSize = 10;
+            sSortDir_0 = "asc";
+            iSortCol_0 = 1;
+            iDisplayStart = 0;
+            iDisplayLength = 10;
         }
 
         //user select page size or number of records to be displayed
-        public int PageSize { get; set; }
+        public int iDisplayLength { get; set; }
 
         public string SearchString { get; set; }
 
@@ -26,7 +26,7 @@
         /// <summary>
         /// Page No
         /// </summary>
-        public int PageNo
+        public int iDisplayStart
         {
             get
             {
@@ -34,12 +34,12 @@
             }
             set
             {
-                _pageNo = value == 0 ? 1 : value;
+                _pageNo = value == 0 ? 0 : value;
             }
         }
 
         //sort order
-        public bool IsAsc { get; set; }
+        public string sSortDir_0 { get; set; }
 
         // delete item id
         public int Id { get; set; }
@@ -48,7 +48,7 @@
         /// Order By Name
         /// </summary>
 
-        public short SortBy { get; set; }
+        public short iSortCol_0 { get; set; }
 
         /// <summary>
         /// Total Count

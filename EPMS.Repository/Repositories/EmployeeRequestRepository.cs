@@ -81,7 +81,7 @@ namespace EPMS.Repository.Repositories
             }
             
 
-            IEnumerable<EmployeeRequest> employeeRequests = searchRequset.IsAsc ?
+            IEnumerable<EmployeeRequest> employeeRequests = searchRequset.sSortDir_0=="Asc" ?
                 DbSet
                 .Where(query).OrderBy(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :

@@ -54,18 +54,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
-        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
         var oTable = $('#employeeTable').dataTable({
             "sPaginationType": "bootstrap",
-            "iDisplayLength": $(".dataTables_length select").val(),
-            "iDisplayStart": start || 0,
-            "aaSorting": [[2, 'asc']],
-            "iSortCol_0": [sortBy],
             "bProcessing": true,
             "bServerSide": true,
-            "bFilter": true,
             "aoColumns": [
                 {
                     "aTargets": [0],
@@ -92,16 +84,14 @@
                         var empId = full["EmployeeId"];
                         var element = '<a href="Create/' + empId + '">' + val + '</a>';
                         return element;
-                    },
-                    "bSortable": false
+                    }
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         return full["EmployeeJobId"];
-                    },
-                    "bSortable": false
+                    }
                 },
                 {
                     "aTargets": [4],
@@ -109,18 +99,16 @@
                     "mRender": function (data, type, full) {
                         var jobTItle = full["JobTitle"];
                         return jobTItle.JobTitleNameE;
-                    },
-                    "bSortable": false
+                    }
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var jobTitle = full["JobTitle"];
-                        var dept = jobTitle.Department.DepartmentNameE;
+                        var dept = jobTitle.DepartmentNameE;
                         return dept;
-                    },
-                    "bSortable": false
+                    }
                 }
             ],
             "fnServerParams": function (aoData) {
@@ -131,7 +119,7 @@
             "oLanguage": {
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
-            }
+            },
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
