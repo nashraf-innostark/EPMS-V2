@@ -47,7 +47,7 @@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="departmentId">Title Name</label>
+                <label class="control-label" for="departmentId">@EPMS.Web.Resources.HR.JobOffered.JobTitle</label>
             </div>
             <div class="span2">
                 @if (direction == "ltr")
@@ -69,7 +69,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Job Description</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.JobDescription</label>
             </div>
             <div class="span9">
                 @if (direction == "ltr")
@@ -89,17 +89,27 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Department</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.Department</label>
             </div>
             <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new { @disabled = true, @id = "departmentName", @class = "select2me", })
-                </div>
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new {@disabled = true, @id = "departmentName", @class = "select2me",})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new {@disabled = true, @id = "departmentName", @class = "select2me",})
+                    </div>
+                }
+                
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Number Of Open Vacancies</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.NoOfPosts</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -109,7 +119,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Show Basic Salary?</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.ShowBasicSalary</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
@@ -119,7 +129,7 @@
         </div>
         <div id="basicSal" class="control-group row-fluid" style="display: none">
             <div class="span3">
-                <label class="control-label">Basic Salary</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.BasicSalaray</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -130,7 +140,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Is Job Open?</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.IsOpen</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
