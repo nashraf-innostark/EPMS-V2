@@ -7,12 +7,8 @@
 ﻿using System.Net;
 ﻿using System.Web;
 ﻿using System.Web.Mvc;
-﻿using EPMS.Implementation.Identity;
-﻿using EPMS.Implementation.Services;
 ﻿using EPMS.Interfaces.IServices;
-﻿using EPMS.Models.DomainModels;
 ﻿using EPMS.Models.RequestModels;
-﻿using EPMS.Models.ResponseModels;
 ﻿using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 ﻿using EPMS.Web.Models;
@@ -20,7 +16,6 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.JobApplicant;
 ﻿using EPMS.WebBase.Mvc;
 ﻿using Microsoft.AspNet.Identity;
-﻿using Microsoft.AspNet.Identity.Owin;
 ﻿using JobApplicant = EPMS.Models.DomainModels.JobApplicant;
 
 namespace EPMS.Web.Areas.HR.Controllers
@@ -50,11 +45,11 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         public ActionResult Jobs()
         {
-            return View(new JobApplicantViewModel
+            JobApplicantViewModel viewModel=new JobApplicantViewModel
             {
-                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom()),
                 JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
-            });
+            };
+            return View(viewModel);
         }
         
         public ActionResult Apply(long? id)
@@ -106,12 +101,13 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult UploadCv()
         {
             HttpPostedFileBase userCv = Request.Files[0];
+            var filename = "";
             try
             {
                 //Save File to Folder
                 if ((userCv != null))
                 {
-                    var filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userCv.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userCv.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
                     var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ApplicantCv"]);
                     string savedFileName = Path.Combine(filePathOriginal, filename);
                     userCv.SaveAs(savedFileName);
@@ -121,7 +117,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { filename = userCv.FileName, size = userCv.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+            return Json(new { filename = filename, size = userCv.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
         [SiteAuthorize(PermissionKey = "JobApplicant")]
         public ActionResult JobApplicantList()
@@ -159,10 +155,16 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (id != null)
             {
                 jobApplicantViewModel.JobApplicant = jobApplicantService.FindJobApplicantById((long)id).CreateJobApplicant();
+                //jobApplicantViewModel.JobApplicant.ApplicantCvPath =
+                //    Server.MapPath(jobApplicantViewModel.JobApplicant.ApplicantCvPath);
             }
             return View(jobApplicantViewModel);
         }
-
+        public FileResult Download(string fileName)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ApplicantCv"] + fileName));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
         #endregion
     }
 }

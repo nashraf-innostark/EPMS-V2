@@ -68,7 +68,7 @@ namespace EPMS.Web.ModelMappers
                 Nationality = source.Nationality,
                 IqamaOrNationalIdNo = source.IqamaOrNationalIdNo,
                 DrivingLicense = source.DrivingLicense,
-                ApplicantCvPath = ConfigurationManager.AppSettings["ApplicantCv"]+source.ApplicantCvPath,
+                ApplicantCvPath = source.ApplicantCvPath,
                 JobOfferedId = source.JobOfferedId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
