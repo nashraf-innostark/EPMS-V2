@@ -70,7 +70,7 @@
                     "mRender": function (data, type, full) {
                         return full["EmployeeImagePath"];
                     },
-                    "bSortable": false
+                    "bSortable": true
                 },
                 {
                     "aTargets": [2],
@@ -81,7 +81,7 @@
                         var element = '<a href="Detail/' + empId + '">' + val + '</a>';
                         return element;
                     },
-                    "bSortable": false
+                    "bSortable": true
                 },
                 {
                     "aTargets": [3],
@@ -89,7 +89,7 @@
                     "mRender": function (data, type, full) {
                         return full["EmployeeJobId"];
                     },
-                    "bSortable": false
+                    "bSortable": true
                 },
                 {
                     "aTargets": [4],
@@ -98,7 +98,7 @@
                         var jobTItle = full["JobTitle"];
                         return jobTItle.JobTitleNameE;
                     },
-                    "bSortable": false
+                    "bSortable": true
                 },
                 {
                     "aTargets": [5],
@@ -107,7 +107,7 @@
                         var jobTitle = full["JobTitle"];
                         return jobTitle.DepartmentNameE;
                     },
-                    "bSortable": false
+                    "bSortable": true
                 }
             ],
             "fnServerParams": function (aoData) {
@@ -119,7 +119,8 @@
                 "sProcessing": "Fetching record(s)",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
-            }
+            },
+            "bAutoWidth": false
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'

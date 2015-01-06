@@ -65,7 +65,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (userRole != null && (userRole.Name == "Admin" || userRole.Name == "PM"))
             {
                 EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
-                
+
                 EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
                     DepartmentList = DepartmentService.GetAll(),
@@ -86,8 +86,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <summary>
         /// Get All Employees and return to View
         /// </summary>
-        /// <param name="employeeSearchRequest">Employee Search Requset</param>
-        /// <param name="param"></param>
+        /// <param name="searchRequest">Employee Search Requset</param>
         /// <returns>IEnumerable of All Employee</returns>
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset searchRequest)
@@ -136,7 +135,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        [SiteAuthorize(PermissionKey = "")]
+        [SiteAuthorize(PermissionKey = "EmployeeCreate")]
         public ActionResult Create(long? id)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
@@ -162,7 +161,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                
+
                 if (userRole != null && id > 0)
                 {
                     viewModel.Role = userRole.Name;
@@ -304,6 +303,10 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+            if (userRole != null) viewModel.Role = userRole.Name;
+            viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
+            viewModel.EmployeeViewModel.BtnText = "Save Employee";
+            viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
         }
@@ -315,13 +318,21 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             string year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture);
             var result = EmployeeService.GetAll();
-            var userRole = result.LastOrDefault();
-            if (userRole != null)
+            var employee = result.LastOrDefault();
+            if (employee != null)
             {
-                string jId = userRole.EmployeeJobId;
-                jId = jId.Substring(Math.Max(0, jId.Length - 4));
+                string jId = employee.EmployeeJobId;
+                string eYear = jId.Substring(0, 4);
+                if (eYear != year || !eYear.Contains(year))
+                {
+                    jId = "0";
+                }
+                else
+                {
+                    jId = jId.Substring(Math.Max(0, jId.Length - 4));
+                }
                 int id = Convert.ToInt32(jId) + 1;
-                int len = id.ToString().Length;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
                 string zeros = "";
                 switch (len)
                 {
@@ -341,7 +352,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 string jobId = year + zeros + id.ToString(CultureInfo.InvariantCulture);
                 return jobId;
             }
-            return String.Empty;
+            return DateTime.Now.Year + "0001";
         }
         #endregion
 
@@ -353,24 +364,31 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         public ActionResult UploadEmployeePhoto()
         {
-            string imagename = "";
             HttpPostedFileBase userPhoto = Request.Files[0];
-            try
+            if ((userPhoto != null))
             {
-                //Save image to Folder
-                if ((userPhoto != null))
+                try
                 {
-                    imagename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userPhoto.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    //Save image to Folder
+                    string imagename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + userPhoto.FileName)
+                        .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
                     var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["EmployeeImage"]);
                     string savedFileName = Path.Combine(filePathOriginal, imagename);
                     userPhoto.SaveAs(savedFileName);
+                    return Json(new { filename = imagename, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception exp)
+                {
+                    return
+                        Json(
+                            new
+                            {
+                                response = "Failed to upload. Error: " + exp.Message,
+                                status = (int)HttpStatusCode.BadRequest
+                            }, JsonRequestBehavior.AllowGet);
                 }
             }
-            catch (Exception exp)
-            {
-                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
-            }
-            return Json(new { filename = imagename, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+            return Json( new{ response = "Failed to upload. Error: ", status = (int)HttpStatusCode.BadRequest}, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -398,7 +416,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             //    var employeeRequestResponse = EmployeeRequestService.LoadAllRequests(viewModel.EmployeeRequestViewModel.SearchRequest);
             //    var data = employeeRequestResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
             //    var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
-                
+
             //    ////long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
             //    ////var employeeRequest = EmployeeRequestService.LoadAllRequestsForEmployee(empId);
             //    ////var employeeRequests = employeeRequest as IList<EPMS.Models.DomainModels.EmployeeRequest> ?? employeeRequest.ToList();
@@ -436,6 +454,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="employeeId">Employee ID</param>
         /// <returns>Json for toast message</returns>
+        [SiteAuthorize(PermissionKey = "EmployeeDelete")]
         public ActionResult Delete(int employeeId)
         {
             var employeeToBeDeleted = EmployeeService.FindEmployeeById(employeeId);
