@@ -121,10 +121,10 @@
     <value>انشاء جديد</value>
   </data>
   <data name="BasicSalary" xml:space="preserve">
-    <value>Basic Salary AR</value>
+    <value>الراتب الاساسي</value>
   </data>
   <data name="BasicSalaryOnCreate" xml:space="preserve">
-    <value>Basic Salary AR</value>
+    <value>الراتب الاساسي</value>
   </data>
   <data name="CancelButton" xml:space="preserve">
     <value>Cancel AR</value>
@@ -136,13 +136,16 @@
     <value>الادارة</value>
   </data>
   <data name="DepartmentOnCreate" xml:space="preserve">
-    <value>Department AR</value>
+    <value>الادارة</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Job Title Description AR</value>
   </data>
-  <data name="DescriptionOnCreate" xml:space="preserve">
-    <value>Job Title Description AR</value>
+  <data name="DescriptionOnCreateA" xml:space="preserve">
+    <value>تفاصيل الوظيفة بالعربي</value>
+  </data>
+  <data name="DescriptionOnCreateE" xml:space="preserve">
+    <value>تفاصيل الوظيفة بالانجليزي</value>
   </data>
   <data name="EditButton" xml:space="preserve">
     <value>Edit AR</value>
@@ -156,8 +159,11 @@
   <data name="Name" xml:space="preserve">
     <value>اسم الوظيفي</value>
   </data>
-  <data name="NameOnCreate" xml:space="preserve">
-    <value>Job Title Name AR</value>
+  <data name="NameOnCreateA" xml:space="preserve">
+    <value>اسم الوظيفي بالعربي</value>
+  </data>
+  <data name="NameOnCreateE" xml:space="preserve">
+    <value>اسم الوظيفي بالانجليزي</value>
   </data>
   <data name="NoOfEmployees" xml:space="preserve">
     <value>عدد الموظفين</value>
@@ -166,7 +172,7 @@
     <value>Save AR</value>
   </data>
   <data name="SelectDepartment" xml:space="preserve">
-    <value>Select Department AR</value>
+    <value>اختار الادارة</value>
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>Update Job Title AR</value>

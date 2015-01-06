@@ -139,10 +139,13 @@
     <value>Department</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Job Title Description</value>
+    <value>Job Description</value>
   </data>
-  <data name="DescriptionOnCreate" xml:space="preserve">
-    <value>Job Title Description</value>
+  <data name="DescriptionOnCreateA" xml:space="preserve">
+    <value>Job Description Arabic</value>
+  </data>
+  <data name="DescriptionOnCreateE" xml:space="preserve">
+    <value>Job Description</value>
   </data>
   <data name="EditButton" xml:space="preserve">
     <value>Edit</value>
@@ -156,8 +159,11 @@
   <data name="Name" xml:space="preserve">
     <value>Job Title Name</value>
   </data>
-  <data name="NameOnCreate" xml:space="preserve">
-    <value>Job Title Name</value>
+  <data name="NameOnCreateA" xml:space="preserve">
+    <value>Title Name Arabic</value>
+  </data>
+  <data name="NameOnCreateE" xml:space="preserve">
+    <value>Title Name</value>
   </data>
   <data name="NoOfEmployees" xml:space="preserve">
     <value>Number Of Employees</value>
