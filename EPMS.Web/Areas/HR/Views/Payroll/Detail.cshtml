@@ -30,18 +30,18 @@
     <h3><small>@Model.Employee.EmployeeNameE</small></h3>
 </header>
 <!-- Page heading ends -->
-@using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "PayrollForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.AntiForgeryToken()
-
+        
+        @Html.HiddenFor(model => model.Id)
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Date">Date</label>
             </div>
-            <div class="span9">
+            <div class="span3">
                 <div class="controls">
-                    <input id="Date" type="text" name="inputField" class="datepicker">
+                    @Html.TextBoxFor(model => model.Date, new { @id = "Date", @class="datepicker" })
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeId, new { @id = "Employeeid", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Employee.EmployeeId, new { @id = "EmployeeId", @disabled = "disabled" })
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.JobTitle.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Employee.JobTitle.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Allowances.Allowance1, new { @id = "Allowance1", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Allowances.Allowance1, new { @id = "Allowance1", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Allowances.Allowance2, new { @id = "Allowance2", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Allowances.Allowance2, new { @id = "Allowance2", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Allowances.Allowance3, new { @id = "Allowance3", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Allowances.Allowance3, new { @id = "Allowance3", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Allowances.Allowance4, new { @id = "Allowance4", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Allowances.Allowance4, new { @id = "Allowance4", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Allowances.Allowance5, new { @id = "Allowance5", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Allowances.Allowance5, new { @id = "Allowance5", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -131,7 +131,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Deduction1, new { @id = "Deduction1", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Deduction1, new { @id = "Deduction1", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -141,7 +141,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Deduction2, new { @id = "Deduction2", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Deduction2, new { @id = "Deduction2", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -151,7 +151,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Total, new { @id = "Total", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.Total, new { @id = "Total", @disabled = "disabled", @class="empty" })
                 </div>
             </div>
         </div>
@@ -162,14 +162,51 @@
         </div>
     </div>
 }
-
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $(".datepicker").mask('99/99/9999');
         $(".datepicker").datepicker({
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            showButtonPanel: true,
+            onSelect: function (date) {
+                $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:100px; height:100px"/>' });
+                getPayrollDetails(date);
+            },
         });
-        
     });
+
+    function getPayrollDetails(date) {
+        var callUrl = "/Payroll/Detail?id=" + $("#EmployeeId").val() + "&date=" + date;
+        $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: '@Url.Action("Detail", "Payroll")',
+            data: $('#PayrollForm').serialize(),
+            success: function (data) {
+                // Set values
+                setControlsValues(data);
+            },
+            error: callError
+        });
+    }
+    function setControlsValues(data) {
+        $("#EmployeeId").val(data["Employee"].EmployeeId);
+        $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameE);
+        $("#BasicSalary").val(data["Employee"].JobTitle.BasicSalary);
+        $("#Allowance1").val(data["Allowances"].Allowance1);
+        $("#Allowance2").val(data["Allowances"].Allowance2);
+        $("#Allowance3").val(data["Allowances"].Allowance3);
+        $("#Allowance4").val(data["Allowances"].Allowance4);
+        $("#Allowance5").val(data["Allowances"].Allowance5);
+        $("#Deduction1").val(data["Deduction1"]);
+        $("#Deduction1").val(data["Deduction1"]);
+        $("#Total").val(data["Total"]);
+        $.unblockUI();
+    }
+    function callError(e, a) {
+        alert("No Data Available");
+        $('.empty').val(0);
+    }
 </script>

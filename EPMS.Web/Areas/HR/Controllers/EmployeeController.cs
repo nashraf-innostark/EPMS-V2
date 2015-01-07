@@ -259,7 +259,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         // Set Employee Values
                         viewModel.EmployeeViewModel.Employee.RecLastUpdatedDt = DateTime.Now;
-                        viewModel.EmployeeViewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.EmployeeViewModel.Employee.RecLastUpdatedBy = User.Identity.GetUserId();
                         // Update Employee
                         var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
                         // check if allowance has been updated
@@ -268,7 +268,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         {
                             // Add new Allowance
                             viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
-                            viewModel.EmployeeViewModel.Allowance.RecCreatedBy = User.Identity.Name;
+                            viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
+                            viewModel.EmployeeViewModel.Allowance.RecCreatedBy = User.Identity.GetUserId();
                             viewModel.EmployeeViewModel.Allowance.RecCreatedDt = DateTime.Now;
                             // save Allowance
                             var allowanceToAdd = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
@@ -301,7 +302,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         // Set Employee Values
                         viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
-                        viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.Name;
+                        viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
                         string employeeJobId = GetEmployeeJobId();
                         viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
                         // Add Employee
@@ -311,7 +312,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         // Set Values for Allownace
                         viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
                         viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
-                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
+                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.GetUserId();
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Add Allowance
                         var allowanceToSave = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
@@ -357,9 +358,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                 oldAllowance.Allowance3 != newAllowance.Allowance3 || oldAllowance.Allowance4 != newAllowance.Allowance4 ||
                 oldAllowance.Allowance5 != newAllowance.Allowance5)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
         #endregion
 

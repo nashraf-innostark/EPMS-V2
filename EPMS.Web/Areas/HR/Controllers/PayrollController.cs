@@ -81,17 +81,22 @@ namespace EPMS.Web.Areas.HR.Controllers
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
         [SiteAuthorize(PermissionKey = "PayrollDetail")]
-        public ActionResult Detail(long? id)
+        public ActionResult Detail(long? id, DateTime? date)
         {
             PayrollViewModel viewModel = new PayrollViewModel();
             if (id != null)
             {
                 // get Employee
-                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, DateTime.Now);
-                
+                if (date == null)
+                {
+                    date = DateTime.Now;
+                }
+                date = DateTime.Parse(date.ToString());
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, (DateTime)date);
                 if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();
+                    viewModel.Id = viewModel.Employee.EmployeeId;
                 }
                 if (response.Allowance != null)
                 {
@@ -126,8 +131,59 @@ namespace EPMS.Web.Areas.HR.Controllers
                                  viewModel.Allowances.Allowance5;
                 }
                 viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
+                viewModel.Date = DateTime.Now;
             }
             return View(viewModel);
+        }
+        [HttpPost]
+        public JsonResult Detail(PayrollViewModel viewModel)
+        {
+            long id = viewModel.Id;
+            DateTime? date = viewModel.Date;
+            //PayrollViewModel viewModel = new PayrollViewModel();
+            if (id > 0)
+            {
+                date = DateTime.Parse(date.ToString());
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, (DateTime)date);
+                if (response.Employee != null)
+                {
+                    viewModel.Employee = response.Employee.CreateFromServerToClient();
+                }
+                if (response.Allowance != null)
+                {
+                    viewModel.Allowances = response.Allowance.CreateFromServerToClient();
+                }
+
+                // get employee requests
+                if (response.Requests != null)
+                {
+                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll());
+                    // get Employee request details
+                    foreach (var reqDetail in requests)
+                    {
+                        var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
+                        if (firstOrDefault != null)
+                            viewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
+                        var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
+                        if (lastOrDefault != null)
+                            viewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
+                    }
+                }
+                double basicSalary = 0;
+                double allowances = 0;
+                if (viewModel.Employee.JobTitle != null)
+                {
+                    basicSalary = viewModel.Employee.JobTitle.BasicSalary;
+                }
+                if (viewModel.Allowances != null)
+                {
+                    allowances = viewModel.Allowances.Allowance1 + viewModel.Allowances.Allowance2 +
+                                 viewModel.Allowances.Allowance3 + viewModel.Allowances.Allowance4 +
+                                 viewModel.Allowances.Allowance5;
+                }
+                viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
+            }
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

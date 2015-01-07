@@ -54,14 +54,14 @@
 @using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.AntiForgeryToken()
-
+        
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeId)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance1)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance2)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance3)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance4)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance5)
+        @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeJobId)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">
@@ -263,7 +263,7 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @id = "ExtraInformationE" })
+                        @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @dir = "ltr", @id = "ExtraInformationE" })
                         @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsE)
                     </div>
                 }
@@ -456,8 +456,11 @@
         }
     </div>
 }
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
+        CKEDITOR.replace('ExtraInformationE');
+        //CKEDITOR.replace('EmployeeDetailsA');
         // upload Image
         var errors = "";
 
@@ -541,61 +544,6 @@
                 });
             }
         });
-        @*var id = '@Model.EmployeeViewModel.Employee.EmployeeId';
-        if (id > 0) {
-            var siteUrl = $('#siteURL').val();
-            var oTable = $('#tableRequsts').dataTable({
-                "sPaginationType": "bootstrap",
-                "iDisplayLength": 20,
-                "iDisplayStart": 0,
-                "bProcessing": true,
-                "bServerSide": true,
-                "bFilter": true,
-                "aoColumns": [
-                    {
-                        "aTargets": [0],
-                        "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
-                            return full["RequestId"];
-                        },
-                        "bVisible": false,
-                    },
-                    {
-                        "aTargets": [1],
-                        "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
-                            var val = full["RequestTopic"];
-                            var id = full["RequestId"];
-                            var element = '<a href="Create/' + id + '">' + val + '</a>';
-                            return element;
-                        },
-                        "bSortable": false,
-                    }
-                ],
-                "sAjaxSource": siteUrl + "/Employee/GetEmployeeRequests",
-                "sServerMethod": "POST",
-                "fnServerParams": function (aoData) {
-                    aoData.push({ "name": "reqSearch", "value": $('input').val() });
-                },
-                "oLanguage": {
-                    "sInfoEmpty": "No matching record(s) found",
-                    "sEmptyTable": "No record(s) found",
-                },
-            });
-            $(".dataTables_filter input").unbind()
-            .bind("input", function (e) {
-                // Bind our desired behavior
-                if (this.value.length > 1 || e.keyCode == 13) {
-                    $("#searchString").val(this.value);
-                    oTable.fnDraw();
-                }
-                if (this.value == "") {
-                    $("#searchString").val(this.value);
-                    oTable.fnDraw();
-                }
-                return;
-            });
-        }*@
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
@@ -604,7 +552,8 @@
         $(".datepicker").mask('99/99/9999');
         $(".datepicker").datepicker({
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            yearRange: "1900:2050"
         });
         // Arabic Date Picker for DOB
         var calendar = $.calendars.instance('islamic');

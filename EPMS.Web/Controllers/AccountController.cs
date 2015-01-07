@@ -381,6 +381,9 @@ namespace IdentitySample.Controllers
             // Add new User
             if (ModelState.IsValid)
             {
+                // TODO:Check # of Users that Admin can create
+
+                // Check if Employee has already assigned
                 var empId = AspNetUserService.GetAllUsers().Select(x => x.EmployeeId);
                 if (empId.Contains(model.SelectedEmployee))
                 {

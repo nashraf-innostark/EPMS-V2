@@ -779,6 +779,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\Gallery\ajax_loader.gif" />
     <Content Include="Images\Gallery\download-brochure.png" />
     <Content Include="Images\News\35.jpg" />
     <Content Include="Images\News\Altaf-Hussain-Arabi-meme.jpg" />
@@ -1852,6 +1853,7 @@
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
+    <Content Include="Scripts\plugins\jquery.blockUI.js" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">

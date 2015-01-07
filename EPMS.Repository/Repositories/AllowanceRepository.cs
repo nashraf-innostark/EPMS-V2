@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Objects;
 using System.Linq;
 using EPMS.Repository.BaseRepository;
 using EPMS.Interfaces.Repository;
@@ -33,7 +34,10 @@ namespace EPMS.Repository.Repositories
 
         public Allowance FindForAllownce(long employeeId, DateTime currTime)
         {
-            return DbSet.FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate <= currTime));
+            //var allowance = DbSet.OrderByDescending(a=>a.AllowanceDate).FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate <= currTime));
+            //var allowance1 = DbSet.Where(allow => allow.EmployeeId == employeeId && DbFunctions.TruncateTime(allow.AllowanceDate) <= currTime).OrderByDescending(a=>a.AllowanceDate);
+            var allowance = DbSet.OrderByDescending(a => a.AllowanceDate).FirstOrDefault(allow => (allow.Employee.EmployeeId == employeeId) && (allow.AllowanceDate <= currTime));
+            return allowance;
         }
 
         #endregion
