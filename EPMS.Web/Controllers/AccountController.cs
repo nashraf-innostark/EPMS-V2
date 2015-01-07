@@ -21,6 +21,7 @@ using EPMS.Web.ViewModels.Admin;
 using System.Net;
 using EPMS.Web.ModelMappers;
 using EPMS.Models.ModelMapers;
+using EPMS.WebBase.Mvc;
 
 namespace IdentitySample.Controllers
 {
@@ -239,8 +240,7 @@ namespace IdentitySample.Controllers
         #region Register
         //
         // GET: /Account/Register
-        [AllowAnonymous]
-        [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
+        [SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
             RegisterViewModel oResult = new RegisterViewModel();

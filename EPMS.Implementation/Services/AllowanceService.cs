@@ -9,7 +9,7 @@ namespace EPMS.Implementation.Services
     public class AllowanceService : IAllowanceService
     {
         private readonly IAllowanceRepository repository;
-
+        
         #region Constructor
         /// <summary>
         /// Constructor
@@ -25,6 +25,10 @@ namespace EPMS.Implementation.Services
         public Allowance FindAllowanceById(long? id)
         {
             return repository.Find(Convert.ToInt32(id));
+        }
+        public Allowance FindByEmpIdDate(long empId, DateTime currTime)
+        {
+            return repository.FindForAllownce(empId,currTime);
         }
 
         public IEnumerable<Allowance> GetAll()

@@ -19,6 +19,7 @@ using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Allowance = EPMS.Web.Models.Allowance;
 using Employee = EPMS.Web.Models.Employee;
 using EmployeeRequest = EPMS.Web.Models.Request;
 
@@ -144,7 +145,14 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
-                    EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
+                    EmployeeViewModel =
+                    {
+                        JobTitleList = JobTitleService.GetAll(),
+                        Allowance =  new Allowance(),
+                        OldAllowance = new Allowance(),
+                        SearchRequest = new EmployeeSearchRequset(),
+                        Employee = new Employee()
+                    }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                 if (userRole != null) viewModel.Role = userRole.Name;
@@ -158,7 +166,14 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
-                    EmployeeViewModel = { JobTitleList = JobTitleService.GetAll() }
+                    EmployeeViewModel =
+                    {
+                        JobTitleList = JobTitleService.GetAll(),
+                        Allowance = new Allowance(),
+                        OldAllowance = new Allowance(),
+                        SearchRequest = new EmployeeSearchRequset(),
+                        Employee = new Employee()
+                    }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
 
@@ -167,6 +182,14 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.Role = userRole.Name;
                     // Get Employee
                     viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                    // Get Allowances
+                    var allowance =
+                        AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId,DateTime.Now);
+                    if (allowance != null)
+                    {
+                        viewModel.EmployeeViewModel.Allowance = allowance.CreateFromServerToClient();
+                        viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
+                    }
                     // Set Employee Name for Header
                     viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
                     if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
@@ -237,16 +260,21 @@ namespace EPMS.Web.Areas.HR.Controllers
                         // Set Employee Values
                         viewModel.EmployeeViewModel.Employee.RecLastUpdatedDt = DateTime.Now;
                         viewModel.EmployeeViewModel.Employee.RecLastUpdatedBy = User.Identity.Name;
-                        // Set Values for Allownace
-                        viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
-                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
-                        viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Update Employee
                         var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
-                        // Update Allowance
-                        var allowanceToTpdate = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
-                        if (EmployeeService.UpdateEmployee(employeeToUpdate) &&
-                            AllowanceService.UpdateAllowance(allowanceToTpdate))
+                        // check if allowance has been updated
+                        var isUpdated = CheckIfAllowanceUpdated(viewModel.EmployeeViewModel.Allowance, viewModel.EmployeeViewModel.OldAllowance);
+                        if (isUpdated)
+                        {
+                            // Add new Allowance
+                            viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
+                            viewModel.EmployeeViewModel.Allowance.RecCreatedBy = User.Identity.Name;
+                            viewModel.EmployeeViewModel.Allowance.RecCreatedDt = DateTime.Now;
+                            // save Allowance
+                            var allowanceToAdd = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
+                            AllowanceService.AddAllowance(allowanceToAdd);
+                        }
+                        if (EmployeeService.UpdateEmployee(employeeToUpdate))
                         {
                             TempData["message"] = new MessageViewModel
                             {
@@ -255,6 +283,14 @@ namespace EPMS.Web.Areas.HR.Controllers
                             };
                             return RedirectToAction("Index");
                         }
+                        viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
+                        viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                        viewModel.Role = userRole.Name;
+                        viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
+                        viewModel.EmployeeViewModel.BtnText = "Save Employee";
+                        viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
+                        TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
+                        return View(viewModel);
                     }
 
                     #endregion
@@ -274,6 +310,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                         // Set Values for Allownace
                         viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
+                        viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.Name;
                         viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
                         // Add Allowance
@@ -309,6 +346,20 @@ namespace EPMS.Web.Areas.HR.Controllers
             viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
+        }
+        #endregion
+
+        #region CheckIfAllowanceUpdated
+
+        bool CheckIfAllowanceUpdated(Allowance newAllowance, Allowance oldAllowance)
+        {
+            if (oldAllowance.Allowance1 != newAllowance.Allowance1 || oldAllowance.Allowance2 != newAllowance.Allowance2 ||
+                oldAllowance.Allowance3 != newAllowance.Allowance3 || oldAllowance.Allowance4 != newAllowance.Allowance4 ||
+                oldAllowance.Allowance5 != newAllowance.Allowance5)
+            {
+                return false;
+            }
+            return true;
         }
         #endregion
 

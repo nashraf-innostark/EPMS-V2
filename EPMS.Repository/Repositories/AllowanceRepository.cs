@@ -33,7 +33,7 @@ namespace EPMS.Repository.Repositories
 
         public Allowance FindForAllownce(long employeeId, DateTime currTime)
         {
-            return DbSet.FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate.Value.Month <= currTime.Month && allow.AllowanceDate.Value.Year <= currTime.Year));
+            return DbSet.FirstOrDefault(allow => allow.EmployeeId == employeeId && (allow.AllowanceDate <= currTime));
         }
 
         #endregion
