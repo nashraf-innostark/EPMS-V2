@@ -11,8 +11,9 @@ namespace EPMS.Implementation.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository repository;
-        private readonly IAllowanceRepository AllowanceRepository;
-        private readonly IEmployeeRequestRepository RequestRepository;
+        private readonly IAllowanceRepository allowanceRepository;
+        private readonly IEmployeeJobHistoryRepository employeeJobHistoryRepository;
+        private readonly IEmployeeRequestRepository requestRepository;
 
 
         #region Constructor
@@ -20,11 +21,12 @@ namespace EPMS.Implementation.Services
         /// Constructor
         /// </summary>
         /// <param name="xRepository"></param>
-        public EmployeeService(IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository)
+        public EmployeeService(IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository)
         {
             repository = xRepository;
-            RequestRepository = requestRepository;
-            AllowanceRepository = allowanceRepository;
+            this.requestRepository = requestRepository;
+            this.allowanceRepository = allowanceRepository;
+            this.employeeJobHistoryRepository = employeeJobHistoryRepository;
         }
 
         #endregion
@@ -48,8 +50,8 @@ namespace EPMS.Implementation.Services
             if (id != null)
             {
                 response.Employee = repository.Find((long)id);
-                response.Allowance = AllowanceRepository.FindForAllownce((long) id, currTime);
-                response.Requests = RequestRepository.GetAllMonetaryRequests(currTime, (long)id);
+                response.Allowance = allowanceRepository.FindForAllownce((long) id, currTime);
+                response.Requests = requestRepository.GetAllMonetaryRequests(currTime, (long)id);
                 return response;
             }
             return null;
@@ -80,6 +82,19 @@ namespace EPMS.Implementation.Services
         {
             try
             {
+                var tempEmployee = repository.Find(employee.EmployeeId);
+                if (employee.JobTitleId != tempEmployee.JobTitleId)
+                {
+                    var jobHistory = new EmployeeJobHistory
+                    {
+                        EmployeeId = employee.EmployeeId,
+                        JobTitleId = Convert.ToInt64(employee.JobTitleId),
+                        RecCreatedDate = DateTime.Now,
+                        RecCreatedBy = employee.RecLastUpdatedBy
+                    };
+                    employeeJobHistoryRepository.Add(jobHistory);
+                    employeeJobHistoryRepository.SaveChanges();
+                }
                 repository.Update(employee);
                 repository.SaveChanges();
                 return true;

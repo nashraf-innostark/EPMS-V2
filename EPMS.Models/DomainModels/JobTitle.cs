@@ -21,5 +21,7 @@ namespace EPMS.Models.DomainModels
         public virtual Department Department { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<JobOffered> JobOffereds { get; set; }
+        public virtual ICollection<EmployeeJobHistory> EmployeeJobHistories { get; set; }
+        public virtual ICollection<JobTitleHistory> JobTitleHistories { get; set; }
     }
 }

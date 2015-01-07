@@ -2,8 +2,7 @@
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IRecruitmentRepository : IBaseRepository<JobOffered, long>
+    public interface IJobTitleHistoryRepository : IBaseRepository<JobTitleHistory, long>
     {
-
     }
 }

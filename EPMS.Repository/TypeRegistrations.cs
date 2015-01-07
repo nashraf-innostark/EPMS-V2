@@ -20,10 +20,11 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IAllowanceRepository, AllowanceRepository>();
             unityContainer.RegisterType<IAspNetUserRepository, AspNetUserRepository>();
             unityContainer.RegisterType<IEmployeeRequestDetailRepository, EmployeeRequestDetailRepository>();
-            unityContainer.RegisterType<IRecruitmentRepository, RecruitmentRepository>();
             unityContainer.RegisterType<DbContext, BaseDbContext>(new PerRequestLifetimeManager());
             unityContainer.RegisterType<IJobOfferedRepository, JobOfferedRepository>();
             unityContainer.RegisterType<IJobApplicantRepository, JobApplicantRepository>();
+            unityContainer.RegisterType<IEmployeeJobHistoryRepository, EmployeeJobHistoryRepository>();
+            unityContainer.RegisterType<IJobTitleHistoryRepository, JobTitleHistoryRepository>();
         }
     }
 }

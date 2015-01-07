@@ -9,7 +9,6 @@ namespace EPMS.Interfaces.Repository
     public interface IEmployeeRepository : IBaseRepository<Employee, long>
     {
         EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset);
-
         /// <summary>
         /// Get All Employees by by Department Id
         /// </summary>
