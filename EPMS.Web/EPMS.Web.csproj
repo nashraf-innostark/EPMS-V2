@@ -570,6 +570,7 @@
     <Content Include="Content\datatable\demo_page.css" />
     <Content Include="Content\datatable\demo_table.css" />
     <Content Include="Content\datatable\demo_table_jui.css" />
+    <Content Include="Content\Images\LoginLogo.png" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\jquery.calendars.picker.css" />
     <Content Include="Content\CSS\zebra.css" />
@@ -2215,6 +2216,7 @@
     <Content Include="Views\Shared\_Alert.cshtml" />
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_ApplicantLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicantCvs\" />

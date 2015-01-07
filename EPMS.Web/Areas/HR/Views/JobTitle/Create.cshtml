@@ -4,6 +4,7 @@
     ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -60,7 +61,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { @dir = "ltr", id = "JobTitleNameA", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { id = "JobTitleNameA", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameA, "", new { @class = "required" })
                 </div>
             </div>
@@ -70,10 +71,20 @@
                 <label class="control-label" for="departmentId">@EPMS.Web.Resources.HR.JobTitle.DepartmentOnCreate</label>
             </div>
             <div class="span2">
-                <div class="controls">
-                    @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
-                    @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
-                </div>
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new {@class = "select2me", id = "departmentId"})
+                        @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new {@class = "required"})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
+                        @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
+                    </div>
+                }                
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -93,7 +104,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { @dir = "ltr", id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "")
                 </div>
             </div>
@@ -104,7 +115,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { @dir = "ltr", id = "BasicSalary", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { id = "BasicSalary", @class = "tbdisable", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary, "")
                 </div>
             </div>
