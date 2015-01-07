@@ -4,6 +4,7 @@
     ViewBag.Title = Model.Department.DepartmentId > 0 ? EPMS.Web.Resources.HR.Department.UpdatePageTitle : EPMS.Web.Resources.HR.Department.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -115,8 +116,14 @@
                                     foreach (var item in Model.EmployeeList.ToList())
                                     {
                                         <tr>
-                                            <td>@item.EmployeeNameE</td>
-
+                                            @if (direction == "ltr")
+                                            {
+                                                <td>@item.EmployeeNameE</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.EmployeeNameA</td>
+                                            }
                                         </tr>
                                     }
                                 }

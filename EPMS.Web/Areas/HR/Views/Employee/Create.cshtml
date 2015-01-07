@@ -509,7 +509,6 @@
             if (jobId != "") {
                 $("#JobID").val(jobId);
                 var jobsList = '@Html.Raw(Json.Encode(Model.EmployeeViewModel.JobTitleDeptList))';
-                //'@Html.Raw(Json.Encode(Model.EmployeeViewModel.JobTitleDeptList))';
                 var parsed = JSON.parse(jobsList);
 
                 $.each(parsed, function (key, value) {
