@@ -112,10 +112,12 @@
     <Compile Include="DomainModels\AspNetUserRole.cs" />
     <Compile Include="DomainModels\Department.cs" />
     <Compile Include="DomainModels\Employee.cs" />
+    <Compile Include="DomainModels\EmployeeJobHistory.cs" />
     <Compile Include="DomainModels\EmployeeRequest.cs" />
     <Compile Include="DomainModels\JobApplicant.cs" />
     <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
+    <Compile Include="DomainModels\JobTitleHistory.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">

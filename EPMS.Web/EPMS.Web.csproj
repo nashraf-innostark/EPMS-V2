@@ -247,7 +247,6 @@
     <Compile Include="Areas\HR\Controllers\JobOfferedController.cs" />
     <Compile Include="Areas\HR\Controllers\JobTitleController.cs" />
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
-    <Compile Include="Areas\HR\Controllers\RecruitmentController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
@@ -774,10 +773,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\Employee\25122014.jpg" />
     <Content Include="Images\favicon.ico" />
-    <Content Include="Images\Gallery\ajax-loader.gif" />
-    <Content Include="Images\Gallery\ajax_loader_red_512.gif" />
     <Content Include="Images\Gallery\download-brochure.png" />
     <Content Include="Images\News\35.jpg" />
     <Content Include="Images\News\Altaf-Hussain-Arabi-meme.jpg" />
@@ -1846,13 +1842,13 @@
     <Content Include="Areas\HR\Views\JobOffered\Index.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
-    <Content Include="Areas\HR\Views\Recruitment\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
+    <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -2227,6 +2223,7 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
+    <Folder Include="Images\Employee\" />
     <Folder Include="Images\HomeSlider\" />
     <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />

@@ -69,7 +69,6 @@
     <Compile Include="IServices\IMenuRightService.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IServices\IRecruitmentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Repository\IJobTitleRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\IMenuRightRepository.cs" />
-    <Compile Include="Repository\IRecruitmentRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
