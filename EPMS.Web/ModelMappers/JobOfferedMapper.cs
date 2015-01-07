@@ -13,6 +13,7 @@ namespace EPMS.Web.ModelMappers
                 JobTitleId = source.JobTitleId,
                 ShowBasicSalary = source.ShowBasicSalary,
                 IsOpenStatus = source.IsOpen?"Open":"Close",
+                IsOpen = source.IsOpen,
                 NoOfPosts = source.NoOfPosts,
                 DepartmentNameE = source.JobTitle.Department.DepartmentNameE,
                 DepartmentNameA = source.JobTitle.Department.DepartmentNameA,

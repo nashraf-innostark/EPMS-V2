@@ -63,20 +63,22 @@
                 <label class="control-label cultureE" for="EmployeeNameE">@EPMS.Web.Resources.HR.Employee.Name</label>
             </div>
             <div class="span9">
-                @if (direction == "ltr")
-                {
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new {@id = "EmployeeNameE"})
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new {@class = "required"})
-                    </div>
-                }
-                else
-                {
-                    <div class="controls">
+                
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new {@id = "EmployeeNameE"})
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new {@class = "required"})
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label cultureA">@EPMS.Web.Resources.HR.Employee.NameA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameA, new { @id = "EmployeeNameA" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA, String.Empty, new { @class = "required" })
                 </div>
-                }
             </div>
         </div>
         <div class="control-group row-fluid">

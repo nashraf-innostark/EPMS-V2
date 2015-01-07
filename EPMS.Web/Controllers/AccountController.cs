@@ -742,7 +742,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [Authorize]
         [ValidateInput(false)]
-        public ActionResult Profile(ProfileViewModel profileViewModel, HttpPostedFileBase file)
+        public ActionResult Profile(ProfileViewModel profileViewModel)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
 
