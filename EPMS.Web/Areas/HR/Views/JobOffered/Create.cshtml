@@ -95,13 +95,13 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new {@disabled = true, @id = "departmentName", @class = "select2me",})
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new {@disabled = true, @id = "departmentName"})
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new {@disabled = true, @id = "departmentName", @class = "select2me",})
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new {@disabled = true, @id = "departmentName"})
                     </div>
                 }
                 
@@ -167,6 +167,7 @@
         $("#jobTitle").on("change", function() {
             var selectedVal = $(this).val();
             if (selectedVal != "") {
+                debugger
                 var jobtitlelist = '@Html.Raw(Json.Encode(Model.JobTitleList))';
                 var parsed = JSON.parse(jobtitlelist);
 
