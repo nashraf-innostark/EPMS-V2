@@ -131,11 +131,13 @@
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\EmployeeJobHistoryRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestDetailRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestRepository.cs" />
     <Compile Include="Repositories\JobApplicantRepository.cs" />
     <Compile Include="Repositories\JobOfferedRepository.cs" />
+    <Compile Include="Repositories\JobTitleHistoryRepository.cs" />
     <Compile Include="Repositories\JobTitleRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />

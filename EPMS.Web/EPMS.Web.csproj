@@ -327,6 +327,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Department.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HR\Employee.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employee.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\Employee.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1871,9 +1876,12 @@
       <LastGenOutput>Department.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HR\Employee.ar.resx" />
+    <EmbeddedResource Include="Resources\HR\Employee.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Employee.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Employee.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Employee.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>

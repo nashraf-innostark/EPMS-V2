@@ -9,16 +9,18 @@ namespace EPMS.Implementation.Services
     public class JobTitleService : IJobTitleService
     {
         private readonly IJobTitleRepository repository;
+        private readonly IJobTitleHistoryRepository jobTitleHistoryRepository;
         private readonly IEmployeeRepository employeeRepository;
 
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="xRepository"></param>
-        public JobTitleService(IJobTitleRepository xRepository)
+        public JobTitleService(IJobTitleRepository xRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IEmployeeRepository employeeRepository)
         {
             repository = xRepository;
+            this.jobTitleHistoryRepository = jobTitleHistoryRepository;
+            this.employeeRepository = employeeRepository;
         }
 
         #endregion
@@ -56,13 +58,33 @@ namespace EPMS.Implementation.Services
 
         public bool UpdateJob(JobTitle jobTitle)
         {
-            if (repository.JobTitleExists(jobTitle))
+            try
             {
-                throw new InvalidOperationException("Job Title with same name already exists.");
+                if (repository.JobTitleExists(jobTitle))
+                {
+                    throw new InvalidOperationException("Job Title with same name already exists.");
+                }
+                var tempjobTitle = repository.Find(jobTitle.JobTitleId);
+                if (jobTitle.BasicSalary != tempjobTitle.BasicSalary)
+                {
+                    var jobHistory = new JobTitleHistory
+                    {
+                        JobTitleId = Convert.ToInt64(jobTitle.JobTitleId),
+                        BasicSalary = Convert.ToDouble(jobTitle.BasicSalary),
+                        RecCreatedDate = DateTime.Now,
+                        RecCreatedBy = jobTitle.RecLastUpdatedBy
+                    };
+                    jobTitleHistoryRepository.Add(jobHistory);
+                    jobTitleHistoryRepository.SaveChanges();
+                }
+                repository.Update(jobTitle);
+                repository.SaveChanges();
+                return true;
             }
-            repository.Update(jobTitle);
-            repository.SaveChanges();
-            return true;
+            catch (Exception e)
+            {
+               return false;
+            }
         }
 
         public void DeleteJob(JobTitle jobTitle)
