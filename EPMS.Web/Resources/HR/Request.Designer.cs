@@ -241,6 +241,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request Reply.
+        /// </summary>
+        public static string RequestReply {
+            get {
+                return ResourceManager.GetString("RequestReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Topic.
         /// </summary>
         public static string RequestTopic {

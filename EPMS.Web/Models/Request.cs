@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace EPMS.Web.Models
 {
@@ -20,6 +21,8 @@ namespace EPMS.Web.Models
         [Display(Name = "Topic")]
         public string RequestTopic { get; set; }
         [Display(Name = "Request Date")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime RequestDate { get; set; }
         [Display(Name = "Monetary")]
         public bool IsMonetary { get; set; }

@@ -63,7 +63,7 @@
     </div>
 </form>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         var siteUrl = $('#siteURL').val();
         if ('@ViewBag.UserRole' == "Admin") {
             var oTable = $('#dataTable').dataTable({
@@ -93,21 +93,21 @@
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
+                        "mRender": function(data, type, full) {
                             return full["EmployeeNameE"];
                         }
                     },
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
+                        "mRender": function(data, type, full) {
                             return full["EmployeeJobId"];
                         }
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
+                        "mRender": function(data, type, full) {
                             return full["DepartmentNameE"];
                         }
                     },
@@ -143,7 +143,7 @@
                         "bSortable": false
                     }
                 ],
-                "fnServerParams": function (aoData) {
+                "fnServerParams": function(aoData) {
                     aoData.push({ "name": "search", "value": $('input').val() });
                 },
                 "sAjaxSource": siteUrl + "/Request/Index",
@@ -164,7 +164,7 @@
                     {
                         "aTargets": [0],
                         "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
+                        "mRender": function(data, type, full) {
                             return full["RequestId"];
                         },
                         "bVisible": false,
@@ -173,7 +173,7 @@
                     {
                         "aTargets": [1],
                         "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
+                        "mRender": function(data, type, full) {
                             var val = full["RequestTopic"];
                             var Id = full["RequestId"];
                             var element = '<a href="Create/' + Id + '">' + val + '</a>';
@@ -183,7 +183,7 @@
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
-                        "mRender": function (data, type, full) {
+                        "mRender": function(data, type, full) {
                             var requestDetail = full["RequestDetail"];
                             var status = "";
                             if (requestDetail.IsReplied) {
@@ -196,7 +196,7 @@
                         "bSortable": false
                     }
                 ],
-                "fnServerParams": function (aoData) {
+                "fnServerParams": function(aoData) {
                     aoData.push({ "name": "search", "value": $('input').val() });
                 },
                 "sAjaxSource": siteUrl + "/Request/Index",
@@ -213,21 +213,49 @@
             dropdownCssClass: 'noSearch'
         });
         $(".dataTables_filter input").unbind()
-           .bind("input", function (e) {
-               // Bind our desired behavior
-               if (this.value.length >= 3 || e.keyCode == 13) {
-                   $("#searchString").val(this.value);
-                   //oTable.fnClearTable();
-                   //$('#employeeTable').empty();
-                   oTable.fnDraw();
-               }
-               if (this.value == "") {
-                   $("#searchString").val(this.value);
-                   oTable.fnDraw();
-               }
-               return;
-           });
+            .bind("input", function(e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    //oTable.fnClearTable();
+                    //$('#employeeTable').empty();
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
     });
+
+    function validateForm() {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length); i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "") {
+                $(control).prop('placeholder', 'Required');
+                counter++;
+                $(control).addClass("Error");
+
+            } else {
+                $(control).removeClass("Error");
+            }
+
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                return false;
+            }
+        }
+        return true;
+    }
 </script>
 
 
