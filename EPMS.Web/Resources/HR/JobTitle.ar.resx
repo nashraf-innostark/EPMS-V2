@@ -171,8 +171,14 @@
   <data name="SaveButton" xml:space="preserve">
     <value>انشاء</value>
   </data>
+  <data name="SaveJobTitle" xml:space="preserve">
+    <value>لقد تم حفظ "عنوان الوظيفة"</value>
+  </data>
   <data name="SelectDepartment" xml:space="preserve">
     <value>اختار الادارة</value>
+  </data>
+  <data name="UpdateJobTitle" xml:space="preserve">
+    <value>وقد تم تحديث "المسمى الوظيفي"</value>
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>اسم الوظيفي الجديد</value>

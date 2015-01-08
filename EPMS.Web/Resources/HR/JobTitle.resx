@@ -171,8 +171,14 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveJobTitle" xml:space="preserve">
+    <value>Job Title has been saved</value>
+  </data>
   <data name="SelectDepartment" xml:space="preserve">
     <value>Select Department</value>
+  </data>
+  <data name="UpdateJobTitle" xml:space="preserve">
+    <value>Job Title has been updated</value>
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>Update Job Title</value>

@@ -106,5 +106,9 @@ namespace EPMS.Repository.Repositories
             return
                 DbSet.Where(x => x.DepartmentId == id);
         }
+        public JobTitle GetJobOfferedByJobTitleId(long jobTitleId)
+        {
+            return DbSet.FirstOrDefault(s => s.JobTitleId == jobTitleId);
+        }
     }
 }

@@ -12,7 +12,7 @@
     <div class="row-fluid">
         <div class="span12">
             <h1>
-                @*@Model.JobOffered.JobTitle.JobTitleNameE*@
+                @(direction == "ltr" ? Model.JobOffered.JobTitleNameE : Model.JobOffered.JobTitleNameA)
             </h1>
         </div>
     </div>
@@ -21,17 +21,18 @@
 @using (Html.BeginForm("Apply", "JobApplicant", FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
 {
     <div class="container-fluid">
-        @Html.AntiForgeryToken()
-        @Html.TextBoxFor(model => model.JobOffered.JobOfferedId, new { style = "display: none;", @id = "departmentName", })
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        @Html.TextBoxFor(model => model.JobOffered.JobOfferedId, new { style = "display: none;", @id = "departmentName", })
+        
         @Html.HiddenFor(model => model.JobApplicant.ApplicantCvPath, new { @id = "CvPath" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="inputField">@EPMS.Web.Resources.HR.JobApplicant.ApplicantName</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.ApplicantName</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantName, new { @id = "applicantName" })
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantName, new { @id = "applicantName", @class="toBeRequired" })
+                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantName, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -54,7 +55,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Description">@EPMS.Web.Resources.HR.JobApplicant.JobDescription</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.JobDescription</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -71,7 +72,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="age">@EPMS.Web.Resources.HR.JobApplicant.Age</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.Age</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -81,28 +82,30 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="mobile">@EPMS.Web.Resources.HR.JobApplicant.MobileNumber</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.MobileNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantMobile, new { @id = "applicantMobile" })
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantMobile, new { @id = "applicantMobile", @class="toBeRequired" })
+                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantMobile, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="email">@EPMS.Web.Resources.HR.JobApplicant.Email</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.Email</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantEmail, new { @id = "applicantEmail" })
+                    @Html.TextBoxFor(model => model.JobApplicant.ApplicantEmail, new { @id = "applicantEmail", @class="toBeRequired" })
+                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantEmail, "", new { @class = "required" })
                 </div>
             </div>
         </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.HR.JobApplicant.MaritalStatus</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.MaritalStatus</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -117,7 +120,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.HR.JobApplicant.Nationality</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.Nationality</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -136,7 +139,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="idNumber">@EPMS.Web.Resources.HR.JobApplicant.IqamaNo</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.JobApplicant.IqamaNo</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -173,7 +176,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button class="btn" type="submit">Apply</button>
+                    <button class="btn" type="submit" onclick="validateForm()">Apply</button>
                 </div>
             </div>
         </div>
@@ -224,5 +227,40 @@
                     }
                 }
             });
-        });
+    });
+    function validateForm() {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length) ; i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "") {
+                $(control).prop('placeholder', 'Required');
+                counter++;
+                $(control).addClass("Error");
+
+            } else {
+                $(control).removeClass("Error");
+            }
+
+        }
+        
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        if ($(".files").length == 0) {
+            $("#uploaded").text("Attach your CV.");
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    };
+
 </script>

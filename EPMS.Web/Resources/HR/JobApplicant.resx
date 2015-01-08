@@ -153,4 +153,19 @@
   <data name="UploadCv" xml:space="preserve">
     <value>Upload CV</value>
   </data>
+  <data name="ApplicantNameValidation" xml:space="preserve">
+    <value>Applicant Name is required</value>
+  </data>
+  <data name="ApplicantCvValidation" xml:space="preserve">
+    <value>CV is required</value>
+  </data>
+  <data name="ApplicantEmailValidation" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="ApplicantMobileValidation" xml:space="preserve">
+    <value>Mobile Number is required</value>
+  </data>
+  <data name="SaveJobApplicant" xml:space="preserve">
+    <value>Your Job Applicantion has been submitted. You will be contacted soon</value>
+  </data>
 </root>

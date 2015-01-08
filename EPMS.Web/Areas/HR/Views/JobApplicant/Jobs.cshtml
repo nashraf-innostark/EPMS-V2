@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.HR.JobOffered.IndexLabel;
     Layout = "~/Views/Shared/_ApplicantLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="container-fluid dashboard dashboard-title">
@@ -28,7 +29,14 @@
             <div class="widget-flipper">
                 <div class="widget-area widget-general-stats widget-front">
                     <div class="widget-head ">
-                        <a href="#" class="lightOrange">@item.JobTitleNameE</a>
+                        @if (direction == "ltr")
+                        {
+                            <a href="#" class="lightOrange">@item.JobTitleNameE</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="lightOrange">@item.JobTitleNameA</a>
+                        }
                         <div>
 
 
@@ -39,8 +47,14 @@
                         <li>
                             <span>Department</span>
                             <div>
-                                @item.DepartmentNameE
-
+                                @if (direction == "ltr")
+                                {
+                                    @item.DepartmentNameE
+                                }
+                                else
+                                {
+                                    @item.DepartmentNameA
+                                }
                             </div>
                         </li>
                         @if (item.NoOfPosts != null)
@@ -66,7 +80,14 @@
                         <li>
                             <span>Job Description</span>
                             <div class="jobDesc">
-                                @item.JobTitleDescE
+                                @if (direction == "ltr")
+                                {
+                                    @item.JobTitleDescE
+                                }
+                                else
+                                {
+                                    @item.JobTitleDescA
+                                }
                             </div>
                         </li>
                     </ul>

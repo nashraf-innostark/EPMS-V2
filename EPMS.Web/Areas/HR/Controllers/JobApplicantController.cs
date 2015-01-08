@@ -81,7 +81,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobApplicantService.AddJobApplicant(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Your Job Applicantion has been submitted. You will be contacted soon.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobApplicant.SaveJobApplicant, IsSaved = true };
                         jobApplicantViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
                         return RedirectToAction("Jobs");
                     }

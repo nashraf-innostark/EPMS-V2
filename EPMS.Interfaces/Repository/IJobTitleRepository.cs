@@ -24,5 +24,6 @@ namespace EPMS.Interfaces.Repository
         /// Checks if Job Title with Arabic and English Name already exists
         /// </summary>
         bool JobTitleExists(JobTitle jobTitle);
+        JobTitle GetJobOfferedByJobTitleId(long jobTitleId);
     }
 }

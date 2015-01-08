@@ -70,11 +70,47 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CV is required.
+        /// </summary>
+        public static string ApplicantCvValidation {
+            get {
+                return ResourceManager.GetString("ApplicantCvValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is required.
+        /// </summary>
+        public static string ApplicantEmailValidation {
+            get {
+                return ResourceManager.GetString("ApplicantEmailValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Number is required.
+        /// </summary>
+        public static string ApplicantMobileValidation {
+            get {
+                return ResourceManager.GetString("ApplicantMobileValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applicant Name.
         /// </summary>
         public static string ApplicantName {
             get {
                 return ResourceManager.GetString("ApplicantName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applicant Name is required.
+        /// </summary>
+        public static string ApplicantNameValidation {
+            get {
+                return ResourceManager.GetString("ApplicantNameValidation", resourceCulture);
             }
         }
         
@@ -156,6 +192,15 @@ namespace EPMS.Web.Resources.HR {
         public static string Nationality {
             get {
                 return ResourceManager.GetString("Nationality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Job Applicantion has been submitted. You will be contacted soon.
+        /// </summary>
+        public static string SaveJobApplicant {
+            get {
+                return ResourceManager.GetString("SaveJobApplicant", resourceCulture);
             }
         }
         

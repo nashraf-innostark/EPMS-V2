@@ -34,5 +34,6 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(s => s.JobTitleId == jobTitleId).ToList();
         }
+        
     }
 }

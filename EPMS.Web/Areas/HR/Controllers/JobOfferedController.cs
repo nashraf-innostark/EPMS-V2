@@ -48,6 +48,13 @@ namespace EPMS.Web.Areas.HR.Controllers
             });
         }
 
+        [HttpGet]
+        public JsonResult GetJobTitles(long deptId)
+        {
+            var jobTitles = jobTitleService.GetJobTitlesByJobOfferedId(deptId).CreateFrom();
+            return Json(jobTitles, JsonRequestBehavior.AllowGet);
+        }
+
         [SiteAuthorize(PermissionKey = "RecruitmentCreate")]
         public ActionResult Create(long? id)
         {
@@ -74,7 +81,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     var jobOffereToUpdate = jobOfferedViewModel.JobOffered.CreateFrom();
                     if (jobOfferedService.UpdateJobOffered(jobOffereToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Job Offer has been updated.", IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobOffered.UpdateJobOffered, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -90,7 +97,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobOfferedService.AddJobOffered(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Job Offer has been saved.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobOffered.SaveJobOffered, IsSaved = true };
                         jobOfferedViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
                         return RedirectToAction("Index");
                     }

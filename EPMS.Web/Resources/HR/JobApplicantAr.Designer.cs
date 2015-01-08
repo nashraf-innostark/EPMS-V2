@@ -160,6 +160,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to وقد قدم &quot;أبليكانشن وظيفة&quot; الخاص بك. سوف يكون الاتصال قريبا.
+        /// </summary>
+        public static string SaveJobApplicant {
+            get {
+                return ResourceManager.GetString("SaveJobApplicant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ارفق السيرة الذاتية.
         /// </summary>
         public static string UploadCv {

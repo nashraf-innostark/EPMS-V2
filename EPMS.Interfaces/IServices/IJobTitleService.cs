@@ -15,5 +15,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateJob(JobTitle jobTitle);
         void DeleteJob(JobTitle jobTitle);
         IEnumerable<Employee> FindEmployeeByJobTitleId(long? jobTitleId);
+        JobTitle GetJobTitlesByJobOfferedId(long jobOfferedId);
     }
 }
