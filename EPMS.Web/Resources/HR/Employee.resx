@@ -213,4 +213,13 @@
   <data name="DeactiveEmp" xml:space="preserve">
     <value>Deactivate Employee</value>
   </data>
+  <data name="AddMessage" xml:space="preserve">
+    <value>Employee has been Added</value>
+  </data>
+  <data name="ProblemSaving" xml:space="preserve">
+    <value>Problem in Saving Employee</value>
+  </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>Employee has been Updated</value>
+  </data>
 </root>

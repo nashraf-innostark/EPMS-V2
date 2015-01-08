@@ -246,6 +246,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel">Employee View Model</param>
         /// <returns>View</returns>
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(EmployeeDetailViewModel viewModel)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
@@ -282,7 +283,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         {
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = "Employee has been Updated",
+                                Message = Resources.HR.Employee.AddMessage,
                                 IsUpdated = true
                             };
                             return RedirectToAction("Index");
@@ -293,7 +294,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
                         viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
                         viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
-                        TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
                         return View(viewModel);
                     }
 
@@ -340,7 +341,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             catch (Exception)
             {
-                TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
+                TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
             }
             viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
@@ -348,7 +349,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
             viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
             viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
-            TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
+            TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
             return View(viewModel);
         }
         #endregion

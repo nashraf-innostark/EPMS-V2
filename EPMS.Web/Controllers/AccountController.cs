@@ -251,7 +251,7 @@ namespace IdentitySample.Controllers
                 {
                     UserId = userToEdit.Id,
                     SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                    SelectedEmployee = employeeService.GetAll().ToList()[0].EmployeeId,
+                    SelectedEmployee = userToEdit.EmployeeId ?? 0,
                     UserName = userToEdit.UserName,
                     Email = userToEdit.Email,
                     //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
@@ -271,7 +271,7 @@ namespace IdentitySample.Controllers
 
 
         [AllowAnonymous]
-        [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "User")]
+        [SiteAuthorize(PermissionKey = "User")]
         public ActionResult Users()
         {
             //if (Session["LoginID"] == null)
@@ -328,12 +328,12 @@ namespace IdentitySample.Controllers
                     // Update User Role
                     UserManager.RemoveFromRole(model.UserId, userRoleName);
                     UserManager.AddToRole(model.UserId, roleName);
-                    TempData["message"] = new MessageViewModel { Message = "User has been updated.", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.UpdateUser, IsUpdated = true };
                 }
                 // Password Reset
                 if (!String.IsNullOrEmpty(model.Password))
                 {
-                    var token = await UserManager.GeneratePasswordResetTokenAsync(User.Identity.GetUserId());
+                    var token = await UserManager.GeneratePasswordResetTokenAsync(model.UserId);
                     var resetPwdResults = await UserManager.ResetPasswordAsync(model.UserId, token, model.Password);
 
                     if (resetPwdResults.Succeeded)
@@ -343,17 +343,28 @@ namespace IdentitySample.Controllers
                         {
                             await SignInAsync(user, isPersistent: false);
                         }
-                        ViewBag.MessageVM = new MessageViewModel
+                        TempData["message"] = new MessageViewModel
                         {
-                            Message = "Password has been updated.",
+                            Message = EPMS.Web.Resources.HR.Account.UpdatePass,
                             IsUpdated = true
                         };
                     }
                 }
                 // Get user by UserId to Update User
-                AspNetUser userToUpdate = UserManager.FindById(User.Identity.GetUserId());
+                AspNetUser userToUpdate = UserManager.FindById(model.UserId);
                 if (userToUpdate.Email != model.Email || userToUpdate.EmployeeId != model.SelectedEmployee)
                 {
+                    if (userToUpdate.EmployeeId != model.SelectedEmployee)
+                    {
+                        var empId = AspNetUserService.GetAllUsers().Select(x => x.EmployeeId);
+                        if (empId.Contains(model.SelectedEmployee))
+                        {
+                            model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                            model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+                            TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                            return View(model);
+                        }
+                    }
                     AspNetUser currUser = new AspNetUser
                     {
                         Email = model.Email,
@@ -367,9 +378,9 @@ namespace IdentitySample.Controllers
                     var updateUserResult = await UserManager.UpdateAsync(userToUpdate);
                     if (updateUserResult.Succeeded)
                     {
-                        ViewBag.MessageVM = new MessageViewModel
+                        TempData["message"] = new MessageViewModel
                         {
-                            Message = "User has been updated.",
+                            Message = EPMS.Web.Resources.HR.Account.UpdateUser,
                             IsUpdated = true
                         };
                     }
@@ -389,7 +400,7 @@ namespace IdentitySample.Controllers
                 {
                     model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
                     model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-                    TempData["message"] = new MessageViewModel { Message = "Employee you selected has been assigned already.", IsError = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
                     return View(model);
                 }
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
@@ -405,7 +416,7 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(model.SelectedRole).Name;
                         UserManager.AddToRole(user.Id, roleName);
 
-                        TempData["message"] = new MessageViewModel { Message = "User has been Registered", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.AddUser, IsSaved = true };
                         return RedirectToAction("Users");
                     }
                 }
@@ -413,7 +424,7 @@ namespace IdentitySample.Controllers
             // If we got this far, something failed, redisplay form
             model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-            TempData["message"] = new MessageViewModel { Message = "Please check the Mendatory fields", IsError = true };
+            TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);
         }
         #endregion

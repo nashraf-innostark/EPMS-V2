@@ -117,109 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddEmployee" xml:space="preserve">
-    <value>اضف الموظف</value>
+  <data name="AddUser" xml:space="preserve">
+    <value>User has been Registered</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>اضافة موظف جديد</value>
+  <data name="ChkFields" xml:space="preserve">
+    <value>Please check the Mandatory fields</value>
   </data>
-  <data name="Allow1" xml:space="preserve">
-    <value>بدل1</value>
+  <data name="EmpError" xml:space="preserve">
+    <value>Employee you selected has been assigned already</value>
   </data>
-  <data name="Allow2" xml:space="preserve">
-    <value>بدل2</value>
+  <data name="UpdatePass" xml:space="preserve">
+    <value>Password has been Updated</value>
   </data>
-  <data name="Allow3" xml:space="preserve">
-    <value>بدل3</value>
-  </data>
-  <data name="Allow4" xml:space="preserve">
-    <value>بدل4</value>
-  </data>
-  <data name="Allow5" xml:space="preserve">
-    <value>بدل5</value>
-  </data>
-  <data name="BasicSal" xml:space="preserve">
-    <value>الراتب الاساسي</value>
-  </data>
-  <data name="Deduc1" xml:space="preserve">
-    <value>1 حسم</value>
-  </data>
-  <data name="Deduc2" xml:space="preserve">
-    <value>2 حسم</value>
-  </data>
-  <data name="Department" xml:space="preserve">
-    <value>الادارة</value>
-  </data>
-  <data name="DOB" xml:space="preserve">
-    <value>تاريخ الميلاد</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>البريد الالكتروني</value>
-  </data>
-  <data name="EmpJobTitle" xml:space="preserve">
-    <value>اسم الوظيفي</value>
-  </data>
-  <data name="Employeelist" xml:space="preserve">
-    <value>قائمة الموظفين</value>
-  </data>
-  <data name="Employees" xml:space="preserve">
-    <value>الموظفين</value>
-  </data>
-  <data name="ExtraInfo" xml:space="preserve">
-    <value>معلومات اضافية</value>
-  </data>
-  <data name="Image" xml:space="preserve">
-    <value>الصورة</value>
-  </data>
-  <data name="IqamaExpiryDate" xml:space="preserve">
-    <value>تاريخ انتهاء البطاقة الشخصية / اقامة</value>
-  </data>
-  <data name="IqamaNo" xml:space="preserve">
-    <value>رقم البطاقة الشخصية /اقامة</value>
-  </data>
-  <data name="JobId" xml:space="preserve">
-    <value>رقم الوظيفي</value>
-  </data>
-  <data name="JobTitle" xml:space="preserve">
-    <value>الاسم الوظيفي</value>
-  </data>
-  <data name="MaritalStat" xml:space="preserve">
-    <value>الحالة الاجتماعية</value>
-  </data>
-  <data name="MobNumber" xml:space="preserve">
-    <value>رقم الجوال</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>اسم الموظف بالانجليزي</value>
-  </data>
-  <data name="NameA" xml:space="preserve">
-    <value>اسم الموظف بالعربي</value>
-  </data>
-  <data name="Nationality" xml:space="preserve">
-    <value>الجنسية</value>
-  </data>
-  <data name="PassExpiryDate" xml:space="preserve">
-    <value>تاريخ انتهاء جواز السفر</value>
-  </data>
-  <data name="PassId" xml:space="preserve">
-    <value>رقم جواز السفر</value>
-  </data>
-  <data name="ReqHistory" xml:space="preserve">
-    <value>قائمة الطلبات</value>
-  </data>
-  <data name="TelephoneNumber" xml:space="preserve">
-    <value>رقم الهاتف</value>
-  </data>
-  <data name="DeactiveEmp" xml:space="preserve">
-    <value>ايفاف الموظف</value>
-  </data>
-  <data name="AddMessage" xml:space="preserve">
-    <value>وقد أضيف موظف</value>
-  </data>
-  <data name="ProblemSaving" xml:space="preserve">
-    <value>مشكلة في توفير الموظف</value>
-  </data>
-  <data name="UpdateMessage" xml:space="preserve">
-    <value>تم تحديث الموظف</value>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>User has been Updated</value>
   </data>
 </root>
