@@ -223,11 +223,29 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job Title has been saved.
+        /// </summary>
+        public static string SaveJobTitle {
+            get {
+                return ResourceManager.GetString("SaveJobTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Department.
         /// </summary>
         public static string SelectDepartment {
             get {
                 return ResourceManager.GetString("SelectDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Title has been updated.
+        /// </summary>
+        public static string UpdateJobTitle {
+            get {
+                return ResourceManager.GetString("UpdateJobTitle", resourceCulture);
             }
         }
         

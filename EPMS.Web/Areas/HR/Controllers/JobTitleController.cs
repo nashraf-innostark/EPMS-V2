@@ -82,7 +82,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     var jobTitleToUpdate = jobTitleViewModel.JobTitle.CreateFrom();
                     if (jobTitleService.UpdateJob(jobTitleToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Job Title has been updated.", IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobTitle.UpdateJobTitle, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -98,7 +98,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobTitleService.AddJob(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Job Title has been saved.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobTitle.SaveJobTitle, IsSaved = true };
                         jobTitleViewModel.JobTitle.JobTitleId = modelToSave.JobTitleId;
                         return RedirectToAction("Index");
                     }

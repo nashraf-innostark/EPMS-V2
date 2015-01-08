@@ -156,6 +156,12 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveDepartment" xml:space="preserve">
+    <value>Department has been saved</value>
+  </data>
+  <data name="UpdateDepartment" xml:space="preserve">
+    <value>Department has been updated</value>
+  </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>Update Department</value>
   </data>

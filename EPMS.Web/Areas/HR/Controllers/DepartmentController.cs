@@ -74,7 +74,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     var departmentToUpdate = departmentListViewModel.Department.CreateFrom();
                     if (oService.UpdateDepartment(departmentToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Department has been updated.", IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Department.UpdateDepartment, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -90,7 +90,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (oService.AddDepartment(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "Department has been saved.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Department.SaveDepartment, IsSaved = true };
                         departmentListViewModel.Department.DepartmentId = modelToSave.DepartmentId;
                         return RedirectToAction("Index");
                     }

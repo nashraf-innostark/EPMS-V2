@@ -11,16 +11,17 @@ namespace EPMS.Implementation.Services
         private readonly IJobTitleRepository repository;
         private readonly IJobTitleHistoryRepository jobTitleHistoryRepository;
         private readonly IEmployeeRepository employeeRepository;
-
+        private readonly IJobOfferedRepository jobOfferedRepository;
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public JobTitleService(IJobTitleRepository xRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IEmployeeRepository employeeRepository)
+        public JobTitleService(IJobTitleRepository xRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IEmployeeRepository employeeRepository, IJobOfferedRepository jobOfferedRepository)
         {
             repository = xRepository;
             this.jobTitleHistoryRepository = jobTitleHistoryRepository;
             this.employeeRepository = employeeRepository;
+            this.jobOfferedRepository = jobOfferedRepository;
         }
 
         #endregion
@@ -29,6 +30,8 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetJobTitlesByDepartmentId(deptId);
         }
+
+        
         //public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
         //{
         //    return repository.GetAllJobTitle(jobTitleSearchRequest);
@@ -37,6 +40,11 @@ namespace EPMS.Implementation.Services
         public JobTitle FindJobTitleById(long id)
         {
             if (id != null) return repository.Find((int)id);
+            return null;
+        }
+        public JobTitle GetJobTitlesByJobOfferedId (long id)
+        {
+            if (id > 0) return repository.GetJobOfferedByJobTitleId(id);
             return null;
         }
 

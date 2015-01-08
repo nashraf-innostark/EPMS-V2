@@ -178,6 +178,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job Offer has been saved.
+        /// </summary>
+        public static string SaveJobOffered {
+            get {
+                return ResourceManager.GetString("SaveJobOffered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Job Title.
         /// </summary>
         public static string SelectJobTitle {
@@ -201,6 +210,15 @@ namespace EPMS.Web.Resources.HR {
         public static string UpdateJob {
             get {
                 return ResourceManager.GetString("UpdateJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Offer has been updated.
+        /// </summary>
+        public static string UpdateJobOffered {
+            get {
+                return ResourceManager.GetString("UpdateJobOffered", resourceCulture);
             }
         }
     }

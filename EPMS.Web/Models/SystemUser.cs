@@ -18,5 +18,6 @@ namespace EPMS.Web.Models
         public string RoleId { get; set; }
         public string Role { get; set; }
         public string Username { get; set; }
+        public string EmpEmail { get; set; }
     }
 }

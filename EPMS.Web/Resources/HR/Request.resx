@@ -189,4 +189,19 @@
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>Request Detail</value>
   </data>
+  <data name="RequestReply" xml:space="preserve">
+    <value>Request Reply</value>
+  </data>
+  <data name="RequestAccepted" xml:space="preserve">
+    <value>The request has been accepted, now you are unable to make changes in this request.</value>
+  </data>
+  <data name="RequestCreated" xml:space="preserve">
+    <value>Requested has been created.</value>
+  </data>
+  <data name="RequestDeleted" xml:space="preserve">
+    <value>Requested has been deleted.</value>
+  </data>
+  <data name="RequestReplied" xml:space="preserve">
+    <value>Requested has been replied.</value>
+  </data>
 </root>

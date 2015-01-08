@@ -178,6 +178,24 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department has been saved.
+        /// </summary>
+        public static string SaveDepartment {
+            get {
+                return ResourceManager.GetString("SaveDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department has been updated.
+        /// </summary>
+        public static string UpdateDepartment {
+            get {
+                return ResourceManager.GetString("UpdateDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Department.
         /// </summary>
         public static string UpdatePageTitle {

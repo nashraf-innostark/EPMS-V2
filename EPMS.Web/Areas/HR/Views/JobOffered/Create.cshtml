@@ -164,7 +164,7 @@
 
     $(document).ready(function () {
         DivHideShow('ShowBasicSalary', 'basicSal');
-        $("#jobTitle").on("change", function() {
+        @*$("#jobTitle").on("change", function() {
             var selectedVal = $(this).val();
             if (selectedVal != "") {
                 debugger
@@ -175,7 +175,7 @@
                     if (value.JobTitleId == selectedVal) {
                         $("#jobTitleDesc").val(value.JobTitleDescE);
                         $("#basicSalary").val(value.BasicSalary);
-                        $('#departmentName').val(value.Department.DepartmentNameE);
+                        $('#departmentName').val(value.DepartmentNameE);
                     }
                 });
             }
@@ -185,10 +185,37 @@
                 $('#departmentName').val(selectedVal);
             }
       
-        });
+        });*@
         $('.select2me').select2({
             placeholder: "Select",
             allowClear: true,
+
+        });
+        var siteUrl = $('#siteURL').val();
+        $("#jobTitle").on("change", function () {
+            var depId = $(this).val();
+            if (depId > 0) {
+                $('#SearchRequest_JobId').empty();
+                $.ajax({
+                    url: siteUrl + "GetJobTitles",
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        deptId: depId
+                    },
+                    success: function (data) {
+                        $("#jobTitleDesc").val(data.JobTitleDescE);
+                        $("#basicSalary").val(data.BasicSalary);
+                        $('#departmentName').val(data.DepartmentNameE);
+                    },
+                    error: function (e) {
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
+                $('#mainbar').unblock();
+                $('#SearchRequest_JobId').empty();
+            }
 
         });
     });

@@ -156,6 +156,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveJobOffered" xml:space="preserve">
+    <value>لقد تم حفظ "عرض الوظيفة"</value>
+  </data>
   <data name="SelectJobTitle" xml:space="preserve">
     <value>Select Job Title</value>
   </data>
@@ -164,5 +167,8 @@
   </data>
   <data name="UpdateJob" xml:space="preserve">
     <value>Update Job Offered</value>
+  </data>
+  <data name="UpdateJobOffered" xml:space="preserve">
+    <value>وقد تم تحديث "توفر الوظيفة"</value>
   </data>
 </root>

@@ -1969,6 +1969,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Payroll.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Request.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Tasks.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.ar.Designer.cs</LastGenOutput>
@@ -2319,11 +2323,6 @@
     <EmbeddedResource Include="Resources\HR\Request.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Request.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HR\Request.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Request.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Tasks.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

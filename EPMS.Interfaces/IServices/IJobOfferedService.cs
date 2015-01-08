@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.IServices
         bool AddJobOffered(JobOffered jobTitle);
         bool UpdateJobOffered(JobOffered jobTitle);
         List<JobOffered> GetJobsOfferedByJobTitleId(long jobTitleId);
+        
     }
 }

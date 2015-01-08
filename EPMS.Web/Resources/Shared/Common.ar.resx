@@ -141,6 +141,9 @@
   <data name="EditDelete" xml:space="preserve">
     <value>تحرير / حذف</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
   <data name="Heading" xml:space="preserve">
     <value>مرحبا</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="Login" xml:space="preserve">
     <value>تسجيل الدخول</value>
+  </data>
+  <data name="Notice" xml:space="preserve">
+    <value>إشعار</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>صفحة</value>
@@ -167,6 +173,9 @@
   </data>
   <data name="Search" xml:space="preserve">
     <value>بحث</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>النجاح</value>
   </data>
   <data name="TextDirection" xml:space="preserve">
     <value>rtl</value>

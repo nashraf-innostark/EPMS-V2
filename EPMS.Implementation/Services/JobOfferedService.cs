@@ -66,5 +66,6 @@ namespace EPMS.Implementation.Services
         {
             return jobOfferedRepository.GetJobsOfferedByJobTitleId(jobTitleId);
         }
+        
     }
 }
