@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                  viewModel.Allowances.Allowance5;
                 }
                 viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
-                viewModel.Date = DateTime.Now;
+                viewModel.Date = DateTime.Now.ToShortDateString();
             }
             return View(viewModel);
         }
@@ -139,12 +139,9 @@ namespace EPMS.Web.Areas.HR.Controllers
         public JsonResult Detail(PayrollViewModel viewModel)
         {
             long id = viewModel.Id;
-            DateTime? date = viewModel.Date;
-            //PayrollViewModel viewModel = new PayrollViewModel();
             if (id > 0)
             {
-                date = DateTime.Parse(date.ToString());
-                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, (DateTime)date);
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, Convert.ToDateTime(viewModel.Date));
                 if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();

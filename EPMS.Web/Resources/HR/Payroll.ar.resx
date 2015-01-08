@@ -117,76 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreatePageTitle" xml:space="preserve">
-    <value>Create Request Ar</value>
-  </data>
-  <data name="CreateRequest" xml:space="preserve">
-    <value>اضافة وظيفة جديدة</value>
-  </data>
-  <data name="DeclineBtn" xml:space="preserve">
-    <value>عدم الموافقة</value>
-  </data>
-  <data name="DepartmentName" xml:space="preserve">
-    <value>ادارة</value>
-  </data>
-  <data name="EmployeeJobId" xml:space="preserve">
-    <value>رقم الوظيفي</value>
-  </data>
-  <data name="EmployeeName" xml:space="preserve">
-    <value>اسم الموظف</value>
-  </data>
-  <data name="FirstInstallmentDate" xml:space="preserve">
-    <value>First Installment Date Ar</value>
-  </data>
-  <data name="InstallmentAmount" xml:space="preserve">
-    <value>Installment Amount Ar</value>
-  </data>
-  <data name="Label" xml:space="preserve">
-    <value>قائمة الطلبات</value>
-  </data>
-  <data name="LastInstallmentDate" xml:space="preserve">
-    <value>Last Installment Date Ar</value>
-  </data>
-  <data name="LoanAmount" xml:space="preserve">
-    <value>Loan Amount Ar</value>
-  </data>
-  <data name="LoanDateGr" xml:space="preserve">
-    <value>Loan Date (Gregorian) Ar</value>
-  </data>
-  <data name="LoanDateHj" xml:space="preserve">
-    <value>Loan Date (Hijri) Ar</value>
-  </data>
-  <data name="Monetary" xml:space="preserve">
-    <value>Monetary Ar</value>
-  </data>
-  <data name="NumberOfMonths" xml:space="preserve">
-    <value>لكم شهر</value>
-  </data>
-  <data name="Replied" xml:space="preserve">
-    <value>تم الرد</value>
-  </data>
-  <data name="ReplyBtn" xml:space="preserve">
-    <value>الرد</value>
-  </data>
-  <data name="ReplyDesc" xml:space="preserve">
-    <value>الرد</value>
-  </data>
-  <data name="RequestDate" xml:space="preserve">
+  <data name="Date" xml:space="preserve">
     <value>تاريخ</value>
   </data>
-  <data name="RequestDesc" xml:space="preserve">
-    <value>التفاصيل</value>
+  <data name="EmpId" xml:space="preserve">
+    <value>رقم الوظيفي</value>
   </data>
-  <data name="Requests" xml:space="preserve">
-    <value>طلبات</value>
+  <data name="PayrollList" xml:space="preserve">
+    <value>قائمة الرواتب</value>
   </data>
-  <data name="RequestTopic" xml:space="preserve">
-    <value>عنوان الطلب</value>
+  <data name="Payrolls" xml:space="preserve">
+    <value>الموظف</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>حالة الطلب</value>
+  <data name="Print" xml:space="preserve">
+    <value>طباعة</value>
   </data>
-  <data name="UpdatePageTitle" xml:space="preserve">
-    <value>Update Request Ar</value>
+  <data name="Title" xml:space="preserve">
+    <value>صفحة الرواتب</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>اجمالي</value>
   </data>
 </root>
