@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
 
 @{
-    ViewBag.Title = "Employees";
+    ViewBag.Title = EPMS.Web.Resources.HR.Employee.Employees;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
@@ -15,7 +15,7 @@
             </a>
         </li>
         <li>
-            Employees' List
+            @EPMS.Web.Resources.HR.Employee.Employeelist
         </li>
     </ul>
 </div>
@@ -42,7 +42,7 @@
                             <th>@EPMS.Web.Resources.HR.Employee.Image</th>
                             <th>@EPMS.Web.Resources.HR.Employee.Name</th>
                             <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.JobTitle</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.EmpJobTitle</th>
                             <th>@EPMS.Web.Resources.HR.Employee.Department</th>
                         </tr>
                     </thead>

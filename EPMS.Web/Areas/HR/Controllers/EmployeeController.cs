@@ -141,6 +141,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
+            var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
             if (id == null)
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
@@ -148,7 +149,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     EmployeeViewModel =
                     {
                         JobTitleList = JobTitleService.GetAll(),
-                        Allowance =  new Allowance(),
+                        Allowance = new Allowance(),
                         OldAllowance = new Allowance(),
                         SearchRequest = new EmployeeSearchRequset(),
                         Employee = new Employee()
@@ -156,9 +157,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                 if (userRole != null) viewModel.Role = userRole.Name;
-                viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
-                viewModel.EmployeeViewModel.BtnText = "Save Employee";
-                viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
+                viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
+                viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
+                viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
                 return View(viewModel);
             }
             long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
@@ -184,14 +185,15 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
                     // Get Allowances
                     var allowance =
-                        AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId,DateTime.Now);
+                        AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId, DateTime.Now);
                     if (allowance != null)
                     {
                         viewModel.EmployeeViewModel.Allowance = allowance.CreateFromServerToClient();
                         viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
                     }
                     // Set Employee Name for Header
-                    viewModel.EmployeeViewModel.EmployeeName = viewModel.EmployeeViewModel.Employee.EmployeeNameE;
+                    
+                    viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeNameE : viewModel.EmployeeViewModel.Employee.EmployeeNameA;
                     if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
                     {
                         viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
@@ -204,13 +206,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                     }
                     if (userRole.Name == "Admin")
                     {
-                        viewModel.EmployeeViewModel.PageTitle = "Employee's List";
-                        viewModel.EmployeeViewModel.BtnText = "Update Changes";
+                        viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee's List" : "قائمة الموظفين";
+                        viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Update Changes" : "حفظ التعديلات";
                     }
                     if (userRole.Name == "Employee" || userRole.Name == "PM")
                     {
-                        viewModel.EmployeeViewModel.PageTitle = "My Profile";
-                        viewModel.EmployeeViewModel.BtnText = "Update Changes";
+                        viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "My Profile" : "ملفي الشخصي";
+                        viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Update Changes" : "تحديث التغييرات";
                     }
                     // get Employee requests
                     var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
@@ -248,6 +250,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var userRole = result.AspNetRoles.FirstOrDefault();
+            var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
             try
             {
                 if (userRole != null && userRole.Name == "Admin" && ModelState.IsValid)
@@ -287,9 +290,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
                         viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                         viewModel.Role = userRole.Name;
-                        viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
-                        viewModel.EmployeeViewModel.BtnText = "Save Employee";
-                        viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
+                        viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
+                        viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
+                        viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
                         TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
                         return View(viewModel);
                     }
@@ -342,9 +345,9 @@ namespace EPMS.Web.Areas.HR.Controllers
             viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             if (userRole != null) viewModel.Role = userRole.Name;
-            viewModel.EmployeeViewModel.EmployeeName = "Add New Employee";
-            viewModel.EmployeeViewModel.BtnText = "Save Employee";
-            viewModel.EmployeeViewModel.PageTitle = "Employee Addition";
+            viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
+            viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
+            viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
             TempData["message"] = new MessageViewModel { Message = "Problem in Saving Employee", IsError = true };
             return View(viewModel);
         }
@@ -440,7 +443,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                             }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json( new{ response = "Failed to upload. Error: ", status = (int)HttpStatusCode.BadRequest}, JsonRequestBehavior.AllowGet);
+            return Json(new { response = "Failed to upload. Error: ", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

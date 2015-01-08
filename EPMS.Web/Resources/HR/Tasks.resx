@@ -117,70 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>حول</value>
+  <data name="AssigTasks" xml:space="preserve">
+    <value>Assigned Tasks</value>
   </data>
-  <data name="BackToList" xml:space="preserve">
-    <value>العودة إلى قائمة</value>
+  <data name="ProjName" xml:space="preserve">
+    <value>Project Name</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>إلغاء</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>اتصال</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>خلق</value>
-  </data>
-  <data name="CreateNew" xml:space="preserve">
-    <value>خلق جديد</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>حذف</value>
-  </data>
-  <data name="EditDelete" xml:space="preserve">
-    <value>تحرير / حذف</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>خطأ</value>
-  </data>
-  <data name="Heading" xml:space="preserve">
-    <value>مرحبا</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>منزل</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>تسجيل الدخول</value>
-  </data>
-  <data name="Notice" xml:space="preserve">
-    <value>إشعار</value>
-  </data>
-  <data name="Page" xml:space="preserve">
-    <value>صفحة</value>
-  </data>
-  <data name="Product" xml:space="preserve">
-    <value>نتاج</value>
-  </data>
-  <data name="Register" xml:space="preserve">
-    <value>تسجيل</value>
-  </data>
-  <data name="Reset" xml:space="preserve">
-    <value>إعادة تعيين</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>حفظ</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>بحث</value>
-  </data>
-  <data name="Success" xml:space="preserve">
-    <value>النجاح</value>
-  </data>
-  <data name="TextDirection" xml:space="preserve">
-    <value>rtl</value>
-  </data>
-  <data name="TotalRecords" xml:space="preserve">
-    <value>إجمالي عدد السجلات:</value>
+  <data name="Task" xml:space="preserve">
+    <value>Tasks</value>
   </data>
 </root>

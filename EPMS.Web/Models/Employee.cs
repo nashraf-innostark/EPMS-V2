@@ -36,7 +36,6 @@ namespace EPMS.Web.Models
         public short? EmployeeNationality { get; set; }
         [Required(ErrorMessage = "Iqama ID is required.")]
         public int? EmployeeIqama { get; set; }
-        [Required(ErrorMessage = "Iqama Issue Date is required.")]
         public DateTime? EmployeeIqamaIssueDt { get; set; }
         public DateTime? EmployeeIqamaIssueDtAr { get; set; }
         [Required(ErrorMessage = "Iqama Expiry Date is required.")]

@@ -223,11 +223,38 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The request has been accepted, now you are unable to make changes in this request..
+        /// </summary>
+        public static string RequestAccepted {
+            get {
+                return ResourceManager.GetString("RequestAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested has been created..
+        /// </summary>
+        public static string RequestCreated {
+            get {
+                return ResourceManager.GetString("RequestCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string RequestDate {
             get {
                 return ResourceManager.GetString("RequestDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested has been deleted..
+        /// </summary>
+        public static string RequestDeleted {
+            get {
+                return ResourceManager.GetString("RequestDeleted", resourceCulture);
             }
         }
         
@@ -241,11 +268,29 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requested has been replied..
+        /// </summary>
+        public static string RequestReplied {
+            get {
+                return ResourceManager.GetString("RequestReplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request Reply.
         /// </summary>
         public static string RequestReply {
             get {
                 return ResourceManager.GetString("RequestReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requests.
+        /// </summary>
+        public static string Requests {
+            get {
+                return ResourceManager.GetString("Requests", resourceCulture);
             }
         }
         

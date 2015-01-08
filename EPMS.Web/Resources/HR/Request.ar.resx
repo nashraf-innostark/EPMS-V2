@@ -120,6 +120,9 @@
   <data name="CreatePageTitle" xml:space="preserve">
     <value>إنشاء طلب</value>
   </data>
+  <data name="CreateRequest" xml:space="preserve">
+    <value>اضافة وظيفة جديدة</value>
+  </data>
   <data name="DeclineBtn" xml:space="preserve">
     <value>عدم الموافقة</value>
   </data>
@@ -174,6 +177,9 @@
   <data name="RequestDesc" xml:space="preserve">
     <value>التفاصيل</value>
   </data>
+  <data name="Requests" xml:space="preserve">
+    <value>طلبات</value>
+  </data>
   <data name="RequestReply" xml:space="preserve">
     <value>طلب رد</value>
   </data>
@@ -185,5 +191,17 @@
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>طلب التحديث</value>
+  </data>
+  <data name="RequestAccepted" xml:space="preserve">
+    <value>وقد تم قبول الطلب، الآن أنت غير قادر على إجراء تغييرات في هذا الطلب.</value>
+  </data>
+  <data name="RequestCreated" xml:space="preserve">
+    <value>طلب قد تم إنشاؤها.</value>
+  </data>
+  <data name="RequestDeleted" xml:space="preserve">
+    <value>طلب قد تم حذفه.</value>
+  </data>
+  <data name="RequestReplied" xml:space="preserve">
+    <value>طلب تم الرد.</value>
   </data>
 </root>

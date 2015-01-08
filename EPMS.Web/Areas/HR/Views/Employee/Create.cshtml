@@ -29,7 +29,7 @@
         else
         {
             <li>
-                Add New Employee
+                @EPMS.Web.Resources.HR.Employee.AddNew
             </li>
         }
     </ul>
@@ -37,7 +37,15 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@Model.EmployeeViewModel.EmployeeName</small></h2>
+    @if (Model.EmployeeViewModel.Employee.EmployeeId > 0)
+    {
+        <h2><small>@Model.EmployeeViewModel.EmployeeName</small></h2>
+    }
+    else
+    {
+        <h2><small>@EPMS.Web.Resources.HR.Employee.AddNew</small></h2>
+    }
+
     @if (Model.EmployeeViewModel.Employee != null)
     {
         if (Model.EmployeeViewModel.Employee.EmployeeId > 0)
@@ -54,7 +62,7 @@
 @using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        
+
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeId)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance1)
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance2)
@@ -65,30 +73,30 @@
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label cultureE" for="EmployeeNameE">@EPMS.Web.Resources.HR.Employee.Name</label>
+                <label class="control-label" for="EmployeeNameE">@EPMS.Web.Resources.HR.Employee.Name</label>
             </div>
             <div class="span9">
-                
+
                 <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new {@id = "EmployeeNameE"})
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new {@class = "required"})
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new { @id = "EmployeeNameE" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label cultureA">@EPMS.Web.Resources.HR.Employee.NameA</label>
+                <label class="control-label">@EPMS.Web.Resources.HR.Employee.NameA</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameA, new { @id = "EmployeeNameA" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA, String.Empty, new { @class = "required" })
-                    </div>
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameA, new { @id = "EmployeeNameA" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA, String.Empty, new { @class = "required" })
+                </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitle">Job Title</label>
+                <label class="control-label" for="JobTitle">@EPMS.Web.Resources.HR.Employee.JobTitle</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -99,7 +107,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DepartmentName">Department</label>
+                <label class="control-label" for="DepartmentName">@EPMS.Web.Resources.HR.Employee.Department</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -109,7 +117,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobID">Job ID</label>
+                <label class="control-label" for="JobID">@EPMS.Web.Resources.HR.Employee.JobId</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -121,7 +129,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputField">
-                    Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.Web.Resources.HR.Employee.Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -134,7 +142,7 @@
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MobileNumber">Mobile Number</label>
+                <label class="control-label" for="MobileNumber">@EPMS.Web.Resources.HR.Employee.MobNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -145,7 +153,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="LandlineNumber">Telephone Number</label>
+                <label class="control-label" for="LandlineNumber">@EPMS.Web.Resources.HR.Employee.TelephoneNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -156,7 +164,18 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">Marital Status</label>
+                <label class="control-label" for="LandlineNumber">@EPMS.Web.Resources.HR.Employee.Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "LandlineNumber" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.Email, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.HR.Employee.MaritalStat</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -167,7 +186,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="EmployeeDOB">Date of Birth (Arabic-Gregorian)</label>
+                <label class="control-label" for="EmployeeDOB">@EPMS.Web.Resources.HR.Employee.DOB</label>
             </div>
             <div class="span9">
                 <div class="controls span4">
@@ -181,7 +200,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Nationality">Nationality</label>
+                <label class="control-label" for="Nationality">@EPMS.Web.Resources.HR.Employee.Nationality</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -192,7 +211,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="IqamaId">Iqama Number Or National ID Number</label>
+                <label class="control-label" for="IqamaId">@EPMS.Web.Resources.HR.Employee.IqamaNo</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -201,24 +220,24 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="IqamaIssueDate">Iqama Issue Date Or National ID Issue Date</label>
-            </div>
-            <div class="span9">
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaIssueDtAr, new { @id = "IqamaIssueDateAr", onchange = "HijriToGregorian(this,'#IqamaIssueDate')", @class = "col-lg-2 datepickerArabic form-control " })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaIssueDt, String.Empty, new { @class = "required" })
+        @*<div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="IqamaIssueDate">Iqama Issue Date Or National ID Issue Date</label>
                 </div>
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaIssueDt, new { @id = "IqamaIssueDate", @class = "col-lg-2 datepicker form-control " })
+                <div class="span9">
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaIssueDtAr, new { @id = "IqamaIssueDateAr", onchange = "HijriToGregorian(this,'#IqamaIssueDate')", @class = "col-lg-2 datepickerArabic form-control " })
+                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaIssueDt, String.Empty, new { @class = "required" })
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaIssueDt, new { @id = "IqamaIssueDate", @class = "col-lg-2 datepicker form-control " })
 
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div>*@
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="IqamaExpiryDate">Iqama Expiry Date Or National ID Expiry Date</label>
+                <label class="control-label" for="IqamaExpiryDate">@EPMS.Web.Resources.HR.Employee.IqamaExpiryDate</label>
             </div>
             <div class="span9">
                 <div class="controls span4">
@@ -232,7 +251,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="PassportID">Passport Id</label>
+                <label class="control-label" for="PassportID">@EPMS.Web.Resources.HR.Employee.PassId</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -243,7 +262,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="PassportExpiryDate">Passport Expiry Date</label>
+                <label class="control-label" for="PassportExpiryDate">@EPMS.Web.Resources.HR.Employee.PassExpiryDate</label>
             </div>
             <div class="span9">
                 <div class="controls span4">
@@ -260,25 +279,26 @@
                 <label class="control-label cultureE" for="ExtraInformationE">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
             </div>
             <div class="span9">
-                @if (direction == "ltr")
-                {
-                    <div class="controls">
-                        @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @dir = "ltr", @id = "ExtraInformationE" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsE)
-                    </div>
-                }
-                else
-                {
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsA, new { @id = "ExtraInformationA" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsA)
-                    </div>
-                }
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @dir = "ltr", @id = "ExtraInformationE" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsE)
+                </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="BasicSalary">Basic Salary</label>
+                <label class="control-label cultureE" for="ExtraInformationE">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsA, new { @id = "ExtraInformationA" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsA)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="BasicSalary">@EPMS.Web.Resources.HR.Employee.BasicSal</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -291,7 +311,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Allownce1">Allownce1</label>
+                    <label class="control-label" for="Allownce1">@EPMS.Web.Resources.HR.Employee.Allow1</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -302,7 +322,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Allownce2">Allownce2</label>
+                    <label class="control-label" for="Allownce2">@EPMS.Web.Resources.HR.Employee.Allow2</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -313,7 +333,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Allownce3">Allownce3</label>
+                    <label class="control-label" for="Allownce3">@EPMS.Web.Resources.HR.Employee.Allow3</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -324,7 +344,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Allownce4">Allownce4</label>
+                    <label class="control-label" for="Allownce4">@EPMS.Web.Resources.HR.Employee.Allow4</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -335,7 +355,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Allownce5">Allownce5</label>
+                    <label class="control-label" for="Allownce5">@EPMS.Web.Resources.HR.Employee.Allow5</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -348,7 +368,7 @@
             {
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="Deduction1">Deduction1</label>
+                        <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -358,7 +378,7 @@
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="Deduction2">Deduction2</label>
+                        <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -368,7 +388,7 @@
                 </div>
             }
         }
-        @if (Model.EmployeeViewModel.Employee != null)
+        @if (Model.EmployeeViewModel.Employee != null && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             if (Model.Role == "Employee")
             {
@@ -380,13 +400,13 @@
             }
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
-                <strong>Requests History</strong>
+                <strong>@EPMS.Web.Resources.HR.Employee.ReqHistory</strong>
             </div>
             <div>
                 <header>
                     <i class="icon-big-notepad"></i>
-                    <h2><small>Requests</small></h2>
-                    <h3> <small><a href="~/HR/Request/Create">Create New Request</a></small></h3>
+                    <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
+                    <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
                 </header>
             </div>
             <!--Sortable Responsive Table begin-->
@@ -396,7 +416,7 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Requests</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Requests</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -417,7 +437,7 @@
             <!--Sortable Responsive Table end-->
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
-                <strong>Assigned Tasks</strong>
+                <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
             </div>
 
             <!--Sortable Responsive Table begin-->
@@ -426,8 +446,8 @@
                     <table class="table table-striped table-responsive" id="tableProjects">
                         <thead>
                             <tr>
-                                <th> Tasks</th>
-                                <th>Project Name</th>
+                                <th>@EPMS.Web.Resources.HR.Tasks.Task</th>
+                                <th>@EPMS.Web.Resources.HR.Tasks.ProjName</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -435,14 +455,14 @@
                 </div>
             </div>
         }
-        @if ((Model.Role == "Admin") && Model.EmployeeViewModel.Employee != null)
+        @if ((Model.Role == "Admin") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
                     <button type="submit" class="btn">@Model.EmployeeViewModel.BtnText</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button type="button" class="btn">Deactivate Employee</button>
+                    <button type="button" class="btn">@EPMS.Web.Resources.HR.Employee.DeactiveEmp</button>
                 </div>
             </div>
         }
@@ -460,7 +480,7 @@
 <script>
     $(document).ready(function () {
         CKEDITOR.replace('ExtraInformationE');
-        //CKEDITOR.replace('EmployeeDetailsA');
+        CKEDITOR.replace('ExtraInformationA');
         // upload Image
         var errors = "";
 
@@ -562,7 +582,9 @@
                 $(this).change();
             }
         });
-        ConvertGregorianToIslamic();
+        if ('@Model.EmployeeViewModel.Employee.EmployeeId' > 0) {
+            ConvertGregorianToIslamic();
+        }
         // Date from Gregorian to Islamic Starts
         $("#EmployeeDOB").on("change", function () {
             if ($('#EmployeeDOB').val() == "") {
@@ -574,16 +596,16 @@
                 $('#EmpDateOfBirthArabic').val(newDate);
             }
         });
-        $("#IqamaIssueDate").on("change", function () {
-            if ($('#IqamaIssueDate').val() == "") {
-                $('#IqamaIssueDateAr').val("");
-            }
-            else {
-                var dateToBeChanged = $('#IqamaIssueDate').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#IqamaIssueDateAr').val(newDate);
-            }
-        });
+        //$("#IqamaIssueDate").on("change", function () {
+        //    if ($('#IqamaIssueDate').val() == "") {
+        //        $('#IqamaIssueDateAr').val("");
+        //    }
+        //    else {
+        //        var dateToBeChanged = $('#IqamaIssueDate').val();
+        //        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+        //        $('#IqamaIssueDateAr').val(newDate);
+        //    }
+        //});
         $("#IqamaExpiryDate").on("change", function () {
             if ($('#IqamaExpiryDate').val() == "") {
                 $('#IqamaExpiryDateAr').val("");
@@ -610,7 +632,7 @@
 
     function ConvertGregorianToIslamic() {
         $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
-        $("#IqamaIssueDateAr").val(ConvertDates($("#IqamaIssueDate").val(), "gregorian", "islamic"));
+        //$("#IqamaIssueDateAr").val(ConvertDates($("#IqamaIssueDate").val(), "gregorian", "islamic"));
         $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
         $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
     }
