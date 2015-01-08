@@ -13,6 +13,7 @@ using System.Web.Http;
 using UnityDependencyResolver = EPMS.WebBase.UnityConfiguration.UnityDependencyResolver;
 using System;
 using System.Web;
+using System.Globalization;
 
 namespace IdentitySample
 {
@@ -72,11 +73,12 @@ namespace IdentitySample
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Set MVC resolver
-            //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             // Set Web Api resolver
-            //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+
+            ////Date Formatter
+            //ModelBinders.Binders.Add(typeof(DateTime), new MyDateTimeModelBinder());
         }
         private void Session_Start(object sender, EventArgs e)
         {
@@ -138,6 +140,37 @@ namespace IdentitySample
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
             Response.Cache.SetNoStore();
+
+            CultureInfo info = new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+            info.DateTimeFormat.ShortDatePattern = "MM/dd/yyyy";
+            System.Threading.Thread.CurrentThread.CurrentCulture = info;
         }
+        //public class MyDateTimeModelBinder : DefaultModelBinder
+        //{
+        //    public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        //    {
+        //        var displayFormat = bindingContext.ModelMetadata.DisplayFormatString;
+        //        var value = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
+
+        //        if (!string.IsNullOrEmpty(displayFormat) && value != null)
+        //        {
+        //            DateTime date;
+        //            displayFormat = displayFormat.Replace("{0:", string.Empty).Replace("}", string.Empty);
+        //            // use the format specified in the DisplayFormat attribute to parse the date
+        //            if (DateTime.TryParseExact(value.AttemptedValue, displayFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+        //            {
+        //                return date;
+        //            }
+        //            else
+        //            {
+        //                bindingContext.ModelState.AddModelError(
+        //                    bindingContext.ModelName,
+        //                    string.Format("{0} is an invalid date format", value.AttemptedValue)
+        //                );
+        //            }
+        //        }
+        //        return base.BindModel(controllerContext, bindingContext);
+        //    }
+        //}
     }
 }

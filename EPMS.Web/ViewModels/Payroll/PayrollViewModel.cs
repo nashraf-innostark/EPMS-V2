@@ -1,4 +1,6 @@
-﻿using EPMS.Web.Models;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using EPMS.Web.Models;
 
 namespace EPMS.Web.ViewModels.Payroll
 {
@@ -16,5 +18,7 @@ namespace EPMS.Web.ViewModels.Payroll
         public double Deduction1 { get; set; }
         public double Deduction2 { get; set; }
         public double Total { get; set; }
+        public string Date { get; set; }
+        public long Id { get; set; }
     }
 }

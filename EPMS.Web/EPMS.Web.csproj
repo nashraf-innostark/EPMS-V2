@@ -367,6 +367,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobTitle.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HR\Payroll.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Payroll.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Payroll.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Payroll.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\Request.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -376,6 +386,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Request.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Tasks.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tasks.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Tasks.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tasks.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -780,6 +800,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\favicon.ico" />
+    <Content Include="Images\Gallery\ajax_loader.gif" />
     <Content Include="Images\Gallery\download-brochure.png" />
     <Content Include="Images\News\35.jpg" />
     <Content Include="Images\News\Altaf-Hussain-Arabi-meme.jpg" />
@@ -1853,6 +1874,7 @@
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
+    <Content Include="Scripts\plugins\jquery.blockUI.js" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -1927,6 +1949,23 @@
     <EmbeddedResource Include="Resources\HR\Department.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Department.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Payroll.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Payroll.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Payroll.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Payroll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Request.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Tasks.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tasks.ar.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -2275,10 +2314,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Request.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HR\Request.resx">
+    <EmbeddedResource Include="Resources\HR\Tasks.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Request.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+      <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

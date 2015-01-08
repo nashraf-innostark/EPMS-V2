@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
 
 @{
-    ViewBag.Title = "Payroll Page";
+    ViewBag.Title = EPMS.Web.Resources.HR.Payroll.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -14,14 +14,14 @@
             </a>
         </li>
         <li>
-            Payroll List
+            @EPMS.Web.Resources.HR.Payroll.PayrollList
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Payroll List</small></h2>
+    <h2><small>@EPMS.Web.Resources.HR.Payroll.PayrollList</small></h2>
 </header>
 <!-- Page heading ends -->
 

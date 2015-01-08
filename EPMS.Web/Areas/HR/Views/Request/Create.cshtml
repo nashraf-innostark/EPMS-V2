@@ -101,7 +101,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Request.RequestDate, new { @class = "datepickerGregorian",@readonly="readonly" })
+                    @Html.TextBoxFor(model => model.Request.RequestDate, new { @class = "datepickerGregorian"})
                     @Html.ValidationMessageFor(model => model.Request.RequestDate)
                 </div>
             </div>
@@ -241,7 +241,7 @@
     <div id="requestReplyControls" class="requestReply" style="display: none">
         <header>
             <i class="icon-big-notepad"></i>
-            <h2><small>Request Reply </small></h2>
+            <h2><small>@EPMS.Web.Resources.HR.Request.RequestReply</small></h2>
         </header>
 
         <div class="container-fluid">
@@ -377,7 +377,7 @@
             $('.RequestDescDisable').attr('disabled', true);
         }
 
-            //If user is Admin, Disable Request and enable Reply Fields
+        //If user is Admin, Disable Request and enable Reply Fields
         else if ($("#UserRole").val() == "Admin") {
             $('.request .toBeReadOnly:input').attr('readonly', true);
             $('.request .toBeDisabled:input').attr('disabled', true);
@@ -426,7 +426,7 @@
         var loanAmount = parseInt($('#LoanAmount').val());
         var installmentAmount = parseInt($('#InstallmentAmount').val());
         if (installmentAmount < loanAmount) {
-            $('#NumberOfMonths').val(loanAmount / installmentAmount);
+            $('#NumberOfMonths').val(Math.ceil(loanAmount / installmentAmount));
         } else {
             $('#InstallmentAmount').val('');
             $('#InstallmentAmount').attr("placeholder", "Must be<=Loan Amount");
@@ -435,7 +435,7 @@
     $('#NumberOfMonths').change(function () {
         var loanAmount = parseInt($('#LoanAmount').val());
         var numberOfMonths = parseInt($('#NumberOfMonths').val());
-        $('#InstallmentAmount').val(loanAmount / numberOfMonths);
+        $('#InstallmentAmount').val(Math.ceil(loanAmount / numberOfMonths));
     });
     //END INSTALLMENT CALCULATIONS
     // REPLY SCRIPTS
@@ -452,7 +452,7 @@
         var loanAmount = parseInt($('#LoanAmountREPLY').val());
         var installmentAmount = parseInt($('#InstallmentAmountREPLY').val());
         if (installmentAmount < loanAmount) {
-            $('#NumberOfMonthsREPLY').val(loanAmount / installmentAmount);
+            $('#NumberOfMonthsREPLY').val(Math.ceil(loanAmount / installmentAmount));
         } else {
             $('#InstallmentAmountREPLY').val('');
             $('#InstallmentAmountREPLY').attr("placeholder", "Must be<=Loan Amount");
@@ -461,7 +461,7 @@
     $('#NumberOfMonthsREPLY').change(function () {
         var loanAmount = parseInt($('#LoanAmountREPLY').val());
         var numberOfMonths = parseInt($('#NumberOfMonthsREPLY').val());
-        $('#InstallmentAmountREPLY').val(loanAmount / numberOfMonths);
+        $('#InstallmentAmountREPLY').val(Math.ceil(loanAmount / numberOfMonths));
     });
     $('#LoanAmountREPLY').change(function () {
         var loanAmountReply = parseInt($('#LoanAmountREPLY').val());
@@ -498,15 +498,15 @@
             DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
 
         } else {
-            DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
+            $("#monetaryRequestReplyControls").hide();
             if ('@Model.RequestReply.IsReplied' == 'False') {
-            $('#LoanAmountREPLY').val('');
-            $('#LoanDateArREPLY').val('');
-            $('#LoanDateEnREPLY').val('');
-            $('#InstallmentAmountREPLY').val('');
-            $('#NumberOfMonthsREPLY').val('');
-            $('#FirstInstallmentDateREPLY').val('');
-            $('#LastInstallmentDateREPLY').val('');}
+                $('#LoanAmountREPLY').val('');
+                $('#LoanDateArREPLY').val('');
+                $('#LoanDateEnREPLY').val('');
+                $('#InstallmentAmountREPLY').val('');
+                $('#NumberOfMonthsREPLY').val('');
+                $('#FirstInstallmentDateREPLY').val('');
+                $('#LastInstallmentDateREPLY').val('');}
         }
     }
 </script>

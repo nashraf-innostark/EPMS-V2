@@ -68,7 +68,7 @@ namespace IdentitySample.Controllers
         public ActionResult Index()
         {
             RoleViewModel roleViewModel = new RoleViewModel();
-            roleViewModel.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).ToList();
+            roleViewModel.Roles = RoleManager.Roles.ToList();
             return View(roleViewModel);
         }
 

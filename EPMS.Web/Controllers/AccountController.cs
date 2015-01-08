@@ -21,6 +21,7 @@ using EPMS.Web.ViewModels.Admin;
 using System.Net;
 using EPMS.Web.ModelMappers;
 using EPMS.Models.ModelMapers;
+using EPMS.WebBase.Mvc;
 
 namespace IdentitySample.Controllers
 {
@@ -239,8 +240,7 @@ namespace IdentitySample.Controllers
         #region Register
         //
         // GET: /Account/Register
-        [AllowAnonymous]
-        [EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
+        [SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
             RegisterViewModel oResult = new RegisterViewModel();
@@ -381,6 +381,9 @@ namespace IdentitySample.Controllers
             // Add new User
             if (ModelState.IsValid)
             {
+                // TODO:Check # of Users that Admin can create
+
+                // Check if Employee has already assigned
                 var empId = AspNetUserService.GetAllUsers().Select(x => x.EmployeeId);
                 if (empId.Contains(model.SelectedEmployee))
                 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -49,7 +50,16 @@ namespace EPMS.Implementation.Services
             PayrollResponse response = new PayrollResponse();
             if (id != null)
             {
+                response.IsError = true;
                 response.Employee = repository.Find((long)id);
+                var empJobTitleHistory = response.Employee.EmployeeJobHistories.FirstOrDefault(x => x.RecCreatedDate <= currTime);
+                var jobTitleHistory = response.Employee.JobTitle.JobTitleHistories.OrderByDescending(x=>x.RecCreatedDate).FirstOrDefault(x => empJobTitleHistory != null && ((x.JobTitleId == empJobTitleHistory.JobTitleId) && (x.RecCreatedDate <= currTime)));
+                if (jobTitleHistory != null)
+                {
+                    response.Employee.JobTitle.JobTitleNameE = jobTitleHistory.JobTitle.JobTitleNameE;
+                    response.Employee.JobTitle.BasicSalary = jobTitleHistory.BasicSalary;
+                    response.IsError = false;
+                }
                 response.Allowance = allowanceRepository.FindForAllownce((long) id, currTime);
                 response.Requests = requestRepository.GetAllMonetaryRequests(currTime, (long)id);
                 return response;

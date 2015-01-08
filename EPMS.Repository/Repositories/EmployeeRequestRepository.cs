@@ -63,6 +63,7 @@ namespace EPMS.Repository.Repositories
             int fromRow = searchRequset.iDisplayStart;
             int toRow = searchRequset.iDisplayStart+searchRequset.iDisplayLength;
             Expression<Func<EmployeeRequest, bool>> query;
+            IEnumerable<EmployeeRequest> employeeRequests;
             if (searchRequset.Requester == "Admin")
             {
                 query =
@@ -79,14 +80,21 @@ namespace EPMS.Repository.Repositories
                 s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.RequestTopic.Contains(searchRequset.SearchString))) && 
                     (s.EmployeeId.Equals(employeeId)));
             }
-            
 
-            IEnumerable<EmployeeRequest> employeeRequests = searchRequset.sSortDir_0=="asc" ?
+            if (searchRequset.iSortCol_0 == 0)
+            {
+                employeeRequests = DbSet
+                .Where(query).OrderByDescending(x=>x.RequestDate).Skip(fromRow).Take(toRow).ToList();
+            }
+            else
+            {
+                employeeRequests = searchRequset.sSortDir_0 == "asc" ?
                 DbSet
                 .Where(query).OrderBy(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList()
-                                           :
-                                           DbSet
-                                           .Where(query).OrderByDescending(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList();
+                :
+                DbSet
+                .Where(query).OrderByDescending(employeeRequestClause[searchRequset.EmployeeRequestByColumn]).Skip(fromRow).Take(toRow).ToList();
+            }
             return new EmployeeRequestResponse { EmployeeRequests = employeeRequests, TotalCount = DbSet.Count(query) };
         }
     }

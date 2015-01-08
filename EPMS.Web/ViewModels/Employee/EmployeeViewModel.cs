@@ -10,10 +10,12 @@ namespace EPMS.Web.ViewModels.Employee
         {
             Employee = new Models.Employee();
             Allowance = new Allowance();
+            OldAllowance = new Allowance();
             SearchRequest = new EmployeeSearchRequset();
         }
         public Models.Employee Employee { get; set; }
         public Models.Allowance Allowance { get; set; }
+        public Models.Allowance OldAllowance { get; set; }
 
         public IEnumerable<EPMS.Models.DomainModels.Department> DepartmentList { get; set; }
         public IEnumerable<EPMS.Models.DomainModels.JobTitle> JobTitleList { get; set; }

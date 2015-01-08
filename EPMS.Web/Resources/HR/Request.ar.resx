@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreatePageTitle" xml:space="preserve">
-    <value>Create Request Ar</value>
+    <value>إنشاء طلب</value>
+  </data>
+  <data name="CreateRequest" xml:space="preserve">
+    <value>اضافة وظيفة جديدة</value>
   </data>
   <data name="DeclineBtn" xml:space="preserve">
     <value>عدم الموافقة</value>
@@ -133,28 +136,28 @@
     <value>اسم الموظف</value>
   </data>
   <data name="FirstInstallmentDate" xml:space="preserve">
-    <value>First Installment Date Ar</value>
+    <value>تاريخ القسط الأول</value>
   </data>
   <data name="InstallmentAmount" xml:space="preserve">
-    <value>Installment Amount Ar</value>
+    <value>دفعات الشهرية</value>
   </data>
   <data name="Label" xml:space="preserve">
     <value>قائمة الطلبات</value>
   </data>
   <data name="LastInstallmentDate" xml:space="preserve">
-    <value>Last Installment Date Ar</value>
+    <value>تاريخ القسط الأخير</value>
   </data>
   <data name="LoanAmount" xml:space="preserve">
-    <value>Loan Amount Ar</value>
+    <value>مقدار القرض</value>
   </data>
   <data name="LoanDateGr" xml:space="preserve">
-    <value>Loan Date (Gregorian) Ar</value>
+    <value>تاريخ القرض</value>
   </data>
   <data name="LoanDateHj" xml:space="preserve">
-    <value>Loan Date (Hijri) Ar</value>
+    <value>تاريخ القرض (الهجري)</value>
   </data>
   <data name="Monetary" xml:space="preserve">
-    <value>Monetary Ar</value>
+    <value>نقدي</value>
   </data>
   <data name="NumberOfMonths" xml:space="preserve">
     <value>لكم شهر</value>
@@ -174,6 +177,12 @@
   <data name="RequestDesc" xml:space="preserve">
     <value>التفاصيل</value>
   </data>
+  <data name="Requests" xml:space="preserve">
+    <value>طلبات</value>
+  </data>
+  <data name="RequestReply" xml:space="preserve">
+    <value>طلب رد</value>
+  </data>
   <data name="RequestTopic" xml:space="preserve">
     <value>عنوان الطلب</value>
   </data>
@@ -181,6 +190,18 @@
     <value>حالة الطلب</value>
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
-    <value>Update Request Ar</value>
+    <value>طلب التحديث</value>
+  </data>
+  <data name="RequestAccepted" xml:space="preserve">
+    <value>وقد تم قبول الطلب، الآن أنت غير قادر على إجراء تغييرات في هذا الطلب.</value>
+  </data>
+  <data name="RequestCreated" xml:space="preserve">
+    <value>طلب قد تم إنشاؤها.</value>
+  </data>
+  <data name="RequestDeleted" xml:space="preserve">
+    <value>طلب قد تم حذفه.</value>
+  </data>
+  <data name="RequestReplied" xml:space="preserve">
+    <value>طلب تم الرد.</value>
   </data>
 </root>

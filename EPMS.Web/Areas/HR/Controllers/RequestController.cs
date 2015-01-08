@@ -119,7 +119,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
             }
             if (requestViewModel.RequestDetail.IsApproved)
-                ViewBag.MessageVM = new MessageViewModel { Message = "The request has been accepted, now you are unable to make changes in this request.", IsInfo = true };
+                ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.Request.RequestAccepted, IsInfo = true };
             return View(requestViewModel);
         }
         // Post: HR/Request/Create
@@ -144,7 +144,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "Request has been replied.",
+                        Message = Resources.HR.Request.RequestReplied,
                         IsUpdated = true
                     };
                 }
@@ -169,7 +169,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         requestViewModel.RequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
                         requestViewModel.RequestDetail.RecLastUpdatedDt = DateTime.Now;
                         employeeRequestService.AddRequestDetail(requestViewModel.RequestDetail.CreateFromClientToServer());
-                        TempData["message"] = new MessageViewModel { Message = "Request has been created.", IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestCreated, IsSaved = true };
                     }
                 }
                 return RedirectToAction("Index","Request");
@@ -187,7 +187,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 bool deleted = employeeRequestService.DeleteRequest((long)id);
                 if (deleted)
                 {
-                    TempData["message"] = new MessageViewModel { Message = "The request has been deleted.", IsInfo = true };
+                    TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestDeleted, IsInfo = true };
                 }
             }
             return RedirectToAction("Index");
