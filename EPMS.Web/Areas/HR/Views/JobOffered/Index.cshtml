@@ -62,7 +62,7 @@
                                 else
                                 {
                                     <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new { id = item.JobOfferedId }) </td>
-                                    <td>@item.JobTitleDescE.Replace("<", "&lt").Replace(">", "&gt")</td>
+                                    <td>@item.JobTitleDescE</td>
                                 }
                                 <td>@if (item.ShowBasicSalary) { @item.BasicSalary }</td>
                                 <td>@item.NoOfPosts</td>
