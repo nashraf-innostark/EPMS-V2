@@ -1,9 +1,12 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Orders;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -24,12 +27,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
         // GET: HR/Orders
         public ActionResult Index()
         {
-            return View(new OrdersListViewModel());
+            OrdersListViewModel viewModel = new OrdersListViewModel();
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Index(OrdersSearchRequest searchRequest)
         {
-            return View(new OrdersListViewModel());
+            OrdersListViewModel viewModel = new OrdersListViewModel();
+            return View(viewModel);
         }
         public ActionResult Create(long? id)
         {
@@ -48,9 +53,51 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Create(OrdersListViewModel viewModel)
+        public ActionResult Create(OrdersCreateViewModel viewModel)
         {
-            return View(new OrdersCreateViewModel());
+            if (ModelState.IsValid)
+            {
+                if (viewModel.Orders.OrderId > 0)
+                {
+                    // Update Case
+                    viewModel.Orders.RecLastUpdatedBy = User.Identity.GetUserId();
+                    viewModel.Orders.RecLastUpdatedDt = DateTime.Now;
+                    var orderToUpdate = viewModel.Orders.CreateFromClientToServer();
+                    if (OrdersService.UpdateOrder(orderToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Order has been Updated",
+                            IsSaved = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    // Add Case
+                    viewModel.Orders.OrderDate = DateTime.Now;
+                    viewModel.Orders.CustomerId = Convert.ToInt64(User.Identity.GetUserId());
+                    viewModel.Orders.RecCreatedBy = User.Identity.GetUserId();
+                    viewModel.Orders.RecCreatedDt = DateTime.Now;
+                    var orderToSave = viewModel.Orders.CreateFromClientToServer();
+                    if (OrdersService.AddOrder(orderToSave))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Order has been Added",
+                            IsSaved = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "Please fill all the fields correctly",
+                IsSaved = true
+            };
+            return View(viewModel);
         }
 
         #endregion

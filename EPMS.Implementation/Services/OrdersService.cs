@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -27,6 +24,49 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+
+        #region Public
+
+        public bool AddOrder(Order order)
+        {
+            try
+            {
+                Repository.Add(order);
+                Repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateOrder(Order order)
+        {
+            try
+            {
+                Repository.Update(order);
+                Repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public void DeleteOrder(Order order)
+        {
+            try
+            {
+                Repository.Delete(order);
+                Repository.SaveChanges();
+            }
+            catch (Exception exception)
+            {
+                throw;
+            }
+        }
         public OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest)
         {
             return Repository.GetAllOrders(searchRequest);
@@ -41,5 +81,7 @@ namespace EPMS.Implementation.Services
         {
             return Repository.GetOrderByOrderId(orderId);
         }
+
+        #endregion
     }
 }
