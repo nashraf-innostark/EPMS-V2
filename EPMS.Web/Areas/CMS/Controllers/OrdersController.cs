@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Orders;
 using Microsoft.AspNet.Identity;
@@ -33,8 +36,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [HttpPost]
         public ActionResult Index(OrdersSearchRequest searchRequest)
         {
-            OrdersListViewModel viewModel = new OrdersListViewModel();
-            return View(viewModel);
+            searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
+            searchRequest.SearchString = Request["search"];
+            var ordersList = OrdersService.GetAllOrders(searchRequest);
+            IEnumerable<Order> orders = ordersList.Orders.Select(o => o.CreateFromServerToClient()).ToList();
+            OrdersListViewModel viewModel = new OrdersListViewModel
+            {
+                aaData = orders,
+                iTotalRecords = Convert.ToInt32(ordersList.TotalRecords),
+                iTotalDisplayRecords = Convert.ToInt32(ordersList.TotalDisplayRecords),
+                SearchRequest = searchRequest
+            };
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Create(long? id)
         {

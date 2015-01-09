@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.IServices
         OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest);
         IEnumerable<Order> GetOrdersByCustomerId(long customerId);
         Order GetOrderByOrderId(long orderId);
+        OrdersLVResponse GetOrderForListView(OrdersSearchRequest searchRequest);
         bool AddOrder(Order order);
         bool UpdateOrder(Order order);
         void DeleteOrder(Order order);

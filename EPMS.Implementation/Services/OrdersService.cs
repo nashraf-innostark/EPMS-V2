@@ -10,7 +10,7 @@ namespace EPMS.Implementation.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly IOrdersRepository Repository;
+        private readonly IOrdersRepository OrdersRepository;
         
         #region Constructor
 
@@ -20,7 +20,7 @@ namespace EPMS.Implementation.Services
         /// <param name="repository"></param>
         public OrdersService(IOrdersRepository repository)
         {
-            Repository = repository;
+            OrdersRepository = repository;
         }
 
         #endregion
@@ -31,8 +31,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                Repository.Add(order);
-                Repository.SaveChanges();
+                OrdersRepository.Add(order);
+                OrdersRepository.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -45,8 +45,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                Repository.Update(order);
-                Repository.SaveChanges();
+                OrdersRepository.Update(order);
+                OrdersRepository.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -59,8 +59,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                Repository.Delete(order);
-                Repository.SaveChanges();
+                OrdersRepository.Delete(order);
+                OrdersRepository.SaveChanges();
             }
             catch (Exception exception)
             {
@@ -69,17 +69,24 @@ namespace EPMS.Implementation.Services
         }
         public OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest)
         {
-            return Repository.GetAllOrders(searchRequest);
+            return OrdersRepository.GetAllOrders(searchRequest);
         }
 
         public IEnumerable<Order> GetOrdersByCustomerId(long customerId)
         {
-            return Repository.GetOrdersByCustomerId(customerId);
+            return OrdersRepository.GetOrdersByCustomerId(customerId);
         }
 
         public Order GetOrderByOrderId(long orderId)
         {
-            return Repository.GetOrderByOrderId(orderId);
+            return OrdersRepository.GetOrderByOrderId(orderId);
+        }
+
+        public OrdersLVResponse GetOrderForListView(OrdersSearchRequest searchRequest)
+        {
+            OrdersLVResponse response = new OrdersLVResponse();
+            response.Order = OrdersRepository.GetAllOrders(searchRequest);
+            return response;
         }
 
         #endregion
