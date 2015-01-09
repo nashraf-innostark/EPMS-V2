@@ -241,6 +241,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
+    <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
@@ -467,6 +469,8 @@
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
@@ -1907,7 +1911,9 @@
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
     <Content Include="Scripts\plugins\jquery.blockUI.js" />
+    <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\CMS\Views\web.config" />
+    <Content Include="Areas\CMS\Views\Orders\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Complaint\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />

@@ -1,0 +1,84 @@
+﻿@model EPMS.Web.ViewModels.Orders.OrdersCreateViewModel
+
+@{
+    ViewBag.Title = Model.PageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/CMS/Orders/Index">
+                Orders List
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditOrdersForm", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.Orders.OrderId)
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="createdBy">Order Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Orders.OrderNo, new { @id = "OrderNumber", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Orders.OrderNo, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="description">Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.Orders.OrderDescription, new { @id = "OrderDescription", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Orders.OrderDescription, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.Orders.OrderNotes, new { @id = "OrderNotes", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Orders.OrderNotes, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">@Model.BtnText</button>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('OrderDescription');
+    CKEDITOR.replace('OrderNotes');
+</script>
