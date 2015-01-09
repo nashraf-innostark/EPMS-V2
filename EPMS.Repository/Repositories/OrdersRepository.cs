@@ -66,6 +66,12 @@ namespace EPMS.Repository.Repositories
             return new OrdersResponse { Orders = orders, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
 
+        public IEnumerable<Order> GetOrdersByCustomerId(long customerId)
+        {
+            var orders = DbSet.Where(model => model.CustomerId == customerId);
+            return orders;
+        }
+
         #endregion
     }
 }

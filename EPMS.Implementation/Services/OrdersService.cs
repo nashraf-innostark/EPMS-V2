@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
@@ -29,6 +30,11 @@ namespace EPMS.Implementation.Services
         public OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest)
         {
             return Repository.GetAllOrders(searchRequest);
+        }
+
+        public IEnumerable<Order> GetOrdersByCustomerId(long customerId)
+        {
+            return Repository.GetOrdersByCustomerId(customerId);
         }
     }
 }
