@@ -4,7 +4,6 @@
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Session["MenuKey"] = 2;
-    ViewBag.MessageVM = TempData["message"];
 }
 
 <div class="breadcrumb-container">
@@ -26,7 +25,9 @@
     <h2><small>@ViewBag.Title</small></h2>
     <h3> <small><a href="~/Account/Create">Add New User</a></small></h3>
 </header>
-
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 <div class="container-fluid">
     <form class="form-horizontal">
         <div class="row-fluid">

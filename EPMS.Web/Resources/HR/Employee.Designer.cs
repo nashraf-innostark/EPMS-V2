@@ -70,6 +70,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee has been Added.
+        /// </summary>
+        public static string AddMessage {
+            get {
+                return ResourceManager.GetString("AddMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add new Employee.
         /// </summary>
         public static string AddNew {
@@ -331,6 +340,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Problem in Saving Employee.
+        /// </summary>
+        public static string ProblemSaving {
+            get {
+                return ResourceManager.GetString("ProblemSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request History.
         /// </summary>
         public static string ReqHistory {
@@ -345,6 +363,15 @@ namespace EPMS.Web.Resources.HR {
         public static string TelephoneNumber {
             get {
                 return ResourceManager.GetString("TelephoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee has been Updated.
+        /// </summary>
+        public static string UpdateMessage {
+            get {
+                return ResourceManager.GetString("UpdateMessage", resourceCulture);
             }
         }
     }
