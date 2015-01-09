@@ -14,5 +14,6 @@ namespace EPMS.Web.Models
         public string OrderNotes { get; set; }
         public DateTime? OrderDate { get; set; }
         public string Attachment { get; set; }
+        public long CustomerId { get; set; }
     }
 }

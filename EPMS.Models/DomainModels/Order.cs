@@ -11,7 +11,9 @@ namespace EPMS.Models.DomainModels
         public string OrderNotes { get; set; }
         public DateTime? OrderDate { get; set; }
         public string Attachment { get; set; }
+        public long CustomerId { get; set; }
 
         public virtual ICollection<Complaint> Complaints { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
