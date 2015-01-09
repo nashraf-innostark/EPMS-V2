@@ -1,0 +1,80 @@
+﻿@model EPMS.Web.ViewModels.Orders.OrdersViewModel
+
+@{
+    ViewBag.Title = "Create New Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/Orders/Index">
+                Orders List
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+
+<form class="form-horizontal" id="validation_form">
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="createdBy">Order Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="createdBy" type="text" value="auto generated">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="description">Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="description" type="text" name="CLK Editor" placeholder="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformation" type="text" name="CLK Editor" placeholder="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">Request A Quote</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('description');
+    CKEDITOR.replace('ExtraInformation');
+</script>
