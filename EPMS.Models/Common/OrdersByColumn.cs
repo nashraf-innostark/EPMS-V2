@@ -2,6 +2,7 @@
 {
     public enum OrdersByColumn
     {
-        OrderNumber = 1
+        OrderNumber = 1,
+        ClientName = 2
     }
 }

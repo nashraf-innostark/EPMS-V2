@@ -35,6 +35,7 @@
 @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditOrdersForm", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Orders.OrderId)
+    @Html.HiddenFor(model => model.Orders.Attachment)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">

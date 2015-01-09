@@ -37,7 +37,8 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Customer = source.Customer.CreateFrom()
             };
         }
     }
