@@ -119,7 +119,7 @@
     <Compile Include="DomainModels\JobTitle.cs" />
     <Compile Include="DomainModels\JobTitleHistory.cs" />
     <Compile Include="DomainModels\Notification.cs" />
-    <Compile Include="DomainModels\Orders.cs" />
+    <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>

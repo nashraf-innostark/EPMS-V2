@@ -84,5 +84,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<EmployeeJobHistory> EmployeeJobHistory { get; set; }
         public DbSet<JobOffered> JobsOffered { get; set; }
         public DbSet<JobApplicant> JobApplicants { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }

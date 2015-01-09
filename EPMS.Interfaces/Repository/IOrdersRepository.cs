@@ -2,7 +2,7 @@
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IOrdersRepository : IBaseRepository<Orders, int>
+    public interface IOrdersRepository : IBaseRepository<Order, int>
     {
     }
 }

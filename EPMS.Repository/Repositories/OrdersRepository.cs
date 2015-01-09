@@ -2,11 +2,10 @@
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using Microsoft.Practices.Unity;
-using EPMS.Repository.BaseRepository;
 
 namespace EPMS.Repository.Repositories
 {
-    class OrdersRepository : BaseRepository<Orders>, IOrdersRepository
+    class OrdersRepository : BaseRepository<Order>, IOrdersRepository
     {
         #region Constructor
         /// <summary>
@@ -20,7 +19,7 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<Orders> DbSet
+        protected override IDbSet<Order> DbSet
         {
             get { return db.Orders; }
         }
