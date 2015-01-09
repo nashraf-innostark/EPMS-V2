@@ -122,7 +122,7 @@
                 <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.ShowBasicSalary</label>
             </div>
             <div class="span9 span-inset">
-                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                <div data-on-label="Show" data-off-label="Hide" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
                     @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "ShowBasicSalary" })
                 </div>
             </div>
@@ -143,7 +143,7 @@
                 <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.IsOpen</label>
             </div>
             <div class="span9 span-inset">
-                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                <div data-on-label="Open" data-off-label="Close" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
                     @Html.CheckBoxFor(model => model.JobOffered.IsOpen, new { @id = "IsOpen" })
                 </div>
             </div>
@@ -196,8 +196,9 @@
             var depId = $(this).val();
             if (depId > 0) {
                 $('#SearchRequest_JobId').empty();
+                var url = siteUrl + "/HR/JobOffered/GetJobTitles";
                 $.ajax({
-                    url: siteUrl + "GetJobTitles",
+                    url: url,
                     type: 'GET',
                     dataType: "json",
                     data: {
