@@ -168,7 +168,7 @@ namespace IdentitySample.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
 
         }
@@ -210,8 +210,8 @@ namespace IdentitySample.Controllers
                     case SignInStatus.Success:
                         {
                             SetUserPermissions(user.Email);
-                            //return RedirectToAction("Index", "Admin");
-                            return RedirectToLocal(returnUrl);
+                            return RedirectToAction("Index", "Dashboard");
+                            //return RedirectToLocal(returnUrl);
                         }
                     case SignInStatus.LockedOut:
                         return View("Lockout");
