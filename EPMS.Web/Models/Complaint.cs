@@ -10,6 +10,7 @@ namespace EPMS.Web.Models
         public long OrderId { get; set; }
         public string Topic { get; set; }
         public string Description { get; set; }
+        public string ComplaintDesc { get; set; }
         public string Reply { get; set; }
         public bool IsReplied { get; set; }
         public int Status { get; set; }//1=resolved,2=in progress

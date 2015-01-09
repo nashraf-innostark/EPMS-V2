@@ -37,10 +37,13 @@
 {
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     @Html.HiddenFor(model => model.Complaint.ComplaintId)
+    @Html.HiddenFor(model => model.Complaint.CustomerId)
+    @Html.HiddenFor(model => model.Complaint.DepartmentId)
+    @Html.HiddenFor(model => model.Complaint.OrderId)
     @Html.HiddenFor(model => model.Complaint.RecCreatedBy)
     @Html.HiddenFor(model => model.Complaint.RecCreatedDt)
     @Html.HiddenFor(model => model.Complaint.IsReplied)
-    @Html.HiddenFor(model => model.ComplaintDesc)
+    @Html.HiddenFor(model => model.Complaint.ComplaintDesc)
 
     <div class="container-fluid">
 
@@ -112,7 +115,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Complaint.Description, new { @class = "toBeDisabled", @id = "DescriptionCK" })
+                    @Html.TextAreaFor(model => model.Complaint.Description, new { @class = "toBeDisabled", @id = "DescriptionCK" })
                 </div>
             </div>
         </div>
@@ -122,7 +125,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Complaint.Reply, new { @class = "toBeDisabled", @id = "ReplyCK" })
+                    @Html.TextAreaFor(model => model.Complaint.Reply, new { @class = "toBeDisabled", @id = "ReplyCK" })
                 </div>
             </div>
         </div>
@@ -158,6 +161,9 @@
         else if ($("#UserRole").val() == "Admin") {
             $('.toBeReadOnly:input').attr('readonly', true);
             $('#DescriptionCK').attr('disabled', true);
+        }
+        else if (parseInt('@Model.Complaint.ComplaintId') == 0) {
+            $('#ReplyCK').attr('disabled', true);
         }
     });
 
