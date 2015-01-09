@@ -61,7 +61,16 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ComplaintsList.
+        ///   Looks up a localized string similar to Client Name.
+        /// </summary>
+        public static string ClientName {
+            get {
+                return ResourceManager.GetString("ClientName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complaints List.
         /// </summary>
         public static string ComplaintsList {
             get {
@@ -72,18 +81,90 @@ namespace EPMS.Web.Resources.CMS {
         /// <summary>
         ///   Looks up a localized string similar to New Complaint.
         /// </summary>
-        public static string CreatePageTitle {
+        public static string CreatePageHeading {
             get {
-                return ResourceManager.GetString("CreatePageTitle", resourceCulture);
+                return ResourceManager.GetString("CreatePageHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        public static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complaint.
+        /// </summary>
+        public static string PageTitle {
+            get {
+                return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reply.
+        /// </summary>
+        public static string Reply {
+            get {
+                return ResourceManager.GetString("Reply", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Reply Complaint.
         /// </summary>
-        public static string ReplyPageTitle {
+        public static string ReplyPageHeading {
             get {
-                return ResourceManager.GetString("ReplyPageTitle", resourceCulture);
+                return ResourceManager.GetString("ReplyPageHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string SubmitBtn {
+            get {
+                return ResourceManager.GetString("SubmitBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic.
+        /// </summary>
+        public static string Topic {
+            get {
+                return ResourceManager.GetString("Topic", resourceCulture);
             }
         }
     }
