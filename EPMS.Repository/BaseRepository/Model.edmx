@@ -290,6 +290,7 @@
           <Property Name="OrderNotes" Type="nvarchar(max)" />
           <Property Name="OrderDate" Type="datetime" />
           <Property Name="Attachment" Type="nvarchar" MaxLength="400" />
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
@@ -585,6 +586,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RequestDetails_EmployeeRequests">
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="1" />
           <End Role="RequestDetails" Type="Self.RequestDetails" Multiplicity="*" />
@@ -706,6 +719,10 @@
           <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Notification" EntitySet="Notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -1255,7 +1272,6 @@
           </AssociationSet>
           <EntitySet Name="Complaints" EntityType="EPMSModel.Complaint" />
           <EntitySet Name="Customers" EntityType="EPMSModel.Customer" />
-          <EntitySet Name="Orders" EntityType="EPMSModel.Order" />
           <AssociationSet Name="FK_AspNetUsers_Customer" Association="EPMSModel.FK_AspNetUsers_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -1268,9 +1284,14 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
+          <EntitySet Name="Orders" EntityType="EPMSModel.Order" />
           <AssociationSet Name="FK_Complaint_Orders" Association="EPMSModel.FK_Complaint_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="EPMSModel.FK_Orders_Orders">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="EmployeeJobHistory">
@@ -1368,18 +1389,7 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="OrderDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="Attachment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
+          <NavigationProperty Name="Orders" Relationship="EPMSModel.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
         </EntityType>
         <Association Name="FK_AspNetUsers_Customer">
           <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -1417,6 +1427,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="Attachment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
+        </EntityType>
         <Association Name="FK_Complaint_Orders">
           <End Type="EPMSModel.Order" Role="Order" Multiplicity="1" />
           <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
@@ -1426,6 +1450,18 @@
             </Principal>
             <Dependent Role="Complaint">
               <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1752,6 +1788,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="EPMSModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="Attachment" ColumnName="Attachment" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="OrderNotes" ColumnName="OrderNotes" />
@@ -1821,11 +1858,12 @@
         <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="10.125" />
         <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="0.75" PointY="12.75" />
-        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="0.75" PointY="9.625" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Customer" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
+        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="3" PointY="6" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_Orders_Orders" />
       </Diagram>
     </Diagrams>
   </Designer>

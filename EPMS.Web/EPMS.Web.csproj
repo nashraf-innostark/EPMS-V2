@@ -241,7 +241,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
+    <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
+    <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -274,6 +276,7 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
     <Compile Include="ModelMappers\ComplaintMapper.cs" />
+    <Compile Include="ModelMappers\CustomerMapper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
@@ -287,10 +290,12 @@
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
@@ -330,6 +335,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Complaint.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Customer.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Customer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -442,6 +457,7 @@
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
     <Compile Include="ViewModels\Complaint\ComplaintViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
@@ -453,6 +469,8 @@
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
@@ -1893,9 +1911,12 @@
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
     <Content Include="Scripts\plugins\jquery.blockUI.js" />
+    <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\CMS\Views\web.config" />
+    <Content Include="Areas\CMS\Views\Orders\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Complaint\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -1922,6 +1943,14 @@
     <EmbeddedResource Include="Resources\CMS\Complaint.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Complaint.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Customer.ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Customer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">

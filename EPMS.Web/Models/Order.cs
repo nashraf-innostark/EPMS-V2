@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Web;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Web.Models
 {
     public class Order
     {
@@ -12,8 +15,5 @@ namespace EPMS.Models.DomainModels
         public DateTime? OrderDate { get; set; }
         public string Attachment { get; set; }
         public long CustomerId { get; set; }
-
-        public virtual ICollection<Complaint> Complaints { get; set; }
-        public virtual Customer Customer { get; set; }
     }
 }
