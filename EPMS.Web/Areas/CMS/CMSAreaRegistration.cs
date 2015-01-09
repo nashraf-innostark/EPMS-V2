@@ -17,7 +17,7 @@ namespace EPMS.Web.Areas.CMS
             context.MapRoute(
                 "CMS_default",
                 "CMS/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { id = UrlParameter.Optional }
             );
         }
     }
