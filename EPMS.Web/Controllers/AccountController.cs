@@ -243,11 +243,11 @@ namespace IdentitySample.Controllers
         [SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
-            RegisterViewModel oResult = new RegisterViewModel();
+            RegisterViewModel Result = new RegisterViewModel();
             if (!string.IsNullOrEmpty(userName))
             {
                 AspNetUser userToEdit = UserManager.FindByName(userName);
-                oResult = new RegisterViewModel
+                Result = new RegisterViewModel
                 {
                     UserId = userToEdit.Id,
                     SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
@@ -257,16 +257,15 @@ namespace IdentitySample.Controllers
                     //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                oResult.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
-                oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-
-                return View(oResult);
+                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
+                Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                return View(Result);
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            oResult.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
-            oResult.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
+            Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
 
-            return View(oResult);
+            return View(Result);
         }
 
 

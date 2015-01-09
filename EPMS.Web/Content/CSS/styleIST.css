@@ -1,7 +1,10 @@
 ﻿.select2me {
     width: 128% !important;
 }
-.required {
+.required{
+    color: #e02222;
+}
+.Error{
     color: #e02222;
 }
 .datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .PassportExpiryDateAr{
