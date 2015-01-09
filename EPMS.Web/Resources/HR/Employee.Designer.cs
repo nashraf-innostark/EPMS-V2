@@ -313,6 +313,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string NameIndex {
+            get {
+                return ResourceManager.GetString("NameIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nationality.
         /// </summary>
         public static string Nationality {
