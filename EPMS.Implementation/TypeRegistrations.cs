@@ -13,7 +13,7 @@ namespace EPMS.Implementation
         public static void RegisterType(IUnityContainer unityContainer)
         {
             UnityConfig.UnityContainer = unityContainer;
-            EPMS.Repository.TypeRegistrations.RegisterType(unityContainer);
+            Repository.TypeRegistrations.RegisterType(unityContainer);
             unityContainer.RegisterType<IMenuRightsService, MenuRightsService>();
             unityContainer.RegisterType<ILogger, LoggerService>();
             unityContainer.RegisterType<IMenuRightsService, MenuRightsService>();
@@ -26,6 +26,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IJobOfferedService, JobOfferedService>();
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
             unityContainer.RegisterType<IJobApplicantService, JobApplicantService>();
+            unityContainer.RegisterType<IComplaintService, ComplaintService>();
         }
     }
 }
