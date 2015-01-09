@@ -12,11 +12,13 @@ namespace EPMS.Web.Models
         public string Description { get; set; }
         public string Reply { get; set; }
         public bool IsReplied { get; set; }
-        public int Status { get; set; }
+        public int Status { get; set; }//1=resolved,2=in progress
         public DateTime ComplaintDate { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+
+        public string ClientName { get; set; }
     }
 }

@@ -16,10 +16,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Constructor and Services
         private readonly IComplaintService complaintService;
         private readonly IAspNetUserService userService;
-        public ComplaintController(IComplaintService complaintService, IAspNetUserService userService)
+        private readonly IDepartmentService departmentService;
+
+        public ComplaintController(IComplaintService complaintService, IAspNetUserService userService, IDepartmentService departmentService)
         {
             this.complaintService = complaintService;
             this.userService = userService;
+            this.departmentService = departmentService;
         }
 
         #endregion
@@ -51,6 +54,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     requestViewModel.Complaint.ComplaintDate = DateTime.Now;
                 }
+                requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
             }
             return View(requestViewModel);
         }

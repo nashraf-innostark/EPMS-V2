@@ -117,13 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ClientName" xml:space="preserve">
+    <value>اسم الشكوى</value>
+  </data>
   <data name="ComplaintsList" xml:space="preserve">
     <value>قائمة الشكاوي</value>
   </data>
-  <data name="CreatePageTitle" xml:space="preserve">
+  <data name="CreatePageHeading" xml:space="preserve">
     <value>شكواى جديدة</value>
   </data>
-  <data name="ReplyPageTitle" xml:space="preserve">
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>الادارة</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>تفاصيل</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>طلب</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>شكاوي</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>رد</value>
+  </data>
+  <data name="ReplyPageHeading" xml:space="preserve">
     <value>شكواى رد</value>
+  </data>
+  <data name="SubmitBtn" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="Topic" xml:space="preserve">
+    <value>عنوان</value>
   </data>
 </root>
