@@ -295,7 +295,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name En.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {
@@ -304,7 +304,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name Ar.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string NameA {
             get {
