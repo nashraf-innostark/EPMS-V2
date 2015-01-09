@@ -19,11 +19,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
         public ActionResult Create(long? id)
         {
+            var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
             OrdersCreateViewModel viewModel = new OrdersCreateViewModel();
             if (id != null)
             {
-                
+                viewModel.PageTitle = direction == "ltr" ? "Update Order" : "";
+                viewModel.BtnText = direction == "ltr" ? "Update Quote" : "";
+                return View(viewModel);
             }
+            viewModel.PageTitle = direction == "ltr" ? "Create New Order" : "";
+            viewModel.BtnText = direction == "ltr" ? "Request A Quote" : "";
             return View(viewModel);
         }
         [HttpPost]

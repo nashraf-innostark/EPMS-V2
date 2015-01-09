@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Orders.OrdersCreateViewModel
 
 @{
-    ViewBag.Title = "Create New Order";
+    ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a href="~/HR/Orders/Index">
+            <a href="~/CMS/Orders/Index">
                 Orders List
             </a>
         </li>
@@ -32,17 +32,18 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-
-<form class="form-horizontal" id="validation_form">
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditOrdersForm", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.Orders.OrderId)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                @*@Html.LabelFor(model=>model.Orders.OrderNo)*@
                 <label class="control-label" for="createdBy">Order Number</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="createdBy" type="text" value="auto generated">
+                    @Html.TextBoxFor(model => model.Orders.OrderNo, new { @id = "OrderNumber", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Orders.OrderNo, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -52,7 +53,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="description" type="text" name="CLK Editor" placeholder="CLK Editor">
+                    @Html.TextAreaFor(model => model.Orders.OrderDescription, new { @id = "OrderDescription", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Orders.OrderDescription, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -62,20 +64,21 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="ExtraInformation" type="text" name="CLK Editor" placeholder="CLK Editor">
+                    @Html.TextAreaFor(model => model.Orders.OrderNotes, new { @id = "OrderNotes", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Orders.OrderNotes, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">Request A Quote</button>
+                <button type="submit" class="btn">@Model.BtnText</button>
             </div>
         </div>
     </div>
-</form>
+}
 
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace('description');
-    CKEDITOR.replace('ExtraInformation');
+    CKEDITOR.replace('OrderDescription');
+    CKEDITOR.replace('OrderNotes');
 </script>

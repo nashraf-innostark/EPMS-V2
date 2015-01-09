@@ -9,7 +9,6 @@ namespace EPMS.Web.Models
     public class Order
     {
         public long OrderId { get; set; }
-        [DisplayName("Order Number")]
         public string OrderNo { get; set; }
         public string OrderDescription { get; set; }
         public string OrderNotes { get; set; }
