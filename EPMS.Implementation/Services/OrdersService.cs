@@ -36,5 +36,10 @@ namespace EPMS.Implementation.Services
         {
             return Repository.GetOrdersByCustomerId(customerId);
         }
+
+        public Order GetOrderByOrderId(long orderId)
+        {
+            return Repository.GetOrderByOrderId(orderId);
+        }
     }
 }

@@ -291,6 +291,10 @@
           <Property Name="OrderDate" Type="datetime" />
           <Property Name="Attachment" Type="nvarchar" MaxLength="400" />
           <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDt" Type="datetime" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" />
         </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
@@ -1293,7 +1297,7 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="EmployeeJobHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -1438,6 +1442,10 @@
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
           <Property Name="Attachment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
           <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
         </EntityType>
@@ -1465,7 +1473,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1788,6 +1796,10 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="EPMSModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="Attachment" ColumnName="Attachment" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
@@ -1861,10 +1873,10 @@
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Customer" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
-        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="3" PointY="5.5" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Orders" />
         <AssociationConnector Association="EPMSModel.FK_Orders_Orders" />
-      </Diagram>
+        </Diagram>
     </Diagrams>
   </Designer>
 </edmx:Edmx>

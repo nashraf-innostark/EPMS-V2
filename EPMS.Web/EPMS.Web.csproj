@@ -284,6 +284,7 @@
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\OrdersMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

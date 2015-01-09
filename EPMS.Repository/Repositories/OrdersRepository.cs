@@ -68,8 +68,13 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Order> GetOrdersByCustomerId(long customerId)
         {
-            var orders = DbSet.Where(model => model.CustomerId == customerId);
+            var orders = DbSet.Where(order => order.CustomerId == customerId);
             return orders;
+        }
+
+        public Order GetOrderByOrderId(long orderId)
+        {
+            return DbSet.FirstOrDefault(order => order.OrderId == orderId);
         }
 
         #endregion

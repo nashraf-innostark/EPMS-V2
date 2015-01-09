@@ -9,5 +9,6 @@ namespace EPMS.Interfaces.IServices
     {
         OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest);
         IEnumerable<Order> GetOrdersByCustomerId(long customerId);
+        Order GetOrderByOrderId(long orderId);
     }
 }
