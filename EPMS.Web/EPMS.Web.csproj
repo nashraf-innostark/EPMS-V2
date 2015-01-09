@@ -241,13 +241,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
+    <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\HR\Controllers\JobApplicantController.cs" />
     <Compile Include="Areas\HR\Controllers\JobOfferedController.cs" />
     <Compile Include="Areas\HR\Controllers\JobTitleController.cs" />
-    <Compile Include="Areas\HR\Controllers\OrdersController.cs" />
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
@@ -441,7 +441,8 @@
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
-    <Compile Include="ViewModels\Orders\OrdersViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
@@ -1882,9 +1883,9 @@
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
     <Content Include="Scripts\plugins\jquery.blockUI.js" />
-    <Content Include="Areas\HR\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\CMS\Views\web.config" />
-    <Content Include="Areas\HR\Views\Orders\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Orders\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -2275,7 +2276,6 @@
   <ItemGroup>
     <Folder Include="ApplicantCvs\" />
     <Folder Include="App_Data\ProfileImages\" />
-    <Folder Include="Areas\CMS\Controllers\" />
     <Folder Include="Areas\CMS\Models\" />
     <Folder Include="Areas\CMS\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />

@@ -1,4 +1,4 @@
-﻿@model EPMS.Web.ViewModels.Orders.OrdersViewModel
+﻿@model EPMS.Web.ViewModels.Orders.OrdersCreateViewModel
 
 @{
     ViewBag.Title = "Create New Order";
@@ -37,6 +37,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
+                @*@Html.LabelFor(model=>model.Orders.OrderNo)*@
                 <label class="control-label" for="createdBy">Order Number</label>
             </div>
             <div class="span9">
