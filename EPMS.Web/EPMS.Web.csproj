@@ -807,8 +807,6 @@
     <Content Include="Images\favicon.ico" />
     <Content Include="Images\Gallery\ajax_loader.gif" />
     <Content Include="Images\Gallery\download-brochure.png" />
-    <Content Include="Images\News\35.jpg" />
-    <Content Include="Images\News\Altaf-Hussain-Arabi-meme.jpg" />
     <Content Include="Images\photon\add_new_ico%402x.png" />
     <Content Include="Images\photon\arrow_menu.png" />
     <Content Include="Images\photon\arrow_menu_exp.png" />
@@ -2284,6 +2282,7 @@
     <Folder Include="Files\PrisonerFiles\" />
     <Folder Include="Images\Employee\" />
     <Folder Include="Images\HomeSlider\" />
+    <Folder Include="Images\News\" />
     <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
