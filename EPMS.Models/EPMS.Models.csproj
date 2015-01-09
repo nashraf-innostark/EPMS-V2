@@ -101,6 +101,7 @@
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
     <Compile Include="Common\JobApplicantByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
+    <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
+    <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
   </ItemGroup>
   <ItemGroup>
