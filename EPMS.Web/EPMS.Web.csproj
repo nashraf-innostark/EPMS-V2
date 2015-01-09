@@ -242,6 +242,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -273,6 +274,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\ComplaintMapper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
@@ -285,6 +287,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
@@ -319,6 +322,16 @@
     </Compile>
     <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
       <DependentUpon>PrisonerReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Complaint.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Complaint.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Complaint.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -430,6 +443,7 @@
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
+    <Compile Include="ViewModels\Complaint\ComplaintViewModel.cs" />
     <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
@@ -1886,6 +1900,8 @@
     <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\CMS\Views\web.config" />
     <Content Include="Areas\CMS\Views\Orders\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Complaint\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -1905,6 +1921,14 @@
     <Content Include="Scripts\App\select2\release.sh" />
     <Content Include="Scripts\App\select2\select2.jquery.json" />
     <Content Include="Scripts\App\select2\select2_locale_en.js.template" />
+    <EmbeddedResource Include="Resources\CMS\Complaint.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Complaint.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Complaint.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Complaint.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
       <Generator>ResXFileCodeGenerator</Generator>

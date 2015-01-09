@@ -86,5 +86,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<JobApplicant> JobApplicants { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Complaint> Complaint { get; set; }
+        public DbSet<Customer> Customers { get; set; }
     }
 }
