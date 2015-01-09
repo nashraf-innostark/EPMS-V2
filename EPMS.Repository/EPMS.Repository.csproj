@@ -130,6 +130,7 @@
     <Compile Include="Repositories\AllowanceRepository.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
+    <Compile Include="Repositories\ComplaintRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\EmployeeJobHistoryRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />

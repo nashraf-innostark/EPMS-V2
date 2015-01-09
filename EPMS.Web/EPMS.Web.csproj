@@ -240,6 +240,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -1882,6 +1883,7 @@
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
     <Content Include="Scripts\plugins\jquery.blockUI.js" />
     <Content Include="Areas\HR\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\web.config" />
     <Content Include="Areas\HR\Views\Orders\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
@@ -2273,6 +2275,9 @@
   <ItemGroup>
     <Folder Include="ApplicantCvs\" />
     <Folder Include="App_Data\ProfileImages\" />
+    <Folder Include="Areas\CMS\Controllers\" />
+    <Folder Include="Areas\CMS\Models\" />
+    <Folder Include="Areas\CMS\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />

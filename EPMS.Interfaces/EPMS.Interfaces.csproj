@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IComplaintService.cs" />
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\IEmployeeRequestService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Repository\IBaseRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Repository\IComplaintRepository.cs" />
     <Compile Include="Repository\IDepartmentRepository.cs" />
     <Compile Include="Repository\IEmployeeJobHistoryRepository.cs" />
     <Compile Include="Repository\IEmployeeRepository.cs" />
