@@ -38,8 +38,6 @@
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     @Html.HiddenFor(model => model.Complaint.ComplaintId)
     @Html.HiddenFor(model => model.Complaint.CustomerId)
-    @Html.HiddenFor(model => model.Complaint.DepartmentId)
-    @Html.HiddenFor(model => model.Complaint.OrderId)
     @Html.HiddenFor(model => model.Complaint.RecCreatedBy)
     @Html.HiddenFor(model => model.Complaint.RecCreatedDt)
     @Html.HiddenFor(model => model.Complaint.IsReplied)
@@ -89,11 +87,8 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
-                        <option>Order1</option>
-                        <option>Order2</option>
-                        <option>None</option>
-                    </select>
+                    @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me" })
+                    @Html.ValidationMessageFor(m => m.Complaint.OrderId, "", new { @class = "required" })
                 </div>
             </div>
 

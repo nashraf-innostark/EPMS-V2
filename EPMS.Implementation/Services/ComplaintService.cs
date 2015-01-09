@@ -30,5 +30,12 @@ namespace EPMS.Implementation.Services
             complaintRepository.SaveChanges();
             return true;
         }
+
+        public bool UpdateComplaint(Complaint complaint)
+        {
+            complaintRepository.Update(complaint);
+            complaintRepository.SaveChanges();
+            return true;
+        }
     }
 }

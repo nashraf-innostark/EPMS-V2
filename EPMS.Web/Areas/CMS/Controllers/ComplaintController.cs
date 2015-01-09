@@ -62,7 +62,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     {
                         requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerName;
                         requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
-                        //requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x=>x.c);
+                        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
                     }
                 }
                 requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());

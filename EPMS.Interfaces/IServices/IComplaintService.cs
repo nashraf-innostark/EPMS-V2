@@ -6,5 +6,6 @@ namespace EPMS.Interfaces.IServices
     {
         Complaint FindComplaintById(long id);
         bool AddComplaint(Complaint complaint);
+        bool UpdateComplaint(Complaint complaint);
     }
 }
