@@ -27,6 +27,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IJobTitleHistoryRepository, JobTitleHistoryRepository>();
             unityContainer.RegisterType<IComplaintRepository, ComplaintRepository>();
             unityContainer.RegisterType<ICustomerRepository, CustomerRepository>();
+            unityContainer.RegisterType<IOrdersRepository, OrdersRepository>();
         }
     }
 }

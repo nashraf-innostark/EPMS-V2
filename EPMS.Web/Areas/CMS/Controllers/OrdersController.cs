@@ -19,6 +19,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             OrdersService = ordersService;
         }
         #endregion
+
+        #region Public
         // GET: HR/Orders
         public ActionResult Index()
         {
@@ -45,9 +47,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return View(viewModel);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(OrdersListViewModel viewModel)
         {
             return View(new OrdersCreateViewModel());
         }
+
+        #endregion
     }
 }

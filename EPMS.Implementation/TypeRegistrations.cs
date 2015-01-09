@@ -28,6 +28,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IJobApplicantService, JobApplicantService>();
             unityContainer.RegisterType<IComplaintService, ComplaintService>();
             unityContainer.RegisterType<ICustomerService, CustomerService>();
+            unityContainer.RegisterType<IOrdersService, OrdersService>();
         }
     }
 }
