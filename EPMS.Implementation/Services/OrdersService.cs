@@ -11,6 +11,7 @@ namespace EPMS.Implementation.Services
     public class OrdersService : IOrdersService
     {
         private readonly IOrdersRepository OrdersRepository;
+        private readonly ICustomerRepository CustomerRepository;
         
         #region Constructor
 
@@ -18,9 +19,11 @@ namespace EPMS.Implementation.Services
         /// Constructor
         /// </summary>
         /// <param name="repository"></param>
-        public OrdersService(IOrdersRepository repository)
+        /// <param name="customerRepository"></param>
+        public OrdersService(IOrdersRepository repository, ICustomerRepository customerRepository)
         {
             OrdersRepository = repository;
+            CustomerRepository = customerRepository;
         }
 
         #endregion
@@ -87,6 +90,11 @@ namespace EPMS.Implementation.Services
             OrdersLVResponse response = new OrdersLVResponse();
             response.Order = OrdersRepository.GetAllOrders(searchRequest);
             return response;
+        }
+
+        public IEnumerable<Order> GetAll()
+        {
+            return OrdersRepository.GetAll();
         }
 
         #endregion

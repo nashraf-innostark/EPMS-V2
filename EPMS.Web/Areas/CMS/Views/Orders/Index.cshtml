@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Orders' List";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
@@ -24,6 +23,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>Order List</small></h2>
+    <h3><small><a href="~/CMS/Orders/Create">Create new Order</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -63,6 +63,8 @@
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
+            "sAjaxSource": siteUrl + "/Orders/Index",
+            "sServerMethod": "POST",
             "aoColumns": [
                 {
                     "aTargets": [0],
@@ -119,15 +121,21 @@
                     "aTargets": [6],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-
+                        var value = "";
+                        if (full["OrderStatus"] == 1) {
+                            value = "Pendding";
+                        } else if (full["OrderStatus"] == 2) {
+                            value = "On Going";
+                        } else if (full["OrderStatus"] == 3) {
+                            value = "Canceled";
+                        }
+                        return value;
                     }
                 }
             ],
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
-            "sAjaxSource": siteUrl + "/Orders/Index",
-            "sServerMethod": "POST",
             "oLanguage": {
                 "sProcessing": "Fetching record(s)",
                 //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
