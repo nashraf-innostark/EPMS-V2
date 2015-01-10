@@ -23,5 +23,19 @@ namespace EPMS.Implementation.Services
         {
             return complaintRepository.Find(id);
         }
+
+        public bool AddComplaint(Complaint complaint)
+        {
+            complaintRepository.Add(complaint);
+            complaintRepository.SaveChanges();
+            return true;
+        }
+
+        public bool UpdateComplaint(Complaint complaint)
+        {
+            complaintRepository.Update(complaint);
+            complaintRepository.SaveChanges();
+            return true;
+        }
     }
 }

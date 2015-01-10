@@ -7,6 +7,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Complaint;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
@@ -17,20 +18,24 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IComplaintService complaintService;
         private readonly IAspNetUserService userService;
         private readonly IDepartmentService departmentService;
+        private readonly IOrdersService ordersService;
 
-        public ComplaintController(IComplaintService complaintService, IAspNetUserService userService, IDepartmentService departmentService)
+        public ComplaintController(IComplaintService complaintService, IAspNetUserService userService, IDepartmentService departmentService,IOrdersService ordersService)
         {
             this.complaintService = complaintService;
             this.userService = userService;
             this.departmentService = departmentService;
+            this.ordersService = ordersService;
         }
 
         #endregion
         // GET: CMS/Complaint
+        [SiteAuthorize(PermissionKey = "ComplaintIndex")]
         public ActionResult Index()
         {
             return View();
         }
+        [SiteAuthorize(PermissionKey = "ComplaintCreate")]
         public ActionResult Create(long? id)
         {
             ComplaintViewModel requestViewModel = new ComplaintViewModel();
@@ -53,15 +58,43 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 else
                 {
                     requestViewModel.Complaint.ComplaintDate = DateTime.Now;
+                    if (ViewBag.UserRole != "Admin")
+                    {
+                        requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerName;
+                        requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
+                        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
+                    }
                 }
                 requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
             }
             return View(requestViewModel);
         }
         [HttpPost]
-        public ActionResult Create()
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult Create(ComplaintViewModel viewModel)
         {
-            return View();
+            try
+            {
+                if (viewModel.Complaint.ComplaintId > 0)//Update
+                {
+                    
+                }
+                else//New
+                {
+                    viewModel.Complaint.RecCreatedBy = User.Identity.GetUserId();
+                    viewModel.Complaint.RecCreatedDt = DateTime.Now;
+                    viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
+                    viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
+
+                    //Add Request to Db, and get RequestId
+                    complaintService.AddComplaint(viewModel.Complaint.CreateFromClientToServer());
+                }
+            }
+            catch (Exception e)
+            {
+                
+            }
+            return RedirectToAction("Index", "Complaint");
         }
     }
 }

@@ -11,6 +11,6 @@ namespace EPMS.Web.ViewModels.Complaint
         public Models.Complaint Complaint { get; set; }
         public IEnumerable<Models.Complaint> Complaints { get; set; }
         public IEnumerable<Models.Department> Departments { get; set; }
-        public string ComplaintDesc { get; set; }
+        public IEnumerable<Models.Order> Orders { get; set; }
     }
 }
