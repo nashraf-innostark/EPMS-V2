@@ -89,6 +89,11 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
+        public IEnumerable<Order> GetAll()
+        {
+            return OrdersRepository.GetAll();
+        }
+
         #endregion
     }
 }

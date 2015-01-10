@@ -24,6 +24,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>Order List</small></h2>
+    <h3><small><a href="~/CMS/Orders/Create">Create new Order</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -119,7 +120,17 @@
                     "aTargets": [6],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-
+                        var value = "";
+                        if (full["OrderStatus"] == 1) {
+                            value = "Pendding";
+                        } else if (full["OrderStatus"] == 2) {
+                            value = "On Going";
+                        } else if (full["OrderStatus"] == 3) {
+                            value = "Canceled";
+                        } else if (full["OrderStatus"] == 4) {
+                            value = "Complete";
+                        }
+                        return value;
                     }
                 }
             ],
