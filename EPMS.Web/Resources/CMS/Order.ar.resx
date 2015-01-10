@@ -117,7 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Canceled" xml:space="preserve">
+    <value>الغي</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>اسم العميل</value>
+  </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>خلق إشتراك جديد</value>
+  </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>الفاتورة</value>
+  </data>
+  <data name="OnGoing" xml:space="preserve">
+    <value>تحت العمل</value>
+  </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>رقم الطلب</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>قائمة الطلبات</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>موقف</value>
+  </data>
+  <data name="Quotation" xml:space="preserve">
+    <value>عرض السعر</value>
+  </data>
+  <data name="Reciept" xml:space="preserve">
+    <value>سند قبض</value>
+  </data>
   <data name="SelectOrder" xml:space="preserve">
     <value>حدد التطبيق</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
   </data>
 </root>

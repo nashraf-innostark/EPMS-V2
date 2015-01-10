@@ -38,6 +38,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             OrdersListViewModel viewModel = new OrdersListViewModel();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var firstOrDefault = result.AspNetRoles.FirstOrDefault();
+            if (firstOrDefault != null)
+            {
+                viewModel.SearchRequest.Role = firstOrDefault.Name;
+                viewModel.SearchRequest.CustomerId = result.CustomerId ?? 0;
+            }
             return View(viewModel);
         }
         [HttpPost]
