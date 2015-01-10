@@ -40,6 +40,7 @@ namespace EPMS.Web.ModelMappers
                 ComplaintDesc = source.Description,
                 Reply = source.Reply,
                 IsReplied = source.IsReplied,
+                IsRepliedString = source.IsReplied?"Yes":"No",
                 Status = source.Status,
                 ComplaintDate = source.ComplaintDate,
                 RecCreatedBy = source.RecCreatedBy,

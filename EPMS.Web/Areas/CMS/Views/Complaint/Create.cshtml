@@ -35,6 +35,7 @@
 <!-- Form starts.  -->
 @using (Html.BeginForm("Create", "Complaint", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
+    
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     @Html.HiddenFor(model => model.Complaint.ComplaintId)
     @Html.HiddenFor(model => model.Complaint.CustomerId)
@@ -42,7 +43,7 @@
     @Html.HiddenFor(model => model.Complaint.RecCreatedDt)
     @Html.HiddenFor(model => model.Complaint.IsReplied)
     @Html.HiddenFor(model => model.Complaint.ComplaintDesc)
-
+    @Html.AntiForgeryToken()
     <div class="container-fluid">
 
 
@@ -75,8 +76,8 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new {@class = "select2me"}) : Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new {@class = "select2me"}))
-                    @Html.ValidationMessageFor(m => m.Complaint.DepartmentId, "", new { @class = "required" })
+                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired" }) : Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired" }))
+                    @Html.ValidationMessageFor(m => m.Complaint.DepartmentId,"", new { @class = "required" })
                 </div>
             </div>
 
@@ -87,7 +88,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me" })
+                    @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me toBeRequired" })
                     @Html.ValidationMessageFor(m => m.Complaint.OrderId, "", new { @class = "required" })
                 </div>
             </div>
@@ -99,7 +100,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Complaint.Topic, new { @class = "toBeReadOnly" })
+                    @Html.TextBoxFor(model => model.Complaint.Topic, new { @class = "toBeReadOnly toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Complaint.Topic, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -114,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid" id="replyDiv">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Reply</label>
             </div>
@@ -129,7 +131,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn toBeDisabled">@EPMS.Web.Resources.CMS.Complaint.SubmitBtn</button>
+                <button type="submit" class="btn toBeDisabled" onclick="return validateForm(event)">@EPMS.Web.Resources.CMS.Complaint.SubmitBtn</button>
             </div>
         </div>
     </div>
@@ -145,21 +147,61 @@
         });
         $(".date").mask('99/99/9999');
         //If complaint has been resolved, disable all fields, and just show records
-        if ('@Model.Complaint.Status' == '1') {
-            $('.toBeReadOnly:input').attr('readonly', true);
-            $('.toBeDisabled:input').attr('disabled', true);
-            //$('.DescriptionCK').attr('disabled', true);
-            //$('.ReplyCK').attr('disabled', true);
-            //$(".btn").hide();
+        if ($("#UserRole").val() == "Customer") {
+            if ('@Model.Complaint.ComplaintId' > 0) {
+                $('.toBeReadOnly:input').attr('readonly', true);
+                $('.toBeDisabled:input').attr('disabled', true);
+            }
+            if ('@Model.Complaint.IsReplied' == 'False') {
+                $("#replyDiv").hide();
+            }
         }
-            //If user is Admin, Disable fields and enable Reply Fields
-        else if ($("#UserRole").val() == "Admin") {
-            $('.toBeReadOnly:input').attr('readonly', true);
-            $('#DescriptionCK').attr('disabled', true);
-        }
-        else if (parseInt('@Model.Complaint.ComplaintId') == 0) {
-            $('#ReplyCK').attr('disabled', true);
+        else {
+            if ('@Model.Complaint.IsReplied' == 'True') {
+                $('.toBeReadOnly:input').attr('readonly', true);
+                $('.toBeDisabled:input').attr('disabled', true);
+            } else {
+                $('.toBeReadOnly:input').attr('readonly', true);
+                $('#DescriptionCK').attr('disabled', true);
+            }
         }
     });
+    function validateForm(event) {
+        var counter = 0;
+        if ($("#Complaint_DepartmentId").val() == null || $("#Complaint_DepartmentId").val() == "") {
+            $("#Complaint_DepartmentId").prop('placeholder', 'Required');
+            counter++;
+            $("#Complaint_DepartmentId").addClass("Error");
 
+        } else {
+            $("#Complaint_DepartmentId").removeClass("Error");
+        }
+        if ($("#Complaint_OrderId").val() == null || $("#Complaint_OrderId").val() == "") {
+            $("#Complaint_OrderId").prop('placeholder', 'Required');
+            counter++;
+            $("#Complaint_OrderId").addClass("Error");
+
+        } else {
+            $("#Complaint_OrderId").removeClass("Error");
+        }
+        if ($("#Complaint_Topic").val() == null || $("#Complaint_Topic").val() == "") {
+            $("#Complaint_Topic").prop('placeholder', 'Required');
+            counter++;
+            $("#Complaint_Topic").addClass("Error");
+
+        } else {
+            $("#Complaint_Topic").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    };
 </script>

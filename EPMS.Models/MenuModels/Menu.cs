@@ -31,6 +31,7 @@ namespace EPMS.Models.MenuModels
         /// Menu Image Path
         /// </summary>
         public string MenuImagePath { get; set; }
+        public string MenuItemClass { get; set; }
         /// <summary>
         /// Menu Function
         /// </summary>

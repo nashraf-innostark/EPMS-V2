@@ -210,8 +210,9 @@ namespace IdentitySample.Controllers
                     case SignInStatus.Success:
                         {
                             SetUserPermissions(user.Email);
-                            return RedirectToAction("Index", "Dashboard");
-                            //return RedirectToLocal(returnUrl);
+                            if (string.IsNullOrEmpty(returnUrl))
+                                return RedirectToAction("Index", "Dashboard");
+                            return RedirectToLocal(returnUrl);
                         }
                     case SignInStatus.LockedOut:
                         return View("Lockout");

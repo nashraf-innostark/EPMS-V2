@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApplicantName" xml:space="preserve">
+    <value>Applicant Name</value>
+  </data>
   <data name="ClientName" xml:space="preserve">
     <value>Client Name</value>
   </data>
+  <data name="ComplaintCreatedMsg" xml:space="preserve">
+    <value>Complaint has been forwarded!</value>
+  </data>
+  <data name="ComplaintRepliedMsg" xml:space="preserve">
+    <value>Complaint has been replied!</value>
+  </data>
   <data name="ComplaintsList" xml:space="preserve">
     <value>Complaints List</value>
+  </data>
+  <data name="CreateNewComplaint" xml:space="preserve">
+    <value>Create New Complaint</value>
   </data>
   <data name="CreatePageHeading" xml:space="preserve">
     <value>New Complaint</value>
@@ -135,11 +147,17 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="NotReplyInfoMsg" xml:space="preserve">
+    <value>Not replied yet!</value>
+  </data>
   <data name="Order" xml:space="preserve">
     <value>Order</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>Complaint</value>
+  </data>
+  <data name="Replied" xml:space="preserve">
+    <value>Replied</value>
   </data>
   <data name="Reply" xml:space="preserve">
     <value>Reply</value>

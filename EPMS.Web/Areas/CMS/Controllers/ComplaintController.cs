@@ -7,6 +7,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Complaint;
+using EPMS.Web.ViewModels.Department;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -29,12 +30,29 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
 
         #endregion
+
+        #region Index
         // GET: CMS/Complaint
         [SiteAuthorize(PermissionKey = "ComplaintIndex")]
         public ActionResult Index()
         {
-            return View();
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+            AspNetUser currentUser = userService.FindById(User.Identity.GetUserId());
+            ComplaintViewModel viewModel= new ComplaintViewModel
+            {
+                Complaints =
+                    currentUser.AspNetRoles.FirstOrDefault().Name == "Customer"
+                        ? complaintService.GetAllComplaintsByCustomerId(Convert.ToInt64(currentUser.CustomerId))
+                            .Select(x => x.CreateFromServerToClient())
+                        : complaintService.GetAllComplaints()
+                            .OrderByDescending(x => x.ComplaintDate)
+                            .Select(x => x.CreateFromServerToClient())
+            };
+            return View(viewModel);
         }
+        #endregion
+        
+        #region Create
         [SiteAuthorize(PermissionKey = "ComplaintCreate")]
         public ActionResult Create(long? id)
         {
@@ -49,23 +67,29 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 if (id != null)
                 {
                     var complaint = complaintService.FindComplaintById((long)id);
-                    //Check if current request is related to logedin user.
-                    if (complaint!=null)
+                    if (complaint != null)
                     {
                         requestViewModel.Complaint = complaint.CreateFromServerToClient();
+
+                        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(requestViewModel.Complaint.CustomerId).Where(x => x.OrderId.Equals(requestViewModel.Complaint.OrderId)).Select(x => x.CreateFromServerToClient());
+                        requestViewModel.Departments = departmentService.GetAll().Where(x => x.DepartmentId == requestViewModel.Complaint.DepartmentId).Select(x => x.CreateFrom());
+                        if (!requestViewModel.Complaint.IsReplied)
+                            ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
                     }
+                }
+                else if (ViewBag.UserRole != "Admin")
+                {
+
+                    requestViewModel.Complaint.ComplaintDate = DateTime.Now;
+                    requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerName;
+                    requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
+                    requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
+                    requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
                 }
                 else
                 {
-                    requestViewModel.Complaint.ComplaintDate = DateTime.Now;
-                    if (ViewBag.UserRole != "Admin")
-                    {
-                        requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerName;
-                        requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
-                        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
-                    }
+                    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
                 }
-                requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
             }
             return View(requestViewModel);
         }
@@ -77,7 +101,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 if (viewModel.Complaint.ComplaintId > 0)//Update
                 {
-                    
+                    viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
+                    viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
+                    viewModel.Complaint.Description = viewModel.Complaint.ComplaintDesc;
+                    viewModel.Complaint.IsReplied = true;
+                    //Update Complaint to Db
+                    complaintService.UpdateComplaint(viewModel.Complaint.CreateFromClientToServer());
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Complaint.ComplaintRepliedMsg,
+                        IsUpdated = true
+                    };
                 }
                 else//New
                 {
@@ -86,15 +120,21 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
                     viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
 
-                    //Add Request to Db, and get RequestId
+                    //Add Complaint to Db
                     complaintService.AddComplaint(viewModel.Complaint.CreateFromClientToServer());
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
+                        IsUpdated = true
+                    };
                 }
             }
             catch (Exception e)
             {
-                
+
             }
             return RedirectToAction("Index", "Complaint");
         }
+        #endregion
     }
 }
