@@ -81,7 +81,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
 
                     requestViewModel.Complaint.ComplaintDate = DateTime.Now;
-                    requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerName;
+                    requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerNameE;
                     requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
                     requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
                     requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());

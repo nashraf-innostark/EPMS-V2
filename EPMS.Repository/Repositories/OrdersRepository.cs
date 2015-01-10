@@ -44,7 +44,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<OrdersByColumn, Func<Order, object>>
                     {
                         { OrdersByColumn.OrderNumber,  c => c.OrderNo},
-                        { OrdersByColumn.ClientName,  c => c.Customer.CustomerName},
+                        { OrdersByColumn.ClientName,  c => c.Customer.CustomerNameE},
                     };
         #endregion
 
@@ -57,7 +57,7 @@ namespace EPMS.Repository.Repositories
             
             Expression<Func<Order, bool>> query =
                 s => ((searchRequest.CustomerId == 0 || s.Customer.CustomerId == searchRequest.CustomerId) && (string.IsNullOrEmpty(searchRequest.SearchString)) || 
-                    (s.OrderNo.Contains(searchRequest.SearchString)) || (s.Customer.CustomerName.Contains(searchRequest.SearchString)));
+                    (s.OrderNo.Contains(searchRequest.SearchString)) || (s.Customer.CustomerNameE.Contains(searchRequest.SearchString)));
 
             IEnumerable<Order> orders = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
