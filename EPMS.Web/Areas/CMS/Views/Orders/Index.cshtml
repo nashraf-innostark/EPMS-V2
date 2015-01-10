@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Orders.OrdersListViewModel
 
 @{
-    ViewBag.Title = "Orders' List";
+    ViewBag.Title = EPMS.Web.Resources.CMS.Order.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -10,19 +10,19 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
         <li>
-            Order List
+            @EPMS.Web.Resources.CMS.Order.PageTitle
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Order List</small></h2>
+    <h2><small>@EPMS.Web.Resources.CMS.Order.PageTitle</small></h2>
     @if (Model.SearchRequest.Role == "Customer")
     {
         <h3><small><a href="~/CMS/Orders/Create">@EPMS.Web.Resources.CMS.Order.CreateNew</a></small></h3>
