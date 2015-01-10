@@ -1928,6 +1928,7 @@
     <Content Include="Areas\CMS\Views\Complaint\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -2338,6 +2339,7 @@
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_ApplicantLayout.cshtml" />
+    <Content Include="Views\Account\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicantCvs\" />

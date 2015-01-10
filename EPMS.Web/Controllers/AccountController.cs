@@ -36,6 +36,7 @@ namespace IdentitySample.Controllers
         private IEmployeeService employeeService;
         private ApplicationRoleManager _roleManager;
         private IAspNetUserService AspNetUserService;
+        private ICustomerService customerService;
 
         /// <summary>
         /// Set User Permission
@@ -66,11 +67,12 @@ namespace IdentitySample.Controllers
 
         #region Constructor
 
-        public AccountController(IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService)
+        public AccountController(IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
             this.AspNetUserService = aspNetUserService;
+            this.customerService = customerService;
         }
 
         #endregion
@@ -426,6 +428,60 @@ namespace IdentitySample.Controllers
             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
             TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Signup()
+        {
+            SignupViewModel signupViewModel = new SignupViewModel();
+            return View(signupViewModel);
+        }
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
+        public async Task<ActionResult> Signup(SignupViewModel signupViewModel)
+        {
+            // Add new User
+                // Check if User already exists
+                var usernames = AspNetUserService.GetAllUsers().Select(x => x.UserName);
+                if (usernames.Contains(signupViewModel.UserName))
+                {
+                    // it means username is already taken
+                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                    return View(signupViewModel);
+                }
+                //call customer add service, get cusID, 
+                
+                #region Add Customer
+
+                EPMS.Models.DomainModels.Customer customer = new EPMS.Models.DomainModels.Customer();
+                customer.CustomerName = signupViewModel.CustomerName;
+                customer.CustomerAddress = signupViewModel.Address;
+                customer.CustomerMobile = signupViewModel.MobileNumber;
+                EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
+                
+                    //custID=ser.add(customer);
+                #endregion
+
+                var user = new AspNetUser { UserName = signupViewModel.UserName, Email = signupViewModel.Email };
+                user.CustomerId = addedCustomer.CustomerId;
+                user.EmailConfirmed = true;
+                if (!String.IsNullOrEmpty(signupViewModel.Password))
+                {
+                    var result = await UserManager.CreateAsync(user, signupViewModel.Password);
+                    if (result.Succeeded)
+                    {
+                        //Setting role
+                        var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                        UserManager.AddToRole(user.Id, "Customer");
+
+                        TempData["message"] = new MessageViewModel { Message = "User Created", IsSaved = true };
+                        return RedirectToAction("Index","Dashboard");
+                    }
+                }
+            return View(signupViewModel);
         }
         #endregion
 
