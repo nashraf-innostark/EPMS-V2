@@ -67,10 +67,6 @@
     $(document).ready(function () {
         $('#ComplaintsList').dataTable({
             "sPaginationType": "bootstrap",
-            "iSortCol_0": "3",
-            "aoColumnDefs": [
-              { "asSorting": [ "desc" ], "aTargets": [ 3 ] }
-            ],
             "aoColumns": [
                 { "bVisible": false },
                   null,
@@ -78,6 +74,7 @@
                   null,
                   null,
             ],
+            "aaSorting": [[3,'desc']],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
