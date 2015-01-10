@@ -61,6 +61,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Applicant Name.
+        /// </summary>
+        public static string ApplicantName {
+            get {
+                return ResourceManager.GetString("ApplicantName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client Name.
         /// </summary>
         public static string ClientName {
@@ -70,11 +79,38 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complaint has been forwarded!.
+        /// </summary>
+        public static string ComplaintCreatedMsg {
+            get {
+                return ResourceManager.GetString("ComplaintCreatedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Complaint has been replied!.
+        /// </summary>
+        public static string ComplaintRepliedMsg {
+            get {
+                return ResourceManager.GetString("ComplaintRepliedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Complaints List.
         /// </summary>
         public static string ComplaintsList {
             get {
                 return ResourceManager.GetString("ComplaintsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Complaint.
+        /// </summary>
+        public static string CreateNewComplaint {
+            get {
+                return ResourceManager.GetString("CreateNewComplaint", resourceCulture);
             }
         }
         
@@ -115,6 +151,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not replied yet!.
+        /// </summary>
+        public static string NotReplyInfoMsg {
+            get {
+                return ResourceManager.GetString("NotReplyInfoMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order.
         /// </summary>
         public static string Order {
@@ -129,6 +174,15 @@ namespace EPMS.Web.Resources.CMS {
         public static string PageTitle {
             get {
                 return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replied.
+        /// </summary>
+        public static string Replied {
+            get {
+                return ResourceManager.GetString("Replied", resourceCulture);
             }
         }
         

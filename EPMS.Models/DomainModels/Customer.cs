@@ -6,7 +6,8 @@ namespace EPMS.Models.DomainModels
     public class Customer
     {
         public long CustomerId { get; set; }
-        public string CustomerName { get; set; }
+        public string CustomerNameE { get; set; }
+        public string CustomerNameA { get; set; }
         public string CustomerAddress { get; set; }
         public string CustomerMobile { get; set; }
         public string RecCreatedBy { get; set; }

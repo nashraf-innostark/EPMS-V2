@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApplicantName" xml:space="preserve">
+    <value>اسم مقدم الشكوى</value>
+  </data>
   <data name="ClientName" xml:space="preserve">
     <value>اسم الشكوى</value>
   </data>
+  <data name="ComplaintCreatedMsg" xml:space="preserve">
+    <value>وقد أحيلت الشكوى</value>
+  </data>
+  <data name="ComplaintRepliedMsg" xml:space="preserve">
+    <value>وقد تم الرد على الشكوى</value>
+  </data>
   <data name="ComplaintsList" xml:space="preserve">
     <value>قائمة الشكاوي</value>
+  </data>
+  <data name="CreateNewComplaint" xml:space="preserve">
+    <value>اضافة شكوى جديدة</value>
   </data>
   <data name="CreatePageHeading" xml:space="preserve">
     <value>شكواى جديدة</value>
@@ -135,11 +147,17 @@
   <data name="Description" xml:space="preserve">
     <value>تفاصيل</value>
   </data>
+  <data name="NotReplyInfoMsg" xml:space="preserve">
+    <value>لم تتلق أي رد حتى الآن</value>
+  </data>
   <data name="Order" xml:space="preserve">
     <value>طلب</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
     <value>شكاوي</value>
+  </data>
+  <data name="Replied" xml:space="preserve">
+    <value>تم الرد</value>
   </data>
   <data name="Reply" xml:space="preserve">
     <value>رد</value>

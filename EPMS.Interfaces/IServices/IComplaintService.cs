@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -7,5 +8,7 @@ namespace EPMS.Interfaces.IServices
         Complaint FindComplaintById(long id);
         bool AddComplaint(Complaint complaint);
         bool UpdateComplaint(Complaint complaint);
+        IEnumerable<Complaint> GetAllComplaints();
+        IEnumerable<Complaint> GetAllComplaintsByCustomerId(long id);
     }
 }

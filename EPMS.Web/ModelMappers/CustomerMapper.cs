@@ -13,7 +13,8 @@ namespace EPMS.Web.ModelMappers
             {
 
                 CustomerId = source.CustomerId,
-                CustomerName = source.CustomerName,
+                CustomerNameE = source.CustomerNameE,
+                CustomerNameA = source.CustomerNameA,
                 CustomerAddress = source.CustomerAddress,
                 CustomerMobile = source.CustomerMobile,
                 RecCreatedBy = source.RecCreatedBy,
@@ -40,7 +41,8 @@ namespace EPMS.Web.ModelMappers
             return new DomainModels.Customer
             {
                 CustomerId = source.CustomerId,
-                CustomerName = source.CustomerName,
+                CustomerNameE = source.CustomerNameE,
+                CustomerNameA = source.CustomerNameA,
                 CustomerAddress = source.CustomerAddress,
                 CustomerMobile = source.CustomerMobile,
                 RecCreatedBy = source.RecCreatedBy,

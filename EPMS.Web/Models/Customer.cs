@@ -7,7 +7,8 @@ namespace EPMS.Web.Models
     {
         public long CustomerId { get; set; }
         [Required(ErrorMessage = "Customer Name is required.")]
-        public string CustomerName { get; set; }
+        public string CustomerNameE { get; set; }
+        public string CustomerNameA { get; set; }
         public string CustomerAddress { get; set; }
         public string CustomerMobile { get; set; }
         public string RecCreatedBy { get; set; }

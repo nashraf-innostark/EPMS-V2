@@ -1,9 +1,8 @@
 ﻿@model EPMS.Web.ViewModels.Orders.OrdersListViewModel
 
 @{
-    ViewBag.Title = "Orders' List";
+    ViewBag.Title = EPMS.Web.Resources.CMS.Order.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
@@ -11,20 +10,23 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
         <li>
-            Order List
+            @EPMS.Web.Resources.CMS.Order.PageTitle
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Order List</small></h2>
-    <h3><small><a href="~/CMS/Orders/Create">Create new Order</a></small></h3>
+    <h2><small>@EPMS.Web.Resources.CMS.Order.PageTitle</small></h2>
+    @if (Model.SearchRequest.Role == "Customer")
+    {
+        <h3><small><a href="~/CMS/Orders/Create">@EPMS.Web.Resources.CMS.Order.CreateNew</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -41,12 +43,12 @@
                     <thead class="">
                         <tr>
                             <th></th>
-                            <th>Order Number</th>
-                            <th>Client Name</th>
-                            <th>Quotation</th>
-                            <th>Invoice</th>
-                            <th>Reciept</th>
-                            <th>Status</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.OrderNo</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.ClientName</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Quotation</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Invoice</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Reciept</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Status</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -64,6 +66,8 @@
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
+            "sAjaxSource": siteUrl + "/Orders/Index",
+            "sServerMethod": "POST",
             "aoColumns": [
                 {
                     "aTargets": [0],
@@ -92,28 +96,35 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["Customer"].CustomerName;
+                        var element = "";
+                        if ('@direction' == "ltr") {
+                            element = full["Customer"].CustomerNameE;
+                        }
+                        if ('@direction' == "rtl") {
+                            element = full["Customer"].CustomerNameA;
+                        }
+                        return element;
                     }
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
@@ -127,8 +138,6 @@
                             value = "On Going";
                         } else if (full["OrderStatus"] == 3) {
                             value = "Canceled";
-                        } else if (full["OrderStatus"] == 4) {
-                            value = "Complete";
                         }
                         return value;
                     }
@@ -137,8 +146,6 @@
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
-            "sAjaxSource": siteUrl + "/Orders/Index",
-            "sServerMethod": "POST",
             "oLanguage": {
                 "sProcessing": "Fetching record(s)",
                 //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",

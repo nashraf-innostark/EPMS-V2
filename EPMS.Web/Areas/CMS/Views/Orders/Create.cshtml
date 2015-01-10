@@ -10,7 +10,7 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
@@ -36,6 +36,7 @@
 @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditOrdersForm", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Orders.OrderId)
+    @Html.HiddenFor(model => model.Orders.CustomerId)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
@@ -47,6 +48,25 @@
                 </div>
             </div>
         </div>
+        @if (Model.RoleName == "Admin")
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="OrderStatus">Order Statue</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.DropDownListFor(model => model.Orders.OrderStatus, new[]
+                        {
+                         new SelectListItem { Value = "1" , Text = "Pending" },
+                         new SelectListItem { Value = "2" , Text = "On Going" },
+                         new SelectListItem { Value = "3" , Text = "Canceled" }
+                        }, new { @id = "OrderStatus", @class = "" })
+                        @Html.ValidationMessageFor(m => m.Orders.OrderStatus, String.Empty, new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+        }
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="description">Description</label>
@@ -69,11 +89,14 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">@Model.BtnText</button>
+        @if (Model.RoleName == "Admin" || Model.Orders.OrderId == 0)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">@Model.BtnText</button>
+                </div>
             </div>
-        </div>
+        }
     </div>
 }
 
