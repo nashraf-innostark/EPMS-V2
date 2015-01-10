@@ -1,4 +1,5 @@
-﻿using EPMS.Interfaces.IServices;
+﻿using System.Collections.Generic;
+using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 
@@ -36,6 +37,16 @@ namespace EPMS.Implementation.Services
             complaintRepository.Update(complaint);
             complaintRepository.SaveChanges();
             return true;
+        }
+
+        public IEnumerable<Complaint> GetAllComplaints()
+        {
+            return complaintRepository.GetAll();
+        }
+
+        public IEnumerable<Complaint> GetAllComplaintsByCustomerId(long id)
+        {
+            return complaintRepository.GetAllComplaintsByCustomerId(id);
         }
     }
 }

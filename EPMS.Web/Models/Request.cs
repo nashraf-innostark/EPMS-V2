@@ -17,12 +17,10 @@ namespace EPMS.Web.Models
         public long RequestId { get; set; }
         public long EmployeeId { get; set; }
         public string EmployeeJobId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Topic is required.")]
         [Display(Name = "Topic")]
         public string RequestTopic { get; set; }
         [Display(Name = "Request Date")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime RequestDate { get; set; }
         [Display(Name = "Monetary")]
         public bool IsMonetary { get; set; }

@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using Microsoft.Practices.Unity;
@@ -26,5 +28,10 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        public IEnumerable<Complaint> GetAllComplaintsByCustomerId(long id)
+        {
+            return DbSet.Where(x => x.CustomerId == id).OrderByDescending(x=>x.ComplaintDate);
+        }
     }
 }

@@ -7,6 +7,20 @@
 .Error{
     color: #e02222;
 }
+.Error::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #e02222;
+}
+.Error:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #e02222;
+   opacity:  1;
+}
+.Error::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #e02222;
+   opacity:  1;
+}
+.Error:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #e02222;
+}
 .datepickerArabic .IqamaIssueDateAr .IqamaExpiryDateAr .PassportExpiryDateAr{
     width: 125px;
     margin-right: 10px;
