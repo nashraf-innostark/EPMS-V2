@@ -257,6 +257,7 @@
           <Property Name="MenuFunction" Type="nvarchar(max)" />
           <Property Name="PermissionKey" Type="nvarchar(max)" />
           <Property Name="MenuImagePath" Type="nvarchar(max)" />
+          <Property Name="MenuItemClass" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -295,6 +296,7 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="OrderStatus" Type="int" />
         </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
@@ -959,6 +961,7 @@
           <Property Name="MenuImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ParentItem" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
+          <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -1448,6 +1451,7 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
           <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
+          <Property Name="OrderStatus" Type="Int32" />
         </EntityType>
         <Association Name="FK_Complaint_Orders">
           <End Type="EPMSModel.Order" Role="Order" Multiplicity="1" />
@@ -1668,6 +1672,7 @@
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="EPMSModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="MenuItemClass" ColumnName="MenuItemClass" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
                 <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
@@ -1796,6 +1801,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="EPMSModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
