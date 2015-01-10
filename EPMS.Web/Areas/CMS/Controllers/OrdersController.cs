@@ -8,6 +8,7 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
@@ -36,15 +37,40 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Index()
         {
             OrdersListViewModel viewModel = new OrdersListViewModel();
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
         [HttpPost]
         public ActionResult Index(OrdersSearchRequest searchRequest)
         {
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var firstOrDefault = result.AspNetRoles.FirstOrDefault();
+            if (firstOrDefault != null)
+            {
+                searchRequest.Role = firstOrDefault.Name;
+                searchRequest.CustomerId = result.CustomerId ?? 0;
+            }
             searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             searchRequest.SearchString = Request["search"];
-            var ordersList = OrdersService.GetAllOrders(searchRequest);
-            IEnumerable<Order> orders = ordersList.Orders.Select(o => o.CreateFromServerToClient()).ToList();
+            OrdersResponse ordersList = null;
+            IEnumerable<Order> orders = null;
+            //Models.Customer customer = null;
+            if (searchRequest.Role != null)
+            {
+                if (searchRequest.Role == "Admin")
+                {
+                    searchRequest.CustomerId = 0;
+                    ordersList = OrdersService.GetAllOrders(searchRequest);
+                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClient());
+                }
+                if (searchRequest.Role == "Customer")
+                {
+                    searchRequest.CustomerId = searchRequest.CustomerId;
+                    ordersList = OrdersService.GetAllOrders(searchRequest);
+                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClient());
+                }
+            }
+            if (ordersList == null) return View(new OrdersListViewModel());
             OrdersListViewModel viewModel = new OrdersListViewModel
             {
                 aaData = orders,
@@ -58,10 +84,20 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             var direction = Resources.Shared.Common.TextDirection;
             OrdersCreateViewModel viewModel = new OrdersCreateViewModel();
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var role = result.AspNetRoles.FirstOrDefault();
+            if (role != null) viewModel.RoleName = role.Name;
             if (id != null)
             {
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
-                viewModel.PageTitle = direction == "ltr" ? "Update Order" : "";
+                if (viewModel.RoleName == "Admin")
+                {
+                    viewModel.PageTitle = direction == "ltr" ? "Update Order" : "";
+                }
+                if (viewModel.RoleName == "Customer")
+                {
+                    viewModel.PageTitle = direction == "ltr" ? "Order Details" : "";
+                }
                 viewModel.BtnText = direction == "ltr" ? "Update Quote" : "";
                 return View(viewModel);
             }
@@ -75,6 +111,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Create(OrdersCreateViewModel viewModel)
         {
             var direction = Resources.Shared.Common.TextDirection;
+            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
+            var role = result.AspNetRoles.FirstOrDefault();
+            if (role != null) viewModel.RoleName = role.Name;
             if (viewModel.Orders.OrderId > 0)
             {
                 // Update Case
@@ -93,12 +132,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
             }
             else
             {
-                // Get Customer Id
-                AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-                var customerId = result.CustomerId;
                 // Add Case
+
+                // Get Customer Id from AspNetUser
+                var customerId = result.CustomerId;
                 viewModel.Orders.OrderDate = DateTime.Now;
                 viewModel.Orders.CustomerId = customerId ?? 0;
+                viewModel.Orders.OrderStatus = 1;
                 viewModel.Orders.RecCreatedBy = User.Identity.GetUserId();
                 viewModel.Orders.RecCreatedDt = DateTime.Now;
                 var orderToSave = viewModel.Orders.CreateFromClientToServer();
@@ -112,7 +152,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            viewModel.PageTitle = direction == "ltr" ? "Create New Order" : "";
+            if (viewModel.RoleName == "Admin")
+            {
+                viewModel.PageTitle = direction == "ltr" ? "Update Order" : "";
+            }
+            if (viewModel.RoleName == "Customer")
+            {
+                viewModel.PageTitle = direction == "ltr" ? "Create New Order" : "";
+            }
             viewModel.BtnText = direction == "ltr" ? "Request A Quote" : "";
             TempData["message"] = new MessageViewModel
             {
@@ -122,6 +169,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return View(viewModel);
         }
 
+        #region Get Order Number
         string GetOrderNumber()
         {
             var result = OrdersService.GetAll();
@@ -152,6 +200,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             }
             return "0001";
         }
+        #endregion
+
         #endregion
     }
 }

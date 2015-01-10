@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Orders' List";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
@@ -64,6 +63,8 @@
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
+            "sAjaxSource": siteUrl + "/Orders/Index",
+            "sServerMethod": "POST",
             "aoColumns": [
                 {
                     "aTargets": [0],
@@ -127,8 +128,6 @@
                             value = "On Going";
                         } else if (full["OrderStatus"] == 3) {
                             value = "Canceled";
-                        } else if (full["OrderStatus"] == 4) {
-                            value = "Complete";
                         }
                         return value;
                     }
@@ -137,8 +136,6 @@
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
-            "sAjaxSource": siteUrl + "/Orders/Index",
-            "sServerMethod": "POST",
             "oLanguage": {
                 "sProcessing": "Fetching record(s)",
                 //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",

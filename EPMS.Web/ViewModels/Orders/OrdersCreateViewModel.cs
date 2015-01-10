@@ -15,6 +15,7 @@ namespace EPMS.Web.ViewModels.Orders
         public Order Orders { get; set; }
         public string PageTitle { get; set; }
         public string BtnText { get; set; }
+        public string RoleName { get; set; }
 
     }
 }
