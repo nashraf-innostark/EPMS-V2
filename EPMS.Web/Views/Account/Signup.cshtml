@@ -1,0 +1,162 @@
+﻿@model EPMS.Models.IdentityModels.ViewModels.SignupViewModel
+
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_ApplicantLayout.cshtml";
+}
+
+<div class="container-login">
+    <div class="form-centering-wrapper">
+        <div class="form-window-login">
+            <div class="form-window-login-logo">
+                <div class="login-logo">
+                    <img src="images/photon/200x100.png" alt="Desert Stars" />
+                </div>
+                <h2 class="login-title">Account Creation</h2>
+
+
+                <div class="login-input-area">
+                    @using (Html.BeginForm("Signup", "Account", FormMethod.Post, new {@class = "", role = "form"}))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.HiddenFor(model => model.CustomerId)
+                        <div>
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", @placeholder = "Username", @id = "Username" })
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control ", @placeholder = "Name" })
+                            @Html.ValidationMessageFor(model => model.CustomerName)
+                        </div>
+                        @*<div>
+                            @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control ", @placeholder = "Arabic Name" })
+                            @Html.ValidationMessageFor(model => model.CustomerName)
+                        </div>*@
+                        <div>
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control ", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                        <div>
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", @placeholder = "Confirm Password" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", @placeholder = "Email" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control ", @placeholder = "Mobile Number" })
+                            @Html.ValidationMessageFor(model => model.MobileNumber)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control ", @placeholder = "Address" })
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+                        
+                        <button type="submit" class="btn btn-large btn-success btn-login">Create Account</button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+                @*@using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <h4>SignupViewModel</h4>
+                            <hr />
+                            @Html.ValidationSummary(true)
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CustomerId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.CustomerId)
+                                    @Html.ValidationMessageFor(model => model.CustomerId)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserId, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserId)
+                                    @Html.ValidationMessageFor(model => model.UserId)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.UserName)
+                                    @Html.ValidationMessageFor(model => model.UserName)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Password)
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Email)
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.ConfirmPassword)
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CustomerName, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.CustomerName)
+                                    @Html.ValidationMessageFor(model => model.CustomerName)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Address)
+                                    @Html.ValidationMessageFor(model => model.Address)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MobileNumber, new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.MobileNumber)
+                                    @Html.ValidationMessageFor(model => model.MobileNumber)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div>
+                        @Html.ActionLink("Back to List", "Index")
+                    </div>*@
