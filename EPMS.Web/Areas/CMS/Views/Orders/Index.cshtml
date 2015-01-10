@@ -96,28 +96,35 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["Customer"].CustomerName;
+                        var element = "";
+                        if ('@direction' == "ltr") {
+                            element = full["Customer"].CustomerNameE;
+                        }
+                        if ('@direction' == "rtl") {
+                            element = full["Customer"].CustomerNameA;
+                        }
+                        return element;
                     }
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
