@@ -69,8 +69,6 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
-                    DepartmentList = DepartmentService.GetAll(),
-                    JobTitleList = JobTitleService.GetJobTitlesByDepartmentId(0),
                     SearchRequest = employeeSearchRequest,
                     Role = userRole.Name,
                 };

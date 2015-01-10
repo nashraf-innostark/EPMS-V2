@@ -1,8 +1,9 @@
 ﻿@model  EPMS.Web.ViewModels.Complaint.ComplaintViewModel
 @{
-    ViewBag.Title = Model.Complaint.ComplaintId > 0 ? EPMS.Web.Resources.CMS.Complaint.ReplyPageTitle : EPMS.Web.Resources.CMS.Complaint.CreatePageTitle;
+    ViewBag.Title = EPMS.Web.Resources.CMS.Complaint.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var pageHeading = Model.Complaint.ComplaintId > 0 ? EPMS.Web.Resources.CMS.Complaint.ReplyPageHeading : EPMS.Web.Resources.CMS.Complaint.CreatePageHeading;
 }
 
 <!-- Navigation Bar -->
@@ -15,8 +16,8 @@
         </li>
         <li>
             <a href="~/CMS/Complaint/Index">
-                @EPMS.Web.Resources.CMS.Complaint.ComplaintsList
-            </a>
+                <i>@EPMS.Web.Resources.CMS.Complaint.ComplaintsList</i>
+</a>
         </li>
         <li class="current">
             <a href="javascript:;">@ViewBag.Title</a>
@@ -26,9 +27,139 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title </small></h2>
+    <h2><small>@pageHeading</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 
 <!-- Form starts.  -->
+@using (Html.BeginForm("Create", "Complaint", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
+    @Html.HiddenFor(model => model.Complaint.ComplaintId)
+    @Html.HiddenFor(model => model.Complaint.CustomerId)
+    @Html.HiddenFor(model => model.Complaint.RecCreatedBy)
+    @Html.HiddenFor(model => model.Complaint.RecCreatedDt)
+    @Html.HiddenFor(model => model.Complaint.IsReplied)
+    @Html.HiddenFor(model => model.Complaint.ComplaintDesc)
+
+    <div class="container-fluid">
+
+
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.ClientName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Complaint.ClientName, new { @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Date</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Complaint.ComplaintDate, new { @class="date",@readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Department</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new {@class = "select2me"}) : Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new {@class = "select2me"}))
+                    @Html.ValidationMessageFor(m => m.Complaint.DepartmentId, "", new { @class = "required" })
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Order</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me" })
+                    @Html.ValidationMessageFor(m => m.Complaint.OrderId, "", new { @class = "required" })
+                </div>
+            </div>
+
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Topic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Complaint.Topic, new { @class = "toBeReadOnly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.Complaint.Description, new { @class = "toBeDisabled", @id = "DescriptionCK" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Complaint.Reply</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.Complaint.Reply, new { @class = "toBeDisabled", @id = "ReplyCK" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn toBeDisabled">@EPMS.Web.Resources.CMS.Complaint.SubmitBtn</button>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('DescriptionCK');
+        CKEDITOR.replace('ReplyCK');
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
+        $(".date").mask('99/99/9999');
+        //If complaint has been resolved, disable all fields, and just show records
+        if ('@Model.Complaint.Status' == '1') {
+            $('.toBeReadOnly:input').attr('readonly', true);
+            $('.toBeDisabled:input').attr('disabled', true);
+            //$('.DescriptionCK').attr('disabled', true);
+            //$('.ReplyCK').attr('disabled', true);
+            //$(".btn").hide();
+        }
+            //If user is Admin, Disable fields and enable Reply Fields
+        else if ($("#UserRole").val() == "Admin") {
+            $('.toBeReadOnly:input').attr('readonly', true);
+            $('#DescriptionCK').attr('disabled', true);
+        }
+        else if (parseInt('@Model.Complaint.ComplaintId') == 0) {
+            $('#ReplyCK').attr('disabled', true);
+        }
+    });
+
+</script>

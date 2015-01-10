@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 
 <!-- Navigation Bar -->
@@ -42,8 +43,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Orders.OrderNo, new { @id = "OrderNumber", @class = "" })
-                    @Html.ValidationMessageFor(m => m.Orders.OrderNo, String.Empty, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.Orders.OrderNo, new { @id = "OrderNumber", @class = "", @readonly = "true" })
                 </div>
             </div>
         </div>

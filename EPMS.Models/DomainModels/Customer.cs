@@ -15,5 +15,6 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecLastUpdatedDt { get; set; }
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

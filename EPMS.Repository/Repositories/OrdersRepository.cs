@@ -44,6 +44,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<OrdersByColumn, Func<Order, object>>
                     {
                         { OrdersByColumn.OrderNumber,  c => c.OrderNo},
+                        { OrdersByColumn.ClientName,  c => c.Customer.CustomerName},
                     };
         #endregion
 
@@ -55,7 +56,8 @@ namespace EPMS.Repository.Repositories
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
             
             Expression<Func<Order, bool>> query =
-                s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.OrderNo.Contains(searchRequest.SearchString)));
+                s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.OrderNo.Contains(searchRequest.SearchString)) || 
+                    (s.Customer.CustomerName.Contains(searchRequest.SearchString)));
 
             IEnumerable<Order> orders = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -64,6 +66,17 @@ namespace EPMS.Repository.Repositories
                                            DbSet
                                            .Where(query).OrderByDescending(orderClause[searchRequest.OrdersByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new OrdersResponse { Orders = orders, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+        }
+
+        public IEnumerable<Order> GetOrdersByCustomerId(long customerId)
+        {
+            var orders = DbSet.Where(order => order.CustomerId == customerId);
+            return orders;
+        }
+
+        public Order GetOrderByOrderId(long orderId)
+        {
+            return DbSet.FirstOrDefault(order => order.OrderId == orderId);
         }
 
         #endregion

@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Orders' List";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
@@ -23,6 +24,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>Order List</small></h2>
+    <h3><small><a href="~/CMS/Orders/Create">Create new Order</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -38,6 +40,7 @@
                 <table class="table table-striped table-responsive" id="OrdersListTable">
                     <thead class="">
                         <tr>
+                            <th></th>
                             <th>Order Number</th>
                             <th>Client Name</th>
                             <th>Quotation</th>
@@ -61,10 +64,80 @@
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["OrderId"];
+                    },
+                    "bVisible": false,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var element;
+                        var val;
+                        var orderId;
+                        val = full["OrderNo"];
+                        orderId = full["OrderId"];
+                        element = '<a href="Create/' + orderId + '">' + val + '</a>';
+                        return element;
+                    },
+                    "bSortable": true
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["Customer"].CustomerName;
+                    }
+                },
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        
+                    }
+                },
+                {
+                    "aTargets": [5],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        
+                    }
+                },
+                {
+                    "aTargets": [6],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var value = "";
+                        if (full["OrderStatus"] == 1) {
+                            value = "Pendding";
+                        } else if (full["OrderStatus"] == 2) {
+                            value = "On Going";
+                        } else if (full["OrderStatus"] == 3) {
+                            value = "Canceled";
+                        } else if (full["OrderStatus"] == 4) {
+                            value = "Complete";
+                        }
+                        return value;
+                    }
+                }
+            ],
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
-            "sAjaxSource": siteUrl + "/Employee/Index",
+            "sAjaxSource": siteUrl + "/Orders/Index",
             "sServerMethod": "POST",
             "oLanguage": {
                 "sProcessing": "Fetching record(s)",
