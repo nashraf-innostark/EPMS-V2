@@ -15,6 +15,10 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public long OrdersCount { get; set; }
+        public string LatestComplaint { get; set; }
+        public string LatestOrder { get; set; }
+        public string Email { get; set; }
+        public string UserId { get; set; }
 
     }
 }

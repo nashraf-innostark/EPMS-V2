@@ -28,5 +28,11 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetAll();
         }
+        public bool UpdateUser(AspNetUser user)
+        {
+            repository.Update(user);
+            repository.SaveChanges();
+            return true;
+        }
     }
 }
