@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EPMS.Models.DomainModels;
+using EPMS.Web.ViewModels.Dashboard;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -43,6 +44,17 @@ namespace EPMS.Web.ModelMappers
                     RecLastUpdatedDt = source.RecLastUpdatedDt,
                     //Employee = source.Employee.CreateFromServerToClient(),
                     RequestDetail = source.RequestDetails.OrderByDescending(x=>x.RowVersion).FirstOrDefault().CreateFromServerToClient()
+                };
+            }
+            public static EmployeeRequestsViewModel CreateForDashboard(this EmployeeRequest source)
+            {
+                return new EmployeeRequestsViewModel
+                {
+                    RequestId = source.RequestId,
+                    EmployeeId = source.EmployeeId,
+                    EmployeeNameE = source.Employee.EmployeeNameE,
+                    RequestTopic = source.RequestTopic,
+                    RequestDateString = source.RequestDate.ToShortDateString()
                 };
             }
         #endregion
