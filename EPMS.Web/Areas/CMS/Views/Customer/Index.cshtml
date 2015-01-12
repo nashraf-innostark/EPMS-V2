@@ -38,6 +38,7 @@
                             <th>@EPMS.Web.Resources.CMS.Customer.CustomerName</th>
                             <th>Number of Orders</th>
                             <th>Complaint</th>
+                            <th>Orders</th>
                             <th>@EPMS.Web.Resources.CMS.Customer.CustomerAddress</th>
                             <th>@EPMS.Web.Resources.CMS.Customer.CustomerMobile</th>
                         </tr>
@@ -47,9 +48,10 @@
                         {
                             <tr>
                                 <td>@item.CustomerId</td>
-                                <td>@Html.ActionLink(@item.CustomerName, "Details", new { id = item.CustomerId }) </td>
+                                <td>@Html.ActionLink(@item.CustomerNameE, "Details", new { id = item.CustomerId }) </td>
                                 <td>@item.OrdersCount</td>
                                 <td>@item.LatestComplaint</td>
+                                <td>@item.LatestOrder</td>
                                 <td>@item.CustomerAddress</td>
                                 <td>@item.CustomerMobile</td>
                             </tr>

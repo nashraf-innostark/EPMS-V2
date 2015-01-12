@@ -107,6 +107,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
         public string CustomerNameE { get; set; }
+        public string CustomerNameA { get; set; }
         public string Address { get; set; }
         public string MobileNumber { get; set; }
     }

@@ -176,7 +176,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button class="btn" type="submit" onclick="validateForm()">Apply</button>
+                    <button class="btn" type="submit" onclick="validateForm(event)">Apply</button>
                 </div>
             </div>
         </div>
@@ -228,7 +228,7 @@
                 }
             });
     });
-    function validateForm() {
+    function validateForm(event) {
         var listSimple = $('.toBeRequired');
         var counter = 0;
         for (var i = 0; i < (listSimple.length) ; i++) {
