@@ -245,6 +245,7 @@
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
+    <Compile Include="Areas\CP\CPAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\HR\Controllers\JobApplicantController.cs" />
@@ -1929,6 +1930,7 @@
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
+    <Content Include="Areas\CP\Views\web.config" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -2349,6 +2351,9 @@
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
+    <Folder Include="Areas\CP\Controllers\" />
+    <Folder Include="Areas\CP\Models\" />
+    <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />

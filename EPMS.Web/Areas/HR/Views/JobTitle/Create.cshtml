@@ -50,7 +50,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameE, new { @dir = "ltr", id = "JobTitleNameE", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameE, new { @dir = "ltr", id = "JobTitleNameE", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameE, "", new { @class = "required" })
                 </div>
             </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { id = "JobTitleNameA", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { id = "JobTitleNameA", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameA, "", new { @class = "required" })
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new {@class = "select2me", id = "departmentId"})
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
                         @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new {@class = "required"})
                     </div>
                 }
@@ -85,6 +85,9 @@
                         @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
                     </div>
                 }                
+            </div>
+            <div class="span2">
+                <label id="departmentvalidate" style="margin-top: 20px"></label>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -124,7 +127,7 @@
             <div class="span3">
                 <div class="span3 span-inset">
                     <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                    <button id="savebtn" class="btn" type="submit" onclick="validateForm(event)">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
                     <button id="cancel" class="btn" onclick="window.location.href='/HR/JobTitle/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
@@ -136,7 +139,7 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         var id = $('#JobTitle_JobTitleId').val();
         $("[readonly='false']").removeAttr("readonly");
         $('.select2me').select2({
@@ -158,10 +161,10 @@
             $("#cancel").hide();
             $("#edit").show();
         }
-        
+
     });
 
-    $("#edit").click(function (event) {
+    $("#edit").click(function(event) {
         CKEDITOR.replace('JobTitleDescE');
         CKEDITOR.replace('JobTitleDescA');
         $('#departmentId').select2('enable');
@@ -169,7 +172,44 @@
         $("#savebtn").show();
         $("#cancel").show();
         $("#edit").hide();
-        
+
         event.preventDefault();
     });
+
+    function validateForm(event) {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length) ; i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "") {
+                $(control).prop('placeholder', 'Required');
+                counter++;
+                $(control).addClass("Error");
+
+            } else {
+                $(control).removeClass("Error");
+            }
+
+        }
+        if ($("#departmentId").val() == null || $("#departmentId").val() == "") {
+            $("#departmentvalidate").text("Please select Department");
+            counter++;
+            $("#departmentvalidate").addClass("Error");
+
+        } else {
+            $("#departmentvalidate").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return false;
+    };
 </script>
