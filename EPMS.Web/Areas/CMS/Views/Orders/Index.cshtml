@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Orders.OrdersListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.CMS.Order.PageTitle;
+    ViewBag.Title = EPMS.Web.Resources.CMS.Order.PTIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -15,14 +15,14 @@
             </a>
         </li>
         <li>
-            @EPMS.Web.Resources.CMS.Order.PageTitle
+            @ViewBag.Title
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.CMS.Order.PageTitle</small></h2>
+    <h2><small>@ViewBag.Title</small></h2>
     @if (Model.SearchRequest.Role == "Customer")
     {
         <h3><small><a href="~/CMS/Orders/Create">@EPMS.Web.Resources.CMS.Order.CreateNew</a></small></h3>
@@ -133,11 +133,11 @@
                     "mRender": function (data, type, full) {
                         var value = "";
                         if (full["OrderStatus"] == 1) {
-                            value = "Pendding";
+                            value = '@EPMS.Web.Resources.CMS.Order.Pending';
                         } else if (full["OrderStatus"] == 2) {
-                            value = "On Going";
+                            value = '@EPMS.Web.Resources.CMS.Order.OnGoing';
                         } else if (full["OrderStatus"] == 3) {
-                            value = "Canceled";
+                            value = '@EPMS.Web.Resources.CMS.Order.Canceled';
                         }
                         return value;
                     }

@@ -99,18 +99,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
                 if (viewModel.RoleName == "Admin")
                 {
-                    viewModel.PageTitle = direction == "ltr" ? "Update Order" : "";
+                    viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
                 }
                 if (viewModel.RoleName == "Customer")
                 {
-                    viewModel.PageTitle = direction == "ltr" ? "Order Details" : "";
+                    viewModel.PageTitle = Resources.CMS.Order.OrderDetail;
                 }
-                viewModel.BtnText = direction == "ltr" ? "Update Quote" : "";
+                viewModel.BtnText = Resources.CMS.Order.BtnUpdate;
                 return View(viewModel);
             }
             viewModel.Orders.OrderNo = GetOrderNumber();
-            viewModel.PageTitle = direction == "ltr" ? "Create New Order" : "";
-            viewModel.BtnText = direction == "ltr" ? "Request A Quote" : "";
+            viewModel.PageTitle = Resources.CMS.Order.PTCreateSave;
+            viewModel.BtnText = Resources.CMS.Order.BtnSave;
             return View(viewModel);
         }
         [HttpPost]
@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "Order has been Updated",
+                        Message = Resources.CMS.Order.Updated,
                         IsSaved = true
                     };
                     return RedirectToAction("Index");
@@ -153,7 +153,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "Order has been Added",
+                        Message = Resources.CMS.Order.Added,
                         IsSaved = true
                     };
                     return RedirectToAction("Index");
@@ -161,16 +161,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
             }
             if (viewModel.RoleName == "Admin")
             {
-                viewModel.PageTitle = direction == "ltr" ? "Update Order" : "";
+                viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
             }
             if (viewModel.RoleName == "Customer")
             {
-                viewModel.PageTitle = direction == "ltr" ? "Create New Order" : "";
+                viewModel.PageTitle = Resources.CMS.Order.PTCreateSave;
             }
-            viewModel.BtnText = direction == "ltr" ? "Request A Quote" : "";
+            viewModel.BtnText = Resources.CMS.Order.BtnSave;
             TempData["message"] = new MessageViewModel
             {
-                Message = "Please fill all the fields correctly",
+                Message = Resources.CMS.Order.Error,
                 IsError = true
             };
             return View(viewModel);

@@ -61,6 +61,33 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Order has been Added.
+        /// </summary>
+        public static string Added {
+            get {
+                return ResourceManager.GetString("Added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request A Quote.
+        /// </summary>
+        public static string BtnSave {
+            get {
+                return ResourceManager.GetString("BtnSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Quote.
+        /// </summary>
+        public static string BtnUpdate {
+            get {
+                return ResourceManager.GetString("BtnUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Canceled.
         /// </summary>
         public static string Canceled {
@@ -79,11 +106,29 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new Order.
+        ///   Looks up a localized string similar to Create New Order.
         /// </summary>
         public static string CreateNew {
             get {
                 return ResourceManager.GetString("CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error in Saving Order.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -97,6 +142,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On Going.
         /// </summary>
         public static string OnGoing {
@@ -106,7 +160,16 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order No.
+        ///   Looks up a localized string similar to Order Details.
+        /// </summary>
+        public static string OrderDetail {
+            get {
+                return ResourceManager.GetString("OrderDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Number.
         /// </summary>
         public static string OrderNo {
             get {
@@ -115,11 +178,11 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Orders&apos; List.
+        ///   Looks up a localized string similar to Order Status.
         /// </summary>
-        public static string PageTitle {
+        public static string OrderStatus {
             get {
-                return ResourceManager.GetString("PageTitle", resourceCulture);
+                return ResourceManager.GetString("OrderStatus", resourceCulture);
             }
         }
         
@@ -129,6 +192,33 @@ namespace EPMS.Web.Resources.CMS {
         public static string Pending {
             get {
                 return ResourceManager.GetString("Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Order.
+        /// </summary>
+        public static string PTCreateSave {
+            get {
+                return ResourceManager.GetString("PTCreateSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Order.
+        /// </summary>
+        public static string PTCreateUpdate {
+            get {
+                return ResourceManager.GetString("PTCreateUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orders&apos; List.
+        /// </summary>
+        public static string PTIndex {
+            get {
+                return ResourceManager.GetString("PTIndex", resourceCulture);
             }
         }
         
@@ -165,6 +255,15 @@ namespace EPMS.Web.Resources.CMS {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order has been Updated.
+        /// </summary>
+        public static string Updated {
+            get {
+                return ResourceManager.GetString("Updated", resourceCulture);
             }
         }
     }
