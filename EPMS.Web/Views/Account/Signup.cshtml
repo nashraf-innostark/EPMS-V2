@@ -1,0 +1,68 @@
+﻿@model EPMS.Models.IdentityModels.ViewModels.SignupViewModel
+
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_ApplicantLayout.cshtml";
+}
+
+<div class="container-login">
+    <div class="form-centering-wrapper">
+        <div class="form-window-login">
+            <div class="form-window-login-logo">
+                <div class="login-logo">
+                    <img src="images/photon/200x100.png" alt="Desert Stars" />
+                </div>
+                <h2 class="login-title">Account Creation</h2>
+
+
+                <div class="login-input-area">
+                    @using (Html.BeginForm("Signup", "Account", FormMethod.Post, new {@class = "", role = "form"}))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.HiddenFor(model => model.CustomerId)
+                        <div>
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", @placeholder = "Username", @id = "Username" })
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.CustomerNameE, new { @class = "form-control ", @placeholder = "NameE" })
+                            @Html.ValidationMessageFor(model => model.CustomerNameE)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.CustomerNameA, new { @class = "form-control ", @placeholder = "NameA" })
+                            @Html.ValidationMessageFor(model => model.CustomerNameA)
+                        </div>
+                        @*<div>
+                            @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control ", @placeholder = "Arabic Name" })
+                            @Html.ValidationMessageFor(model => model.CustomerName)
+                        </div>*@
+                        <div>
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control ", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                        <div>
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", @placeholder = "Confirm Password" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", @placeholder = "Email" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control ", @placeholder = "Mobile Number" })
+                            @Html.ValidationMessageFor(model => model.MobileNumber)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control ", @placeholder = "Address" })
+                            @Html.ValidationMessageFor(model => model.Address)
+                        </div>
+                        
+                        <button type="submit" class="btn btn-large btn-success btn-login">Create Account</button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

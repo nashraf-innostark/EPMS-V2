@@ -153,14 +153,21 @@ namespace EPMS.Web.Areas.HR.Controllers
                         Employee = new Employee()
                     }
                 };
+                string employeeJobId = GetEmployeeJobId();
+                viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                 if (userRole != null) viewModel.Role = userRole.Name;
                 viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-                viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
-                viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
+                viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
+                viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
                 return View(viewModel);
             }
-            long empId = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+            long empId = 0;
+            if (userRole != null && userRole.Name != "Admin")
+            {
+                var users = AspNetUserService.FindById(User.Identity.GetUserId());
+                empId = users.Employee.EmployeeId;
+            }
             if (id > 0 && (id == empId || (userRole != null && userRole.Name == "Admin")))
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
@@ -204,13 +211,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                     }
                     if (userRole.Name == "Admin")
                     {
-                        viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee's List" : "قائمة الموظفين";
-                        viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Update Changes" : "حفظ التعديلات";
+                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTList;
+                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
                     }
                     if (userRole.Name == "Employee" || userRole.Name == "PM")
                     {
-                        viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "My Profile" : "ملفي الشخصي";
-                        viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Update Changes" : "تحديث التغييرات";
+                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTProfile;
+                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
                     }
                     // get Employee requests
                     var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
@@ -281,7 +288,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         {
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = Resources.HR.Employee.AddMessage,
+                                Message = Resources.HR.Employee.UpdateMessage,
                                 IsUpdated = true
                             };
                             return RedirectToAction("Index");
@@ -290,8 +297,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                         viewModel.Role = userRole.Name;
                         viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-                        viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
-                        viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
+                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
+                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
                         TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
                         return View(viewModel);
                     }
@@ -303,8 +310,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                     // Set Employee Values
                     viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
                     viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
-                    string employeeJobId = GetEmployeeJobId();
-                    viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
                     // Add Employee
                     var employeeToSave = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
                     long employeeId = EmployeeService.AddEmployee(employeeToSave);
@@ -320,7 +325,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Employee has been Added",
+                            Message = Resources.HR.Employee.AddMessage,
                             IsSaved = true
                         };
                         viewModel.EmployeeViewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
@@ -342,8 +347,8 @@ namespace EPMS.Web.Areas.HR.Controllers
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             if (userRole != null) viewModel.Role = userRole.Name;
             viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-            viewModel.EmployeeViewModel.BtnText = direction == "ltr" ? "Save Employee" : "اضف الموظف";
-            viewModel.EmployeeViewModel.PageTitle = direction == "ltr" ? "Employee Addition" : "اضافة موظف جديد";
+            viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
+            viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
             TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
             return View(viewModel);
         }

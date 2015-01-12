@@ -19,7 +19,7 @@ namespace EPMS.Interfaces.IServices
         /// <summary>
         /// Add Customer
         /// </summary>
-        bool AddCustomer(Customer customer);
+        Customer AddCustomer(Customer customer);
         /// <summary>
         /// Update Customer
         /// </summary>

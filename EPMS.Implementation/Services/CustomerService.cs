@@ -29,11 +29,11 @@ namespace EPMS.Implementation.Services
             return customerRepository.Find(id);
         }
 
-        public bool AddCustomer(Customer customer)
+        public Customer AddCustomer(Customer customer)
         {
             customerRepository.Add(customer);
             customerRepository.SaveChanges();
-            return true;
+            return customer;
         }
 
         public bool UpdateCustomer(Customer customer)

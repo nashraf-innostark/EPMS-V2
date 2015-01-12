@@ -7,5 +7,6 @@ namespace EPMS.Interfaces.IServices
     {
         AspNetUser FindById(string id);
         IEnumerable<AspNetUser> GetAllUsers();
+        bool UpdateUser(AspNetUser user);
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Orders.OrdersListViewModel
 
 @{
-    ViewBag.Title = "Orders' List";
+    ViewBag.Title = EPMS.Web.Resources.CMS.Order.PTIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -10,20 +10,23 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
         <li>
-            Order List
+            @ViewBag.Title
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Order List</small></h2>
-    <h3><small><a href="~/CMS/Orders/Create">Create new Order</a></small></h3>
+    <h2><small>@ViewBag.Title</small></h2>
+    @if (Model.SearchRequest.Role == "Customer")
+    {
+        <h3><small><a href="~/CMS/Orders/Create">@EPMS.Web.Resources.CMS.Order.CreateNew</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -40,12 +43,12 @@
                     <thead class="">
                         <tr>
                             <th></th>
-                            <th>Order Number</th>
-                            <th>Client Name</th>
-                            <th>Quotation</th>
-                            <th>Invoice</th>
-                            <th>Reciept</th>
-                            <th>Status</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.OrderNo</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.ClientName</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Quotation</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Invoice</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Reciept</th>
+                            <th>@EPMS.Web.Resources.CMS.Order.Status</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -93,28 +96,35 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["Customer"].CustomerName;
+                        var element = "";
+                        if ('@direction' == "ltr") {
+                            element = full["CustomerNameE"];
+                        }
+                        if ('@direction' == "rtl") {
+                            element = full["CustomerNameA"];
+                        }
+                        return element;
                     }
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        
+
                     }
                 },
                 {
@@ -123,11 +133,11 @@
                     "mRender": function (data, type, full) {
                         var value = "";
                         if (full["OrderStatus"] == 1) {
-                            value = "Pendding";
+                            value = '@EPMS.Web.Resources.CMS.Order.Pending';
                         } else if (full["OrderStatus"] == 2) {
-                            value = "On Going";
+                            value = '@EPMS.Web.Resources.CMS.Order.OnGoing';
                         } else if (full["OrderStatus"] == 3) {
-                            value = "Canceled";
+                            value = '@EPMS.Web.Resources.CMS.Order.Canceled';
                         }
                         return value;
                     }

@@ -117,7 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Added" xml:space="preserve">
+    <value>وقد أضيف أجل</value>
+  </data>
+  <data name="BtnSave" xml:space="preserve">
+    <value>طلب اقتباس</value>
+  </data>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>تحديث ترتيب</value>
+  </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>الغي</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>اسم العميل</value>
+  </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>خلق إشتراك جديد</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>الخطأ من أجل توفير</value>
+  </data>
+  <data name="Invoice" xml:space="preserve">
+    <value>الفاتورة</value>
+  </data>
+  <data name="OnGoing" xml:space="preserve">
+    <value>تحت العمل</value>
+  </data>
+  <data name="OrderDetail" xml:space="preserve">
+    <value>ترتيب تفاصيل</value>
+  </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>رقم الطلب</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>موقف</value>
+  </data>
+  <data name="PTCreateSave" xml:space="preserve">
+    <value>خلق طلب جديد</value>
+  </data>
+  <data name="PTCreateUpdate" xml:space="preserve">
+    <value>تحديث ترتيب</value>
+  </data>
+  <data name="PTIndex" xml:space="preserve">
+    <value>قائمة الطلبات</value>
+  </data>
+  <data name="Quotation" xml:space="preserve">
+    <value>عرض السعر</value>
+  </data>
+  <data name="Reciept" xml:space="preserve">
+    <value>سند قبض</value>
+  </data>
   <data name="SelectOrder" xml:space="preserve">
     <value>حدد التطبيق</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>تم تحديث ترتيب</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>تفاصيل الطلب</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>حالة الطلب</value>
   </data>
 </root>

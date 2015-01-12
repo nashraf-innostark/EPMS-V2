@@ -40,7 +40,8 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 OrderStatus = source.OrderStatus,
-                Customer = source.Customer.CreateFrom(),
+                CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
+                CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
             };
         }
     }

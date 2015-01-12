@@ -100,7 +100,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "setDeptJobId toBeRequired", @id = "JobTitle" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "setDeptJobId", @id = "JobTitle" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitleId, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -125,20 +125,30 @@
                 </div>
             </div>
         </div>
-        <!--Drag And Drop Upload begin-->
-        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+        <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="inputField">
-                    @EPMS.Web.Resources.HR.Employee.Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
-                </label>
+                <label class="control-label" for="DepartmentName">@EPMS.Web.Resources.HR.Employee.EmployeeJobId</label>
             </div>
-            <div class="span9 row-fluid">
-                <div class="upload-boxes row-fluid">
-                    <div class="span3" id="upload"></div>
-                    <div class="span9" id="uploaded"></div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeJobId, new { @id = "EmployeeJobId", @disabled = true })
                 </div>
             </div>
         </div>
+        <!--Drag And Drop Upload begin-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="inputField">
+                        @EPMS.Web.Resources.HR.Employee.Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    </label>
+                </div>
+                <div class="span9 row-fluid">
+                    <div class="upload-boxes row-fluid">
+                        <div class="span3" id="upload"></div>
+                        <div class="span9" id="uploaded"></div>
+                    </div>
+                </div>
+            </div>
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -167,8 +177,8 @@
                 <label class="control-label" for="LandlineNumber">@EPMS.Web.Resources.HR.Employee.Email</label>
             </div>
             <div class="span9">
-                <div class="controls Error">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "LandlineNumber", @class = "toBeRequired" })
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "Email", @class = "toBeRequired" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.Email, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -179,7 +189,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "toBeRequired" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.MaritalStatus, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -212,7 +222,7 @@
                         new SelectListItem { Value = "2" , Text = "UAE" },
                         new SelectListItem { Value = "3" , Text = "USA" },
                         new SelectListItem { Value = "4" , Text = "UK" },
-                    }, new { @id = "Nationality", @class = "toBeRequired" })
+                    }, new { @id = "Nationality", @class = "" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNationality, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -380,7 +390,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1" })
+                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
                         </div>
                     </div>
                 </div>
@@ -390,7 +400,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2" })
+                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
                         </div>
                     </div>
                 </div>
@@ -410,25 +420,28 @@
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>@EPMS.Web.Resources.HR.Employee.ReqHistory</strong>
             </div>
-            <div>
-                <header>
-                    <i class="icon-big-notepad"></i>
-                    <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
-                    <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
-                </header>
-            </div>
+            if (Model.Role != "Admin")
+            {
+                <div>
+                    <header>
+                        <i class="icon-big-notepad"></i>
+                        <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
+                        <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+                    </header>
+                </div>
+            }
             <!--Sortable Responsive Table begin-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableRequsts">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>@EPMS.Web.Resources.HR.Request.Requests</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.RequestListViewModel.aaData != null)
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped table-responsive" id="tableRequsts">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@EPMS.Web.Resources.HR.Request.Requests</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.RequestListViewModel.aaData != null)
                             {
                                 foreach (var item in Model.RequestListViewModel.aaData.ToList())
                                 {
@@ -438,36 +451,36 @@
                                     </tr>
                                 }
                             }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             <!--Sortable Responsive Table end-->
-            <div class="alert alert-info alert-block">
-                <i class="icon-alert icon-alert-info"></i>
-                <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
-            </div>
+                <div class="alert alert-info alert-block">
+                    <i class="icon-alert icon-alert-info"></i>
+                    <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
+                </div>
 
             <!--Sortable Responsive Table begin-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableProjects">
-                        <thead>
-                            <tr>
-                                <th>@EPMS.Web.Resources.HR.Tasks.Task</th>
-                                <th>@EPMS.Web.Resources.HR.Tasks.ProjName</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped table-responsive" id="tableProjects">
+                            <thead>
+                                <tr>
+                                    <th>@EPMS.Web.Resources.HR.Tasks.Task</th>
+                                    <th>@EPMS.Web.Resources.HR.Tasks.ProjName</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
         }
         @if ((Model.Role == "Admin") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="return validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
                 </div>
                 <div class="span3 span-inset">
                     <button type="button" class="btn">@EPMS.Web.Resources.HR.Employee.DeactiveEmp</button>
@@ -478,222 +491,217 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="validateForm()">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="return validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
                 </div>
             </div>
         }
     </div>
 }
-<script src="~/RichTextEditor/ckeditor.js"></script>
-<script>
-    $(document).ready(function () {
-        CKEDITOR.replace('ExtraInformationE');
-        CKEDITOR.replace('ExtraInformationA');
-        // upload Image
-        var errors = "";
+        <script src="~/RichTextEditor/ckeditor.js"></script>
+        <script>
+            $(document).ready(function () {
+                CKEDITOR.replace('ExtraInformationE');
+                CKEDITOR.replace('ExtraInformationA');
 
-        $('#upload').mfupload({
-            type: 'jpg,png,tif,jpeg', //all types
-            maxsize: 1,
-            post_upload: "UploadEmployeePhoto",
-            folder: "./",
-            ini_text: "Drag your file here or click (max: 1MB)",
-            over_text: "Drop Here",
-            over_col: '#666666',
-            over_bkcol: '#f0f0f0',
+                // upload Image
+                var errors = "";
+                $('#upload').mfupload({
+                    type: 'jpg,png,tif,jpeg', //all types
+                    maxsize: 1,
+                    post_upload: "UploadEmployeePhoto",
+                    folder: "./",
+                    ini_text: "Drag your file here or click (max: 1MB)",
+                    over_text: "Drop Here",
+                    over_col: '#666666',
+                    over_bkcol: '#f0f0f0',
 
-            init: function () {
-                $("#uploaded").empty();
-            },
+                    init: function () {
+                        $("#uploaded").empty();
+                    },
 
-            start: function (result) {
-                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
-            },
+                    start: function (result) {
+                        $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+                    },
 
-            loaded: function (result) {
-                $("#PRO" + result.fileno).remove();
-                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
-                $("#EmployeeImage").val(result.filename);
-            },
+                    loaded: function (result) {
+                        $("#PRO" + result.fileno).remove();
+                        $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                        $("#EmployeeImage").val(result.filename);
+                    },
 
-            progress: function (result) {
-                $("#PRO" + result.fileno).css("width", result.perc + "%");
-            },
+                    progress: function (result) {
+                        $("#PRO" + result.fileno).css("width", result.perc + "%");
+                    },
 
-            error: function (error) {
-                errors += error.filename + ": " + error.err_des + "\n";
-            },
+                    error: function (error) {
+                        errors += error.filename + ": " + error.err_des + "\n";
+                    },
 
-            completed: function () {
-                if (errors != "") {
-                    alert(errors);
-                    errors = "";
-                }
-            }
-        });
-
-        // set JobId and Department Name
-        $(".setDeptJobId").on("change", function () {
-            var jobId = $(this).val();
-            if (jobId != "") {
-                $("#JobID").val(jobId);
-                var jobsList = '@Html.Raw(Json.Encode(Model.EmployeeViewModel.JobTitleDeptList))';
-                var parsed = JSON.parse(jobsList);
-
-                $.each(parsed, function (key, value) {
-                    if (value.JobId == jobId) {
-                        $("#DepartmentName").val(value.DeptNameE);
-                        $("#BasicSalary").val(value.BasicSalary);
+                    completed: function () {
+                        if (errors != "") {
+                            alert(errors);
+                            errors = "";
+                        }
                     }
                 });
-            } else {
-                $("#DepartmentName").val(jobId);
-                $("#JobID").val(jobId);
-            }
-        });
-        $('#tableProjects').dataTable({
-            "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
+
+                // set JobId and Department Name
+                $(".setDeptJobId").on("change", function () {
+                    var jobId = $(this).val();
+                    if (jobId != "") {
+                        $("#JobID").val(jobId);
+                        var jobsList = '@Html.Raw(Json.Encode(Model.EmployeeViewModel.JobTitleDeptList))';
+                        var parsed = JSON.parse(jobsList);
+
+                        $.each(parsed, function (key, value) {
+                            if (value.JobId == jobId) {
+                                $("#DepartmentName").val(value.DeptNameE);
+                                $("#BasicSalary").val(value.BasicSalary);
+                            }
+                        });
+                    } else {
+                        $("#DepartmentName").val(jobId);
+                        $("#JobID").val(jobId);
+                    }
+                });
+                $('#tableProjects').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                var oTable = $('#tableRequsts').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "iDisplayLength": 5,
+                    "aoColumns": [
+                        { "bVisible": false }, // cloumn to be hide
+                          null // not hide
+                    ],
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                $(".dataTables_length select").select2({
                     dropdownCssClass: 'noSearch'
                 });
-            }
-        });
-        var oTable = $('#tableRequsts').dataTable({
-            "sPaginationType": "bootstrap",
-            "iDisplayLength": 5,
-            "aoColumns": [
-                { "bVisible": false }, // cloumn to be hide
-                  null // not hide
-            ],
-            "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
+
+                // Gregorian Date Picker
+                $(".datepicker").mask('99/99/9999');
+                $(".datepicker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "1900:2050"
                 });
-            }
-        });
-        $(".dataTables_length select").select2({
-            dropdownCssClass: 'noSearch'
-        });
+                // Arabic Date Picker for DOB
+                var calendar = $.calendars.instance('islamic');
+                $('.datepickerArabic').calendarsPicker({
+                    calendar: calendar,
+                    onSelect: function () {
+                        $(this).change();
+                    }
+                });
+                if ('@Model.EmployeeViewModel.Employee.EmployeeId' > 0) {
+                    ConvertGregorianToIslamic();
+                }
+                // Date from Gregorian to Islamic Starts
+                $("#EmployeeDOB").on("change", function () {
+                    if ($('#EmployeeDOB').val() == "") {
+                        $('#EmpDateOfBirthArabic').val("");
+                    }
+                    else {
+                        var dateToBeChanged = $('#EmployeeDOB').val();
+                        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+                        $('#EmpDateOfBirthArabic').val(newDate);
+                    }
+                });
+                //$("#IqamaIssueDate").on("change", function () {
+                //    if ($('#IqamaIssueDate').val() == "") {
+                //        $('#IqamaIssueDateAr').val("");
+                //    }
+                //    else {
+                //        var dateToBeChanged = $('#IqamaIssueDate').val();
+                //        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+                //        $('#IqamaIssueDateAr').val(newDate);
+                //    }
+                //});
+                $("#IqamaExpiryDate").on("change", function () {
+                    if ($('#IqamaExpiryDate').val() == "") {
+                        $('#IqamaExpiryDateAr').val("");
+                    }
+                    else {
+                        var dateToBeChanged = $('#IqamaExpiryDate').val();
+                        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+                        $('#IqamaExpiryDateAr').val(newDate);
+                    }
+                });
+                $("#PassportExpiryDate").on("change", function () {
+                    if ($('#PassportExpiryDate').val() == "") {
+                        $('#PassportExpiryDateAr').val("");
+                    }
+                    else {
+                        var dateToBeChanged = $('#PassportExpiryDate').val();
+                        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+                        $('#PassportExpiryDateAr').val(newDate);
+                    }
+                });
+                // Date from Gregorian to Islamic Ends
 
-        // Gregorian Date Picker
-        $(".datepicker").mask('99/99/9999');
-        $(".datepicker").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "1900:2050"
-        });
-        // Arabic Date Picker for DOB
-        var calendar = $.calendars.instance('islamic');
-        $('.datepickerArabic').calendarsPicker({
-            calendar: calendar,
-            onSelect: function () {
-                $(this).change();
-            }
-        });
-        if ('@Model.EmployeeViewModel.Employee.EmployeeId' > 0) {
-            ConvertGregorianToIslamic();
-        }
-        // Date from Gregorian to Islamic Starts
-        $("#EmployeeDOB").on("change", function () {
-            if ($('#EmployeeDOB').val() == "") {
-                $('#EmpDateOfBirthArabic').val("");
-            }
-            else {
-                var dateToBeChanged = $('#EmployeeDOB').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#EmpDateOfBirthArabic').val(newDate);
-            }
-        });
-        //$("#IqamaIssueDate").on("change", function () {
-        //    if ($('#IqamaIssueDate').val() == "") {
-        //        $('#IqamaIssueDateAr').val("");
-        //    }
-        //    else {
-        //        var dateToBeChanged = $('#IqamaIssueDate').val();
-        //        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-        //        $('#IqamaIssueDateAr').val(newDate);
-        //    }
-        //});
-        $("#IqamaExpiryDate").on("change", function () {
-            if ($('#IqamaExpiryDate').val() == "") {
-                $('#IqamaExpiryDateAr').val("");
-            }
-            else {
-                var dateToBeChanged = $('#IqamaExpiryDate').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#IqamaExpiryDateAr').val(newDate);
-            }
-        });
-        $("#PassportExpiryDate").on("change", function () {
-            if ($('#PassportExpiryDate').val() == "") {
-                $('#PassportExpiryDateAr').val("");
-            }
-            else {
-                var dateToBeChanged = $('#PassportExpiryDate').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#PassportExpiryDateAr').val(newDate);
-            }
-        });
-        // Date from Gregorian to Islamic Ends
+            });
 
-    });
-
-    function ConvertGregorianToIslamic() {
-        $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
-        //$("#IqamaIssueDateAr").val(ConvertDates($("#IqamaIssueDate").val(), "gregorian", "islamic"));
-        $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
-        $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
-    }
-    function HijriToGregorian(currElement, toValue) {
-        if ($(currElement).val() == "") {
-            $(toValue).val("");
-        }
-        else {
-            var splittedDate = $(currElement).val().split('/');
-            $(currElement).val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
-            var dateToBeChanged = $(currElement).val();
-            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
-            $(toValue).val(newDate);
-        }
-    }
-    function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
-        var calender = $.calendars.instance(fromCalender);
-        var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);
-        calender = $.calendars.instance(toCalender);
-        var changedDate = calender.fromJD(dateToBeChanged.toJD());
-        return calender.formatDate("mm/dd/yyyy", changedDate);
-    }
-    function validateForm() {
-        var listSimple = $('.toBeRequired');
-        var counter = 0;
-        for (var i = 0; i < (listSimple.length) ; i++) {
-            var control = listSimple[i];
-            var fieldvalue = $(control).val();
-            if (fieldvalue == null || fieldvalue == "" || fieldvalue == 0) {
-                $(control).prop('placeholder', 'Required');
-                counter++;
-                $(control).addClass("Error");
-
-            } else {
-                $(control).removeClass("Error");
+            function ConvertGregorianToIslamic() {
+                $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
+                //$("#IqamaIssueDateAr").val(ConvertDates($("#IqamaIssueDate").val(), "gregorian", "islamic"));
+                $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
+                $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
             }
-        }
-        if (counter > 0) {
-            //implementing focus back to error
-            if ($(".Error").length > 0) {
-                var divId = $(".Error")[0].id;
-                if ($("#" + divId).length > 0)
-                    $("#" + divId).focus();
-                event.preventDefault();
-                return false;
+            function HijriToGregorian(currElement, toValue) {
+                if ($(currElement).val() == "") {
+                    $(toValue).val("");
+                }
+                else {
+                    var splittedDate = $(currElement).val().split('/');
+                    $(currElement).val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
+                    var dateToBeChanged = $(currElement).val();
+                    var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
+                    $(toValue).val(newDate);
+                }
             }
-        }
-        if ($(".files").length == 0) {
-            $("#uploaded").text("Attach your Profile Picture.");
-            event.preventDefault();
-            return false;
-        }
-        return true;
-    }
-</script>
+            function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
+                var calender = $.calendars.instance(fromCalender);
+                var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);
+                calender = $.calendars.instance(toCalender);
+                var changedDate = calender.fromJD(dateToBeChanged.toJD());
+                return calender.formatDate("mm/dd/yyyy", changedDate);
+            }
+            function validateForm() {
+                var listSimple = $('.toBeRequired');
+                var counter = 0;
+                for (var i = 0; i < (listSimple.length) ; i++) {
+                    var control = listSimple[i];
+                    var fieldvalue = $(control).val();
+                    if (fieldvalue == null || fieldvalue == "") {
+                        $(control).prop('placeholder', 'Required');
+                        counter++;
+                        $(control).addClass("Error");
+
+                    } else {
+                        $(control).removeClass("Error");
+                    }
+                }
+                if (counter > 0) {
+                    //implementing focus back to error
+                    if ($(".Error").length > 0) {
+                        var divId = $(".Error")[0].id;
+                        if ($("#" + divId).length > 0)
+                            $("#" + divId).focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                }
+                return true;
+            }
+        </script>

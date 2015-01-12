@@ -2405,6 +2405,7 @@
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
     <Content Include="Content\CSS\ie-only.less" />
+    <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
     <Content Include="Content\CSS\ie8-only.less" />
     <Content Include="Content\CSS\photon-responsive.less" />
     <Content Include="Content\CSS\photon.less" />
@@ -2836,6 +2837,7 @@
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_ApplicantLayout.cshtml" />
+    <Content Include="Views\Account\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicantCvs\" />
