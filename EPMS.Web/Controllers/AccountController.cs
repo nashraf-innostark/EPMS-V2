@@ -457,7 +457,8 @@ namespace IdentitySample.Controllers
                 #region Add Customer
 
                 EPMS.Models.DomainModels.Customer customer = new EPMS.Models.DomainModels.Customer();
-                customer.CustomerName = signupViewModel.CustomerName;
+                customer.CustomerNameE = signupViewModel.CustomerNameE;
+                customer.CustomerNameA = signupViewModel.CustomerNameA;
                 customer.CustomerAddress = signupViewModel.Address;
                 customer.CustomerMobile = signupViewModel.MobileNumber;
                 EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);

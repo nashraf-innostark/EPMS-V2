@@ -22,8 +22,20 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 OrdersCount = source.Orders.Count,
-                //LatestComplaint = source.Complaints.OrderByDescending(c=>c.ComplaintDate).Where(c=>c.CustomerId == source.CustomerId).FirstOrDefault().Topic ?? "",
-                //LatestOrder = source.Orders.OrderByDescending(c => c.OrderDate).Where(c => c.CustomerId == source.CustomerId).FirstOrDefault().OrderNo ?? "",
+                LatestComplaint =
+                    (source.Complaints != null && source.Complaints.Any(c => c.CustomerId == source.CustomerId))
+                        ? source.Complaints.Where(c => c.CustomerId == source.CustomerId)
+                            .OrderByDescending(c => c.ComplaintDate)
+                            .FirstOrDefault()
+                            .Topic
+                        : string.Empty,
+                LatestOrder =
+                    (source.Orders != null && source.Orders.Any(c => c.CustomerId == source.CustomerId))
+                        ? source.Orders.Where(c => c.CustomerId == source.CustomerId)
+                            .OrderBy(c => c.OrderDate)
+                            .FirstOrDefault()
+                            .OrderNo
+                        : string.Empty,
             };
 
         }

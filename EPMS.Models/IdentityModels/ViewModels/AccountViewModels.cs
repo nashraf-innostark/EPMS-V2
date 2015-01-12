@@ -106,7 +106,8 @@ namespace EPMS.Models.IdentityModels.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
-        public string CustomerName { get; set; }
+        public string CustomerNameE { get; set; }
+        public string CustomerNameA { get; set; }
         public string Address { get; set; }
         public string MobileNumber { get; set; }
     }
