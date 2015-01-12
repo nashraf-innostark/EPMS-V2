@@ -225,4 +225,22 @@
   <data name="NameIndex" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="EmployeeJobId" xml:space="preserve">
+    <value>Employee Job ID</value>
+  </data>
+  <data name="BtnSave" xml:space="preserve">
+    <value>Save Employee</value>
+  </data>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>Update Changes</value>
+  </data>
+  <data name="PTAdd" xml:space="preserve">
+    <value>Employee Addition</value>
+  </data>
+  <data name="PTList" xml:space="preserve">
+    <value>Employee's List</value>
+  </data>
+  <data name="PTProfile" xml:space="preserve">
+    <value>My Profile</value>
+  </data>
 </root>

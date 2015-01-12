@@ -142,6 +142,24 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save Employee.
+        /// </summary>
+        public static string BtnSave {
+            get {
+                return ResourceManager.GetString("BtnSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Changes.
+        /// </summary>
+        public static string BtnUpdate {
+            get {
+                return ResourceManager.GetString("BtnUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deactivate Employee.
         /// </summary>
         public static string DeactiveEmp {
@@ -201,6 +219,15 @@ namespace EPMS.Web.Resources.HR {
         public static string EmpJobTitle {
             get {
                 return ResourceManager.GetString("EmpJobTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Job ID.
+        /// </summary>
+        public static string EmployeeJobId {
+            get {
+                return ResourceManager.GetString("EmployeeJobId", resourceCulture);
             }
         }
         
@@ -354,6 +381,33 @@ namespace EPMS.Web.Resources.HR {
         public static string ProblemSaving {
             get {
                 return ResourceManager.GetString("ProblemSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Addition.
+        /// </summary>
+        public static string PTAdd {
+            get {
+                return ResourceManager.GetString("PTAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee&apos;s List.
+        /// </summary>
+        public static string PTList {
+            get {
+                return ResourceManager.GetString("PTList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Profile.
+        /// </summary>
+        public static string PTProfile {
+            get {
+                return ResourceManager.GetString("PTProfile", resourceCulture);
             }
         }
         

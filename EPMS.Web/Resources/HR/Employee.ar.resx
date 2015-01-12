@@ -225,4 +225,22 @@
   <data name="NameIndex" xml:space="preserve">
     <value>اسم الموظف</value>
   </data>
+  <data name="EmployeeJobId" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BtnSave" xml:space="preserve">
+    <value>اضف الموظف</value>
+  </data>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>حفظ التعديلات</value>
+  </data>
+  <data name="PTAdd" xml:space="preserve">
+    <value>اضافة موظف جديد</value>
+  </data>
+  <data name="PTList" xml:space="preserve">
+    <value>قائمة الموظفين</value>
+  </data>
+  <data name="PTProfile" xml:space="preserve">
+    <value>ملفي الشخصي</value>
+  </data>
 </root>

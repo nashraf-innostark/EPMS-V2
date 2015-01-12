@@ -85,7 +85,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Employee.NameA</label>
+                <label class="control-label" for="EmployeeNameA">@EPMS.Web.Resources.HR.Employee.Name</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -100,7 +100,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "setDeptJobId toBeRequired", @id = "JobTitle" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "setDeptJobId", @id = "JobTitle" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitleId, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -122,6 +122,16 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitleId, new { @disabled = true, @id = "JobID" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="EmployeeJobId">@EPMS.Web.Resources.HR.Employee.EmployeeJobId</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeJobId, new { @id = "EmployeeJobId", @disabled = true })
                 </div>
             </div>
         </div>
@@ -164,11 +174,11 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="LandlineNumber">@EPMS.Web.Resources.HR.Employee.Email</label>
+                <label class="control-label" for="Email">@EPMS.Web.Resources.HR.Employee.Email</label>
             </div>
             <div class="span9">
-                <div class="controls Error">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "LandlineNumber", @class = "toBeRequired" })
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "Email", @class = "toBeRequired" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.Email, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -179,7 +189,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "toBeRequired" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.MaritalStatus, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -212,7 +222,7 @@
                         new SelectListItem { Value = "2" , Text = "UAE" },
                         new SelectListItem { Value = "3" , Text = "USA" },
                         new SelectListItem { Value = "4" , Text = "UK" },
-                    }, new { @id = "Nationality", @class = "toBeRequired" })
+                    }, new { @id = "Nationality", @class = "" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNationality, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -295,7 +305,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label cultureE" for="ExtraInformationE">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+                <label class="control-label cultureE" for="ExtraInformationA">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -380,7 +390,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1" })
+                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
                         </div>
                     </div>
                 </div>
@@ -390,7 +400,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2" })
+                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
                         </div>
                     </div>
                 </div>
@@ -410,13 +420,16 @@
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>@EPMS.Web.Resources.HR.Employee.ReqHistory</strong>
             </div>
-            <div>
-                <header>
-                    <i class="icon-big-notepad"></i>
-                    <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
-                    <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
-                </header>
-            </div>
+            if (Model.Role != "Admin")
+            {
+                <div>
+                    <header>
+                        <i class="icon-big-notepad"></i>
+                        <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
+                        <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+                    </header>
+                </div>
+            }
             <!--Sortable Responsive Table begin-->
             <div class="row-fluid">
                 <div class="span12">
@@ -467,7 +480,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="return validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
                 </div>
                 <div class="span3 span-inset">
                     <button type="button" class="btn">@EPMS.Web.Resources.HR.Employee.DeactiveEmp</button>
@@ -478,7 +491,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="validateForm()">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="return validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
                 </div>
             </div>
         }
@@ -487,11 +500,11 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
+        // CK Editor
         CKEDITOR.replace('ExtraInformationE');
         CKEDITOR.replace('ExtraInformationA');
         // upload Image
         var errors = "";
-
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', //all types
             maxsize: 1,
@@ -531,7 +544,7 @@
                 }
             }
         });
-
+        
         // set JobId and Department Name
         $(".setDeptJobId").on("change", function () {
             var jobId = $(this).val();
@@ -664,13 +677,22 @@
         var changedDate = calender.fromJD(dateToBeChanged.toJD());
         return calender.formatDate("mm/dd/yyyy", changedDate);
     }
-    function validateForm() {
+    //function validateForm(event) {
+    //    event.preventDefault();
+    //    // Ignore Image Validation in Data Annotation
+    //    $("#AddEditEmployeeForm").validate({
+    //        ignore: mf_file_upload,
+    //        rules: {
+    //        }
+    //    });
+    //}
+    function validateForm(event) {
         var listSimple = $('.toBeRequired');
         var counter = 0;
         for (var i = 0; i < (listSimple.length) ; i++) {
             var control = listSimple[i];
             var fieldvalue = $(control).val();
-            if (fieldvalue == null || fieldvalue == "" || fieldvalue == 0) {
+            if (fieldvalue == null || fieldvalue == "") {
                 $(control).prop('placeholder', 'Required');
                 counter++;
                 $(control).addClass("Error");
@@ -688,11 +710,6 @@
                 event.preventDefault();
                 return false;
             }
-        }
-        if ($(".files").length == 0) {
-            $("#uploaded").text("Attach your Profile Picture.");
-            event.preventDefault();
-            return false;
         }
         return true;
     }

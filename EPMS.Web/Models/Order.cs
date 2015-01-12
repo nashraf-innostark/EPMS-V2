@@ -20,7 +20,7 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public int? OrderStatus { get; set; }
-
-        public Customer Customer { get; set; }
+        public string CustomerNameE{ get; set; }
+        public string CustomerNameA{ get; set; }
     }
 }
