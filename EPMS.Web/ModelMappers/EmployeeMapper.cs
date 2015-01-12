@@ -65,10 +65,10 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
-                JobTitle = source.JobTitle.CreateFrom(),
                 EmployeeJobId = source.EmployeeJobId,
                 //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
+                JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
             };
 
         }
@@ -99,7 +99,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
                 EmployeeJobId = source.EmployeeJobId,
-                JobTitle = source.JobTitle.CreateFrom(),
+                JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
                 //EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
             };
