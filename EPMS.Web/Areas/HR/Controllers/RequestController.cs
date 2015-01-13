@@ -117,6 +117,10 @@ namespace EPMS.Web.Areas.HR.Controllers
                     requestViewModel.Request.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
                     requestViewModel.Request.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
                 }
+                else
+                {
+                    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
+                }
             }
             if (requestViewModel.RequestDetail.IsApproved)
                 ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.Request.RequestAccepted, IsInfo = true };

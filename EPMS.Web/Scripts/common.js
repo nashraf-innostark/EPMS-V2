@@ -257,7 +257,6 @@ function resizeEnd () {
 // FLIP WIDGET
 
 function flipit (elem) {
-
 	if($(elem).hasClass("btn-inverse"))
 		{
 			$(elem).parents('.widget-holder').find(".widget-flipper").hide();
@@ -272,6 +271,4 @@ function removeTempLoader()
 	var parent = $(this).parent();
 	parent.find(".widget-flipper").show();
 	$(this).hide();
-	
-	
 }

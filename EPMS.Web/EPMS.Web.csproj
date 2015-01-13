@@ -265,6 +265,9 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="DashboardModels\Complaint.cs" />
+    <Compile Include="DashboardModels\Customer.cs" />
+    <Compile Include="DashboardModels\EmployeeRequest.cs" />
     <Compile Include="Files\PDF Helping Files\PDFCheckBoxFieldType.cs" />
     <Compile Include="Files\PDF Helping Files\PDFFieldType.cs" />
     <Compile Include="Files\PDF Helping Files\PDFHelper.cs" />
@@ -356,6 +359,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Order.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -470,7 +478,7 @@
     <Compile Include="ViewModels\Complaint\ComplaintViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
-    <Compile Include="ViewModels\Dashboard\EmployeeRequestsViewModel.cs" />
+    <Compile Include="DashboardModels\Employee.cs" />
     <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
@@ -1795,7 +1803,6 @@
     <Content Include="Images\w_twitter%402x.png" />
     <Content Include="Reports\PrisonerInfo.aspx" />
     <Content Include="Reports\PrisonerReport.aspx" />
-    <Content Include="Resources\Product.xml" />
     <Content Include="RichTextEditor\adapters\jquery.js" />
     <Content Include="RichTextEditor\build-config.js" />
     <Content Include="RichTextEditor\ckeditor.js" />
@@ -2470,6 +2477,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Order.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2857,8 +2868,6 @@
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
     <Folder Include="Images\Employee\" />
-    <Folder Include="Images\HomeSlider\" />
-    <Folder Include="Images\News\" />
     <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />

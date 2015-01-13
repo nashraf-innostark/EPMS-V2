@@ -39,14 +39,19 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
-        public IEnumerable<Complaint> GetAllComplaints()
+        public IEnumerable<Complaint> LoadAllComplaints()
         {
             return complaintRepository.GetAll();
         }
 
-        public IEnumerable<Complaint> GetAllComplaintsByCustomerId(long id)
+        public IEnumerable<Complaint> LoadAllComplaintsByCustomerId(long id)
         {
             return complaintRepository.GetAllComplaintsByCustomerId(id);
+        }
+
+        public IEnumerable<Complaint> LoadComplaintsForDashboard(string requester)
+        {
+            return complaintRepository.GetComplaintsForDashboard(requester);
         }
     }
 }

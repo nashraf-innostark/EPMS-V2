@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
@@ -32,6 +33,16 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<Complaint> GetAllComplaintsByCustomerId(long id)
         {
             return DbSet.Where(x => x.CustomerId == id).OrderByDescending(x=>x.ComplaintDate);
+        }
+
+        public IEnumerable<Complaint> GetComplaintsForDashboard(string requester)
+        {
+            if (requester == "Admin")
+            {
+                return DbSet.OrderByDescending(x => x.ComplaintDate).Take(5);
+            }
+            long customerId = Convert.ToInt64(requester);
+            return DbSet.Where(x => x.CustomerId == customerId).OrderByDescending(x => x.ComplaintDate).Take(5);
         }
     }
 }

@@ -53,6 +53,16 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.EmployeeId == employeeId);
         }
 
+        public IEnumerable<EmployeeRequest> GetRequestsForDashboard(string requester)
+        {
+            if (requester == "Admin")
+            {
+                return DbSet.OrderByDescending(x => x.RequestDate).Take(5);
+            }
+            long employeeId = Convert.ToInt64(requester);
+            return DbSet.Where(x => x.EmployeeId == employeeId).OrderByDescending(x => x.RequestDate).Take(5);
+        }
+
         public IEnumerable<EmployeeRequest> GetAllMonetaryRequests(DateTime currentMonth, long id)
         {
             return DbSet.Where(x => (x.IsMonetary) && (x.EmployeeId == id) && (x.RequestDetails.Count(y => (y.IsApproved))>0) && (x.RequestDetails.Count(z => ((currentMonth >= z.FirstInstallmentDate) && (currentMonth <= z.LastInstallmentDate))) > 0));

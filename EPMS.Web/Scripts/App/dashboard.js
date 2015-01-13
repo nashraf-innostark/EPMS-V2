@@ -155,7 +155,7 @@
         $.pnotify({
             title: 'Welcome',
             type: 'info',
-            text: 'Login Person Name'
+            text: $("#SessionUserName").val()
         });
     }, 2000);
     var firstHover = true;
@@ -196,15 +196,13 @@
 
     $(".tempLoader").on('click', removeTempLoader);
 
-
-    var count = 0
+    var count = 0;
     $("#progressId li.dashTask").each(function () {
 
         if (count >= 4) {
             $(this).addClass("hideIt");
         }
         count++;
-
     });
 
     if (count >= 4) {
@@ -336,12 +334,8 @@
             $('.processed-pct2 .bar').text(target + "%");
         }, 200);
     });
-
-
-    $(".tempLoader").on('click', removeTempLoader);
-
-
-    var count = 0
+    
+    count = 0;
     $("#progressId2 li.dashTask").each(function () {
 
         if (count >= 4) {
@@ -536,12 +530,21 @@ function scrollToTop() {
 
 //#region Widgets Loaders
 //#region Employee Requests Loaders
-var siteUrl = $('#siteURL').val();
-function GetEmployeeRequests() {
-    var id = $(this).val();
-    if (id > 0) {
-        $('#SearchRequest_JobId').empty();
-        var url = siteUrl + "/Dashboard/GetEmployeeRequests";
+function Loader(control) {
+    if (control.className != "refresher") {
+        flipit(control);
+    } else {
+        $(control).parents('.widget-holder').find(".tempLoader").show();
+    }
+}
+function LoadEmployeeRequests(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var id = $("#employeeId").val();
+    if (control.className == "refresher" || id == "") {
+        id = 0;
+    }
+    var url = siteUrl + "/Dashboard/LoadEmployeeRequests";
         $.ajax({
             url: url,
             type: 'GET',
@@ -550,30 +553,71 @@ function GetEmployeeRequests() {
                 employeeId: id
             },
             success: function (data) {
+                $(".tempLoader").click();
                 //we have searchResult and now convert it in list item form.
                 $('#employeeRequests').empty();
-                $.each(data, function (itemIndex, result) {
-                    //passing telephone and map's latitude langitude in accessKey and dir attributes respectively.
-                    if (result.nightPharmacy) {
-                        $('#employeeRequests').append(
-                            '<li onclick="tap(this)" class="search-special ui-li-static ui-body-inherit ui-li-has-thumb ui-first-child ui-last-child" dir=' + result.latlng + ' accesskey=' + result.tel.replace(/\s/g, '') + '>' +
-                                '<img class="search-img" src="img/icon-e.png">' +
-                                '<p class="search-heading">' + result.label + '</p>' +
-                                '<p class="search-detail">' + result.address + '</p>' +
-                                '<p class="ui-li-aside search-distance"><strong>' + result.distance + 'KM</strong></p>' +
-                            '</li> ');
-                    }
-                });
+                if (data.length > 0) {
+                    $.each(data, function (itemIndex, item) {
+                        if (item.IsReplied) {
+                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + '<img src="/Images/photon/workDone.png" alt="Read" title="Read" class="status"></div></li>');
+                        } else {
+                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + '<img src="/Images/photon/notDone.png" alt="Read" title="Read" class="status"></div></li>');
+                        }
+                        
+                    });
+                }
+                else {
+                    $(".tempLoader").click();
+                    $('#employeeRequests').append('<li>No record found</li>');
+                }
             },
             error: function (e) {
                 alert('Error=' + e.toString());
+                $(".tempLoader").click();
             }
         });
-    } else {
-        $('#mainbar').unblock();
-        $('#SearchRequest_JobId').empty();
+};
+function LoadComplaints(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var id = $("#customerId").val();
+    if (control.className == "refresher" || id == "") {
+        id = 0;
     }
-
+    var url = siteUrl + "/Dashboard/LoadComplaints";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            customerId: id
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#complaints').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (item.IsReplied) {
+                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + '<img src="/Images/photon/workDone.png" alt="Read" title="Read" class="status"></div></li>');
+                    } else {
+                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + '<img src="/Images/photon/notDone.png" alt="Read" title="Read" class="status"></div></li>');
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#complaints').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+    //} else {
+    //    $(".tempLoader").click();
+    //}
 };
 //#endregion
 //#endregion
