@@ -25,7 +25,6 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
-
         public static Models.Complaint CreateFromServerToClient(this Complaint source)
         {
             return new Models.Complaint
@@ -47,6 +46,16 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+        }
+        public static DashboardModels.Complaint CreateForDashboard(this Complaint source)
+        {
+            return new DashboardModels.Complaint
+            {
+                ComplaintId = source.ComplaintId,
+                ClientName = source.Customer.CustomerNameE,
+                Topic = source.Topic,
+                IsReplied = source.IsReplied
             };
         }
         #endregion

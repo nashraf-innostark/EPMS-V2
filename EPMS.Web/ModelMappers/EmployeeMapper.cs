@@ -72,6 +72,15 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
+        public static DashboardModels.Employee CreateForDashboard(this Employee source)
+        {
+            return new DashboardModels.Employee
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? ""
+            };
+
+        }
         public static Models.Employee CreateFromServerToClientWithImage(this Employee source)
         {
             return new Models.Employee

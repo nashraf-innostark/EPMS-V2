@@ -45,6 +45,18 @@ namespace EPMS.Web.ModelMappers
                     RequestDetail = source.RequestDetails.OrderByDescending(x=>x.RowVersion).FirstOrDefault().CreateFromServerToClient()
                 };
             }
+            public static DashboardModels.EmployeeRequest CreateForDashboard(this EmployeeRequest source)
+            {
+                return new DashboardModels.EmployeeRequest
+                {
+                    RequestId = source.RequestId,
+                    EmployeeId = source.EmployeeId,
+                    EmployeeNameE = source.Employee.EmployeeNameE,
+                    RequestTopic = source.RequestTopic,
+                    RequestDateString = source.RequestDate.ToShortDateString(),
+                    IsReplied = source.RequestDetails.OrderByDescending(x => x.RowVersion).FirstOrDefault().IsReplied
+                };
+            }
         #endregion
 
         #region Employee Request Detail Mappers

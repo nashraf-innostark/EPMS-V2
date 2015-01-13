@@ -39,6 +39,21 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
+        /// <summary>
+        /// Map customers from database to client dashboard
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static DashboardModels.Customer CreateForDashboard(this DomainModels.Customer source)
+        {
+            return new DashboardModels.Customer
+            {
+                CustomerId = source.CustomerId,
+                CustomerNameE = source.CustomerNameE,
+                CustomerNameA = source.CustomerNameA
+            };
+
+        }
         public static CustomerViewModel CreateFromServerToClientVM(this DomainModels.Customer source)
         {
             return new CustomerViewModel

@@ -40,33 +40,32 @@ namespace EPMS.Web.Controllers
         public void SetUserDetail()
         {
             Session["FullName"] = Session["LoginID"] = string.Empty;
-            
-            if (User.Identity.IsAuthenticated)
-            {
-                AspNetUser result =
-                    HttpContext.GetOwinContext()
-                        .GetUserManager<ApplicationUserManager>()
-                        .FindById(User.Identity.GetUserId());
-                string role =
-                    HttpContext.GetOwinContext()
-                        .Get<ApplicationRoleManager>()
-                        .FindById(result.AspNetRoles.ToList()[0].Id)
-                        .Name;
-                Session["LoginID"] = result.Id;
-                Session["RoleName"] = role;
 
-                menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
+            if (!User.Identity.IsAuthenticated) return;
+            AspNetUser result =
+                HttpContext.GetOwinContext()
+                    .GetUserManager<ApplicationUserManager>()
+                    .FindById(User.Identity.GetUserId());
+            string role =
+                HttpContext.GetOwinContext()
+                    .Get<ApplicationRoleManager>()
+                    .FindById(result.AspNetRoles.ToList()[0].Id)
+                    .Name;
+            Session["FullName"] = result.UserName;
+            Session["LoginID"] = result.Id;
+            Session["RoleName"] = role;
+            Session["EmployeeID"] = result.EmployeeId;
+            Session["CustomerID"] = result.CustomerId;
 
-                AspNetUser userResult = UserManager.FindById(User.Identity.GetUserId());
-                List<AspNetRole> roles = userResult.AspNetRoles.ToList();
-                IList<MenuRight> userRights =
-                    menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
+            menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
 
-                string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
-                Session["UserPermissionSet"] = userPermissions;
-                return;
-            }
+            AspNetUser userResult = UserManager.FindById(User.Identity.GetUserId());
+            List<AspNetRole> roles = userResult.AspNetRoles.ToList();
+            IList<MenuRight> userRights =
+                menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
 
+            string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
+            Session["UserPermissionSet"] = userPermissions;
         }
 
 

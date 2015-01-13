@@ -1,18 +1,18 @@
 ﻿@using System.Configuration
-@using System.Configuration
 <!DOCTYPE html>
 
-<html dir="@EPMS.Web.Resources.Shared.Common.TextDirection">
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-
-    <title>@ViewBag.Title</title>
+    <title>Dashboard</title>
 
     <!-- shortcut icon -->
     <link rel="shortcut icon" href="~/Images/favicon.ico" />
+    <link rel="apple-touch-icon" href="~/Images/iosicon.png" />
+    <!--    DEVELOPMENT LESS -->
+    <!--    <link rel="stylesheet/less" href="~/Content/css/photon.less" media="all" />
+            <link rel="stylesheet/less" href="~/Content/css/photon-responsive.less" media="all" /> -->
+
     <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
@@ -133,27 +133,27 @@
                 </a>
                 <ul class="nav user-sub-menu">
                     <li class="">
-                        <a href="dashboard-En.html">
+                        <a href="#">
                             <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />EN
                         </a>
                     </li>
                     <li class="">
-                        <a href="dashboard-Ar.html">
+                        <a href="#">
                             <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />AR
                         </a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="companyWebsite.html">
+                <a href="#">
                     <i class="icon-photon target"></i>
 
                 </a>
             </li>
             <li>
-                <a href="NotificationList(Admin,Employee with Auth)En.html">
+                <a href="#">
                     <i class="icon-photon comment_alt2_stroke"></i>
-                    <div class="notification-count">12</div>
+                    <div class="notification-count">0</div>
                 </a>
             </li>
         </ul>
@@ -172,17 +172,8 @@
             </ul>
         </div>
     </div>
-
-
     <!-- Page content starts -->
-    <div class="container-fluid dashboard dashboard-widget-group">
-        <div class="row-fluid">
-            <div id="photon_widgets" class="span12 ui-sortable">
-                @RenderBody()
-            </div>
-        </div>
-    </div>
-    <div class="dashboard-watermark"></div>
+    @RenderBody()
     <div class="scroll-top-wrapper ">
         <span class="scroll-top-inner">
             <span class="arrow_up"></span>
@@ -197,79 +188,7 @@
         <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
         <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
     }
-    <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
-
-    <script>
-        $(function () {
-            setTimeout(function () {
-                $('.nav-fixed-topright').removeAttr('style');
-            }, 300);
-
-            $(window).scroll(function () {
-                if ($('.breadcrumb-container').length) {
-                    var scrollState = $(window).scrollTop();
-                    if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
-                    else $('.nav-fixed-topright').removeClass('nav-released');
-                }
-            });
-            $('.user-sub-menu-container').on('click', function () {
-                $(this).toggleClass('active-user-menu');
-            });
-            $('.user-sub-menu .light').on('click', function () {
-                if ($('body').is('.light-version')) return;
-                $('body').addClass('light-version');
-                setTimeout(function () {
-                    $.cookie('themeColor', 'light', {
-                        expires: 7,
-                        path: '/'
-                    });
-                }, 500);
-            });
-            $('.user-sub-menu .dark').on('click', function () {
-                if ($('body').is('.light-version')) {
-                    $('body').removeClass('light-version');
-                    $.cookie('themeColor', 'dark', {
-                        expires: 7,
-                        path: '/'
-                    });
-                }
-            });
-        });
-
-        $(function () {
-
-            $(document).on('scroll', function () {
-
-                if ($(window).scrollTop() > 100) {
-                    $('.scroll-top-wrapper').addClass('show');
-                } else {
-                    $('.scroll-top-wrapper').removeClass('show');
-                }
-            });
-
-
-            $(document).on('scroll', function () {
-
-                if ($(window).scrollTop() > 100) {
-                    $('.scroll-top-wrapper').addClass('show');
-                } else {
-                    $('.scroll-top-wrapper').removeClass('show');
-                }
-            });
-
-            $('.scroll-top-wrapper').on('click', scrollToTop);
-
-
-        });
-
-        function scrollToTop() {
-            verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
-            element = $('body');
-            offset = element.offset();
-            offsetTop = offset.top;
-            $('html, body').animate({ scrollTop: offsetTop }, 500, 'linear');
-        }
-    </script>
-
+    <input type="hidden" id="SessionUserName" value="@ViewBag.UserName" />
+    <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"])" />
 </body>
 </html>

@@ -85,7 +85,10 @@ namespace EPMS.Implementation.Services
                 return false;
             }
         }
-
+        public IEnumerable<EmployeeRequest> LoadRequestsForDashboard(string requester)
+        {
+            return repository.GetRequestsForDashboard(requester);
+        }
         public EmployeeRequestResponse LoadAllRequests(EmployeeRequestSearchRequest searchRequset)
         {
             return repository.GetAllRequests(searchRequset);
@@ -94,7 +97,6 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetAllMonetaryRequests(currentMonth,id);
         }
-
         public IEnumerable<EmployeeRequest> LoadAllRequests(string requester)
         {
             return requester == "Admin" ? repository.GetAll() : repository.GetAllRequests(Convert.ToInt64(requester));
@@ -103,12 +105,10 @@ namespace EPMS.Implementation.Services
         {
             return repository.GetAllRequests(Convert.ToInt64(requester));
         }
-
         public RequestDetail LoadRequestDetailByRequestId(long requestId)
         {
             return repositoryRequestDetail.LoadRequestDetailByRequestId(requestId);
         }
-
         public bool UpdateRequest(EmployeeRequest request)
         {
             try

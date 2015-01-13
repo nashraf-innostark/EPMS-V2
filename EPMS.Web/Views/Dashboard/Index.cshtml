@@ -1,5 +1,1092 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
+
+@{
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 
+<div class="container-fluid dashboard dashboard-title">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1>
+                Dashboard
+            </h1>
+            <div class="btn-group">
+                <button type="button" class="btn btn-gear dropdown-toggle" data-toggle="dropdown"></button>
+                <ul class="dropdown-menu">
+                    <li><a href="javascript:;">  <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />EN</a></li>
+                    <li><a href="javascript:;">  <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />AR</a></li>
 
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- dashboard-quick-launch box -->
+@*<div class="container-fluid dashboard dashboard-quick-launch">
+        <div class="row-fluid">
+            <div class="span12">
+                <ul id="sortable">
+                    <li class="add-ql">
+                        <a href="#modal-add-quick-launch-custom" data-toggle="modal">
+                            <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>*@
+<div class="container-fluid dashboard dashboard-widget-group">
+    <div class="row-fluid">
+        <div id="photon_widgets" class="span12 ui-sortable">
+            <!-- General Stats Widget begin -->
+            <!-- Employee Requests Widget -->
+            <div class="widget-holder">
+                <div class="widget-flipper">
+                    <!-- Front -->
+                    <div class="widget-area widget-general-stats widget-front">
+                        <div class="widget-head ">
+                            <a href="~/HR/Request/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.EmployeeRequests</a>
+                            <div>
+                                <a href="javascript:;" class="refresher" onclick="LoadEmployeeRequests(this);"><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                                @if (ViewBag.UserRole == "Admin")
+                                {<a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>}
+                                <i class="icon-photon user opc1"></i>
+                            </div>
+                        </div>
+                        <ul id="employeeRequests">
+                            @foreach (var item in Model.EmployeeRequests.ToList())
+                            {
+                            <li>
+                                <a href="~/HR/Request/Create/@item.RequestId">  <span>@item.RequestTopic</span></a>
+                                <div>
+                                    @item.EmployeeNameE
+                                    @if (item.IsReplied)
+                                        {
+                                        <img src="~/Images/photon/workDone.png" alt="Read" title="Read" class="status" />
+                                        }
+                                        else
+                                        {
+                                        <img src="~/Images/photon/notDone.png" alt="Read" title="Read" class="status" />
+                                        }
+                                </div>
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                    <!-- Back -->
+                    <div class="widget-area widget-general-stats widget-back">
+                        <div class="widget-savehead">
+                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadEmployeeRequests(this);"><i class='icon-photon cog'></i>Done</a>
+                        </div>
+                        <form>
+                            <div class="container-fluid widget-settings">
+                                <div class="control-group row-fluid">
+                                    <div class="span12">
+                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                    </div>
+                                </div>
+                                <div class="control-group row-fluid">
+                                    <div class="span12">
+                                        <div class="controls">
+                                            @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tempLoader" style="display:none;"></div>
+            </div>
+
+            <!-- Orders Widget -->
+            @if (ViewBag.UserRole == "Admin") {
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area widget-general-stats widget-front">
+                            <div class="widget-head ">
+                                <a href="EmployeesRequestList(Admin)En.html" class="darkGreen"> Orders</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                    <i class="icon-photon calendar_alt_stroke  opc1"></i>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a href="">  <span>Sick Leave</span></a>
+                                    <div>
+                                        22/2/2014
+                                        <img src="images/photon/pending.png" alt="Pending" title="Pending" class="status">
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">   <span>Apply Loan</span></a>
+                                    <div>
+                                        22/2/2014
+                                        <img src="images/photon/notDone.png" alt="Canceled" title="Canceled" class="status">
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">  <span>Promotion </span></a>
+                                    <div>
+                                        22/2/2014
+                                        <img src="images/photon/pending.png" alt="Pending" title="Pending" class="status">
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">    <span>Sick Leave</span></a>
+                                    <div>
+                                        22/2/2014
+                                        <img src="images/photon/workDone.png" alt="Accepted" title="Accepted" class="status">
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""> <span>Apply Loan</span></a>
+                                    <div>
+                                        22/2/2014
+                                        <img src="images/photon/notDone.png" alt="Canceled" title="Canceled" class="status">
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget-area widget-general-stats widget-back">
+                            <div class="widget-savehead">
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Customer:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="1">Ali</option>
+                                                    <option value="2">Said</option>
+                                                    <option value="3">Mohammed</option>
+                                                    <option value="4">Mazin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by status:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="1">pending</option>
+                                                    <option value="2">accepted</option>
+                                                    <option value="3">cancled</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+
+            <!-- Complaints Widget -->
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <!-- Front -->
+                        <div class="widget-area widget-general-stats widget-front">
+                            <div class="widget-head ">
+                                <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Complaints</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher" onclick="LoadComplaints(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                    <i class="icon-photon user opc1"></i>
+                                </div>
+                            </div>
+                            <ul id="complaints">
+                                @foreach (var item in Model.Complaints.ToList())
+                            {
+                            <li>
+                                <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span>@item.Topic</span></a>
+                                <div>
+                                    @item.ClientName
+                                    @if (item.IsReplied)
+                                        {
+                                        <img src="~/Images/photon/workDone.png" alt="Read" title="Read" class="status" />
+                                        }
+                                        else
+                                        {
+                                        <img src="~/Images/photon/notDone.png" alt="Read" title="Read" class="status" />
+                                        }
+                                </div>
+                            </li>
+                            }
+                            </ul>
+
+                        </div>
+                        <!-- Back -->
+                        <div class="widget-area widget-general-stats widget-back">
+                            <div class="widget-savehead">
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadComplaints(this);"><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                @Html.DropDownListFor(x => x.customerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerId" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+
+            <!-- Payment Widget -->
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area widget-general-stats widget-front">
+                            <div class="widget-head ">
+                                <a href="" class="darkGreen">  Payment </a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                    <i class="icon-photon document_stroke opc1"></i>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a href="">  <span>1st Installment</span></a>
+                                    <div>
+                                        5000
+                                        <img src="images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="">  <span>2nd Installment</span></a>
+                                    <div>
+                                        10000
+                                        <img src="images/photon/workDone.png" alt="Paid" title="Paid" class="status">
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">    <span>3rd Installment </span></a>
+                                    <div>
+                                        4000
+                                        <img src="images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">  <span>4th Installment </span></a>
+                                    <div>
+                                        6000
+                                        <img src="images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <span>Project Name:</span> <div>50%</div>
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+                        <div class="widget-area widget-general-stats widget-back">
+                            <div class="widget-savehead">
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Clients:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="1">Ali</option>
+                                                    <option value="2">Said</option>
+                                                    <option value="3">Mohammed</option>
+                                                    <option value="4">Mazin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Project:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="1">Project 1</option>
+                                                    <option value="2">Project 2</option>
+                                                    <option value="3">Project 3</option>
+                                                    <option value="4">Project 4</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+
+            <!-- Alerts Widget -->
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area widget-general-stats widget-front">
+                            <div class="widget-head">
+                                <a href="" class="lightRed">   Alerts</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                    <i class="icon-photon bolt opc1"></i>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a href="">  <span>Ali Nasir</span></a>
+                                    <div>
+                                        22/2/2014
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">  <span>Mahmood Ameen</span></a>
+                                    <div>
+                                        12/5/2014
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""> <span>Chamber of Commerce</span></a>
+                                    <div>
+                                        1/2/2014
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">  <span>Rent</span></a>
+                                    <div>
+                                        9/12/2014
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href=""> <span>Telephone Bill</span></a>
+                                    <div>
+                                        4/8/2014
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget-area widget-general-stats widget-back">
+                            <div class="widget-savehead">
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Alert Type:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="1">Employees</option>
+                                                    <option value="2">Documents</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+
+            <!-- Recruitment Widget -->
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area widget-general-stats widget-front">
+                            <div class="widget-head ">
+                                <a href="" class="lightOrange">  Recruitment</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+
+                                    <i class="icon-photon hash opc1"></i>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a href="">     <span>Salesman</span></a>
+                                    <div>
+                                        22
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">    <span>Wharehouse Keeper</span></a>
+                                    <div>
+                                        12
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">   <span>Manager</span></a>
+                                    <div>
+                                        26
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">  <span>Driver</span></a>
+                                    <div>
+                                        35
+
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="">   <span>Accountent</span></a>
+                                    <div>
+                                        30
+
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+            }
+            <!-- Meeting Widget -->
+            <div class="widget-holder">
+                <div class="widget-flipper">
+                    <div class="widget-area widget-general-stats widget-front">
+                        <div class="widget-head ">
+                            <a href="" class="lightYellow">  Meeting</a>
+                            <div>
+                                <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+
+                                <i class="icon-photon calendar_alt_stroke opc1"></i>
+                            </div>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="">    <span>Meeting Name 1</span></a>
+                                <div>
+                                    22/2/2014
+
+                                </div>
+                            </li>
+                            <li>
+                                <a href="">   <span>Meeting Name 2</span></a>
+                                <div>
+                                    12/5/2014
+
+                                </div>
+                            </li>
+                            <li>
+                                <a href="">     <span>Meeting Name 3</span></a>
+                                <div>
+                                    1/2/2014
+
+                                </div>
+                            </li>
+                            <li>
+                                <a href="">     <span>Meeting Name 4</span></a>
+                                <div>
+                                    9/12/2014
+
+                                </div>
+                            </li>
+                            <li>
+                                <a href="">   <span>Meeting Name 5</span></a>
+                                <div>
+                                    4/8/2014
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="tempLoader" style="display:none;"></div>
+            </div>
+
+            <!-- My Profile Widget -->
+            <div class="widget-holder">
+                <div class="widget-flipper">
+                    <div class="widget-area widget-general-stats widget-front profile">
+                        <div class="widget-head ">
+                            <a href="" class="lightPurpule">  My Profile</a>
+                            <div>
+                                <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+
+                                <i class="icon-photon folder_stroke opc1"></i>
+                            </div>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="avatar-image">
+                                    <img src="images/photon/user1.jpg" alt="profile">
+                                </div>
+                                <div>Abdul Aziz Al Qureshi</div>
+
+                            </li>
+                            <li>
+                                <span>Job ID</span>
+                                <div>
+                                    908098
+
+                                </div>
+                            </li>
+                            <li>
+                                <span>Job Title</span>
+                                <div>
+                                    Sales - Manager
+
+                                </div>
+                            </li>
+                            <li>
+                                <span>ID Expiry Date</span>
+                                <div>
+                                    9/12/2014
+
+                                </div>
+
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="tempLoader" style="display:none;"></div>
+            </div>
+
+            <!-- Payroll Widget -->
+            <div class="widget-holder">
+                <div class="widget-flipper">
+                    <div class="widget-area widget-general-stats widget-front">
+                        <div class="widget-head ">
+                            <a href="" class="lightOrange">  Payroll </a>
+                            <div>
+                                <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                <i class="icon-photon document_stroke opc1"></i>
+                            </div>
+                        </div>
+                        <ul>
+
+                            <li id="basicSal">
+                                <span>Basic Salary</span>
+                                <div>
+                                    5000
+
+                                </div>
+                            </li>
+                            <li id="totalAllownces">
+                                <span>Allowances</span>
+                                <div>
+                                    1000
+
+                                </div>
+                            </li>
+                            <li id="totalDeductions">
+                                <span>Deductions</span>
+                                <div>
+                                    500
+
+                                </div>
+                            </li>
+                            <li id="totalSal">
+                                <span>Total</span>
+                                <div>
+                                    5500
+
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="widget-area widget-general-stats widget-back">
+                        <div class="widget-savehead">
+                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                        </div>
+                        <form>
+                            <div class="container-fluid widget-settings">
+                                <div class="control-group row-fluid">
+                                    <div class="span12">
+                                        <label class="control-label">Filter by Month:</label>
+                                    </div>
+                                </div>
+                                <div class="control-group row-fluid">
+                                    <div class="span12">
+                                        <div class="controls">
+                                            <select>
+                                                <option selected="" value="Any">Any</option>
+                                                <option value="1">Previous</option>
+                                                <option value="2">Current</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="tempLoader" style="display:none;"></div>
+            </div>
+            <!-- General Stats Widget end -->
+            <!-- Latest Users Widget begins -->
+            @if (ViewBag.UserRole == "Admin")
+            {
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area widget-latest-users widget-front">
+
+                            <div class="widget-head ">
+                                <a href="" class="lightOrange">  Employees</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                    <i class="icon-photon hash opc1"></i>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div class="avatar-image">
+                                        <img src="images/photon/user1.jpg" alt="profile" />
+                                    </div>
+                                    <a href="">     <span>Abdul Aziz Al shammery</span></a>
+                                    <div>100558799</div>
+                                </li>
+                                <li>
+                                    <div class="avatar-image">
+                                        <img src="images/photon/user2.jpg" alt="profile" />
+                                    </div>
+                                    <a href="">    <span>Prasent Neque</span> </a>
+                                    <div>100558799</div>
+                                </li>
+                                <li>
+                                    <div class="avatar-image">
+                                        <img src="images/photon/user3.jpg" alt="profile" />
+                                    </div>
+                                    <a href="">        <span>Nunc Cenenatis</span> </a>
+                                    <div>100558799</div>
+                                </li>
+                                <li>
+                                    <div class="avatar-image">
+                                        <img src="images/photon/user4.jpg" alt="profile" />
+                                    </div>
+                                    <a href="">      <span>Etiam Libero</span> </a>
+                                    <div>100558799</div>
+                                </li>
+                                <li>
+                                    <div class="avatar-image">
+                                        <img src="images/photon/user5.jpg" alt="profile" />
+                                    </div>
+                                    <a href="">    <span>Morbi Consequat</span> </a>
+                                    <div>100558799</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget-area widget-latest-users widget-back">
+                            <div class="widget-savehead">
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" flipit(this) "><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Department:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="Sales">Sales</option>
+                                                    <option value="HR">HR</option>
+                                                    <option value="Marketing">Marketing</option>
+                                                    <option value="Accounting">Accounting</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tempLoader" style="display: none;"></div>
+                </div>
+            
+            <!-- Latest Users Widget ends -->
+
+            <!-- Task Completion Widget begins -->
+            <!-- Project Widget -->
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area task-completion widget-front">
+                            <div class="widget-head ">
+                                <a href="ProjectDetails(Admin,PM)En.html" class="lightBlue">  Project</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                    <img src="images/photon/w_task@2x.png" alt="arrows" />
+                                </div>
+                            </div>
+                            <ul id="progressId">
+                                <li class="dashProject dashTask">
+                                    <a data-overall="62">Project</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="20">Task 1</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="50">Task 2</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="80">Task 3</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="100">Task 4</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="50">Task 5</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="20">Task 6</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="50">Task 7</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="80">Task 8</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="100">Task 9</a>
+
+                                </li>
+
+                                <li class="dashBack">
+                                    <a><i class='icon-photon arrow_left'></i></a>
+
+                                </li>
+                                <li class="dashNext">
+                                    <a><i class='icon-photon arrow_right'></i></a>
+
+                                </li>
+                                <li class="processed-pct">
+                                    <span>Project</span>
+                                    <div class="progress progress-info">
+                                        <div class="bar" data-target="62" style="width: 0;">62%</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget-area task-completion widget-back">
+                            <div class="widget-savehead">
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Project Progress:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="Current">Current</option>
+                                                    <option value="Finished">Finished</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Projects:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="project1">project 1</option>
+                                                    <option value="project2">project 2</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+            }
+            <!-- My Tasks Widget -->
+                <div class="widget-holder">
+                    <div class="widget-flipper">
+                        <div class="widget-area task-completion widget-front">
+                            <div class="widget-head ">
+                                <a href="ProjectDetails(Admin,PM)En.html" class="lightBlue">  My Tasks</a>
+                                <div>
+                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                    <img src="images/photon/w_task@2x.png" alt="arrows" />
+                                </div>
+                            </div>
+                            <ul id="progressId2">
+                                <li class="dashTask">
+                                    <a data-task="20">Task 1</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="50">Task 2</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="80">Task 3</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="100">Task 4</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="50">Task 5</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="20">Task 6</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="50">Task 7</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="80">Task 8</a>
+
+                                </li>
+                                <li class="dashTask">
+                                    <a data-task="100">Task 9</a>
+
+                                </li>
+
+                                <li class="dashBack">
+                                    <a><i class='icon-photon arrow_left'></i></a>
+
+                                </li>
+                                <li class="dashNext">
+                                    <a><i class='icon-photon arrow_right'></i></a>
+
+                                </li>
+                                <li class="processed-pct2">
+                                    <span>Task 1</span>
+                                    <div class="progress progress-info">
+                                        <div class="bar" data-target="20" style="width: 0;">20%</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="widget-area task-completion widget-back">
+                            <div class="widget-savehead">
+
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                            </div>
+                            <form>
+                                <div class="container-fluid widget-settings">
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <label class="control-label">Filter by Projects:</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group row-fluid">
+                                        <div class="span12">
+                                            <div class="controls">
+                                                <select>
+                                                    <option selected="" value="Any">Any</option>
+                                                    <option value="Current">Current</option>
+                                                    <option value="Finished">Finished</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tempLoader" style="display:none;"></div>
+                </div>
+            <!-- Task Completion Widget ends -->
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-watermark"></div>
+    <!--Modal Dialogs' HTML begin-->
+    <div id="modal-add-quick-launch" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add Quick Launch Item</h3>
+        </div>
+        <div class="modal-body">
+            <p>Select from system shortcuts below or <a href="#modal-add-quick-launch-custom" data-dismiss="modal" data-toggle="modal">create your custom shortcut »</a></p>
+            <div class="control-group row-fluid">
+                <div class="span12">
+                    <div class="controls">
+                        <select multiple name="multiFilter" id="multiFilter">
+                            <option value="Beige">Beige</option>
+                            <option value="Black">Black</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Brown">Brown</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Gray">Gray</option>
+                            <option value="Green">Green</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Pink">Pink</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Red">Red</option>
+                            <option value="Silver">Silver</option>
+                            <option selected="" value="Turquoise">Turquoise</option>
+                            <option value="White">White</option>
+                            <option value="Yellow">Yellow</option>
+                        </select>
+                    </div>
+                </div>
+                <script>
+                        $().ready(function(){
+                            $("#multiFilter").select2();
+                        });
+                </script>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Add Selected</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <div id="modal-add-quick-launch-custom" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Create Quick Launch Item</h3>
+        </div>
+        <div class="modal-body">
+
+            <p class="alternative">Select the links you would like on your dashboard</p>
+        </div>
+        <div class="modal-body predefined-icons">
+            <ul>
+                <li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/applicants.png" alt="Predefined" title="Applicants" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/profile.png" alt="Predefined" title="My Profile" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/ql2@2x.png" alt="Predefined" title="Projects" data-hrf="form-elements-input-fields.html"></li>
+
+                <li><img src="~/Images/photon/icons/tasks.png" alt="Predefined" title="Tasks" data-hrf="form-elements-input-fields.html"></li>
+
+                <li><img src="~/Images/photon/icons/receipt.png" alt="Predefined" title="Receipt" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/invoices.png" alt="Predefined" title="Invoices" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/quotation.png" alt="Predefined" title="Quotations" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/ql1@2x.png" alt="Predefined" title="Order" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/complaints.png" alt="Predefined" title="Complaints" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/notification.png" alt="Predefined" title="Notifications" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/ql10@2x.png" alt="Predefined" title="Meetings" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>
+
+
+
+
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal">Add Item</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/App/dashboard.js"></script>
