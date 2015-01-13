@@ -1,0 +1,525 @@
+﻿@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
+
+@{
+    ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.CreateNew;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var employeeName = Model.EmployeeName;
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/CMS/Quotation/Index">
+                @EPMS.Web.Resources.CMS.Quotation.QuotList
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+@using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        @*@Html.HiddenFor(model => model.)*@
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Client">@EPMS.Web.Resources.CMS.Quotation.ClientName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.Customer, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
+                    @Html.ValidationMessageFor(m => m.Customer, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="">@EPMS.Web.Resources.CMS.Quotation.OrderNameNo</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="">@EPMS.Web.Resources.CMS.Quotation.CreatedBy</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="createdBy" type="text" value="@employeeName" disabled>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="greeting">@EPMS.Web.Resources.CMS.Quotation.Greetings</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="greeting" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="greetinga">@EPMS.Web.Resources.CMS.Quotation.GreetingsAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="greetinga" type="text">
+                </div>
+            </div>
+        </div>
+        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Quotation.ExcelImport</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <textarea id="tiny" rows="2" class=""></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" id="importEx" class="btn">@EPMS.Web.Resources.CMS.Quotation.Import</button>
+            </div>
+        </div>
+        <div class="row-fluid" id="ress">
+            <div class="span12">
+                <table class="table table-striped table-responsive ">
+                    <thead class="">
+                        <tr>
+                            <th style="width:70%">@EPMS.Web.Resources.CMS.Quotation.ItemDetails</th>
+                            <th>@EPMS.Web.Resources.CMS.Quotation.Quantity</th>
+                            <th>@EPMS.Web.Resources.CMS.Quotation.UnitPrice</th>
+                            <th>@EPMS.Web.Resources.CMS.Quotation.Total</th>
+                            <th style="width:4%">@EPMS.Web.Resources.CMS.Quotation.Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="qouteAdd">
+                        <tr>
+                            <td>
+                                <textarea rows="2" class=""></textarea>
+                            </td>
+                            <td class="quantity">
+                                <input class="n1" type="text" name="numbers" value="0">
+                            </td>
+                            <td class="unitPrice">
+                                <input class="n2" type="text" name="numbers" value="0">
+                            </td>
+                            <td class="total">
+                                <input class="n3" type="text" disabled value="0">
+                            </td>
+                            <td class="delete">
+                                <i class="icon-photon minus deleteRow"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn trAdder">@EPMS.Web.Resources.CMS.Quotation.Add</button>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="subtotal">@EPMS.Web.Resources.CMS.Quotation.Subtotal</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="subtotal" type="text" name="numbers" value="0" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Discount">@EPMS.Web.Resources.CMS.Quotation.Discount<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Discount" type="text" name="numbers_range" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="GrandTotal">@EPMS.Web.Resources.CMS.Quotation.GrandTotal</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="GrandTotal" type="text" name="numbers" value="0" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inWord">@EPMS.Web.Resources.CMS.Quotation.InWords</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="inWord" type="text" name="numbers" value="0" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" id="actDe" class="btn">@EPMS.Web.Resources.CMS.Quotation.ActDeActInWords</button>
+            </div>
+        </div>
+        <div class="alert alert-info alert-block">
+            <i class="icon-alert icon-alert-info"></i>
+            <strong><a>@EPMS.Web.Resources.CMS.Quotation.InstallmentPlan</a></strong>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Installment1">@EPMS.Web.Resources.CMS.Quotation.FirstInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Installment1" type="text" name="numbers_range" class="installer" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Dueat">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Dueat" type="text" name="numbers_range" class="dap" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Installment2">@EPMS.Web.Resources.CMS.Quotation.SecondInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Installment2" type="text" name="numbers_range" class="installer" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Dueat2">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Dueat2" type="text" name="numbers_range" class="dap" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Installment3">@EPMS.Web.Resources.CMS.Quotation.ThirdInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Installment3" type="text" name="numbers_range" class="installer" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Dueat3">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Dueat3" type="text" name="numbers_range" class="dap" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Installment4">@EPMS.Web.Resources.CMS.Quotation.FourthInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Installment4" type="text" name="numbers" class="installer" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Dueat4">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Dueat4" type="text" name="numbers" class="dap" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.CMS.Quotation.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformation" type="text" name="CLK Editor" placeholder="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformationa">@EPMS.Web.Resources.CMS.Quotation.NotesAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformationa" type="text" name="CLK Editor" placeholder="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" class="btn">@EPMS.Web.Resources.CMS.Quotation.CreateQoute</button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript" src="~/Scripts/plugins/elrte.min.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
+<script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tiny').elrte({
+            lang: "en",
+            styleWithCSS: false,
+            height: 200,
+            toolbar: 'tiny'
+        });
+        $('.trAdder').on("click", function () {
+            var html = ' <tr> <td > <textarea rows="2" class="auto-resize"></textarea> </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value=0> </td> <td class="unitPrice"> <input class="n2" type="text" name="numbers" value=0> </td> <td class="total"> <input class="n3" type="text" disabled value=0 > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+            $('.qouteAdd').append(html);
+            reActivateDelete();
+            reactivateCount();
+        });
+        reActivateDelete();
+        reactivateCount();
+        function reActivateDelete() {
+            $('.deleteRow').on("click", function () {
+                var count = $('.qouteAdd tr').length;
+                if (count > 1) {
+                    $(this).parent().parent().remove();
+                    var x = 0;
+                    $('.qouteAdd tr .n3').each(function () {
+                        x = x + parseInt($(this).val());
+                    });
+                    $('#subtotal').val(x);
+                    calDiscount();
+                }
+            });
+        }
+        function reactivateCount() {
+            $('.quantity .n1').on("blur", function () {
+                var n2Val = $(this).parent().parent().find(".n2").val();
+                $(this).parent().parent().find(".n3").val($(this).val() * n2Val);
+                var x = 0;
+                $('.qouteAdd tr .n3').each(function () {
+                    x = x + parseInt($(this).val());
+                });
+                $('#subtotal').val(x);
+                calDiscount();
+            });
+            $('.unitPrice .n2').on("blur", function () {
+                var n2Va2 = $(this).parent().parent().find(".n1").val();
+                $(this).parent().parent().find(".n3").val($(this).val() * n2Va2);
+                var x = 0;
+                $('.qouteAdd tr .n3').each(function () {
+                    x = x + parseInt($(this).val());
+                });
+                $('#subtotal').val(x);
+                calDiscount();
+            });
+        }
+        $('#Discount').on("blur", function () {
+            calDiscount();
+        });
+        function calDiscount() {
+            var subtotal = parseInt($('#subtotal').val());
+            var discount = parseInt($('#Discount').val());
+            var grand = subtotal - (subtotal * (discount / 100));
+            $('#GrandTotal').val(grand);
+        }
+        //$.nToWord({number:n,language:"ar"});
+        $('#actDe').on("click", function () {
+            if ('@direction' == "ltr")
+            {
+                if ($('#inWord').hasClass("activatedBt")) {
+                    $('#inWord').val("");
+                    $('#inWord').removeClass("activatedBt");
+                }
+                else {
+                    $('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "en" }));
+                    $('#inWord').addClass("activatedBt");
+                }
+            }
+            else if ('@direction' == "rtl") {
+                if ($('#inWord').hasClass("activatedBt")) {
+                    $('#inWord').val("");
+                    $('#inWord').removeClass("activatedBt");
+                }
+                else {
+                    $('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "ar" }));
+                    $('#inWord').addClass("activatedBt");
+                }
+            }
+        });
+        $("#importEx").on("click", function () {
+            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
+            var coln = $(excel).find("tr:first td").length;
+            var count = 0;
+            var x = 0;
+            if (coln == 3) {
+                $(excel).find("tr").each(function () {
+                    var y = 0;
+                    var t1 = "";
+                    var t2 = 0;
+                    var t3 = 0;
+                    var t4 = 0;
+                    $(this).find("td").each(function () {
+                        if (y == 0) {
+                            t1 = $(this).text();
+                        }
+                        else if (y == 1) {
+                            t2 = parseInt($(this).text());
+                        }
+                        else if (y == 2) {
+                            t3 = parseInt($(this).text());
+                        }
+                        y++;
+                    });
+                    t4 = t3 * t2;
+                    var html = ' <tr> <td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea> </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t2 + '"> </td> <td class="unitPrice"> <input class="n2" type="text" name="numbers" value="' + t3 + '"> </td> <td class="total"> <input class="n3" type="text" disabled value="' + t4 + '" > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
+
+                    if (count == 0) {
+                        $('.qouteAdd').html("");
+                    }
+                    $('.qouteAdd').append(html);
+                    reActivateDelete();
+                    reactivateCount();
+                    count++;
+                });
+                $('.qouteAdd tr .n3').each(function () {
+
+                    x = x + parseInt($(this).val());
+                });
+                $('#subtotal').val(x);
+                calDiscount();
+            }
+            else {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
+                });
+            }
+        });
+        $('.installer').on("blur",function(){
+            b = 0;
+            b =  parseInt($('#Installment1').val());
+            if(b>100){
+                noteIt();
+                $(this).val(0);
+                return;
+            }
+            else
+            {
+                b = b + parseInt($('#Installment2').val());
+                if(b>100){
+                    noteIt();
+                    $(this).val(0);
+                    return;
+                }
+                else{
+                    b =	b+  parseInt($('#Installment3').val());
+                    if(b>100){
+                        noteIt();
+                        $(this).val(0);
+                        return;
+                    }
+                    else{
+                        b = b+  parseInt($('#Installment4').val());
+                        if(b>100){
+                            noteIt();
+                            $(this).val(0);
+                            return;
+                        }
+                    }
+                }
+            }
+            function noteIt(){
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The total % of all the due to project should not exceed 100'
+                });
+                $(this).val(0);
+            }
+        });
+        $('.dap').on("blur", function() {
+            bb = 0;
+            bb = parseInt($('#Dueat').val());
+            if (bb > 100) {
+                noteItb();
+                $(this).val(0);
+                return;
+            } else {
+                bb = bb + parseInt($('#Dueat2').val());
+                if (bb > 100) {
+                    noteItb();
+                    $(this).val(0);
+                    return;
+                } else {
+                    bb = bb + parseInt($('#Dueat3').val());
+                    if (bb > 100) {
+                        noteItb();
+                        $(this).val(0);
+                        return;
+                    } else {
+                        bb = bb + parseInt($('#Dueat4').val());
+                        if (bb > 100) {
+                            noteItb();
+                            $(this).val(0);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            function noteItb() {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The total % of all the installments should not exceed 100'
+                });
+
+                $(this).val(0);
+            }
+        });
+    });
+</script>

@@ -244,6 +244,7 @@
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -356,6 +357,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Order.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Quotation.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quotation.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Quotation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quotation.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -483,6 +494,7 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
@@ -1929,6 +1941,8 @@
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
+    <Content Include="Areas\CMS\Views\Quotation\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Quotation\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -1971,6 +1985,14 @@
     <EmbeddedResource Include="Resources\CMS\Order.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Order.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Quotation.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Quotation.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Quotation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
@@ -2194,6 +2216,7 @@
     <Content Include="Scripts\plugins\jquery.metadata.js" />
     <Content Include="Scripts\plugins\jquery.mockjax.js" />
     <Content Include="Scripts\plugins\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\plugins\jquery.nToWord.js" />
     <Content Include="Scripts\plugins\jquery.pnotify.min.js" />
     <Content Include="Scripts\plugins\jquery.qrcode.min.js" />
     <Content Include="Scripts\plugins\jquery.rating.pack.js" />
