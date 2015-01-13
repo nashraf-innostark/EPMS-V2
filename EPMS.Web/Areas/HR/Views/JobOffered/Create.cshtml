@@ -64,7 +64,9 @@
                         @Html.ValidationMessageFor(m => m.JobOffered.JobTitleId, "", new { @class = "required" })
                     </div>
                 }
-                
+            </div>
+            <div class="span4">
+                <label id="jobtitlevalidate" style="margin-top: 20px"></label>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -75,7 +77,8 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.JobTitleDescE, new { @disabled = true, @id = "jobTitleDesc" })
+                        @Html.LabelFor((model => @Html.Raw(model.JobOffered.JobTitleDescE)), new { @disabled = true, @id = "jobTitleDesc" })
+                        
                     </div>
                 }
                 else
@@ -152,7 +155,7 @@
             <div class="span3">
                 <div class="span3 span-inset">
                     @*<button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>*@
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                    <button id="savebtn" class="btn" type="submit" onclick="validateForm(event)">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
                 </div>
             </div>
         </div>
@@ -192,7 +195,7 @@
 
         });
         var siteUrl = $('#siteURL').val();
-        $("#jobTitle").on("change", function () {
+        $("#jobTitle").on("change", function() {
             var depId = $(this).val();
             if (depId > 0) {
                 $('#SearchRequest_JobId').empty();
@@ -204,12 +207,12 @@
                     data: {
                         deptId: depId
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $("#jobTitleDesc").val(data.JobTitleDescE);
                         $("#basicSalary").val(data.BasicSalary);
                         $('#departmentName').val(data.DepartmentNameE);
                     },
-                    error: function (e) {
+                    error: function(e) {
                         alert('Error=' + e.toString());
                     }
                 });
@@ -220,7 +223,8 @@
 
         });
     });
-    //GENERAL FUNCTIONS
+
+//GENERAL FUNCTIONS
     function DivHideShow(chk, div) {
         var divToBeAffected = '#' + div;
         if ($('#' + chk).is(":checked")) {
@@ -229,7 +233,32 @@
             $(divToBeAffected).hide();
         }
     };
-    $('#ShowBasicSalary').change(function () {
+
+    $('#ShowBasicSalary').change(function() {
         DivHideShow('ShowBasicSalary', 'basicSal');
     });
+
+    function validateForm(event) {
+        var counter = 0;
+        if ($("#jobTitle").val() == null || $("#jobTitle").val() == "") {
+            $("#jobtitlevalidate").text("Please select Job Title");
+            counter++;
+            $("#jobtitlevalidate").addClass("Error");
+
+        } else {
+            $("#jobtitlevalidate").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    };
+
 </script>

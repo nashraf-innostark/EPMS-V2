@@ -82,11 +82,11 @@
                             <div class="jobDesc">
                                 @if (direction == "ltr")
                                 {
-                                    @item.JobTitleDescE
+                                    @Html.Raw(item.JobTitleDescE)
                                 }
                                 else
                                 {
-                                    @item.JobTitleDescA
+                                    @Html.Raw(item.JobTitleDescA)
                                 }
                             </div>
                         </li>
