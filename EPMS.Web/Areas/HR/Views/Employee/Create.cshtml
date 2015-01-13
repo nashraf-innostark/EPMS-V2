@@ -204,7 +204,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control toBeRequired", @id = "EmployeeDOB" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true })
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -288,7 +288,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@ namespace EPMS.Web.ViewModels.Quotation
 
         public IEnumerable<Models.Customer> Customers { get; set; }
         public string Customer { get; set; }
+        public string OrderNo { get; set; }
         public string EmployeeName { get; set; }
         public QuotationSearchRequest SearchRequest { get; set; }
     }

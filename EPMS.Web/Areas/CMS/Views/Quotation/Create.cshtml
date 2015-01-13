@@ -35,7 +35,7 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-@using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         @*@Html.HiddenFor(model => model.)*@
@@ -56,7 +56,9 @@
             </div>
             <div class="span2">
                 <div class="controls">
-
+                    @Html.DropDownListFor(m => m.OrderNo, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderNo" })
+                    @*@Html.DropDownListFor(model => model.OrderNo,Enumerable.Empty< SelectListItem >(),null)*@
+                    @*@Html.DropDownListFor(model => model.Customer, new SelectList(null, "OrderId", "OrderNo"), "", new { @id = "OrderNo" })*@
                 </div>
             </div>
         </div>
@@ -96,7 +98,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <textarea id="tiny" rows="2" class=""></textarea>
+                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
                 </div>
             </div>
         </div>
@@ -120,7 +122,7 @@
                     <tbody class="qouteAdd">
                         <tr>
                             <td>
-                                <textarea rows="2" class=""></textarea>
+                                <textarea rows="2" class="auto-resize"></textarea>
                             </td>
                             <td class="quantity">
                                 <input class="n1" type="text" name="numbers" value="0">
@@ -304,8 +306,52 @@
 <script type="text/javascript" src="~/Scripts/plugins/elrte.min.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
     $(document).ready(function () {
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/CMS/Quotation/GetCustomerOrders";
+        $("#Client").on("change", function () {
+            var customerId = $(this).val();
+            if (customerId > 0) {
+                //$('#SearchRequest_JobId').empty();
+                $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>', css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" } });
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        customerId: customerId
+                    },
+                    success: function (data) {
+                        populateDDL(data);
+                    },
+                    error: function (e) {
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
+
+            }
+
+        });
+        $("#AddQuotationForm").validate({
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "numbers_range": {
+                    range: [0, 100]
+                }
+            }
+        });
+        $(".auto-resize").keyup(function () {
+            autoGrowField($(this).get(0));
+        });
         $('#tiny').elrte({
             lang: "en",
             styleWithCSS: false,
@@ -367,8 +413,7 @@
         }
         //$.nToWord({number:n,language:"ar"});
         $('#actDe').on("click", function () {
-            if ('@direction' == "ltr")
-            {
+            if ('@direction' == "ltr") {
                 if ($('#inWord').hasClass("activatedBt")) {
                     $('#inWord').val("");
                     $('#inWord').removeClass("activatedBt");
@@ -439,32 +484,31 @@
                 });
             }
         });
-        $('.installer').on("blur",function(){
+        $('.installer').on("blur", function () {
             b = 0;
-            b =  parseInt($('#Installment1').val());
-            if(b>100){
+            b = parseInt($('#Installment1').val());
+            if (b > 100) {
                 noteIt();
                 $(this).val(0);
                 return;
             }
-            else
-            {
+            else {
                 b = b + parseInt($('#Installment2').val());
-                if(b>100){
+                if (b > 100) {
                     noteIt();
                     $(this).val(0);
                     return;
                 }
-                else{
-                    b =	b+  parseInt($('#Installment3').val());
-                    if(b>100){
+                else {
+                    b = b + parseInt($('#Installment3').val());
+                    if (b > 100) {
                         noteIt();
                         $(this).val(0);
                         return;
                     }
-                    else{
-                        b = b+  parseInt($('#Installment4').val());
-                        if(b>100){
+                    else {
+                        b = b + parseInt($('#Installment4').val());
+                        if (b > 100) {
                             noteIt();
                             $(this).val(0);
                             return;
@@ -472,7 +516,7 @@
                     }
                 }
             }
-            function noteIt(){
+            function noteIt() {
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
@@ -481,7 +525,7 @@
                 $(this).val(0);
             }
         });
-        $('.dap').on("blur", function() {
+        $('.dap').on("blur", function () {
             bb = 0;
             bb = parseInt($('#Dueat').val());
             if (bb > 100) {
@@ -522,4 +566,16 @@
             }
         });
     });
+    function populateDDL(data) {
+        $("#OrderNo").empty();
+        $("#OrderNo").append(
+                $('<option></option>').val(0).html("--Select--")
+            );
+        for (var i=0; i < data.length; i++) {
+            $("#OrderNo").append(
+                $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+            );
+        }
+        $.unblockUI();
+    }
 </script>

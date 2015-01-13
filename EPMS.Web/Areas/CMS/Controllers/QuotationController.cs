@@ -13,14 +13,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Private
         private readonly ICustomerService CustomerService;
         private readonly IAspNetUserService AspNetUserService;
+        private readonly IOrdersService OrdersService;
         #endregion
 
         #region Constructor
 
-        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService)
+        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService)
         {
             CustomerService = customerService;
             AspNetUserService = aspNetUserService;
+            OrdersService = ordersService;
         }
 
         #endregion
@@ -42,6 +44,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if(users.Employee != null)
                 viewModel.EmployeeName = users.Employee.EmployeeNameE;
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public JsonResult GetCustomerOrders(long customerId)
+        {
+            var orders = OrdersService.GetOrdersByCustomerId(customerId).Select(x=>x.CreateFromServerToClient());
+            return Json(orders, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }
