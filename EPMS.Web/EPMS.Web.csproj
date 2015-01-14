@@ -302,6 +302,8 @@
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\QuotationItemDetail.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
@@ -363,10 +365,13 @@
       <DependentUpon>Order.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\CMS\Quotation.ar.Designer.cs">
-    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Quotation.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>Dashboard.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\CMS\Quotation.Designer.cs">
@@ -2491,9 +2496,11 @@
       <LastGenOutput>Order.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Quotation.ar.resx">
-    <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Quotation.resx">

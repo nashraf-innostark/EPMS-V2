@@ -8,21 +8,24 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
+    [Authorize]
     public class QuotationController : Controller
     {
         #region Private
         private readonly ICustomerService CustomerService;
         private readonly IAspNetUserService AspNetUserService;
         private readonly IOrdersService OrdersService;
+        private readonly IQuotationService QuotationService;
         #endregion
 
         #region Constructor
 
-        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService)
+        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService)
         {
             CustomerService = customerService;
             AspNetUserService = aspNetUserService;
             OrdersService = ordersService;
+            QuotationService = quotationService;
         }
 
         #endregion
@@ -35,15 +38,36 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
-            var customers = CustomerService.GetAll();
-            viewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
-            var users = AspNetUserService.FindById(User.Identity.GetUserId());
-            if(users.Employee != null)
-                viewModel.EmployeeName = users.Employee.EmployeeNameE;
+            if (id == null)
+            {
+                var customers = CustomerService.GetAll();
+                viewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
+                var users = AspNetUserService.FindById(User.Identity.GetUserId());
+                var direction = Resources.Shared.Common.TextDirection;
+                if (users.Employee != null && direction == "ltr")
+                {
+                    viewModel.CreatedByEmployee = users.Employee.EmployeeId;
+                    viewModel.CreatedByName = users.Employee.EmployeeNameE;
+                }
+                if (users.Employee != null && direction == "rtl")
+                {
+                    viewModel.CreatedByEmployee = users.Employee.EmployeeId;
+                    viewModel.CreatedByName = users.Employee.EmployeeNameA;
+                }
+            }
+            // Mapper
+            //viewModel = QuotationService.FindQuotationById(id);
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(QuotationCreateViewModel model)
+        {
+            return RedirectToAction("Create");
+            //return RedirectToAction("Index");
         }
 
         [HttpGet]

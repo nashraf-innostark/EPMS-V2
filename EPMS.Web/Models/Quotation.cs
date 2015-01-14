@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using EPMS.Models.RequestModels;
-using EPMS.Web.Models;
 
-namespace EPMS.Web.ViewModels.Quotation
+namespace EPMS.Web.Models
 {
-    public class QuotationCreateViewModel
+    public class Quotation
     {
-        public QuotationCreateViewModel()
-        {
-            SearchRequest = new QuotationSearchRequest();
-            //Quotation = new Models.Quotation();
-            QuotationItemDetails = new List<QuotationItemDetail>();
-        }
         public long QuotationId { get; set; }
         public string ClientName { get; set; }
         [Required(ErrorMessage = "Order Number is required.")]
@@ -33,7 +25,6 @@ namespace EPMS.Web.ViewModels.Quotation
         public short? FourthInsDueAtCompletion { get; set; }
         public string NotesEn { get; set; }
         public string NotesAr { get; set; }
-        public long ItemDetails { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecUpdatedDt { get; set; }
@@ -42,10 +33,6 @@ namespace EPMS.Web.ViewModels.Quotation
         public long CustomerId { get; set; }
         public string CreatedByName { get; set; }
 
-        public IList<QuotationItemDetail> QuotationItemDetails { get; set; }
-        //public Models.Quotation Quotation { get; set; }
-        //public IList<QuotationItemDetail> ItemDetails { get; set; }
-        public IEnumerable<Models.Customer> Customers { get; set; }
-        public QuotationSearchRequest SearchRequest { get; set; }
+        public ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
     }
 }

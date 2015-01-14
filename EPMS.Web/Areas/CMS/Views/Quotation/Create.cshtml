@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.CreateNew;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var employeeName = Model.EmployeeName;
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
@@ -38,57 +37,59 @@
 @using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @*@Html.HiddenFor(model => model.)*@
+        @Html.HiddenFor(model => model.CreatedByName)
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Client">@EPMS.Web.Resources.CMS.Quotation.ClientName</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.Customer, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
-                    @Html.ValidationMessageFor(m => m.Customer, String.Empty, new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
+                    }
+                    @Html.ValidationMessageFor(m => m.CustomerId, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="">@EPMS.Web.Resources.CMS.Quotation.OrderNameNo</label>
+                <label class="control-label" for="OrderNo">@EPMS.Web.Resources.CMS.Quotation.OrderNameNo</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(m => m.OrderNo, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderNo" })
-                    @*@Html.DropDownListFor(model => model.OrderNo,Enumerable.Empty< SelectListItem >(),null)*@
-                    @*@Html.DropDownListFor(model => model.Customer, new SelectList(null, "OrderId", "OrderNo"), "", new { @id = "OrderNo" })*@
+                    @Html.DropDownListFor(m => m.OrderNumber, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderNo" })
+                    @Html.ValidationMessageFor(m => m.OrderNumber, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="">@EPMS.Web.Resources.CMS.Quotation.CreatedBy</label>
+                <label class="control-label" for="CreatedByEmployee">@EPMS.Web.Resources.CMS.Quotation.CreatedBy</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="createdBy" type="text" value="@employeeName" disabled>
+                    @Html.TextBoxFor(model => model.CreatedByName, new { @id = "CreatedByEmployee", @class = "", @readonly = true })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="greeting">@EPMS.Web.Resources.CMS.Quotation.Greetings</label>
+                <label class="control-label" for="GreetingEn">@EPMS.Web.Resources.CMS.Quotation.Greetings</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="greeting" type="text">
+                    @Html.TextBoxFor(model => model.GreetingsEn, new { @id = "GreetingEn", @class = "" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="greetinga">@EPMS.Web.Resources.CMS.Quotation.GreetingsAr</label>
+                <label class="control-label" for="GreetingAr">@EPMS.Web.Resources.CMS.Quotation.GreetingsAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="greetinga" type="text">
+                    @Html.TextBoxFor(model => model.GreetingsAr, new { @id = "GreetingAr", @class = "" })
                 </div>
             </div>
         </div>
@@ -120,24 +121,76 @@
                         </tr>
                     </thead>
                     <tbody class="qouteAdd">
-                        <tr>
-                            <td>
-                                <textarea rows="2" class="auto-resize"></textarea>
-                            </td>
-                            <td class="quantity">
-                                <input class="n1" type="text" name="numbers" value="0">
-                            </td>
-                            <td class="unitPrice">
-                                <input class="n2" type="text" name="numbers" value="0">
-                            </td>
-                            <td class="total">
-                                <input class="n3" type="text" disabled value="0">
-                            </td>
-                            <td class="delete">
-                                <i class="icon-photon minus deleteRow"></i>
-                            </td>
-                        </tr>
+                        @if (Model.QuotationItemDetails.Any())
+                        {
+                            for (int i = 0; i < Model.QuotationItemDetails.Count(); i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize" })
+                                        @*<textarea rows="2" class="auto-resize">@item.ItemDetails</textarea>*@
+                                    </td>
+                                    <td class="quantity">
+                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].ItemQuantity, new { @id = "", @class = "n1" })
+                                    </td>
+                                    <td class="unitPrice">
+                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].UnitPrice, new { @id = "", @class = "n2" })
+                                    </td>
+                                    <td class="total">
+                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].TotalPrice, new { @id = "", @class = "n3", @readonly = true })
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
+                            }
+                            @*foreach (var item in Model.QuotationItemDetails)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.TextArea(item.ItemDetails, new { @class = "auto-resize" })
+                                    </td>
+                                    <td class="quantity">
+                                        @Html.TextBox(item.ItemQuantity.ToString(), new { @id = "", @class = "n1", Name = "quantity" })
+                                    </td>
+                                    <td class="unitPrice">
+                                        @Html.TextBox(item.UnitPrice.ToString(), new { @id = "", @class = "n2" })
+                                    </td>
+                                    <td class="total">
+                                        @Html.TextBox(item.TotalPrice.ToString(), new { @id = "", @class = "n3", @readonly = true })
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
+                            }*@
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    @*@Html.TextAreaFor(model => model.Items.ItemDetails, new { @id = "GreetingAr", @class = "auto-resize" })*@
+                                    <textarea rows="2" class="auto-resize"></textarea>
+                                </td>
+                                <td class="quantity">
+                                    @*@Html.TextBoxFor(model => model.Items.ItemQuantity, new { @id = "GreetingAr", @class = "n1" })*@
+                                    <input class="n1" type="text" name="numbers" value="0">
+                                </td>
+                                <td class="unitPrice">
+                                    @*@Html.TextBoxFor(model => model.Items.UnitPrice, new { @id = "GreetingAr", @class = "n2" })*@
+                                    <input class="n2" type="text" name="numbers" value="0">
+                                </td>
+                                <td class="total">
+                                    @*@Html.TextBoxFor(model => model.Items.TotalPrice, new { @id = "GreetingAr", @class = "n3", @readonly = true })*@
+                                    <input class="n3" type="text" disabled value="0">
+                                </td>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow"></i>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
+
                 </table>
             </div>
             <div class="control-group row-fluid">
@@ -152,7 +205,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="subtotal" type="text" name="numbers" value="0" disabled />
+                    <input id="subtotal" type="text" value="0" disabled />
                 </div>
             </div>
         </div>
@@ -162,7 +215,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Discount" type="text" name="numbers_range" value="0">
+                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = "", Name = "numbers_range", @Value = "0" })
                 </div>
             </div>
         </div>
@@ -172,7 +225,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="GrandTotal" type="text" name="numbers" value="0" disabled />
+                    <input id="GrandTotal" type="text" value="0" disabled />
                 </div>
             </div>
         </div>
@@ -182,7 +235,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="inWord" type="text" name="numbers" value="0" disabled />
+                    <input id="inWord" type="text" value="0" disabled />
                 </div>
             </div>
         </div>
@@ -202,17 +255,17 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Installment1" type="text" name="numbers_range" class="installer" value="0">
+                    @Html.TextBoxFor(model => model.FirstInstallement, new { @id = "Installment1", @class = "installer", @Value = "0" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Dueat">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                <label class="control-label" for="DueAt1">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Dueat" type="text" name="numbers_range" class="dap" value="0">
+                    @Html.TextBoxFor(model => model.FirstInsDueAtCompletion, new { @id = "DueAt1", @class = "dap", @Value = "0" })
                 </div>
             </div>
         </div>
@@ -222,17 +275,17 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Installment2" type="text" name="numbers_range" class="installer" value="0">
+                    @Html.TextBoxFor(model => model.SecondInstallment, new { @id = "Installment2", @class = "installer", @Value = "0" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Dueat2">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                <label class="control-label" for="DueAt2">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Dueat2" type="text" name="numbers_range" class="dap" value="0">
+                    @Html.TextBoxFor(model => model.SecondInsDueAtCompletion, new { @id = "DueAt2", @class = "dap", @Value = "0" })
                 </div>
             </div>
         </div>
@@ -242,17 +295,17 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Installment3" type="text" name="numbers_range" class="installer" value="0">
+                    @Html.TextBoxFor(model => model.ThirdInstallment, new { @id = "Installment3", @class = "installer", @Value = "0" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Dueat3">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                <label class="control-label" for="DueAt3">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Dueat3" type="text" name="numbers_range" class="dap" value="0">
+                    @Html.TextBoxFor(model => model.ThirdInsDueAtCompletion, new { @id = "DueAt3", @class = "dap", @Value = "0" })
                 </div>
             </div>
         </div>
@@ -262,43 +315,43 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Installment4" type="text" name="numbers" class="installer" value="0">
+                    @Html.TextBoxFor(model => model.FourthInstallment, new { @id = "Installment4", @class = "installer", @Value = "0" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Dueat4">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                <label class="control-label" for="DueAt4">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Dueat4" type="text" name="numbers" class="dap" value="0">
+                    @Html.TextBoxFor(model => model.FourthInsDueAtCompletion, new { @id = "DueAt4", @class = "dap", @Value = "0" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.CMS.Quotation.Notes</label>
+                <label class="control-label" for="ExtraInformationEn">@EPMS.Web.Resources.CMS.Quotation.Notes</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="ExtraInformation" type="text" name="CLK Editor" placeholder="CLK Editor">
+                    @Html.TextBoxFor(model => model.NotesEn, new { @id = "ExtraInformationEn", @class = "", })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="ExtraInformationa">@EPMS.Web.Resources.CMS.Quotation.NotesAr</label>
+                <label class="control-label" for="ExtraInformationaAr">@EPMS.Web.Resources.CMS.Quotation.NotesAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="ExtraInformationa" type="text" name="CLK Editor" placeholder="CLK Editor">
+                    @Html.TextBoxFor(model => model.NotesAr, new { @id = "ExtraInformationaAr", @class = "", })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">@EPMS.Web.Resources.CMS.Quotation.CreateQoute</button>
+                <button type="submit" class="btn" onclick="return addItemToList(event)">@EPMS.Web.Resources.CMS.Quotation.CreateQoute</button>
             </div>
         </div>
     </div>
@@ -308,14 +361,71 @@
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
+    function addItemToList(event) {
+        //event.preventDefault();
+        return true;
+    }
     $(document).ready(function () {
+        $("#importEx").on("click", function () {
+            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
+            var coln = $(excel).find("tr:first td").length;
+            var count = 0;
+            var x = 0;
+            if (coln == 3) {
+                $(excel).find("tr").each(function () {
+                    var y = 0;
+                    var t1 = "";
+                    var t2 = 0;
+                    var t3 = 0;
+                    var t4 = 0;
+                    $(this).find("td").each(function () {
+                        if (y == 0) {
+                            t1 = $(this).text();
+                        }
+                        else if (y == 1) {
+                            t2 = parseInt($(this).text());
+                        }
+                        else if (y == 2) {
+                            t3 = parseInt($(this).text());
+                        }
+                        y++;
+                    });
+                    t4 = t3 * t2;
+                    var html = ' <tr> <td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea> </td> <td class="quantity"> <input class="n1" type="text" value="' + t2 + '"> </td> <td class="unitPrice"> <input class="n2" type="text" value="' + t3 + '"> </td> <td class="total"> <input class="n3" type="text" disabled value="' + t4 + '" > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+
+                    if (count == 0) {
+                        $('.qouteAdd').html("");
+                    }
+                    $('.qouteAdd').append(html);
+                    reActivateDelete();
+                    reactivateCount();
+                    count++;
+                });
+                $('.qouteAdd tr .n3').each(function () {
+
+                    x = x + parseInt($(this).val());
+                });
+                $('#subtotal').val(x);
+                calDiscount();
+            }
+            else {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
+                });
+            }
+        });
         var siteUrl = $('#siteURL').val();
         var url = siteUrl + "/CMS/Quotation/GetCustomerOrders";
         $("#Client").on("change", function () {
             var customerId = $(this).val();
             if (customerId > 0) {
                 //$('#SearchRequest_JobId').empty();
-                $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>', css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" } });
+                $.blockUI({
+                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -434,54 +544,22 @@
                 }
             }
         });
-        $("#importEx").on("click", function () {
-            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
-            var coln = $(excel).find("tr:first td").length;
-            var count = 0;
-            var x = 0;
-            if (coln == 3) {
-                $(excel).find("tr").each(function () {
-                    var y = 0;
-                    var t1 = "";
-                    var t2 = 0;
-                    var t3 = 0;
-                    var t4 = 0;
-                    $(this).find("td").each(function () {
-                        if (y == 0) {
-                            t1 = $(this).text();
-                        }
-                        else if (y == 1) {
-                            t2 = parseInt($(this).text());
-                        }
-                        else if (y == 2) {
-                            t3 = parseInt($(this).text());
-                        }
-                        y++;
-                    });
-                    t4 = t3 * t2;
-                    var html = ' <tr> <td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea> </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t2 + '"> </td> <td class="unitPrice"> <input class="n2" type="text" name="numbers" value="' + t3 + '"> </td> <td class="total"> <input class="n3" type="text" disabled value="' + t4 + '" > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
 
-                    if (count == 0) {
-                        $('.qouteAdd').html("");
-                    }
-                    $('.qouteAdd').append(html);
-                    reActivateDelete();
-                    reactivateCount();
-                    count++;
-                });
-                $('.qouteAdd tr .n3').each(function () {
-
-                    x = x + parseInt($(this).val());
-                });
-                $('#subtotal').val(x);
-                calDiscount();
+        $('#Discount').on("blur", function () {
+            var b;
+            b = parseInt($('#Discount').val());
+            if (b > 100) {
+                discount();
+                $(this).val(0);
+                return;
             }
-            else {
+            function discount() {
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
-                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
+                    text: 'The total % of discount should not exceed 100'
                 });
+                $(this).val(0);
             }
         });
         $('.installer').on("blur", function () {
@@ -526,26 +604,26 @@
             }
         });
         $('.dap').on("blur", function () {
-            bb = 0;
-            bb = parseInt($('#Dueat').val());
+            var bb;
+            bb = parseInt($('#DueAt1').val());
             if (bb > 100) {
                 noteItb();
                 $(this).val(0);
                 return;
             } else {
-                bb = bb + parseInt($('#Dueat2').val());
+                bb = bb + parseInt($('#DueAt2').val());
                 if (bb > 100) {
                     noteItb();
                     $(this).val(0);
                     return;
                 } else {
-                    bb = bb + parseInt($('#Dueat3').val());
+                    bb = bb + parseInt($('#DueAt3').val());
                     if (bb > 100) {
                         noteItb();
                         $(this).val(0);
                         return;
                     } else {
-                        bb = bb + parseInt($('#Dueat4').val());
+                        bb = bb + parseInt($('#DueAt4').val());
                         if (bb > 100) {
                             noteItb();
                             $(this).val(0);
@@ -569,9 +647,9 @@
     function populateDDL(data) {
         $("#OrderNo").empty();
         $("#OrderNo").append(
-                $('<option></option>').val(0).html("--Select--")
-            );
-        for (var i=0; i < data.length; i++) {
+            $('<option></option>').val(0).html("--Select--")
+        );
+        for (var i = 0; i < data.length; i++) {
             $("#OrderNo").append(
                 $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
             );
