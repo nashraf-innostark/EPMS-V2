@@ -126,10 +126,22 @@
   <data name="EmployeeRequests" xml:space="preserve">
     <value>Employee Requests</value>
   </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
   <data name="FilterByClient" xml:space="preserve">
     <value>Filter by Clients</value>
   </data>
+  <data name="FilterByDepartment" xml:space="preserve">
+    <value>Filter by Department</value>
+  </data>
   <data name="FilterByEmployee" xml:space="preserve">
     <value>Filter by Employee</value>
+  </data>
+  <data name="FilterByStatus" xml:space="preserve">
+    <value>Filter by Status</value>
+  </data>
+  <data name="Recruitment" xml:space="preserve">
+    <value>Recruitment</value>
   </data>
 </root>

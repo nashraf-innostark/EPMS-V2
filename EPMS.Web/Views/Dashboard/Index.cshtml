@@ -62,13 +62,13 @@
                                 <div>
                                     @item.EmployeeNameE
                                     @if (item.IsReplied)
-                                        {
-                                        <img src="~/Images/photon/workDone.png" alt="Read" title="Read" class="status" />
-                                        }
-                                        else
-                                        {
-                                        <img src="~/Images/photon/notDone.png" alt="Read" title="Read" class="status" />
-                                        }
+                                    {
+                                        <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                    }
                                 </div>
                             </li>
                             }
@@ -105,74 +105,55 @@
             @if (ViewBag.UserRole == "Admin") {
                 <div class="widget-holder">
                     <div class="widget-flipper">
+                        <!-- Front -->
                         <div class="widget-area widget-general-stats widget-front">
                             <div class="widget-head ">
-                                <a href="EmployeesRequestList(Admin)En.html" class="darkGreen"> Orders</a>
+                                <a href="~/CMS/Orders/Index" class="darkGreen"> Orders</a>
                                 <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" class="refresher" onclick="LoadOrders(this);"><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                     <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
                                     <i class="icon-photon calendar_alt_stroke  opc1"></i>
                                 </div>
                             </div>
-                            <ul>
-                                <li>
-                                    <a href="">  <span>Sick Leave</span></a>
-                                    <div>
-                                        22/2/2014
-                                        <img src="images/photon/pending.png" alt="Pending" title="Pending" class="status">
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">   <span>Apply Loan</span></a>
-                                    <div>
-                                        22/2/2014
-                                        <img src="images/photon/notDone.png" alt="Canceled" title="Canceled" class="status">
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">  <span>Promotion </span></a>
-                                    <div>
-                                        22/2/2014
-                                        <img src="images/photon/pending.png" alt="Pending" title="Pending" class="status">
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">    <span>Sick Leave</span></a>
-                                    <div>
-                                        22/2/2014
-                                        <img src="images/photon/workDone.png" alt="Accepted" title="Accepted" class="status">
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href=""> <span>Apply Loan</span></a>
-                                    <div>
-                                        22/2/2014
-                                        <img src="images/photon/notDone.png" alt="Canceled" title="Canceled" class="status">
-                                    </div>
-                                </li>
+                            <ul id="customerOrders">
+                                @foreach (var item in Model.Orders.ToList())
+                                {
+                                    <li>
+                                        <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
+                                        <div class="dateFormatter">
+                                            @item.OrderDate
+                                            @switch (item.OrderStatus)
+                                            {
+                                                case 1: <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                    break;
+                                                case 2: <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
+                                                    break;
+                                                case 3: <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
+                                                    break;
+                                                case 4: <img src="~/Images/photon/workDone.png" alt="Completed" title="Completed" class="status" />
+                                                    break;
+                                            }
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
+                        <!-- Back -->
                         <div class="widget-area widget-general-stats widget-back">
                             <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadOrders(this);"><i class='icon-photon cog'></i>Done</a>
                             </div>
                             <form>
                                 <div class="container-fluid widget-settings">
                                     <div class="control-group row-fluid">
                                         <div class="span12">
-                                            <label class="control-label">Filter by Customer:</label>
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                         </div>
                                     </div>
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="1">Ali</option>
-                                                    <option value="2">Said</option>
-                                                    <option value="3">Mohammed</option>
-                                                    <option value="4">Mazin</option>
-                                                </select>
+                                               @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerIdForOrder" })
                                             </div>
                                         </div>
                                     </div>
@@ -182,18 +163,18 @@
                                 <div class="container-fluid widget-settings">
                                     <div class="control-group row-fluid">
                                         <div class="span12">
-                                            <label class="control-label">Filter by status:</label>
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                         </div>
                                     </div>
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="1">pending</option>
-                                                    <option value="2">accepted</option>
-                                                    <option value="3">cancled</option>
-
+                                                <select id="orderStatus">
+                                                    <option selected="" value="0">Any</option>
+                                                    <option value="1">Pending</option>
+                                                    <option value="2">On Going</option>
+                                                    <option value="4">Completed</option>
+                                                    <option value="3">Canceled</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -202,8 +183,6 @@
                                 </div>
                             </form>
                         </div>
-
-
                     </div>
                     <div class="tempLoader" style="display:none;"></div>
                 </div>
@@ -223,22 +202,22 @@
                             </div>
                             <ul id="complaints">
                                 @foreach (var item in Model.Complaints.ToList())
-                            {
-                            <li>
-                                <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span>@item.Topic</span></a>
-                                <div>
-                                    @item.ClientName
-                                    @if (item.IsReplied)
-                                        {
-                                        <img src="~/Images/photon/workDone.png" alt="Read" title="Read" class="status" />
-                                        }
-                                        else
-                                        {
-                                        <img src="~/Images/photon/notDone.png" alt="Read" title="Read" class="status" />
-                                        }
-                                </div>
-                            </li>
-                            }
+                                {
+                                <li>
+                                    <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span>@item.Topic</span></a>
+                                    <div>
+                                        @item.ClientName
+                                        @if (item.IsReplied)
+                                            {
+                                            <img src="~/Images/photon/workDone.png" alt="Read" title="Read" class="status" />
+                                            }
+                                            else
+                                            {
+                                            <img src="~/Images/photon/notDone.png" alt="Read" title="Read" class="status" />
+                                            }
+                                    </div>
+                                </li>
+                                }
                             </ul>
 
                         </div>
@@ -459,49 +438,22 @@
                     <div class="widget-flipper">
                         <div class="widget-area widget-general-stats widget-front">
                             <div class="widget-head ">
-                                <a href="" class="lightOrange">  Recruitment</a>
+                                <a href="~/HR/JobOffered/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Recruitment</a>
                                 <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-
+                                    <a href="javascript:;" class="refresher" onclick="LoadRecruitments();"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <i class="icon-photon hash opc1"></i>
                                 </div>
                             </div>
-                            <ul>
-                                <li>
-                                    <a href="">     <span>Salesman</span></a>
-                                    <div>
-                                        22
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">    <span>Wharehouse Keeper</span></a>
-                                    <div>
-                                        12
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">   <span>Manager</span></a>
-                                    <div>
-                                        26
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">  <span>Driver</span></a>
-                                    <div>
-                                        35
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">   <span>Accountent</span></a>
-                                    <div>
-                                        30
-
-                                    </div>
-                                </li>
+                            <ul id="recruitments">
+                                    @foreach (var item in Model.Recruitments.ToList())
+                                    {
+                                        <li>
+                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
+                                            <div>
+                                                @item.NoOfApplicants
+                                            </div>
+                                        </li>
+                                    }
                             </ul>
                         </div>
 
@@ -563,7 +515,7 @@
                 </div>
                 <div class="tempLoader" style="display:none;"></div>
             </div>
-
+            @if (ViewBag.UserRole != "Admin") { 
             <!-- My Profile Widget -->
             <div class="widget-holder">
                 <div class="widget-flipper">
@@ -688,86 +640,57 @@
                 </div>
                 <div class="tempLoader" style="display:none;"></div>
             </div>
+            }
             <!-- General Stats Widget end -->
             <!-- Latest Users Widget begins -->
             @if (ViewBag.UserRole == "Admin")
             {
                 <div class="widget-holder">
                     <div class="widget-flipper">
+                        <!-- Front -->
                         <div class="widget-area widget-latest-users widget-front">
-
                             <div class="widget-head ">
-                                <a href="" class="lightOrange">  Employees</a>
+                                <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Employees</a>
                                 <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" class="refresher" onclick="LoadRecentEmployees(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                                     <i class="icon-photon hash opc1"></i>
                                 </div>
                             </div>
-                            <ul>
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="images/photon/user1.jpg" alt="profile" />
-                                    </div>
-                                    <a href="">     <span>Abdul Aziz Al shammery</span></a>
-                                    <div>100558799</div>
-                                </li>
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="images/photon/user2.jpg" alt="profile" />
-                                    </div>
-                                    <a href="">    <span>Prasent Neque</span> </a>
-                                    <div>100558799</div>
-                                </li>
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="images/photon/user3.jpg" alt="profile" />
-                                    </div>
-                                    <a href="">        <span>Nunc Cenenatis</span> </a>
-                                    <div>100558799</div>
-                                </li>
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="images/photon/user4.jpg" alt="profile" />
-                                    </div>
-                                    <a href="">      <span>Etiam Libero</span> </a>
-                                    <div>100558799</div>
-                                </li>
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="images/photon/user5.jpg" alt="profile" />
-                                    </div>
-                                    <a href="">    <span>Morbi Consequat</span> </a>
-                                    <div>100558799</div>
-                                </li>
+                            <ul id="recentEmployees">
+                                @foreach (var item in Model.EmployeesRecent.ToList())
+                                {
+                                    <li>
+                                        <div class="avatar-image">
+                                            <img src="@item.EmployeeImagePath" alt="profile image" />
+                                        </div>
+                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span>@item.EmployeeNameE</span></a>
+                                        <div>
+                                            @item.EmployeeJobId
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
+                        <!-- Back -->
                         <div class="widget-area widget-latest-users widget-back">
                             <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" flipit(this) "><i class='icon-photon cog'></i>Done</a>
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadRecentEmployees(this);"><i class='icon-photon cog'></i>Done</a>
                             </div>
                             <form>
                                 <div class="container-fluid widget-settings">
                                     <div class="control-group row-fluid">
                                         <div class="span12">
-                                            <label class="control-label">Filter by Department:</label>
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
                                         </div>
                                     </div>
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="Sales">Sales</option>
-                                                    <option value="HR">HR</option>
-                                                    <option value="Marketing">Marketing</option>
-                                                    <option value="Accounting">Accounting</option>
-                                                </select>
+                                                @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </form>
                         </div>

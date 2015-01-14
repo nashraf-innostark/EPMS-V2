@@ -67,6 +67,11 @@ namespace EPMS.Implementation.Services
             return null;
         }
 
+        public IEnumerable<Employee> GetRecentEmployees(string requester)
+        {
+            return repository.GetRecentEmployees(requester);
+        }
+
         public IEnumerable<Employee> GetAll()
         {
             return repository.GetAll();

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -26,6 +24,11 @@ namespace EPMS.Implementation.Services
         public IEnumerable<JobOffered> GetAll()
         {
             return jobOfferedRepository.GetAll();
+        }
+
+        public IEnumerable<JobOffered> GetRecentJobOffereds()
+        {
+            return jobOfferedRepository.GetRecentJobOffereds();
         }
 
         public JobOffered FindJobOfferedById(long id)

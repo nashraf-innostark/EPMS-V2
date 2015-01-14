@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -42,6 +43,17 @@ namespace EPMS.Web.ModelMappers
                 OrderStatus = source.OrderStatus,
                 CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
                 CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
+            };
+        }
+
+        public static DashboardModels.Order CreateForDashboard(this Order source)
+        {
+            return new DashboardModels.Order
+            {
+                OrderId = source.OrderId,
+                OrderNo = source.OrderNo,
+                OrderDate = Convert.ToDateTime(source.OrderDate).ToShortDateString(),
+                OrderStatus = source.OrderStatus
             };
         }
     }

@@ -559,9 +559,9 @@ function LoadEmployeeRequests(control) {
                 if (data.length > 0) {
                     $.each(data, function (itemIndex, item) {
                         if (item.IsReplied) {
-                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + '<img src="/Images/photon/workDone.png" alt="Read" title="Read" class="status"></div></li>');
+                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + ' <img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
                         } else {
-                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + '<img src="/Images/photon/notDone.png" alt="Read" title="Read" class="status"></div></li>');
+                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                         }
                         
                     });
@@ -599,9 +599,9 @@ function LoadComplaints(control) {
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (item.IsReplied) {
-                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + '<img src="/Images/photon/workDone.png" alt="Read" title="Read" class="status"></div></li>');
+                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + ' <img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
                     } else {
-                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + '<img src="/Images/photon/notDone.png" alt="Read" title="Read" class="status"></div></li>');
+                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + ' <img src="/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
                     }
                 });
             }
@@ -615,9 +615,116 @@ function LoadComplaints(control) {
             $(".tempLoader").click();
         }
     });
-    //} else {
-    //    $(".tempLoader").click();
-    //}
+};
+function LoadOrders(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var id = $("#customerIdForOrder").val();
+    var status = $("#orderStatus").val();
+    if (control.className == "refresher" || id == "") {
+        id = 0;
+        status = 0;
+    }
+    var url = siteUrl + "/Dashboard/LoadOrders";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            customerId: id,
+            orderStatus: status
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#customerOrders').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                     switch (item.OrderStatus)
+                    {
+                         case 1: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            break;
+                         case 2: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
+                            break;
+                         case 3: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
+                            break;
+                         case 4: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/workDone.png" alt="Completed" title="Completed" class="status"></div></li>');
+                            break;
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#customerOrders').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadRecruitments() {
+    var siteUrl = $('#siteURL').val();
+    var url = siteUrl + "/Dashboard/LoadRecruitments";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#recruitments').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    $('#recruitments').append('<li><a href="/HR/JobOffered/Create/' + item.JobOfferedId + '"><span>' + item.TitleE + '</span></a><div>' + item.NoOfApplicants + ' </div></li>');
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#recruitments').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadRecentEmployees(control) {
+    Loader(control);
+    var id = $("#departmentId").val();
+    if (control.className == "refresher" || id == "") {
+        id = 0;
+    }
+    var siteUrl = $('#siteURL').val();
+    var url = siteUrl + "/Dashboard/LoadRecentEmployees";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+            departmentId: id
+        },
+        dataType: "json",
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#recentEmployees').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    $('#recentEmployees').append('<li><div class="avatar-image"><img src="' + item.EmployeeImagePath + '" alt="profile image" /></div><a href="/HR/Employee/Create/' + item.EmployeeId + '"><span>' + item.EmployeeNameE + '</span></a><div>' + item.EmployeeJobId + ' </div></li>');
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#recentEmployees').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
 };
 //#endregion
 //#endregion

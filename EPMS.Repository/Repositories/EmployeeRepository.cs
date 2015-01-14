@@ -86,6 +86,17 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(employee => employee.JobTitle.DepartmentId == departmentId);
         }
+
+        public IEnumerable<Employee> GetRecentEmployees(string requester)
+        {
+            if (requester == "Admin")
+            {
+                return DbSet.OrderByDescending(x => x.RecCreatedDt).Take(5);
+            }
+            long departmentId = Convert.ToInt64(requester);
+            return DbSet.Where(x => x.JobTitle.DepartmentId == departmentId).OrderByDescending(x => x.RecCreatedDt).Take(5);
+        }
+
         public Employee FindForPayroll(long employeeId, DateTime currTime)
         {
             return DbSet.FirstOrDefault(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);

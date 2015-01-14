@@ -75,6 +75,20 @@ namespace EPMS.Repository.Repositories
             return orders;
         }
 
+        public IEnumerable<Order> GetRecentOrders(string requester, int status)
+        {
+            if (requester == "Admin")
+            {
+                if(status>0)
+                    return DbSet.Where(x => x.OrderStatus == status).OrderByDescending(x => x.OrderDate).Take(5);
+                return DbSet.OrderByDescending(x => x.OrderDate).Take(5);
+            }
+            long customerId = Convert.ToInt64(requester);
+            if (status > 0)
+                return DbSet.Where(x => x.CustomerId == customerId && x.OrderStatus == status).OrderByDescending(x => x.OrderDate).Take(5);
+            return DbSet.Where(x => x.CustomerId == customerId).OrderByDescending(x => x.OrderDate).Take(5);
+        }
+
         public Order GetOrderByOrderId(long orderId)
         {
             return DbSet.FirstOrDefault(order => order.OrderId == orderId);
