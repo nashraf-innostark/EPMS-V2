@@ -15,7 +15,7 @@ namespace EPMS.Interfaces.IServices
         Employee FindEmployeeById(long? id);
         //IEnumerable<Employee> FindEmployeeForPayroll(long? id, DateTime currTime);
         PayrollResponse FindEmployeeForPayroll(long? id, DateTime currTime);
-
+        IEnumerable<Employee> GetRecentEmployees(string requester);
         IEnumerable<Employee> GetAll(); 
         long AddEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);

@@ -27,9 +27,5 @@ namespace EPMS.Web.Models
         public double? BasicSalary { get; set; }
         public string JobTitleNameE { get; set; }
         public string JobTitleNameA { get; set; }
-
-        //public ICollection<JobApplicant> JobApplicants { get; set; }
-        //public JobTitle JobTitle { get; set; }
-        //public Department Department { get; set; }
     }
 }

@@ -77,7 +77,25 @@ namespace EPMS.Web.ModelMappers
             return new DashboardModels.Employee
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE ?? ""
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
+            };
+
+        }
+        public static DashboardModels.Profile CreateForDashboardProfile(this Employee source)
+        {
+            return new DashboardModels.Profile
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeJobTitleE = source.JobTitle.JobTitleNameE,
+                EmployeeJobTitleA = source.JobTitle.JobTitleNameA,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt,
+                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
             };
 
         }

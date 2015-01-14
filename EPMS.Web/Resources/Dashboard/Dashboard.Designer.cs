@@ -88,6 +88,15 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employees.
+        /// </summary>
+        public static string Employees {
+            get {
+                return ResourceManager.GetString("Employees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter by Clients.
         /// </summary>
         public static string FilterByClient {
@@ -97,11 +106,38 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by Department.
+        /// </summary>
+        public static string FilterByDepartment {
+            get {
+                return ResourceManager.GetString("FilterByDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter by Employee.
         /// </summary>
         public static string FilterByEmployee {
             get {
                 return ResourceManager.GetString("FilterByEmployee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter by Status.
+        /// </summary>
+        public static string FilterByStatus {
+            get {
+                return ResourceManager.GetString("FilterByStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recruitment.
+        /// </summary>
+        public static string Recruitment {
+            get {
+                return ResourceManager.GetString("Recruitment", resourceCulture);
             }
         }
     }

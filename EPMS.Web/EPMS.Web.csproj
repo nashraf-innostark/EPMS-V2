@@ -268,7 +268,13 @@
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="DashboardModels\Complaint.cs" />
     <Compile Include="DashboardModels\Customer.cs" />
+    <Compile Include="DashboardModels\Department.cs" />
     <Compile Include="DashboardModels\EmployeeRequest.cs" />
+    <Compile Include="DashboardModels\Order.cs" />
+    <Compile Include="DashboardModels\Payment.cs" />
+    <Compile Include="DashboardModels\Payroll.cs" />
+    <Compile Include="DashboardModels\Profile.cs" />
+    <Compile Include="DashboardModels\Recruitment.cs" />
     <Compile Include="Files\PDF Helping Files\PDFCheckBoxFieldType.cs" />
     <Compile Include="Files\PDF Helping Files\PDFFieldType.cs" />
     <Compile Include="Files\PDF Helping Files\PDFHelper.cs" />
@@ -1550,6 +1556,7 @@
     <Content Include="Images\photon\notDone.png" />
     <Content Include="Images\photon\note%402x.png" />
     <Content Include="Images\photon\note.png" />
+    <Content Include="Images\photon\ongoing.png" />
     <Content Include="Images\photon\panel_bck.jpg" />
     <Content Include="Images\photon\panel_logo%402x.png" />
     <Content Include="Images\photon\panel_logo-light-2x.png" />
