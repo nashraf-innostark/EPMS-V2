@@ -74,6 +74,9 @@
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs"/>
+    <Compile Include="Repository\IBaseRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Repository\IComplaintRepository.cs" />
     <Compile Include="Repository\ICustomerRepository.cs" />
     <Compile Include="Repository\IDepartmentRepository.cs" />
