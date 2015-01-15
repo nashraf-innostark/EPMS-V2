@@ -244,6 +244,7 @@
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
@@ -308,6 +309,8 @@
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\QuotationItemDetail.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
@@ -368,10 +371,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Order.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CMS\Quotation.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quotation.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Quotation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quotation.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -501,6 +514,7 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
@@ -2422,8 +2436,10 @@
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
     <Content Include="Content\CSS\ie-only.less" />
     <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
+    <Content Include="Areas\CMS\Views\Quotation\Index.cshtml" />
     <Content Include="Content\CSS\ie8-only.less" />
     <Content Include="Areas\CP\Views\web.config" />
+    <Content Include="Areas\CMS\Views\Quotation\Create.cshtml" />
     <Content Include="Content\CSS\photon-responsive.less" />
     <Content Include="Content\CSS\photon.less" />
     <Content Include="Content\CSS\variables.less" />
@@ -2487,9 +2503,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Order.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Quotation.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Quotation.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Quotation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
@@ -2713,6 +2737,7 @@
     <Content Include="Scripts\plugins\jquery.metadata.js" />
     <Content Include="Scripts\plugins\jquery.mockjax.js" />
     <Content Include="Scripts\plugins\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\plugins\jquery.nToWord.js" />
     <Content Include="Scripts\plugins\jquery.pnotify.min.js" />
     <Content Include="Scripts\plugins\jquery.qrcode.min.js" />
     <Content Include="Scripts\plugins\jquery.rating.pack.js" />

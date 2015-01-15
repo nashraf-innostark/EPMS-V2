@@ -8,7 +8,7 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
@@ -136,7 +136,7 @@
             </div>
         </div>
         <!--Drag And Drop Upload begin-->
-        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid ignore">
             <div class="span3">
                 <label class="control-label" for="inputField">
                     @EPMS.Web.Resources.HR.Employee.Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
@@ -204,7 +204,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control toBeRequired", @id = "EmployeeDOB" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true })
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -288,7 +288,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -480,7 +480,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="return validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="">@Model.EmployeeViewModel.BtnText</button>
                 </div>
                 <div class="span3 span-inset">
                     <button type="button" class="btn">@EPMS.Web.Resources.HR.Employee.DeactiveEmp</button>
@@ -491,7 +491,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="return validateForm(event)">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="">@Model.EmployeeViewModel.BtnText</button>
                 </div>
             </div>
         }
@@ -503,6 +503,9 @@
         // CK Editor
         CKEDITOR.replace('ExtraInformationE');
         CKEDITOR.replace('ExtraInformationA');
+        $("#AddEditEmployeeForm").validate({
+            //ignore: ".ignore"
+        }).settings.ignore = ".ignore, .file";
         // upload Image
         var errors = "";
         $('#upload').mfupload({
