@@ -1,6 +1,6 @@
-﻿namespace EPMS.Web.DashboardModels
+﻿namespace EPMS.Models.ResponseModels
 {
-    public class Payroll
+    public class PayrollWidgetResponse
     {
         public double BasicSalary { get; set; }
         public double Allowances { get; set; }

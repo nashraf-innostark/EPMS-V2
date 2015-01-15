@@ -55,6 +55,8 @@ namespace EPMS.Web.ModelMappers
                 ComplaintId = source.ComplaintId,
                 ClientName = source.Customer.CustomerNameE,
                 Topic = source.Topic,
+                ClientNameShort = source.Customer.CustomerNameE.Length > 7 ? source.Customer.CustomerNameE.Substring(0, 7) + "..." : source.Customer.CustomerNameE,
+                TopicShort = source.Topic.Length > 9 ? source.Topic.Substring(0, 9) + "..." : source.Topic,
                 IsReplied = source.IsReplied
             };
         }

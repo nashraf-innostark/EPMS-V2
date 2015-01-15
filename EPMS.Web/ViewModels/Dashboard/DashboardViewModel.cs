@@ -19,5 +19,6 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<Order> Orders { get; set; }
         public IEnumerable<DashboardModels.Recruitment> Recruitments { get; set; }
         public Profile Profile { get; set; }
+        public DashboardModels.Payroll Payroll { get; set; }
     }
 }

@@ -124,11 +124,38 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by Month.
+        /// </summary>
+        public static string FilterbyMonth {
+            get {
+                return ResourceManager.GetString("FilterbyMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter by Status.
         /// </summary>
         public static string FilterByStatus {
             get {
                 return ResourceManager.GetString("FilterByStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Profile.
+        /// </summary>
+        public static string MyProfile {
+            get {
+                return ResourceManager.GetString("MyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payroll.
+        /// </summary>
+        public static string Payroll {
+            get {
+                return ResourceManager.GetString("Payroll", resourceCulture);
             }
         }
         
