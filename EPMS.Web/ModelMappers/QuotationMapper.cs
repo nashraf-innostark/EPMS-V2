@@ -1,0 +1,118 @@
+﻿using System.Linq;
+using EPMS.Models.DomainModels;
+using EPMS.Web.ViewModels;
+using EPMS.Web.ViewModels.Quotation;
+
+namespace EPMS.Web.ModelMappers
+{
+    public static class QuotationMapper
+    {
+        public static Quotation CreateFromClientToServer(this QuotationCreateViewModel source)
+        {
+            var caseType = new Quotation
+            {
+                QuotationId = source.QuotationId,
+                ClientName = source.ClientName,
+                CustomerId = source.CustomerId,
+                OrderNumber = source.OrderNumber,
+                CreatedByEmployee = source.CreatedByEmployee,
+                GreetingsEn = source.GreetingsEn,
+                GreetingsAr = source.GreetingsAr,
+                QuotationDiscount = source.QuotationDiscount,
+                FirstInstallement = source.FirstInstallement,
+                FirstInsDueAtCompletion = source.FirstInsDueAtCompletion,
+                SecondInstallment = source.SecondInstallment,
+                SecondInsDueAtCompletion = source.SecondInsDueAtCompletion,
+                ThirdInstallment = source.ThirdInstallment,
+                ThirdInsDueAtCompletion = source.ThirdInsDueAtCompletion,
+                FourthInstallment = source.FourthInstallment,
+                FourthInsDueAtCompletion = source.FourthInsDueAtCompletion,
+                NotesEn = source.NotesEn,
+                NotesAr = source.NotesAr,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDt = source.RecUpdatedDt,
+            };
+            return caseType;
+        }
+
+        public static QuotationCreateViewModel CreateFromServerToClient(this Quotation source)
+        {
+            return new QuotationCreateViewModel
+            {
+                QuotationId = source.QuotationId,
+                ClientName = source.ClientName,
+                CustomerId = source.CustomerId,
+                OrderNumber = source.OrderNumber,
+                CreatedByEmployee = source.CreatedByEmployee,
+                GreetingsEn = source.GreetingsEn,
+                GreetingsAr = source.GreetingsAr,
+                QuotationDiscount = source.QuotationDiscount,
+                FirstInstallement = source.FirstInstallement,
+                FirstInsDueAtCompletion = source.FirstInsDueAtCompletion,
+                SecondInstallment = source.SecondInstallment,
+                SecondInsDueAtCompletion = source.SecondInsDueAtCompletion,
+                ThirdInstallment = source.ThirdInstallment,
+                ThirdInsDueAtCompletion = source.ThirdInsDueAtCompletion,
+                FourthInstallment = source.FourthInstallment,
+                FourthInsDueAtCompletion = source.FourthInsDueAtCompletion,
+                NotesEn = source.NotesEn,
+                NotesAr = source.NotesAr,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDt = source.RecUpdatedDt,
+                QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),
+            };
+        }
+        public static Models.Quotation CreateFromServerToClientLv(this Quotation source)
+        {
+            return new Models.Quotation
+            {
+                QuotationId = source.QuotationId,
+                ClientName = source.ClientName,
+                CustomerId = source.CustomerId,
+                OrderNumber = source.OrderNumber,
+                CreatedByEmployee = source.CreatedByEmployee,
+            };
+        }
+
+        public static QuotationItemDetail CreateFromClientToServer(this Models.QuotationItemDetail source)
+        {
+            var caseType = new QuotationItemDetail
+            {
+                ItemId = source.ItemId,
+                QuotationId = source.QuotationId,
+                ItemDetails = source.ItemDetails,
+                ItemQuantity = source.ItemQuantity,
+                UnitPrice = source.UnitPrice,
+                TotalPrice = source.UnitPrice,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDt = source.RecUpdatedDt,
+
+            };
+            return caseType;
+        }
+
+        public static Models.QuotationItemDetail CreateFromServerToClient(this QuotationItemDetail source)
+        {
+            return new Models.QuotationItemDetail
+            {
+                ItemId = source.ItemId,
+                QuotationId = source.QuotationId,
+                ItemDetails = source.ItemDetails,
+                ItemQuantity = source.ItemQuantity,
+                UnitPrice = source.UnitPrice,
+                TotalPrice = source.UnitPrice,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDt = source.RecUpdatedDt,
+
+            };
+        }
+    }
+}

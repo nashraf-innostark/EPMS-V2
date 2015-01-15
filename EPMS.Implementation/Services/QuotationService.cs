@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -24,14 +26,16 @@ namespace EPMS.Implementation.Services
             return Repository.GetAll();
         }
 
-        public Quotation FindQuotationById(long? id)
+        public Quotation FindQuotationById(long id)
         {
-            return Repository.Find(Convert.ToInt32(id));
+            return Repository.Find(id);
         }
 
-        public bool AddQuotation(Quotation quotation)
+        public long AddQuotation(Quotation quotation)
         {
-            return true;
+            Repository.Add(quotation);
+            Repository.SaveChanges();
+            return quotation.QuotationId;
         }
 
         public bool UpdateQuotation(Quotation quotation)
@@ -42,6 +46,11 @@ namespace EPMS.Implementation.Services
         public void DeleteQuotation(Quotation quotation)
         {
             
+        }
+
+        public QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest)
+        {
+            return Repository.GetAllQuotation(searchRequest);
         }
     }
 }

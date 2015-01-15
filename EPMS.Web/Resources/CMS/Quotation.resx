@@ -210,4 +210,10 @@
   <data name="UnitPrice" xml:space="preserve">
     <value>Unit Price</value>
   </data>
+  <data name="AddMessage" xml:space="preserve">
+    <value>Quotation has been Addded Successfully.</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Problem in Saving Quotation.</value>
+  </data>
 </root>

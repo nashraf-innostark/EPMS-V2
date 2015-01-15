@@ -29,6 +29,8 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IComplaintService, ComplaintService>();
             unityContainer.RegisterType<ICustomerService, CustomerService>();
             unityContainer.RegisterType<IOrdersService, OrdersService>();
+            unityContainer.RegisterType<IQuotationService, QuotationService>();
+            unityContainer.RegisterType<IQuotationItemService, QuotationItemService>();
         }
     }
 }

@@ -72,6 +72,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     SearchRequest = employeeSearchRequest,
                     Role = userRole.Name,
                 };
+                ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                 return View(employeeViewModel);
             }
             if (userRole != null && userRole.Name == "Employee")

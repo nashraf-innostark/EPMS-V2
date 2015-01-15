@@ -210,4 +210,10 @@
   <data name="UnitPrice" xml:space="preserve">
     <value>سعر الافرادي</value>
   </data>
+  <data name="AddMessage" xml:space="preserve">
+    <value>تمت إضافة الاقتباس بنجاح</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>مشكلة في إنقاذ الاقتباس</value>
+  </data>
 </root>

@@ -28,6 +28,8 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IComplaintRepository, ComplaintRepository>();
             unityContainer.RegisterType<ICustomerRepository, CustomerRepository>();
             unityContainer.RegisterType<IOrdersRepository, OrdersRepository>();
+            unityContainer.RegisterType<IQuotationRepository, QuotationRepository>();
+            unityContainer.RegisterType<IQuotationItemRepository, QuotationItemRepository>();
         }
     }
 }

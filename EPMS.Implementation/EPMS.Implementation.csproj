@@ -138,6 +138,7 @@
     <Compile Include="Services\MenuRightsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>

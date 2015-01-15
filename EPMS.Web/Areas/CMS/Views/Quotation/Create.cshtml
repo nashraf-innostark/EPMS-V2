@@ -1,9 +1,11 @@
-﻿@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
+﻿@using EPMS.Web.Models
+@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.CreateNew;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    //IEnumerable<Customer> clients = (Customer)ViewBag.Customers;
 }
 
 <!-- Navigation Bar -->
@@ -37,7 +39,10 @@
 @using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.HiddenFor(model => model.CreatedByName)
+        @Html.HiddenFor(model => model.CreatedByEmployee)
+        @Html.HiddenFor(model => model.QuotationId)
+        @Html.HiddenFor(model => model.OldItemDetailsCount)
+        @Html.HiddenFor(model => model.ClientName)
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Client">@EPMS.Web.Resources.CMS.Quotation.ClientName</label>
@@ -46,7 +51,7 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
                     }
                     @Html.ValidationMessageFor(m => m.CustomerId, String.Empty, new { @class = "required" })
                 </div>
@@ -58,7 +63,14 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(m => m.OrderNumber, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderNo" })
+                    @if (Model.CustomerId == 0)
+                    {
+                        @Html.DropDownListFor(m => m.OrderNumber, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderNo" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.OrderNumber, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderNo" })
+                    }
                     @Html.ValidationMessageFor(m => m.OrderNumber, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -121,14 +133,15 @@
                         </tr>
                     </thead>
                     <tbody class="qouteAdd">
+                        <tr class="ItemDetailError Error center"></tr>
                         @if (Model.QuotationItemDetails.Any())
                         {
                             for (int i = 0; i < Model.QuotationItemDetails.Count(); i++)
                             {
                                 <tr>
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId)
                                     <td>
                                         @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize" })
-                                        @*<textarea rows="2" class="auto-resize">@item.ItemDetails</textarea>*@
                                     </td>
                                     <td class="quantity">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].ItemQuantity, new { @id = "", @class = "n1" })
@@ -144,45 +157,21 @@
                                     </td>
                                 </tr>
                             }
-                            @*foreach (var item in Model.QuotationItemDetails)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.TextArea(item.ItemDetails, new { @class = "auto-resize" })
-                                    </td>
-                                    <td class="quantity">
-                                        @Html.TextBox(item.ItemQuantity.ToString(), new { @id = "", @class = "n1", Name = "quantity" })
-                                    </td>
-                                    <td class="unitPrice">
-                                        @Html.TextBox(item.UnitPrice.ToString(), new { @id = "", @class = "n2" })
-                                    </td>
-                                    <td class="total">
-                                        @Html.TextBox(item.TotalPrice.ToString(), new { @id = "", @class = "n3", @readonly = true })
-                                    </td>
-                                    <td class="delete">
-                                        <i class="icon-photon minus deleteRow"></i>
-                                    </td>
-                                </tr>
-                            }*@
                         }
                         else
                         {
                             <tr>
                                 <td>
-                                    @*@Html.TextAreaFor(model => model.Items.ItemDetails, new { @id = "GreetingAr", @class = "auto-resize" })*@
-                                    <textarea rows="2" class="auto-resize"></textarea>
+                                    <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails"></textarea>
                                 </td>
                                 <td class="quantity">
-                                    @*@Html.TextBoxFor(model => model.Items.ItemQuantity, new { @id = "GreetingAr", @class = "n1" })*@
-                                    <input class="n1" type="text" name="numbers" value="0">
+                                    <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity">
                                 </td>
                                 <td class="unitPrice">
-                                    @*@Html.TextBoxFor(model => model.Items.UnitPrice, new { @id = "GreetingAr", @class = "n2" })*@
-                                    <input class="n2" type="text" name="numbers" value="0">
+                                    <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice">
                                 </td>
                                 <td class="total">
-                                    @*@Html.TextBoxFor(model => model.Items.TotalPrice, new { @id = "GreetingAr", @class = "n3", @readonly = true })*@
-                                    <input class="n3" type="text" disabled value="0">
+                                    <input class="n3" type="text" value="0" name="QuotationItemDetails[0].TotalPrice" readonly>
                                 </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow"></i>
@@ -190,7 +179,6 @@
                             </tr>
                         }
                     </tbody>
-
                 </table>
             </div>
             <div class="control-group row-fluid">
@@ -205,7 +193,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="subtotal" type="text" value="0" disabled />
+                    <input id="subtotal" type="text" value="0" readonly />
                 </div>
             </div>
         </div>
@@ -215,7 +203,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = "", Name = "numbers_range", @Value = "0" })
+                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = ""})
                 </div>
             </div>
         </div>
@@ -225,7 +213,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="GrandTotal" type="text" value="0" disabled />
+                    <input id="GrandTotal" type="text" value="0" readonly />
                 </div>
             </div>
         </div>
@@ -235,7 +223,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="inWord" type="text" value="0" disabled />
+                    <input id="inWord" type="text" value="0" readonly />
                 </div>
             </div>
         </div>
@@ -255,7 +243,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.FirstInstallement, new { @id = "Installment1", @class = "installer", @Value = "0" })
+                    @Html.TextBoxFor(model => model.FirstInstallement, new { @id = "Installment1", @class = "installer" })
                 </div>
             </div>
         </div>
@@ -265,7 +253,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.FirstInsDueAtCompletion, new { @id = "DueAt1", @class = "dap", @Value = "0" })
+                    @Html.TextBoxFor(model => model.FirstInsDueAtCompletion, new { @id = "DueAt1", @class = "dap" })
                 </div>
             </div>
         </div>
@@ -275,7 +263,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.SecondInstallment, new { @id = "Installment2", @class = "installer", @Value = "0" })
+                    @Html.TextBoxFor(model => model.SecondInstallment, new { @id = "Installment2", @class = "installer" })
                 </div>
             </div>
         </div>
@@ -285,7 +273,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.SecondInsDueAtCompletion, new { @id = "DueAt2", @class = "dap", @Value = "0" })
+                    @Html.TextBoxFor(model => model.SecondInsDueAtCompletion, new { @id = "DueAt2", @class = "dap" })
                 </div>
             </div>
         </div>
@@ -295,7 +283,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ThirdInstallment, new { @id = "Installment3", @class = "installer", @Value = "0" })
+                    @Html.TextBoxFor(model => model.ThirdInstallment, new { @id = "Installment3", @class = "installer" })
                 </div>
             </div>
         </div>
@@ -305,7 +293,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ThirdInsDueAtCompletion, new { @id = "DueAt3", @class = "dap", @Value = "0" })
+                    @Html.TextBoxFor(model => model.ThirdInsDueAtCompletion, new { @id = "DueAt3", @class = "dap" })
                 </div>
             </div>
         </div>
@@ -315,7 +303,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.FourthInstallment, new { @id = "Installment4", @class = "installer", @Value = "0" })
+                    @Html.TextBoxFor(model => model.FourthInstallment, new { @id = "Installment4", @class = "installer" })
                 </div>
             </div>
         </div>
@@ -325,7 +313,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.FourthInsDueAtCompletion, new { @id = "DueAt4", @class = "dap", @Value = "0" })
+                    @Html.TextBoxFor(model => model.FourthInsDueAtCompletion, new { @id = "DueAt4", @class = "dap" })
                 </div>
             </div>
         </div>
@@ -351,7 +339,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return addItemToList(event)">@EPMS.Web.Resources.CMS.Quotation.CreateQoute</button>
+                <button type="submit" class="btn" onclick="return setClientName()">@EPMS.Web.Resources.CMS.Quotation.CreateQoute</button>
             </div>
         </div>
     </div>
@@ -361,11 +349,64 @@
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
-    function addItemToList(event) {
-        //event.preventDefault();
+    function setClientName() {
+        $("#ClientName").val($("#Client option:selected").text());
         return true;
     }
+    function checkIfPrevItemExist() {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length) ; i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "" || fieldvalue == 0) {
+                //$(control).prop('placeholder', 'Required');
+                counter++;
+                $(control).addClass("Error");
+
+            } else {
+                $(control).removeClass("Error");
+            }
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'Please Complete Item Detail.'
+                });
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    }
+    var itemsDetailCount;
+    var iExcelData = false;
+    var isUpdate = false;
     $(document).ready(function () {
+        var quotationId = parseInt('@Model.QuotationId');
+        if (quotationId == 0) {
+            $("#Discount").val(0);
+            $("#Installment1").val(0);
+            $("#Installment2").val(0);
+            $("#Installment3").val(0);
+            $("#Installment4").val(0);
+            $("#DueAt1").val(0);
+            $("#DueAt2").val(0);
+            $("#DueAt3").val(0);
+            $("#DueAt4").val(0);
+            itemsDetailCount = 0;
+        } else {
+            itemsDetailCount = parseInt('@Model.QuotationItemDetails.Count');
+            isUpdate = true;
+            $("#ClientName").val($("#Client option:selected").text());
+        }
+        var discount = parseInt('@Model.QuotationDiscount');
+        if (discount == 0 || isNaN(discount)) {
+            $("#Discount").val(0);
+        }
         $("#importEx").on("click", function () {
             var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
             var coln = $(excel).find("tr:first td").length;
@@ -391,8 +432,14 @@
                         y++;
                     });
                     t4 = t3 * t2;
-                    var html = ' <tr> <td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea> </td> <td class="quantity"> <input class="n1" type="text" value="' + t2 + '"> </td> <td class="unitPrice"> <input class="n2" type="text" value="' + t3 + '"> </td> <td class="total"> <input class="n3" type="text" disabled value="' + t4 + '" > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
-
+                    
+                    var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails">' + t1 + '</textarea> </td> ' +
+                '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="' + t2 + '" name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity"> </td> ' +
+                '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="' + t3 + '" name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice"> </td>' +
+                ' <td class="total"> <input class="n3" type="text" readonly value="' + t4 + '" name="QuotationItemDetails[' + itemsDetailCount + '].TotalPrice"> </td> ' +
+                '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+                    itemsDetailCount = itemsDetailCount + 1;
+                    iExcelData = true;
                     if (count == 0) {
                         $('.qouteAdd').html("");
                     }
@@ -421,6 +468,7 @@
         $("#Client").on("change", function () {
             var customerId = $(this).val();
             if (customerId > 0) {
+                $("#ClientName").val($("#Client option:selected").text());
                 //$('#SearchRequest_JobId').empty();
                 $.blockUI({
                     message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
@@ -469,10 +517,21 @@
             toolbar: 'tiny'
         });
         $('.trAdder').on("click", function () {
-            var html = ' <tr> <td > <textarea rows="2" class="auto-resize"></textarea> </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value=0> </td> <td class="unitPrice"> <input class="n2" type="text" name="numbers" value=0> </td> <td class="total"> <input class="n3" type="text" disabled value=0 > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
-            $('.qouteAdd').append(html);
-            reActivateDelete();
-            reactivateCount();
+            if (checkIfPrevItemExist()) {
+                if (!iExcelData && !isUpdate) {
+                    itemsDetailCount = itemsDetailCount + 1;
+                }
+                var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails"></textarea> </td> ' +
+                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity"> </td> ' +
+                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice"> </td>' +
+                    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + itemsDetailCount + '].TotalPrice"> </td> ' +
+                    '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+                $('.qouteAdd').append(html);
+                iExcelData = false;
+                isUpdate = false;
+                reActivateDelete();
+                reactivateCount();
+            }
         });
         reActivateDelete();
         reactivateCount();
