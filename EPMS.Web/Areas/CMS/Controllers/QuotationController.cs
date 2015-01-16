@@ -126,14 +126,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
                             isAdded.Add(QuotationItemService.AddQuotationItem(itemDetailToAdd));
                         }
                     }
-                    if (isUpdated.Count + isAdded.Count == viewModel.QuotationItemDetails.Count)
+                    if (!isUpdated.Contains(false) && !isAdded.Contains(false))
                     {
-                        TempData["message"] = new MessageViewModel
+                        if (isUpdated.Count + isAdded.Count == viewModel.QuotationItemDetails.Count)
                         {
-                            Message = Resources.CMS.Quotation.UpdateMessage,
-                            IsUpdated = true
-                        };
-                        return RedirectToAction("Index");
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = Resources.CMS.Quotation.UpdateMessage,
+                                IsUpdated = true
+                            };
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
                 else
