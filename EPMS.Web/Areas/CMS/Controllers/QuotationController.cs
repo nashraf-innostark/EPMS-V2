@@ -88,24 +88,25 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(QuotationCreateViewModel model)
+        public ActionResult Create(QuotationCreateViewModel viewModel)
         {
             // Update case
-            if (model.QuotationId > 0)
+            if (viewModel.QuotationId > 0)
             {
+
                 return RedirectToAction("Index");
             }
             // Add case
             // Save Quotation
-            model.RecCreatedBy = User.Identity.GetUserId();
-            model.RecCreatedDt = DateTime.Now;
-            var quotationToAdd = model.CreateFromClientToServer();
+            viewModel.RecCreatedBy = User.Identity.GetUserId();
+            viewModel.RecCreatedDt = DateTime.Now;
+            var quotationToAdd = viewModel.CreateFromClientToServer();
             var quotaionId = QuotationService.AddQuotation(quotationToAdd);
             var addStatus = false;
             if (quotaionId > 0)
             {
                 //Save Item Details
-                foreach (var itemDetail in model.QuotationItemDetails)
+                foreach (var itemDetail in viewModel.QuotationItemDetails)
                 {
                     itemDetail.QuotationId = quotaionId;
                     itemDetail.RecCreatedBy = User.Identity.GetUserId();
@@ -129,7 +130,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 Message = Resources.CMS.Quotation.ErrorMessage,
                 IsSaved = true
             };
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]
