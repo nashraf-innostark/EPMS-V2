@@ -8,6 +8,7 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Quotation;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
@@ -38,6 +39,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Public
         // GET: CMS/Quotation
+        [SiteAuthorize(PermissionKey = "QuotationIndex")]
         public ActionResult Index()
         {
             QuotationListViewModel viewModel = new QuotationListViewModel
@@ -58,6 +60,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
+        [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(long? id)
         {
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
@@ -106,6 +109,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         if (itemDetail.ItemId > 0)
                         {
                             // Update item details
+                            itemDetail.QuotationId = viewModel.QuotationId;
                             itemDetail.RecUpdatedBy = User.Identity.GetUserId();
                             itemDetail.RecUpdatedDt = DateTime.Now;
                             var itemDetailToUpdate = itemDetail.CreateFromClientToServer();
