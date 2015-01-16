@@ -34,5 +34,15 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
+        public static DashboardModels.Department CreateForDashboard(this Department source)
+        {
+            return new DashboardModels.Department
+            {
+                DepartmentId = source.DepartmentId,
+                DepartmentNameE = source.DepartmentNameE,
+                DepartmentNameA = source.DepartmentNameA
+            };
+
+        }
     }
 }

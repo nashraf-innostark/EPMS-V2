@@ -44,5 +44,16 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
+
+        public static DashboardModels.Recruitment CreateForDashboard(this DomainModels.JobOffered source)
+        {
+            return new DashboardModels.Recruitment
+            {
+                JobOfferedId = source.JobOfferedId,
+                NoOfApplicants = source.JobApplicants.Count,
+                TitleE = source.JobTitle.JobTitleNameE,
+                TitleA = source.JobTitle.JobTitleNameA
+            };
+        }
     }
 }

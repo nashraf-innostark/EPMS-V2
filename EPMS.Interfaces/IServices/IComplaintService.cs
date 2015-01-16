@@ -8,7 +8,8 @@ namespace EPMS.Interfaces.IServices
         Complaint FindComplaintById(long id);
         bool AddComplaint(Complaint complaint);
         bool UpdateComplaint(Complaint complaint);
-        IEnumerable<Complaint> GetAllComplaints();
-        IEnumerable<Complaint> GetAllComplaintsByCustomerId(long id);
+        IEnumerable<Complaint> LoadAllComplaints();
+        IEnumerable<Complaint> LoadAllComplaintsByCustomerId(long id);
+        IEnumerable<Complaint> LoadComplaintsForDashboard(string requester);
     }
 }

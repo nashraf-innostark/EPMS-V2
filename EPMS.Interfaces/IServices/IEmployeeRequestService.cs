@@ -12,6 +12,7 @@ namespace EPMS.Interfaces.IServices
         long AddRequestDetail(RequestDetail model);
         EmployeeRequest Find(long id);
         bool DeleteRequest(long requestId);
+        IEnumerable<EmployeeRequest> LoadRequestsForDashboard(string requester);
         EmployeeRequestResponse LoadAllRequests(EmployeeRequestSearchRequest searchRequset);
         IEnumerable<EmployeeRequest> LoadAllMonetaryRequests(DateTime currentMonth, long id);
         IEnumerable<EmployeeRequest> LoadAllRequests(string requester);

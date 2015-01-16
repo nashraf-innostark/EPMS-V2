@@ -21,7 +21,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+    @if (ViewBag.UserRole != "Admin")
+    {
+        <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")

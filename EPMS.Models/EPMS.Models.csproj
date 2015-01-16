@@ -127,6 +127,8 @@
     <Compile Include="DomainModels\JobTitleHistory.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\Order.cs" />
+    <Compile Include="DomainModels\Quotation.cs" />
+    <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
@@ -155,6 +157,7 @@
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
+    <Compile Include="RequestModels\QuotationSearchRequest.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
@@ -165,6 +168,7 @@
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
+    <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

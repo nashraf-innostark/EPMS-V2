@@ -72,6 +72,36 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
+        public static DashboardModels.Employee CreateForDashboard(this Employee source)
+        {
+            return new DashboardModels.Employee
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeNameEShort = source.EmployeeNameE.Length > 10 ? source.EmployeeNameE.Substring(0, 10) + "..." : source.EmployeeNameE,
+                EmployeeNameAShort = source.EmployeeNameA.Length > 15 ? source.EmployeeNameA.Substring(0, 15) + "..." : source.EmployeeNameA,
+                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
+            };
+
+        }
+        public static DashboardModels.Profile CreateForDashboardProfile(this Employee source)
+        {
+            return new DashboardModels.Profile
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeNameEShort = source.EmployeeNameE.Length > 14 ? source.EmployeeNameE.Substring(0, 14) + "..." : source.EmployeeNameE,
+                EmployeeNameAShort = source.EmployeeNameA.Length > 18 ? source.EmployeeNameA.Substring(0, 18) + "..." : source.EmployeeNameA,
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeJobTitleE = source.JobTitle.JobTitleNameE,
+                EmployeeJobTitleA = source.JobTitle.JobTitleNameA,
+                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt.ToString()).ToShortDateString(),
+                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
+            };
+        }
         public static Models.Employee CreateFromServerToClientWithImage(this Employee source)
         {
             return new Models.Employee

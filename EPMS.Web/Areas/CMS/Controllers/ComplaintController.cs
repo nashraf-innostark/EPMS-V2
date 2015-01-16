@@ -42,9 +42,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 Complaints =
                     currentUser.AspNetRoles.FirstOrDefault().Name == "Customer"
-                        ? complaintService.GetAllComplaintsByCustomerId(Convert.ToInt64(currentUser.CustomerId))
+                        ? complaintService.LoadAllComplaintsByCustomerId(Convert.ToInt64(currentUser.CustomerId))
                             .Select(x => x.CreateFromServerToClient())
-                        : complaintService.GetAllComplaints()
+                        : complaintService.LoadAllComplaints()
                             .OrderByDescending(x => x.ComplaintDate)
                             .Select(x => x.CreateFromServerToClient())
             };

@@ -5,13 +5,13 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Repository.Repositories;
 
 namespace EPMS.Implementation.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly IOrdersRepository OrdersRepository;
-        private readonly ICustomerRepository CustomerRepository;
+        private readonly IOrdersRepository ordersRepository;
         
         #region Constructor
 
@@ -20,22 +20,21 @@ namespace EPMS.Implementation.Services
         /// </summary>
         /// <param name="repository"></param>
         /// <param name="customerRepository"></param>
-        public OrdersService(IOrdersRepository repository, ICustomerRepository customerRepository)
+        public OrdersService(IOrdersRepository repository)
         {
-            OrdersRepository = repository;
-            CustomerRepository = customerRepository;
+            ordersRepository = repository;
         }
 
         #endregion
 
         #region Public
 
-        public bool AddOrder(Order order)
+       public bool AddOrder(Order order)
         {
             try
             {
-                OrdersRepository.Add(order);
-                OrdersRepository.SaveChanges();
+                ordersRepository.Add(order);
+                ordersRepository.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -48,8 +47,8 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                OrdersRepository.Update(order);
-                OrdersRepository.SaveChanges();
+                ordersRepository.Update(order);
+                ordersRepository.SaveChanges();
                 return true;
             }
             catch (Exception)
@@ -60,41 +59,39 @@ namespace EPMS.Implementation.Services
 
         public void DeleteOrder(Order order)
         {
-            try
-            {
-                OrdersRepository.Delete(order);
-                OrdersRepository.SaveChanges();
-            }
-            catch (Exception exception)
-            {
-                throw;
-            }
+            ordersRepository.Delete(order);
+            ordersRepository.SaveChanges();
         }
         public OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest)
         {
-            return OrdersRepository.GetAllOrders(searchRequest);
+            return ordersRepository.GetAllOrders(searchRequest);
+        }
+
+        public IEnumerable<Order> GetRecentOrders(string requester, int status)
+        {
+            return ordersRepository.GetRecentOrders(requester, status);
         }
 
         public IEnumerable<Order> GetOrdersByCustomerId(long customerId)
         {
-            return OrdersRepository.GetOrdersByCustomerId(customerId);
+            return ordersRepository.GetOrdersByCustomerId(customerId);
         }
 
         public Order GetOrderByOrderId(long orderId)
         {
-            return OrdersRepository.GetOrderByOrderId(orderId);
+            return ordersRepository.GetOrderByOrderId(orderId);
         }
 
         public OrdersLVResponse GetOrderForListView(OrdersSearchRequest searchRequest)
         {
             OrdersLVResponse response = new OrdersLVResponse();
-            response.Order = OrdersRepository.GetAllOrders(searchRequest);
+            response.Order = ordersRepository.GetAllOrders(searchRequest);
             return response;
         }
 
         public IEnumerable<Order> GetAll()
         {
-            return OrdersRepository.GetAll();
+            return ordersRepository.GetAll();
         }
 
         #endregion

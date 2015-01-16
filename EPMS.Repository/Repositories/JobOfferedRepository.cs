@@ -34,6 +34,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(s => s.JobTitleId == jobTitleId).ToList();
         }
-        
+
+        public IEnumerable<JobOffered> GetRecentJobOffereds()
+        {
+            return DbSet.OrderByDescending(x=>x.RecCreatedDt);
+        }
     }
 }

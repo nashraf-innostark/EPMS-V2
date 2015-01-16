@@ -161,7 +161,7 @@
 		settings.file_elem = "mf_file_"+$(this).attr("id");
 		settings.iframe = "mf_iframe_"+$(this).attr("id");
 				
-		$(this).append('<div class="mf_upload_m"><form method="post" enctype="multipart/form-data" class="file" action="'+settings.post_upload+'" target="'+settings.iframe+'"><input type="file" class="file" name="'+settings.file_elem+'" id="'+settings.file_elem+'" multiple /><input type="hidden" name="folder" value="'+settings.folder+'" /><input type="hidden" name="file_element" value="'+settings.file_elem+'" /></form><div class="mf_upload_ins"></div></div>');
+		$(this).append('<div class="mf_upload_m"><form method="post" enctype="multipart/form-data" class="file" action="' + settings.post_upload + '" target="' + settings.iframe + '"><input type="file" class="file" name="' + settings.file_elem + '" id="' + settings.file_elem + '" multiple /><input type="hidden" name="folder" value="' + settings.folder + '" /><input type="hidden" name="file_element" value="' + settings.file_elem + '" /></form><div class="mf_upload_ins"></div></div>');
 		
 		$(this).find(".mf_upload_m").css({
 			'position': 'relative',
