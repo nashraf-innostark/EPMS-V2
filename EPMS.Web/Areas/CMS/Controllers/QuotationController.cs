@@ -51,7 +51,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
-            viewModel.Quotations = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
+            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
+            viewModel.iTotalRecords = quotationList.TotalCount;
+            viewModel.iTotalDisplayRecords = quotationList.TotalCount;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 

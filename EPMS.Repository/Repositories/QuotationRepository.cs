@@ -54,11 +54,9 @@ namespace EPMS.Repository.Repositories
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
 
-            var orderNo = Convert.ToInt64(searchRequest.SearchString);
-
             Expression<Func<Quotation, bool>> query =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.ClientName.Contains(searchRequest.SearchString)) ||
-                    (s.OrderNumber == orderNo));
+                    (s.OrderNumber.Contains(searchRequest.SearchString)));
 
             IEnumerable<Quotation> quotations = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -66,7 +64,7 @@ namespace EPMS.Repository.Repositories
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(quotationClause[searchRequest.QuotationByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new QuotationResponse { Quotations = quotations, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+            return new QuotationResponse { Quotations = quotations, TotalCount = DbSet.Count(query) };
         }
 
         #endregion

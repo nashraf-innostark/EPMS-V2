@@ -305,7 +305,7 @@
           </Key>
           <Property Name="QuotationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OrderNumber" Type="bigint" Nullable="false" />
+          <Property Name="OrderNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="CreatedByEmployee" Type="bigint" Nullable="false" />
           <Property Name="GreetingsEn" Type="nvarchar(max)" />
           <Property Name="GreetingsAr" Type="nvarchar(max)" />
@@ -1377,8 +1377,8 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <EntitySet Name="Quotations" EntityType="DomainModels.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="DomainModels.QuotationItemDetail" />
+          <EntitySet Name="Quotations" EntityType="DomainModels.Quotation" />
           <AssociationSet Name="FK_Quotation_Customer" Association="DomainModels.FK_Quotation_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Quotation" EntitySet="Quotations" />
@@ -1566,13 +1566,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="QuotationItemDetail">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuotationId" Type="Int64" Nullable="false" />
+          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQuantity" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Quotation" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
+        </EntityType>
         <EntityType Name="Quotation">
           <Key>
             <PropertyRef Name="QuotationId" />
           </Key>
           <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNumber" Type="Int64" Nullable="false" />
+          <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
           <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1594,22 +1610,6 @@
           <Property Name="CustomerId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
           <NavigationProperty Name="QuotationItemDetails" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
-        </EntityType>
-        <EntityType Name="QuotationItemDetail">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuotationId" Type="Int64" Nullable="false" />
-          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQuantity" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
-          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Quotation" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
         </EntityType>
         <Association Name="FK_Quotation_Customer">
           <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
@@ -1975,6 +1975,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="QuotationItemDetails">
+            <EntityTypeMapping TypeName="DomainModels.QuotationItemDetail">
+              <MappingFragment StoreEntitySet="QuotationItemDetail">
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="DomainModels.Quotation">
               <MappingFragment StoreEntitySet="Quotation">
@@ -2000,22 +2016,6 @@
                 <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
                 <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="QuotationItemDetails">
-            <EntityTypeMapping TypeName="DomainModels.QuotationItemDetail">
-              <MappingFragment StoreEntitySet="QuotationItemDetail">
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
-                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
-                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2085,8 +2085,8 @@
         <AssociationConnector Association="DomainModels.FK_Complaint_Customer" />
         <AssociationConnector Association="DomainModels.FK_Complaint_Orders" />
         <AssociationConnector Association="DomainModels.FK_Orders_Orders" />
-        <EntityTypeShape EntityType="DomainModels.Quotation" Width="1.5" PointX="1.25" PointY="1.875" />
         <EntityTypeShape EntityType="DomainModels.QuotationItemDetail" Width="1.5" PointX="3.5" PointY="3.125" />
+        <EntityTypeShape EntityType="DomainModels.Quotation" Width="1.5" PointX="0.875" PointY="3.625" />
         <AssociationConnector Association="DomainModels.FK_Quotation_Customer" />
         <AssociationConnector Association="DomainModels.FK_QuotationItemDetail_Quotation" />
         </Diagram>

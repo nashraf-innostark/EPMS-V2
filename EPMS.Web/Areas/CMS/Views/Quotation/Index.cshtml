@@ -57,25 +57,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        //$('#QuotationTable').dataTable({
-        //    "sPaginationType": "bootstrap",
-        //    "aoColumns": [
-        //        { "bVisible": false },
-        //          null,
-        //          null
-        //    ],
-        //    "fnInitComplete": function () {
-        //        $(".dataTables_wrapper select").select2({
-        //            dropdownCssClass: 'noSearch'
-        //        });
-        //    }
-        //});
-        var siteUrl = $('#siteURL').val();
+        var url = "/CMS/Quotation/Index";
         var oTable = $('#QuotationTable').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": siteUrl + "/Quotation/Index",
+            "sAjaxSource": url,
             "sServerMethod": "POST",
             "aoColumns": [
                 {

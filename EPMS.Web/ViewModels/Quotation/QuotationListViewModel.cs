@@ -10,6 +10,15 @@ namespace EPMS.Web.ViewModels.Quotation
             SearchRequest = new QuotationSearchRequest();
         }
         public QuotationSearchRequest SearchRequest { get; set; }
-        public IEnumerable<Models.Quotation> Quotations { get; set; }
+        public IEnumerable<Models.Quotation> aaData { get; set; }
+        /// <summary>
+        /// Total Records in DB
+        /// </summary>
+        public int iTotalRecords;
+
+        /// <summary>
+        /// Total Records Filtered
+        /// </summary>
+        public int iTotalDisplayRecords;
     }
 }
