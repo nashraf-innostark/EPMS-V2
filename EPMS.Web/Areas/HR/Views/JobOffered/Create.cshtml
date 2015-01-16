@@ -77,7 +77,7 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.LabelFor((model => @Html.Raw(model.JobOffered.JobTitleDescE)), new { @disabled = true, @id = "jobTitleDesc" })
+                        @Html.TextBoxFor((model => model.JobOffered.JobTitleDescE), new { @disabled = true, @id = "jobTitleDesc" })
                         
                     </div>
                 }

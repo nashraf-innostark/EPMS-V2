@@ -111,6 +111,10 @@
     <Compile Include="DomainModels\AspNetUserClaim.cs" />
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
+    <Compile Include="DomainModels\CompanyBankDetail.cs" />
+    <Compile Include="DomainModels\CompanyDocumentDetail.cs" />
+    <Compile Include="DomainModels\CompanyProfile.cs" />
+    <Compile Include="DomainModels\CompanySocialDetail.cs" />
     <Compile Include="DomainModels\Complaint.cs" />
     <Compile Include="DomainModels\Customer.cs" />
     <Compile Include="DomainModels\Department.cs" />
