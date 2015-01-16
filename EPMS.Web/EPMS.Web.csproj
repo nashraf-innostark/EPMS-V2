@@ -248,6 +248,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Controllers\ContactListController.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\HR\Controllers\JobApplicantController.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Models\CompanyProfile.cs" />
     <Compile Include="Models\CompanySocialDetail.cs" />
     <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\ContactList.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -392,7 +394,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profile.ar.resx</DependentUpon>
     </Compile>
-     <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
+    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Dashboard.resx</DependentUpon>
@@ -406,6 +408,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Account.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\ContactsList.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsList.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\ContactsList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsList.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Department.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -543,6 +555,7 @@
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
+    <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -2478,6 +2491,7 @@
     <Content Include="Images\photon\logo_watermark.psd" />
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
+    <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -2545,6 +2559,14 @@
     <EmbeddedResource Include="Resources\HR\Account.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Account.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\ContactsList.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactsList.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\ContactsList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactsList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Department.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2919,7 +2941,6 @@
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
-    <Folder Include="Areas\CP\Controllers\" />
     <Folder Include="Areas\CP\Models\" />
     <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />

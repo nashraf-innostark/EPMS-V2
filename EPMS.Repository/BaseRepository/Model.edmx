@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -417,48 +417,6 @@
           <Property Name="RecLastUpdatedDt" Type="datetime" />
           <Property Name="OrderStatus" Type="int" />
         </EntityType>
-        <EntityType Name="Quotation">
-          <Key>
-            <PropertyRef Name="QuotationId" />
-          </Key>
-          <Property Name="QuotationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OrderNumber" Type="bigint" Nullable="false" />
-          <Property Name="CreatedByEmployee" Type="bigint" Nullable="false" />
-          <Property Name="GreetingsEn" Type="nvarchar(max)" />
-          <Property Name="GreetingsAr" Type="nvarchar(max)" />
-          <Property Name="QuotationDiscount" Type="smallint" />
-          <Property Name="FirstInstallement" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="FirstInsDueAtCompletion" Type="smallint" Nullable="false" />
-          <Property Name="SecondInstallment" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="SecondInsDueAtCompletion" Type="smallint" />
-          <Property Name="ThirdInstallment" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="ThirdInsDueAtCompletion" Type="smallint" />
-          <Property Name="FourthInstallment" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="FourthInsDueAtCompletion" Type="smallint" />
-          <Property Name="NotesEn" Type="nvarchar(max)" />
-          <Property Name="NotesAr" Type="nvarchar(max)" />
-          <Property Name="RecCreatedDt" Type="datetime" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecUpdatedDt" Type="datetime" />
-          <Property Name="RecUpdatedBy" Type="datetime" />
-          <Property Name="CustomerId" Type="bigint" Nullable="false" />
-        </EntityType>
-        <EntityType Name="QuotationItemDetail">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="QuotationId" Type="bigint" Nullable="false" />
-          <Property Name="ItemDetails" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="ItemQuantity" Type="decimal" Precision="10" Scale="0" Nullable="false" />
-          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="TotalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecUpdatedDt" Type="datetime" />
-          <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="200" />
-        </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
             <PropertyRef Name="RequestDetailId" />
@@ -801,30 +759,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quotation_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Quotation" Type="Self.Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuotationItemDetail_Quotation">
-          <End Role="Quotation" Type="Self.Quotation" Multiplicity="1" />
-          <End Role="QuotationItemDetail" Type="Self.QuotationItemDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="QuotationItemDetail">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RequestDetails_EmployeeRequests">
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="1" />
           <End Role="RequestDetails" Type="Self.RequestDetails" Multiplicity="*" />
@@ -862,8 +796,6 @@
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Quotation" EntityType="Self.Quotation" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -968,14 +900,6 @@
           <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quotation_Customer" Association="Self.FK_Quotation_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Quotation" EntitySet="Quotation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="Self.FK_QuotationItemDetail_Quotation">
-            <End Role="Quotation" EntitySet="Quotation" />
-            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -1554,16 +1478,6 @@
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanyBankDetail" EntitySet="CompanyBankDetails" />
           </AssociationSet>
-          <EntitySet Name="Quotations" EntityType="DomainModels.Quotation" />
-          <EntitySet Name="QuotationItemDetails" EntityType="DomainModels.QuotationItemDetail" />
-          <AssociationSet Name="FK_Quotation_Customer" Association="DomainModels.FK_Quotation_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Quotation" EntitySet="Quotations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="DomainModels.FK_QuotationItemDetail_Quotation">
-            <End Role="Quotation" EntitySet="Quotations" />
-            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="DomainModels.FK_CompanySocialDetails_CompanyProfile">
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanySocialDetail" EntitySet="CompanySocialDetails" />
@@ -1683,7 +1597,6 @@
           <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUser" />
           <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
           <NavigationProperty Name="Orders" Relationship="DomainModels.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
-          <NavigationProperty Name="Quotations" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1752,78 +1665,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Quotation">
-          <Key>
-            <PropertyRef Name="QuotationId" />
-          </Key>
-          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNumber" Type="Int64" Nullable="false" />
-          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
-          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QuotationDiscount" Type="Int16" />
-          <Property Name="FirstInstallement" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
-          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
-          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
-          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
-          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="DateTime" Precision="3" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
-          <NavigationProperty Name="QuotationItemDetails" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
-        </EntityType>
-        <EntityType Name="QuotationItemDetail">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuotationId" Type="Int64" Nullable="false" />
-          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQuantity" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
-          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Quotation" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
-        </EntityType>
-        <Association Name="FK_Quotation_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Quotation" Role="Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuotationItemDetail_Quotation">
-          <End Type="DomainModels.Quotation" Role="Quotation" Multiplicity="1" />
-          <End Type="DomainModels.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="QuotationItemDetail">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
 
         <EntityType Name="CompanyBankDetail">
-          <Key>
           <Key>
             <PropertyRef Name="CompanyId" />
           </Key>
@@ -2515,10 +2358,6 @@
         <EntityTypeShape EntityType="DomainModels.CompanyProfile" Width="1.5" PointX="13.375" PointY="10.125" />
         <EntityTypeShape EntityType="DomainModels.CompanySocialDetail" Width="1.5" PointX="15.625" PointY="8.625" />
         <AssociationConnector Association="DomainModels.FK_CompanyBankDetails_CompanyProfile" />
-        <EntityTypeShape EntityType="DomainModels.Quotation" Width="1.5" PointX="1.25" PointY="1.875" />
-        <EntityTypeShape EntityType="DomainModels.QuotationItemDetail" Width="1.5" PointX="3.5" PointY="3.125" />
-        <AssociationConnector Association="DomainModels.FK_Quotation_Customer" />
-        <AssociationConnector Association="DomainModels.FK_QuotationItemDetail_Quotation" />
         <AssociationConnector Association="DomainModels.FK_CompanySocialDetails_CompanyProfile" />
         <EntityTypeShape EntityType="DomainModels.CompanyDocumentDetail" Width="1.5" PointX="15.625" PointY="18.875" />
         <AssociationConnector Association="DomainModels.FK_CompanyDocuments_CompanyProfile" />

@@ -135,6 +135,21 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
+
+        public static Models.ContactList CreateForContactList(this Employee source)
+        {
+            return new Models.ContactList
+            {
+                Link = "/HR/Employee/Create/"+ source.EmployeeId,
+                NameE = source.EmployeeNameE ?? "",
+                NameA = source.EmployeeNameA ?? "",
+                Type = "Employee",
+                MobileNumber = source.EmployeeMobileNum ?? "",
+                Email = source.Email,
+            };
+
+        }
+
         private static string ImageUrl(string imageName)
         {
             if (string.IsNullOrEmpty(imageName))
