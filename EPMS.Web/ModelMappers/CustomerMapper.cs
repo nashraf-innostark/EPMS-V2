@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using EPMS.Web.ViewModels.Customer;
-using ApiModels = EPMS.Web.Models;
+using Models = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -78,6 +78,20 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
+        }
+
+        public static Models.ContactList CreateForContactList(this DomainModels.Customer source)
+        {
+            Models.ContactList contactList = new Models.ContactList();
+            contactList.NameE = source.CustomerNameE ?? "";
+            contactList.NameA = source.CustomerNameA ?? "";
+            contactList.Link = "/CMS/Customer/Create/" + source.CustomerId;
+            contactList.Type = "Customer";
+            contactList.MobileNumber = source.CustomerMobile ?? "";
+            var firstOrDefault = source.AspNetUsers.Where(x=>x.CustomerId==source.CustomerId).FirstOrDefault();
+            if (firstOrDefault != null)
+                contactList.Email = firstOrDefault.Email;
+            return contactList;
         }
     }
 }

@@ -311,12 +311,14 @@
     <Compile Include="Models\CompanyProfile.cs" />
     <Compile Include="Models\CompanySocialDetail.cs" />
     <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\ContactList.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Quotation.cs" />
     <Compile Include="Models\QuotationItemDetail.cs" />
     <Compile Include="Models\Request.cs" />
@@ -408,6 +410,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Account.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\ContactsList.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsList.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\ContactsList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsList.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\Department.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -546,6 +558,7 @@
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
+    <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -2481,6 +2494,7 @@
     <Content Include="Images\photon\logo_watermark.psd" />
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
+    <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
@@ -2548,6 +2562,14 @@
     <EmbeddedResource Include="Resources\HR\Account.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Account.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\ContactsList.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactsList.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\ContactsList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactsList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Department.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

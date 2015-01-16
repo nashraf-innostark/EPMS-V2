@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 using System.Web.Http.ModelBinding;
-using ApiModels = EPMS.Web.Models;
+using Models = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -80,6 +80,20 @@ namespace EPMS.Web.ModelMappers
                 JobDescriptionE = source.JobOffered.JobTitle.JobTitleNameE,
                 JobDescriptionA = source.JobOffered.JobTitle.JobTitleNameA
             };
+        }
+
+        public static Models.ContactList CreateForContactList(this DomainModels.JobApplicant source)
+        {
+            return new Models.ContactList
+            {
+                Link = "/HR/JobApplicant/Detail/" + source.ApplicantId,
+                NameE = source.ApplicantName ?? "",
+                NameA = source.ApplicantName ?? "",
+                Type = "Applicant",
+                MobileNumber = source.ApplicantMobile ?? "",
+                Email = source.ApplicantEmail ?? "",
+            };
+
         }
     }
 }

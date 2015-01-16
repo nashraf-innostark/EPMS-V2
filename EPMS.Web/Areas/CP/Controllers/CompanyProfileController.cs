@@ -10,10 +10,12 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.CompanyProfile;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CP.Controllers
 {
+    [Authorize]
     public class CompanyProfileController : BaseController
     {
         #region Private
@@ -37,6 +39,7 @@ namespace EPMS.Web.Areas.CP.Controllers
 
         #endregion
         
+        [SiteAuthorize(PermissionKey = "CP")]
         public ActionResult Detail()
         {
             CompanyProfileViewModel companyProfileViewModel = new CompanyProfileViewModel();

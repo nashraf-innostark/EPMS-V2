@@ -9,11 +9,13 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Customer;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
+    [Authorize]
     public class CustomerController : BaseController
     {
         #region Private
@@ -34,7 +36,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #endregion
 
         #region Public
-
+        [SiteAuthorize(PermissionKey = "CustomerIndex")]
         public ActionResult Index()
         {
             return View(new CustomerViewModel
@@ -43,6 +45,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             });
         }
 
+        [SiteAuthorize(PermissionKey = "CustomerProfile")]
         public ActionResult Details(long id)
         {
             CustomerViewModel customerViewModel = new CustomerViewModel();

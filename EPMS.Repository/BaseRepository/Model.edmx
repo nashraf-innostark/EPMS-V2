@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DomainModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -80,6 +80,124 @@
           <Property Name="CustomerId" Type="bigint" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="ImageName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CompanyBankDetails">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="bigint" Nullable="false" />
+          <Property Name="Bank1Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank1NameArabic" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank1AccountNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank1IBANNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank1MobileNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="Bank2Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank2NameArabic" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank2AccountNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank2IBANNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank2MobileNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="Bank3Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank3NameArabic" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank3AccountNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank3IBANNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank3MobileNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="Bank4Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank4NameArabic" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank4AccountNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank4IBANNumber" Type="nvarchar" MaxLength="500" />
+          <Property Name="Bank4MobileNumber" Type="nvarchar" MaxLength="100" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="date" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="CompanyDocumentDetails">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="bigint" Nullable="false" />
+          <Property Name="CommercialRegister" Type="nvarchar" MaxLength="500" />
+          <Property Name="CommercialRegisterIssueDate" Type="date" />
+          <Property Name="CommercialRegisterExpiryDate" Type="date" />
+          <Property Name="InsuranceCertificate" Type="nvarchar" MaxLength="500" />
+          <Property Name="InsuranceCertificateIssueDate" Type="date" />
+          <Property Name="InsuranceCertificateExpiryDate" Type="date" />
+          <Property Name="ChamberCertificate" Type="nvarchar" MaxLength="500" />
+          <Property Name="ChamberCertificateIssueDate" Type="date" />
+          <Property Name="ChamberCertificateExpiryDate" Type="date" />
+          <Property Name="IncomeAndZakaCertificate" Type="nvarchar" MaxLength="500" />
+          <Property Name="IncomeAndZakaCertificateIssueDate" Type="date" />
+          <Property Name="IncomeAndZakaCertificateExpiryDate" Type="date" />
+          <Property Name="SaudilizationCertificate" Type="nvarchar" MaxLength="500" />
+          <Property Name="SaudilizationCertificateIssueDate" Type="date" />
+          <Property Name="SaudilizationCertificateExpiryDate" Type="date" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="date" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="CompanyProfile">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyNameE" Type="nvarchar" MaxLength="500" />
+          <Property Name="CompanyNameA" Type="nvarchar" MaxLength="500" />
+          <Property Name="CompanyLogoPath" Type="nchar" MaxLength="400" />
+          <Property Name="CompanyWebsite" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyEmail" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyAddressE" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CompanyAddressA" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CompanyLocation" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyMobileNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="date" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="CompanySocialDetails">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="bigint" Nullable="false" />
+          <Property Name="Twitter" Type="nvarchar" MaxLength="500" />
+          <Property Name="TwitterUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TwitterPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Facebook" Type="nvarchar" MaxLength="500" />
+          <Property Name="FacebookUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FacebookPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Youtube" Type="nvarchar" MaxLength="500" />
+          <Property Name="YoutubeUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="YoutubePassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="LinkedIn" Type="nvarchar" MaxLength="500" />
+          <Property Name="LinkedInUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LinkedInPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="GooglePlus" Type="nvarchar" MaxLength="500" />
+          <Property Name="GooglePlusUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="GooglePlusPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Istegram" Type="nvarchar" MaxLength="500" />
+          <Property Name="IstegramUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IstegramPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Tumbler" Type="nvarchar" MaxLength="500" />
+          <Property Name="TumblerUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TumblerPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Flickr" Type="nvarchar" MaxLength="500" />
+          <Property Name="FlickrUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FlickrPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Pinterest" Type="nvarchar" MaxLength="500" />
+          <Property Name="PinterestUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="PinterestPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Social1" Type="nvarchar" MaxLength="500" />
+          <Property Name="Social1UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Social1Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="Social2" Type="nvarchar" MaxLength="500" />
+          <Property Name="Social2UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Social2Password" Type="nvarchar" MaxLength="100" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="date" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDate" Type="date" />
         </EntityType>
         <EntityType Name="Complaint">
           <Key>
@@ -299,6 +417,30 @@
           <Property Name="RecLastUpdatedDt" Type="datetime" />
           <Property Name="OrderStatus" Type="int" />
         </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameE" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="NameA" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="CustomerId" Type="bigint" />
+          <Property Name="OrderId" Type="bigint" />
+          <Property Name="SerialNo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="DescriptionE" Type="nvarchar(max)" />
+          <Property Name="DescriptionA" Type="nvarchar(max)" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="NotesE" Type="nvarchar(max)" />
+          <Property Name="NotesA" Type="nvarchar(max)" />
+          <Property Name="NotesForCustomerE" Type="nvarchar(max)" />
+          <Property Name="NotesForCustomerA" Type="nvarchar(max)" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Quotation">
           <Key>
             <PropertyRef Name="QuotationId" />
@@ -396,6 +538,42 @@
             </Principal>
             <Dependent Role="AspNetUsers">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyBankDetails_CompanyProfile">
+          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
+          <End Role="CompanyBankDetails" Type="Self.CompanyBankDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyBankDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDocuments_CompanyProfile">
+          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
+          <End Role="CompanyDocumentDetails" Type="Self.CompanyDocumentDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyDocumentDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanySocialDetails_CompanyProfile">
+          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
+          <End Role="CompanySocialDetails" Type="Self.CompanySocialDetails" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanySocialDetails">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -647,6 +825,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Project_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Quotation_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Quotation" Type="Self.Quotation" Multiplicity="*" />
@@ -683,13 +885,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EPMSModelStoreContainer">
+        <EntityContainer Name="DomainModelsStoreContainer">
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyBankDetails" EntityType="Self.CompanyBankDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyDocumentDetails" EntityType="Self.CompanyDocumentDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyProfile" EntityType="Self.CompanyProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
@@ -704,6 +910,7 @@
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotation" EntityType="Self.Quotation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
@@ -718,6 +925,18 @@
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="Self.FK_CompanyBankDetails_CompanyProfile">
+            <End Role="CompanyProfile" EntitySet="CompanyProfile" />
+            <End Role="CompanyBankDetails" EntitySet="CompanyBankDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDocuments_CompanyProfile" Association="Self.FK_CompanyDocuments_CompanyProfile">
+            <End Role="CompanyProfile" EntitySet="CompanyProfile" />
+            <End Role="CompanyDocumentDetails" EntitySet="CompanyDocumentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="Self.FK_CompanySocialDetails_CompanyProfile">
+            <End Role="CompanyProfile" EntitySet="CompanyProfile" />
+            <End Role="CompanySocialDetails" EntitySet="CompanySocialDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Complaint_Customer" Association="Self.FK_Complaint_Customer">
             <End Role="Customer" EntitySet="Customer" />
@@ -799,6 +1018,14 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_Project_Customer" Association="Self.FK_Project_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Orders" Association="Self.FK_Project_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Project" EntitySet="Project" />
+          </AssociationSet>
           <AssociationSet Name="FK_Quotation_Customer" Association="Self.FK_Quotation_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Quotation" EntitySet="Quotation" />
@@ -812,10 +1039,11 @@
             <End Role="RequestDetails" EntitySet="RequestDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -894,6 +1122,130 @@
           <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
+        <EntityType Name="CompanyBankDetail">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int64" Nullable="false" />
+          <Property Name="Bank1Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank1NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank1AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank1IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank1MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Bank2Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank2NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank2AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank2IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank2MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Bank3Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank3NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank3AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank3IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank3MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Bank4Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank4NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank4AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank4IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Bank4MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CompanyProfile" Relationship="Self.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyBankDetails" ToRole="CompanyProfile" />
+        </EntityType>
+        <EntityType Name="CompanyDocumentDetail">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int64" Nullable="false" />
+          <Property Name="CommercialRegister" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CommercialRegisterIssueDate" Type="DateTime" Precision="0" />
+          <Property Name="CommercialRegisterExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="InsuranceCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="InsuranceCertificateIssueDate" Type="DateTime" Precision="0" />
+          <Property Name="InsuranceCertificateExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="ChamberCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ChamberCertificateIssueDate" Type="DateTime" Precision="0" />
+          <Property Name="ChamberCertificateExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="IncomeAndZakaCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IncomeAndZakaCertificateIssueDate" Type="DateTime" Precision="0" />
+          <Property Name="IncomeAndZakaCertificateExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="SaudilizationCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SaudilizationCertificateIssueDate" Type="DateTime" Precision="0" />
+          <Property Name="SaudilizationCertificateExpiryDate" Type="DateTime" Precision="0" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CompanyProfile" Relationship="Self.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyDocumentDetails" ToRole="CompanyProfile" />
+        </EntityType>
+        <EntityType Name="CompanyProfile">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyNameE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyNameA" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyLogoPath" Type="String" MaxLength="400" FixedLength="true" Unicode="true" />
+          <Property Name="CompanyWebsite" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyAddressE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyAddressA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyMobileNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CompanyBankDetail" Relationship="Self.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyBankDetails" />
+          <NavigationProperty Name="CompanyDocumentDetail" Relationship="Self.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyDocumentDetails" />
+          <NavigationProperty Name="CompanySocialDetail" Relationship="Self.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanySocialDetails" />
+        </EntityType>
+        <EntityType Name="CompanySocialDetail">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int64" Nullable="false" />
+          <Property Name="Twitter" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TwitterUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TwitterPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Facebook" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FacebookPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Youtube" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="YoutubeUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="YoutubePassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LinkedIn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LinkedInUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LinkedInPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GooglePlus" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="GooglePlusUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GooglePlusPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Istegram" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IstegramUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IstegramPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Tumbler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TumblerUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TumblerPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Flickr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FlickrUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FlickrPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Pinterest" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PinterestUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PinterestPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Social1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Social1UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Social1Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Social2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Social2UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Social2Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CompanyProfile" Relationship="Self.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanySocialDetails" ToRole="CompanyProfile" />
+        </EntityType>
         <EntityType Name="Complaint">
           <Key>
             <PropertyRef Name="ComplaintId" />
@@ -932,7 +1284,8 @@
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUsers" />
           <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Orders" FromRole="Customer" ToRole="Orders" />
-          <NavigationProperty Name="Quotations" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
+          <NavigationProperty Name="Quotations" Relationship="Self.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -1146,6 +1499,62 @@
           <Property Name="OrderStatus" Type="Int32" />
           <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Orders" FromRole="Orders" ToRole="Complaint" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Orders" FromRole="Orders" ToRole="Customer" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Orders" FromRole="Orders" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NameA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerId" Type="Int64" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="SerialNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesForCustomerE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesForCustomerA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Project_Customer" FromRole="Project" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Project_Orders" FromRole="Project" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Quotation">
+          <Key>
+            <PropertyRef Name="QuotationId" />
+          </Key>
+          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
+          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuotationDiscount" Type="Int16" />
+          <Property Name="FirstInstallement" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
+          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
+          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
+          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
+          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
+          <NavigationProperty Name="QuotationItemDetails" Relationship="Self.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -1161,7 +1570,7 @@
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Quotation" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
+          <NavigationProperty Name="Quotation" Relationship="Self.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="RequestDetail">
           <Key>
@@ -1262,6 +1671,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CompanyBankDetails_CompanyProfile">
+          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
+          <End Role="CompanyBankDetails" Type="Self.CompanyBankDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyBankDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDocuments_CompanyProfile">
+          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
+          <End Role="CompanyDocumentDetails" Type="Self.CompanyDocumentDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyDocumentDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanySocialDetails_CompanyProfile">
+          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
+          <End Role="CompanySocialDetails" Type="Self.CompanySocialDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanySocialDetails">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Complaint_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
@@ -1306,6 +1751,30 @@
               <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quotation_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Quotation" Type="Self.Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Quotation">
               <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1454,6 +1923,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Project_Orders">
+          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuotationItemDetail_Quotation">
+          <End Role="Quotation" Type="Self.Quotation" Multiplicity="1" />
+          <End Role="QuotationItemDetail" Type="Self.QuotationItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotation">
+              <PropertyRef Name="QuotationId" />
+            </Principal>
+            <Dependent Role="QuotationItemDetail">
+              <PropertyRef Name="QuotationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -1464,6 +1957,10 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="CompanyBankDetails" EntityType="Self.CompanyBankDetail" />
+          <EntitySet Name="CompanyDocumentDetails" EntityType="Self.CompanyDocumentDetail" />
+          <EntitySet Name="CompanyProfiles" EntityType="Self.CompanyProfile" />
+          <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetail" />
           <EntitySet Name="Complaints" EntityType="Self.Complaint" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Departments" EntityType="Self.Department" />
@@ -1478,6 +1975,8 @@
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
@@ -1504,6 +2003,18 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="Self.FK_CompanyBankDetails_CompanyProfile">
+            <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
+            <End Role="CompanyBankDetails" EntitySet="CompanyBankDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyDocuments_CompanyProfile" Association="Self.FK_CompanyDocuments_CompanyProfile">
+            <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
+            <End Role="CompanyDocumentDetails" EntitySet="CompanyDocumentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="Self.FK_CompanySocialDetails_CompanyProfile">
+            <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
+            <End Role="CompanySocialDetails" EntitySet="CompanySocialDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_Complaint_Customer" Association="Self.FK_Complaint_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Complaint" EntitySet="Complaints" />
@@ -1519,6 +2030,14 @@
           <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Customer" Association="Self.FK_Project_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quotation_Customer" Association="Self.FK_Quotation_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Quotation" EntitySet="Quotations" />
           </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
@@ -1568,81 +2087,27 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="MenuRight" EntitySet="MenuRights" />
           </AssociationSet>
+          <AssociationSet Name="FK_Project_Orders" Association="Self.FK_Project_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="Self.FK_QuotationItemDetail_Quotation">
+            <End Role="Quotation" EntitySet="Quotations" />
+            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
+          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Quotations" EntityType="EPMSModel.Quotation" />
-          <AssociationSet Name="FK_Quotation_Customer" Association="EPMSModel.FK_Quotation_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Quotation" EntitySet="Quotations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="EPMSModel.FK_QuotationItemDetail_Quotation">
-            <End Role="Quotation" EntitySet="Quotations" />
-            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Quotation">
-          <Key>
-            <PropertyRef Name="QuotationId" />
-          </Key>
-          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
-          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QuotationDiscount" Type="Int16" />
-          <Property Name="FirstInstallement" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
-          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
-          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
-          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
-          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
-          <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
-        </EntityType>
-        <Association Name="FK_Quotation_Customer">
-          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuotationItemDetail_Quotation">
-          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="1" />
-          <End Type="EPMSModel.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="QuotationItemDetail">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="DomainModelsStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Allowances">
-            <EntityTypeMapping TypeName="EPMSModel.Allowance">
+            <EntityTypeMapping TypeName="DomainModels.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
                 <ScalarProperty Name="AllowanceId" ColumnName="AllowanceId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1666,7 +2131,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetRole">
+            <EntityTypeMapping TypeName="DomainModels.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1674,7 +2139,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetUserClaim">
+            <EntityTypeMapping TypeName="DomainModels.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -1684,7 +2149,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetUserLogin">
+            <EntityTypeMapping TypeName="DomainModels.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -1693,7 +2158,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
+            <EntityTypeMapping TypeName="DomainModels.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -1712,8 +2177,130 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CompanyBankDetails">
+            <EntityTypeMapping TypeName="DomainModels.CompanyBankDetail">
+              <MappingFragment StoreEntitySet="CompanyBankDetails">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Bank1Name" ColumnName="Bank1Name" />
+                <ScalarProperty Name="Bank1NameArabic" ColumnName="Bank1NameArabic" />
+                <ScalarProperty Name="Bank1AccountNumber" ColumnName="Bank1AccountNumber" />
+                <ScalarProperty Name="Bank1IBANNumber" ColumnName="Bank1IBANNumber" />
+                <ScalarProperty Name="Bank1MobileNumber" ColumnName="Bank1MobileNumber" />
+                <ScalarProperty Name="Bank2Name" ColumnName="Bank2Name" />
+                <ScalarProperty Name="Bank2NameArabic" ColumnName="Bank2NameArabic" />
+                <ScalarProperty Name="Bank2AccountNumber" ColumnName="Bank2AccountNumber" />
+                <ScalarProperty Name="Bank2IBANNumber" ColumnName="Bank2IBANNumber" />
+                <ScalarProperty Name="Bank2MobileNumber" ColumnName="Bank2MobileNumber" />
+                <ScalarProperty Name="Bank3Name" ColumnName="Bank3Name" />
+                <ScalarProperty Name="Bank3NameArabic" ColumnName="Bank3NameArabic" />
+                <ScalarProperty Name="Bank3AccountNumber" ColumnName="Bank3AccountNumber" />
+                <ScalarProperty Name="Bank3IBANNumber" ColumnName="Bank3IBANNumber" />
+                <ScalarProperty Name="Bank3MobileNumber" ColumnName="Bank3MobileNumber" />
+                <ScalarProperty Name="Bank4Name" ColumnName="Bank4Name" />
+                <ScalarProperty Name="Bank4NameArabic" ColumnName="Bank4NameArabic" />
+                <ScalarProperty Name="Bank4AccountNumber" ColumnName="Bank4AccountNumber" />
+                <ScalarProperty Name="Bank4IBANNumber" ColumnName="Bank4IBANNumber" />
+                <ScalarProperty Name="Bank4MobileNumber" ColumnName="Bank4MobileNumber" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyDocumentDetails">
+            <EntityTypeMapping TypeName="DomainModels.CompanyDocumentDetail">
+              <MappingFragment StoreEntitySet="CompanyDocumentDetails">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CommercialRegister" ColumnName="CommercialRegister" />
+                <ScalarProperty Name="CommercialRegisterIssueDate" ColumnName="CommercialRegisterIssueDate" />
+                <ScalarProperty Name="CommercialRegisterExpiryDate" ColumnName="CommercialRegisterExpiryDate" />
+                <ScalarProperty Name="InsuranceCertificate" ColumnName="InsuranceCertificate" />
+                <ScalarProperty Name="InsuranceCertificateIssueDate" ColumnName="InsuranceCertificateIssueDate" />
+                <ScalarProperty Name="InsuranceCertificateExpiryDate" ColumnName="InsuranceCertificateExpiryDate" />
+                <ScalarProperty Name="ChamberCertificate" ColumnName="ChamberCertificate" />
+                <ScalarProperty Name="ChamberCertificateIssueDate" ColumnName="ChamberCertificateIssueDate" />
+                <ScalarProperty Name="ChamberCertificateExpiryDate" ColumnName="ChamberCertificateExpiryDate" />
+                <ScalarProperty Name="IncomeAndZakaCertificate" ColumnName="IncomeAndZakaCertificate" />
+                <ScalarProperty Name="IncomeAndZakaCertificateIssueDate" ColumnName="IncomeAndZakaCertificateIssueDate" />
+                <ScalarProperty Name="IncomeAndZakaCertificateExpiryDate" ColumnName="IncomeAndZakaCertificateExpiryDate" />
+                <ScalarProperty Name="SaudilizationCertificate" ColumnName="SaudilizationCertificate" />
+                <ScalarProperty Name="SaudilizationCertificateIssueDate" ColumnName="SaudilizationCertificateIssueDate" />
+                <ScalarProperty Name="SaudilizationCertificateExpiryDate" ColumnName="SaudilizationCertificateExpiryDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyProfiles">
+            <EntityTypeMapping TypeName="DomainModels.CompanyProfile">
+              <MappingFragment StoreEntitySet="CompanyProfile">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CompanyNameE" ColumnName="CompanyNameE" />
+                <ScalarProperty Name="CompanyNameA" ColumnName="CompanyNameA" />
+                <ScalarProperty Name="CompanyLogoPath" ColumnName="CompanyLogoPath" />
+                <ScalarProperty Name="CompanyWebsite" ColumnName="CompanyWebsite" />
+                <ScalarProperty Name="CompanyEmail" ColumnName="CompanyEmail" />
+                <ScalarProperty Name="CompanyAddressE" ColumnName="CompanyAddressE" />
+                <ScalarProperty Name="CompanyAddressA" ColumnName="CompanyAddressA" />
+                <ScalarProperty Name="CompanyLocation" ColumnName="CompanyLocation" />
+                <ScalarProperty Name="CompanyNumber" ColumnName="CompanyNumber" />
+                <ScalarProperty Name="CompanyMobileNumber" ColumnName="CompanyMobileNumber" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanySocialDetails">
+            <EntityTypeMapping TypeName="DomainModels.CompanySocialDetail">
+              <MappingFragment StoreEntitySet="CompanySocialDetails">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="TwitterUserName" ColumnName="TwitterUserName" />
+                <ScalarProperty Name="TwitterPassword" ColumnName="TwitterPassword" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="FacebookUserName" ColumnName="FacebookUserName" />
+                <ScalarProperty Name="FacebookPassword" ColumnName="FacebookPassword" />
+                <ScalarProperty Name="Youtube" ColumnName="Youtube" />
+                <ScalarProperty Name="YoutubeUserName" ColumnName="YoutubeUserName" />
+                <ScalarProperty Name="YoutubePassword" ColumnName="YoutubePassword" />
+                <ScalarProperty Name="LinkedIn" ColumnName="LinkedIn" />
+                <ScalarProperty Name="LinkedInUserName" ColumnName="LinkedInUserName" />
+                <ScalarProperty Name="LinkedInPassword" ColumnName="LinkedInPassword" />
+                <ScalarProperty Name="GooglePlus" ColumnName="GooglePlus" />
+                <ScalarProperty Name="GooglePlusUserName" ColumnName="GooglePlusUserName" />
+                <ScalarProperty Name="GooglePlusPassword" ColumnName="GooglePlusPassword" />
+                <ScalarProperty Name="Istegram" ColumnName="Istegram" />
+                <ScalarProperty Name="IstegramUserName" ColumnName="IstegramUserName" />
+                <ScalarProperty Name="IstegramPassword" ColumnName="IstegramPassword" />
+                <ScalarProperty Name="Tumbler" ColumnName="Tumbler" />
+                <ScalarProperty Name="TumblerUserName" ColumnName="TumblerUserName" />
+                <ScalarProperty Name="TumblerPassword" ColumnName="TumblerPassword" />
+                <ScalarProperty Name="Flickr" ColumnName="Flickr" />
+                <ScalarProperty Name="FlickrUserName" ColumnName="FlickrUserName" />
+                <ScalarProperty Name="FlickrPassword" ColumnName="FlickrPassword" />
+                <ScalarProperty Name="Pinterest" ColumnName="Pinterest" />
+                <ScalarProperty Name="PinterestUserName" ColumnName="PinterestUserName" />
+                <ScalarProperty Name="PinterestPassword" ColumnName="PinterestPassword" />
+                <ScalarProperty Name="Social1" ColumnName="Social1" />
+                <ScalarProperty Name="Social1UserName" ColumnName="Social1UserName" />
+                <ScalarProperty Name="Social1Password" ColumnName="Social1Password" />
+                <ScalarProperty Name="Social2" ColumnName="Social2" />
+                <ScalarProperty Name="Social2UserName" ColumnName="Social2UserName" />
+                <ScalarProperty Name="Social2Password" ColumnName="Social2Password" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Complaints">
-            <EntityTypeMapping TypeName="EPMSModel.Complaint">
+            <EntityTypeMapping TypeName="DomainModels.Complaint">
               <MappingFragment StoreEntitySet="Complaint">
                 <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -1733,7 +2320,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="EPMSModel.Customer">
+            <EntityTypeMapping TypeName="DomainModels.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
@@ -1748,7 +2335,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="EPMSModel.Department">
+            <EntityTypeMapping TypeName="DomainModels.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="DepartmentNameE" ColumnName="DepartmentNameE" />
@@ -1762,7 +2349,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="EPMSModel.Employee">
+            <EntityTypeMapping TypeName="DomainModels.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmployeeNameE" ColumnName="EmployeeNameE" />
@@ -1791,7 +2378,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeJobHistories">
-            <EntityTypeMapping TypeName="EPMSModel.EmployeeJobHistory">
+            <EntityTypeMapping TypeName="DomainModels.EmployeeJobHistory">
               <MappingFragment StoreEntitySet="EmployeeJobHistory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1802,7 +2389,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRequests">
-            <EntityTypeMapping TypeName="EPMSModel.EmployeeRequest">
+            <EntityTypeMapping TypeName="DomainModels.EmployeeRequest">
               <MappingFragment StoreEntitySet="EmployeeRequests">
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -1817,7 +2404,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobApplicants">
-            <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
+            <EntityTypeMapping TypeName="DomainModels.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicants">
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
@@ -1838,7 +2425,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobOffereds">
-            <EntityTypeMapping TypeName="EPMSModel.JobOffered">
+            <EntityTypeMapping TypeName="DomainModels.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
                 <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
@@ -1857,7 +2444,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitles">
-            <EntityTypeMapping TypeName="EPMSModel.JobTitle">
+            <EntityTypeMapping TypeName="DomainModels.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="JobTitleNameE" ColumnName="JobTitleNameE" />
@@ -1874,7 +2461,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitleHistories">
-            <EntityTypeMapping TypeName="EPMSModel.JobTitleHistory">
+            <EntityTypeMapping TypeName="DomainModels.JobTitleHistory">
               <MappingFragment StoreEntitySet="JobTitleHistory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
@@ -1885,7 +2472,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="EPMSModel.Menu">
+            <EntityTypeMapping TypeName="DomainModels.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
@@ -1903,7 +2490,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
-            <EntityTypeMapping TypeName="EPMSModel.MenuRight">
+            <EntityTypeMapping TypeName="DomainModels.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
                 <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
                 <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
@@ -1912,7 +2499,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="EPMSModel.Notification">
+            <EntityTypeMapping TypeName="DomainModels.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
@@ -1927,7 +2514,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="EPMSModel.Order">
+            <EntityTypeMapping TypeName="DomainModels.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
@@ -1944,8 +2531,61 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="DomainModels.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="NameE" ColumnName="NameE" />
+                <ScalarProperty Name="NameA" ColumnName="NameA" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
+                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="NotesForCustomerE" ColumnName="NotesForCustomerE" />
+                <ScalarProperty Name="NotesForCustomerA" ColumnName="NotesForCustomerA" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotations">
+            <EntityTypeMapping TypeName="DomainModels.Quotation">
+              <MappingFragment StoreEntitySet="Quotation">
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
+                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
+                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
+                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
+                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
+                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
+                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
+                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
+                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
+                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
+                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
+                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
+                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="QuotationItemDetails">
-            <EntityTypeMapping TypeName="EPMSModel.QuotationItemDetail">
+            <EntityTypeMapping TypeName="DomainModels.QuotationItemDetail">
               <MappingFragment StoreEntitySet="QuotationItemDetail">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
@@ -1961,7 +2601,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestDetails">
-            <EntityTypeMapping TypeName="EPMSModel.RequestDetail">
+            <EntityTypeMapping TypeName="DomainModels.RequestDetail">
               <MappingFragment StoreEntitySet="RequestDetails">
                 <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
@@ -1983,7 +2623,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EPMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -1991,34 +2631,6 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Quotations">
-            <EntityTypeMapping TypeName="EPMSModel.Quotation">
-              <MappingFragment StoreEntitySet="Quotation">
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
-                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
-                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
-                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
-                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
-                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
-                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
-                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
-                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
-                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
-                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
-                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
-                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
-                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
-                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
