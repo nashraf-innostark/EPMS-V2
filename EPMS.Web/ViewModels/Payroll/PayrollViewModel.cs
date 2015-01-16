@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using EPMS.Web.Models;
+﻿using EPMS.Web.Models;
 
 namespace EPMS.Web.ViewModels.Payroll
 {

@@ -57,6 +57,10 @@
   <ItemGroup>
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\ICompanyBankService.cs" />
+    <Compile Include="IServices\ICompanyDocumentService.cs" />
+    <Compile Include="IServices\ICompanyProfileService.cs" />
+    <Compile Include="IServices\ICompanySocialService.cs" />
     <Compile Include="IServices\IComplaintService.cs" />
     <Compile Include="IServices\ICustomerService.cs" />
     <Compile Include="IServices\IDepartmentService.cs" />
@@ -65,21 +69,20 @@
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
-    <Compile Include="IServices\ILogger.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IServices\IMenuRightService.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="IServices\ILogger.cs" />
+    <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
+    <Compile Include="IServices\IPayrollService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
-    <Compile Include="Repository\IBaseRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Repository\IBaseRepository.cs" />
+    <Compile Include="Repository\ICompanyBankRepository.cs" />
+    <Compile Include="Repository\ICompanyDocumentRepository.cs" />
+    <Compile Include="Repository\ICompanyProfileRepository.cs" />
+    <Compile Include="Repository\ICompanySocialRepository.cs" />
     <Compile Include="Repository\IComplaintRepository.cs" />
     <Compile Include="Repository\ICustomerRepository.cs" />
     <Compile Include="Repository\IDepartmentRepository.cs" />

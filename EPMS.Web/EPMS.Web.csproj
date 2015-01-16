@@ -246,6 +246,7 @@
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
     <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
+    <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -286,8 +287,10 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\CompanyProfileMapper.cs" />
     <Compile Include="ModelMappers\ComplaintMapper.cs" />
     <Compile Include="ModelMappers\CustomerMapper.cs" />
+    <Compile Include="ModelMappers\DashboardMappers.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
@@ -302,6 +305,10 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\CompanyBankDetail.cs" />
+    <Compile Include="Models\CompanyDocumentDetail.cs" />
+    <Compile Include="Models\CompanyProfile.cs" />
+    <Compile Include="Models\CompanySocialDetail.cs" />
     <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Department.cs" />
@@ -371,12 +378,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Order.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CP\Profile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profile.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CMS\Quotation.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Quotation.ar.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
+    <Compile Include="Resources\CP\Profile.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profile.ar.resx</DependentUpon>
+    </Compile>
+     <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Dashboard.resx</DependentUpon>
@@ -496,6 +513,7 @@
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
+    <Compile Include="ViewModels\CompanyProfile\CompanyProfileViewModel.cs" />
     <Compile Include="ViewModels\Complaint\ComplaintViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
@@ -2440,6 +2458,7 @@
     <Content Include="Areas\CMS\Views\Quotation\Index.cshtml" />
     <Content Include="Content\CSS\ie8-only.less" />
     <Content Include="Areas\CP\Views\web.config" />
+    <Content Include="Areas\CP\Views\CompanyProfile\Detail.cshtml" />
     <Content Include="Areas\CMS\Views\Quotation\Create.cshtml" />
     <Content Include="Content\CSS\photon-responsive.less" />
     <Content Include="Content\CSS\photon.less" />
@@ -2504,17 +2523,25 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Order.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CP\Profile.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Profile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Quotation.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
+    <EmbeddedResource Include="Resources\CP\Profile.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+      <LastGenOutput>Profile.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Quotation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
@@ -2906,6 +2933,7 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
+    <Folder Include="Images\CompanyLogo\" />
     <Folder Include="Images\Employee\" />
     <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />

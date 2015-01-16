@@ -559,9 +559,9 @@ function LoadEmployeeRequests(control) {
                 if (data.length > 0) {
                     $.each(data, function (itemIndex, item) {
                         if (item.IsReplied) {
-                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + ' <img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
+                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="'+item.EmployeeNameE+'">'+item.EmployeeNameEShort+' </span><img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
                         } else {
-                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span>' + item.RequestTopic + '</span></a><div>' + item.EmployeeNameE + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                         }
                         
                     });
@@ -599,9 +599,9 @@ function LoadComplaints(control) {
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (item.IsReplied) {
-                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + ' <img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
+                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="'+item.Topic+'">'+item.TopicShort+'</span></a><div><span title="'+item.ClientName+'">'+item.ClientNameShort+'</span> <img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
                     } else {
-                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span>' + item.Topic + '</span></a><div>' + item.ClientName + ' <img src="/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
+                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
                     }
                 });
             }
@@ -712,7 +712,7 @@ function LoadRecentEmployees(control) {
             $('#recentEmployees').empty();
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
-                    $('#recentEmployees').append('<li><div class="avatar-image"><img src="' + item.EmployeeImagePath + '" alt="profile image" /></div><a href="/HR/Employee/Create/' + item.EmployeeId + '"><span>' + item.EmployeeNameE + '</span></a><div>' + item.EmployeeJobId + ' </div></li>');
+                    $('#recentEmployees').append('<li><div class="avatar-image"><img src="' + item.EmployeeImagePath + '" alt="profile image" /></div><a href="/HR/Employee/Create/' + item.EmployeeId + '"><span title="'+item.EmployeeNameE+'">'+item.EmployeeNameEShort+'</span></a><div>' + item.EmployeeJobId + ' </div></li>');
                 });
             }
             else {
@@ -722,6 +722,65 @@ function LoadRecentEmployees(control) {
         },
         error: function (e) {
             alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadMyProfile(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var url = siteUrl + "/Dashboard/LoadMyProfile";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#myprofile').empty();
+            if (data!=null) {
+                $('#myprofile').append('<li><div class="avatar-image"><img src="' + data.EmployeeImagePath + '" alt="profile"></div><div title="'+data.EmployeeNameE+'">'+data.EmployeeNameEShort+'</div></li><li><span>Job ID</span><div>' + data.EmployeeJobId + '</div></li><li><span>Job Title</span><div>' + data.EmployeeJobTitleE + '</div></li><li><span>ID Expiry Date</span><div>' + data.EmployeeIqamaExpiryDt + '</div></li>');
+            }
+            else {
+                $(".tempLoader").click();
+                $('#myprofile').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error:' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadPayroll(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var url = siteUrl + "/Dashboard/LoadPayroll";
+    var month = $("#selectedmonth").val();
+    if (control.className == "refresher") {
+        month = 1;
+    }
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+            month: month
+        },
+        dataType: "json",
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#mypayroll').empty();
+            if (data != null) {
+                $('#mypayroll').append('<li id="basicSal"><span>Basic Salary</span><div>'+data.BasicSalary+'</div></li><li id="totalAllownces"><span>Allowances</span><div>'+data.Allowances+'</div></li><li id="totalDeductions"><span>Deductions</span><div>'+data.Deductions+'</div></li><li id="totalSal"><span>Total</span><div>'+data.Total+'</div></li>');
+            }
+            else {
+                $(".tempLoader").click();
+                $('#mypayroll').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error:' + e.toString());
             $(".tempLoader").click();
         }
     });

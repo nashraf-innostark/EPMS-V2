@@ -120,12 +120,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Identity\ApplicationUserManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Identity\ApplicationUserManager.cs"/>
     <Compile Include="Identity\IdentityOperation.cs" />
     <Compile Include="Services\AllowanceService.cs" />
     <Compile Include="Services\AspNetUserService.cs" />
+    <Compile Include="Services\CompanyBankService.cs" />
+    <Compile Include="Services\CompanyDocumentService.cs" />
+    <Compile Include="Services\CompanyProfileService.cs" />
+    <Compile Include="Services\CompanySocialService.cs" />
     <Compile Include="Services\ComplaintService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OrdersService.cs" />
     <Compile Include="Services\QuotationItemService.cs" />
+    <Compile Include="Services\PayrollService.cs" />
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>

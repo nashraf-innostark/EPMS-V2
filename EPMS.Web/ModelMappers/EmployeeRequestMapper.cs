@@ -53,6 +53,8 @@ namespace EPMS.Web.ModelMappers
                     EmployeeId = source.EmployeeId,
                     EmployeeNameE = source.Employee.EmployeeNameE,
                     RequestTopic = source.RequestTopic,
+                    EmployeeNameEShort = source.Employee.EmployeeNameE.Length > 7 ? source.Employee.EmployeeNameE.Substring(0, 7) + "..." : source.Employee.EmployeeNameE,
+                    RequestTopicShort = source.RequestTopic.Length > 9 ? source.RequestTopic.Substring(0, 9) + "..." : source.RequestTopic,
                     RequestDateString = source.RequestDate.ToShortDateString(),
                     IsReplied = source.RequestDetails.OrderByDescending(x => x.RowVersion).FirstOrDefault().IsReplied
                 };

@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
@@ -13,6 +15,7 @@ namespace EPMS.Web.Controllers
     {
         #region Constructor and Private Services objects
 
+        private readonly IPayrollService payrollService;
         private readonly IDepartmentService departmentService;
         private readonly IJobOfferedService jobOfferedService;
         private readonly IOrdersService ordersService;
@@ -24,6 +27,7 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Dashboard constructor
         /// </summary>
+        /// <param name="payrollService"></param>
         /// <param name="departmentService"></param>
         /// <param name="jobOfferedService"></param>
         /// <param name="ordersService"></param>
@@ -31,8 +35,9 @@ namespace EPMS.Web.Controllers
         /// <param name="employeeService"></param>
         /// <param name="customerService"></param>
         /// <param name="complaintService"></param>
-        public DashboardController(IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
+        public DashboardController(IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
         {
+            this.payrollService = payrollService;
             this.departmentService = departmentService;
             this.jobOfferedService = jobOfferedService;
             this.ordersService = ordersService;
@@ -69,14 +74,22 @@ namespace EPMS.Web.Controllers
             #region Recruitment Widget
             dashboardViewModel.Recruitments = GetRecruitments();
             #endregion
+
             #region Recent Employees Widget
             dashboardViewModel.Departments = GetAllDepartments();
             dashboardViewModel.EmployeesRecent = GetRecentEmployees(requester);
             #endregion
+
             #region Employee Requests Widget
+            if (requester!="Admin")
+                dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
             #endregion
-            #region Employee Requests Widget
+
+            #region Payroll Widget
+            if (requester != "Admin")
+                dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()),DateTime.Now);
             #endregion
+
             #region Employee Requests Widget
             #endregion
             #region Employee Requests Widget
@@ -99,7 +112,7 @@ namespace EPMS.Web.Controllers
         /// </summary>
         /// <param name="requester"></param>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.EmployeeRequest> GetEmployeeRequests(string requester)
+        private IEnumerable<EmployeeRequest> GetEmployeeRequests(string requester)
         {
             return employeeRequestService.LoadRequestsForDashboard(requester).Select(x => x.CreateForDashboard());
         }
@@ -107,11 +120,11 @@ namespace EPMS.Web.Controllers
         /// Load all employees for dropdownlist
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.Employee> GetAllEmployees()
+        private IEnumerable<Employee> GetAllEmployees()
         {
             return employeeService.GetAll().Select(x => x.CreateForDashboard());
         }
-        private IEnumerable<DashboardModels.Department> GetAllDepartments()
+        private IEnumerable<Department> GetAllDepartments()
         {
             return departmentService.GetAll().Select(x => x.CreateForDashboard());
         }
@@ -119,7 +132,7 @@ namespace EPMS.Web.Controllers
         /// Load all customers for dropdownlist
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.Customer> GetAllCustomers()
+        private IEnumerable<Customer> GetAllCustomers()
         {
             return customerService.GetAll().Select(x => x.CreateForDashboard());
         }
@@ -127,7 +140,7 @@ namespace EPMS.Web.Controllers
         /// Load all complaints for widget
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.Complaint> GetComplaints(string requester)
+        private IEnumerable<Complaint> GetComplaints(string requester)
         {
             return complaintService.LoadComplaintsForDashboard(requester).Select(x => x.CreateForDashboard());
         }
@@ -135,7 +148,7 @@ namespace EPMS.Web.Controllers
         /// Load recent 5 orders
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.Order> GetOrders(string requester,int status)
+        private IEnumerable<Order> GetOrders(string requester,int status)
         {
             return ordersService.GetRecentOrders(requester,status).Select(x => x.CreateForDashboard());
         }
@@ -143,7 +156,7 @@ namespace EPMS.Web.Controllers
         /// Load recent jobs offered
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.Recruitment> GetRecruitments()
+        private IEnumerable<Recruitment> GetRecruitments()
         {
             return jobOfferedService.GetRecentJobOffereds().Select(x => x.CreateForDashboard());
         }
@@ -152,9 +165,22 @@ namespace EPMS.Web.Controllers
         /// </summary>
         /// <param name="requester"></param>
         /// <returns></returns>
-        private IEnumerable<DashboardModels.Employee> GetRecentEmployees(string requester)
+        private IEnumerable<Employee> GetRecentEmployees(string requester)
         {
             return employeeService.GetRecentEmployees(requester).Select(x => x.CreateForDashboard());
+        }
+        /// <summary>
+        /// Load Profile data from employee table of current user
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        private Profile GetMyProfile(long employeeId)
+        {
+            return employeeService.FindEmployeeById(employeeId).CreateForDashboardProfile();
+        }
+        private Payroll GetPayroll(long employeeId,DateTime date)
+        {
+            return payrollService.LoadPayroll(employeeId, date).CreatePayrollForDashboard();
         }
         #endregion
 
@@ -219,6 +245,28 @@ namespace EPMS.Web.Controllers
             var requester = departmentId == 0 ? "Admin" : departmentId.ToString();
             var recentEmployees = GetRecentEmployees(requester);
             return Json(recentEmployees, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Load employee's profile
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadMyProfile()
+        {
+            var myProfile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
+            return Json(myProfile, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Load emloyees' payroll
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadPayroll(int month)
+        {
+            DateTime filterDateTime = month == 1 ? DateTime.Now : DateTime.Now.AddMonths(-1);
+            var payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), filterDateTime);
+            return Json(payroll, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

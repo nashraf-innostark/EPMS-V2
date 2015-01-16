@@ -58,9 +58,9 @@
                             @foreach (var item in Model.EmployeeRequests.ToList())
                             {
                             <li>
-                                <a href="~/HR/Request/Create/@item.RequestId">  <span>@item.RequestTopic</span></a>
+                                <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
                                 <div>
-                                    @item.EmployeeNameE
+                                    <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
                                     @if (item.IsReplied)
                                     {
                                         <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
@@ -204,17 +204,17 @@
                                 @foreach (var item in Model.Complaints.ToList())
                                 {
                                 <li>
-                                    <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span>@item.Topic</span></a>
+                                    <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
                                     <div>
-                                        @item.ClientName
+                                        <span title="@item.ClientName">@item.ClientNameShort</span>
                                         @if (item.IsReplied)
-                                            {
-                                            <img src="~/Images/photon/workDone.png" alt="Read" title="Read" class="status" />
-                                            }
-                                            else
-                                            {
-                                            <img src="~/Images/photon/notDone.png" alt="Read" title="Read" class="status" />
-                                            }
+                                        {
+                                            <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
+                                        }
                                     </div>
                                 </li>
                                 }
@@ -521,42 +521,38 @@
                 <div class="widget-flipper">
                     <div class="widget-area widget-general-stats widget-front profile">
                         <div class="widget-head ">
-                            <a href="" class="lightPurpule">  My Profile</a>
+                            <a href="~/HR/Employee/Index" class="lightPurpule">@EPMS.Web.Resources.Dashboard.Dashboard.MyProfile</a>
                             <div>
-                                <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-
+                                <a href="javascript:;" class="refresher" onclick="LoadMyProfile(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                 <i class="icon-photon folder_stroke opc1"></i>
                             </div>
                         </div>
-                        <ul>
+                        <ul id="myprofile">
                             <li>
                                 <div class="avatar-image">
-                                    <img src="images/photon/user1.jpg" alt="profile">
+                                    <img src="@Model.Profile.EmployeeImagePath" alt="profile">
                                 </div>
-                                <div>Abdul Aziz Al Qureshi</div>
+                                <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
 
                             </li>
                             <li>
                                 <span>Job ID</span>
                                 <div>
-                                    908098
-
+                                    @Model.Profile.EmployeeJobId
                                 </div>
                             </li>
                             <li>
                                 <span>Job Title</span>
                                 <div>
-                                    Sales - Manager
-
+                                    @Model.Profile.EmployeeJobTitleE
                                 </div>
                             </li>
                             <li>
                                 <span>ID Expiry Date</span>
                                 <div>
-                                    9/12/2014
-
+                                    @Model.Profile.EmployeeIqamaExpiryDt
                                 </div>
-
+                            </li>
                         </ul>
                     </div>
 
@@ -569,66 +565,57 @@
                 <div class="widget-flipper">
                     <div class="widget-area widget-general-stats widget-front">
                         <div class="widget-head ">
-                            <a href="" class="lightOrange">  Payroll </a>
+                            <a href="~/HR/Payroll/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Payroll</a>
                             <div>
-                                <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                <a href="javascript:;" class="refresher" onclick="LoadPayroll(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                 <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
                                 <i class="icon-photon document_stroke opc1"></i>
                             </div>
                         </div>
-                        <ul>
-
+                        <ul id="mypayroll">
                             <li id="basicSal">
                                 <span>Basic Salary</span>
                                 <div>
-                                    5000
-
+                                    @Model.Payroll.BasicSalary
                                 </div>
                             </li>
                             <li id="totalAllownces">
                                 <span>Allowances</span>
                                 <div>
-                                    1000
-
+                                    @Model.Payroll.Allowances
                                 </div>
                             </li>
                             <li id="totalDeductions">
                                 <span>Deductions</span>
                                 <div>
-                                    500
-
+                                    @Model.Payroll.Deductions
                                 </div>
                             </li>
                             <li id="totalSal">
                                 <span>Total</span>
                                 <div>
-                                    5500
-
+                                    @Model.Payroll.Total
                                 </div>
                             </li>
-
-
                         </ul>
                     </div>
                     <div class="widget-area widget-general-stats widget-back">
                         <div class="widget-savehead">
-                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadPayroll(this);"><i class='icon-photon cog'></i>Done</a>
                         </div>
                         <form>
                             <div class="container-fluid widget-settings">
                                 <div class="control-group row-fluid">
                                     <div class="span12">
-                                        <label class="control-label">Filter by Month:</label>
+                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterbyMonth:</label>
                                     </div>
                                 </div>
                                 <div class="control-group row-fluid">
                                     <div class="span12">
                                         <div class="controls">
-                                            <select>
-                                                <option selected="" value="Any">Any</option>
-                                                <option value="1">Previous</option>
-                                                <option value="2">Current</option>
-
+                                            <select id="selectedmonth">
+                                                <option selected="" value="1">Current</option>
+                                                <option value="2">Previous</option>
                                             </select>
                                         </div>
                                     </div>
@@ -642,9 +629,10 @@
             </div>
             }
             <!-- General Stats Widget end -->
-            <!-- Latest Users Widget begins -->
+            
             @if (ViewBag.UserRole == "Admin")
             {
+            <!-- Latest Recent Employees Widget begins -->
                 <div class="widget-holder">
                     <div class="widget-flipper">
                         <!-- Front -->
@@ -664,7 +652,7 @@
                                         <div class="avatar-image">
                                             <img src="@item.EmployeeImagePath" alt="profile image" />
                                         </div>
-                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span>@item.EmployeeNameE</span></a>
+                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
                                         <div>
                                             @item.EmployeeJobId
                                         </div>
@@ -697,8 +685,7 @@
                     </div>
                     <div class="tempLoader" style="display: none;"></div>
                 </div>
-            
-            <!-- Latest Users Widget ends -->
+            <!-- Latest Recent Employees Widget ends -->
 
             <!-- Task Completion Widget begins -->
             <!-- Project Widget -->

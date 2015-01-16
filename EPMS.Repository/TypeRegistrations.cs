@@ -30,6 +30,10 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IOrdersRepository, OrdersRepository>();
             unityContainer.RegisterType<IQuotationRepository, QuotationRepository>();
             unityContainer.RegisterType<IQuotationItemRepository, QuotationItemRepository>();
+            unityContainer.RegisterType<ICompanyProfileRepository, CompanyProfileRepository>();
+            unityContainer.RegisterType<ICompanyBankRepository, CompanyBankRepository>();
+            unityContainer.RegisterType<ICompanyDocumentRepository, CompanyDocumentRepository>();
+            unityContainer.RegisterType<ICompanySocialRepository, CompanySocialRepository>();
         }
     }
 }
