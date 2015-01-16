@@ -561,6 +561,7 @@
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ApplicantCvs\dummy.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ClinicAdmin.css" />
@@ -929,12 +930,14 @@
     <Content Include="Images\brd_separator%402x.png" />
     <Content Include="Images\brd_separator.png" />
     <Content Include="Images\calendar%402x.png" />
+    <Content Include="Images\CompanyLogo\dummy.txt" />
     <Content Include="Images\container-login.jpg" />
     <Content Include="Images\dashboard%402x.png" />
     <Content Include="Images\data-supplemental-icons.png" />
     <Content Include="Images\delete.gif" />
     <Content Include="Images\digits.png" />
     <Content Include="Images\down-arrow.png" />
+    <Content Include="Images\Employee\profile.jpg" />
     <Content Include="Images\entypo.svg" />
     <Content Include="Images\error-pages%402x.png" />
     <Content Include="Images\favicon.ico" />
@@ -1807,6 +1810,7 @@
     <Content Include="Images\preloader\335.gif" />
     <Content Include="Images\preloader\76.gif" />
     <Content Include="Images\preloader\82.gif" />
+    <Content Include="Images\Profile\dummy.txt" />
     <Content Include="Images\saudi_arabia_flag_small.PNG" />
     <Content Include="Images\search_icon_dark%402x.png" />
     <Content Include="Images\search_icon_dark.png" />
@@ -2937,7 +2941,6 @@
     <Content Include="Views\Account\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ApplicantCvs\" />
     <Folder Include="App_Data\ProfileImages\" />
     <Folder Include="Areas\CMS\Models\" />
     <Folder Include="Areas\CMS\Views\Shared\" />
@@ -2955,9 +2958,6 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
-    <Folder Include="Images\CompanyLogo\" />
-    <Folder Include="Images\Employee\" />
-    <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
