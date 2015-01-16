@@ -137,6 +137,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
                 else
                 {
+                    var customers = CustomerService.GetAll();
+                    ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
+                    ViewBag.Orders = OrdersService.GetOrdersByCustomerId(viewModel.CustomerId).Select(x => x.CreateFromServerToClient());
                     TempData["message"] = new MessageViewModel
                     {
                         Message = Resources.CMS.Quotation.UpdateMessage,
