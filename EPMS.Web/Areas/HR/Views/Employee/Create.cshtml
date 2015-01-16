@@ -508,10 +508,11 @@
         }).settings.ignore = ".ignore, .file";
         // upload Image
         var errors = "";
+        var url = "/HR/Employee/UploadEmployeePhoto";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', //all types
             maxsize: 1,
-            post_upload: "UploadEmployeePhoto",
+            post_upload: url,
             folder: "./",
             ini_text: "Drag your file here or click (max: 1MB)",
             over_text: "Drop Here",

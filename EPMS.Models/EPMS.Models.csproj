@@ -103,6 +103,7 @@
     <Compile Include="Common\JobTitleByColumn.cs" />
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
+    <Compile Include="Common\QuotationByColumn.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="DomainModels\JobTitleHistory.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\Order.cs" />
+    <Compile Include="DomainModels\Project.cs" />
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
@@ -169,6 +171,7 @@
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
+    <Compile Include="ResponseModels\QuotationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

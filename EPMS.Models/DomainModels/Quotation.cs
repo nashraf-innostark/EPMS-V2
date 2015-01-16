@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPMS.Models.DomainModels
 {
@@ -10,7 +7,7 @@ namespace EPMS.Models.DomainModels
     {
         public long QuotationId { get; set; }
         public string ClientName { get; set; }
-        public long OrderNumber { get; set; }
+        public string OrderNumber { get; set; }
         public long CreatedByEmployee { get; set; }
         public string GreetingsEn { get; set; }
         public string GreetingsAr { get; set; }
@@ -28,7 +25,7 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecUpdatedDt { get; set; }
-        public DateTime? RecUpdatedBy { get; set; }
+        public string RecUpdatedBy { get; set; }
         public long CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }

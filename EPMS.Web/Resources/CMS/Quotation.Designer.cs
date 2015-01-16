@@ -79,6 +79,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quotation has been Addded Successfully..
+        /// </summary>
+        public static string AddMessage {
+            get {
+                return ResourceManager.GetString("AddMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client Name.
         /// </summary>
         public static string ClientName {
@@ -138,6 +147,15 @@ namespace EPMS.Web.Resources.CMS {
         public static string DueAt {
             get {
                 return ResourceManager.GetString("DueAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem in Saving Quotation..
+        /// </summary>
+        public static string ErrorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
             }
         }
         
@@ -336,6 +354,15 @@ namespace EPMS.Web.Resources.CMS {
         public static string UnitPrice {
             get {
                 return ResourceManager.GetString("UnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quotation has been Updated Successfully..
+        /// </summary>
+        public static string UpdateMessage {
+            get {
+                return ResourceManager.GetString("UpdateMessage", resourceCulture);
             }
         }
     }

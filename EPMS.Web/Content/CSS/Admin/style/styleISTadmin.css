@@ -1,6 +1,7 @@
 ﻿.Error {
-color: red !important;
+    color: red !important;
 }
+
 .ltr {
     direction: ltr;
 }

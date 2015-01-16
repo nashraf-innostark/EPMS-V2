@@ -148,6 +148,8 @@
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Repositories\QuotationItemRepository.cs" />
+    <Compile Include="Repositories\QuotationRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />
     <Compile Include="TypeRegistrations.cs" />

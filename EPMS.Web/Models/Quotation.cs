@@ -9,7 +9,7 @@ namespace EPMS.Web.Models
         public long QuotationId { get; set; }
         public string ClientName { get; set; }
         [Required(ErrorMessage = "Order Number is required.")]
-        public long OrderNumber { get; set; }
+        public string OrderNumber { get; set; }
         public long CreatedByEmployee { get; set; }
         public string GreetingsEn { get; set; }
         public string GreetingsAr { get; set; }
@@ -28,7 +28,7 @@ namespace EPMS.Web.Models
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecUpdatedDt { get; set; }
-        public DateTime? RecUpdatedBy { get; set; }
+        public string RecUpdatedBy { get; set; }
         [Required(ErrorMessage = "Client Name is required.")]
         public long CustomerId { get; set; }
         public string CreatedByName { get; set; }
