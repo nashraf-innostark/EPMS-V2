@@ -20,5 +20,6 @@ namespace EPMS.Models.DomainModels
 
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }
