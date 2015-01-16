@@ -1,4 +1,5 @@
 ﻿@using System.Collections.Generic
+@using System.Configuration
 @using System.Linq
 @using EPMS.Models.MenuModels
 @model EPMS.Web.ViewModels.Common.MenuViewModel
@@ -15,7 +16,7 @@
                 // get child items with respect to menu header
                 IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId).OrderBy(c => c.Menu.SortOrder).ToList();
                 <li class="@header.Menu.MenuItemClass">
-                    <a href="@(String.IsNullOrEmpty(header.Menu.MenuTargetController) ? "#" : "/"+header.Menu.MenuTargetController +"/"+header.Menu.MenuFunction)" class="sub-nav-container">
+                    <a href="@(String.IsNullOrEmpty(header.Menu.MenuTargetController) ? "#" : (ConfigurationManager.AppSettings["SiteURL"].ToString())+"/"+header.Menu.MenuTargetController +"/"+header.Menu.MenuFunction)" class="sub-nav-container">
                         <i class="icon-photon @header.Menu.MenuImagePath"></i>
                         <span class="nav-selection">@header.Menu.MenuTitle</span>
                         @if (menuRightchildList.Any())
