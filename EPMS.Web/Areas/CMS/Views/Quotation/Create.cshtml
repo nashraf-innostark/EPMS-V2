@@ -36,7 +36,7 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-@using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddQuotationForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         @Html.HiddenFor(model => model.CreatedByEmployee)
@@ -139,7 +139,7 @@
                             for (int i = 0; i < Model.QuotationItemDetails.Count(); i++)
                             {
                                 <tr>
-                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId)
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId, new { @class="itemDetailId" } )
                                     <td>
                                         @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize" })
                                     </td>
@@ -385,6 +385,7 @@
     var itemsDetailCount;
     var iExcelData = false;
     var isUpdate = false;
+    var elementToDelete;
     $(document).ready(function () {
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
@@ -494,7 +495,7 @@
             }
 
         });
-        $("#AddQuotationForm").validate({
+        $("#AddUpdateQuotationForm").validate({
             errorElement: "span",
             errorClass: "error",
             onclick: true,
@@ -538,16 +539,49 @@
         reactivateCount();
         function reActivateDelete() {
             $('.deleteRow').on("click", function () {
-                var count = $('.qouteAdd tr').length;
-                if (count > 1) {
-                    $(this).parent().parent().remove();
-                    var x = 0;
-                    $('.qouteAdd tr .n3').each(function () {
-                        x = x + parseInt($(this).val());
-                    });
-                    $('#subtotal').val(x);
-                    calDiscount();
-                }
+                $.blockUI({
+                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                var id = parseInt($(this).closest('tr').children(".itemDetailId").val());
+                elementToDelete = $(this).parent().parent();
+                url = siteUrl + "/CMS/Quotation/Delete";
+                //var isErrorInDeleting = true;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        itemDetailId : id
+                    },
+                    success: function (data) {
+                        if (data.Status == "Success") {
+                            itemsDetailCount = itemsDetailCount - 1;
+                            var count = $('.qouteAdd tr').length;
+                            if (count > 1) {
+                                elementToDelete.remove();
+                                var x = 0;
+                                $('.qouteAdd tr .n3').each(function () {
+                                    x = x + parseInt($(this).val());
+                                });
+                                $('#subtotal').val(x);
+                                calDiscount();
+                            }
+                            //isErrorInDeleting = false;
+                            $.unblockUI();
+                        }
+                        if (data.Status == "Error") {
+                            $.unblockUI();
+                            alert("Error in deleting Item Detail");
+                            return;
+                        }
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error: You are not authorized');
+                        return;
+                    }
+                });
             });
         }
         function reactivateCount() {
@@ -706,9 +740,6 @@
     });
     function populateDDL(data) {
         $("#OrderNo").empty();
-        $("#OrderNo").append(
-            $('<option></option>').val(0).html("--Select--")
-        );
         for (var i = 0; i < data.length; i++) {
             $("#OrderNo").append(
                 $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
