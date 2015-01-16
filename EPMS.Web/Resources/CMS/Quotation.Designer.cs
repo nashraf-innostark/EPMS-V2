@@ -356,5 +356,14 @@ namespace EPMS.Web.Resources.CMS {
                 return ResourceManager.GetString("UnitPrice", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quotation has been Updated Successfully..
+        /// </summary>
+        public static string UpdateMessage {
+            get {
+                return ResourceManager.GetString("UpdateMessage", resourceCulture);
+            }
+        }
     }
 }

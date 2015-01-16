@@ -25,7 +25,7 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecUpdatedDt { get; set; }
-        public DateTime? RecUpdatedBy { get; set; }
+        public string RecUpdatedBy { get; set; }
         public long CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }

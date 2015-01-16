@@ -81,124 +81,6 @@
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="ImageName" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="CompanyBankDetails">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="bigint" Nullable="false" />
-          <Property Name="Bank1Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank1NameArabic" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank1AccountNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank1IBANNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank1MobileNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="Bank2Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank2NameArabic" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank2AccountNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank2IBANNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank2MobileNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="Bank3Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank3NameArabic" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank3AccountNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank3IBANNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank3MobileNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="Bank4Name" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank4NameArabic" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank4AccountNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank4IBANNumber" Type="nvarchar" MaxLength="500" />
-          <Property Name="Bank4MobileNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDate" Type="date" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDate" Type="date" />
-        </EntityType>
-        <EntityType Name="CompanyDocumentDetails">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="bigint" Nullable="false" />
-          <Property Name="CommercialRegister" Type="nvarchar" MaxLength="500" />
-          <Property Name="CommercialRegisterIssueDate" Type="date" />
-          <Property Name="CommercialRegisterExpiryDate" Type="date" />
-          <Property Name="InsuranceCertificate" Type="nvarchar" MaxLength="500" />
-          <Property Name="InsuranceCertificateIssueDate" Type="date" />
-          <Property Name="InsuranceCertificateExpiryDate" Type="date" />
-          <Property Name="ChamberCertificate" Type="nvarchar" MaxLength="500" />
-          <Property Name="ChamberCertificateIssueDate" Type="date" />
-          <Property Name="ChamberCertificateExpiryDate" Type="date" />
-          <Property Name="IncomeAndZakaCertificate" Type="nvarchar" MaxLength="500" />
-          <Property Name="IncomeAndZakaCertificateIssueDate" Type="date" />
-          <Property Name="IncomeAndZakaCertificateExpiryDate" Type="date" />
-          <Property Name="SaudilizationCertificate" Type="nvarchar" MaxLength="500" />
-          <Property Name="SaudilizationCertificateIssueDate" Type="date" />
-          <Property Name="SaudilizationCertificateExpiryDate" Type="date" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDate" Type="date" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDate" Type="date" />
-        </EntityType>
-        <EntityType Name="CompanyProfile">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CompanyNameE" Type="nvarchar" MaxLength="500" />
-          <Property Name="CompanyNameA" Type="nvarchar" MaxLength="500" />
-          <Property Name="CompanyLogoPath" Type="nchar" MaxLength="400" />
-          <Property Name="CompanyWebsite" Type="nvarchar" MaxLength="200" />
-          <Property Name="CompanyEmail" Type="nvarchar" MaxLength="200" />
-          <Property Name="CompanyAddressE" Type="nvarchar" MaxLength="1000" />
-          <Property Name="CompanyAddressA" Type="nvarchar" MaxLength="1000" />
-          <Property Name="CompanyLocation" Type="nvarchar" MaxLength="200" />
-          <Property Name="CompanyNumber" Type="nvarchar" MaxLength="200" />
-          <Property Name="CompanyMobileNumber" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDate" Type="date" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDate" Type="date" />
-        </EntityType>
-        <EntityType Name="CompanySocialDetails">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="bigint" Nullable="false" />
-          <Property Name="Twitter" Type="nvarchar" MaxLength="500" />
-          <Property Name="TwitterUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="TwitterPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Facebook" Type="nvarchar" MaxLength="500" />
-          <Property Name="FacebookUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="FacebookPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Youtube" Type="nvarchar" MaxLength="500" />
-          <Property Name="YoutubeUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="YoutubePassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="LinkedIn" Type="nvarchar" MaxLength="500" />
-          <Property Name="LinkedInUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="LinkedInPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="GooglePlus" Type="nvarchar" MaxLength="500" />
-          <Property Name="GooglePlusUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="GooglePlusPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Istegram" Type="nvarchar" MaxLength="500" />
-          <Property Name="IstegramUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="IstegramPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Tumbler" Type="nvarchar" MaxLength="500" />
-          <Property Name="TumblerUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="TumblerPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Flickr" Type="nvarchar" MaxLength="500" />
-          <Property Name="FlickrUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="FlickrPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Pinterest" Type="nvarchar" MaxLength="500" />
-          <Property Name="PinterestUserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="PinterestPassword" Type="nvarchar" MaxLength="100" />
-          <Property Name="Social1" Type="nvarchar" MaxLength="500" />
-          <Property Name="Social1UserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Social1Password" Type="nvarchar" MaxLength="100" />
-          <Property Name="Social2" Type="nvarchar" MaxLength="500" />
-          <Property Name="Social2UserName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Social2Password" Type="nvarchar" MaxLength="100" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDate" Type="date" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDate" Type="date" />
-        </EntityType>
         <EntityType Name="Complaint">
           <Key>
             <PropertyRef Name="ComplaintId" />
@@ -441,7 +323,7 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecUpdatedDt" Type="datetime" />
-          <Property Name="RecUpdatedBy" Type="datetime" />
+          <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="CustomerId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
@@ -514,42 +396,6 @@
             </Principal>
             <Dependent Role="AspNetUsers">
               <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyBankDetails_CompanyProfile">
-          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
-          <End Role="CompanyBankDetails" Type="Self.CompanyBankDetails" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanyBankDetails">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyDocuments_CompanyProfile">
-          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
-          <End Role="CompanyDocumentDetails" Type="Self.CompanyDocumentDetails" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanyDocumentDetails">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanySocialDetails_CompanyProfile">
-          <End Role="CompanyProfile" Type="Self.CompanyProfile" Multiplicity="1" />
-          <End Role="CompanySocialDetails" Type="Self.CompanySocialDetails" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanySocialDetails">
-              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -844,10 +690,6 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompanyBankDetails" EntityType="Self.CompanyBankDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompanyDocumentDetails" EntityType="Self.CompanyDocumentDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompanyProfile" EntityType="Self.CompanyProfile" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
@@ -876,18 +718,6 @@
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="Self.FK_CompanyBankDetails_CompanyProfile">
-            <End Role="CompanyProfile" EntitySet="CompanyProfile" />
-            <End Role="CompanyBankDetails" EntitySet="CompanyBankDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CompanyDocuments_CompanyProfile" Association="Self.FK_CompanyDocuments_CompanyProfile">
-            <End Role="CompanyProfile" EntitySet="CompanyProfile" />
-            <End Role="CompanyDocumentDetails" EntitySet="CompanyDocumentDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="Self.FK_CompanySocialDetails_CompanyProfile">
-            <End Role="CompanyProfile" EntitySet="CompanyProfile" />
-            <End Role="CompanySocialDetails" EntitySet="CompanySocialDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Complaint_Customer" Association="Self.FK_Complaint_Customer">
             <End Role="Customer" EntitySet="Customer" />
@@ -985,7 +815,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -1060,9 +890,49 @@
           <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_AspNetUsers_Customer" FromRole="AspNetUsers" ToRole="Customer" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_AspNetUsers_Customer" FromRole="AspNetUser" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="ComplaintId" />
+          </Key>
+          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="Topic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
+          <NavigationProperty Name="Department" Relationship="Self.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Complaint_Orders" FromRole="Complaint" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerNameE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerNameA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Orders" FromRole="Customer" ToRole="Orders" />
+          <NavigationProperty Name="Quotations" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -1076,8 +946,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
           <NavigationProperty Name="JobTitles" Relationship="Self.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
-          <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1109,9 +979,21 @@
           <NavigationProperty Name="Allowances" Relationship="Self.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUsers" />
           <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <NavigationProperty Name="EmployeeJobHistories" Relationship="Self.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
           <NavigationProperty Name="EmployeeRequests" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequests" />
           <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
-          <NavigationProperty Name="EmployeeJobHistories" Relationship="DomainModels.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
+        </EntityType>
+        <EntityType Name="EmployeeJobHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
+          <Property Name="JobTitleId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeJobHistory_Employee" FromRole="EmployeeJobHistory" ToRole="Employee" />
+          <NavigationProperty Name="JobTitle" Relationship="Self.FK_EmployeeJobHistory_JobTitle" FromRole="EmployeeJobHistory" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -1187,9 +1069,20 @@
           <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Department" Relationship="Self.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeJobHistories" Relationship="Self.FK_EmployeeJobHistory_JobTitle" FromRole="JobTitle" ToRole="EmployeeJobHistory" />
           <NavigationProperty Name="JobOffereds" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
-          <NavigationProperty Name="EmployeeJobHistories" Relationship="DomainModels.FK_EmployeeJobHistory_JobTitle" FromRole="JobTitle" ToRole="EmployeeJobHistory" />
-          <NavigationProperty Name="JobTitleHistories" Relationship="DomainModels.FK_JobTitleHistory_JobTitle" FromRole="JobTitle" ToRole="JobTitleHistory" />
+          <NavigationProperty Name="JobTitleHistories" Relationship="Self.FK_JobTitleHistory_JobTitle" FromRole="JobTitle" ToRole="JobTitleHistory" />
+        </EntityType>
+        <EntityType Name="JobTitleHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobTitleId" Type="Int64" Nullable="false" />
+          <Property Name="BasicSalary" Type="Double" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="JobTitle" Relationship="Self.FK_JobTitleHistory_JobTitle" FromRole="JobTitleHistory" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -1206,9 +1099,9 @@
           <Property Name="MenuFunction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PermissionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MenuImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ParentItem" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
-          <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -1234,6 +1127,41 @@
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsNotified" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="Attachment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="OrderStatus" Type="Int32" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Orders" FromRole="Orders" ToRole="Complaint" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Orders" FromRole="Orders" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="QuotationItemDetail">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuotationId" Type="Int64" Nullable="false" />
+          <Property Name="ItemDetails" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemQuantity" Type="Decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Quotation" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="RequestDetail">
           <Key>
@@ -1310,6 +1238,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetUsers_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AspNetUsers_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -1319,6 +1259,54 @@
             </Principal>
             <Dependent Role="AspNetUsers">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Orders">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1346,6 +1334,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeJobHistory_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeJobHistory" Type="Self.EmployeeJobHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeJobHistory">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeRequests_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="EmployeeRequests" Type="Self.EmployeeRequest" Multiplicity="*" />
@@ -1367,6 +1367,18 @@
             </Principal>
             <Dependent Role="Notification">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJobHistory_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+          <End Role="EmployeeJobHistory" Type="Self.EmployeeJobHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="EmployeeJobHistory">
+              <PropertyRef Name="JobTitleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1406,6 +1418,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JobTitleHistory_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+          <End Role="JobTitleHistory" Type="Self.JobTitleHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="JobTitleHistory">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
           <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
           <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
@@ -1434,21 +1458,27 @@
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="BaseDbContext" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Allowances" EntityType="Self.Allowance" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Complaints" EntityType="Self.Complaint" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="EmployeeJobHistories" EntityType="Self.EmployeeJobHistory" />
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequest" />
           <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
           <EntitySet Name="JobOffereds" EntityType="Self.JobOffered" />
           <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
+          <EntitySet Name="JobTitleHistories" EntityType="Self.JobTitleHistory" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
@@ -1466,9 +1496,29 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Customer" Association="Self.FK_AspNetUsers_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaint_Customer" Association="Self.FK_Complaint_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaint_Department" Association="Self.FK_Complaint_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaint_Orders" Association="Self.FK_Complaint_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
@@ -1478,6 +1528,10 @@
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJobHistory_Employee" Association="Self.FK_EmployeeJobHistory_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -1485,6 +1539,10 @@
           <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJobHistory_JobTitle" Association="Self.FK_EmployeeJobHistory_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -1498,6 +1556,10 @@
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobOffered" EntitySet="JobOffereds" />
           </AssociationSet>
+          <AssociationSet Name="FK_JobTitleHistory_JobTitle" Association="Self.FK_JobTitleHistory_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="JobTitleHistory" EntitySet="JobTitleHistories" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Menu1" EntitySet="Menus" />
@@ -1510,264 +1572,16 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="EmployeeJobHistories" EntityType="DomainModels.EmployeeJobHistory" />
-          <EntitySet Name="JobTitleHistories" EntityType="DomainModels.JobTitleHistory" />
-          <AssociationSet Name="FK_EmployeeJobHistory_Employee" Association="DomainModels.FK_EmployeeJobHistory_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeJobHistory_JobTitle" Association="DomainModels.FK_EmployeeJobHistory_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobTitleHistory_JobTitle" Association="DomainModels.FK_JobTitleHistory_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="JobTitleHistory" EntitySet="JobTitleHistories" />
-          </AssociationSet>
-          <EntitySet Name="Complaints" EntityType="DomainModels.Complaint" />
-          <AssociationSet Name="FK_Complaint_Department" Association="DomainModels.FK_Complaint_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
-          <EntitySet Name="Customers" EntityType="DomainModels.Customer" />
-          <EntitySet Name="Orders" EntityType="DomainModels.Order" />
-          <AssociationSet Name="FK_AspNetUsers_Customer" Association="DomainModels.FK_AspNetUsers_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Customer" Association="DomainModels.FK_Complaint_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Orders" Association="DomainModels.FK_Complaint_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Orders" Association="DomainModels.FK_Orders_Orders">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <EntitySet Name="CompanyBankDetails" EntityType="DomainModels.CompanyBankDetail" />
-          <EntitySet Name="CompanyProfiles" EntityType="DomainModels.CompanyProfile" />
-          <EntitySet Name="CompanySocialDetails" EntityType="DomainModels.CompanySocialDetail" />
-          <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="DomainModels.FK_CompanyBankDetails_CompanyProfile">
-            <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
-            <End Role="CompanyBankDetail" EntitySet="CompanyBankDetails" />
-          </AssociationSet>
-          <EntitySet Name="QuotationItemDetails" EntityType="DomainModels.QuotationItemDetail" />
-          <EntitySet Name="Quotations" EntityType="DomainModels.Quotation" />
-          <AssociationSet Name="FK_Quotation_Customer" Association="DomainModels.FK_Quotation_Customer">
+          <EntitySet Name="Quotations" EntityType="EPMSModel.Quotation" />
+          <AssociationSet Name="FK_Quotation_Customer" Association="EPMSModel.FK_Quotation_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Quotation" EntitySet="Quotations" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="DomainModels.FK_QuotationItemDetail_Quotation">
+          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="EPMSModel.FK_QuotationItemDetail_Quotation">
             <End Role="Quotation" EntitySet="Quotations" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="DomainModels.FK_CompanySocialDetails_CompanyProfile">
-            <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
-            <End Role="CompanySocialDetail" EntitySet="CompanySocialDetails" />
-          </AssociationSet>
-          <EntitySet Name="CompanyDocumentDetails" EntityType="DomainModels.CompanyDocumentDetail" />
-          <AssociationSet Name="FK_CompanyDocuments_CompanyProfile" Association="DomainModels.FK_CompanyDocuments_CompanyProfile">
-            <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
-            <End Role="CompanyDocumentDetail" EntitySet="CompanyDocumentDetails" />
-          </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="EmployeeJobHistory">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
-          <Property Name="JobTitleId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_EmployeeJobHistory_Employee" FromRole="EmployeeJobHistory" ToRole="Employee" />
-          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_EmployeeJobHistory_JobTitle" FromRole="EmployeeJobHistory" ToRole="JobTitle" />
-        </EntityType>
-        <EntityType Name="JobTitleHistory">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobTitleId" Type="Int64" Nullable="false" />
-          <Property Name="BasicSalary" Type="Double" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobTitleHistory_JobTitle" FromRole="JobTitleHistory" ToRole="JobTitle" />
-        </EntityType>
-        <Association Name="FK_EmployeeJobHistory_Employee">
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="DomainModels.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmployeeJobHistory">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeJobHistory_JobTitle">
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
-          <End Type="DomainModels.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="EmployeeJobHistory">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobTitleHistory_JobTitle">
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
-          <End Type="DomainModels.JobTitleHistory" Role="JobTitleHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="JobTitleHistory">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Complaint">
-          <Key>
-            <PropertyRef Name="ComplaintId" />
-          </Key>
-          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
-          <Property Name="OrderId" Type="Int64" Nullable="false" />
-          <Property Name="Topic" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Department" Relationship="DomainModels.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
-          <NavigationProperty Name="Order" Relationship="DomainModels.FK_Complaint_Orders" FromRole="Complaint" ToRole="Order" />
-        </EntityType>
-        <Association Name="FK_Complaint_Department">
-          <End Type="DomainModels.Department" Role="Department" Multiplicity="1" />
-          <End Type="DomainModels.Complaint" Role="Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerNameE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerNameA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUser" />
-          <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
-          <NavigationProperty Name="Orders" Relationship="DomainModels.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
-          <NavigationProperty Name="Quotations" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="OrderDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="Attachment" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="OrderStatus" Type="Int32" />
-          <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
-        </EntityType>
-        <Association Name="FK_AspNetUsers_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="AspNetUser">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Complaint" Role="Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Orders">
-          <End Type="DomainModels.Order" Role="Order" Multiplicity="1" />
-          <End Type="DomainModels.Complaint" Role="Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Orders">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="QuotationItemDetail">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="QuotationId" Type="Int64" Nullable="false" />
-          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQuantity" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
-          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Quotation" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
-        </EntityType>
+        </EntityContainer>
         <EntityType Name="Quotation">
           <Key>
             <PropertyRef Name="QuotationId" />
@@ -1792,14 +1606,14 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
-          <NavigationProperty Name="QuotationItemDetails" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
+          <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
         </EntityType>
         <Association Name="FK_Quotation_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Quotation" Role="Quotation" Multiplicity="*" />
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="CustomerId" />
@@ -1810,8 +1624,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_QuotationItemDetail_Quotation">
-          <End Type="DomainModels.Quotation" Role="Quotation" Multiplicity="1" />
-          <End Type="DomainModels.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
+          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="1" />
+          <End Type="EPMSModel.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Quotation">
               <PropertyRef Name="QuotationId" />
@@ -1821,176 +1635,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
-        <EntityType Name="CompanyBankDetail">
-          <Key>
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="Int64" Nullable="false" />
-          <Property Name="Bank1Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank1NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank1AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank1IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank1MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Bank2Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank2NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank2AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank2IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank2MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Bank3Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank3NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank3AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank3IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank3MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Bank4Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank4NameArabic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank4AccountNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank4IBANNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Bank4MobileNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyProfile" Relationship="DomainModels.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyBankDetail" ToRole="CompanyProfile" />
-        </EntityType>
-        <EntityType Name="CompanyProfile">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyNameE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyNameA" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyLogoPath" Type="String" MaxLength="400" FixedLength="true" Unicode="true" />
-          <Property Name="CompanyWebsite" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyAddressE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyAddressA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyLocation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompanyMobileNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyBankDetail" Relationship="DomainModels.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyBankDetail" />
-          <NavigationProperty Name="CompanySocialDetail" Relationship="DomainModels.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanySocialDetail" />
-          <NavigationProperty Name="CompanyDocumentDetail" Relationship="DomainModels.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyDocumentDetail" />
-        </EntityType>
-        <EntityType Name="CompanySocialDetail">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="Int64" Nullable="false" />
-          <Property Name="Twitter" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="TwitterUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TwitterPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Facebook" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="FacebookUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="FacebookPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Youtube" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="YoutubeUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="YoutubePassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LinkedIn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="LinkedInUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LinkedInPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GooglePlus" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="GooglePlusUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="GooglePlusPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Istegram" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IstegramUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IstegramPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Tumbler" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="TumblerUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TumblerPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Flickr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="FlickrUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="FlickrPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Pinterest" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="PinterestUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PinterestPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Social1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Social1UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Social1Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Social2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Social2UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Social2Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyProfile" Relationship="DomainModels.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanySocialDetail" ToRole="CompanyProfile" />
-        </EntityType>
-        <Association Name="FK_CompanyBankDetails_CompanyProfile">
-          <End Type="DomainModels.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
-          <End Type="DomainModels.CompanyBankDetail" Role="CompanyBankDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanyBankDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanySocialDetails_CompanyProfile">
-          <End Type="DomainModels.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
-          <End Type="DomainModels.CompanySocialDetail" Role="CompanySocialDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanySocialDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CompanyDocumentDetail">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
-          <Property Name="CompanyId" Type="Int64" Nullable="false" />
-          <Property Name="CommercialRegister" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CommercialRegisterIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="CommercialRegisterExpiryDate" Type="DateTime" Precision="0" />
-          <Property Name="InsuranceCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="InsuranceCertificateIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="InsuranceCertificateExpiryDate" Type="DateTime" Precision="0" />
-          <Property Name="ChamberCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ChamberCertificateIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="ChamberCertificateExpiryDate" Type="DateTime" Precision="0" />
-          <Property Name="IncomeAndZakaCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IncomeAndZakaCertificateIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="IncomeAndZakaCertificateExpiryDate" Type="DateTime" Precision="0" />
-          <Property Name="SaudilizationCertificate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SaudilizationCertificateIssueDate" Type="DateTime" Precision="0" />
-          <Property Name="SaudilizationCertificateExpiryDate" Type="DateTime" Precision="0" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyProfile" Relationship="DomainModels.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyDocumentDetail" ToRole="CompanyProfile" />
-        </EntityType>
-        <Association Name="FK_CompanyDocuments_CompanyProfile">
-          <End Type="DomainModels.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
-          <End Type="DomainModels.CompanyDocumentDetail" Role="CompanyDocumentDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanyDocumentDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="BaseDbContext">
+        <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Allowances">
-            <EntityTypeMapping TypeName="DomainModels.Allowance">
+            <EntityTypeMapping TypeName="EPMSModel.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
                 <ScalarProperty Name="AllowanceId" ColumnName="AllowanceId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -2014,7 +1666,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="DomainModels.AspNetRole">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2022,7 +1674,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="DomainModels.AspNetUserClaim">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -2032,7 +1684,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="DomainModels.AspNetUserLogin">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -2041,7 +1693,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="DomainModels.AspNetUser">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -2060,8 +1712,43 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="EPMSModel.Complaint">
+              <MappingFragment StoreEntitySet="Complaint">
+                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Reply" ColumnName="Reply" />
+                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="EPMSModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
+                <ScalarProperty Name="CustomerNameA" ColumnName="CustomerNameA" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="CustomerMobile" ColumnName="CustomerMobile" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="DomainModels.Department">
+            <EntityTypeMapping TypeName="EPMSModel.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="DepartmentNameE" ColumnName="DepartmentNameE" />
@@ -2075,7 +1762,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="DomainModels.Employee">
+            <EntityTypeMapping TypeName="EPMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="EmployeeNameE" ColumnName="EmployeeNameE" />
@@ -2103,8 +1790,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeJobHistories">
+            <EntityTypeMapping TypeName="EPMSModel.EmployeeJobHistory">
+              <MappingFragment StoreEntitySet="EmployeeJobHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRequests">
-            <EntityTypeMapping TypeName="DomainModels.EmployeeRequest">
+            <EntityTypeMapping TypeName="EPMSModel.EmployeeRequest">
               <MappingFragment StoreEntitySet="EmployeeRequests">
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -2119,7 +1817,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobApplicants">
-            <EntityTypeMapping TypeName="DomainModels.JobApplicant">
+            <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicants">
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
@@ -2140,7 +1838,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobOffereds">
-            <EntityTypeMapping TypeName="DomainModels.JobOffered">
+            <EntityTypeMapping TypeName="EPMSModel.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
                 <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
@@ -2159,7 +1857,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitles">
-            <EntityTypeMapping TypeName="DomainModels.JobTitle">
+            <EntityTypeMapping TypeName="EPMSModel.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
                 <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
                 <ScalarProperty Name="JobTitleNameE" ColumnName="JobTitleNameE" />
@@ -2175,10 +1873,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="JobTitleHistories">
+            <EntityTypeMapping TypeName="EPMSModel.JobTitleHistory">
+              <MappingFragment StoreEntitySet="JobTitleHistory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="DomainModels.Menu">
+            <EntityTypeMapping TypeName="EPMSModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="MenuItemClass" ColumnName="MenuItemClass" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
                 <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
@@ -2190,11 +1898,12 @@
                 <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
                 <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
                 <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
+                <ScalarProperty Name="MenuItemClass" ColumnName="MenuItemClass" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
-            <EntityTypeMapping TypeName="DomainModels.MenuRight">
+            <EntityTypeMapping TypeName="EPMSModel.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
                 <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
                 <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
@@ -2203,7 +1912,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="DomainModels.Notification">
+            <EntityTypeMapping TypeName="EPMSModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="NotificationName" ColumnName="NotificationName" />
@@ -2217,8 +1926,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="EPMSModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="OrderDescription" ColumnName="OrderDescription" />
+                <ScalarProperty Name="OrderNotes" ColumnName="OrderNotes" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuotationItemDetails">
+            <EntityTypeMapping TypeName="EPMSModel.QuotationItemDetail">
+              <MappingFragment StoreEntitySet="QuotationItemDetail">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RequestDetails">
-            <EntityTypeMapping TypeName="DomainModels.RequestDetail">
+            <EntityTypeMapping TypeName="EPMSModel.RequestDetail">
               <MappingFragment StoreEntitySet="RequestDetails">
                 <ScalarProperty Name="RequestDetailId" ColumnName="RequestDetailId" />
                 <ScalarProperty Name="RequestId" ColumnName="RequestId" />
@@ -2240,7 +1983,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EPMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
@@ -2248,210 +1991,31 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="EmployeeJobHistories">
-            <EntityTypeMapping TypeName="DomainModels.EmployeeJobHistory">
-              <MappingFragment StoreEntitySet="EmployeeJobHistory">
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobTitleHistories">
-            <EntityTypeMapping TypeName="DomainModels.JobTitleHistory">
-              <MappingFragment StoreEntitySet="JobTitleHistory">
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Complaints">
-            <EntityTypeMapping TypeName="DomainModels.Complaint">
-              <MappingFragment StoreEntitySet="Complaint">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
-                <ScalarProperty Name="Reply" ColumnName="Reply" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Topic" ColumnName="Topic" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+          <EntitySetMapping Name="Quotations">
+            <EntityTypeMapping TypeName="EPMSModel.Quotation">
+              <MappingFragment StoreEntitySet="Quotation">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="DomainModels.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="CustomerMobile" ColumnName="CustomerMobile" />
-                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
-                <ScalarProperty Name="CustomerNameA" ColumnName="CustomerNameA" />
-                <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="DomainModels.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="OrderNotes" ColumnName="OrderNotes" />
-                <ScalarProperty Name="OrderDescription" ColumnName="OrderDescription" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="QuotationItemDetails">
-            <EntityTypeMapping TypeName="DomainModels.QuotationItemDetail">
-              <MappingFragment StoreEntitySet="QuotationItemDetail">
                 <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
                 <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
-                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
+                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
+                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
+                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
+                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
+                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
+                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
+                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
+                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
+                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
+                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
+                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
+                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
                 <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="Bank4MobileNumber" ColumnName="Bank4MobileNumber" />
-                <ScalarProperty Name="Bank4IBANNumber" ColumnName="Bank4IBANNumber" />
-                <ScalarProperty Name="Bank4AccountNumber" ColumnName="Bank4AccountNumber" />
-                <ScalarProperty Name="Bank4NameArabic" ColumnName="Bank4NameArabic" />
-                <ScalarProperty Name="Bank4Name" ColumnName="Bank4Name" />
-                <ScalarProperty Name="Bank3MobileNumber" ColumnName="Bank3MobileNumber" />
-                <ScalarProperty Name="Bank3IBANNumber" ColumnName="Bank3IBANNumber" />
-                <ScalarProperty Name="Bank3AccountNumber" ColumnName="Bank3AccountNumber" />
-                <ScalarProperty Name="Bank3NameArabic" ColumnName="Bank3NameArabic" />
-                <ScalarProperty Name="Bank3Name" ColumnName="Bank3Name" />
-                <ScalarProperty Name="Bank2MobileNumber" ColumnName="Bank2MobileNumber" />
-                <ScalarProperty Name="Bank2IBANNumber" ColumnName="Bank2IBANNumber" />
-                <ScalarProperty Name="Bank2AccountNumber" ColumnName="Bank2AccountNumber" />
-                <ScalarProperty Name="Bank2NameArabic" ColumnName="Bank2NameArabic" />
-                <ScalarProperty Name="Bank2Name" ColumnName="Bank2Name" />
-                <ScalarProperty Name="Bank1MobileNumber" ColumnName="Bank1MobileNumber" />
-                <ScalarProperty Name="Bank1IBANNumber" ColumnName="Bank1IBANNumber" />
-                <ScalarProperty Name="Bank1AccountNumber" ColumnName="Bank1AccountNumber" />
-                <ScalarProperty Name="Bank1NameArabic" ColumnName="Bank1NameArabic" />
-                <ScalarProperty Name="Bank1Name" ColumnName="Bank1Name" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompanyProfiles">
-            <EntityTypeMapping TypeName="DomainModels.CompanyProfile">
-              <MappingFragment StoreEntitySet="CompanyProfile">
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="CompanyMobileNumber" ColumnName="CompanyMobileNumber" />
-                <ScalarProperty Name="CompanyNumber" ColumnName="CompanyNumber" />
-                <ScalarProperty Name="CompanyLocation" ColumnName="CompanyLocation" />
-                <ScalarProperty Name="CompanyAddressA" ColumnName="CompanyAddressA" />
-                <ScalarProperty Name="CompanyAddressE" ColumnName="CompanyAddressE" />
-                <ScalarProperty Name="CompanyEmail" ColumnName="CompanyEmail" />
-                <ScalarProperty Name="CompanyWebsite" ColumnName="CompanyWebsite" />
-                <ScalarProperty Name="CompanyLogoPath" ColumnName="CompanyLogoPath" />
-                <ScalarProperty Name="CompanyNameA" ColumnName="CompanyNameA" />
-                <ScalarProperty Name="CompanyNameE" ColumnName="CompanyNameE" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompanySocialDetails">
-            <EntityTypeMapping TypeName="DomainModels.CompanySocialDetail">
-              <MappingFragment StoreEntitySet="CompanySocialDetails">
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="Social2Password" ColumnName="Social2Password" />
-                <ScalarProperty Name="Social2UserName" ColumnName="Social2UserName" />
-                <ScalarProperty Name="Social2" ColumnName="Social2" />
-                <ScalarProperty Name="Social1Password" ColumnName="Social1Password" />
-                <ScalarProperty Name="Social1UserName" ColumnName="Social1UserName" />
-                <ScalarProperty Name="Social1" ColumnName="Social1" />
-                <ScalarProperty Name="PinterestPassword" ColumnName="PinterestPassword" />
-                <ScalarProperty Name="PinterestUserName" ColumnName="PinterestUserName" />
-                <ScalarProperty Name="Pinterest" ColumnName="Pinterest" />
-                <ScalarProperty Name="FlickrPassword" ColumnName="FlickrPassword" />
-                <ScalarProperty Name="FlickrUserName" ColumnName="FlickrUserName" />
-                <ScalarProperty Name="Flickr" ColumnName="Flickr" />
-                <ScalarProperty Name="TumblerPassword" ColumnName="TumblerPassword" />
-                <ScalarProperty Name="TumblerUserName" ColumnName="TumblerUserName" />
-                <ScalarProperty Name="Tumbler" ColumnName="Tumbler" />
-                <ScalarProperty Name="IstegramPassword" ColumnName="IstegramPassword" />
-                <ScalarProperty Name="IstegramUserName" ColumnName="IstegramUserName" />
-                <ScalarProperty Name="Istegram" ColumnName="Istegram" />
-                <ScalarProperty Name="GooglePlusPassword" ColumnName="GooglePlusPassword" />
-                <ScalarProperty Name="GooglePlusUserName" ColumnName="GooglePlusUserName" />
-                <ScalarProperty Name="GooglePlus" ColumnName="GooglePlus" />
-                <ScalarProperty Name="LinkedInPassword" ColumnName="LinkedInPassword" />
-                <ScalarProperty Name="LinkedInUserName" ColumnName="LinkedInUserName" />
-                <ScalarProperty Name="LinkedIn" ColumnName="LinkedIn" />
-                <ScalarProperty Name="YoutubePassword" ColumnName="YoutubePassword" />
-                <ScalarProperty Name="YoutubeUserName" ColumnName="YoutubeUserName" />
-                <ScalarProperty Name="Youtube" ColumnName="Youtube" />
-                <ScalarProperty Name="FacebookPassword" ColumnName="FacebookPassword" />
-                <ScalarProperty Name="FacebookUserName" ColumnName="FacebookUserName" />
-                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
-                <ScalarProperty Name="TwitterPassword" ColumnName="TwitterPassword" />
-                <ScalarProperty Name="TwitterUserName" ColumnName="TwitterUserName" />
-                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CompanyDocumentDetails">
-            <EntityTypeMapping TypeName="DomainModels.CompanyDocumentDetail">
-              <MappingFragment StoreEntitySet="CompanyDocumentDetails">
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="SaudilizationCertificateExpiryDate" ColumnName="SaudilizationCertificateExpiryDate" />
-                <ScalarProperty Name="SaudilizationCertificateIssueDate" ColumnName="SaudilizationCertificateIssueDate" />
-                <ScalarProperty Name="SaudilizationCertificate" ColumnName="SaudilizationCertificate" />
-                <ScalarProperty Name="IncomeAndZakaCertificateExpiryDate" ColumnName="IncomeAndZakaCertificateExpiryDate" />
-                <ScalarProperty Name="IncomeAndZakaCertificateIssueDate" ColumnName="IncomeAndZakaCertificateIssueDate" />
-                <ScalarProperty Name="IncomeAndZakaCertificate" ColumnName="IncomeAndZakaCertificate" />
-                <ScalarProperty Name="ChamberCertificateExpiryDate" ColumnName="ChamberCertificateExpiryDate" />
-                <ScalarProperty Name="ChamberCertificateIssueDate" ColumnName="ChamberCertificateIssueDate" />
-                <ScalarProperty Name="ChamberCertificate" ColumnName="ChamberCertificate" />
-                <ScalarProperty Name="InsuranceCertificateExpiryDate" ColumnName="InsuranceCertificateExpiryDate" />
-                <ScalarProperty Name="InsuranceCertificateIssueDate" ColumnName="InsuranceCertificateIssueDate" />
-                <ScalarProperty Name="InsuranceCertificate" ColumnName="InsuranceCertificate" />
-                <ScalarProperty Name="CommercialRegisterExpiryDate" ColumnName="CommercialRegisterExpiryDate" />
-                <ScalarProperty Name="CommercialRegisterIssueDate" ColumnName="CommercialRegisterIssueDate" />
-                <ScalarProperty Name="CommercialRegister" ColumnName="CommercialRegister" />
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2476,64 +2040,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams>
-      <Diagram DiagramId="8420df825e6d46b39cfcfe4a2b15b02c" Name="Diagram1" ZoomLevel="72">
-        <EntityTypeShape EntityType="DomainModels.Allowance" Width="1.5" PointX="11.375" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.AspNetRole" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.AspNetUserClaim" Width="1.5" PointX="13.625" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.AspNetUser" Width="1.5" PointX="11.375" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.Department" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.Employee" Width="1.5" PointX="9.125" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.EmployeeRequest" Width="1.5" PointX="7.5" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.JobApplicant" Width="1.5" PointX="7.5" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.JobOffered" Width="1.5" PointX="5.25" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.JobTitle" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.Menu" Width="1.5" PointX="8.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.MenuRight" Width="1.5" PointX="14.375" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.Notification" Width="1.5" PointX="7.5" PointY="22.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.RequestDetail" Width="1.5" PointX="9.75" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.EmployeeJobHistory" Width="1.5" PointX="14.375" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.JobTitleHistory" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
-        <AssociationConnector Association="DomainModels.FK_Allowance_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_AspNetUsers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_JobTitle_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_Employee_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_Notification_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_JobOffered_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="DomainModels.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DomainModels.Complaint" Width="1.5" PointX="6.875" PointY="9.125" />
-        <AssociationConnector Association="DomainModels.FK_Complaint_Department" />
-        <EntityTypeShape EntityType="DomainModels.Customer" Width="1.5" PointX="4.625" PointY="9.75" />
-        <EntityTypeShape EntityType="DomainModels.Order" Width="1.5" PointX="6.875" PointY="4.5" />
-        <AssociationConnector Association="DomainModels.FK_AspNetUsers_Customer" />
-        <AssociationConnector Association="DomainModels.FK_Complaint_Customer" />
-        <AssociationConnector Association="DomainModels.FK_Complaint_Orders" />
-        <AssociationConnector Association="DomainModels.FK_Orders_Orders" />
-        <EntityTypeShape EntityType="DomainModels.CompanyBankDetail" Width="1.5" PointX="15.625" PointY="1.875" />
-        <EntityTypeShape EntityType="DomainModels.CompanyProfile" Width="1.5" PointX="13.375" PointY="10.125" />
-        <EntityTypeShape EntityType="DomainModels.CompanySocialDetail" Width="1.5" PointX="15.625" PointY="8.625" />
-        <AssociationConnector Association="DomainModels.FK_CompanyBankDetails_CompanyProfile" />
-        <EntityTypeShape EntityType="DomainModels.Quotation" Width="1.5" PointX="1.25" PointY="1.875" />
-        <EntityTypeShape EntityType="DomainModels.QuotationItemDetail" Width="1.5" PointX="3.5" PointY="3.125" />
-        <EntityTypeShape EntityType="DomainModels.Quotation" Width="1.5" PointX="0.875" PointY="3.625" />
-        <AssociationConnector Association="DomainModels.FK_Quotation_Customer" />
-        <AssociationConnector Association="DomainModels.FK_QuotationItemDetail_Quotation" />
-        <AssociationConnector Association="DomainModels.FK_CompanySocialDetails_CompanyProfile" />
-        <EntityTypeShape EntityType="DomainModels.CompanyDocumentDetail" Width="1.5" PointX="15.625" PointY="18.875" />
-        <AssociationConnector Association="DomainModels.FK_CompanyDocuments_CompanyProfile" />
-        </Diagram>
-    </Diagrams>
+    <Diagrams></Diagrams>
   </Designer>
 </edmx:Edmx>

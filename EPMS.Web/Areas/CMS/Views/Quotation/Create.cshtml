@@ -69,7 +69,7 @@
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.OrderNumber, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderNo" })
+                        @Html.DropDownListFor(m => m.OrderNumber, new SelectList(ViewBag.Orders, "OrderNo", "OrderNo"), "", new { @id = "OrderNo" })
                     }
                     @Html.ValidationMessageFor(m => m.OrderNumber, String.Empty, new { @class = "required" })
                 </div>
@@ -412,6 +412,7 @@
             var coln = $(excel).find("tr:first td").length;
             var count = 0;
             var x = 0;
+            itemsDetailCount = 0;
             if (coln == 3) {
                 $(excel).find("tr").each(function () {
                     var y = 0;

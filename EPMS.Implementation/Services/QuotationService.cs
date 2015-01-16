@@ -40,7 +40,16 @@ namespace EPMS.Implementation.Services
 
         public bool UpdateQuotation(Quotation quotation)
         {
-            return true;
+            try
+            {
+                Repository.Update(quotation);
+                Repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void DeleteQuotation(Quotation quotation)

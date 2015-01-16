@@ -248,6 +248,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Controllers\ContactListController.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\HR\Controllers\JobApplicantController.cs" />
@@ -393,7 +394,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Profile.ar.resx</DependentUpon>
     </Compile>
-     <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
+    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Dashboard.resx</DependentUpon>
@@ -2921,7 +2922,6 @@
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
-    <Folder Include="Areas\CP\Controllers\" />
     <Folder Include="Areas\CP\Models\" />
     <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />

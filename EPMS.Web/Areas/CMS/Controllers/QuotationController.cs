@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Implementation.Services;
@@ -88,24 +89,69 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(QuotationCreateViewModel model)
+        public ActionResult Create(QuotationCreateViewModel viewModel)
         {
             // Update case
-            if (model.QuotationId > 0)
+            if (viewModel.QuotationId > 0)
             {
-                return RedirectToAction("Index");
+                viewModel.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecUpdatedDt = DateTime.Now;
+                var quotationToUpdate = viewModel.CreateFromClientToServer();
+                if (QuotationService.UpdateQuotation(quotationToUpdate))
+                {
+                    List<bool> isUpdated = new List<bool>();
+                    List<bool> isAdded = new List<bool>();
+                    foreach (var itemDetail in viewModel.QuotationItemDetails)
+                    {
+                        if (itemDetail.ItemId > 0)
+                        {
+                            // Update item details
+                            itemDetail.RecUpdatedBy = User.Identity.GetUserId();
+                            itemDetail.RecUpdatedDt = DateTime.Now;
+                            var itemDetailToUpdate = itemDetail.CreateFromClientToServer();
+                            isUpdated.Add(QuotationItemService.UpdateQuotationItem(itemDetailToUpdate));
+                        }
+                        else
+                        {
+                            // Add item details
+                            itemDetail.QuotationId = viewModel.QuotationId;
+                            itemDetail.RecCreatedBy = User.Identity.GetUserId();
+                            itemDetail.RecCreatedDt = DateTime.Now;
+                            var itemDetailToAdd = itemDetail.CreateFromClientToServer();
+                            isAdded.Add(QuotationItemService.AddQuotationItem(itemDetailToAdd));
+                        }
+                    }
+                    if (isUpdated.Count + isAdded.Count == viewModel.QuotationItemDetails.Count)
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.CMS.Quotation.UpdateMessage,
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Quotation.UpdateMessage,
+                        IsUpdated = true
+                    };
+                    return View(viewModel);
+                }
             }
             // Add case
             // Save Quotation
-            model.RecCreatedBy = User.Identity.GetUserId();
-            model.RecCreatedDt = DateTime.Now;
-            var quotationToAdd = model.CreateFromClientToServer();
+            viewModel.RecCreatedBy = User.Identity.GetUserId();
+            viewModel.RecCreatedDt = DateTime.Now;
+            var quotationToAdd = viewModel.CreateFromClientToServer();
             var quotaionId = QuotationService.AddQuotation(quotationToAdd);
-            var addStatus = false;
+            bool addStatus = false;
             if (quotaionId > 0)
             {
                 //Save Item Details
-                foreach (var itemDetail in model.QuotationItemDetails)
+                foreach (var itemDetail in viewModel.QuotationItemDetails)
                 {
                     itemDetail.QuotationId = quotaionId;
                     itemDetail.RecCreatedBy = User.Identity.GetUserId();
@@ -127,9 +173,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
             TempData["message"] = new MessageViewModel
             {
                 Message = Resources.CMS.Quotation.ErrorMessage,
-                IsSaved = true
+                IsError = true
             };
-            return View(model);
+            return View(viewModel);
         }
 
         [HttpGet]

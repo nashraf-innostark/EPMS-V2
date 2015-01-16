@@ -87,12 +87,11 @@ namespace EPMS.Web.ModelMappers
                 ItemDetails = source.ItemDetails,
                 ItemQuantity = source.ItemQuantity,
                 UnitPrice = source.UnitPrice,
-                TotalPrice = source.UnitPrice,
+                TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDt = source.RecUpdatedDt,
-
             };
             return caseType;
         }

@@ -28,7 +28,7 @@ namespace EPMS.Web.Models
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecUpdatedDt { get; set; }
-        public DateTime? RecUpdatedBy { get; set; }
+        public string RecUpdatedBy { get; set; }
         [Required(ErrorMessage = "Client Name is required.")]
         public long CustomerId { get; set; }
         public string CreatedByName { get; set; }

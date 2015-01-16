@@ -72,8 +72,8 @@
     <Compile Include="IServices\ILogger.cs" />
     <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
-    <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
+    <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />

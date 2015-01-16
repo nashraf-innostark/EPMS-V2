@@ -169,8 +169,8 @@
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
-    <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
+    <Compile Include="ResponseModels\QuotationResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
