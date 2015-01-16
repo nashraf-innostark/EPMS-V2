@@ -1,4 +1,4 @@
-﻿@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
+﻿@model EPMS.Web.ViewModels.Quotation.QuotationListViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.PTIndex;
@@ -15,9 +15,7 @@
             </a>
         </li>
         <li>
-            <a href="">
-                @EPMS.Web.Resources.CMS.Quotation.QuotList
-            </a>
+            @EPMS.Web.Resources.CMS.Quotation.QuotList
         </li>
     </ul>
 </div>
@@ -34,7 +32,7 @@
 <!-- Page heading ends -->
 
 <form class="form-horizontal">
-    @*@Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" });*@
+    @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" });
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
@@ -46,9 +44,7 @@
                             <th>@EPMS.Web.Resources.CMS.Quotation.ClientName</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -57,76 +53,69 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#QuotationTable').dataTable({
+        var url = "/CMS/Quotation/Index";
+        var oTable = $('#QuotationTable').dataTable({
             "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": url,
+            "sServerMethod": "POST",
             "aoColumns": [
-                { "bVisible": false },
-                  null,
-                  null
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["QuotationId"];
+                    },
+                    "bVisible": false,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var element;
+                        var val = full["QuotationId"];
+                        var quoId = full["QuotationId"];
+                        element = '<a href="Create/' + quoId + '">' + "Quotation " + val + '</a>';
+                        return element;
+                    },
+                    "bSortable": true
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ClientName"];
+                    },
+                    "bSortable": true
+                }
             ],
-            "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
-                });
-            }
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
+            "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            },
         });
-        //var oTable = $('#QuotationTable').dataTable({
-        //    "sPaginationType": "bootstrap",
-        //    "bProcessing": true,
-        //    "bServerSide": true,
-        //    "sAjaxSource": siteUrl + "/Quotation/Index",
-        //    "sServerMethod": "POST",
-        //    "aoColumns": [
-        //        {
-        //            "aTargets": [0],
-        //            "sDefaultContent": "No Data",
-        //            "mRender": function (data, type, full) {
-        //                return full["OrderId"];
-        //            },
-        //            "bVisible": false,
-        //            "bSortable": false
-        //        },
-        //        {
-        //            "aTargets": [1],
-        //            "sDefaultContent": "No Data",
-        //            "mRender": function (data, type, full) {
-                        
-        //            },
-        //            "bSortable": true
-        //        },
-        //        {
-        //            "aTargets": [2],
-        //            "sDefaultContent": "No Data",
-        //            "mRender": function (data, type, full) {
-                        
-        //            }
-        //        }
-        //    ],
-        //    "fnServerParams": function (aoData) {
-        //        aoData.push({ "name": "search", "value": $('input').val() });
-        //    },
-        //    "oLanguage": {
-        //        "sProcessing": "Fetching record(s)",
-        //        //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
-        //        "sInfoEmpty": "No matching record(s) found",
-        //        "sEmptyTable": "No record(s) found",
-        //    },
-        //});
-        //$(".dataTables_length select").select2({
-        //    dropdownCssClass: 'noSearch'
-        //});
-        //$(".dataTables_filter input").unbind()
-        //    .bind("input", function (e) {
-        //        // Bind our desired behavior
-        //        if (this.value.length >= 3 || e.keyCode == 13) {
-        //            $("#searchString").val(this.value);
-        //            oTable.fnDraw();
-        //        }
-        //        if (this.value == "") {
-        //            $("#searchString").val(this.value);
-        //            oTable.fnDraw();
-        //        }
-        //        return;
-        //    });
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
     });
 </script>

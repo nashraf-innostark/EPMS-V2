@@ -14,6 +14,7 @@ namespace EPMS.Web.ViewModels.Employee
             SearchRequest = new EmployeeSearchRequset();
         }
         public Models.Employee Employee { get; set; }
+        public IEnumerable<Models.Employee> EmployeeList { get; set; }
         public Models.Allowance Allowance { get; set; }
         public Models.Allowance OldAllowance { get; set; }
 

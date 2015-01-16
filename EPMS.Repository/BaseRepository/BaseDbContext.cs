@@ -88,5 +88,11 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<Complaint> Complaint { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Quotation> Quotations { get; set; }
+        public DbSet<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public DbSet<CompanyProfile> Profile { get; set; }
+        public DbSet<CompanyBankDetail> Bank { get; set; }
+        public DbSet<CompanySocialDetail> Social { get; set; }
+        public DbSet<CompanyDocumentDetail> Document { get; set; }
     }
 }

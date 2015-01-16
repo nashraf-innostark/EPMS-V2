@@ -1,0 +1,1102 @@
+﻿@model EPMS.Web.ViewModels.CompanyProfile.CompanyProfileViewModel
+
+@{
+    ViewBag.Title = @EPMS.Web.Resources.CP.Profile.CompanyProfile;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@EPMS.Web.Resources.CP.Profile.CompanyProfile</a>
+        </li>
+    </ul>
+</div>
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+    @if (ViewBag.LogoPat != null)
+    {
+        <img class="employeeImg" src='@Url.Content(ViewBag.LogoPath)' alt="user" />
+    }
+    else
+    {
+        <img class="employeeImg" alt="Logo" />
+    }
+</header>
+
+
+
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <!--Company Logo-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">
+                    @EPMS.Web.Resources.CP.Profile.CompanyLogo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+        </div>
+        <!--Tabs-->
+        <div class="control-group row-fluid">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a data-toggle="tab" href="#tab-1">@EPMS.Web.Resources.CP.Profile.CompanyInformation</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-2">@EPMS.Web.Resources.CP.Profile.CompanyDocuments</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-3">@EPMS.Web.Resources.CP.Profile.LicenseInformation</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-4">@EPMS.Web.Resources.CP.Profile.BankInformation</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-5">@EPMS.Web.Resources.CP.Profile.SocialMedia</a></li>
+            </ul>
+            <div class="tab-content">
+                <!--Company Information-->
+                <div id="tab-1" class="tab-pane fade active in">
+                    @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "ProfileForm", @class = "form-horizontal", role = "form" }))
+                {
+                        @Html.HiddenFor(m => m.CompanyProfile.CompanyId)
+                        @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
+                        @Html.HiddenFor(model => model.CompanyProfile.CompanyLogoPath, new { @id = "CompanyLogoPath" })
+
+                        <!--Input Field begin-->
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Name</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyNameE, new { id = "CompanyNameE" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.NameAr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyNameA, new { id = "CompanyNameA" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Website</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyWebsite, new { id = "CompanyWebsite" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Mail</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyEmail, new { id = "CompanyEmail" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Address</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyAddressE, new { id = "CompanyAddressE" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AddressAr</label>
+    </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyAddressA, new { id = "CompanyAddressA" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Location</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyLocation, new { id = "CompanyLocation" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Number</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyNumber, new { id = "CompanyNumber" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Mobile</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyProfile.CompanyMobileNumber, new { id = "CompanyMobileNumber" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button id="savebtn" class="btn" type="submit" onclick="SetTabId(1)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                            </div>
+
+                        </div>
+                }
+                </div>
+
+                <!--Company Documents-->
+                <div id="tab-2" class="tab-pane fade">
+                    @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "DocumentForm", @class = "form-horizontal", role = "form" }))
+                {
+                        @Html.HiddenFor(m => m.CompanyDocuments.CompanyId, new { @class = "CompanyId" })
+                        @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
+
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.CommercialRegister</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyDocuments.CommercialRegister, new { @id = "CommercialRegister", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterIssueDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDate", onchange = "GregorianToHijri(this,'#CommercialRegisterIssueDateAr')", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterExpiryDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDate", onchange = "GregorianToHijri(this, CommercialRegisterExpiryDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.InsuranceCertificate</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyDocuments.InsuranceCertificate, new { id = "InsuranceCertificate", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateIssueDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDate", onchange = "GregorianToHijri(this, InsuranceCertificateIssueDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDate", onchange = "GregorianToHijri(this, InsuranceCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.ChamberCertificate</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyDocuments.ChamberCertificate, new { id = "ChamberCertificate", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateIssueDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDate", onchange = "GregorianToHijri(this, ChamberCertificateIssueDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateExpiryDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDate", onchange = "GregorianToHijri(this, ChamberCertificateExpiryDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IncomeCertificate</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyDocuments.IncomeAndZakaCertificate, new { id = "IncomeAndZakaCertificate", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateIssueDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateIssueDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateExpiryDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateExpiryDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.SaudilizationCertificate</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyDocuments.SaudilizationCertificate, new { id = "SaudilizationCertificate", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateIssueDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDate", onchange = "GregorianToHijri(this, SaudilizationCertificateIssueDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Date_Picker" class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">
+                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                </label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateExpiryDate')", @readonly = "readonly" })
+                                </div>
+                                <div class="controls span4">
+                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDate", onchange = "GregorianToHijri(this, SaudilizationCertificateExpiryDateAr)", @readonly = "readonly" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(2)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                            </div>
+                        </div>
+                }
+                </div>
+
+                <!--License Information-->
+                <div id="tab-3" class="tab-pane fade">
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="pnumber">@EPMS.Web.Resources.CP.Profile.ProductNo</label>
+   </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input id="pnumber" type="text" name="inputField" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="unumber">@EPMS.Web.Resources.CP.Profile.NoOfUsers</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input id="unumber" type="text" name="inputField" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="lnumber">@EPMS.Web.Resources.CP.Profile.LicenseNo</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input id="lnumber" type="text" name="inputField" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="snumberl">@EPMS.Web.Resources.CP.Profile.StartDate</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input id="snumberl" type="text" name="inputField" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="enumberl">@EPMS.Web.Resources.CP.Profile.ExpiryDate</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input id="enumberl" type="text" name="inputField" disabled />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="help">@EPMS.Web.Resources.CP.Profile.HelpUrl</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input id="help" type="text" name="inputField" disabled />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--Bank Information-->
+                <div id="tab-4" class="tab-pane fade">
+                    @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "BankForm", @class = "form-horizontal", role = "form" }))
+                {
+                        @Html.HiddenFor(m => m.CompanyBank.CompanyId, new { @class = "CompanyId" })
+                        @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1Name, new { id = "Bank1Name", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1NameArabic, new { id = "Bank1NameArabic", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1AccountNumber, new { id = "Bank1AccountNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1IBANNumber, new { id = "Bank1IBANNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1MobileNumber, new { id = "Bank1MobileNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2Name, new { id = "Bank2Name", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2NameArabic, new { id = "Bank2NameArabic", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2AccountNumber, new { id = "Bank2AccountNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2IBANNumber, new { id = "Bank2IBANNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2MobileNumber, new { id = "Bank2MobileNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+     </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3Name, new { id = "Bank3Name", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3NameArabic, new { id = "Bank3NameArabic", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3AccountNumber, new { id = "Bank3AccountNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3IBANNumber, new { id = "Bank3IBANNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3MobileNumber, new { id = "Bank3MobileNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4Name, new { id = "Bank4Name", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4NameArabic, new { id = "Bank4NameArabic", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+ </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4AccountNumber, new { id = "Bank4AccountNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4IBANNumber, new { id = "Bank4IBANNumber", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+    <div class="control-group row-fluid">
+        <div class="span3">
+            <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+        </div>
+        <div class="span9">
+            <div class="controls">
+                @Html.TextBoxFor(m => m.CompanyBank.Bank4MobileNumber, new { id = "Bank4MobileNumber", @class = "tbdisable" })
+            </div>
+        </div>
+    </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick=" SetTabId(4) ">Save</button>
+                            </div>
+                        </div>
+                }
+                </div>
+
+                <!--Social Media-->
+                <div id="tab-5" class="tab-pane fade">
+                    @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "SocialForm", @class = "form-horizontal", role = "form" }))
+                {
+                        @Html.HiddenFor(m => m.CompanyProfile)
+                        @Html.HiddenFor(m => m.CompanySocial.CompanyId, new { @class = "CompanyId" })
+                        @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Twitter</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Twitter, new { id = "Twitter", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.TwitterUserName, new { id = "TwitterUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.TwitterPassword, new { id = "TwitterPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Facebook</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Facebook, new { id = "Facebook", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.FacebookUserName, new { id = "TwitterUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+       </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.FacebookPassword, new { id = "FacebookPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Youtube</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Youtube, new { id = "Youtube", @class = "tbdisable" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.YoutubeUserName, new { id = "YoutubeUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.YoutubePassword, new { id = "YoutubePassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.LinkedIn</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.LinkedIn, new { id = "LinkedIn", @class = "tbdisable" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+      </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.LinkedInUserName, new { id = "LinkedInUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.LinkedInPassword, new { id = "LinkedInPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.GooglePlus</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.GooglePlus, new { id = "GooglePlus", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.GooglePlusUserName, new { id = "GooglePlusUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.GooglePlusPassword, new { id = "GooglePlusPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Instagram</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Istegram, new { id = "Istegram", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.IstegramUserName, new { id = "IstegramUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.IstegramPassword, new { id = "IstegramPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Tumblr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Tumbler, new { id = "Tumbler", @class = "tbdisable" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.TumblerUserName, new { id = "TumblerUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+       </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.TumblerPassword, new { id = "TumblerPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Flickr</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Flickr, new { id = "Flickr", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.FlickrUserName, new { id = "FlickrUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.FlickrPassword, new { id = "FlickrPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Pinterest</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Pinterest, new { id = "Pinterest", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.PinterestUserName, new { id = "PinterestUserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.PinterestPassword, new { id = "PinterestPassword", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Social1</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Social1, new { id = "Social1", @class = "tbdisable" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Social1UserName, new { id = "Social1UserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.Social1Password, new { id = "Social1Password", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Social2</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Social2, new { id = "Social2", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanySocial.Social2UserName, new { id = "Social2UserName", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.PasswordFor(m => m.CompanySocial.Social2Password, new { id = "Social2Password", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3 span-inset">
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(5)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                            </div>
+                        </div>
+                }
+                </div>
+
+            </div>
+        </div>
+        <!--Tabs Content-->
+    </div>
+</div>
+
+
+<script>
+    $().ready(function () {
+        var companyId = $('#CompanyProfile_CompanyId').val();
+        if (companyId == 0) {
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $(".saveButton").hide();
+        }
+
+        var url = "/CP/CompanyProfile/UploadLogo";
+        var errors = "";
+        $('#upload').mfupload({
+            type: 'jpg,png,tif,jpeg', // type: '', for all types
+            maxsize: 1, //file size in MBs
+            post_upload: url,
+            folder: "./",
+            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                $('#CompanyLogoPath').val(result.filename);
+            },
+
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+    });
+
+    function SetTabId(id) {
+        $('.TabId').val(id);
+        $('.CompanyId').val('@ViewBag.CompanyId');
+    };
+    
+</script>

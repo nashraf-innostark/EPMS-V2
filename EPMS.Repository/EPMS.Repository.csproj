@@ -130,6 +130,10 @@
     <Compile Include="Repositories\AllowanceRepository.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
+    <Compile Include="Repositories\CompanyBankRepository.cs" />
+    <Compile Include="Repositories\CompanyDocumentRepository.cs" />
+    <Compile Include="Repositories\CompanyProfileRepository.cs" />
+    <Compile Include="Repositories\CompanySocialRepository.cs" />
     <Compile Include="Repositories\ComplaintRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
@@ -145,6 +149,8 @@
     <Compile Include="Repositories\MenuRightRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
+    <Compile Include="Repositories\QuotationItemRepository.cs" />
+    <Compile Include="Repositories\QuotationRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />
     <Compile Include="TypeRegistrations.cs" />
@@ -157,6 +163,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="BaseRepository\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </None>
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="fonts\glyphicons-halflings-regular.eot" />
