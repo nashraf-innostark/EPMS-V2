@@ -54,11 +54,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var url = "/CMS/Quotation/Index";
+        var siteUrl = $('#siteURL').val();
         var oTable = $('#QuotationTable').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": url,
+            "sAjaxSource": siteUrl + "/Quotation/Index",
             "sServerMethod": "POST",
             "aoColumns": [
                 {
