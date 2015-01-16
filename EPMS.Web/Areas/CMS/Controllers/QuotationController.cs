@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
@@ -191,6 +192,29 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var orders = OrdersService.GetOrdersByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
+        [SiteAuthorize(PermissionKey = "QuotationsDelete")]
+        public ActionResult Delete(int itemDetailId)
+        {
+            var itemDetailToBeDeleted = QuotationItemService.FindQuotationById(itemDetailId);
+            try
+            {
+                QuotationItemService.DeleteQuotationItem(itemDetailToBeDeleted);
+                return Json(new
+                {
+                    Status = "Success"
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception exp)
+            {
+                return Json(
+                        new
+                        {
+                            Status = "Error"
+                        }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #endregion
     }
 }

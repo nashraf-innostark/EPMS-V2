@@ -58,7 +58,15 @@ namespace EPMS.Implementation.Services
 
         public void DeleteQuotationItem(QuotationItemDetail itemDetail)
         {
-            
+            try
+            {
+                Repository.Delete(itemDetail);
+                Repository.SaveChanges();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
