@@ -21,7 +21,7 @@ namespace EPMS.Implementation.Services
 
         public Project FindProjectById(long id)
         {
-            throw new System.NotImplementedException();
+           return projectRepository.Find(id);
         }
 
         public bool AddProject(Project complaint)

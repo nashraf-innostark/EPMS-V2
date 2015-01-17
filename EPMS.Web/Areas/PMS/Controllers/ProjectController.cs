@@ -1,12 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.PMS;
+using EPMS.Web.ViewModels.Common;
+using EPMS.Web.ViewModels.Complaint;
 using EPMS.Web.ViewModels.Project;
+using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.PMS.Controllers
 {
+    [Authorize]
     public class ProjectController : BaseController
     {
         private readonly IProjectService projectService;
@@ -15,20 +22,111 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             this.projectService = projectService;
         }
-
+        #region Loading Lists
         // GET: PMS/Project/OnGoing
+        [SiteAuthorize(PermissionKey = "ProjectIndex")]
         public ActionResult OnGoing()
         {
-            ProjectListViewModel projectsList=new ProjectListViewModel();
-            projectsList.Projects = projectService.LoadAllOnGoingProjects().Select(x=>x.CreateFromServerToClient());
+            ProjectListViewModel projectsList=new ProjectListViewModel
+            {
+                Projects =
+                    Session["RoleName"].ToString() == "Customer"
+                        ? projectService.LoadAllOnGoingProjectsByCustomerId(
+                            Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
+                        : projectService.LoadAllOnGoingProjects().Select(x => x.CreateFromServerToClient())
+            };
             return View(projectsList);
         }
         // GET: PMS/Project/Finished
+        [SiteAuthorize(PermissionKey = "ProjectIndex")]
         public ActionResult Finished()
         {
-            ProjectListViewModel projectsList = new ProjectListViewModel();
-            projectsList.Projects = projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient());
+            ProjectListViewModel projectsList = new ProjectListViewModel
+            {
+                Projects =
+                    Session["RoleName"].ToString() == "Customer"
+                        ? projectService.LoadAllFinishedProjectsByCustomerId(
+                            Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
+                        : projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient())
+            };
             return View(projectsList);
         }
+        #endregion
+        #region Create
+        [SiteAuthorize(PermissionKey = "ProjectCreate")]
+        public ActionResult Create(long? id)
+        {
+            ProjectViewModel projectViewModel = new ProjectViewModel();
+            ViewBag.UserRole = Session["RoleName"].ToString();
+                //if (id != null)
+                //{
+                //    var project = projectService.FindProjectById((long)id);
+                //    if (project != null)
+                //    {
+                //        projectViewModel.Project = project.CreateFromServerToClient();
+
+                //        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(requestViewModel.Complaint.CustomerId).Where(x => x.OrderId.Equals(requestViewModel.Complaint.OrderId)).Select(x => x.CreateFromServerToClient());
+                //        requestViewModel.Departments = departmentService.GetAll().Where(x => x.DepartmentId == requestViewModel.Complaint.DepartmentId).Select(x => x.CreateFrom());
+                //        if (!requestViewModel.Complaint.IsReplied)
+                //            ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
+                //    }
+                //}
+                //else if (ViewBag.UserRole != "Admin")
+                //{
+                //    requestViewModel.Complaint.ComplaintDate = DateTime.Now;
+                //    requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerNameE;
+                //    requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
+                //    requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
+                //    requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
+                //}
+                //else
+                //{
+                //    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
+                //}
+            return View(projectViewModel);
+        }
+        //[HttpPost]
+        //[ValidateInput(false)]//this is due to CK Editor
+        //public ActionResult Create(ComplaintViewModel viewModel)
+        //{
+        //    try
+        //    {
+        //        if (viewModel.Complaint.ComplaintId > 0)//Update
+        //        {
+        //            viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
+        //            viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
+        //            viewModel.Complaint.Description = viewModel.Complaint.ComplaintDesc;
+        //            viewModel.Complaint.IsReplied = true;
+        //            //Update Complaint to Db
+        //            complaintService.UpdateComplaint(viewModel.Complaint.CreateFromClientToServer());
+        //            TempData["message"] = new MessageViewModel
+        //            {
+        //                Message = Resources.CMS.Complaint.ComplaintRepliedMsg,
+        //                IsUpdated = true
+        //            };
+        //        }
+        //        else//New
+        //        {
+        //            viewModel.Complaint.RecCreatedBy = User.Identity.GetUserId();
+        //            viewModel.Complaint.RecCreatedDt = DateTime.Now;
+        //            viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
+        //            viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
+
+        //            //Add Complaint to Db
+        //            complaintService.AddComplaint(viewModel.Complaint.CreateFromClientToServer());
+        //            TempData["message"] = new MessageViewModel
+        //            {
+        //                Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
+        //                IsUpdated = true
+        //            };
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //    }
+        //    return RedirectToAction("Index", "Complaint");
+        //}
+        #endregion
     }
 }
