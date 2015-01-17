@@ -8,7 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Products {
+namespace EPMS.Web.Resources.PMS {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -19,14 +22,14 @@ namespace EPMS.Web.Resources.Products {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Product {
+    public class Project {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Product() {
+        internal Project() {
         }
         
         /// <summary>
@@ -36,7 +39,7 @@ namespace EPMS.Web.Resources.Products {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Products.Product", typeof(Product).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.PMS.Project", typeof(Project).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -58,74 +61,56 @@ namespace EPMS.Web.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter category..
+        ///   Looks up a localized string similar to Add New.
         /// </summary>
-        public static string CategoryErrorMessage {
+        public static string AddNew {
             get {
-                return ResourceManager.GetString("CategoryErrorMessage", resourceCulture);
+                return ResourceManager.GetString("AddNew", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category Id.
+        ///   Looks up a localized string similar to Client Name.
         /// </summary>
-        public static string CategoryId {
+        public static string ClientName {
             get {
-                return ResourceManager.GetString("CategoryId", resourceCulture);
+                return ResourceManager.GetString("ClientName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Category Name .
+        ///   Looks up a localized string similar to Delivery Date.
         /// </summary>
-        public static string CategoryName {
+        public static string DeliveryDate {
             get {
-                return ResourceManager.GetString("CategoryName", resourceCulture);
+                return ResourceManager.GetString("DeliveryDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to Finihsed Projects.
         /// </summary>
-        public static string Description {
+        public static string FinihsedProjects {
             get {
-                return ResourceManager.GetString("Description", resourceCulture);
+                return ResourceManager.GetString("FinihsedProjects", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product already exist with this name..
+        ///   Looks up a localized string similar to Projects.
         /// </summary>
-        public static string DuplicateName {
+        public static string ListPageHeading {
             get {
-                return ResourceManager.GetString("DuplicateName", resourceCulture);
+                return ResourceManager.GetString("ListPageHeading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully edit..
+        ///   Looks up a localized string similar to Project Management.
         /// </summary>
-        public static string Edit {
+        public static string ListPageTitle {
             get {
-                return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please enter Name..
-        /// </summary>
-        public static string NameErrorMessage {
-            get {
-                return ResourceManager.GetString("NameErrorMessage", resourceCulture);
+                return ResourceManager.GetString("ListPageTitle", resourceCulture);
             }
         }
         
@@ -139,47 +124,38 @@ namespace EPMS.Web.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please enter price..
+        ///   Looks up a localized string similar to Progress.
         /// </summary>
-        public static string PriceErrorMessage {
+        public static string Progress {
             get {
-                return ResourceManager.GetString("PriceErrorMessage", resourceCulture);
+                return ResourceManager.GetString("Progress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Product Name :.
+        ///   Looks up a localized string similar to Project Name.
         /// </summary>
-        public static string ProductName {
+        public static string ProjectName {
             get {
-                return ResourceManager.GetString("ProductName", resourceCulture);
+                return ResourceManager.GetString("ProjectName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Successfully save..
+        ///   Looks up a localized string similar to Projects List.
         /// </summary>
-        public static string Save {
+        public static string ProjectsList {
             get {
-                return ResourceManager.GetString("Save", resourceCulture);
+                return ResourceManager.GetString("ProjectsList", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to --Select Category--.
+        ///   Looks up a localized string similar to Start Date.
         /// </summary>
-        public static string SelectCategory {
+        public static string StartDate {
             get {
-                return ResourceManager.GetString("SelectCategory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Price:.
-        /// </summary>
-        public static string TotalPrice {
-            get {
-                return ResourceManager.GetString("TotalPrice", resourceCulture);
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
     }
