@@ -17,10 +17,20 @@ namespace EPMS.Web.ModelMappers.PMS
         }
         public static Models.Project CreateFromServerToClient(this Project source)
         {
-            return new Models.Project
+            Models.Project project=new Models.Project();
+            project.ProjectId = source.ProjectId;
+            project.NameE = source.NameE;
+            project.NameA = source.NameA;
+            project.CustomerId = source.CustomerId;
+            if (source.CustomerId > 0)
             {
-                CustomerId = source.CustomerId
-            };
+                project.CustomerNameE = source.Customer.CustomerNameE;
+                project.CustomerNameA = source.Customer.CustomerNameA;
+            }
+            project.StartDate = source.StartDate;
+            project.EndDate = source.EndDate;
+            
+            return project;
         }
         //public static DashboardModels.Project CreateForDashboard(this Project source)
         //{

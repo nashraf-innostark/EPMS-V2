@@ -36,12 +36,12 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<Project> LoadAllOnGoingProjects()
         {
-            throw new System.NotImplementedException();
+            return projectRepository.GetAllOnGoingProjects();
         }
 
         public IEnumerable<Project> LoadAllFinishedProjects()
         {
-            throw new System.NotImplementedException();
+            return projectRepository.GetAllFinishedProjects();
         }
 
         public IEnumerable<Project> LoadAllOnGoingProjectsByCustomerId(long id)

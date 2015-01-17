@@ -16,11 +16,18 @@ namespace EPMS.Web.Areas.PMS.Controllers
             this.projectService = projectService;
         }
 
-        // GET: PMS/Project
+        // GET: PMS/Project/OnGoing
         public ActionResult OnGoing()
         {
             ProjectListViewModel projectsList=new ProjectListViewModel();
             projectsList.Projects = projectService.LoadAllOnGoingProjects().Select(x=>x.CreateFromServerToClient());
+            return View(projectsList);
+        }
+        // GET: PMS/Project/Finished
+        public ActionResult Finished()
+        {
+            ProjectListViewModel projectsList = new ProjectListViewModel();
+            projectsList.Projects = projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient());
             return View(projectsList);
         }
     }

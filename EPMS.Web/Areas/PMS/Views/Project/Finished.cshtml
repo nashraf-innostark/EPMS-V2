@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Project.ProjectListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.PMS.Project.ListPageTitle;
+    ViewBag.Title = EPMS.Web.Resources.PMS.Project.FinishedProjects;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Navigation Bar Start-->
@@ -12,8 +12,13 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
-        <li class ="current">
-            @EPMS.Web.Resources.PMS.Project.ProjectsList
+        <li>
+            <a href="~/PMS/Project/OnGoing">
+                @EPMS.Web.Resources.PMS.Project.ProjectsList
+            </a>
+        </li>
+        <li class="current">
+            @EPMS.Web.Resources.PMS.Project.FinishedProjectsList
         </li>
     </ul>
 </div>
@@ -21,9 +26,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.PMS.Project.ListPageHeading</small></h2>
-    <h3> <small><a href="~/PMS/Project/Create">@EPMS.Web.Resources.PMS.Project.AddNew</a></small></h3>
-    <h3> <small><a href="~/PMS/Project/Finished">@EPMS.Web.Resources.PMS.Project.FinishedProjects</a></small></h3>
+    <h2><small>@EPMS.Web.Resources.PMS.Project.FinishedProjects</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -43,7 +46,6 @@
                             <th>@EPMS.Web.Resources.PMS.Project.StartDate</th>
                             <th>@EPMS.Web.Resources.PMS.Project.DeliveryDate</th>
                             <th>@EPMS.Web.Resources.PMS.Project.Price</th>
-                            <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,11 +58,6 @@
                                 <th>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</th>
                                 <th>@(Convert.ToDateTime(item.EndDate).ToShortDateString())</th>
                                 <th>@item.Price</th>
-                                <th>
-                                    <div class="progress progress-info">
-                                        <div class="bar" style="width: @item.Progress%">@item.Progress%</div>
-                                    </div>
-                                </th>
                             </tr>
                         }
                     </tbody>
@@ -80,10 +77,9 @@
                   null,
                   null,
                   null,
-                  null,
-                  null,
+                  null
             ],
-            "aaSorting": [[3,'asc']],
+            "aaSorting": [[4,'desc']],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'

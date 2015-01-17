@@ -39,7 +39,7 @@ namespace EPMS.Web.Controllers
 //when isForce =  true it sets the value, no matter session has or not
         public void SetUserDetail()
         {
-            Session["FullName"] = Session["LoginID"] = string.Empty;
+            Session["FullName"] = Session["UserID"] = string.Empty;
 
             if (!User.Identity.IsAuthenticated) return;
             AspNetUser result =
@@ -52,7 +52,7 @@ namespace EPMS.Web.Controllers
                     .FindById(result.AspNetRoles.ToList()[0].Id)
                     .Name;
             Session["FullName"] = result.UserName;
-            Session["LoginID"] = result.Id;
+            Session["UserID"] = result.Id;
             Session["RoleName"] = role;
             Session["EmployeeID"] = result.EmployeeId;
             Session["CustomerID"] = result.CustomerId;
