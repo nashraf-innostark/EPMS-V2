@@ -49,7 +49,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Details(long id)
         {
             CustomerViewModel customerViewModel = new CustomerViewModel();
-                customerViewModel = customerService.FindCustomerById(id).CreateFromServerToClientVM();
+            customerViewModel = customerService.FindCustomerById(id).CreateFromServerToClientVM();
+            AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
+            ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
             return View(customerViewModel);
         }
         [HttpPost]
