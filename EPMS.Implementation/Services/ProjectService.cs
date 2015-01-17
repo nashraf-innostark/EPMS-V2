@@ -34,12 +34,22 @@ namespace EPMS.Implementation.Services
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Project> LoadAllProjects()
+        public IEnumerable<Project> LoadAllOnGoingProjects()
         {
-            return projectRepository.GetAll();
+            throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Project> LoadAllProjectsByCustomerId(long id)
+        public IEnumerable<Project> LoadAllFinishedProjects()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Project> LoadAllOnGoingProjectsByCustomerId(long id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Project> LoadAllFinishedProjectsByCustomerId(long id)
         {
             throw new System.NotImplementedException();
         }

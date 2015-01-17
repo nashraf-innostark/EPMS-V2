@@ -36,6 +36,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<ICompanyDocumentService, CompanyDocumentService>();
             unityContainer.RegisterType<ICompanyBankService, CompanyBankService>();
             unityContainer.RegisterType<ICompanySocialService, CompanySocialService>();
+            unityContainer.RegisterType<IProjectService, ProjectService>();
         }
     }
 }

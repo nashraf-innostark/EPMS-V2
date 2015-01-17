@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.Models;
+using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Project;
 
 namespace EPMS.Web.Areas.PMS.Controllers
@@ -18,10 +17,10 @@ namespace EPMS.Web.Areas.PMS.Controllers
         }
 
         // GET: PMS/Project
-        public ActionResult Index()
+        public ActionResult OnGoing()
         {
             ProjectListViewModel projectsList=new ProjectListViewModel();
-            projectsList.Projects = projectService.LoadAllProjects().Select(x=>x.c);
+            projectsList.Projects = projectService.LoadAllOnGoingProjects().Select(x=>x.CreateFromServerToClient());
             return View(projectsList);
         }
     }

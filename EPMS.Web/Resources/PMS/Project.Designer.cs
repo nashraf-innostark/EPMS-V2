@@ -97,6 +97,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finished Projects.
+        /// </summary>
+        public static string FinishedProjects {
+            get {
+                return ResourceManager.GetString("FinishedProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projects.
         /// </summary>
         public static string ListPageHeading {
