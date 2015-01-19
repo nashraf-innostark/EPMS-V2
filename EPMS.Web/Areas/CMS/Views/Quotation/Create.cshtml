@@ -51,6 +51,10 @@
                     {
                         @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
                     }
+                    @if (direction == "rtl")
+                    {
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "ClientAr" })
+                    }
                     @Html.ValidationMessageFor(m => m.CustomerId, String.Empty, new { @class = "required" })
                 </div>
             </div>

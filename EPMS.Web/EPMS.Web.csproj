@@ -259,6 +259,7 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -551,6 +552,7 @@
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -561,6 +563,7 @@
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
     <Content Include="Areas\PMS\Views\Project\OnGoing.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
+    <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
