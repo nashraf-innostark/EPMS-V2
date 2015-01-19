@@ -148,6 +148,9 @@
                         } else if (full["OrderStatus"] == 3) {
                             value = '@EPMS.Web.Resources.CMS.Order.Canceled';
                         }
+                        else if (full["OrderStatus"] == 4) {
+                            value = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                        }
                         return value;
                     }
                 }
