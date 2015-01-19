@@ -18,5 +18,7 @@ namespace EPMS.Web.Models
         public int? OrderStatus { get; set; }
         public string CustomerNameE{ get; set; }
         public string CustomerNameA{ get; set; }
+        public string Link { get; set; }
+        public long QuotationId { get; set; }
     }
 }

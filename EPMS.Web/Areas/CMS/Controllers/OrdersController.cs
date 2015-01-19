@@ -68,13 +68,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     searchRequest.CustomerId = 0;
                     ordersList = OrdersService.GetAllOrders(searchRequest);
-                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClient());
+                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
                 }
                 if (searchRequest.Role == "Customer")
                 {
                     searchRequest.CustomerId = searchRequest.CustomerId;
                     ordersList = OrdersService.GetAllOrders(searchRequest);
-                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClient());
+                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
                 }
             }
             if (ordersList == null) return View(new OrdersListViewModel());

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -23,24 +24,26 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IOrdersService OrdersService;
         private readonly IQuotationService QuotationService;
         private readonly IQuotationItemService QuotationItemService;
+        private readonly ICompanyProfileService ProfileService;
         #endregion
 
         #region Constructor
 
-        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService)
+        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService)
         {
             CustomerService = customerService;
             AspNetUserService = aspNetUserService;
             OrdersService = ordersService;
             QuotationService = quotationService;
             QuotationItemService = quotationItemService;
+            ProfileService = profileService;
         }
 
         #endregion
 
         #region Public
         // GET: CMS/Quotation
-        [SiteAuthorize(PermissionKey = "QuotationIndex")]
+        //[SiteAuthorize(PermissionKey = "QuotationIndex")]
         public ActionResult Index()
         {
             QuotationListViewModel viewModel = new QuotationListViewModel
@@ -61,7 +64,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
-        [SiteAuthorize(PermissionKey = "QuotationsCreate")]
+        //[SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(long? id)
         {
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
@@ -196,10 +199,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Detail()
+        public ActionResult Detail(long? id)
         {
-
-            return View();
+            QuotationDetailViewModel viewModel = new QuotationDetailViewModel();
+            if (id != null)
+            {
+                viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
+                viewModel.Quotation = QuotationService.FindQuotationById((long)id).CreateFromServerToClientLv();
+                ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
+                return View(viewModel);
+            }
+            return View(viewModel);
         }
         [SiteAuthorize(PermissionKey = "QuotationsDelete")]
         public ActionResult Delete(int itemDetailId)
