@@ -20,7 +20,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    @if (ViewBag.LogoPat != null)
+    @if (!(string.IsNullOrEmpty(ViewBag.LogoPath)))
     {
         <img class="employeeImg" src='@Url.Content(ViewBag.LogoPath)' alt="user" />
     }

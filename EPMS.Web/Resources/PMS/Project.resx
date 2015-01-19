@@ -117,46 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CategoryErrorMessage" xml:space="preserve">
-    <value>Please enter category.</value>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New</value>
   </data>
-  <data name="CategoryId" xml:space="preserve">
-    <value>Category Id</value>
+  <data name="ClientName" xml:space="preserve">
+    <value>Client Name</value>
   </data>
-  <data name="CategoryName" xml:space="preserve">
-    <value>Category Name </value>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>Delivery Date</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="FinishedProjects" xml:space="preserve">
+    <value>Finished Projects</value>
   </data>
-  <data name="DuplicateName" xml:space="preserve">
-    <value>Product already exist with this name.</value>
+  <data name="FinishedProjectsList" xml:space="preserve">
+    <value>Finished Projects List</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Successfully edit.</value>
+  <data name="ListPageHeading" xml:space="preserve">
+    <value>Projects</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="NameErrorMessage" xml:space="preserve">
-    <value>Please enter Name.</value>
+  <data name="ListPageTitle" xml:space="preserve">
+    <value>Project Management</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
-  <data name="PriceErrorMessage" xml:space="preserve">
-    <value>Please enter price.</value>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
   </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>Product Name :</value>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Successfully save.</value>
+  <data name="ProjectsList" xml:space="preserve">
+    <value>Projects List</value>
   </data>
-  <data name="SelectCategory" xml:space="preserve">
-    <value>--Select Category--</value>
-  </data>
-  <data name="TotalPrice" xml:space="preserve">
-    <value>Total Price:</value>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
   </data>
 </root>

@@ -26,5 +26,10 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+
+        public string CustomerNameE { get; set; }
+        public string CustomerNameA { get; set; }
+        public double Price { get; set; }
+        public int Progress { get; set; }
     }
 }

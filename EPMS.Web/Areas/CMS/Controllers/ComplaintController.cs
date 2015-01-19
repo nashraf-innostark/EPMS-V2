@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
+    [Authorize]
     public class ComplaintController : BaseController
     {
         #region Constructor and Services

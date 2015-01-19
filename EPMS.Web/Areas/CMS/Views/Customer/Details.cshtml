@@ -38,6 +38,7 @@
     <div class="container-fluid">
         @Html.HiddenFor(model => model.Customer.CustomerId)
         @Html.HiddenFor(model => model.User.Id)
+        <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
         @Html.TextBoxFor(model => model.User.Id, new { style = "display: none;"})
         <div class="control-group row-fluid">
             <div class="span3">
@@ -99,6 +100,13 @@
 }
 
 <script>
+    $(document).ready(function() {
+        if ($("#UserRole").val() == "Admin") {
+            $("#savebtn").show();
+            $("#edit").hide();
+        }
+    });
+
     $("#edit").click(function () {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         event.preventDefault();
