@@ -142,7 +142,7 @@ namespace IdentitySample
             Response.Cache.SetNoStore();
 
             CultureInfo info = new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
-            info.DateTimeFormat.ShortDatePattern = "MM/dd/yyyy";
+            info.DateTimeFormat.ShortDatePattern = "dd/mm/yyyy";
             System.Threading.Thread.CurrentThread.CurrentCulture = info;
         }
         //public class MyDateTimeModelBinder : DefaultModelBinder

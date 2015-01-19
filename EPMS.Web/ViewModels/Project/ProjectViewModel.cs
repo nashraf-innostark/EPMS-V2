@@ -1,4 +1,6 @@
-﻿namespace EPMS.Web.ViewModels.Project
+﻿using System.Collections.Generic;
+
+namespace EPMS.Web.ViewModels.Project
 {
     public class ProjectViewModel
     {
@@ -7,5 +9,7 @@
             Project=new Models.Project();
         }
         public Models.Project Project { get; set; }
+        public IEnumerable<Models.Customer> Customers { get; set; }
+        public IEnumerable<Models.Order> Orders { get; set; }
     }
 }

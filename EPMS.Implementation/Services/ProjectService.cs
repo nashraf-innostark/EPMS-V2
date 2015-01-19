@@ -24,9 +24,11 @@ namespace EPMS.Implementation.Services
            return projectRepository.Find(id);
         }
 
-        public bool AddProject(Project complaint)
+        public bool AddProject(Project project)
         {
-            throw new System.NotImplementedException();
+            projectRepository.Add(project);
+            projectRepository.SaveChanges();
+            return true;
         }
 
         public bool UpdateProject(Project complaint)

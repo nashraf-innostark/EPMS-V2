@@ -55,8 +55,10 @@ namespace EPMS.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            if ((string)Session["RoleName"] != "Customer")
+            {
+                var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
             #region Employee Requests Widget
             dashboardViewModel.Employees = GetAllEmployees();
             dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
@@ -89,17 +91,12 @@ namespace EPMS.Web.Controllers
             if (requester != "Admin")
                 dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()),DateTime.Now);
             #endregion
-
-            #region Employee Requests Widget
-            #endregion
-            #region Employee Requests Widget
-            #endregion
-            #region Employee Requests Widget
-            #endregion
-            #region Employee Requests Widget
-            #endregion
-            #region Employee Requests Widget
-            #endregion
+                
+            }
+            else
+            {
+                return RedirectToAction("Index", "Orders", new { area = "CMS" });
+            }
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
             return View(dashboardViewModel);

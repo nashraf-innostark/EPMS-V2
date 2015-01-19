@@ -183,10 +183,10 @@ function isNumberKey(evt) {
 
 function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
     var calender = $.calendars.instance(fromCalender);
-    var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);
+    var dateToBeChanged = calender.parseDate("dd/mm/yyyy", dateTobeChanged);
     calender = $.calendars.instance(toCalender);
     var changedDate = calender.fromJD(dateToBeChanged.toJD());
-    return calender.formatDate("mm/dd/yyyy", changedDate);
+    return calender.formatDate("dd/mm/yyyy", changedDate);
 }
 function HijriToGregorian(arabicCalendar, englishCalendar) {
     if ($(arabicCalendar).val() == "") {
@@ -194,7 +194,7 @@ function HijriToGregorian(arabicCalendar, englishCalendar) {
     }
     else {
         var splittedDate = $(arabicCalendar).val().split('/');
-        $(arabicCalendar).val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
+        $(arabicCalendar).val(splittedDate[2] + '/' + splittedDate[1] + '/' + splittedDate[0]);
         var dateToBeChanged = $(arabicCalendar).val();
         var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
         $(englishCalendar).val(newDate);
@@ -217,7 +217,8 @@ $(document).ready(function() {
     $(".datepickerGregorian").mask('99/99/9999');
     $(".datepickerGregorian").datepicker({
         changeMonth: true,
-        changeYear: true
+        changeYear: true,
+        dateFormat:"dd/mm/yy"
     });
     // Arabic Date Picker
     var calendar = $.calendars.instance('islamic');
