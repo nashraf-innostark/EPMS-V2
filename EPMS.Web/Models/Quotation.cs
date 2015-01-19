@@ -33,6 +33,7 @@ namespace EPMS.Web.Models
         public long CustomerId { get; set; }
         public string CreatedByName { get; set; }
 
-        public ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public IEnumerable<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public Customer Customers { get; set; }
     }
 }

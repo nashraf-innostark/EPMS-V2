@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.CMS.Order.PTIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var userRole = (string)Session["RoleName"];
 }
 
 <!-- Navigation Bar -->
@@ -66,7 +67,7 @@
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": siteUrl + "/Orders/Index",
+            "sAjaxSource": siteUrl + "/CMS/Orders/Index",
             "sServerMethod": "POST",
             "aoColumns": [
                 {
@@ -110,7 +111,15 @@
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-
+                        var element = "No Data";
+                        var val = full["QuotationId"];
+                        if ('@userRole' == "Admin" && val != 0) {
+                            element = '<a href="/CMS/Quotation/Create/' + val + '">' + "Quotation " + val + '</a>';
+                        }
+                        if ('@userRole' == "Customer" && val != 0) {
+                            element = '<a href="/CMS/Quotation/Detail/' + val + '">' + "Quotation " + val + '</a>';
+                        }
+                        return element;
                     }
                 },
                 {

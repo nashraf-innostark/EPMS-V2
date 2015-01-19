@@ -75,6 +75,22 @@ namespace EPMS.Web.ModelMappers
                 CustomerId = source.CustomerId,
                 OrderNumber = source.OrderNumber,
                 CreatedByEmployee = source.CreatedByEmployee,
+                Customers = source.Customer.CreateFromServerToClient(),
+                RecCreatedDt = source.RecCreatedDt,
+                GreetingsEn = source.GreetingsEn,
+                GreetingsAr = source.GreetingsAr,
+                FirstInstallement = source.FirstInstallement,
+                FirstInsDueAtCompletion = source.FirstInsDueAtCompletion,
+                SecondInstallment = source.SecondInstallment,
+                SecondInsDueAtCompletion = source.SecondInsDueAtCompletion,
+                ThirdInstallment = source.ThirdInstallment,
+                ThirdInsDueAtCompletion = source.ThirdInsDueAtCompletion,
+                FourthInstallment = source.FourthInstallment,
+                FourthInsDueAtCompletion = source.FourthInsDueAtCompletion,
+                NotesEn = source.NotesEn,
+                NotesAr = source.NotesAr,
+                QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()),
+                QuotationDiscount = source.QuotationDiscount,
             };
         }
 
