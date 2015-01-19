@@ -1,0 +1,100 @@
+﻿@model EPMS.Web.ViewModels.Quotation.QuotationDetailViewModel
+
+@{
+    ViewBag.Title = "Quotation Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        @*<li>
+                <a href="~/CMS/Quotation/Index">
+                    @EPMS.Web.Resources.CMS.Quotation.QuotList
+                </a>
+            </li>*@
+        <li>
+            @EPMS.Web.Resources.CMS.Quotation.QuotDetail
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.CMS.Quotation.QuotDetail</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+@using (Html.BeginForm("Detail", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+
+            <div class="form-legend centTitle">
+                Qoutation
+            </div>
+            <div class="invoice-info">
+
+                <div class="invoice-name">
+                    Company Name
+                </div>
+                <div class="controls">
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> Print</a>
+                </div>
+                <img src="images/photon/wheel.png" alt="user" class="companyInvImg">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <div class="invoice-from">
+                            <span>Employee Name</span>
+                            <strong>Company Name</strong>
+                            <address>
+                                Street Address
+                                City, ST ZIP Code  <br>
+                                <abbr title="Phone">Phone:</abbr> (125) 358123-581 <br>
+                                <abbr title="Fax">Website:</abbr> www.website.com <br>
+                                <abbr title="invoiceMail">Email:</abbr> www.website.com <br>
+                            </address>
+                        </div>
+                    </div>
+
+                    <div class="span3">
+                        <div class="invoice-to">
+                            <span>Client Name</span>
+                            <strong>Max Mustermann</strong>
+                            <address>
+                                Street Address
+                                City, ST ZIP Code <br>
+                                <abbr title="Phone">Phone:</abbr> (125) 358123-581 <br>
+                                <abbr title="Fax">Email:</abbr> Clients Email
+                            </address>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="invoice-infos">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Date:</th>
+                                        <td>Aug 06, 2012</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Qoutation #:</th>
+                                        <td>0001752188s</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

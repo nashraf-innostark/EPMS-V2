@@ -304,6 +304,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quotation Detail.
+        /// </summary>
+        public static string QuotDetail {
+            get {
+                return ResourceManager.GetString("QuotDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quotations List.
         /// </summary>
         public static string QuotList {

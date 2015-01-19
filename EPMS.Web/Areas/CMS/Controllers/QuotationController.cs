@@ -195,6 +195,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var orders = OrdersService.GetOrdersByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Detail()
+        {
+
+            return View();
+        }
         [SiteAuthorize(PermissionKey = "QuotationsDelete")]
         public ActionResult Delete(int itemDetailId)
         {
