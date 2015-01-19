@@ -88,11 +88,65 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Project.
+        /// </summary>
+        public static string CreateProject {
+            get {
+                return ResourceManager.GetString("CreateProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delivery Date.
         /// </summary>
         public static string DeliveryDate {
             get {
                 return ResourceManager.GetString("DeliveryDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description arabic.
+        /// </summary>
+        public static string DescriptionA {
+            get {
+                return ResourceManager.GetString("DescriptionA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string DescriptionE {
+            get {
+                return ResourceManager.GetString("DescriptionE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Documents.
+        /// </summary>
+        public static string Documents {
+            get {
+                return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to file size shouldn&apos;t exceed 1MB.
+        /// </summary>
+        public static string FileSize {
+            get {
+                return ResourceManager.GetString("FileSize", resourceCulture);
             }
         }
         
@@ -142,6 +196,51 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes arabic.
+        /// </summary>
+        public static string NotesA {
+            get {
+                return ResourceManager.GetString("NotesA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes For Customer arabic.
+        /// </summary>
+        public static string NotesCustomerA {
+            get {
+                return ResourceManager.GetString("NotesCustomerA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes For Customer.
+        /// </summary>
+        public static string NotesCustomerE {
+            get {
+                return ResourceManager.GetString("NotesCustomerE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string NotesE {
+            get {
+                return ResourceManager.GetString("NotesE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order Name - Number.
+        /// </summary>
+        public static string OrderNo {
+            get {
+                return ResourceManager.GetString("OrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {
@@ -165,6 +264,42 @@ namespace EPMS.Web.Resources.PMS {
         public static string ProjectName {
             get {
                 return ResourceManager.GetString("ProjectName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Name arabic.
+        /// </summary>
+        public static string ProjectNameAr {
+            get {
+                return ResourceManager.GetString("ProjectNameAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project name in arabic is required.
+        /// </summary>
+        public static string ProjectNameARequiredMsg {
+            get {
+                return ResourceManager.GetString("ProjectNameARequiredMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project name in english is required.
+        /// </summary>
+        public static string ProjectNameERequiredMsg {
+            get {
+                return ResourceManager.GetString("ProjectNameERequiredMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Serial Number.
+        /// </summary>
+        public static string ProjectSerialNo {
+            get {
+                return ResourceManager.GetString("ProjectSerialNo", resourceCulture);
             }
         }
         

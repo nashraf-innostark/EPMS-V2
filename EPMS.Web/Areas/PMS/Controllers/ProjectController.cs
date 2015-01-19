@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
+using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Project;
@@ -14,11 +15,16 @@ namespace EPMS.Web.Areas.PMS.Controllers
     public class ProjectController : BaseController
     {
         private readonly IProjectService projectService;
+        private readonly ICustomerService customerService;
+        private readonly IOrdersService ordersService;
 
-        public ProjectController(IProjectService projectService)
+        public ProjectController(IProjectService projectService,ICustomerService customerService,IOrdersService ordersService)
         {
             this.projectService = projectService;
+            this.customerService = customerService;
+            this.ordersService = ordersService;
         }
+
         #region Loading Lists
         // GET: PMS/Project/OnGoing
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
@@ -55,6 +61,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString();
+            var customers = customerService.GetAll();
+            var orders = ordersService.GetAll();
             if (projectId != null)
             {
                 var project = projectService.FindProjectById((long)projectId);
@@ -63,6 +71,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project = project.CreateFromServerToClient();
                 }
             }
+            projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
+            projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
             //else
             //{
             //    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });

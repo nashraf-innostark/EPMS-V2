@@ -8,7 +8,7 @@ namespace EPMS.Models.DomainModels
         public long RequestId { get; set; }
         public long EmployeeId { get; set; }
         public string RequestTopic { get; set; }
-        public System.DateTime RequestDate { get; set; }
+        public DateTime RequestDate { get; set; }
         public bool IsMonetary { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
