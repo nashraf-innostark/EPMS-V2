@@ -738,10 +738,16 @@
     });
     function populateDDL(data) {
         $("#OrderNo").empty();
-        for (var i = 0; i < data.length; i++) {
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                $("#OrderNo").append(
+                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                );
+            }
+        } else {
             $("#OrderNo").append(
-                $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
-            );
+                    $('<option></option>').val("").html("none")
+                );
         }
         $.unblockUI();
     }

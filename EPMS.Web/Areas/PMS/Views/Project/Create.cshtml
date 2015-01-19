@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Project.ProjectViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.PMS.Project.ListPageTitle;
+    ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -65,7 +65,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.ClientName, new { @class = "select2me" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.ClientName, new { @class = "select2me" }))
+                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.ClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.ClientName, new { @class = "select2me", @id = "Client" }))
                         @Html.ValidationMessageFor(m => m.Project.CustomerId, "", new { @class = "required" })
                     </div>
                 </div>
@@ -77,7 +77,14 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.PMS.Project.OrderNo, new { @class = "select2me" }) : Html.DropDownListFor(x => x.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.PMS.Project.OrderNo, new { @class = "select2me" }))
+                    @if (Model.Project.CustomerId > 0)
+                    {
+                        @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderNo" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @id = "OrderNo" })
+                    }
                     @Html.ValidationMessageFor(m => m.Project.OrderId, "", new { @class = "required" })
                 </div>
             </div>
@@ -452,8 +459,11 @@
 
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
     $(document).ready(function () {
+        var siteUrl = $('#siteURL').val();
+        
         CKEDITOR.replace('DescriptionA');
         CKEDITOR.replace('DescriptionE');
         CKEDITOR.replace('NotesA');
@@ -468,7 +478,51 @@
                 });
             }
         });
+        $("#Client").on("change", function () {
+            var customerId = $(this).val();
+            var url = siteUrl + "/PMS/Project/GetCustomerOrders";
+            if (customerId > 0) {
+                $("#ClientName").val($("#Client option:selected").text());
+                //$('#SearchRequest_JobId').empty();
+                $.blockUI({
+                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        customerId: customerId
+                    },
+                    success: function (data) {
+                        populateDDL(data);
+                    },
+                    error: function (e) {
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
 
+            }
+
+        });
+
+        function populateDDL(data) {
+            $("#OrderNo").empty();
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#OrderNo").append(
+                        $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                    );
+                }
+            } else {
+                $("#OrderNo").append(
+                        $('<option></option>').val("").html("none")
+                    );
+            }
+            $.unblockUI();
+        }
 
         var errors = "";
 

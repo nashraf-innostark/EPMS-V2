@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Common;
+using EPMS.Web.ViewModels.Complaint;
 using EPMS.Web.ViewModels.Project;
 using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.PMS.Controllers
 {
@@ -80,48 +83,51 @@ namespace EPMS.Web.Areas.PMS.Controllers
             //ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
             return View(projectViewModel);
         }
-        //[HttpPost]
-        //[ValidateInput(false)]//this is due to CK Editor
-        //public ActionResult Create(ComplaintViewModel viewModel)
-        //{
-        //    try
-        //    {
-        //        if (viewModel.Complaint.ComplaintId > 0)//Update
-        //        {
-        //            viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
-        //            viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
-        //            viewModel.Complaint.Description = viewModel.Complaint.ComplaintDesc;
-        //            viewModel.Complaint.IsReplied = true;
-        //            //Update Complaint to Db
-        //            complaintService.UpdateComplaint(viewModel.Complaint.CreateFromClientToServer());
-        //            TempData["message"] = new MessageViewModel
-        //            {
-        //                Message = Resources.CMS.Complaint.ComplaintRepliedMsg,
-        //                IsUpdated = true
-        //            };
-        //        }
-        //        else//New
-        //        {
-        //            viewModel.Complaint.RecCreatedBy = User.Identity.GetUserId();
-        //            viewModel.Complaint.RecCreatedDt = DateTime.Now;
-        //            viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
-        //            viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult Create(ProjectViewModel projectViewModel)
+        {
+            try
+            {
+                if (projectViewModel.Project.ProjectId > 0)//Update
+                {
+                    
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Complaint.ComplaintRepliedMsg,
+                        IsUpdated = true
+                    };
+                }
+                else//New
+                {
+                    projectViewModel.Project.RecCreatedBy = User.Identity.GetUserId();
+                    projectViewModel.Project.RecCreatedDate = DateTime.Now;
+                    projectViewModel.Project.RecLastUpdatedBy = User.Identity.GetUserId();
+                    projectViewModel.Project.RecLastUpdatedDate = DateTime.Now;
 
-        //            //Add Complaint to Db
-        //            complaintService.AddComplaint(viewModel.Complaint.CreateFromClientToServer());
-        //            TempData["message"] = new MessageViewModel
-        //            {
-        //                Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
-        //                IsUpdated = true
-        //            };
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-
-        //    }
-        //    return RedirectToAction("Index", "Complaint");
-        //}
+                    //Add Complaint to Db
+                    projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
+                        IsUpdated = true
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return View(projectViewModel);
+            }
+            return RedirectToAction("OnGoing", "Project");
+        }
+        #endregion
+        #region Get Customer Orders
+        [HttpGet]
+        public JsonResult GetCustomerOrders(long customerId)
+        {
+            var orders = ordersService.GetOrdersByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
+            return Json(orders, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

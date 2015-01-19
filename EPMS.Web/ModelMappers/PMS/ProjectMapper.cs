@@ -8,11 +8,24 @@ namespace EPMS.Web.ModelMappers.PMS
         {
             return new Project
             {
+                NameE = source.NameE,
+                NameA = source.NameA,
                 CustomerId = source.CustomerId,
                 OrderId = source.OrderId,
+                SerialNo = source.SerialNo,
+                DescriptionE = source.DescriptionE,
+                DescriptionA = source.DescriptionA,
+                StartDate = source.StartDate,
+                EndDate = source.EndDate,
                 Status = source.Status,
+                NotesE = source.NameE,
+                NotesA = source.NameA,
+                NotesForCustomerE = source.NotesForCustomerE,
+                NotesForCustomerA = source.NotesForCustomerA,
                 RecCreatedBy = source.RecCreatedBy,
-                RecLastUpdatedBy = source.RecLastUpdatedBy
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate
             };
         }
         public static Models.Project CreateFromServerToClient(this Project source)
