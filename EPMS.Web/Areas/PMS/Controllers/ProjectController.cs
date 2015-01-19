@@ -2,14 +2,11 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Complaint;
 using EPMS.Web.ViewModels.Project;
 using EPMS.WebBase.Mvc;
-using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.PMS.Controllers
 {
@@ -54,35 +51,23 @@ namespace EPMS.Web.Areas.PMS.Controllers
         #endregion
         #region Create
         [SiteAuthorize(PermissionKey = "ProjectCreate")]
-        public ActionResult Create(long? id)
+        public ActionResult Create(long? projectId)
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString();
-                //if (id != null)
-                //{
-                //    var project = projectService.FindProjectById((long)id);
-                //    if (project != null)
-                //    {
-                //        projectViewModel.Project = project.CreateFromServerToClient();
-
-                //        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(requestViewModel.Complaint.CustomerId).Where(x => x.OrderId.Equals(requestViewModel.Complaint.OrderId)).Select(x => x.CreateFromServerToClient());
-                //        requestViewModel.Departments = departmentService.GetAll().Where(x => x.DepartmentId == requestViewModel.Complaint.DepartmentId).Select(x => x.CreateFrom());
-                //        if (!requestViewModel.Complaint.IsReplied)
-                //            ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
-                //    }
-                //}
-                //else if (ViewBag.UserRole != "Admin")
-                //{
-                //    requestViewModel.Complaint.ComplaintDate = DateTime.Now;
-                //    requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerNameE;
-                //    requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
-                //    requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
-                //    requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
-                //}
-                //else
-                //{
-                //    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
-                //}
+            if (projectId != null)
+            {
+                var project = projectService.FindProjectById((long)projectId);
+                if (project != null)
+                {
+                    projectViewModel.Project = project.CreateFromServerToClient();
+                }
+            }
+            //else
+            //{
+            //    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
+            //}
+            //ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
             return View(projectViewModel);
         }
         //[HttpPost]

@@ -70,6 +70,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Project.
+        /// </summary>
+        public static string AddNewProject {
+            get {
+                return ResourceManager.GetString("AddNewProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client Name.
         /// </summary>
         public static string ClientName {
@@ -120,6 +129,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string ListPageTitle {
             get {
                 return ResourceManager.GetString("ListPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Project.
+        /// </summary>
+        public static string NewProject {
+            get {
+                return ResourceManager.GetString("NewProject", resourceCulture);
             }
         }
         
