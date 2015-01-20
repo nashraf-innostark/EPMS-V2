@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -25,17 +27,23 @@ namespace EPMS.Web.Areas.CP.Controllers
         private readonly ICompanyDocumentService documentService;
         private readonly ICompanyBankService bankService;
         private readonly ICompanySocialService socialService;
+        private readonly IEmployeeService employeeService;
+        private readonly ICustomerService customerService;
+        private readonly IJobApplicantService jobApplicantService;
 
         #endregion
         
         #region Constructor
 
-        public CompanyProfileController(ICompanyProfileService profileService, ICompanyDocumentService documentService, ICompanyBankService bankService, ICompanySocialService socialService)
+        public CompanyProfileController(ICompanyProfileService profileService, ICompanyDocumentService documentService, ICompanyBankService bankService, ICompanySocialService socialService, IEmployeeService employeeService, ICustomerService customerService, IJobApplicantService jobApplicantService)
         {
             this.profileService = profileService;
             this.documentService = documentService;
             this.bankService = bankService;
             this.socialService = socialService;
+            this.employeeService = employeeService;
+            this.customerService = customerService;
+            this.jobApplicantService = jobApplicantService;
         }
 
         #endregion
@@ -54,7 +62,14 @@ namespace EPMS.Web.Areas.CP.Controllers
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + companyProfileViewModel.CompanyProfile.CompanyLogoPath;
                 ViewBag.CompanyId = companyProfileViewModel.CompanyProfile.CompanyId;
             }
-            
+            var contactList = new List<ContactList>();
+            var empList = employeeService.GetAll().Where(x => !string.IsNullOrEmpty(x.EmployeeMobileNum)).Select(x => x.CreateForContactList());
+            var customerList = customerService.GetAll().Where(x => !string.IsNullOrEmpty(x.CustomerMobile)).Select(x => x.CreateForContactList());
+            var applicantList = jobApplicantService.GetAll().Where(x => !string.IsNullOrEmpty(x.ApplicantMobile)).Select(x => x.CreateForContactList());
+            contactList.AddRange(empList);
+            contactList.AddRange(customerList);
+            contactList.AddRange(applicantList);
+            companyProfileViewModel.List = contactList;
             return View(companyProfileViewModel);
         }
         [HttpPost]
@@ -129,43 +144,41 @@ namespace EPMS.Web.Areas.CP.Controllers
             return Json(new { filename = filename, size = companyLogo.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SendSms()
+        public ActionResult SendSms(CompanyProfileViewModel companyProfileViewModel)
         {
-            try
+            string username = ConfigurationManager.AppSettings["MobileUsername"];
+            string password = ConfigurationManager.AppSettings["MobilePassword"];
+            string senderId = ConfigurationManager.AppSettings["SenderID"];
+            string smsText = "Bank Name: " + companyProfileViewModel.BankName + ", Bank Name Arabic: " +
+                                companyProfileViewModel.BankNameAr + ", Account #: " +
+                                companyProfileViewModel.BankAccountNo + ", Iban #: " + companyProfileViewModel.BankIbanNo +
+                                ", Mobile #:" + companyProfileViewModel.BankMobileNo;
+            string mobileNo = companyProfileViewModel.MobileNo.Aggregate("", (current, item) => current +","+ item);
+            WebRequest smsRequest =
+                WebRequest.Create("http://www.jawalbsms.ws/api.php/sendsms?user=" + username + "&pass=" +
+                                    password +
+                                    "&to=" + mobileNo.Substring(1, mobileNo.Length-1) + "&message=" + smsText +
+                                    "&sender=" + senderId);
+            WebResponse smsRequestResponse = smsRequest.GetResponse();
+            Stream smsDataStream = smsRequestResponse.GetResponseStream();
+            StreamReader smsReader = new StreamReader(smsDataStream);
+            string smsResponse = smsReader.ReadToEnd();
+            //Patient SMS End
+
+            if (smsResponse.ToLower().Contains("success"))
             {
-                var companyProfile = profileService.GetDetail();
-                CompanyProfileViewModel companyProfileViewModel = companyProfile.CreateFromServerToClient();
-
-                string username = ConfigurationManager.AppSettings["MobileUsername"];
-                string password = ConfigurationManager.AppSettings["MobilePassword"];
-                string senderId = ConfigurationManager.AppSettings["SenderID"];
-                string smsText = "Bank Name: " + companyProfileViewModel.BankName + " Bank Name Arabic: " +
-                                 companyProfileViewModel.BankNameAr + " Account # " +
-                                 companyProfileViewModel.BankAccountNo + " Iban # " + companyProfileViewModel.BankIbanNo +
-                                 " Mobile #" + companyProfileViewModel.BankMobileNo;
-                string mobileNo = "abc";
-                WebRequest smsRequest =
-                    WebRequest.Create("http://www.jawalbsms.ws/api.php/sendsms?user=" + username + "&pass=" +
-                                      password +
-                                      "&to=" + mobileNo + "&message=" + smsText +
-                                      "&sender=" + senderId);
-                WebResponse smsRequestResponse = smsRequest.GetResponse();
-                Stream smsDataStream = smsRequestResponse.GetResponseStream();
-                StreamReader smsReader = new StreamReader(smsDataStream);
-                string smsResponse = smsReader.ReadToEnd();
-                //Patient SMS End
-
-                if (smsResponse.ToLower().Contains("success"))
-                {
-                    return Json(new { response = "", status = 200 }, JsonRequestBehavior.AllowGet);
-                }
+                TempData["message"] = new MessageViewModel {Message = "Message Sent", IsInfo = true};
+                return RedirectToAction("Detail");
             }
-            catch (Exception e)
-            {
-
+            TempData["message"] = new MessageViewModel { Message = "Error Code " + smsResponse, IsError = true };
+            return RedirectToAction("Detail");
+                
             }
-            return Json(new {response = "", status = 500}, JsonRequestBehavior.AllowGet);
-        }
+            
+
+        
+
+
 
         #endregion
     }

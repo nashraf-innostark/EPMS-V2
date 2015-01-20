@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = @EPMS.Web.Resources.CP.Profile.CompanyProfile;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
 }
 
 <div class="breadcrumb-container">
@@ -30,7 +31,9 @@
     }
 </header>
 
-
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 
 <div class="form-horizontal">
     <div class="container-fluid">
@@ -1054,31 +1057,30 @@
         <h3 id="popupHeader">Send SMS</h3>
     </div>
     <div class="form-horizontal">
-        <div class="popup-ct">
-            <div class="popup-custom row-fluid">
-                <div class="span3">
-                    <label class="control-label">Select Contact</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.CompanySocial.IstegramUserName, new { id = "" })
+        @using (Html.BeginForm("SendSMS", "CompanyProfile", FormMethod.Post, new {@id = "SMSForm", @class = "form-horizontal", role = "form"}))
+        {
+            @Html.HiddenFor(m => m.BankName, new {@class = "BankName" })
+            @Html.HiddenFor(m => m.BankNameAr, new { @class = "BankNameAr" })
+            @Html.HiddenFor(m => m.BankAccountNo, new { @class = "BankAccountNo" })
+            @Html.HiddenFor(m => m.BankIbanNo, new { @class = "BankIbanNo" })
+            @Html.HiddenFor(m => m.BankMobileNo, new { @class = "BankMobileNo" })
+            <div class="popup-ct">
+                <div class="popup-custom row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Select Contact</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @*@Html.DropDownList("NameE", new SelectList(ViewBag.ContactList, "", "MobileNumber"))*@
+                            @Html.ListBoxFor(m => m.MobileNo, new MultiSelectList(Model.List, "MobileNumber", "NameE"))
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="popup-custom row-fluid">
-                <div class="span3">
-                    <label class="control-label">Enter Number</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.CompanySocial.IstegramUserName, new { id = "" })
-                    </div>
+                <div class="">
+                    <button type="submit">Send</button>
                 </div>
             </div>
-            <div class="selectbtn">
-                <button type="submit" class="btn">Send</button>
-            </div>
-        </div>
+        }
     </div>
     </div>
 
@@ -1144,7 +1146,7 @@
 
     function SetDetail(id) {
         $('.BankName').val($('#BankName' + id).val());
-        $('.BankNameAr').val($('#BankNameAr' + id).val());
+        $('.BankNameAr').val($('#BankNameArabic' + id).val());
         $('.BankAccountNo').val($('#BankAccountNumber' + id).val());
         $('.BankIbanNo').val($('#BankIBANNumber' + id).val());
         $('.BankMobileNo').val($('#BankMobileNumber' + id).val());

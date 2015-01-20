@@ -1,4 +1,5 @@
-﻿using EPMS.Web.Models;
+﻿using System.Collections.Generic;
+using EPMS.Web.Models;
 
 namespace EPMS.Web.ViewModels.CompanyProfile
 {
@@ -21,5 +22,7 @@ namespace EPMS.Web.ViewModels.CompanyProfile
         public string BankAccountNo { get; set; }
         public string BankIbanNo { get; set; }
         public string BankMobileNo { get; set; }
+        public List<string> MobileNo { get; set; }
+        public IEnumerable<ContactList> List { get; set; }
     }
 }
