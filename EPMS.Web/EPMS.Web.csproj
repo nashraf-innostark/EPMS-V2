@@ -2464,6 +2464,7 @@
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
+    <Content Include="Scripts\jquery.leanModal.min.js" />
     <Content Include="Scripts\plugins\jquery.blockUI.js" />
     <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\CMS\Views\web.config" />
