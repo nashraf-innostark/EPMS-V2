@@ -120,36 +120,42 @@
                             element = '<a href="/CMS/Quotation/Detail/' + val + '">' + "Quotation " + val + '</a>';
                         }
                         return element;
-                    }
+                    },
+                    "bSortable": false
                 },
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
 
-                    }
+                    },
+                    "bSortable": false
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
 
-                    }
+                    },
+                    "bSortable": false
                 },
                 {
                     "aTargets": [6],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var value = "";
-                        if (full["OrderStatus"] == 1) {
+                        if (full["OrderStatus"] == 2) {
                             value = '@EPMS.Web.Resources.CMS.Order.Pending';
-                        } else if (full["OrderStatus"] == 2) {
+                        } else if (full["OrderStatus"] == 1) {
                             value = '@EPMS.Web.Resources.CMS.Order.OnGoing';
                         } else if (full["OrderStatus"] == 3) {
                             value = '@EPMS.Web.Resources.CMS.Order.Canceled';
                         }
                         else if (full["OrderStatus"] == 4) {
                             value = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                        }
+                        else if (full["OrderStatus"] == 5) {
+                            value = '@EPMS.Web.Resources.CMS.Order.Completed';
                         }
                         return value;
                     }

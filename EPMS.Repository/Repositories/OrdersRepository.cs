@@ -45,6 +45,10 @@ namespace EPMS.Repository.Repositories
                     {
                         { OrdersByColumn.OrderNumber,  c => c.OrderNo},
                         { OrdersByColumn.ClientName,  c => c.Customer.CustomerNameE},
+                        //{ OrdersByColumn.Quotation,  c => c.Customer.Quotations},
+                        //{ OrdersByColumn.Invoice,  c => c.},
+                        //{ OrdersByColumn.Reciepts,  c => c.},
+                        { OrdersByColumn.Status,  c => c.OrderStatus},
                     };
         #endregion
 
