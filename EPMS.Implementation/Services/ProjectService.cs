@@ -24,11 +24,11 @@ namespace EPMS.Implementation.Services
            return projectRepository.Find(id);
         }
 
-        public bool AddProject(Project project)
+        public long AddProject(Project project)
         {
             projectRepository.Add(project);
             projectRepository.SaveChanges();
-            return true;
+            return project.ProjectId;
         }
 
         public bool UpdateProject(Project complaint)

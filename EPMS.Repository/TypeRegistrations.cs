@@ -35,6 +35,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<ICompanyDocumentRepository, CompanyDocumentRepository>();
             unityContainer.RegisterType<ICompanySocialRepository, CompanySocialRepository>();
             unityContainer.RegisterType<IProjectRepository, ProjectRepository>();
+            unityContainer.RegisterType<IProjectDocumentRepository, ProjectDocumentRepository>();
         }
     }
 }

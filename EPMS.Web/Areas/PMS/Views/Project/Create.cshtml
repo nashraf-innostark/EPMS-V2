@@ -1,4 +1,6 @@
-﻿@model EPMS.Web.ViewModels.Project.ProjectViewModel
+﻿@using System.Web.UI.HtmlControls
+@using iTextSharp.text.pdf.qrcode
+@model EPMS.Web.ViewModels.Project.ProjectViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
@@ -35,7 +37,8 @@
 {
     <div class="container-fluid">
 
-
+        @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" });
+        @Html.HiddenFor(model => model.Project.Status, new { @id = "ProjectStatus" });
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -43,7 +46,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.NameE)
+                    @Html.TextBoxFor(model => model.Project.NameE, new { @id = "ProjectNameE" })
                     @Html.ValidationMessageFor(m => m.Project.NameE, "", new { @class = "required" })
                 </div>
             </div>
@@ -54,7 +57,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.NameA)
+                    @Html.TextBoxFor(model => model.Project.NameA, new { @id = "ProjectNameA" })
                     @Html.ValidationMessageFor(m => m.Project.NameA, "", new { @class = "required" })
                 </div>
             </div>
@@ -97,7 +100,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.SerialNo, new { @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Project.SerialNo, new { @id = "ProjectSerialNo", @readonly = "readonly" })
                 </div>
             </div>
         </div>
@@ -157,18 +160,9 @@
                 </div>
             </div>
         </div>
-
-        <script>
-        $(function () {
-
-            var price = parseInt($("#MobileNumber").val());
-            var TotalCost = parseInt($("#TotalCost").val());
-            var OtherCost = parseInt($("#OtherCost").val());
-            $("#Profit").val(price - (TotalCost + OtherCost));
-
-        });
-        </script>
-        <!--Input Field begin-->
+        @if (Model.Project.OrderId > 0)
+        {
+       <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="MobileNumber">Price</label>
@@ -363,7 +357,7 @@
         </div>
         <!--Sortable Responsive Table end-->
 
-
+        }
 
 
         <div class="control-group row-fluid">
@@ -372,7 +366,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
+                    <select id="ProjectStatusDDL">
                         <option value="1">On Going </option>
                         <option value="2">On Hold</option>
                         <option value="3">Canceled</option>
@@ -450,7 +444,7 @@
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
+                <button type="submit" class="btn" onclick="SetStatus()">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
             </div>
 
         </div>
@@ -478,6 +472,50 @@
                 });
             }
         });
+       
+        var errors = "";
+        var url = "/PMS/Project/UploadDocuments";
+        $('#upload').mfupload({
+
+            type: '',   //all types
+            maxsize: 1,
+            post_upload: url,
+            folder: "./",
+            ini_text: "Drag your file(s) here or click (max: 1MB each)",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                addDocName(result.filename);
+            },
+
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+
         $("#Client").on("change", function () {
             var customerId = $(this).val();
             var url = siteUrl + "/PMS/Project/GetCustomerOrders";
@@ -507,63 +545,45 @@
             }
 
         });
-
-        function populateDDL(data) {
-            $("#OrderNo").empty();
-            if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    $("#OrderNo").append(
-                        $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
-                    );
-                }
-            } else {
-                $("#OrderNo").append(
-                        $('<option></option>').val("").html("none")
-                    );
-            }
-            $.unblockUI();
-        }
-
-        var errors = "";
-
-        $('#upload').mfupload({
-
-            type: '',   //all types
-            maxsize: 1,
-            post_upload: "./file-uploader.html",
-            folder: "./",
-            ini_text: "Drag your file(s) here or click (max: 1MB each)",
-            over_text: "Drop Here",
-            over_col: '#666666',
-            over_bkcol: '#f0f0f0',
-
-            init: function () {
-                $("#uploaded").empty();
-            },
-
-            start: function (result) {
-                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
-            },
-
-            loaded: function (result) {
-                $("#PRO" + result.fileno).remove();
-                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
-            },
-
-            progress: function (result) {
-                $("#PRO" + result.fileno).css("width", result.perc + "%");
-            },
-
-            error: function (error) {
-                errors += error.filename + ": " + error.err_des + "\n";
-            },
-
-            completed: function () {
-                if (errors != "") {
-                    alert(errors);
-                    errors = "";
-                }
-            }
+        //set order's no as a project name
+        $("#OrderNo").on("change", function () {
+            var orderTitle = $("#OrderNo option:selected").text();
+            SetNames(orderTitle);
         });
     });
+   
+    function populateDDL(data) {
+        $("#OrderNo").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                //set first order's no as a project name
+                var orderTitle = data[0].OrderNo;
+                SetNames(orderTitle);
+                $("#OrderNo").append(
+                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                );
+            }
+        } else {
+            $("#OrderNo").append(
+                    $('<option></option>').val("").html("none")
+                );
+            SetNames("");
+        }
+        $.unblockUI();
+    }
+    
+    function addDocName(filename) {
+        var lis = $("#DocsNames").val();
+        lis += filename + "~";
+        $("#DocsNames").val(lis);
+    }
+    function SetStatus() {
+        $("#ProjectStatus").val($("#ProjectStatusDDL").val());
+    }
+    function SetNames(value) {
+        $("#ProjectNameE").val(value);//empty project name
+        $("#ProjectNameA").val(value);
+        var serial = (new Date().getFullYear()) + value;
+        $("#ProjectSerialNo").val(serial);
+    }
 </script>

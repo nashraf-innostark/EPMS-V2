@@ -281,11 +281,6 @@
     <Compile Include="DashboardModels\Payroll.cs" />
     <Compile Include="DashboardModels\Profile.cs" />
     <Compile Include="DashboardModels\Recruitment.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFCheckBoxFieldType.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFFieldType.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFHelper.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFOtherFieldType.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFTextFieldType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -582,7 +577,7 @@
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ApplicantCvs\dummy.txt" />
+    <Content Include="Files\ApplicantCvs\dummy.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ClinicAdmin.css" />
@@ -2983,7 +2978,7 @@
     <Folder Include="Areas\Notification\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
-    <Folder Include="Files\PrisonerFiles\" />
+    <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
