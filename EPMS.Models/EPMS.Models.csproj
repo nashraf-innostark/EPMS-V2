@@ -129,7 +129,7 @@
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\Project.cs" />
-    <Compile Include="DomainModels\ProjectDocuments.cs" />
+    <Compile Include="DomainModels\ProjectDocument.cs" />
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />

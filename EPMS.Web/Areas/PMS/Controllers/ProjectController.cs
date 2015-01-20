@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
@@ -26,12 +27,14 @@ namespace EPMS.Web.Areas.PMS.Controllers
         private readonly IProjectService projectService;
         private readonly ICustomerService customerService;
         private readonly IOrdersService ordersService;
+        private readonly IProjectDocumentService projectDocumentService;
 
-        public ProjectController(IProjectService projectService,ICustomerService customerService,IOrdersService ordersService)
+        public ProjectController(IProjectService projectService,ICustomerService customerService,IOrdersService ordersService,IProjectDocumentService projectDocumentService)
         {
             this.projectService = projectService;
             this.customerService = customerService;
             this.ordersService = ordersService;
+            this.projectDocumentService = projectDocumentService;
         }
 
         #region Loading Lists
@@ -65,7 +68,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         }
         #endregion
         #region Create
-        [SiteAuthorize(PermissionKey = "ProjectCreate")]
+        //[SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Create(long? projectId)
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
@@ -112,11 +115,23 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project.RecLastUpdatedDate = DateTime.Now;
 
                     //Add Project to Db
-                    projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
+                    projectViewModel.Project.ProjectId=projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
                     
                     
                     //Save file names in db
-
+                    var projectDocuments = projectViewModel.DocsNames.Substring(0,projectViewModel.DocsNames.Length-2).Split('~').ToList();
+                    foreach (var projectDocument in projectDocuments)
+                    {
+                        ProjectDocument doc=new ProjectDocument();
+                        doc.FileName = projectDocument;
+                        doc.ProjectId = projectViewModel.Project.ProjectId;
+                        doc.RecCreatedBy = Session["UserID"].ToString();
+                        doc.RecCreatedDate = DateTime.Now;
+                        doc.RecLastUpdatedBy = Session["UserID"].ToString();
+                        doc.RecLastUpdatedDate = DateTime.Now;
+                        projectDocumentService.AddProjectDocument(doc);
+                    }
+                    
 
                     TempData["message"] = new MessageViewModel
                     {
