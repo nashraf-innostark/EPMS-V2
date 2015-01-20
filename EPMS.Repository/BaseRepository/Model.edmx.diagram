@@ -62,7 +62,14 @@
         <AssociationConnector Association="DomainModels.FK_Project_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.AspNetUserRoles" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="DomainModels.PreRequisitTask" Width="1.5" PointX="9.625" PointY="7.75" />
+        <EntityTypeShape EntityType="DomainModels.TaskEmployee" Width="1.5" PointX="9.625" PointY="4.5" />
+        <EntityTypeShape EntityType="DomainModels.ProjectTask" Width="1.5" PointX="4.625" PointY="3.125" />
+        <AssociationConnector Association="DomainModels.FK_ProjectTask_Customer" />
+        <AssociationConnector Association="DomainModels.FK_PreRequisitTask_Task" />
+        <AssociationConnector Association="DomainModels.FK_ProjectTask_Project" />
+        <AssociationConnector Association="DomainModels.FK_TaskEmployee_Task" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
