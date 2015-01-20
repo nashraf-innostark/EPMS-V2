@@ -126,6 +126,9 @@
     <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
     <Compile Include="DomainModels\JobTitleHistory.cs" />
+    <Compile Include="DomainModels\Meeting.cs" />
+    <Compile Include="DomainModels\MeetingAttendee.cs" />
+    <Compile Include="DomainModels\MeetingDocument.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\PreRequisitTask.cs" />

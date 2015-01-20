@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPMS.Models.DomainModels
 {
@@ -16,6 +12,6 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
 
-        public virtual  ProjectTask ProjectTask { get; set; }
+        public virtual ProjectTask ProjectTask { get; set; }
     }
 }
