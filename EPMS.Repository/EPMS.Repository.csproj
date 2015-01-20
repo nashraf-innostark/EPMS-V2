@@ -150,6 +150,7 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\ProjectDocumentRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
+    <Compile Include="Repositories\ProjectTaskRepository.cs" />
     <Compile Include="Repositories\QuotationItemRepository.cs" />
     <Compile Include="Repositories\QuotationRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />

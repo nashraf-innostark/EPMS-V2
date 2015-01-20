@@ -95,5 +95,8 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<CompanyBankDetail> Bank { get; set; }
         public DbSet<CompanySocialDetail> Social { get; set; }
         public DbSet<CompanyDocumentDetail> Document { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
+        public DbSet<TaskEmployee> TaskEmployees { get; set; }
+        public DbSet<PreRequisitTask> PreRequisitTasks { get; set; }
     }
 }
