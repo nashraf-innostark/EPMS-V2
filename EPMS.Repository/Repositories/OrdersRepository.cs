@@ -56,9 +56,9 @@ namespace EPMS.Repository.Repositories
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
             
             Expression<Func<Order, bool>> query =
-                s => ((searchRequest.CustomerId == 0 || s.Customer.CustomerId == searchRequest.CustomerId) && (string.IsNullOrEmpty(searchRequest.SearchString)) || 
+                s => ( searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || 
                     (s.OrderNo.Contains(searchRequest.SearchString)) || (s.Customer.CustomerNameE.Contains(searchRequest.SearchString)) ||
-                    (s.Customer.CustomerNameA.Contains(searchRequest.SearchString)));
+                    (s.Customer.CustomerNameA.Contains(searchRequest.SearchString))));
 
             IEnumerable<Order> orders = searchRequest.sSortDir_0 == "asc" ?
                 DbSet

@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
     public class Project
     {
         public long ProjectId { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.PMS.Project), ErrorMessageResourceName = "ProjectNameERequiredMsg")]
         public string NameE { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.PMS.Project), ErrorMessageResourceName = "ProjectNameARequiredMsg")]
         public string NameA { get; set; }
         public long? CustomerId { get; set; }
         public long? OrderId { get; set; }
@@ -26,5 +26,10 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+
+        public string CustomerNameE { get; set; }
+        public string CustomerNameA { get; set; }
+        public double Price { get; set; }
+        public int Progress { get; set; }
     }
 }

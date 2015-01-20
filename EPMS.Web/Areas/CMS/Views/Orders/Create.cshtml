@@ -60,7 +60,8 @@
                         {
                          new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.CMS.Order.Pending },
                          new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.OnGoing },
-                         new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Canceled }
+                         new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Canceled },
+                         new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
                         }, new { @id = "OrderStatus", @class = "" })
                         @Html.ValidationMessageFor(m => m.Orders.OrderStatus, String.Empty, new { @class = "required" })
                     </div>

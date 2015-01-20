@@ -1,11 +1,9 @@
-﻿@using EPMS.Web.Models
-@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
+﻿@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.CreateNew;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    //IEnumerable<Customer> clients = (Customer)ViewBag.Customers;
 }
 
 <!-- Navigation Bar -->
@@ -52,6 +50,10 @@
                     @if (direction == "ltr")
                     {
                         @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
+                    }
+                    @if (direction == "rtl")
+                    {
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "ClientAr" })
                     }
                     @Html.ValidationMessageFor(m => m.CustomerId, String.Empty, new { @class = "required" })
                 </div>
@@ -323,7 +325,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.NotesEn, new { @id = "ExtraInformationEn", @class = "", })
+                    @Html.TextAreaFor(model => model.NotesEn, new { @id = "ExtraInformationEn", @class = "", })
                 </div>
             </div>
         </div>
@@ -333,7 +335,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.NotesAr, new { @id = "ExtraInformationaAr", @class = "", })
+                    @Html.TextAreaFor(model => model.NotesAr, new { @id = "ExtraInformationAr", @class = "", })
                 </div>
             </div>
         </div>
@@ -348,6 +350,7 @@
 <script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     function setClientName() {
         $("#ClientName").val($("#Client option:selected").text());
@@ -387,6 +390,8 @@
     var isUpdate = false;
     var elementToDelete;
     $(document).ready(function () {
+        CKEDITOR.replace('ExtraInformationEn');
+        CKEDITOR.replace('ExtraInformationAr');
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
             $("#Discount").val(0);
@@ -740,10 +745,16 @@
     });
     function populateDDL(data) {
         $("#OrderNo").empty();
-        for (var i = 0; i < data.length; i++) {
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                $("#OrderNo").append(
+                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                );
+            }
+        } else {
             $("#OrderNo").append(
-                $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
-            );
+                    $('<option></option>').val("").html("none")
+                );
         }
         $.unblockUI();
     }

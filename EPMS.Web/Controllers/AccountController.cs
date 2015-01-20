@@ -276,7 +276,7 @@ namespace IdentitySample.Controllers
         [SiteAuthorize(PermissionKey = "User")]
         public ActionResult Users()
         {
-            //if (Session["LoginID"] == null)
+            //if (Session["UserID"] == null)
             //{
             //    return RedirectToAction("Login");
             //}
@@ -939,7 +939,7 @@ namespace IdentitySample.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             string role = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().FindById(result.AspNetRoles.ToList()[0].Id).Name;
             //Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
-            Session["LoginID"] = result.Id;
+            Session["UserID"] = result.Id;
             Session["RoleName"] = role;
         }
     }

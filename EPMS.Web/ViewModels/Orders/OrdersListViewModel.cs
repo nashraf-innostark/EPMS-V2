@@ -10,6 +10,7 @@ namespace EPMS.Web.ViewModels.Orders
         {
             SearchRequest = new OrdersSearchRequest();
         }
+
         public IEnumerable<Order> aaData { get; set; }
         public OrdersSearchRequest SearchRequest { get; set; }
         

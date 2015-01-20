@@ -61,6 +61,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accepted.
+        /// </summary>
+        public static string Accepted {
+            get {
+                return ResourceManager.GetString("Accepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order has been Added.
         /// </summary>
         public static string Added {

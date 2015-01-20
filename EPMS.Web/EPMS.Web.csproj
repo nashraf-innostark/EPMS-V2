@@ -258,6 +258,8 @@
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
+    <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -300,6 +302,7 @@
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
+    <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -501,6 +504,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tasks.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\PMS\Project.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Project.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -510,16 +518,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Products\Product.ar.Designer.cs">
-      <DependentUpon>Product.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Products\Product.Designer.cs">
-      <DependentUpon>Product.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
@@ -545,12 +543,16 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
+    <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
+    <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -558,6 +560,11 @@
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
+    <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\OnGoing.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
+    <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2955,7 +2962,6 @@
     <Folder Include="Areas\Notification\Controllers\" />
     <Folder Include="Areas\Notification\Models\" />
     <Folder Include="Areas\Notification\Views\Shared\" />
-    <Folder Include="Areas\PMS\Controllers\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\PrisonerFiles\" />
@@ -3002,6 +3008,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Project.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Project.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.ar.Designer.cs</LastGenOutput>
@@ -3010,14 +3020,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Products\Product.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Product.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Products\Product.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Product.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

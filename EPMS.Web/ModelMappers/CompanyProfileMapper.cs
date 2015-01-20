@@ -1,4 +1,5 @@
-﻿using EPMS.Web.ViewModels.CompanyProfile;
+﻿using EPMS.Web.Models;
+using EPMS.Web.ViewModels.CompanyProfile;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -108,6 +109,24 @@ namespace EPMS.Web.ModelMappers
             }
 
             return companyProfileViewModel;
+        }
+
+        public static CompanyProfile CreateFromServerToClientForQuotation(this DomainModels.CompanyProfile source)
+        {
+            return new CompanyProfile
+            {
+                CompanyId = source.CompanyId,
+                CompanyLogoPath = source.CompanyLogoPath,
+                CompanyNameE = source.CompanyNameE,
+                CompanyNameA = source.CompanyNameA,
+                CompanyWebsite = source.CompanyWebsite,
+                CompanyEmail = source.CompanyEmail,
+                CompanyAddressE = source.CompanyAddressE,
+                CompanyAddressA = source.CompanyAddressA,
+                CompanyLocation = source.CompanyLocation,
+                CompanyNumber = source.CompanyNumber,
+                CompanyMobileNumber = source.CompanyMobileNumber,
+            };
         }
         public static DomainModels.CompanyProfile CreateFromProfile(this Models.CompanyProfile source)
         {

@@ -117,46 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CategoryErrorMessage" xml:space="preserve">
-    <value>Please enter category.</value>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New</value>
   </data>
-  <data name="CategoryId" xml:space="preserve">
-    <value>Category Id</value>
+  <data name="AddNewProject" xml:space="preserve">
+    <value>Add New Project</value>
   </data>
-  <data name="CategoryName" xml:space="preserve">
-    <value>Category Name </value>
+  <data name="ClientName" xml:space="preserve">
+    <value>Client Name</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>Delivery Date</value>
   </data>
-  <data name="DuplicateName" xml:space="preserve">
-    <value>Product already exist with this name.</value>
+  <data name="FinishedProjects" xml:space="preserve">
+    <value>Finished Projects</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Successfully edit.</value>
+  <data name="FinishedProjectsList" xml:space="preserve">
+    <value>Finished Projects List</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="ListPageHeading" xml:space="preserve">
+    <value>Projects</value>
   </data>
-  <data name="NameErrorMessage" xml:space="preserve">
-    <value>Please enter Name.</value>
+  <data name="ListPageTitle" xml:space="preserve">
+    <value>Project Management</value>
+  </data>
+  <data name="NewProject" xml:space="preserve">
+    <value>New Project</value>
   </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
-  <data name="PriceErrorMessage" xml:space="preserve">
-    <value>Please enter price.</value>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
   </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>Product Name :</value>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Successfully save.</value>
+  <data name="ProjectsList" xml:space="preserve">
+    <value>Projects List</value>
   </data>
-  <data name="SelectCategory" xml:space="preserve">
-    <value>--Select Category--</value>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
   </data>
-  <data name="TotalPrice" xml:space="preserve">
-    <value>Total Price:</value>
+  <data name="ProjectNameERequiredMsg" xml:space="preserve">
+    <value>Project name in english is required</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create Project</value>
+  </data>
+  <data name="DescriptionA" xml:space="preserve">
+    <value>Description arabic</value>
+  </data>
+  <data name="DescriptionE" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>file size shouldn't exceed 1MB</value>
+  </data>
+  <data name="NotesA" xml:space="preserve">
+    <value>Notes arabic</value>
+  </data>
+  <data name="NotesCustomerA" xml:space="preserve">
+    <value>Notes For Customer arabic</value>
+  </data>
+  <data name="NotesCustomerE" xml:space="preserve">
+    <value>Notes For Customer</value>
+  </data>
+  <data name="NotesE" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>Order Name - Number</value>
+  </data>
+  <data name="ProjectNameAr" xml:space="preserve">
+    <value>Project Name arabic</value>
+  </data>
+  <data name="ProjectNameARequiredMsg" xml:space="preserve">
+    <value>Project name in arabic is required</value>
+  </data>
+  <data name="ProjectSerialNo" xml:space="preserve">
+    <value>Project Serial Number</value>
   </data>
 </root>
