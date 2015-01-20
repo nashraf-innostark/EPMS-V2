@@ -257,6 +257,7 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
@@ -577,6 +578,7 @@
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
+    <Content Include="Areas\Meeting\Views\web.config" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2973,6 +2975,9 @@
     <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\Meeting\Controllers\" />
+    <Folder Include="Areas\Meeting\Models\" />
+    <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />
     <Folder Include="Areas\Notification\Models\" />
     <Folder Include="Areas\Notification\Views\Shared\" />

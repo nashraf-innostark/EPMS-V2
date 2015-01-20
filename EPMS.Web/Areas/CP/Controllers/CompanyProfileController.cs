@@ -174,12 +174,7 @@ namespace EPMS.Web.Areas.CP.Controllers
             return RedirectToAction("Detail");
                 
             }
-            
-
         }
 
-
-
         #endregion
-    }
 }

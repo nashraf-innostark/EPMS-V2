@@ -126,12 +126,18 @@
     <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
     <Compile Include="DomainModels\JobTitleHistory.cs" />
+    <Compile Include="DomainModels\Meeting.cs" />
+    <Compile Include="DomainModels\MeetingAttendee.cs" />
+    <Compile Include="DomainModels\MeetingDocument.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\Order.cs" />
+    <Compile Include="DomainModels\PreRequisitTask.cs" />
     <Compile Include="DomainModels\Project.cs" />
+    <Compile Include="DomainModels\ProjectTask.cs" />
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
+    <Compile Include="DomainModels\TaskEmployee.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>

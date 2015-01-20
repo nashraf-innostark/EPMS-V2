@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cb7d9ced239d40d394a4188be89bd4c4" Name="Diagram1" ZoomLevel="73">
+      <Diagram DiagramId="cb7d9ced239d40d394a4188be89bd4c4" Name="Diagram1" ZoomLevel="78">
         <EntityTypeShape EntityType="DomainModels.Allowance" Width="1.5" PointX="7.5" PointY="14.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.AspNetRole" Width="1.5" PointX="5.25" PointY="25.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="17.875" IsExpanded="true" />
@@ -25,7 +25,7 @@
         <EntityTypeShape EntityType="DomainModels.JobTitle" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.JobTitleHistory" Width="1.5" PointX="5.25" PointY="33.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DomainModels.MenuRight" Width="1.5" PointX="7.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DomainModels.MenuRight" Width="1.5" PointX="7.5" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.Notification" Width="1.5" PointX="7.5" PointY="33.625" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.Order" Width="1.5" PointX="0.75" PointY="22.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DomainModels.Project" Width="1.5" PointX="10" PointY="11.5" IsExpanded="true" />
@@ -62,6 +62,20 @@
         <AssociationConnector Association="DomainModels.FK_Project_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="DomainModels.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DomainModels.Meeting" Width="1.5" PointX="3.375" PointY="2.25" />
+        <EntityTypeShape EntityType="DomainModels.MeetingAttendee" Width="1.5" PointX="5.625" PointY="1.125" />
+        <EntityTypeShape EntityType="DomainModels.MeetingDocument" Width="1.5" PointX="5.625" PointY="5" />
+        <EntityTypeShape EntityType="DomainModels.PreRequisitTask" Width="1.5" PointX="19.5" PointY="15" />
+        <EntityTypeShape EntityType="DomainModels.ProjectDocument" Width="1.5" PointX="12.25" PointY="17.5" />
+        <EntityTypeShape EntityType="DomainModels.ProjectTask" Width="1.5" PointX="17.25" PointY="12" />
+        <EntityTypeShape EntityType="DomainModels.TaskEmployee" Width="1.5" PointX="19.5" PointY="11.75" />
+        <AssociationConnector Association="DomainModels.FK_ProjectTask_Customer" />
+        <AssociationConnector Association="DomainModels.FK_MeetingAttendees_Meeting" />
+        <AssociationConnector Association="DomainModels.FK_MeetingDocuments_Meeting" />
+        <AssociationConnector Association="DomainModels.FK_PreRequisitTask_Task" />
+        <AssociationConnector Association="DomainModels.FK_ProjectDocuments_Project" />
+        <AssociationConnector Association="DomainModels.FK_ProjectTask_Project" />
+        <AssociationConnector Association="DomainModels.FK_TaskEmployee_Task" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
