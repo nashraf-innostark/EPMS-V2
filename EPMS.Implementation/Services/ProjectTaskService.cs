@@ -29,6 +29,11 @@ namespace EPMS.Implementation.Services
             return Repository.GetAll();
         }
 
+        public IEnumerable<ProjectTask> GetTasksByProjectId(long projectId)
+        {
+            return Repository.GetTasksByProjectId(projectId);
+        }
+
         public long AddProjectTask(ProjectTask task)
         {
             Repository.Add(task);

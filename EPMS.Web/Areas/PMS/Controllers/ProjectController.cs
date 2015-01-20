@@ -22,13 +22,15 @@ namespace EPMS.Web.Areas.PMS.Controllers
     [Authorize]
     public class ProjectController : BaseController
     {
+        private readonly IProjectTaskService projectTaskService;
         private readonly IProjectService projectService;
         private readonly ICustomerService customerService;
         private readonly IOrdersService ordersService;
         private readonly IProjectDocumentService projectDocumentService;
 
-        public ProjectController(IProjectService projectService,ICustomerService customerService,IOrdersService ordersService,IProjectDocumentService projectDocumentService)
+        public ProjectController(IProjectTaskService projectTaskService,IProjectService projectService,ICustomerService customerService,IOrdersService ordersService,IProjectDocumentService projectDocumentService)
         {
+            this.projectTaskService = projectTaskService;
             this.projectService = projectService;
             this.customerService = customerService;
             this.ordersService = ordersService;
@@ -76,9 +78,14 @@ namespace EPMS.Web.Areas.PMS.Controllers
             if (id != null)
             {
                 var project = projectService.FindProjectById((long)id);
+                var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                 if (project != null)
                 {
                     projectViewModel.Project = project.CreateFromServerToClient();
+                }
+                if (projectTasks != null)
+                {
+                    projectViewModel.ProjectTasks = projectTasks.Select(x=>x.CreateFromServerToClient());
                 }
             }
             projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
