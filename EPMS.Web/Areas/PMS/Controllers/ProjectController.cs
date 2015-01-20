@@ -7,14 +7,12 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Complaint;
 using EPMS.Web.ViewModels.Project;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
@@ -24,13 +22,15 @@ namespace EPMS.Web.Areas.PMS.Controllers
     [Authorize]
     public class ProjectController : BaseController
     {
+        private readonly IProjectTaskService projectTaskService;
         private readonly IProjectService projectService;
         private readonly ICustomerService customerService;
         private readonly IOrdersService ordersService;
         private readonly IProjectDocumentService projectDocumentService;
 
-        public ProjectController(IProjectService projectService,ICustomerService customerService,IOrdersService ordersService,IProjectDocumentService projectDocumentService)
+        public ProjectController(IProjectTaskService projectTaskService,IProjectService projectService,ICustomerService customerService,IOrdersService ordersService,IProjectDocumentService projectDocumentService)
         {
+            this.projectTaskService = projectTaskService;
             this.projectService = projectService;
             this.customerService = customerService;
             this.ordersService = ordersService;
@@ -68,19 +68,24 @@ namespace EPMS.Web.Areas.PMS.Controllers
         }
         #endregion
         #region Create
-        //[SiteAuthorize(PermissionKey = "ProjectCreate")]
-        public ActionResult Create(long? projectId)
+        [SiteAuthorize(PermissionKey = "ProjectCreate")]
+        public ActionResult Create(long? id)
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString();
             var customers = customerService.GetAll();
             var orders = ordersService.GetAll();
-            if (projectId != null)
+            if (id != null)
             {
-                var project = projectService.FindProjectById((long)projectId);
+                var project = projectService.FindProjectById((long)id);
+                var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                 if (project != null)
                 {
                     projectViewModel.Project = project.CreateFromServerToClient();
+                }
+                if (projectTasks != null)
+                {
+                    projectViewModel.ProjectTasks = projectTasks.Select(x=>x.CreateFromServerToClient());
                 }
             }
             projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
@@ -119,25 +124,27 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     
                     
                     //Save file names in db
-                    var projectDocuments = projectViewModel.DocsNames.Substring(0,projectViewModel.DocsNames.Length-2).Split('~').ToList();
-                    foreach (var projectDocument in projectDocuments)
+                    if (!string.IsNullOrEmpty(projectViewModel.DocsNames))
                     {
-                        ProjectDocument doc=new ProjectDocument();
-                        doc.FileName = projectDocument;
-                        doc.ProjectId = projectViewModel.Project.ProjectId;
-                        doc.RecCreatedBy = Session["UserID"].ToString();
-                        doc.RecCreatedDate = DateTime.Now;
-                        doc.RecLastUpdatedBy = Session["UserID"].ToString();
-                        doc.RecLastUpdatedDate = DateTime.Now;
-                        projectDocumentService.AddProjectDocument(doc);
+                        var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 2).Split('~').ToList();
+                        foreach (var projectDocument in projectDocuments)
+                        {
+                            ProjectDocument doc = new ProjectDocument();
+                            doc.FileName = projectDocument;
+                            doc.ProjectId = projectViewModel.Project.ProjectId;
+                            doc.RecCreatedBy = Session["UserID"].ToString();
+                            doc.RecCreatedDate = DateTime.Now;
+                            doc.RecLastUpdatedBy = Session["UserID"].ToString();
+                            doc.RecLastUpdatedDate = DateTime.Now;
+                            projectDocumentService.AddProjectDocument(doc);
+                        }
                     }
-                    
 
-                    TempData["message"] = new MessageViewModel
-                    {
-                        Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
-                        IsUpdated = true
-                    };
+                    //TempData["message"] = new MessageViewModel
+                    //{
+                    //    Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
+                    //    IsUpdated = true
+                    //};
                 }
             }
             catch (Exception e)

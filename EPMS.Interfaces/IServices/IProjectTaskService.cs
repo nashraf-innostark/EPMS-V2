@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.IServices
     {
         ProjectTask FindProjectTaskById(long id);
         IEnumerable<ProjectTask> GetAll();
+        IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
         long AddProjectTask(ProjectTask task);
         bool UpdateProjectTask(ProjectTask task);
         void DeleteProjectTask(ProjectTask task);

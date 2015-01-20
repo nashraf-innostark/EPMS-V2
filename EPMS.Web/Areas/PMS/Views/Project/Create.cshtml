@@ -37,8 +37,8 @@
 {
     <div class="container-fluid">
 
-        @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" });
-        @Html.HiddenFor(model => model.Project.Status, new { @id = "ProjectStatus" });
+        @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" })
+        @Html.HiddenFor(model => model.Project.Status, new { @id = "ProjectStatus" })
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.ClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.ClientName, new { @class = "select2me", @id = "Client" }))
+                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
                         @Html.ValidationMessageFor(m => m.Project.CustomerId, "", new { @class = "required" })
                     </div>
                 </div>
@@ -160,16 +160,16 @@
                 </div>
             </div>
         </div>
-        @if (Model.Project.OrderId > 0)
+        @if (Model.Project.ProjectId > 0)
         {
        <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MobileNumber">Price</label>
+                <label class="control-label">@EPMS.Web.Resources.PMS.Project.Price</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="MobileNumber" type="text" name="inputField" value="5000" class="required number">
+                    @Html.TextBoxFor(model => model.Project.Price, new { @id = "ProjectPrice" })
                 </div>
             </div>
         </div>
@@ -177,106 +177,84 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong><a>Tasks</a></strong>
+            <strong><a>@EPMS.Web.Resources.PMS.Project.Tasks</a></strong>
         </div>
 
         <!--Sortable Responsive Table begin-->
-        <div class="row-fluid">
-            <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableRes">
-                    <thead>
+    <div class="row-fluid">
+        <div class="span12">
+            <table id="TasksTable" class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
+                        <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
+                        <th>@*@EPMS.Web.Resources.PMS.Project.TaskPreReq*@</th>
+                        <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     @foreach (var item in Model.ProjectTasks.ToList())
+                    {
                         <tr>
-                            <th>Tasks</th>
-                            <th>Date</th>
-                            <th>pre-requist task</th>
-                            <th>Employees</th>
-                            <th>Progress</th>
+                            <td>@item.TaskId</td>
+                            <td><a href="/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
+                            <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
+                            <td>@item.TaskProgress</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="gradeX">
-                            <td><a href="TaskDetails(Admin,PM)En.html">Task4</a></td>
-                            <td>Date</td>
-                            <td>task1 - task2 </td>
-                            <td>Abdul Aziz </td>
-                            <td>
-                                <div class="progress progress-info">
-                                    <div class="bar" style="width: 25%">25%</div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="gradeA">
-                            <td><a href="TaskDetails(Admin,PM)En.html">Task5</a></td>
-                            <td>Date</td>
-                            <td>task1 - task2 </td>
-                            <td>Abdul Aziz </td>
-                            <td>
-                                <div class="progress progress-info">
-                                    <div class="bar" style="width: 25%">25%</div>
-                                </div>
-
-
-
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
+    </div>
         <!--Sortable Responsive Table end-->
         <!--Input Field begin-->
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="TotalCost">Total Tasks Cost</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    <input id="TotalCost" type="text" name="inputField" value="1000" class="required number" disabled>
-                </div>
+    <div class="control-group row-fluid">
+        <div class="span3">
+            <label class="control-label">@EPMS.Web.Resources.PMS.Project.TotalTasksCost</label>
+        </div>
+        <div class="span9">
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Project.TotalTasksCost, new { @id = "ProjectPrice", @readonly = true })
             </div>
         </div>
+    </div>
         <!--Input Field end-->
         <!--Input Field begin-->
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="OtherCost">Other Cost</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    <input id="OtherCost" type="text" name="inputField" value="500" class="required number">
-                </div>
+    <div class="control-group row-fluid">
+        <div class="span3">
+            <label class="control-label">@EPMS.Web.Resources.PMS.Project.OtherCost</label>
+        </div>
+        <div class="span9">
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Project.OtherCost, new { @id = "ProjectPrice" })
             </div>
         </div>
+    </div>
         <!--Input Field end-->
         <!--Input Field begin-->
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Profit">Profit</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    <input id="Profit" type="text" name="inputField" value="0" disabled>
-                </div>
+    <div class="control-group row-fluid">
+        <div class="span3">
+            <label class="control-label">@EPMS.Web.Resources.PMS.Project.Profit</label>
+        </div>
+        <div class="span9">
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Project.Profit, new { @id = "ProjectPrice",@readonly=true })
             </div>
         </div>
+    </div>
         <!--Input Field end-->
         <!--Input Field begin-->
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Progress">Progress</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    <input id="Progress" type="text" name="inputField" value="0">
-
-
-                </div>
+    <div class="control-group row-fluid">
+        <div class="span3">
+            <label class="control-label">@EPMS.Web.Resources.PMS.Project.Progress</label>
+        </div>
+        <div class="span9">
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Project.ProgressTotal, new { @id = "ProjectPrice" })
             </div>
         </div>
+    </div>
         <!--Input Field end-->
 
 
@@ -285,76 +263,38 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Installment Plan</strong>
+            <strong>@EPMS.Web.Resources.PMS.Project.InstallmentPlan</strong>
         </div>
 
 
         <!--Sortable Responsive Table begin-->
-        <div class="row-fluid">
-            <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableProjects">
-                    <thead>
-                        <tr>
-                            <th><a href="OrderDetails(admin)En.html">Installment</a> </th>
-                            <th>Due At Project Porgress</th>
-                            <th>Mathod of Payment</th>
-                            <th>Paid</th>
-                            <th>Creat/Show Receipt</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="gradeX">
-                            <td>1st</td>
-                            <td>
-                                <div class="progress progress-info">
-                                    <div class="bar" style="width: 20%">20%</div>
-                                </div>
-                            </td>
-                            <td>Online</td>
-                            <td>Yes</td>
-                            <td><a href="">Creat</a>/<a href="">Show Receipt</a></td>
-                        </tr>
-
-                        <tr class="gradeA">
-                            <td>2st</td>
-                            <td>
-                                <div class="progress progress-info">
-                                    <div class="bar" style="width: 30%">30%</div>
-                                </div>
-                            </td>
-                            <td>Offline</td>
-                            <td>No</td>
-                            <td><a href="">Creat</a>/<a href="">Show Receipt</a>></td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>3rd</td>
-                            <td>
-                                <div class="progress progress-info">
-                                    <div class="bar" style="width: 10%">10%</div>
-                                </div>
-                            </td>
-                            <td>Online</td>
-                            <td>Yes</td>
-                            <td><a href="">Creat</a>/<a href="">Show Receipt</a></td>
-                        </tr>
-
-                        <tr class="gradeA">
-                            <td>4th</td>
-                            <td>
-                                <div class="progress progress-info">
-                                    <div class="bar" style="width: 40%">40%</div>
-                                </div>
-                            </td>
-                            <td>Offline</td>
-                            <td>No</td>
-                            <td><a href="">Creat</a>/<a href="">Show Receipt</a></td>
-                        </tr>
-
-
+    <div class="row-fluid">
+        <div class="span12">
+            <table id="InstallmentTable" class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
+                        <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
+                        <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
+                        <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                       @* @foreach (var item in Model.Complaints.ToList())
+                        {
+                            <tr>
+                                <td>@item.ComplaintId</td>
+                                <td><a href="/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
+                                <td>@Html.ActionLink(@item.Topic, "Create", new { id = item.ComplaintId })</td>
+                                <td>@item.ComplaintDate.ToShortDateString()</td>
+                                <td>@item.IsRepliedString</td>
+                            </tr>
+                        }*@
                     </tbody>
-                </table>
-            </div>
+            </table>
         </div>
+    </div>
         <!--Sortable Responsive Table end-->
 
         }
@@ -464,7 +404,7 @@
         CKEDITOR.replace('NotesE');
         CKEDITOR.replace('NotesForCustomerA');
         CKEDITOR.replace('NotesForCustomerE');
-        $('#tableSortableRes,#tableSortableProjects').dataTable({
+        $('#TasksTable,#InstallmentTable').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({

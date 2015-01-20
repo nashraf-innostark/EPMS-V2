@@ -18,8 +18,8 @@ namespace EPMS.Web.ModelMappers.PMS
                 StartDate = source.StartDate,
                 EndDate = source.EndDate,
                 Status = source.Status,
-                NotesE = source.NameE,
-                NotesA = source.NameA,
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
                 NotesForCustomerE = source.NotesForCustomerE,
                 NotesForCustomerA = source.NotesForCustomerA,
                 RecCreatedBy = source.RecCreatedBy,
@@ -35,14 +35,26 @@ namespace EPMS.Web.ModelMappers.PMS
             project.NameE = source.NameE;
             project.NameA = source.NameA;
             project.CustomerId = source.CustomerId;
+            project.OrderId = source.OrderId;
+            project.SerialNo = source.SerialNo;
+            project.DescriptionE = source.DescriptionE;
+            project.DescriptionA = source.DescriptionA;
+            project.StartDate = source.StartDate;
+            project.EndDate = source.EndDate;
+            project.Status = source.Status;
+            project.NotesE = source.NotesE;
+            project.NotesA = source.NotesA;
+            project.NotesForCustomerE = source.NotesForCustomerE;
+            project.NotesForCustomerA = source.NotesForCustomerA;
+            project.RecCreatedBy = source.RecCreatedBy;
+            project.RecCreatedDate = source.RecCreatedDate;
+            project.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            project.RecLastUpdatedDate = source.RecLastUpdatedDate;
             if (source.CustomerId > 0)
             {
                 project.CustomerNameE = source.Customer.CustomerNameE;
                 project.CustomerNameA = source.Customer.CustomerNameA;
             }
-            project.StartDate = source.StartDate;
-            project.EndDate = source.EndDate;
-            
             return project;
         }
         //public static DashboardModels.Project CreateForDashboard(this Project source)

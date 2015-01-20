@@ -30,6 +30,10 @@ namespace EPMS.Web.Models
         public string CustomerNameE { get; set; }
         public string CustomerNameA { get; set; }
         public double Price { get; set; }
+        public double TotalTasksCost { get; set; }
+        public double OtherCost { get; set; }
+        public double Profit { get; set; }
+        public double ProgressTotal { get; set; }
         public int Progress { get; set; }
     }
 }

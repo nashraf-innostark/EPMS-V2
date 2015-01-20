@@ -38,6 +38,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<ICompanySocialService, CompanySocialService>();
             unityContainer.RegisterType<IProjectService, ProjectService>();
             unityContainer.RegisterType<IProjectDocumentService, ProjectDocumentService>();
+            unityContainer.RegisterType<IProjectTaskService, ProjectTaskService>();
         }
     }
 }

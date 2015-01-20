@@ -97,6 +97,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create/Show Receipt.
+        /// </summary>
+        public static string CreateShowReceipt {
+            get {
+                return ResourceManager.GetString("CreateShowReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delivery Date.
         /// </summary>
         public static string DeliveryDate {
@@ -129,6 +138,24 @@ namespace EPMS.Web.Resources.PMS {
         public static string Documents {
             get {
                 return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Due At Project Porgress.
+        /// </summary>
+        public static string DueAtProjectPorgress {
+            get {
+                return ResourceManager.GetString("DueAtProjectPorgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee.
+        /// </summary>
+        public static string Employee {
+            get {
+                return ResourceManager.GetString("Employee", resourceCulture);
             }
         }
         
@@ -169,6 +196,24 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Installment.
+        /// </summary>
+        public static string Installment {
+            get {
+                return ResourceManager.GetString("Installment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment Plan.
+        /// </summary>
+        public static string InstallmentPlan {
+            get {
+                return ResourceManager.GetString("InstallmentPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Projects.
         /// </summary>
         public static string ListPageHeading {
@@ -183,6 +228,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string ListPageTitle {
             get {
                 return ResourceManager.GetString("ListPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Method of Payment.
+        /// </summary>
+        public static string MethodOfPayment {
+            get {
+                return ResourceManager.GetString("MethodOfPayment", resourceCulture);
             }
         }
         
@@ -241,11 +295,38 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Other Cost.
+        /// </summary>
+        public static string OtherCost {
+            get {
+                return ResourceManager.GetString("OtherCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid.
+        /// </summary>
+        public static string Paid {
+            get {
+                return ResourceManager.GetString("Paid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profit.
+        /// </summary>
+        public static string Profit {
+            get {
+                return ResourceManager.GetString("Profit", resourceCulture);
             }
         }
         
@@ -313,11 +394,56 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to - Select Client -.
+        /// </summary>
+        public static string SelectClientName {
+            get {
+                return ResourceManager.GetString("SelectClientName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Date.
         /// </summary>
         public static string StartDate {
             get {
                 return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string TaskDate {
+            get {
+                return ResourceManager.GetString("TaskDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pre-requist task.
+        /// </summary>
+        public static string TaskPreReq {
+            get {
+                return ResourceManager.GetString("TaskPreReq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        public static string Tasks {
+            get {
+                return ResourceManager.GetString("Tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Tasks Cost.
+        /// </summary>
+        public static string TotalTasksCost {
+            get {
+                return ResourceManager.GetString("TotalTasksCost", resourceCulture);
             }
         }
     }
