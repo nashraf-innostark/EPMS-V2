@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DomainModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -448,6 +448,18 @@
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesForCustomerE" Type="nvarchar(max)" />
           <Property Name="NotesForCustomerA" Type="nvarchar(max)" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectDocuments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectId" Type="bigint" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
@@ -908,6 +920,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProjectDocuments_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="ProjectDocuments" Type="Self.ProjectDocuments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="ProjectDocuments">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectTask_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="*" />
@@ -980,7 +1004,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DomainModelsStoreContainer">
+        <EntityContainer Name="EPMSModelStoreContainer">
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -1007,6 +1031,7 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreRequisitTask" EntityType="Self.PreRequisitTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTask" EntityType="Self.ProjectTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotation" EntityType="Self.Quotation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
@@ -1128,6 +1153,10 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Project" EntitySet="Project" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProjectDocuments_Project" Association="Self.FK_ProjectDocuments_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectDocuments" EntitySet="ProjectDocuments" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProjectTask_Customer" Association="Self.FK_ProjectTask_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="ProjectTask" EntitySet="ProjectTask" />
@@ -1156,157 +1185,176 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DomainModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Allowances" EntityType="DomainModels.Allowance" />
-          <EntitySet Name="AspNetRoles" EntityType="DomainModels.AspNetRole" />
-          <EntitySet Name="AspNetUserClaims" EntityType="DomainModels.AspNetUserClaim" />
-          <EntitySet Name="AspNetUserLogins" EntityType="DomainModels.AspNetUserLogin" />
-          <EntitySet Name="AspNetUsers" EntityType="DomainModels.AspNetUser" />
-          <EntitySet Name="CompanyBankDetails" EntityType="DomainModels.CompanyBankDetail" />
-          <EntitySet Name="CompanyDocumentDetails" EntityType="DomainModels.CompanyDocumentDetail" />
-          <EntitySet Name="CompanyProfiles" EntityType="DomainModels.CompanyProfile" />
-          <EntitySet Name="CompanySocialDetails" EntityType="DomainModels.CompanySocialDetail" />
-          <EntitySet Name="Complaints" EntityType="DomainModels.Complaint" />
-          <EntitySet Name="Customers" EntityType="DomainModels.Customer" />
-          <EntitySet Name="Departments" EntityType="DomainModels.Department" />
-          <EntitySet Name="Employees" EntityType="DomainModels.Employee" />
-          <EntitySet Name="EmployeeJobHistories" EntityType="DomainModels.EmployeeJobHistory" />
-          <EntitySet Name="EmployeeRequests" EntityType="DomainModels.EmployeeRequest" />
-          <EntitySet Name="JobApplicants" EntityType="DomainModels.JobApplicant" />
-          <EntitySet Name="JobOffereds" EntityType="DomainModels.JobOffered" />
-          <EntitySet Name="JobTitles" EntityType="DomainModels.JobTitle" />
-          <EntitySet Name="JobTitleHistories" EntityType="DomainModels.JobTitleHistory" />
-          <EntitySet Name="Menus" EntityType="DomainModels.Menu" />
-          <EntitySet Name="MenuRights" EntityType="DomainModels.MenuRight" />
-          <EntitySet Name="Notifications" EntityType="DomainModels.Notification" />
-          <EntitySet Name="Orders" EntityType="DomainModels.Order" />
-          <EntitySet Name="Projects" EntityType="DomainModels.Project" />
-          <EntitySet Name="ProjectDocuments" EntityType="DomainModels.ProjectDocument" />
-          <EntitySet Name="Quotations" EntityType="DomainModels.Quotation" />
-          <EntitySet Name="QuotationItemDetails" EntityType="DomainModels.QuotationItemDetail" />
-          <EntitySet Name="RequestDetails" EntityType="DomainModels.RequestDetail" />
-          <AssociationSet Name="FK_Allowance_Employee" Association="DomainModels.FK_Allowance_Employee">
+          <EntitySet Name="Allowances" EntityType="EPMSModel.Allowance" />
+          <EntitySet Name="AspNetRoles" EntityType="EPMSModel.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="EPMSModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="EPMSModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="EPMSModel.AspNetUser" />
+          <EntitySet Name="CompanyBankDetails" EntityType="EPMSModel.CompanyBankDetail" />
+          <EntitySet Name="CompanyDocumentDetails" EntityType="EPMSModel.CompanyDocumentDetail" />
+          <EntitySet Name="CompanyProfiles" EntityType="EPMSModel.CompanyProfile" />
+          <EntitySet Name="CompanySocialDetails" EntityType="EPMSModel.CompanySocialDetail" />
+          <EntitySet Name="Complaints" EntityType="EPMSModel.Complaint" />
+          <EntitySet Name="Customers" EntityType="EPMSModel.Customer" />
+          <EntitySet Name="Departments" EntityType="EPMSModel.Department" />
+          <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
+          <EntitySet Name="EmployeeJobHistories" EntityType="EPMSModel.EmployeeJobHistory" />
+          <EntitySet Name="EmployeeRequests" EntityType="EPMSModel.EmployeeRequest" />
+          <EntitySet Name="JobApplicants" EntityType="EPMSModel.JobApplicant" />
+          <EntitySet Name="JobOffereds" EntityType="EPMSModel.JobOffered" />
+          <EntitySet Name="JobTitles" EntityType="EPMSModel.JobTitle" />
+          <EntitySet Name="JobTitleHistories" EntityType="EPMSModel.JobTitleHistory" />
+          <EntitySet Name="Menus" EntityType="EPMSModel.Menu" />
+          <EntitySet Name="MenuRights" EntityType="EPMSModel.MenuRight" />
+          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
+          <EntitySet Name="Orders" EntityType="EPMSModel.Order" />
+          <EntitySet Name="PreRequisitTasks" EntityType="EPMSModel.PreRequisitTask" />
+          <EntitySet Name="Projects" EntityType="EPMSModel.Project" />
+          <EntitySet Name="ProjectDocuments" EntityType="EPMSModel.ProjectDocument" />
+          <EntitySet Name="ProjectTasks" EntityType="EPMSModel.ProjectTask" />
+          <EntitySet Name="Quotations" EntityType="EPMSModel.Quotation" />
+          <EntitySet Name="QuotationItemDetails" EntityType="EPMSModel.QuotationItemDetail" />
+          <EntitySet Name="RequestDetails" EntityType="EPMSModel.RequestDetail" />
+          <EntitySet Name="TaskEmployees" EntityType="EPMSModel.TaskEmployee" />
+          <AssociationSet Name="FK_Allowance_Employee" Association="EPMSModel.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Allowance" EntitySet="Allowances" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
+          <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="MenuRight" EntitySet="MenuRights" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Customer" Association="DomainModels.FK_AspNetUsers_Customer">
+          <AssociationSet Name="FK_AspNetUsers_Customer" Association="EPMSModel.FK_AspNetUsers_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Employee" Association="DomainModels.FK_AspNetUsers_Employee">
+          <AssociationSet Name="FK_AspNetUsers_Employee" Association="EPMSModel.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="DomainModels.FK_CompanyBankDetails_CompanyProfile">
+          <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="EPMSModel.FK_CompanyBankDetails_CompanyProfile">
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanyBankDetail" EntitySet="CompanyBankDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompanyDocuments_CompanyProfile" Association="DomainModels.FK_CompanyDocuments_CompanyProfile">
+          <AssociationSet Name="FK_CompanyDocuments_CompanyProfile" Association="EPMSModel.FK_CompanyDocuments_CompanyProfile">
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanyDocumentDetail" EntitySet="CompanyDocumentDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="DomainModels.FK_CompanySocialDetails_CompanyProfile">
+          <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="EPMSModel.FK_CompanySocialDetails_CompanyProfile">
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanySocialDetail" EntitySet="CompanySocialDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Customer" Association="DomainModels.FK_Complaint_Customer">
+          <AssociationSet Name="FK_Complaint_Customer" Association="EPMSModel.FK_Complaint_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Department" Association="DomainModels.FK_Complaint_Department">
+          <AssociationSet Name="FK_Complaint_Department" Association="EPMSModel.FK_Complaint_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Orders" Association="DomainModels.FK_Complaint_Orders">
+          <AssociationSet Name="FK_Complaint_Orders" Association="EPMSModel.FK_Complaint_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Orders" Association="DomainModels.FK_Orders_Orders">
+          <AssociationSet Name="FK_Orders_Orders" Association="EPMSModel.FK_Orders_Orders">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Project_Customer" Association="DomainModels.FK_Project_Customer">
+          <AssociationSet Name="FK_Project_Customer" Association="EPMSModel.FK_Project_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Project" EntitySet="Projects" />
           </AssociationSet>
-          <AssociationSet Name="FK_Quotation_Customer" Association="DomainModels.FK_Quotation_Customer">
+          <AssociationSet Name="FK_ProjectTask_Customer" Association="EPMSModel.FK_ProjectTask_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quotation_Customer" Association="EPMSModel.FK_Quotation_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Quotation" EntitySet="Quotations" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobTitle_Department" Association="DomainModels.FK_JobTitle_Department">
+          <AssociationSet Name="FK_JobTitle_Department" Association="EPMSModel.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="JobTitle" EntitySet="JobTitles" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="DomainModels.FK_Employee_JobTitle">
+          <AssociationSet Name="FK_Employee_JobTitle" Association="EPMSModel.FK_Employee_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeJobHistory_Employee" Association="DomainModels.FK_EmployeeJobHistory_Employee">
+          <AssociationSet Name="FK_EmployeeJobHistory_Employee" Association="EPMSModel.FK_EmployeeJobHistory_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="DomainModels.FK_EmployeeRequests_Employee">
+          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="EPMSModel.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK_Notification_Employee" Association="DomainModels.FK_Notification_Employee">
+          <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeJobHistory_JobTitle" Association="DomainModels.FK_EmployeeJobHistory_JobTitle">
+          <AssociationSet Name="FK_EmployeeJobHistory_JobTitle" Association="EPMSModel.FK_EmployeeJobHistory_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="DomainModels.FK_RequestDetails_EmployeeRequests">
+          <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="EPMSModel.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
             <End Role="RequestDetail" EntitySet="RequestDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="DomainModels.FK_JobApplicants_JobOffered">
+          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="EPMSModel.FK_JobApplicants_JobOffered">
             <End Role="JobOffered" EntitySet="JobOffereds" />
             <End Role="JobApplicant" EntitySet="JobApplicants" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobOffered_JobTitle" Association="DomainModels.FK_JobOffered_JobTitle">
+          <AssociationSet Name="FK_JobOffered_JobTitle" Association="EPMSModel.FK_JobOffered_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobOffered" EntitySet="JobOffereds" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobTitleHistory_JobTitle" Association="DomainModels.FK_JobTitleHistory_JobTitle">
+          <AssociationSet Name="FK_JobTitleHistory_JobTitle" Association="EPMSModel.FK_JobTitleHistory_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobTitleHistory" EntitySet="JobTitleHistories" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="Menu1" EntitySet="Menus" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+          <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="MenuRight" EntitySet="MenuRights" />
           </AssociationSet>
-          <AssociationSet Name="FK_Project_Orders" Association="DomainModels.FK_Project_Orders">
+          <AssociationSet Name="FK_Project_Orders" Association="EPMSModel.FK_Project_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="Project" EntitySet="Projects" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProjectDocuments_Project" Association="DomainModels.FK_ProjectDocuments_Project">
+          <AssociationSet Name="FK_PreRequisitTask_Task" Association="EPMSModel.FK_PreRequisitTask_Task">
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+            <End Role="PreRequisitTask" EntitySet="PreRequisitTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectDocuments_Project" Association="EPMSModel.FK_ProjectDocuments_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="ProjectDocument" EntitySet="ProjectDocuments" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="DomainModels.FK_QuotationItemDetail_Quotation">
+          <AssociationSet Name="FK_ProjectTask_Project" Association="EPMSModel.FK_ProjectTask_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskEmployee_Task" Association="EPMSModel.FK_TaskEmployee_Task">
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="EPMSModel.FK_QuotationItemDetail_Quotation">
             <End Role="Quotation" EntitySet="Quotations" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="DomainModels.AspNetUserRoles">
+          <AssociationSet Name="AspNetUserRoles" Association="EPMSModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
@@ -1333,7 +1381,7 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="AllowanceDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1341,8 +1389,8 @@
           </Key>
           <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="MenuRights" Relationship="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="AspNetRole" ToRole="MenuRight" />
-          <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+          <NavigationProperty Name="MenuRights" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="AspNetRole" ToRole="MenuRight" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -1352,7 +1400,7 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUserLogin">
           <Key>
@@ -1363,7 +1411,7 @@
           <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="AspNetUser">
           <Key>
@@ -1383,11 +1431,11 @@
           <Property Name="CustomerId" Type="Int64" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_AspNetUsers_Customer" FromRole="AspNetUser" ToRole="Customer" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
-          <NavigationProperty Name="AspNetRoles" Relationship="DomainModels.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_AspNetUsers_Customer" FromRole="AspNetUser" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
+          <NavigationProperty Name="AspNetRoles" Relationship="EPMSModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
         <EntityType Name="CompanyBankDetail">
           <Key>
@@ -1418,7 +1466,7 @@
           <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyProfile" Relationship="DomainModels.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyBankDetail" ToRole="CompanyProfile" />
+          <NavigationProperty Name="CompanyProfile" Relationship="EPMSModel.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyBankDetail" ToRole="CompanyProfile" />
         </EntityType>
         <EntityType Name="CompanyDocumentDetail">
           <Key>
@@ -1444,7 +1492,7 @@
           <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyProfile" Relationship="DomainModels.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyDocumentDetail" ToRole="CompanyProfile" />
+          <NavigationProperty Name="CompanyProfile" Relationship="EPMSModel.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyDocumentDetail" ToRole="CompanyProfile" />
         </EntityType>
         <EntityType Name="CompanyProfile">
           <Key>
@@ -1465,9 +1513,9 @@
           <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyBankDetail" Relationship="DomainModels.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyBankDetail" />
-          <NavigationProperty Name="CompanyDocumentDetail" Relationship="DomainModels.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyDocumentDetail" />
-          <NavigationProperty Name="CompanySocialDetail" Relationship="DomainModels.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanySocialDetail" />
+          <NavigationProperty Name="CompanyBankDetail" Relationship="EPMSModel.FK_CompanyBankDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyBankDetail" />
+          <NavigationProperty Name="CompanyDocumentDetail" Relationship="EPMSModel.FK_CompanyDocuments_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanyDocumentDetail" />
+          <NavigationProperty Name="CompanySocialDetail" Relationship="EPMSModel.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanyProfile" ToRole="CompanySocialDetail" />
         </EntityType>
         <EntityType Name="CompanySocialDetail">
           <Key>
@@ -1511,7 +1559,7 @@
           <Property Name="RecCreatedDate" Type="DateTime" Precision="0" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CompanyProfile" Relationship="DomainModels.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanySocialDetail" ToRole="CompanyProfile" />
+          <NavigationProperty Name="CompanyProfile" Relationship="EPMSModel.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanySocialDetail" ToRole="CompanyProfile" />
         </EntityType>
         <EntityType Name="Complaint">
           <Key>
@@ -1531,9 +1579,9 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
-          <NavigationProperty Name="Department" Relationship="DomainModels.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
-          <NavigationProperty Name="Order" Relationship="DomainModels.FK_Complaint_Orders" FromRole="Complaint" ToRole="Order" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
+          <NavigationProperty Name="Department" Relationship="EPMSModel.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
+          <NavigationProperty Name="Order" Relationship="EPMSModel.FK_Complaint_Orders" FromRole="Complaint" ToRole="Order" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -1548,12 +1596,12 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUser" />
-          <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
-          <NavigationProperty Name="Orders" Relationship="DomainModels.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
-          <NavigationProperty Name="Projects" Relationship="DomainModels.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
-          <NavigationProperty Name="Quotations" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
-          <NavigationProperty Name="ProjectTasks" Relationship="DomainModels.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUser" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
+          <NavigationProperty Name="Orders" Relationship="EPMSModel.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Projects" Relationship="EPMSModel.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
+          <NavigationProperty Name="ProjectTasks" Relationship="EPMSModel.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
+          <NavigationProperty Name="Quotations" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -1567,8 +1615,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
-          <NavigationProperty Name="JobTitles" Relationship="DomainModels.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
+          <NavigationProperty Name="JobTitles" Relationship="EPMSModel.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -1597,12 +1645,12 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeDetailsA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Allowances" Relationship="DomainModels.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
-          <NavigationProperty Name="AspNetUsers" Relationship="DomainModels.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
-          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
-          <NavigationProperty Name="EmployeeJobHistories" Relationship="DomainModels.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
-          <NavigationProperty Name="EmployeeRequests" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
-          <NavigationProperty Name="Notifications" Relationship="DomainModels.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
+          <NavigationProperty Name="Allowances" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
+          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <NavigationProperty Name="EmployeeJobHistories" Relationship="EPMSModel.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
+          <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
+          <NavigationProperty Name="Notifications" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -1613,8 +1661,8 @@
           <Property Name="JobTitleId" Type="Int64" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_EmployeeJobHistory_Employee" FromRole="EmployeeJobHistory" ToRole="Employee" />
-          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_EmployeeJobHistory_JobTitle" FromRole="EmployeeJobHistory" ToRole="JobTitle" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_EmployeeJobHistory_Employee" FromRole="EmployeeJobHistory" ToRole="Employee" />
+          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_EmployeeJobHistory_JobTitle" FromRole="EmployeeJobHistory" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -1629,8 +1677,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
-          <NavigationProperty Name="RequestDetails" Relationship="DomainModels.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequest" ToRole="RequestDetail" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
+          <NavigationProperty Name="RequestDetails" Relationship="EPMSModel.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequest" ToRole="RequestDetail" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -1651,7 +1699,7 @@
           <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IqamaOrNationalIdNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DrivingLicense" Type="Boolean" />
-          <NavigationProperty Name="JobOffered" Relationship="DomainModels.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
+          <NavigationProperty Name="JobOffered" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
         </EntityType>
         <EntityType Name="JobOffered">
           <Key>
@@ -1670,8 +1718,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobApplicants" Relationship="DomainModels.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
-          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
+          <NavigationProperty Name="JobApplicants" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
+          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -1688,11 +1736,11 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="JobTitleNameA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Department" Relationship="DomainModels.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
-          <NavigationProperty Name="Employees" Relationship="DomainModels.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
-          <NavigationProperty Name="EmployeeJobHistories" Relationship="DomainModels.FK_EmployeeJobHistory_JobTitle" FromRole="JobTitle" ToRole="EmployeeJobHistory" />
-          <NavigationProperty Name="JobOffereds" Relationship="DomainModels.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
-          <NavigationProperty Name="JobTitleHistories" Relationship="DomainModels.FK_JobTitleHistory_JobTitle" FromRole="JobTitle" ToRole="JobTitleHistory" />
+          <NavigationProperty Name="Department" Relationship="EPMSModel.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
+          <NavigationProperty Name="Employees" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
+          <NavigationProperty Name="EmployeeJobHistories" Relationship="EPMSModel.FK_EmployeeJobHistory_JobTitle" FromRole="JobTitle" ToRole="EmployeeJobHistory" />
+          <NavigationProperty Name="JobOffereds" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
+          <NavigationProperty Name="JobTitleHistories" Relationship="EPMSModel.FK_JobTitleHistory_JobTitle" FromRole="JobTitle" ToRole="JobTitleHistory" />
         </EntityType>
         <EntityType Name="JobTitleHistory">
           <Key>
@@ -1703,7 +1751,7 @@
           <Property Name="BasicSalary" Type="Double" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="JobTitle" Relationship="DomainModels.FK_JobTitleHistory_JobTitle" FromRole="JobTitleHistory" ToRole="JobTitle" />
+          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_JobTitleHistory_JobTitle" FromRole="JobTitleHistory" ToRole="JobTitle" />
         </EntityType>
         <EntityType Name="Menu">
           <Key>
@@ -1721,8 +1769,8 @@
           <Property Name="PermissionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MenuImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ParentItem" Relationship="DomainModels.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
-          <NavigationProperty Name="MenuRights" Relationship="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
+          <NavigationProperty Name="ParentItem" Relationship="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="MenuRights" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -1731,8 +1779,8 @@
           <Property Name="MenuRightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Menu_MenuId" Type="Int32" />
           <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetRole" Relationship="DomainModels.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRole" />
-          <NavigationProperty Name="Menu" Relationship="DomainModels.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
+          <NavigationProperty Name="AspNetRole" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRole" />
+          <NavigationProperty Name="Menu" Relationship="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -1747,7 +1795,7 @@
           <Property Name="MobileNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsNotified" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="DomainModels.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1765,9 +1813,22 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="OrderStatus" Type="Int32" />
-          <NavigationProperty Name="Complaints" Relationship="DomainModels.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
-          <NavigationProperty Name="Projects" Relationship="DomainModels.FK_Project_Orders" FromRole="Order" ToRole="Project" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Orders" FromRole="Order" ToRole="Complaint" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Projects" Relationship="EPMSModel.FK_Project_Orders" FromRole="Order" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="PreRequisitTask">
+          <Key>
+            <PropertyRef Name="PreReqTaskId" />
+          </Key>
+          <Property Name="PreReqTaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskId" Type="Int64" Nullable="false" />
+          <Property Name="PreReqTask" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProjectTask" Relationship="EPMSModel.FK_PreRequisitTask_Task" FromRole="PreRequisitTask" ToRole="ProjectTask" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -1792,9 +1853,10 @@
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Project_Customer" FromRole="Project" ToRole="Customer" />
-          <NavigationProperty Name="Order" Relationship="DomainModels.FK_Project_Orders" FromRole="Project" ToRole="Order" />
-          <NavigationProperty Name="ProjectTasks" Relationship="DomainModels.FK_ProjectTask_Project" FromRole="Project" ToRole="ProjectTask" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Project_Customer" FromRole="Project" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="EPMSModel.FK_Project_Orders" FromRole="Project" ToRole="Order" />
+          <NavigationProperty Name="ProjectDocuments" Relationship="EPMSModel.FK_ProjectDocuments_Project" FromRole="Project" ToRole="ProjectDocument" />
+          <NavigationProperty Name="ProjectTasks" Relationship="EPMSModel.FK_ProjectTask_Project" FromRole="Project" ToRole="ProjectTask" />
         </EntityType>
         <EntityType Name="ProjectDocument">
           <Key>
@@ -1807,7 +1869,34 @@
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Project" Relationship="DomainModels.FK_ProjectDocuments_Project" FromRole="ProjectDocument" ToRole="Project" />
+          <NavigationProperty Name="Project" Relationship="EPMSModel.FK_ProjectDocuments_Project" FromRole="ProjectDocument" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="ProjectTask">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="ProjectId" Type="Int64" Nullable="false" />
+          <Property Name="TaskNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TaskNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="TotalCost" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="TotalWeight" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TaskProgress" Type="Int32" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_ProjectTask_Customer" FromRole="ProjectTask" ToRole="Customer" />
+          <NavigationProperty Name="PreRequisitTasks" Relationship="EPMSModel.FK_PreRequisitTask_Task" FromRole="ProjectTask" ToRole="PreRequisitTask" />
+          <NavigationProperty Name="Project" Relationship="EPMSModel.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
+          <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
         </EntityType>
         <EntityType Name="Quotation">
           <Key>
@@ -1835,8 +1924,8 @@
           <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
-          <NavigationProperty Name="QuotationItemDetails" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
+          <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -1852,7 +1941,7 @@
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Quotation" Relationship="DomainModels.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
+          <NavigationProperty Name="Quotation" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="RequestDetail">
           <Key>
@@ -1875,407 +1964,7 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EmployeeRequest" Relationship="DomainModels.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetail" ToRole="EmployeeRequest" />
-        </EntityType>
-        <Association Name="FK_Allowance_Employee">
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="DomainModels.Allowance" Role="Allowance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Allowance">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
-          <End Type="DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="0..1" />
-          <End Type="DomainModels.MenuRight" Role="MenuRight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRole">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MenuRight">
-              <PropertyRef Name="Role_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DomainModels.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaim">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="DomainModels.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogin">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUsers_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="AspNetUser">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUsers_Employee">
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="AspNetUser">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyBankDetails_CompanyProfile">
-          <End Type="DomainModels.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
-          <End Type="DomainModels.CompanyBankDetail" Role="CompanyBankDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanyBankDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyDocuments_CompanyProfile">
-          <End Type="DomainModels.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
-          <End Type="DomainModels.CompanyDocumentDetail" Role="CompanyDocumentDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanyDocumentDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanySocialDetails_CompanyProfile">
-          <End Type="DomainModels.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
-          <End Type="DomainModels.CompanySocialDetail" Role="CompanySocialDetail" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyProfile">
-              <PropertyRef Name="CompanyId" />
-            </Principal>
-            <Dependent Role="CompanySocialDetail">
-              <PropertyRef Name="CompanyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Complaint" Role="Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Department">
-          <End Type="DomainModels.Department" Role="Department" Multiplicity="1" />
-          <End Type="DomainModels.Complaint" Role="Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Orders">
-          <End Type="DomainModels.Order" Role="Order" Multiplicity="1" />
-          <End Type="DomainModels.Complaint" Role="Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Orders">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Project_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="DomainModels.Project" Role="Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Quotation_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.Quotation" Role="Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobTitle_Department">
-          <End Type="DomainModels.Department" Role="Department" Multiplicity="1" />
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="JobTitle">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="0..1" />
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeJobHistory_Employee">
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="DomainModels.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmployeeJobHistory">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeRequests_Employee">
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="DomainModels.EmployeeRequest" Role="EmployeeRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmployeeRequest">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notification_Employee">
-          <End Type="DomainModels.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="DomainModels.Notification" Role="Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeJobHistory_JobTitle">
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
-          <End Type="DomainModels.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="EmployeeJobHistory">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RequestDetails_EmployeeRequests">
-          <End Type="DomainModels.EmployeeRequest" Role="EmployeeRequest" Multiplicity="1" />
-          <End Type="DomainModels.RequestDetail" Role="RequestDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EmployeeRequest">
-              <PropertyRef Name="RequestId" />
-            </Principal>
-            <Dependent Role="RequestDetail">
-              <PropertyRef Name="RequestId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobApplicants_JobOffered">
-          <End Type="DomainModels.JobOffered" Role="JobOffered" Multiplicity="1" />
-          <End Type="DomainModels.JobApplicant" Role="JobApplicant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobOffered">
-              <PropertyRef Name="JobOfferedId" />
-            </Principal>
-            <Dependent Role="JobApplicant">
-              <PropertyRef Name="JobOfferedId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobOffered_JobTitle">
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
-          <End Type="DomainModels.JobOffered" Role="JobOffered" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="JobOffered">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobTitleHistory_JobTitle">
-          <End Type="DomainModels.JobTitle" Role="JobTitle" Multiplicity="1" />
-          <End Type="DomainModels.JobTitleHistory" Role="JobTitleHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="JobTitleHistory">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
-          <End Type="DomainModels.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="DomainModels.Menu" Role="Menu1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="Menu1">
-              <PropertyRef Name="ParentItem_Menu" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
-          <End Type="DomainModels.Menu" Role="Menu" Multiplicity="0..1" />
-          <End Type="DomainModels.MenuRight" Role="MenuRight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="MenuRight">
-              <PropertyRef Name="Menu_MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Project_Orders">
-          <End Type="DomainModels.Order" Role="Order" Multiplicity="0..1" />
-          <End Type="DomainModels.Project" Role="Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectDocuments_Project">
-          <End Type="DomainModels.Project" Role="Project" Multiplicity="1" />
-          <End Type="DomainModels.ProjectDocument" Role="ProjectDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="ProjectDocument">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuotationItemDetail_Quotation">
-          <End Type="DomainModels.Quotation" Role="Quotation" Multiplicity="1" />
-          <End Type="DomainModels.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="QuotationItemDetail">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="DomainModels.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-        </Association>
-          <EntitySet Name="PreRequisitTasks" EntityType="DomainModels.PreRequisitTask" />
-          <EntitySet Name="TaskEmployees" EntityType="DomainModels.TaskEmployee" />
-          <EntitySet Name="ProjectTasks" EntityType="DomainModels.ProjectTask" />
-          <AssociationSet Name="FK_ProjectTask_Customer" Association="DomainModels.FK_ProjectTask_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PreRequisitTask_Task" Association="DomainModels.FK_PreRequisitTask_Task">
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-            <End Role="PreRequisitTask" EntitySet="PreRequisitTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectTask_Project" Association="DomainModels.FK_ProjectTask_Project">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaskEmployee_Task" Association="DomainModels.FK_TaskEmployee_Task">
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
-          </AssociationSet>
-        <EntityType Name="PreRequisitTask">
-          <Key>
-            <PropertyRef Name="PreReqTaskId" />
-          </Key>
-          <Property Name="PreReqTaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TaskId" Type="Int64" Nullable="false" />
-          <Property Name="PreReqTask" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProjectTask" Relationship="DomainModels.FK_PreRequisitTask_Task" FromRole="PreRequisitTask" ToRole="ProjectTask" />
+          <NavigationProperty Name="EmployeeRequest" Relationship="EPMSModel.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetail" ToRole="EmployeeRequest" />
         </EntityType>
         <EntityType Name="TaskEmployee">
           <Key>
@@ -2288,38 +1977,183 @@
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProjectTask" Relationship="DomainModels.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
+          <NavigationProperty Name="ProjectTask" Relationship="EPMSModel.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
         </EntityType>
-        <EntityType Name="ProjectTask">
-          <Key>
-            <PropertyRef Name="TaskId" />
-          </Key>
-          <Property Name="TaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <Property Name="ProjectId" Type="Int64" Nullable="false" />
-          <Property Name="TaskNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="TaskNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="TotalCost" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="TotalWeight" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TaskProgress" Type="Int32" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Customer" Relationship="DomainModels.FK_ProjectTask_Customer" FromRole="ProjectTask" ToRole="Customer" />
-          <NavigationProperty Name="PreRequisitTasks" Relationship="DomainModels.FK_PreRequisitTask_Task" FromRole="ProjectTask" ToRole="PreRequisitTask" />
-          <NavigationProperty Name="Project" Relationship="DomainModels.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
-          <NavigationProperty Name="TaskEmployees" Relationship="DomainModels.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
-        </EntityType>
+        <Association Name="FK_Allowance_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.Allowance" Role="Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Allowance">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
+          <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="0..1" />
+          <End Type="EPMSModel.MenuRight" Role="MenuRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MenuRight">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPMSModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EPMSModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyBankDetails_CompanyProfile">
+          <End Type="EPMSModel.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
+          <End Type="EPMSModel.CompanyBankDetail" Role="CompanyBankDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyBankDetail">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyDocuments_CompanyProfile">
+          <End Type="EPMSModel.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
+          <End Type="EPMSModel.CompanyDocumentDetail" Role="CompanyDocumentDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanyDocumentDetail">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanySocialDetails_CompanyProfile">
+          <End Type="EPMSModel.CompanyProfile" Role="CompanyProfile" Multiplicity="1" />
+          <End Type="EPMSModel.CompanySocialDetail" Role="CompanySocialDetail" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyProfile">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="CompanySocialDetail">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Department">
+          <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Orders">
+          <End Type="EPMSModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="EPMSModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectTask_Customer">
-          <End Type="DomainModels.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="DomainModels.ProjectTask" Role="ProjectTask" Multiplicity="*" />
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="CustomerId" />
@@ -2329,9 +2163,177 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Quotation_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Quotation">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobTitle_Department">
+          <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="JobTitle">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="0..1" />
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJobHistory_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeJobHistory">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeRequests_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.EmployeeRequest" Role="EmployeeRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeRequest">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJobHistory_JobTitle">
+          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="1" />
+          <End Type="EPMSModel.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="EmployeeJobHistory">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestDetails_EmployeeRequests">
+          <End Type="EPMSModel.EmployeeRequest" Role="EmployeeRequest" Multiplicity="1" />
+          <End Type="EPMSModel.RequestDetail" Role="RequestDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeRequest">
+              <PropertyRef Name="RequestId" />
+            </Principal>
+            <Dependent Role="RequestDetail">
+              <PropertyRef Name="RequestId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApplicants_JobOffered">
+          <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="1" />
+          <End Type="EPMSModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOffered">
+              <PropertyRef Name="JobOfferedId" />
+            </Principal>
+            <Dependent Role="JobApplicant">
+              <PropertyRef Name="JobOfferedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobOffered_JobTitle">
+          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="1" />
+          <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="JobOffered">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobTitleHistory_JobTitle">
+          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="1" />
+          <End Type="EPMSModel.JobTitleHistory" Role="JobTitleHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="JobTitleHistory">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+          <End Type="EPMSModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="EPMSModel.Menu" Role="Menu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="Menu1">
+              <PropertyRef Name="ParentItem_Menu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+          <End Type="EPMSModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="EPMSModel.MenuRight" Role="MenuRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="MenuRight">
+              <PropertyRef Name="Menu_MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Orders">
+          <End Type="EPMSModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="EPMSModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PreRequisitTask_Task">
-          <End Type="DomainModels.ProjectTask" Role="ProjectTask" Multiplicity="1" />
-          <End Type="DomainModels.PreRequisitTask" Role="PreRequisitTask" Multiplicity="*" />
+          <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="1" />
+          <End Type="EPMSModel.PreRequisitTask" Role="PreRequisitTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProjectTask">
               <PropertyRef Name="TaskId" />
@@ -2341,9 +2343,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProjectDocuments_Project">
+          <End Type="EPMSModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="EPMSModel.ProjectDocument" Role="ProjectDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="ProjectDocument">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProjectTask_Project">
-          <End Type="DomainModels.Project" Role="Project" Multiplicity="1" />
-          <End Type="DomainModels.ProjectTask" Role="ProjectTask" Multiplicity="*" />
+          <End Type="EPMSModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
               <PropertyRef Name="ProjectId" />
@@ -2354,8 +2368,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TaskEmployee_Task">
-          <End Type="DomainModels.ProjectTask" Role="ProjectTask" Multiplicity="1" />
-          <End Type="DomainModels.TaskEmployee" Role="TaskEmployee" Multiplicity="*" />
+          <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="1" />
+          <End Type="EPMSModel.TaskEmployee" Role="TaskEmployee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProjectTask">
               <PropertyRef Name="TaskId" />
@@ -2365,14 +2379,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <Association Name="FK_QuotationItemDetail_Quotation">
+          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="1" />
+          <End Type="EPMSModel.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotation">
+              <PropertyRef Name="QuotationId" />
+            </Principal>
+            <Dependent Role="QuotationItemDetail">
+              <PropertyRef Name="QuotationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DomainModelsStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="EPMSModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Allowances">
-            <EntityTypeMapping TypeName="DomainModels.Allowance">
+            <EntityTypeMapping TypeName="EPMSModel.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
                 <ScalarProperty Name="AllowanceDate" ColumnName="AllowanceDate" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
@@ -2396,7 +2426,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="DomainModels.AspNetRole">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -2404,7 +2434,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="DomainModels.AspNetUserClaim">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetUserClaim">
               <MappingFragment StoreEntitySet="AspNetUserClaims">
                 <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
                 <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
@@ -2414,7 +2444,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="DomainModels.AspNetUserLogin">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetUserLogin">
               <MappingFragment StoreEntitySet="AspNetUserLogins">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
@@ -2423,7 +2453,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="DomainModels.AspNetUser">
+            <EntityTypeMapping TypeName="EPMSModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -2443,7 +2473,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompanyBankDetails">
-            <EntityTypeMapping TypeName="DomainModels.CompanyBankDetail">
+            <EntityTypeMapping TypeName="EPMSModel.CompanyBankDetail">
               <MappingFragment StoreEntitySet="CompanyBankDetails">
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2474,7 +2504,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompanyDocumentDetails">
-            <EntityTypeMapping TypeName="DomainModels.CompanyDocumentDetail">
+            <EntityTypeMapping TypeName="EPMSModel.CompanyDocumentDetail">
               <MappingFragment StoreEntitySet="CompanyDocumentDetails">
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2500,7 +2530,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompanyProfiles">
-            <EntityTypeMapping TypeName="DomainModels.CompanyProfile">
+            <EntityTypeMapping TypeName="EPMSModel.CompanyProfile">
               <MappingFragment StoreEntitySet="CompanyProfile">
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2521,7 +2551,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CompanySocialDetails">
-            <EntityTypeMapping TypeName="DomainModels.CompanySocialDetail">
+            <EntityTypeMapping TypeName="EPMSModel.CompanySocialDetail">
               <MappingFragment StoreEntitySet="CompanySocialDetails">
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2565,7 +2595,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Complaints">
-            <EntityTypeMapping TypeName="DomainModels.Complaint">
+            <EntityTypeMapping TypeName="EPMSModel.Complaint">
               <MappingFragment StoreEntitySet="Complaint">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2585,7 +2615,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="DomainModels.Customer">
+            <EntityTypeMapping TypeName="EPMSModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2600,7 +2630,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="DomainModels.Department">
+            <EntityTypeMapping TypeName="EPMSModel.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2614,7 +2644,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="DomainModels.Employee">
+            <EntityTypeMapping TypeName="EPMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmployeeDetailsA" ColumnName="EmployeeDetailsA" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -2643,7 +2673,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeJobHistories">
-            <EntityTypeMapping TypeName="DomainModels.EmployeeJobHistory">
+            <EntityTypeMapping TypeName="EPMSModel.EmployeeJobHistory">
               <MappingFragment StoreEntitySet="EmployeeJobHistory">
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -2654,7 +2684,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EmployeeRequests">
-            <EntityTypeMapping TypeName="DomainModels.EmployeeRequest">
+            <EntityTypeMapping TypeName="EPMSModel.EmployeeRequest">
               <MappingFragment StoreEntitySet="EmployeeRequests">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2669,7 +2699,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobApplicants">
-            <EntityTypeMapping TypeName="DomainModels.JobApplicant">
+            <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicants">
                 <ScalarProperty Name="DrivingLicense" ColumnName="DrivingLicense" />
                 <ScalarProperty Name="IqamaOrNationalIdNo" ColumnName="IqamaOrNationalIdNo" />
@@ -2690,7 +2720,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobOffereds">
-            <EntityTypeMapping TypeName="DomainModels.JobOffered">
+            <EntityTypeMapping TypeName="EPMSModel.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2709,7 +2739,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitles">
-            <EntityTypeMapping TypeName="DomainModels.JobTitle">
+            <EntityTypeMapping TypeName="EPMSModel.JobTitle">
               <MappingFragment StoreEntitySet="JobTitle">
                 <ScalarProperty Name="JobTitleDescA" ColumnName="JobTitleDescA" />
                 <ScalarProperty Name="JobTitleNameA" ColumnName="JobTitleNameA" />
@@ -2726,7 +2756,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="JobTitleHistories">
-            <EntityTypeMapping TypeName="DomainModels.JobTitleHistory">
+            <EntityTypeMapping TypeName="EPMSModel.JobTitleHistory">
               <MappingFragment StoreEntitySet="JobTitleHistory">
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -2737,7 +2767,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="DomainModels.Menu">
+            <EntityTypeMapping TypeName="EPMSModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="MenuItemClass" ColumnName="MenuItemClass" />
                 <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
@@ -2755,7 +2785,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
-            <EntityTypeMapping TypeName="DomainModels.MenuRight">
+            <EntityTypeMapping TypeName="EPMSModel.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
                 <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
                 <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
@@ -2764,7 +2794,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="DomainModels.Notification">
+            <EntityTypeMapping TypeName="EPMSModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
                 <ScalarProperty Name="IsNotified" ColumnName="IsNotified" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -2779,7 +2809,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="DomainModels.Order">
+            <EntityTypeMapping TypeName="EPMSModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
@@ -2796,8 +2826,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PreRequisitTasks">
+            <EntityTypeMapping TypeName="EPMSModel.PreRequisitTask">
+              <MappingFragment StoreEntitySet="PreRequisitTask">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="PreReqTask" ColumnName="PreReqTask" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="PreReqTaskId" ColumnName="PreReqTaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Projects">
-            <EntityTypeMapping TypeName="DomainModels.Project">
+            <EntityTypeMapping TypeName="EPMSModel.Project">
               <MappingFragment StoreEntitySet="Project">
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2822,7 +2865,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProjectDocuments">
-            <EntityTypeMapping TypeName="DomainModels.ProjectDocument">
+            <EntityTypeMapping TypeName="EPMSModel.ProjectDocument">
               <MappingFragment StoreEntitySet="ProjectDocuments">
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2834,8 +2877,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTasks">
+            <EntityTypeMapping TypeName="EPMSModel.ProjectTask">
+              <MappingFragment StoreEntitySet="ProjectTask">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="TaskProgress" ColumnName="TaskProgress" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
+                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
+                <ScalarProperty Name="TaskNameA" ColumnName="TaskNameA" />
+                <ScalarProperty Name="TaskNameE" ColumnName="TaskNameE" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Quotations">
-            <EntityTypeMapping TypeName="DomainModels.Quotation">
+            <EntityTypeMapping TypeName="EPMSModel.Quotation">
               <MappingFragment StoreEntitySet="Quotation">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
@@ -2863,7 +2930,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="QuotationItemDetails">
-            <EntityTypeMapping TypeName="DomainModels.QuotationItemDetail">
+            <EntityTypeMapping TypeName="EPMSModel.QuotationItemDetail">
               <MappingFragment StoreEntitySet="QuotationItemDetail">
                 <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
                 <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
@@ -2879,7 +2946,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RequestDetails">
-            <EntityTypeMapping TypeName="DomainModels.RequestDetail">
+            <EntityTypeMapping TypeName="EPMSModel.RequestDetail">
               <MappingFragment StoreEntitySet="RequestDetails">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -2901,29 +2968,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="DomainModels.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="PreRequisitTasks">
-            <EntityTypeMapping TypeName="DomainModels.PreRequisitTask">
-              <MappingFragment StoreEntitySet="PreRequisitTask">
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="PreReqTask" ColumnName="PreReqTask" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="PreReqTaskId" ColumnName="PreReqTaskId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TaskEmployees">
-            <EntityTypeMapping TypeName="DomainModels.TaskEmployee">
+            <EntityTypeMapping TypeName="EPMSModel.TaskEmployee">
               <MappingFragment StoreEntitySet="TaskEmployee">
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
@@ -2935,31 +2981,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProjectTasks">
-            <EntityTypeMapping TypeName="DomainModels.ProjectTask">
-              <MappingFragment StoreEntitySet="ProjectTask">
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="TaskProgress" ColumnName="TaskProgress" />
-                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
-                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
-                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
-                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
-                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
-                <ScalarProperty Name="TaskNameA" ColumnName="TaskNameA" />
-                <ScalarProperty Name="TaskNameE" ColumnName="TaskNameE" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="EPMSModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -2980,6 +3010,75 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="d0e37fd6704640c9b22c7aaef47d060f" Name="Diagram1">
+        <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="26.875" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="8.25" PointY="13.25" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="12.75" PointY="13.875" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="12.75" PointY="16.625" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="10.5" PointY="13.875" />
+        <EntityTypeShape EntityType="EPMSModel.CompanyBankDetail" Width="1.5" PointX="17" PointY="11.125" />
+        <EntityTypeShape EntityType="EPMSModel.CompanyDocumentDetail" Width="1.5" PointX="17" PointY="17.875" />
+        <EntityTypeShape EntityType="EPMSModel.CompanyProfile" Width="1.5" PointX="14.75" PointY="10.125" />
+        <EntityTypeShape EntityType="EPMSModel.CompanySocialDetail" Width="1.5" PointX="17" PointY="1.875" />
+        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="12.875" />
+        <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="0.75" PointY="22.375" />
+        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="18.625" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="12.875" />
+        <EntityTypeShape EntityType="EPMSModel.EmployeeJobHistory" Width="1.5" PointX="7.5" PointY="16.25" />
+        <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="22.25" />
+        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="7.5" PointY="32.625" />
+        <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="5.25" PointY="32.75" />
+        <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="3" PointY="18" />
+        <EntityTypeShape EntityType="EPMSModel.JobTitleHistory" Width="1.5" PointX="5.25" PointY="23.75" />
+        <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.875" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="10.5" PointY="7" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.5" PointY="9.375" />
+        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="EPMSModel.PreRequisitTask" Width="1.5" PointX="7.5" PointY="41.75" />
+        <EntityTypeShape EntityType="EPMSModel.Project" Width="1.5" PointX="3" PointY="22.875" />
+        <EntityTypeShape EntityType="EPMSModel.ProjectDocument" Width="1.5" PointX="5.25" PointY="43.25" />
+        <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.5" PointX="5.25" PointY="26.75" />
+        <EntityTypeShape EntityType="EPMSModel.Quotation" Width="1.5" PointX="3" PointY="37.5" />
+        <EntityTypeShape EntityType="EPMSModel.QuotationItemDetail" Width="1.5" PointX="5.25" PointY="38.75" />
+        <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="9.75" PointY="21.625" />
+        <EntityTypeShape EntityType="EPMSModel.TaskEmployee" Width="1.5" PointX="7.5" PointY="38.375" />
+        <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_CompanyBankDetails_CompanyProfile" />
+        <AssociationConnector Association="EPMSModel.FK_CompanyDocuments_CompanyProfile" />
+        <AssociationConnector Association="EPMSModel.FK_CompanySocialDetails_CompanyProfile" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_Orders_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_Project_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_Quotation_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" />
+        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" />
+        <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" />
+        <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
+        <AssociationConnector Association="EPMSModel.FK_Project_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_PreRequisitTask_Task" />
+        <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" />
+        <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
+        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Task" />
+        <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" />
+        <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

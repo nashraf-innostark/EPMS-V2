@@ -16,6 +16,6 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
 
-        public ProjectTask ProjectTask { get; set; }
+        public virtual  ProjectTask ProjectTask { get; set; }
     }
 }

@@ -24,9 +24,9 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
 
-        public Customer Customer { get; set; }
-        public ICollection<PreRequisitTask> PreRequisitTasks { get; set; }
-        public Project Project { get; set; }
-        public ICollection<TaskEmployee> TaskEmployees { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual ICollection<PreRequisitTask> PreRequisitTasks { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual ICollection<TaskEmployee> TaskEmployees { get; set; }
     }
 }

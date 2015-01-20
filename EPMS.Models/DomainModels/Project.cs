@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
@@ -26,5 +27,6 @@ namespace EPMS.Models.DomainModels
 
         public virtual Customer Customer { get; set; }
         public virtual Order Order { get; set; }
+        public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
     }
 }
