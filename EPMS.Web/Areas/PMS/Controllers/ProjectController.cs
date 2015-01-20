@@ -7,14 +7,12 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
-using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Complaint;
 using EPMS.Web.ViewModels.Project;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
@@ -68,16 +66,16 @@ namespace EPMS.Web.Areas.PMS.Controllers
         }
         #endregion
         #region Create
-        //[SiteAuthorize(PermissionKey = "ProjectCreate")]
-        public ActionResult Create(long? projectId)
+        [SiteAuthorize(PermissionKey = "ProjectCreate")]
+        public ActionResult Create(long? id)
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString();
             var customers = customerService.GetAll();
             var orders = ordersService.GetAll();
-            if (projectId != null)
+            if (id != null)
             {
-                var project = projectService.FindProjectById((long)projectId);
+                var project = projectService.FindProjectById((long)id);
                 if (project != null)
                 {
                     projectViewModel.Project = project.CreateFromServerToClient();
