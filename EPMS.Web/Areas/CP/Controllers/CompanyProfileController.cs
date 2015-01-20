@@ -32,10 +32,12 @@ namespace EPMS.Web.Areas.CP.Controllers
         private readonly IJobApplicantService jobApplicantService;
 
         #endregion
-        
+
         #region Constructor
 
-        public CompanyProfileController(ICompanyProfileService profileService, ICompanyDocumentService documentService, ICompanyBankService bankService, ICompanySocialService socialService, IEmployeeService employeeService, ICustomerService customerService, IJobApplicantService jobApplicantService)
+        public CompanyProfileController(ICompanyProfileService profileService, ICompanyDocumentService documentService,
+            ICompanyBankService bankService, ICompanySocialService socialService, IEmployeeService employeeService,
+            ICustomerService customerService, IJobApplicantService jobApplicantService)
         {
             this.profileService = profileService;
             this.documentService = documentService;
@@ -54,24 +56,35 @@ namespace EPMS.Web.Areas.CP.Controllers
         public ActionResult Detail()
         {
             CompanyProfileViewModel companyProfileViewModel = new CompanyProfileViewModel();
-            
+
             var companyProfile = profileService.GetDetail();
             if (companyProfile != null)
             {
                 companyProfileViewModel = companyProfile.CreateFromServerToClient();
-                ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + companyProfileViewModel.CompanyProfile.CompanyLogoPath;
+                ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] +
+                                   companyProfileViewModel.CompanyProfile.CompanyLogoPath;
                 ViewBag.CompanyId = companyProfileViewModel.CompanyProfile.CompanyId;
             }
             var contactList = new List<ContactList>();
-            var empList = employeeService.GetAll().Where(x => !string.IsNullOrEmpty(x.EmployeeMobileNum)).Select(x => x.CreateForContactList());
-            var customerList = customerService.GetAll().Where(x => !string.IsNullOrEmpty(x.CustomerMobile)).Select(x => x.CreateForContactList());
-            var applicantList = jobApplicantService.GetAll().Where(x => !string.IsNullOrEmpty(x.ApplicantMobile)).Select(x => x.CreateForContactList());
+            var empList =
+                employeeService.GetAll()
+                    .Where(x => !string.IsNullOrEmpty(x.EmployeeMobileNum))
+                    .Select(x => x.CreateForContactList());
+            var customerList =
+                customerService.GetAll()
+                    .Where(x => !string.IsNullOrEmpty(x.CustomerMobile))
+                    .Select(x => x.CreateForContactList());
+            var applicantList =
+                jobApplicantService.GetAll()
+                    .Where(x => !string.IsNullOrEmpty(x.ApplicantMobile))
+                    .Select(x => x.CreateForContactList());
             contactList.AddRange(empList);
             contactList.AddRange(customerList);
             contactList.AddRange(applicantList);
             companyProfileViewModel.List = contactList;
             return View(companyProfileViewModel);
         }
+
         [HttpPost]
         public ActionResult Detail(CompanyProfileViewModel companyProfileViewModel)
         {
@@ -82,7 +95,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var profileToUpdate = companyProfileViewModel.CompanyProfile.CreateFromProfile();
                 if (profileService.UpdateDetail(profileToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
                     return RedirectToAction("Detail");
                 }
             }
@@ -93,7 +106,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var documentToUpdate = companyProfileViewModel.CompanyDocuments.CreateFromDocument();
                 if (documentService.UpdateDetail(documentToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
                     return RedirectToAction("Detail");
                 }
             }
@@ -104,7 +117,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var bankToUpdate = companyProfileViewModel.CompanyBank.CreateFromBank();
                 if (bankService.UpdateDetail(bankToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
                     return RedirectToAction("Detail");
                 }
             }
@@ -115,7 +128,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var socialToUpdate = companyProfileViewModel.CompanySocial.CreateFromSocial();
                 if (socialService.UpdateDetail(socialToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
                     return RedirectToAction("Detail");
                 }
             }
@@ -131,7 +144,9 @@ namespace EPMS.Web.Areas.CP.Controllers
                 //Save File to Folder
                 if ((companyLogo != null))
                 {
-                    filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + companyLogo.FileName).Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    filename =
+                        (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + companyLogo.FileName)
+                            .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
                     var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["CompanyLogo"]);
                     string savedFileName = Path.Combine(filePathOriginal, filename);
                     companyLogo.SaveAs(savedFileName);
@@ -139,9 +154,23 @@ namespace EPMS.Web.Areas.CP.Controllers
             }
             catch (Exception exp)
             {
-                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+                return
+                    Json(
+                        new
+                        {
+                            response = "Failed to upload. Error: " + exp.Message,
+                            status = (int) HttpStatusCode.BadRequest
+                        }, JsonRequestBehavior.AllowGet);
             }
-            return Json(new { filename = filename, size = companyLogo.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+            return
+                Json(
+                    new
+                    {
+                        filename = filename,
+                        size = companyLogo.ContentLength/1024 + "KB",
+                        response = "Successfully uploaded!",
+                        status = (int) HttpStatusCode.OK
+                    }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SendSms(CompanyProfileViewModel companyProfileViewModel)
@@ -150,15 +179,15 @@ namespace EPMS.Web.Areas.CP.Controllers
             string password = ConfigurationManager.AppSettings["MobilePassword"];
             string senderId = ConfigurationManager.AppSettings["SenderID"];
             string smsText = "Bank Name: " + companyProfileViewModel.BankName + ", Bank Name Arabic: " +
-                                companyProfileViewModel.BankNameAr + ", Account #: " +
-                                companyProfileViewModel.BankAccountNo + ", Iban #: " + companyProfileViewModel.BankIbanNo +
-                                ", Mobile #:" + companyProfileViewModel.BankMobileNo;
-            string mobileNo = companyProfileViewModel.MobileNo.Aggregate("", (current, item) => current +","+ item);
+                             companyProfileViewModel.BankNameAr + ", Account #: " +
+                             companyProfileViewModel.BankAccountNo + ", Iban #: " + companyProfileViewModel.BankIbanNo +
+                             ", Mobile #:" + companyProfileViewModel.BankMobileNo;
+            string mobileNo = companyProfileViewModel.MobileNo.Aggregate("", (current, item) => current + "," + item);
             WebRequest smsRequest =
                 WebRequest.Create("http://www.jawalbsms.ws/api.php/sendsms?user=" + username + "&pass=" +
-                                    password +
-                                    "&to=" + mobileNo.Substring(1, mobileNo.Length-1) + "&message=" + smsText +
-                                    "&sender=" + senderId);
+                                  password +
+                                  "&to=" + mobileNo.Substring(1, mobileNo.Length - 1) + "&message=" + smsText +
+                                  "&sender=" + senderId);
             WebResponse smsRequestResponse = smsRequest.GetResponse();
             Stream smsDataStream = smsRequestResponse.GetResponseStream();
             StreamReader smsReader = new StreamReader(smsDataStream);
@@ -170,13 +199,14 @@ namespace EPMS.Web.Areas.CP.Controllers
                 TempData["message"] = new MessageViewModel {Message = "Message Sent", IsInfo = true};
                 return RedirectToAction("Detail");
             }
-            TempData["message"] = new MessageViewModel { Message = "Error Code " + smsResponse, IsError = true };
+            TempData["message"] = new MessageViewModel {Message = "Error Code " + smsResponse, IsError = true};
             return RedirectToAction("Detail");
-                
-            }
-            
 
-        
+        }
+
+
+
 
         #endregion
+    }
 }

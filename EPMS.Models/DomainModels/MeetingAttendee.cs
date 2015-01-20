@@ -4,27 +4,17 @@ namespace EPMS.Models.DomainModels
 {
     public class MeetingAttendee
     {
-        public long CompanyId { get; set; }
-        public string CommercialRegister { get; set; }
-        public DateTime? CommercialRegisterIssueDate { get; set; }
-        public DateTime? CommercialRegisterExpiryDate { get; set; }
-        public string InsuranceCertificate { get; set; }
-        public DateTime? InsuranceCertificateIssueDate { get; set; }
-        public DateTime? InsuranceCertificateExpiryDate { get; set; }
-        public string ChamberCertificate { get; set; }
-        public DateTime? ChamberCertificateIssueDate { get; set; }
-        public DateTime? ChamberCertificateExpiryDate { get; set; }
-        public string IncomeAndZakaCertificate { get; set; }
-        public DateTime? IncomeAndZakaCertificateIssueDate { get; set; }
-        public DateTime? IncomeAndZakaCertificateExpiryDate { get; set; }
-        public string SaudilizationCertificate { get; set; }
-        public DateTime? SaudilizationCertificateIssueDate { get; set; }
-        public DateTime? SaudilizationCertificateExpiryDate { get; set; }
+        public long AttendeeId { get; set; }
+        public long MeetingId { get; set; }
+        public long? EmployeeId { get; set; }
+        public string AttendeeName { get; set; }
+        public string AttendeeEmail { get; set; }
+        public bool? Status { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime? RecCreatedDate { get; set; }
+        public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public DateTime? RecLastUpdatedDate { get; set; }
+        public DateTime? RecLastUpdatedDt { get; set; }
 
-        public virtual CompanyProfile CompanyProfile { get; set; }
+        public virtual Meeting Meeting { get; set; }
     }
 }

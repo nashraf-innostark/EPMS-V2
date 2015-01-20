@@ -27,6 +27,7 @@ namespace EPMS.Models.DomainModels
 
         public virtual Customer Customer { get; set; }
         public virtual Order Order { get; set; }
+        public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
     }
 }
