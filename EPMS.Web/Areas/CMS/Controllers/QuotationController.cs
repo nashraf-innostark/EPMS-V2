@@ -85,11 +85,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 viewModel.CreatedByName = createdByName;
                 viewModel.CreatedByEmployee = users.EmployeeId ?? 0;
+                viewModel.PageTitle = Resources.CMS.Quotation.CreateNew;
+                viewModel.BtnText = Resources.CMS.Quotation.CreateQoute;
                 return View(viewModel);
             }
             viewModel = QuotationService.FindQuotationById((long)id).CreateFromServerToClient();
             viewModel.CreatedByName = createdByName;
             viewModel.CreatedByEmployee = users.EmployeeId ?? 0;
+            viewModel.PageTitle = Resources.CMS.Quotation.UpdateQuotation;
+            viewModel.BtnText = Resources.CMS.Quotation.UpdateQuotation;
             viewModel.OldItemDetailsCount = viewModel.QuotationItemDetails.Count;
             ViewBag.Orders = OrdersService.GetOrdersByCustomerId(viewModel.CustomerId).Select(x => x.CreateFromServerToClient());
             return View(viewModel);
@@ -206,11 +210,46 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
                 viewModel.Quotation = QuotationService.FindQuotationById((long)id).CreateFromServerToClientLv();
+                // Get Order from Order Number
+                viewModel.Order = OrdersService.GetOrderByOrderNumber(viewModel.Quotation.OrderNumber).CreateFromServerToClient();
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
                 return View(viewModel);
             }
             return View(viewModel);
         }
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Detail(QuotationDetailViewModel viewModel)
+        {
+            // Update Case
+            Models.Order order = OrdersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
+            order.OrderStatus = viewModel.Order.OrderStatus;
+            order.RecLastUpdatedBy = User.Identity.GetUserId();
+            order.RecLastUpdatedDt = DateTime.Now;
+            var orderToUpdate = order.CreateFromClientToServer();
+            if (OrdersService.UpdateOrder(orderToUpdate))
+            {
+                if (viewModel.Order.OrderStatus == 3)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Order.Canceled,
+                        IsSaved = true
+                    };
+                }
+                if (viewModel.Order.OrderStatus == 4)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.CMS.Order.Updated,
+                        IsSaved = true
+                    };
+                }
+                return RedirectToAction("Index", "Orders");
+            }
+            return null;
+        }
+
         [SiteAuthorize(PermissionKey = "QuotationsDelete")]
         public ActionResult Delete(int itemDetailId)
         {

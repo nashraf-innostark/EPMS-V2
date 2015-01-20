@@ -374,5 +374,14 @@ namespace EPMS.Web.Resources.CMS {
                 return ResourceManager.GetString("UpdateMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Quotation.
+        /// </summary>
+        public static string UpdateQuotation {
+            get {
+                return ResourceManager.GetString("UpdateQuotation", resourceCulture);
+            }
+        }
     }
 }

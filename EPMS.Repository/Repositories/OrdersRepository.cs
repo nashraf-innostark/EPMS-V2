@@ -98,6 +98,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.FirstOrDefault(order => order.OrderId == orderId);
         }
 
+        public Order GetOrderByOrderNumber(string orderNo)
+        {
+            return DbSet.FirstOrDefault(order => order.OrderNo == orderNo);
+        }
+
         #endregion
     }
 }

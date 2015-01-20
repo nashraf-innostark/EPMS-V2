@@ -9,7 +9,6 @@ namespace EPMS.Web.ViewModels.Quotation
     {
         public QuotationCreateViewModel()
         {
-            //Quotation = new Models.Quotation();
             QuotationItemDetails = new List<QuotationItemDetail>();
         }
         public long QuotationId { get; set; }
@@ -41,6 +40,7 @@ namespace EPMS.Web.ViewModels.Quotation
         public int OldItemDetailsCount { get; set; }
 
         public IList<QuotationItemDetail> QuotationItemDetails { get; set; }
-        //public Models.Quotation Quotation { get; set; }
+        public string BtnText { get; set; }
+        public string PageTitle { get; set; }
     }
 }

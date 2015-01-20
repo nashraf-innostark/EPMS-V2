@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
@@ -21,5 +22,6 @@ namespace EPMS.Web.Models
         public string Email { get; set; }
         public string UserId { get; set; }
 
+        //public IEnumerable<Order> Orders { get; set; }
     }
 }
