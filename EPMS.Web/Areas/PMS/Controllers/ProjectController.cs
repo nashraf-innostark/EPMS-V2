@@ -124,25 +124,27 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     
                     
                     //Save file names in db
-                    var projectDocuments = projectViewModel.DocsNames.Substring(0,projectViewModel.DocsNames.Length-2).Split('~').ToList();
-                    foreach (var projectDocument in projectDocuments)
+                    if (!string.IsNullOrEmpty(projectViewModel.DocsNames))
                     {
-                        ProjectDocument doc=new ProjectDocument();
-                        doc.FileName = projectDocument;
-                        doc.ProjectId = projectViewModel.Project.ProjectId;
-                        doc.RecCreatedBy = Session["UserID"].ToString();
-                        doc.RecCreatedDate = DateTime.Now;
-                        doc.RecLastUpdatedBy = Session["UserID"].ToString();
-                        doc.RecLastUpdatedDate = DateTime.Now;
-                        projectDocumentService.AddProjectDocument(doc);
+                        var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 2).Split('~').ToList();
+                        foreach (var projectDocument in projectDocuments)
+                        {
+                            ProjectDocument doc = new ProjectDocument();
+                            doc.FileName = projectDocument;
+                            doc.ProjectId = projectViewModel.Project.ProjectId;
+                            doc.RecCreatedBy = Session["UserID"].ToString();
+                            doc.RecCreatedDate = DateTime.Now;
+                            doc.RecLastUpdatedBy = Session["UserID"].ToString();
+                            doc.RecLastUpdatedDate = DateTime.Now;
+                            projectDocumentService.AddProjectDocument(doc);
+                        }
                     }
-                    
 
-                    TempData["message"] = new MessageViewModel
-                    {
-                        Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
-                        IsUpdated = true
-                    };
+                    //TempData["message"] = new MessageViewModel
+                    //{
+                    //    Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
+                    //    IsUpdated = true
+                    //};
                 }
             }
             catch (Exception e)

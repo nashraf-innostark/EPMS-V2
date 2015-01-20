@@ -189,21 +189,20 @@
                         <th></th>
                         <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
                         <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
-                        <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
+                        <th>@*@EPMS.Web.Resources.PMS.Project.TaskPreReq*@</th>
                         <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @* @foreach (var item in Model.Complaints.ToList())
-            {
-                <tr>
-                    <td>@item.ComplaintId</td>
-                    <td><a href="/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
-                    <td>@Html.ActionLink(@item.Topic, "Create", new { id = item.ComplaintId })</td>
-                    <td>@item.ComplaintDate.ToShortDateString()</td>
-                    <td>@item.IsRepliedString</td>
-                </tr>
-            }*@
+                     @foreach (var item in Model.ProjectTasks.ToList())
+                    {
+                        <tr>
+                            <td>@item.TaskId</td>
+                            <td><a href="/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
+                            <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
+                            <td>@item.TaskProgress</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
