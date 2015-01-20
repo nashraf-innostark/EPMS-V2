@@ -32,7 +32,7 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-@using (Html.BeginForm("Create", "Task", FormMethod.Post, new {@class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Create", "Task", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data" }))
 {
     @*@Html.HiddenFor(model => model.Orders.OrderId)*@
     <div class="container-fluid">
@@ -42,7 +42,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    
+
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    
+
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    
+
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    
+
                 </div>
             </div>
         </div>
@@ -86,5 +86,71 @@
                 </div>
             </div>
         </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobIDa">Description arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="JobIDa" type="text" name="inputField" value="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="dualMulti">Pre-Requisit Tasks</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <select multiple name="dualMulti" id="dualMulti">
+                        <option selected="" value="Task1">Task1</option>
+                        <option value="Task1">Task2</option>
+                        <option value="Task1">Task3</option>
+                        <option value="Task1">Task4</option>
+                        <option value="Task1">Task5 </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="Date_Picker" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="datepicker">
+                    Start Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input type="text" id="datepicker" class="span3 datepicker" />
+                </div>
+            </div>
+        </div>
+        <div id="Date_Picker2" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="datepicker2">
+                    End Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input type="text" id="datepicker2" class="span3 datepicker" />
+                </div>
+            </div>
+        </div>
+
     </div>
 }
+
+<script>
+    $().ready(function () {
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
+        $("#dualMulti2").pickList({
+            sourceListLabel: "Employees - Number Of Tasks They Are Working On",
+            targetListLabel: "Added",
+        });
+        $('.datepicker').mask('99/99/9999');
+        $(".datepicker").datepicker();
+    });
+</script>
