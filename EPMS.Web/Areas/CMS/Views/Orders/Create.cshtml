@@ -37,6 +37,7 @@
 {
     @Html.HiddenFor(model => model.Orders.OrderId)
     @Html.HiddenFor(model => model.Orders.CustomerId)
+    @Html.HiddenFor(model => model.Orders.OrderStatus)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
@@ -48,26 +49,6 @@
                 </div>
             </div>
         </div>
-        @if (Model.RoleName == "Admin")
-        {
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="OrderStatus">@EPMS.Web.Resources.CMS.Order.OrderStatus</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.DropDownListFor(model => model.Orders.OrderStatus, new[]
-                        {
-                         new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                         new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.OnGoing },
-                         new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Canceled },
-                         new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
-                        }, new { @id = "OrderStatus", @class = "" })
-                        @Html.ValidationMessageFor(m => m.Orders.OrderStatus, String.Empty, new { @class = "required" })
-                    </div>
-                </div>
-            </div>
-        }
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="description">@EPMS.Web.Resources.CMS.Order.Description</label>

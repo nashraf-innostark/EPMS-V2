@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -11,15 +12,24 @@ namespace EPMS.Web.Models
             Social=new CompanySocialDetail();
         }
         public long CompanyId { get; set; }
+        [StringLength(500, ErrorMessage = "Company Name cannot exceed 500 characters.")]
         public string CompanyNameE { get; set; }
+        [StringLength(500, ErrorMessage = "Company Name cannot exceed 500 characters.")]
         public string CompanyNameA { get; set; }
         public string CompanyLogoPath { get; set; }
+        [StringLength(500, ErrorMessage = "Website cannot exceed 200 characters.")]
         public string CompanyWebsite { get; set; }
+        [StringLength(500, ErrorMessage = "Email cannot exceed 200 characters.")]
         public string CompanyEmail { get; set; }
+        [StringLength(500, ErrorMessage = "Address cannot exceed 1000 characters.")]
         public string CompanyAddressE { get; set; }
+        [StringLength(500, ErrorMessage = "Address cannot exceed 1000 characters.")]
         public string CompanyAddressA { get; set; }
+        [StringLength(500, ErrorMessage = "Location cannot exceed 200 characters.")]
         public string CompanyLocation { get; set; }
+        [StringLength(500, ErrorMessage = "Number cannot exceed 200 characters.")]
         public string CompanyNumber { get; set; }
+        [StringLength(500, ErrorMessage = "Mobile Number cannot exceed 200 characters.")]
         public string CompanyMobileNumber { get; set; }
         public string CommercialRegister { get; set; }
         public DateTime? CommercialRegisterIssueDate { get; set; }

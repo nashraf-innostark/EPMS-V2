@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
@@ -46,13 +48,24 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
 
         [SiteAuthorize(PermissionKey = "CustomerProfile")]
-        public ActionResult Details(long id)
+        public ActionResult Details(long? id)
         {
             CustomerViewModel customerViewModel = new CustomerViewModel();
-            customerViewModel = customerService.FindCustomerById(id).CreateFromServerToClientVM();
-            AspNetUser currentUser = aspNetUserService.FindById(User.Identity.GetUserId());
-            ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
-            return View(customerViewModel);
+            if (id == null)
+            {
+                if (Session["RoleName"].ToString() != "Customer")
+                {
+                    return RedirectToAction("Index", "Customer");
+                }
+                id = Convert.ToInt64(Session["CustomerID"].ToString());
+            }
+            if (id == Convert.ToInt64(Session["CustomerID"].ToString()) || Session["RoleName"].ToString() == "Admin")
+            {
+                customerViewModel = customerService.FindCustomerById((long)id).CreateFromServerToClientVM();
+                ViewBag.UserRole = Session["RoleName"].ToString();
+                return View(customerViewModel);
+            }
+            return RedirectToAction("Index", "Dashboard", new {area = ""});
         }
         [HttpPost]
 

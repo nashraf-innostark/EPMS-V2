@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.CompanyProfile;
 using EPMS.WebBase.Mvc;
@@ -38,7 +39,9 @@ namespace EPMS.Web.Areas.CP.Controllers
         }
 
         #endregion
-        
+
+        #region Public
+
         [SiteAuthorize(PermissionKey = "CP")]
         public ActionResult Detail()
         {
@@ -125,5 +128,45 @@ namespace EPMS.Web.Areas.CP.Controllers
             }
             return Json(new { filename = filename, size = companyLogo.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult SendSms()
+        {
+            try
+            {
+                var companyProfile = profileService.GetDetail();
+                CompanyProfileViewModel companyProfileViewModel = companyProfile.CreateFromServerToClient();
+
+                string username = ConfigurationManager.AppSettings["MobileUsername"];
+                string password = ConfigurationManager.AppSettings["MobilePassword"];
+                string senderId = ConfigurationManager.AppSettings["SenderID"];
+                string smsText = "Bank Name: " + companyProfileViewModel.BankName + " Bank Name Arabic: " +
+                                 companyProfileViewModel.BankNameAr + " Account # " +
+                                 companyProfileViewModel.BankAccountNo + " Iban # " + companyProfileViewModel.BankIbanNo +
+                                 " Mobile #" + companyProfileViewModel.BankMobileNo;
+                string mobileNo = "abc";
+                WebRequest smsRequest =
+                    WebRequest.Create("http://www.jawalbsms.ws/api.php/sendsms?user=" + username + "&pass=" +
+                                      password +
+                                      "&to=" + mobileNo + "&message=" + smsText +
+                                      "&sender=" + senderId);
+                WebResponse smsRequestResponse = smsRequest.GetResponse();
+                Stream smsDataStream = smsRequestResponse.GetResponseStream();
+                StreamReader smsReader = new StreamReader(smsDataStream);
+                string smsResponse = smsReader.ReadToEnd();
+                //Patient SMS End
+
+                if (smsResponse.ToLower().Contains("success"))
+                {
+                    return Json(new { response = "", status = 200 }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            return Json(new {response = "", status = 500}, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
     }
 }

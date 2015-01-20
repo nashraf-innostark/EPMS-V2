@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Quotation.QuotationCreateViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.CreateNew;
+    ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -341,7 +341,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return setClientName()">@EPMS.Web.Resources.CMS.Quotation.CreateQoute</button>
+                <button type="submit" class="btn" onclick="return setClientName()">@Model.BtnText</button>
             </div>
         </div>
     </div>

@@ -8,9 +8,14 @@ namespace EPMS.Web.Models
     {
         public long JobTitleId { get; set; }
         [Required(ErrorMessage = "Job Title is required.")]
+        [StringLength(200, ErrorMessage = "Job Title Name cannot exceed 200 characters. ")]
         public string JobTitleNameE { get; set; }
-        public string JobTitleDescE { get; set; }
+        [Required(ErrorMessage = "Job Title is required.")]
+        [StringLength(200, ErrorMessage = "Job Title Name cannot exceed 200 characters. ")]
         public string JobTitleNameA { get; set; }
+        [StringLength(1000, ErrorMessage = "Description cannot exceed 200 characters. ")]
+        public string JobTitleDescE { get; set; }
+        [StringLength(1000, ErrorMessage = "Description cannot exceed 200 characters. ")]
         public string JobTitleDescA { get; set; }
         [Required(ErrorMessage = "Department is Required")]
         public long DepartmentId { get; set; }

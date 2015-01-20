@@ -61,7 +61,7 @@
                 <!--Company Information-->
                 <div id="tab-1" class="tab-pane fade active in">
                     @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "ProfileForm", @class = "form-horizontal", role = "form" }))
-                {
+                    {
                         @Html.HiddenFor(m => m.CompanyProfile.CompanyId)
                         @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
                         @Html.HiddenFor(model => model.CompanyProfile.CompanyLogoPath, new { @id = "CompanyLogoPath" })
@@ -120,7 +120,7 @@
                         <div class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">@EPMS.Web.Resources.CP.Profile.AddressAr</label>
-    </div>
+                            </div>
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyProfile.CompanyAddressA, new { id = "CompanyAddressA" })
@@ -163,13 +163,13 @@
                             </div>
 
                         </div>
-                }
+                    }
                 </div>
 
                 <!--Company Documents-->
                 <div id="tab-2" class="tab-pane fade">
                     @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "DocumentForm", @class = "form-horizontal", role = "form" }))
-                {
+                    {
                         @Html.HiddenFor(m => m.CompanyDocuments.CompanyId, new { @class = "CompanyId" })
                         @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
 
@@ -380,7 +380,7 @@
                                 <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(2)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
                             </div>
                         </div>
-                }
+                    }
                 </div>
 
                 <!--License Information-->
@@ -388,7 +388,7 @@
                     <div class="control-group row-fluid">
                         <div class="span3">
                             <label class="control-label" for="pnumber">@EPMS.Web.Resources.CP.Profile.ProductNo</label>
-   </div>
+                        </div>
                         <div class="span9">
                             <div class="controls">
                                 <input id="pnumber" type="text" name="inputField" disabled />
@@ -455,16 +455,21 @@
                 <!--Bank Information-->
                 <div id="tab-4" class="tab-pane fade">
                     @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "BankForm", @class = "form-horizontal", role = "form" }))
-                {
+                    {
                         @Html.HiddenFor(m => m.CompanyBank.CompanyId, new { @class = "CompanyId" })
                         @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
+                        @Html.HiddenFor(m => m.BankName, new { @id = "BankName", @class = "BankName" })
+                        @Html.HiddenFor(m => m.BankNameAr, new { @class = "BankNameAr" })
+                        @Html.HiddenFor(m => m.BankAccountNo, new { @class = "BankAccountNo" })
+                        @Html.HiddenFor(m => m.BankIbanNo, new { @class = "BankIbanNo" })
+                        @Html.HiddenFor(m => m.BankMobileNo, new { @class = "BankMobileNo" })
                         <div class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1Name, new { id = "Bank1Name", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1Name, new { id = "BankName1", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -474,7 +479,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1NameArabic, new { id = "Bank1NameArabic", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1NameArabic, new { id = "BankNameArabic1", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -484,7 +489,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1AccountNumber, new { id = "Bank1AccountNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1AccountNumber, new { id = "BankAccountNumber1", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -494,7 +499,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1IBANNumber, new { id = "Bank1IBANNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1IBANNumber, new { id = "BankIBANNumber1", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -504,13 +509,13 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1MobileNumber, new { id = "Bank1MobileNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1MobileNumber, new { id = "Bank1MobileNumber1", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(1)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -519,7 +524,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2Name, new { id = "Bank2Name", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2Name, new { id = "BankName2", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -529,7 +534,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2NameArabic, new { id = "Bank2NameArabic", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2NameArabic, new { id = "BankNameArabic2", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -539,7 +544,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2AccountNumber, new { id = "Bank2AccountNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2AccountNumber, new { id = "BankAccountNumber2", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -549,7 +554,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2IBANNumber, new { id = "Bank2IBANNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2IBANNumber, new { id = "BankIBANNumber2", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -559,14 +564,14 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2MobileNumber, new { id = "Bank2MobileNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank2MobileNumber, new { id = "BankMobileNumber2", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
-     </div>
+                                <button type="button" class="btn" onclick="SetDetail(2)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                            </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
@@ -574,7 +579,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3Name, new { id = "Bank3Name", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3Name, new { id = "BankName3", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -584,7 +589,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3NameArabic, new { id = "Bank3NameArabic", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3NameArabic, new { id = "BankNameArabic3", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -594,7 +599,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3AccountNumber, new { id = "Bank3AccountNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3AccountNumber, new { id = "BankAccountNumber3", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -604,7 +609,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3IBANNumber, new { id = "Bank3IBANNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3IBANNumber, new { id = "BankIBANNumber3", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -614,13 +619,13 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3MobileNumber, new { id = "Bank3MobileNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank3MobileNumber, new { id = "BankMobileNumber3", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(3)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -629,7 +634,7 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4Name, new { id = "Bank4Name", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4Name, new { id = "BankName4", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -639,17 +644,17 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4NameArabic, new { id = "Bank4NameArabic", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4NameArabic, new { id = "BankNameArabic4", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
- </div>
+                            </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4AccountNumber, new { id = "Bank4AccountNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4AccountNumber, new { id = "BankAccountNumber4", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
@@ -659,23 +664,23 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4IBANNumber, new { id = "Bank4IBANNumber", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4IBANNumber, new { id = "BankIBANNumber4", @class = "tbdisable" })
                                 </div>
                             </div>
                         </div>
-    <div class="control-group row-fluid">
-        <div class="span3">
-            <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
-        </div>
-        <div class="span9">
-            <div class="controls">
-                @Html.TextBoxFor(m => m.CompanyBank.Bank4MobileNumber, new { id = "Bank4MobileNumber", @class = "tbdisable" })
-            </div>
-        </div>
-    </div>
+                        <div class="control-group row-fluid">
+                            <div class="span3">
+                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                            </div>
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank4MobileNumber, new { id = "BankMobileNumber4", @class = "tbdisable" })
+                                </div>
+                            </div>
+                        </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(4)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -683,13 +688,13 @@
                                 <button id="savebtn" class="btn saveButton" type="submit" onclick=" SetTabId(4) ">Save</button>
                             </div>
                         </div>
-                }
+                    }
                 </div>
 
                 <!--Social Media-->
                 <div id="tab-5" class="tab-pane fade">
                     @using (Html.BeginForm("Detail", "CompanyProfile", FormMethod.Post, new { @id = "SocialForm", @class = "form-horizontal", role = "form" }))
-                {
+                    {
                         @Html.HiddenFor(m => m.CompanyProfile)
                         @Html.HiddenFor(m => m.CompanySocial.CompanyId, new { @class = "CompanyId" })
                         @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
@@ -747,7 +752,7 @@
                         <div class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
-       </div>
+                            </div>
                             <div class="span9">
                                 <div class="controls">
                                     @Html.PasswordFor(m => m.CompanySocial.FacebookPassword, new { id = "FacebookPassword", @class = "tbdisable" })
@@ -799,7 +804,7 @@
                         <div class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
-      </div>
+                            </div>
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanySocial.LinkedInUserName, new { id = "LinkedInUserName", @class = "tbdisable" })
@@ -900,7 +905,7 @@
                         <div class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
-       </div>
+                            </div>
                             <div class="span9">
                                 <div class="controls">
                                     @Html.PasswordFor(m => m.CompanySocial.TumblerPassword, new { id = "TumblerPassword", @class = "tbdisable" })
@@ -1033,7 +1038,7 @@
                                 <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(5)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
                             </div>
                         </div>
-                }
+                    }
                 </div>
 
             </div>
@@ -1041,6 +1046,41 @@
         <!--Tabs Content-->
     </div>
 </div>
+
+<a id="go" rel="leanModal" name="popup" href="#popup"></a>
+<div id="popup" class="pops-custom">
+    <div class="popup-header">
+        <button type="button" class="close" onclick="hide()">×</button>
+        <h3 id="popupHeader">Send SMS</h3>
+    </div>
+    <div class="form-horizontal">
+        <div class="popup-ct">
+            <div class="popup-custom row-fluid">
+                <div class="span3">
+                    <label class="control-label">Select Contact</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.CompanySocial.IstegramUserName, new { id = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="popup-custom row-fluid">
+                <div class="span3">
+                    <label class="control-label">Enter Number</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.CompanySocial.IstegramUserName, new { id = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="selectbtn">
+                <button type="submit" class="btn">Send</button>
+            </div>
+        </div>
+    </div>
+    </div>
 
 
 <script>
@@ -1098,5 +1138,19 @@
         $('.TabId').val(id);
         $('.CompanyId').val('@ViewBag.CompanyId');
     };
-    
+    $(function () {
+        $('a[rel*=leanModal]').leanModal({ top: 80, closeButton: ".btnSelect,.modal_close" });
+    });
+
+    function SetDetail(id) {
+        $('.BankName').val($('#BankName' + id).val());
+        $('.BankNameAr').val($('#BankNameAr' + id).val());
+        $('.BankAccountNo').val($('#BankAccountNumber' + id).val());
+        $('.BankIbanNo').val($('#BankIBANNumber' + id).val());
+        $('.BankMobileNo').val($('#BankMobileNumber' + id).val());
+        $("#go").click();
+    }
+    function hide() {
+        $("#popup").hide();
+    }
 </script>
