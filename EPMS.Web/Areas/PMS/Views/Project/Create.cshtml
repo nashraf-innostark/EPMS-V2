@@ -38,6 +38,7 @@
     <div class="container-fluid">
 
         @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" });
+        @Html.HiddenFor(model => model.Project.Status, new { @id = "ProjectStatus" });
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -99,7 +100,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.SerialNo, new { @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Project.SerialNo, new { @id = "ProjectSerialNo", @readonly = "readonly" })
                 </div>
             </div>
         </div>
@@ -365,7 +366,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
+                    <select id="ProjectStatusDDL">
                         <option value="1">On Going </option>
                         <option value="2">On Hold</option>
                         <option value="3">Canceled</option>
@@ -443,7 +444,7 @@
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
+                <button type="submit" class="btn" onclick="SetStatus()">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
             </div>
 
         </div>
@@ -471,69 +472,7 @@
                 });
             }
         });
-        $("#Client").on("change", function () {
-            var customerId = $(this).val();
-            var url = siteUrl + "/PMS/Project/GetCustomerOrders";
-            if (customerId > 0) {
-                $("#ClientName").val($("#Client option:selected").text());
-                //$('#SearchRequest_JobId').empty();
-                $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
-                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
-                });
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: "json",
-                    data: {
-                        customerId: customerId
-                    },
-                    success: function (data) {
-                        populateDDL(data);
-                    },
-                    error: function (e) {
-                        alert('Error=' + e.toString());
-                    }
-                });
-            } else {
-
-            }
-
-        });
-
-        function populateDDL(data) {
-            $("#OrderNo").empty();
-            if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    //set first order's no as a project name
-                    var orderTitle = data[0].OrderNo;
-                    $("#ProjectNameE").val(orderTitle);
-                    $("#ProjectNameA").val(orderTitle);
-                    $("#OrderNo").append(
-                        $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
-                    );
-                }
-            } else {
-                $("#OrderNo").append(
-                        $('<option></option>').val("").html("none")
-                    );
-                $("#ProjectNameE").val("");//empty project name
-                $("#ProjectNameA").val("");
-            }
-            $.unblockUI();
-        }
-        //set order's no as a project name
-        $("#OrderNo").on("change", function () {
-            var orderTitle = $("#OrderNo option:selected").text();
-            $("#ProjectNameE").val(orderTitle);
-            $("#ProjectNameA").val(orderTitle);
-        });
-        function addDocName(filename) {
-            var lis = $("#DocsNames").val();
-            lis += filename + "~";
-            $("#DocsNames").val(lis);
-        }
-
+       
         var errors = "";
         var url = "/PMS/Project/UploadDocuments";
         $('#upload').mfupload({
@@ -576,5 +515,75 @@
                 }
             }
         });
+
+        $("#Client").on("change", function () {
+            var customerId = $(this).val();
+            var url = siteUrl + "/PMS/Project/GetCustomerOrders";
+            if (customerId > 0) {
+                $("#ClientName").val($("#Client option:selected").text());
+                //$('#SearchRequest_JobId').empty();
+                $.blockUI({
+                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        customerId: customerId
+                    },
+                    success: function (data) {
+                        populateDDL(data);
+                    },
+                    error: function (e) {
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
+
+            }
+
+        });
+        //set order's no as a project name
+        $("#OrderNo").on("change", function () {
+            var orderTitle = $("#OrderNo option:selected").text();
+            SetNames(orderTitle);
+        });
     });
+   
+    function populateDDL(data) {
+        $("#OrderNo").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                //set first order's no as a project name
+                var orderTitle = data[0].OrderNo;
+                SetNames(orderTitle);
+                $("#OrderNo").append(
+                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                );
+            }
+        } else {
+            $("#OrderNo").append(
+                    $('<option></option>').val("").html("none")
+                );
+            SetNames("");
+        }
+        $.unblockUI();
+    }
+    
+    function addDocName(filename) {
+        var lis = $("#DocsNames").val();
+        lis += filename + "~";
+        $("#DocsNames").val(lis);
+    }
+    function SetStatus() {
+        $("#ProjectStatus").val($("#ProjectStatusDDL").val());
+    }
+    function SetNames(value) {
+        $("#ProjectNameE").val(value);//empty project name
+        $("#ProjectNameA").val(value);
+        var serial = (new Date().getFullYear()) + value;
+        $("#ProjectSerialNo").val(serial);
+    }
 </script>

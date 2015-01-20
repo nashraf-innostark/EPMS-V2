@@ -2,7 +2,7 @@
 
 namespace EPMS.Models.DomainModels
 {
-    public class ProjectDocuments
+    public class ProjectDocument
     {
         public long Id { get; set; }
         public long ProjectId { get; set; }

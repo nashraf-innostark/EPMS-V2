@@ -131,7 +131,7 @@
     <Compile Include="DomainModels\PreRequisitTask.cs" />
     <Compile Include="DomainModels\Project.cs" />
     <Compile Include="DomainModels\ProjectTask.cs" />
-    <Compile Include="DomainModels\ProjectDocuments.cs" />
+    <Compile Include="DomainModels\ProjectDocument.cs" />
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />

@@ -17,8 +17,8 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
-        public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
+        public virtual ICollection<Quotation> Quotations { get; set; }
     }
 }
