@@ -1,5 +1,11 @@
 ﻿using System;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
@@ -105,8 +111,13 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project.RecLastUpdatedBy = User.Identity.GetUserId();
                     projectViewModel.Project.RecLastUpdatedDate = DateTime.Now;
 
-                    //Add Complaint to Db
+                    //Add Project to Db
                     projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
+                    
+                    
+                    //Save file names in db
+
+
                     TempData["message"] = new MessageViewModel
                     {
                         Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
@@ -119,6 +130,30 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 return View(projectViewModel);
             }
             return RedirectToAction("OnGoing", "Project");
+        }
+
+        public ActionResult UploadDocuments()
+        {
+            HttpPostedFileBase doc = Request.Files[0];
+            var filename = "";
+            try
+            {
+                //Save File to Folder
+                if ((doc != null))
+                {
+                    filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture) + doc.FileName);//concat date time with file name
+                    Regex pattern = new Regex("[;|:|,|-|_|+|/| ]");
+                    filename = pattern.Replace(filename, "");//remove some characters and spaces from file name
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    doc.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
         #endregion
         #region Get Customer Orders
