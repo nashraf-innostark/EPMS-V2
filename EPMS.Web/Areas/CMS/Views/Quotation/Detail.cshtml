@@ -1,5 +1,4 @@
 ﻿@model EPMS.Web.ViewModels.Quotation.QuotationDetailViewModel
-
 @{
     ViewBag.Title = "Quotation Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -41,10 +40,12 @@
 @using (Html.BeginForm("Detail", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
+        @Html.HiddenFor(model => model.Order.OrderId)
+        @Html.HiddenFor(model => model.Order.OrderStatus)
         <div class="control-group row-fluid">
 
             <div class="form-legend centTitle">
-                Qoutation
+                @EPMS.Web.Resources.CMS.Quotation.Quot
             </div>
             <div class="invoice-info">
                 <div class="invoice-name">
@@ -304,19 +305,18 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Place Order</button>
+                <button type="submit" class="btn" onclick="placeOrder()">Place Order</button>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Cancel Order</button>
+                <button type="submit" class="btn" onclick="cancelOrder()">Cancel Order</button>
             </div>
         </div>
     </div>
 }
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script>
-
     $(document).ready(function () {
         var x = 0;
         $('.qouteAdd tr').each(function () {
@@ -336,4 +336,12 @@
             $('#inWord').val($.nToWord({ number: grand, language: "en" }));
         }
     });
+    function placeOrder() {
+        $("#Order_OrderStatus").val(4);
+        return true;
+    }
+    function cancelOrder() {
+        $("#Order_OrderStatus").val(3);
+        return true;
+    }
 </script>

@@ -1,7 +1,7 @@
-﻿@model EPMS.Web.ViewModels.Tasks.TaskListViewModel
+﻿@model EPMS.Web.ViewModels.Tasks.TaskCreateViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,6 +14,11 @@
             </a>
         </li>
         <li>
+            <a href="~/PMS/Task/Index">
+
+            </a>
+        </li>
+        <li>
             @ViewBag.Title
         </li>
     </ul>
@@ -21,11 +26,16 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
+    <h2><small>@Model.Header</small></h2>
 </header>
-
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-
+@using (Html.BeginForm("Create", "Task", FormMethod.Post, new {@class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data"}))
+{
+    @*@Html.HiddenFor(model => model.Orders.OrderId)*@
+    <div class="container-fluid">
+        
+    </div>
+}

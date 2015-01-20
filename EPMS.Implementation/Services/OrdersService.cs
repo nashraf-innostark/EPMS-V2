@@ -82,6 +82,11 @@ namespace EPMS.Implementation.Services
             return ordersRepository.GetOrderByOrderId(orderId);
         }
 
+        public Order GetOrderByOrderNumber(string orderNo)
+        {
+            return ordersRepository.GetOrderByOrderNumber(orderNo);
+        }
+
         public OrdersLVResponse GetOrderForListView(OrdersSearchRequest searchRequest)
         {
             OrdersLVResponse response = new OrdersLVResponse();

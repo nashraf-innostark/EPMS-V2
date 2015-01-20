@@ -11,5 +11,6 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<Order> GetRecentOrders(string requester, int status);
         IEnumerable<Order> GetOrdersByCustomerId(long customerId);
         Order GetOrderByOrderId(long orderId);
+        Order GetOrderByOrderNumber(string orderNo);
     }
 }

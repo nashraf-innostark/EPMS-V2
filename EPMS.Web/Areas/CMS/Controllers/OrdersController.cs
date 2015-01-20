@@ -145,7 +145,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 var customerId = result.CustomerId;
                 viewModel.Orders.OrderDate = DateTime.Now;
                 viewModel.Orders.CustomerId = customerId ?? 0;
-                viewModel.Orders.OrderStatus = 1;
+                viewModel.Orders.OrderStatus = 2;
                 viewModel.Orders.RecCreatedBy = User.Identity.GetUserId();
                 viewModel.Orders.RecCreatedDt = DateTime.Now;
                 var orderToSave = viewModel.Orders.CreateFromClientToServer();

@@ -509,6 +509,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Project.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\PMS\Task.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Task.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PMS\Task.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Task.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -552,6 +562,7 @@
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -565,6 +576,7 @@
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
+    <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2549,6 +2561,7 @@
     <EmbeddedResource Include="Resources\CMS\Order.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Order.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CP\Profile.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2565,6 +2578,7 @@
     <EmbeddedResource Include="Resources\CMS\Quotation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3011,6 +3025,14 @@
     <EmbeddedResource Include="Resources\PMS\Project.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Project.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Task.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Task.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
