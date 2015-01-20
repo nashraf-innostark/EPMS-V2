@@ -16,5 +16,10 @@ namespace EPMS.Web.ViewModels.CompanyProfile
         public CompanyBankDetail CompanyBank { get; set; }
         public CompanySocialDetail CompanySocial { get; set; }
         public int TabId { get; set; }
+        public string BankName { get; set; }
+        public string BankNameAr { get; set; }
+        public string BankAccountNo { get; set; }
+        public string BankIbanNo { get; set; }
+        public string BankMobileNo { get; set; }
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="IServices\ICompanyProfileService.cs" />
     <Compile Include="IServices\ICompanySocialService.cs" />
     <Compile Include="IServices\IComplaintService.cs" />
+    <Compile Include="IServices\IContactListService.cs" />
     <Compile Include="IServices\ICustomerService.cs" />
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\IEmployeeRequestService.cs" />
