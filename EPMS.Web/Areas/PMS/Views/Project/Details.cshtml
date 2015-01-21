@@ -13,6 +13,9 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
+        <li>
+            <a href="~/PMS/Project/OnGoing">@EPMS.Web.Resources.PMS.Project.ProjectsList</a>
+        </li>
         <li class="current">
             @ViewBag.Title
         </li>
@@ -183,6 +186,7 @@
                                 <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Employees</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
                             </tr>
                         </thead>
@@ -194,6 +198,7 @@
                                     <td><a href="/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
                                     <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
                                     <td>@item.PreReqTasks</td>
+                                    <td>@item.EmployeesAssigned</td>
                                     <td>
                                         <div class="progress progress-info">
                                             <div class="bar" style="width: @item.TaskProgress%">@item.TaskProgress%</div>
@@ -272,23 +277,66 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
+                                <th><a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a></th>
+                                <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.CreateShowReceipt</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @* @foreach (var item in Model.Complaints.ToList())
-                                {
-                                    <tr>
-                                        <td>@item.ComplaintId</td>
-                                        <td><a href="/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
-                                        <td>@Html.ActionLink(@item.Topic, "Create", new { id = item.ComplaintId })</td>
-                                        <td>@item.ComplaintDate.ToShortDateString()</td>
-                                        <td>@item.IsRepliedString</td>
-                                    </tr>
-                                }*@
+                            @if (Model.Installment != null)
+                            {
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.FirstInstallement</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.FirstInsDueAtCompletion%">@Model.Installment.FirstInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.SecondInstallment</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.SecondInsDueAtCompletion%">@Model.Installment.SecondInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.ThirdInstallment</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.ThirdInsDueAtCompletion%">@Model.Installment.ThirdInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.FourthInstallment</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.FourthInsDueAtCompletion%">@Model.Installment.FourthInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+
                         </tbody>
                     </table>
                 </div>
@@ -397,6 +445,7 @@
             "sPaginationType": "bootstrap",
             "aoColumns": [
                 { "bVisible": false },
+                null,
                 null,
                 null,
                 null,

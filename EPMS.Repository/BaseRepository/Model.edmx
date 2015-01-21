@@ -1081,6 +1081,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TaskEmployee_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskEmployee">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TaskEmployee_Task">
           <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="1" />
           <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
@@ -1284,6 +1296,10 @@
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
             <End Role="RequestDetails" EntitySet="RequestDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TaskEmployee" EntitySet="TaskEmployee" />
           </AssociationSet>
           <AssociationSet Name="FK_TaskEmployee_Task" Association="Self.FK_TaskEmployee_Task">
             <End Role="ProjectTask" EntitySet="ProjectTask" />
@@ -1510,6 +1526,10 @@
           <AssociationSet Name="PreRequisitTask" Association="EPMSModel.PreRequisitTask">
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskEmployee_Employee" Association="EPMSModel.FK_TaskEmployee_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Allowance">
@@ -1805,6 +1825,7 @@
           <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
           <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
           <NavigationProperty Name="Notifications" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
+          <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -2151,6 +2172,7 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProjectTask" Relationship="EPMSModel.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="TaskEmployee" ToRole="Employee" />
         </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
@@ -2583,6 +2605,18 @@
         <Association Name="PreRequisitTask">
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask1" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_TaskEmployee_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.TaskEmployee" Role="TaskEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskEmployee">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -3315,6 +3349,7 @@
         <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" />
+        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
         </Diagram>
     </Diagrams>
   </Designer>

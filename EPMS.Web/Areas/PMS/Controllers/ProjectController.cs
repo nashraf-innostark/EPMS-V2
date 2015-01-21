@@ -85,16 +85,27 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 if (project != null)
                 {
                     projectViewModel.Project = project.CreateFromServerToClient();
+                    //Map Installments
                     if (project.OrderId > 0)
                     {
-                        //projectViewModel.Installment = quotationService.FindQuotationByOrderNo(project.OrderId).Select(x => x.CreateFromServerToClient());
+                        var quotation = quotationService.FindQuotationByOrderId(Convert.ToInt64(project.OrderId));
+                        if (quotation != null)
+                            projectViewModel.Installment = quotation.CreateFromServerToClientLv();
                     }
-
+                    //Map Project Tasks
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
                         projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        foreach (var projectTask in projectViewModel.ProjectTasks)
+                        {
+                            projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
+                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
+                        }
                     }
+                    projectViewModel.Project.Profit = (projectViewModel.Project.Price +
+                                                       projectViewModel.Project.OtherCost) -
+                                                      projectViewModel.Project.TotalTasksCost;
                 }
             }
             projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
@@ -207,16 +218,27 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var customers = customerService.GetAll();
                     var orders = ordersService.GetAll();
                     projectViewModel.Project = project.CreateFromServerToClient();
+                    //Map Installments
                     if (project.OrderId > 0)
                     {
-                        //projectViewModel.Installment = quotationService.FindQuotationByOrderNo(project.OrderId).Select(x => x.CreateFromServerToClient());
+                        var quotation = quotationService.FindQuotationByOrderId(Convert.ToInt64(project.OrderId));
+                        if (quotation!=null)
+                            projectViewModel.Installment = quotation.CreateFromServerToClientLv();
                     }
-
+                    //Map Project Tasks
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
                         projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        foreach (var projectTask in projectViewModel.ProjectTasks)
+                        {
+                            projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
+                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
+                        }
                     }
+                    projectViewModel.Project.Profit = (projectViewModel.Project.Price +
+                                                       projectViewModel.Project.OtherCost) -
+                                                      projectViewModel.Project.TotalTasksCost;
                     var projectDocument = projectDocumentService.FindProjectDocumentsByProjectId((long)id);
                     var projectDocsNames = projectDocument as IList<ProjectDocument> ?? projectDocument.ToList();
                     if (projectDocsNames.Any())

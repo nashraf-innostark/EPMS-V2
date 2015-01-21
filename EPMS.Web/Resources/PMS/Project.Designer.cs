@@ -160,11 +160,11 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee.
+        ///   Looks up a localized string similar to Employees.
         /// </summary>
-        public static string Employee {
+        public static string Employees {
             get {
-                return ResourceManager.GetString("Employee", resourceCulture);
+                return ResourceManager.GetString("Employees", resourceCulture);
             }
         }
         

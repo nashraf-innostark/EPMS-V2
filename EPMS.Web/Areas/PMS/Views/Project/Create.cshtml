@@ -172,7 +172,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.Price, new { @id = "ProjectPrice" })
+                        @Html.TextBoxFor(model => model.Project.Price, new { @id = "ProjectPrice", onchange = "Profit()" })
                     </div>
                 </div>
             </div>
@@ -193,6 +193,7 @@
                                 <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Employees</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
                             </tr>
                         </thead>
@@ -204,6 +205,7 @@
                                     <td><a href="/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
                                     <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
                                     <td>@item.PreReqTasks</td>
+                                    <td>@item.EmployeesAssigned</td>
                                     <td>
                                         <div class="progress progress-info">
                                             <div class="bar" style="width: @item.TaskProgress%">@item.TaskProgress%</div>
@@ -223,7 +225,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.TotalTasksCost, new { @id = "ProjectPrice", @readonly = true })
+                        @Html.TextBoxFor(model => model.Project.TotalTasksCost, new { @id = "TotalTasksCost", @readonly = true })
                     </div>
                 </div>
             </div>
@@ -235,7 +237,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.OtherCost, new { @id = "ProjectPrice" })
+                        @Html.TextBoxFor(model => model.Project.OtherCost, new { @id = "ProjectOtherCost", onchange = "Profit()" })
                     </div>
                 </div>
             </div>
@@ -247,7 +249,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.Profit, new { @id = "ProjectPrice", @readonly = true })
+                        @Html.TextBoxFor(model => model.Project.Profit, new { @id = "ProjectProfit", @readonly = true })
                     </div>
                 </div>
             </div>
@@ -259,7 +261,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.ProgressTotal, new { @id = "ProjectPrice" })
+                        @Html.TextBoxFor(model => model.Project.ProgressTotal, new { @id = "ProgressTotal" })
                     </div>
                 </div>
             </div>
@@ -282,24 +284,68 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Installment</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.CreateShowReceipt</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @* @foreach (var item in Model.Complaints.ToList())
-                                {
-                                    <tr>
-                                        <td>@item.ComplaintId</td>
-                                        <td><a href="/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
-                                        <td>@Html.ActionLink(@item.Topic, "Create", new { id = item.ComplaintId })</td>
-                                        <td>@item.ComplaintDate.ToShortDateString()</td>
-                                        <td>@item.IsRepliedString</td>
-                                    </tr>
-                                }*@
+                            @if (Model.Installment != null)
+                            {
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.FirstInstallement</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.FirstInsDueAtCompletion%">@Model.Installment.FirstInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.SecondInstallment</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.SecondInsDueAtCompletion%">@Model.Installment.SecondInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.ThirdInstallment</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.ThirdInsDueAtCompletion%">@Model.Installment.ThirdInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>@Model.Installment.QuotationId</td>
+                                    <td>@Model.Installment.FourthInstallment</td>
+                                    <td>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @Model.Installment.FourthInsDueAtCompletion%">@Model.Installment.FourthInsDueAtCompletion%</div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                            
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -417,6 +463,7 @@
             "sPaginationType": "bootstrap",
             "aoColumns": [
                 { "bVisible": false },
+                  null,
                   null,
                   null,
                   null,
@@ -544,7 +591,13 @@
     function SetNames(value) {
         $("#ProjectNameE").val(value);//empty project name
         $("#ProjectNameA").val(value);
-        var serial = (new Date().getFullYear()) + value;
-        $("#ProjectSerialNo").val(serial);
+        $("#ProjectSerialNo").val(value);
+    }
+    function Profit() {
+        var other=$("#ProjectOtherCost").val();//empty project name 
+        var price=$("#ProjectPrice").val();
+        var cost=$("#TotalTasksCost").val();
+        var profit = parseFloat(price) + parseFloat(other) - parseFloat(cost);
+        $("#ProjectProfit").val(profit);
     }
 </script>

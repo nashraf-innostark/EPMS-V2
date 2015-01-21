@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
 {
@@ -16,8 +17,10 @@ namespace EPMS.Web.ModelMappers.PMS
                 SerialNo = source.SerialNo,
                 DescriptionE = source.DescriptionE,
                 DescriptionA = source.DescriptionA,
-                StartDate = source.StartDate,
-                EndDate = source.EndDate,
+                StartDate = Convert.ToDateTime(source.StartDate),
+                EndDate = Convert.ToDateTime(source.EndDate),
+                Price = source.Price,
+                OtherCost = source.OtherCost,
                 Status = source.Status,
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
@@ -40,8 +43,10 @@ namespace EPMS.Web.ModelMappers.PMS
             project.SerialNo = source.SerialNo;
             project.DescriptionE = source.DescriptionE;
             project.DescriptionA = source.DescriptionA;
-            project.StartDate = source.StartDate;
-            project.EndDate = source.EndDate;
+            project.StartDate = Convert.ToDateTime(source.StartDate).ToShortDateString();
+            project.EndDate = Convert.ToDateTime(source.EndDate).ToShortDateString();
+            project.Price = Convert.ToInt64(source.Price);
+            project.OtherCost = Convert.ToInt64(source.OtherCost);
             project.Status = source.Status;
             project.NotesE = source.NotesE;
             project.NotesA = source.NotesA;
