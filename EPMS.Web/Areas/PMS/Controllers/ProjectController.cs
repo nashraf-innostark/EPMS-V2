@@ -87,6 +87,10 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 {
                     projectViewModel.ProjectTasks = projectTasks.Select(x=>x.CreateFromServerToClient());
                 }
+                if (project != null)
+                {
+                    projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                }
             }
             projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
             projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
