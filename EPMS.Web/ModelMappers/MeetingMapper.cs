@@ -34,7 +34,7 @@ namespace EPMS.Web.ModelMappers
                 Agenda = source.Agenda,
                 AgendaAr = source.AgendaAr,
                 Discussion = source.Discussion,
-                DiscusionAr = source.DiscusionAr,
+                DiscusionAr = source.DiscussionAr,
                 Decisions = source.Decisions,
                 DecisionsAr = source.DecisionsAr,
                 RecCreatedBy = source.RecCreatedBy,
