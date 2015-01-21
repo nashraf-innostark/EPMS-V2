@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -30,5 +29,6 @@ namespace EPMS.Web.Models
 
         public string PreReqTasks { get; set; }
         public IList<PreRequisitTask> RequisitTasks { get; set; }
+        public string EmployeesAssigned { get; set; }
     }
 }

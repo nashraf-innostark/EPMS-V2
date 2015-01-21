@@ -15,8 +15,8 @@ namespace EPMS.Web.Models
         public string SerialNo { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public int Status { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
@@ -29,11 +29,10 @@ namespace EPMS.Web.Models
 
         public string CustomerNameE { get; set; }
         public string CustomerNameA { get; set; }
-        public double Price { get; set; }
-        public double TotalTasksCost { get; set; }
-        public double OtherCost { get; set; }
-        public double Profit { get; set; }
+        public decimal Price { get; set; }
+        public decimal TotalTasksCost { get; set; }
+        public decimal OtherCost { get; set; }
+        public decimal Profit { get; set; }
         public double ProgressTotal { get; set; }
-        public int Progress { get; set; }
     }
 }

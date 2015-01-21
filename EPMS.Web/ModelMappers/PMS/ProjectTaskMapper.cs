@@ -29,15 +29,22 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
             projectTask.RequisitTasks = source.PreRequisitTasks.Select(x => x.CreateFromServerToClient()).ToList();
-            if (source.PreRequisitTasks.Count > 0)
+            if (source.PreRequisitTask.Count > 0)
             {
-                foreach (var preRequisitTask in source.PreRequisitTasks)
+                foreach (var preRequisitTask in source.PreRequisitTask)
                 {
-                    projectTask.PreReqTasks = preRequisitTask.ProjectTask.TaskNameE + " - " + projectTask.PreReqTasks;
+                    projectTask.PreReqTasks = preRequisitTask.TaskNameE + " - " + projectTask.PreReqTasks;
                 }
                 projectTask.PreReqTasks = projectTask.PreReqTasks.Substring(0, projectTask.PreReqTasks.Length - 3);
             }
-            
+            if (source.TaskEmployees.Count > 0)
+            {
+                foreach (var employee in source.TaskEmployees)
+                {
+                    projectTask.EmployeesAssigned = employee.Employee.EmployeeNameE + " - " + projectTask.EmployeesAssigned;
+                }
+                projectTask.EmployeesAssigned = projectTask.EmployeesAssigned.Substring(0, projectTask.EmployeesAssigned.Length - 3);
+            }
             return projectTask;
         }
     }
