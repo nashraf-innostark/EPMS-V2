@@ -189,7 +189,7 @@
                         <th></th>
                         <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
                         <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
-                        <th>@*@EPMS.Web.Resources.PMS.Project.TaskPreReq*@</th>
+                        <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
                         <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
                     </tr>
                 </thead>
@@ -200,6 +200,7 @@
                             <td>@item.TaskId</td>
                             <td><a href="/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
                             <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
+                            <td>@item.PreReqTasks</td>
                             <td>@item.TaskProgress</td>
                         </tr>
                     }
@@ -407,6 +408,13 @@
         CKEDITOR.replace('NotesForCustomerE');
         $('#TasksTable,#InstallmentTable').dataTable({
             "sPaginationType": "bootstrap",
+            "aoColumns": [
+                { "bVisible": false },
+                  null,
+                  null,
+                  null,
+                  null
+            ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
