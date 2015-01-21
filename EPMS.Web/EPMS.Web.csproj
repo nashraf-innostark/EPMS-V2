@@ -285,6 +285,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="IMeetingDocumentService.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
     <Compile Include="ModelMappers\CompanyProfileMapper.cs" />
     <Compile Include="ModelMappers\ComplaintMapper.cs" />

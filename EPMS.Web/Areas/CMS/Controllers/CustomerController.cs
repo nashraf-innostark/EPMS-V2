@@ -59,7 +59,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
                 id = Convert.ToInt64(Session["CustomerID"].ToString());
             }
-            if (id == Convert.ToInt64(Session["CustomerID"].ToString()) || Session["RoleName"].ToString() == "Admin")
+            if (Session["RoleName"].ToString() == "Admin" || id == Convert.ToInt64(Session["CustomerID"].ToString()))
             {
                 customerViewModel = customerService.FindCustomerById((long)id).CreateFromServerToClientVM();
                 ViewBag.UserRole = Session["RoleName"].ToString();
