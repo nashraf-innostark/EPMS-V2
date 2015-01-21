@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.IServices
         QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest);
         IEnumerable<Quotation> GetAll();
         Quotation FindQuotationById(long id);
+        Quotation FindQuotationByOrderNo(string orderNo);
         long AddQuotation(Quotation quotation);
         bool UpdateQuotation(Quotation quotation);
         void DeleteQuotation(Quotation quotation);

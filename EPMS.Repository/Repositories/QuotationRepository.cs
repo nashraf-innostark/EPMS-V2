@@ -67,6 +67,11 @@ namespace EPMS.Repository.Repositories
             return new QuotationResponse { Quotations = quotations, TotalCount = DbSet.Count(query) };
         }
 
+        public Quotation FindQuotationByOrderNo(string orderNo)
+        {
+            return DbSet.FirstOrDefault(x => x.OrderNumber == orderNo);
+        }
+
         #endregion
     }
 }
