@@ -119,13 +119,19 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @*@foreach (var tasks in Model.ProjectTask.RequisitTasks)
-                        {
-                            <option selected value="@tasks.PreReqTask">@tasks.PreReqTask</option>
-                        }*@
+                    @*@if (Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any())
+                    {
+                        <select multiple id="dualMulti">
+                            @for (var i = 0; i < Model.ProjectTask.RequisitTasks.Count; i++)
+                            {
+                                <option selected name="ProjectTask.RequisitTasks[@i].PreReqTask" value="@Model.ProjectTask.RequisitTasks[i].PreReqTask">@Model.ProjectTask.RequisitTasks[i].PreReqTask</option>
+                            }
+                        </select>
+                    }*@
+
                     @if (Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any())
                     {
-                        @Html.DropDownListFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectTask.RequisitTasks, "PreReqTask", "PreReqTask"), "", new { @class = "", @id = "dualMulti" })
+                        @Html.DropDownListFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectTask.RequisitTasks, "PreReqTask", "PreReqTask"), "", new { @class = "", @id = "dualMulti", })
                     }
                     else
                     {
@@ -224,7 +230,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="aa(event)">Save Changes</button>
+                <button type="submit" class="btn">Save Changes</button>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -238,23 +244,28 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    function aa(event) {
-        event.preventDefault();
-        var html = "";
-        $("#dualMulti option:selected").each(function () {
+    //function aa(event) {
+    //    event.preventDefault();
+    //    var html = "";
+    //    $("#dualMulti option:selected").each(function () {
 
-        });
-        return false;
-    }
+    //    });
+    //    return false;
+    //}
 
     $(document).ready(function () {
-        if ('@Model.ProjectTask.RequisitTasks' != "") {
-            @*if ('@Model.ProjectTask.RequisitTasks.Count()' > 0) {*@
-                $("#dualMulti").pickList({
-                    sourceListLabel: "Tasks",
-                    targetListLabel: "Prerquisit Tasks",
-                });
-            //}
+        if ('@Model.ProjectTask.RequisitTasks' != "" && '@Model.ProjectTask.RequisitTasks.Count' > 0) {
+            @foreach (var preRequisitTask in Model.ProjectTask.RequisitTasks)
+            {
+                var element = "#dualMulti option[value=\""+preRequisitTask.PreReqTask+"\"]";
+                //$(element).attr("selected", "selected");
+            }
+
+
+            $("#dualMulti").pickList({
+                sourceListLabel: "Tasks",
+                targetListLabel: "Prerquisit Tasks",
+            });
         }
         $("#dualMulti2").pickList({
             sourceListLabel: "Employees - Number Of Tasks They Are Working On",

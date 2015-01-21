@@ -28,7 +28,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
-            projectTask.RequisitTasks = source.PreRequisitTasks.Select(x => x.CreateFromServerToClient());
+            projectTask.RequisitTasks = source.PreRequisitTasks.Select(x => x.CreateFromServerToClient()).ToList();
             if (source.PreRequisitTasks.Count > 0)
             {
                 foreach (var preRequisitTask in source.PreRequisitTasks)
