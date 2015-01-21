@@ -36,9 +36,11 @@ namespace EPMS.Implementation.Services
             return project.ProjectId;
         }
 
-        public bool UpdateProject(Project complaint)
+        public long UpdateProject(Project project)
         {
-            throw new System.NotImplementedException();
+            projectRepository.Update(project);
+            projectRepository.SaveChanges();
+            return project.ProjectId;
         }
 
         public IEnumerable<Project> LoadAllOnGoingProjects()

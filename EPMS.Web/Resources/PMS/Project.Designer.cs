@@ -340,6 +340,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project has been created!.
+        /// </summary>
+        public static string ProjectCreatedMsg {
+            get {
+                return ResourceManager.GetString("ProjectCreatedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project Name.
         /// </summary>
         public static string ProjectName {
@@ -390,6 +399,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string ProjectsList {
             get {
                 return ResourceManager.GetString("ProjectsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project has been updated!.
+        /// </summary>
+        public static string ProjectUpdatedMsg {
+            get {
+                return ResourceManager.GetString("ProjectUpdatedMsg", resourceCulture);
             }
         }
         
