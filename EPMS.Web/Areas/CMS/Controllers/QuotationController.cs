@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
-using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
@@ -100,6 +98,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(QuotationCreateViewModel viewModel)
         {
             // Update case

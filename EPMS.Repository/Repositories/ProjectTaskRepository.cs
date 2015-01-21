@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -25,5 +27,10 @@ namespace EPMS.Repository.Repositories
             get { return db.ProjectTasks; }
         }
         #endregion
+
+        public IEnumerable<ProjectTask> GetTasksByProjectId(long projectId)
+        {
+            return DbSet.Where(x => x.ProjectId == projectId);
+        }
     }
 }

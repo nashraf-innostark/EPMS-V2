@@ -53,7 +53,7 @@
                     }
                     @if (direction == "rtl")
                     {
-                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "ClientAr" })
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "Client" })
                     }
                     @Html.ValidationMessageFor(m => m.CustomerId, String.Empty, new { @class = "required" })
                 </div>
@@ -473,7 +473,7 @@
         var siteUrl = $('#siteURL').val();
         var url = siteUrl + "/CMS/Quotation/GetCustomerOrders";
         $("#Client").on("change", function () {
-            var customerId = $(this).val();
+            var customerId = parseInt($(this).val());
             if (customerId > 0) {
                 $("#ClientName").val($("#Client option:selected").text());
                 //$('#SearchRequest_JobId').empty();
@@ -492,6 +492,7 @@
                         populateDDL(data);
                     },
                     error: function (e) {
+                        $.unblockUI();
                         alert('Error=' + e.toString());
                     }
                 });
@@ -748,7 +749,7 @@
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
                 $("#OrderNo").append(
-                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                    $('<option></option>').val(data[i].OrderNo).html(data[i].OrderNo)
                 );
             }
         } else {

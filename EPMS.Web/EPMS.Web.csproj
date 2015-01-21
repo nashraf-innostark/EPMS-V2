@@ -300,6 +300,7 @@
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
+    <Compile Include="ModelMappers\PMS\ProjectTaskMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -503,6 +504,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Tasks.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PMS\Project.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Project.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\PMS\Project.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3025,6 +3031,10 @@
     <EmbeddedResource Include="Resources\HR\Tasks.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Project.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Project.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\PMS\Project.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

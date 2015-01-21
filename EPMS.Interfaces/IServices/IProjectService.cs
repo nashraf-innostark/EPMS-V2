@@ -6,6 +6,7 @@ namespace EPMS.Interfaces.IServices
     public interface IProjectService
     {
         Project FindProjectById(long id);
+        IEnumerable<Project> FindProjectByCustomerId(long id);
         long AddProject(Project complaint);
         bool UpdateProject(Project complaint);
         IEnumerable<Project> LoadAllOnGoingProjects();
