@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<Project> GetAllOnGoingProjectsByCustomerId(long id);
         IEnumerable<Project> GetAllFinishedProjectsByCustomerId(long id);
         IEnumerable<Project> GetProjectsForDashboard(string requester);
+        IEnumerable<Project> FindProjectByCustomerId(long id);
     }
 }

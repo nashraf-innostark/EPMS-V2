@@ -53,5 +53,10 @@ namespace EPMS.Repository.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+        public IEnumerable<Project> FindProjectByCustomerId(long id)
+        {
+            return DbSet.Where(project => project.CustomerId == id);
+        }
     }
 }
