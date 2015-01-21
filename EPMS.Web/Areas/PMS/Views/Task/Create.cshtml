@@ -259,7 +259,35 @@
                         customerId: customerId
                     },
                     success: function (data) {
-                        populateDDL(data);
+                        populateProjectDDL(data);
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
+
+            }
+
+        }); 
+        url = siteUrl + "/PMS/Task/GetProjectTasks";
+        $("#ProjectId").on("change", function () {
+            var projectId = parseInt($(this).val());
+            if (customerId > 0) {
+                $.blockUI({
+                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        projectId: projectId
+                    },
+                    success: function (data) {
+                        populateTaskDDL(data);
                     },
                     error: function (e) {
                         $.unblockUI();
@@ -272,7 +300,8 @@
 
         });
     });
-    function populateDDL(data) {
+    
+    function populateProjectDDL(data) {
         $("#ProjectId").empty();
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
@@ -286,5 +315,8 @@
                 );
         }
         $.unblockUI();
+    }
+    function populateTaskDDL(data) {
+        
     }
 </script>

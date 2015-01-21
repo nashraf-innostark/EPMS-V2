@@ -11,11 +11,13 @@ namespace EPMS.Web.Areas.PMS.Controllers
     {
         private readonly ICustomerService CustomerService;
         private readonly IProjectService ProjectService;
+        private readonly IProjectTaskService TaskService;
 
-        public TaskController(ICustomerService customerService, IProjectService projectService)
+        public TaskController(ICustomerService customerService, IProjectService projectService, IProjectTaskService taskService)
         {
             CustomerService = customerService;
             ProjectService = projectService;
+            TaskService = taskService;
         }
 
         // GET: PMS/Task
@@ -55,5 +57,11 @@ namespace EPMS.Web.Areas.PMS.Controllers
             var projects = ProjectService.FindProjectByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
+        //[HttpGet]
+        //public JsonResult GetProjectTasks(long projectId)
+        //{
+        //    var projects = TaskService.FindProjectTaskByProjectId(projectId).Select(x => x.CreateFromServerToClient());
+        //    return Json(projects, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
