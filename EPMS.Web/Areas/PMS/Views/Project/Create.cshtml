@@ -306,12 +306,13 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select id="ProjectStatusDDL">
-                        <option value="1">On Going </option>
-                        <option value="2">On Hold</option>
-                        <option value="3">Canceled</option>
-                        <option value="4">Finished</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.Project.Status, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = "On Going" },
+                        new SelectListItem { Value = "2" , Text = "On Hold" },
+                        new SelectListItem { Value = "3" , Text = "Canceled" },
+                        new SelectListItem { Value = "4" , Text = "Finished" }
+                    }, new { @id = "ProjectStatusDDL" })
                 </div>
             </div>
 
@@ -384,7 +385,7 @@
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="SetStatus()">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
+                <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
             </div>
 
         </div>
@@ -516,9 +517,6 @@
         var lis = $("#DocsNames").val();
         lis += filename + "~";
         $("#DocsNames").val(lis);
-    }
-    function SetStatus() {
-        $("#ProjectStatus").val($("#ProjectStatusDDL").val());
     }
     function SetNames(value) {
         $("#ProjectNameE").val(value);//empty project name
