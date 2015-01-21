@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 
-namespace EPMS.Web
+namespace EPMS.Interfaces.IServices
 {
     public interface IMeetingDocumentService
     {

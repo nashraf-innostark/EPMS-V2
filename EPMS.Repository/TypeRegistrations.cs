@@ -37,6 +37,10 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IProjectRepository, ProjectRepository>();
             unityContainer.RegisterType<IProjectDocumentRepository, ProjectDocumentRepository>();
             unityContainer.RegisterType<IProjectTaskRepository, ProjectTaskRepository>();
+            unityContainer.RegisterType<IMeetingRepository, MeetingRepository>();
+            unityContainer.RegisterType<IMeetingAttendeeRepository, MeetingAttendeeRepository>();
+            unityContainer.RegisterType<IMeetingDocumentRepository, MeetingDocumentRepository>();
+
         }
     }
 }
