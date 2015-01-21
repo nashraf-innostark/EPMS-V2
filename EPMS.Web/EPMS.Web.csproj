@@ -590,6 +590,7 @@
     <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

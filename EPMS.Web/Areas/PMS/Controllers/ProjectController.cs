@@ -189,6 +189,39 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+        #region Detail
+        [SiteAuthorize(PermissionKey = "ProjectCreate")]
+        public ActionResult Details(long? id)
+        {
+            
+            if (id != null)
+            {
+                var project = projectService.FindProjectById((long)id);
+                if (project != null)
+                {
+                    ProjectViewModel projectViewModel = new ProjectViewModel();
+                    ViewBag.UserRole = Session["RoleName"].ToString();
+                    var customers = customerService.GetAll();
+                    var orders = ordersService.GetAll();
+                    projectViewModel.Project = project.CreateFromServerToClient();
+                    if (project.OrderId > 0)
+                    {
+                        //projectViewModel.Installment = quotationService.FindQuotationByOrderNo(project.OrderId).Select(x => x.CreateFromServerToClient());
+                    }
+
+                    var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
+                    if (projectTasks != null)
+                    {
+                        //projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                    }
+                    projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
+                    projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
+                    return View(projectViewModel);
+                }
+            }
+            return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
+        }
+        #endregion
         #region Get Customer Orders
         [HttpGet]
         public JsonResult GetCustomerOrders(long customerId)
