@@ -320,6 +320,7 @@
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\MeetingAttendee.cs" />
     <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PreRequisitTask.cs" />
@@ -590,6 +591,7 @@
     <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
