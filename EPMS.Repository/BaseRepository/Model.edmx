@@ -535,7 +535,7 @@
           </Key>
           <Property Name="QuotationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ClientName" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OrderNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
           <Property Name="CreatedByEmployee" Type="bigint" Nullable="false" />
           <Property Name="GreetingsEn" Type="nvarchar(max)" />
           <Property Name="GreetingsAr" Type="nvarchar(max)" />
@@ -1328,7 +1328,6 @@
           <EntitySet Name="Projects" EntityType="EPMSModel.Project" />
           <EntitySet Name="ProjectDocuments" EntityType="EPMSModel.ProjectDocument" />
           <EntitySet Name="ProjectTasks" EntityType="EPMSModel.ProjectTask" />
-          <EntitySet Name="Quotations" EntityType="EPMSModel.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="EPMSModel.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="EPMSModel.RequestDetail" />
           <EntitySet Name="TaskEmployees" EntityType="EPMSModel.TaskEmployee" />
@@ -1391,10 +1390,6 @@
           <AssociationSet Name="FK_ProjectTask_Customer" Association="EPMSModel.FK_ProjectTask_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quotation_Customer" Association="EPMSModel.FK_Quotation_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Quotation" EntitySet="Quotations" />
           </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="EPMSModel.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
@@ -1468,13 +1463,18 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="EPMSModel.FK_QuotationItemDetail_Quotation">
-            <End Role="Quotation" EntitySet="Quotations" />
-            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
-          </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="EPMSModel.AspNetUserRoles">
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Quotations" EntityType="EPMSModel.Quotation" />
+          <AssociationSet Name="FK_Quotation_Customer" Association="EPMSModel.FK_Quotation_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Quotation" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="EPMSModel.FK_QuotationItemDetail_Quotation">
+            <End Role="Quotation" EntitySet="Quotations" />
+            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Allowance">
@@ -2042,35 +2042,6 @@
           <NavigationProperty Name="Project" Relationship="EPMSModel.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
           <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
         </EntityType>
-        <EntityType Name="Quotation">
-          <Key>
-            <PropertyRef Name="QuotationId" />
-          </Key>
-          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
-          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QuotationDiscount" Type="Int16" />
-          <Property Name="FirstInstallement" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
-          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
-          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
-          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
-          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
-          <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
-        </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -2307,18 +2278,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Quotation_Customer">
-          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_JobTitle_Department">
           <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
           <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="*" />
@@ -2535,6 +2494,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Quotation">
+          <Key>
+            <PropertyRef Name="QuotationId" />
+          </Key>
+          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
+          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuotationDiscount" Type="Int16" />
+          <Property Name="FirstInstallement" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
+          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
+          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
+          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
+          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
+          <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
+        </EntityType>
+        <Association Name="FK_Quotation_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Quotation">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_QuotationItemDetail_Quotation">
           <End Type="EPMSModel.Quotation" Role="Quotation" Multiplicity="1" />
           <End Type="EPMSModel.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
@@ -2546,10 +2550,6 @@
               <PropertyRef Name="QuotationId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -3100,34 +3100,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Quotations">
-            <EntityTypeMapping TypeName="EPMSModel.Quotation">
-              <MappingFragment StoreEntitySet="Quotation">
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
-                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
-                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
-                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
-                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
-                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
-                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
-                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
-                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
-                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
-                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
-                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
-                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
-                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
-                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="QuotationItemDetails">
             <EntityTypeMapping TypeName="EPMSModel.QuotationItemDetail">
               <MappingFragment StoreEntitySet="QuotationItemDetail">
@@ -3188,6 +3160,34 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Quotations">
+            <EntityTypeMapping TypeName="EPMSModel.Quotation">
+              <MappingFragment StoreEntitySet="Quotation">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
+                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
+                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
+                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
+                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
+                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
+                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
+                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
+                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
+                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
+                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
+                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
+                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3210,7 +3210,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1">
+      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="10.125" PointY="17.125" />
@@ -3242,7 +3242,6 @@
         <EntityTypeShape EntityType="EPMSModel.Project" Width="1.5" PointX="12.625" PointY="14.625" />
         <EntityTypeShape EntityType="EPMSModel.ProjectDocument" Width="1.5" PointX="14.875" PointY="24.625" />
         <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.5" PointX="14.875" PointY="13" />
-        <EntityTypeShape EntityType="EPMSModel.Quotation" Width="1.5" PointX="5.625" PointY="2.875" />
         <EntityTypeShape EntityType="EPMSModel.QuotationItemDetail" Width="1.5" PointX="7.875" PointY="4.125" />
         <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="12.375" PointY="31.125" />
         <EntityTypeShape EntityType="EPMSModel.TaskEmployee" Width="1.5" PointX="17.125" PointY="15.5" />
@@ -3261,7 +3260,6 @@
         <AssociationConnector Association="EPMSModel.FK_Orders_Orders" />
         <AssociationConnector Association="EPMSModel.FK_Project_Customer" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" />
-        <AssociationConnector Association="EPMSModel.FK_Quotation_Customer" />
         <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" />
         <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
@@ -3280,8 +3278,10 @@
         <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Task" />
-        <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="EPMSModel.Quotation" Width="1.5" PointX="5.625" PointY="5.875" />
+        <AssociationConnector Association="EPMSModel.FK_Quotation_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" />
         </Diagram>
     </Diagrams>
   </Designer>
