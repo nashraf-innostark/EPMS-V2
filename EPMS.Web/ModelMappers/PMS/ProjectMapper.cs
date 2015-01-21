@@ -8,6 +8,7 @@ namespace EPMS.Web.ModelMappers.PMS
         {
             return new Project
             {
+                ProjectId = source.ProjectId,
                 NameE = source.NameE,
                 NameA = source.NameA,
                 CustomerId = source.CustomerId,

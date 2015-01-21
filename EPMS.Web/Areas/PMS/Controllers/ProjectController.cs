@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
@@ -69,6 +70,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return View(projectsList);
         }
         #endregion
+
         #region Create
         [SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Create(long? id)
@@ -91,7 +93,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        //projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
                     }
                 }
             }
@@ -189,6 +191,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region Detail
         [SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Details(long? id)
@@ -212,7 +215,13 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        //projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                    }
+                    var projectDocument = projectDocumentService.FindProjectDocumentsByProjectId((long)id);
+                    var projectDocsNames = projectDocument as IList<ProjectDocument> ?? projectDocument.ToList();
+                    if (projectDocsNames.Any())
+                    {
+                        projectViewModel.ProjectDocsNames = projectDocsNames;
                     }
                     projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
                     projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
@@ -221,7 +230,13 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
         }
+        public FileResult Download(string fileName)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"] + fileName));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
         #endregion
+
         #region Get Customer Orders
         [HttpGet]
         public JsonResult GetCustomerOrders(long customerId)

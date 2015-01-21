@@ -9,7 +9,7 @@ namespace EPMS.Web.ModelMappers.PMS
             Models.PreRequisitTask caseType = new Models.PreRequisitTask
             {
                 TaskId = source.TaskId,
-                PreReqTask = source.PreReqTask,
+                PreReqTask = source.PreReqTaskId,
             };
             return caseType;
         }
