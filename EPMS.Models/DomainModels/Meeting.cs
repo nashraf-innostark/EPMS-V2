@@ -13,7 +13,7 @@ namespace EPMS.Models.DomainModels
         public string Agenda { get; set; }
         public string AgendaAr { get; set; }
         public string Discussion { get; set; }
-        public string DiscusionAr { get; set; }
+        public string DiscussionAr { get; set; }
         public string Decisions { get; set; }
         public string DecisionsAr { get; set; }
         public string RecCreatedBy { get; set; }
