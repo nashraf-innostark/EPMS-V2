@@ -101,6 +101,7 @@
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
     <Compile Include="Common\JobApplicantByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
+    <Compile Include="Common\MeetingByColumn.cs" />
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="RequestModels\JobApplicantSearchRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
+    <Compile Include="RequestModels\MeetingSearchRequest.cs" />
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
+    <Compile Include="ResponseModels\MeetingResponse.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />

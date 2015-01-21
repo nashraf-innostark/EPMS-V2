@@ -70,6 +70,9 @@
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
     <Compile Include="IServices\ILogger.cs" />
+    <Compile Include="IServices\IMeetingAttendeeService.cs" />
+    <Compile Include="IServices\IMeetingDocumentService.cs" />
+    <Compile Include="IServices\IMeetingService.cs" />
     <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
@@ -97,6 +100,9 @@
     <Compile Include="Repository\IJobOfferedRepository.cs" />
     <Compile Include="Repository\IJobTitleHistoryRepository.cs" />
     <Compile Include="Repository\IJobTitleRepository.cs" />
+    <Compile Include="Repository\IMeetingAttendeeRepository.cs" />
+    <Compile Include="Repository\IMeetingDocumentRepository.cs" />
+    <Compile Include="Repository\IMeetingRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\IMenuRightRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />

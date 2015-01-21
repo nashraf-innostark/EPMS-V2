@@ -17,7 +17,7 @@ namespace EPMS.Web.Areas.Meeting
             context.MapRoute(
                 "Meeting_default",
                 "Meeting/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { id = UrlParameter.Optional }
             );
         }
     }

@@ -2,6 +2,7 @@
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.IdentityModels;
+using EPMS.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
@@ -39,6 +40,9 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IProjectService, ProjectService>();
             unityContainer.RegisterType<IProjectDocumentService, ProjectDocumentService>();
             unityContainer.RegisterType<IProjectTaskService, ProjectTaskService>();
+            unityContainer.RegisterType<IMeetingService, MeetingService>();
+            unityContainer.RegisterType<IMeetingAttendeeService, MeetingAttendeeService>();
+            unityContainer.RegisterType<IMeetingDocumentService, MeetingDocumentService>();
         }
     }
 }
