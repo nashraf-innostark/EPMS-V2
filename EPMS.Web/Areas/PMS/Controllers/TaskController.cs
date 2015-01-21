@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Activities.Expressions;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Tasks;
 
 namespace EPMS.Web.Areas.PMS.Controllers
@@ -39,6 +41,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 viewModel.Header = Resources.PMS.Task.Create;
                 return View(viewModel);
             }
+            viewModel.ProjectTask = TaskService.FindProjectTaskById((long) id).CreateFromServerToClient();
+            viewModel.Projects = ProjectService.FindProjectByCustomerId(viewModel.ProjectTask.CustomerId).Select(x => x.CreateFromServerToClient());
             viewModel.PageTitle = Resources.PMS.Task.PageTitleEdit;
             viewModel.BtnText = Resources.PMS.Task.BtnTextEdit;
             viewModel.Header = Resources.PMS.Task.Edit;

@@ -11,7 +11,8 @@ namespace EPMS.Web.ViewModels.Tasks
             RequisitTasks = new List<PreRequisitTask>();
         }
         public ProjectTask ProjectTask { get; set; }
-        public IList<PreRequisitTask> RequisitTasks { get; set; }
+        public List<PreRequisitTask> RequisitTasks { get; set; }
+        public IEnumerable<Models.Project> Projects { get; set; }
         public string PageTitle { get; set; }
         public string BtnText { get; set; }
         public string Header { get; set; }
