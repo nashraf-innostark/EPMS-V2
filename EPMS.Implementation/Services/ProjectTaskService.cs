@@ -24,7 +24,7 @@ namespace EPMS.Implementation.Services
             return Repository.Find(id);
         }
 
-        public ProjectTask FindProjectTaskByProjectId(long projectid)
+        public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid)
         {
             return Repository.FindProjectTaskByProjectId(projectid);
         }

@@ -120,11 +120,10 @@
             <div class="span9">
                 <div class="controls">
                     <select multiple name="dualMulti" id="dualMulti">
-                        <option selected="" value="Task1">Task1</option>
-                        <option value="Task1">Task2</option>
-                        <option value="Task1">Task3</option>
-                        <option value="Task1">Task4</option>
-                        <option value="Task1">Task5 </option>
+                        @foreach (var tasks in Model.RequisitTasks)
+                        {
+                            <option selected value="@tasks">@tasks</option>
+                        }
                     </select>
                 </div>
             </div>
@@ -137,7 +136,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input type="text" id="datepicker" class="span3 datepicker" />
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepicker" })
                 </div>
             </div>
         </div>
@@ -149,7 +148,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input type="text" id="datepicker2" class="span3 datepicker" />
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepicker" })
                 </div>
             </div>
         </div>
@@ -159,7 +158,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <select multiple name="dualMulti" id="dualMulti2">
+                    <select multiple name="" id="dualMulti2">
                         <option selected="" value="0">Ali - 1</option>
                         <option value="1">Saud - 1</option>
                         <option value="2">Hussain - 1</option>
@@ -176,7 +175,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="MobileNumber" type="text" name="inputField" class="required number">
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TotalCost, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -186,7 +186,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="TaskWeight" type="text" name="inputField" class="required">
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalWeight, new { @id = "TotalWeight", @class = "" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TotalWeight, String.Empty, new { @class = "required" })
                     <script>
                         $(document).ready(function () {
                             $('#TaskWeight').mask("99%");
@@ -201,7 +202,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Notes" type="text" name="inputField" value="CLK Editor">
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesE, new { @id = "NotesE", @class = "" })
                 </div>
             </div>
         </div>
@@ -211,7 +212,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="Notesa" type="text" name="inputField" value="CLK Editor">
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesA, new { @id = "NotesA", @class = "" })
                 </div>
             </div>
         </div>
@@ -232,10 +233,12 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $().ready(function () {
-        $("#dualMulti").pickList({
-            sourceListLabel: "Tasks",
-            targetListLabel: "Prerquisit Tasks",
-        });
+        if ('@Model.RequisitTasks.Count' > 0) {
+            $("#dualMulti").pickList({
+                sourceListLabel: "Tasks",
+                targetListLabel: "Prerquisit Tasks",
+            });
+        }
         $("#dualMulti2").pickList({
             sourceListLabel: "Employees - Number Of Tasks They Are Working On",
             targetListLabel: "Added",
@@ -243,9 +246,9 @@
         $('.datepicker').mask('99/99/9999');
         $(".datepicker").datepicker();
         var siteUrl = $('#siteURL').val();
-        var url = siteUrl + "/PMS/Task/GetCustomerProjects";
         $("#Client").on("change", function () {
             var customerId = parseInt($(this).val());
+            var url = siteUrl + "/PMS/Task/GetCustomerProjects";
             if (customerId > 0) {
                 $.blockUI({
                     message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
@@ -266,15 +269,12 @@
                         alert('Error=' + e.toString());
                     }
                 });
-            } else {
-
             }
-
-        }); 
-        url = siteUrl + "/PMS/Task/GetProjectTasks";
+        });
         $("#ProjectId").on("change", function () {
             var projectId = parseInt($(this).val());
-            if (customerId > 0) {
+            var url = siteUrl + "/PMS/Task/GetProjectTasks";
+            if (projectId > 0) {
                 $.blockUI({
                     message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
@@ -294,16 +294,16 @@
                         alert('Error=' + e.toString());
                     }
                 });
-            } else {
-
             }
-
         });
     });
-    
+
     function populateProjectDDL(data) {
         $("#ProjectId").empty();
         if (data.length > 0) {
+            $("#ProjectId").append(
+                    $('<option></option>').val(0).html("--Select--")
+                );
             for (var i = 0; i < data.length; i++) {
                 $("#ProjectId").append(
                     $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
@@ -317,6 +317,22 @@
         $.unblockUI();
     }
     function populateTaskDDL(data) {
-        
+        $("#dualMulti").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                $("#dualMulti").append(
+                    $('<option></option>').val(data[i].TaskId).html(data[i].TaskNameE)
+                );
+            }
+        } else {
+            $("#dualMulti").append(
+                    $('<option></option>').val("").html("none")
+                );
+        }
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
+        $.unblockUI();
     }
 </script>

@@ -33,9 +33,9 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.ProjectId == projectId);
         }
 
-        public ProjectTask FindProjectTaskByProjectId(long projectid)
+        public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid)
         {
-            return DbSet.FirstOrDefault(x => x.ProjectId == projectid);
+            return DbSet.Where(x => x.ProjectId == projectid);
         }
     }
 }
