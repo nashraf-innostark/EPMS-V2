@@ -61,5 +61,10 @@ namespace EPMS.Implementation.Services
         {
             return Repository.GetAllQuotation(searchRequest);
         }
+
+        public Quotation FindQuotationByOrderNo(string orderNo)
+        {
+            return Repository.FindQuotationByOrderNo(orderNo);
+        }
     }
 }

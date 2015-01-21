@@ -17,12 +17,18 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.EndDate = source.EndDate;
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
+            projectTask.TaskProgress = source.TaskProgress;
             projectTask.NotesE = source.NotesE;
             projectTask.NotesA = source.NotesA;
             projectTask.RecCreatedBy = source.RecCreatedBy;
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            //projectTask.PreReqTasks = " - ";
+            foreach (var preRequisitTask in source.PreRequisitTasks)
+            {
+                projectTask.PreReqTasks = projectTask.PreReqTasks+ " - " + preRequisitTask.ProjectTask.TaskNameE;
+            }
             return projectTask;
         }
     }
