@@ -140,7 +140,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true,@placeholder="English", onchange = "GregorianToHijri(this,'#StartDateA')" })
-                    @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                    @Html.TextBox("Start Date",null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#StartDateE')" })
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Project.EndDate, new { @class = "datepickerGregorian cursorHand span3", @id = "EndDateE", @readonly = true, @placeholder = "English", onchange = "GregorianToHijri(this,'#EndDateA')" })
-                    @Html.TextBoxFor(model => model.Project.EndDate, new { @class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#EndDateE')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#EndDateE')" })
                 </div>
             </div>
         </div>
@@ -425,7 +425,15 @@
                 });
             }
         });
-       
+        //Convert Gregorian to Hijri
+        if ($("#StartDateE").val() != null && $("#StartDateE").val() != "") {
+            $("#StartDateA").val(ConvertDates($("#StartDateE").val(), "gregorian", "islamic"));
+        }
+        if ($("#EndDateE").val() != null && $("#EndDateE").val() != "") {
+            $("#EndDateA").val(ConvertDates($("#EndDateE").val(), "gregorian", "islamic"));
+        }
+
+
         var errors = "";
         var url = "/PMS/Project/UploadDocuments";
         $('#upload').mfupload({

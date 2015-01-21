@@ -15,6 +15,8 @@ namespace EPMS.Models.DomainModels
         public string DescriptionA { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public decimal? OtherCost { get; set; }
+        public decimal? Price { get; set; }
         public int Status { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
