@@ -7,7 +7,7 @@ namespace EPMS.Models.DomainModels
     {
         public long QuotationId { get; set; }
         public string ClientName { get; set; }
-        public string OrderNumber { get; set; }
+        public long OrderId { get; set; }
         public long CreatedByEmployee { get; set; }
         public string GreetingsEn { get; set; }
         public string GreetingsAr { get; set; }

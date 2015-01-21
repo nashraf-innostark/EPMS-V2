@@ -62,9 +62,9 @@ namespace EPMS.Implementation.Services
             return Repository.GetAllQuotation(searchRequest);
         }
 
-        public Quotation FindQuotationByOrderNo(string orderNo)
+        public Quotation FindQuotationByOrderId(long orderId)
         {
-            return Repository.FindQuotationByOrderNo(orderNo);
+            return Repository.FindQuotationByOrderId(orderId);
         }
     }
 }
