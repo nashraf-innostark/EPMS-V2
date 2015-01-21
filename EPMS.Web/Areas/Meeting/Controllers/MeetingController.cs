@@ -7,6 +7,7 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
+using EPMS.Web.ViewModels.JobOffered;
 using EPMS.Web.ViewModels.Meeting;
 
 namespace EPMS.Web.Areas.Meeting.Controllers
@@ -19,16 +20,18 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         private readonly IMeetingService meetingService;
         private readonly IMeetingAttendeeService meetingAttendeeService;
         private readonly IMeetingDocumentService meetingDocumentService;
+        private readonly IEmployeeService employeeService;
 
         #endregion
 
         #region Constructor
 
-        public MeetingController(IMeetingService meetingService, IMeetingAttendeeService meetingAttendeeService, IMeetingDocumentService meetingDocumentService)
+        public MeetingController(IMeetingService meetingService, IMeetingAttendeeService meetingAttendeeService, IMeetingDocumentService meetingDocumentService, IEmployeeService employeeService)
         {
             this.meetingService = meetingService;
             this.meetingAttendeeService = meetingAttendeeService;
             this.meetingDocumentService = meetingDocumentService;
+            this.employeeService = employeeService;
         }
 
         #endregion
@@ -64,6 +67,29 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             };
 
             return Json(meetingListViewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Create(long? id)
+        {
+            MeetingViewModel meetingViewModel = new MeetingViewModel();
+            if (id != null)
+            {
+                var meeting = meetingService.FindMeetingById((long) id);
+                if (meeting != null)
+                {
+                    meetingViewModel.Meeting = meeting.CreateFromServertoClient();
+                    if (meeting.MeetingAttendees.Count > 0)
+                    {
+                        meetingViewModel.MeetingAttendees = meetingAttendeeService.FindAttendeeByMeetingId((long)id);
+                    }
+                    if (meeting.MeetingDocuments.Count > 0)
+                    {
+                        meetingViewModel.MeetingDocuments = meetingDocumentService.FindDocumentByMeetingId((long)id);
+                    }
+                }
+            }
+            meetingViewModel.Employees = employeeService.GetAll().Select(x => x.CreateFromServerToClient());
+            return View(meetingViewModel);
         }
 
         #endregion

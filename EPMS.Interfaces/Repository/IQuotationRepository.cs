@@ -7,6 +7,6 @@ namespace EPMS.Interfaces.Repository
     public interface IQuotationRepository : IBaseRepository<Quotation, long>
     {
         QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest);
-        Quotation FindQuotationByOrderNo(string orderNo);
+        Quotation FindQuotationByOrderId(long orderId);
     }
 }

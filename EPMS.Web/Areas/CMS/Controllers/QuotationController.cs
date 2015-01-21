@@ -210,7 +210,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
                 viewModel.Quotation = QuotationService.FindQuotationById((long)id).CreateFromServerToClientLv();
                 // Get Order from Order Number
-                viewModel.Order = OrdersService.GetOrderByOrderNumber(viewModel.Quotation.OrderNumber).CreateFromServerToClient();
+                viewModel.Order = OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
                 return View(viewModel);
             }

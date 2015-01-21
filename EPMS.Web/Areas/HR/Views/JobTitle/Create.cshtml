@@ -41,8 +41,8 @@
     <div class="container-fluid">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.JobTitle.JobTitleId)
-        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedBy)
-        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedDt)
+        @Html.HiddenFor(m => m.JobTitle.RecCreatedBy)
+        @Html.HiddenFor(m => m.JobTitle.RecCreatedDt)
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">

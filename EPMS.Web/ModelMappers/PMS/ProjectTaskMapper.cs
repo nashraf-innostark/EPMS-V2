@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Linq;
+using System;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
@@ -22,10 +23,12 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TaskProgress = source.TaskProgress;
             projectTask.NotesE = source.NotesE;
             projectTask.NotesA = source.NotesA;
+            projectTask.TaskProgress = source.TaskProgress;
             projectTask.RecCreatedBy = source.RecCreatedBy;
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            projectTask.RequisitTasks = source.PreRequisitTasks.Select(x => x.CreateFromServerToClient());
             if (source.PreRequisitTasks.Count > 0)
             {
                 foreach (var preRequisitTask in source.PreRequisitTasks)

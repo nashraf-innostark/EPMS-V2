@@ -300,6 +300,7 @@
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
     <Compile Include="ModelMappers\MeetingMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
+    <Compile Include="ModelMappers\PMS\PreRequisitTasksMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectTaskMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
@@ -320,6 +321,7 @@
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\MeetingAttendee.cs" />
     <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PreRequisitTask.cs" />
@@ -591,6 +593,7 @@
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

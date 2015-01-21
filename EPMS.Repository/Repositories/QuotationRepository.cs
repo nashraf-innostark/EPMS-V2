@@ -44,7 +44,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<QuotationByColumn, Func<Quotation, object>>
                     {
                         { QuotationByColumn.ClientName,  c => c.ClientName},
-                        { QuotationByColumn.OrderNo, c => c.OrderNumber}
+                        { QuotationByColumn.OrderId, c => c.OrderId}
                     };
         #endregion
 
@@ -54,9 +54,11 @@ namespace EPMS.Repository.Repositories
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
 
+            long orderId = Convert.ToInt64(searchRequest.SearchString);
+
             Expression<Func<Quotation, bool>> query =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.ClientName.Contains(searchRequest.SearchString)) ||
-                    (s.OrderNumber.Contains(searchRequest.SearchString)));
+                    (s.OrderId == orderId));
 
             IEnumerable<Quotation> quotations = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -67,9 +69,9 @@ namespace EPMS.Repository.Repositories
             return new QuotationResponse { Quotations = quotations, TotalCount = DbSet.Count(query) };
         }
 
-        public Quotation FindQuotationByOrderNo(string orderNo)
+        public Quotation FindQuotationByOrderId(long orderId)
         {
-            return DbSet.FirstOrDefault(x => x.OrderNumber == orderNo);
+            return DbSet.FirstOrDefault(x => x.OrderId == orderId);
         }
 
         #endregion

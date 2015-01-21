@@ -57,11 +57,11 @@ namespace EPMS.Web.Areas.PMS.Controllers
             var projects = ProjectService.FindProjectByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
-        //[HttpGet]
-        //public JsonResult GetProjectTasks(long projectId)
-        //{
-        //    var projects = TaskService.FindProjectTaskByProjectId(projectId).Select(x => x.CreateFromServerToClient());
-        //    return Json(projects, JsonRequestBehavior.AllowGet);
-        //}
+        [HttpGet]
+        public JsonResult GetProjectTasks(long projectId)
+        {
+            var projects = TaskService.FindProjectTaskByProjectId(projectId).Select(x => x.CreateFromServerToClient());
+            return Json(projects.ToList(), JsonRequestBehavior.AllowGet);
+        }
     }
 }

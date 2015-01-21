@@ -67,13 +67,13 @@
                 <div class="controls">
                     @if (Model.CustomerId == 0)
                     {
-                        @Html.DropDownListFor(m => m.OrderNumber, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderNo" })
+                        @Html.DropDownListFor(m => m.OrderId, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderId" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.OrderNumber, new SelectList(ViewBag.Orders, "OrderNo", "OrderNo"), "", new { @id = "OrderNo" })
+                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId" })
                     }
-                    @Html.ValidationMessageFor(m => m.OrderNumber, String.Empty, new { @class = "required" })
+                    @Html.ValidationMessageFor(m => m.OrderId, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -745,15 +745,15 @@
         });
     });
     function populateDDL(data) {
-        $("#OrderNo").empty();
+        $("#OrderId").empty();
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
-                $("#OrderNo").append(
-                    $('<option></option>').val(data[i].OrderNo).html(data[i].OrderNo)
+                $("#OrderId").append(
+                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
                 );
             }
         } else {
-            $("#OrderNo").append(
+            $("#OrderId").append(
                     $('<option></option>').val("").html("none")
                 );
         }

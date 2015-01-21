@@ -6,6 +6,6 @@ namespace EPMS.Interfaces.Repository
     public interface IProjectTaskRepository : IBaseRepository<ProjectTask, long>
     {
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
-        ProjectTask FindProjectTaskByProjectId(long projectid);
+        IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid);
     }
 }

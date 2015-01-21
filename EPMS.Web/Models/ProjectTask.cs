@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -24,5 +25,6 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
 
         public string PreReqTasks { get; set; }
+        public IEnumerable<PreRequisitTask> RequisitTasks { get; set; }
     }
 }
