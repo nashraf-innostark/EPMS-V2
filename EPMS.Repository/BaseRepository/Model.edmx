@@ -466,15 +466,11 @@
         </EntityType>
         <EntityType Name="PreRequisitTask">
           <Key>
-            <PropertyRef Name="PreReqTaskId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="PreReqTask" />
           </Key>
-          <Property Name="PreReqTaskId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskId" Type="bigint" Nullable="false" />
           <Property Name="PreReqTask" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -509,10 +505,6 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProjectId" Type="bigint" Nullable="false" />
           <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ProjectTask">
           <Key>
@@ -957,7 +949,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PreRequisitTask_Task">
+        <Association Name="FK_PreRequisitTask_ProjectTask">
           <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="1" />
           <End Role="PreRequisitTask" Type="Self.PreRequisitTask" Multiplicity="*" />
           <ReferentialConstraint>
@@ -965,7 +957,7 @@
               <PropertyRef Name="TaskId" />
             </Principal>
             <Dependent Role="PreRequisitTask">
-              <PropertyRef Name="PreReqTask" />
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1225,7 +1217,7 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_PreRequisitTask_Task" Association="Self.FK_PreRequisitTask_Task">
+          <AssociationSet Name="FK_PreRequisitTask_ProjectTask" Association="Self.FK_PreRequisitTask_ProjectTask">
             <End Role="ProjectTask" EntitySet="ProjectTask" />
             <End Role="PreRequisitTask" EntitySet="PreRequisitTask" />
           </AssociationSet>
@@ -1460,7 +1452,7 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="Project" EntitySet="Projects" />
           </AssociationSet>
-          <AssociationSet Name="FK_PreRequisitTask_Task" Association="EPMSModel.FK_PreRequisitTask_Task">
+          <AssociationSet Name="FK_PreRequisitTask_ProjectTask" Association="EPMSModel.FK_PreRequisitTask_ProjectTask">
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="PreRequisitTask" EntitySet="PreRequisitTasks" />
           </AssociationSet>
@@ -1977,16 +1969,12 @@
         </EntityType>
         <EntityType Name="PreRequisitTask">
           <Key>
-            <PropertyRef Name="PreReqTaskId" />
+            <PropertyRef Name="TaskId" />
+            <PropertyRef Name="PreReqTask" />
           </Key>
-          <Property Name="PreReqTaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TaskId" Type="Int64" Nullable="false" />
           <Property Name="PreReqTask" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProjectTask" Relationship="EPMSModel.FK_PreRequisitTask_Task" FromRole="PreRequisitTask" ToRole="ProjectTask" />
+          <NavigationProperty Name="ProjectTask" Relationship="EPMSModel.FK_PreRequisitTask_ProjectTask" FromRole="PreRequisitTask" ToRole="ProjectTask" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -2025,10 +2013,6 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectId" Type="Int64" Nullable="false" />
           <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Project" Relationship="EPMSModel.FK_ProjectDocuments_Project" FromRole="ProjectDocument" ToRole="Project" />
         </EntityType>
         <EntityType Name="ProjectTask">
@@ -2054,7 +2038,7 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_ProjectTask_Customer" FromRole="ProjectTask" ToRole="Customer" />
-          <NavigationProperty Name="PreRequisitTasks" Relationship="EPMSModel.FK_PreRequisitTask_Task" FromRole="ProjectTask" ToRole="PreRequisitTask" />
+          <NavigationProperty Name="PreRequisitTasks" Relationship="EPMSModel.FK_PreRequisitTask_ProjectTask" FromRole="ProjectTask" ToRole="PreRequisitTask" />
           <NavigationProperty Name="Project" Relationship="EPMSModel.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
           <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
         </EntityType>
@@ -2503,7 +2487,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PreRequisitTask_Task">
+        <Association Name="FK_PreRequisitTask_ProjectTask">
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="1" />
           <End Type="EPMSModel.PreRequisitTask" Role="PreRequisitTask" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2511,7 +2495,7 @@
               <PropertyRef Name="TaskId" />
             </Principal>
             <Dependent Role="PreRequisitTask">
-              <PropertyRef Name="PreReqTask" />
+              <PropertyRef Name="TaskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2567,7 +2551,7 @@
           <End Type="EPMSModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -3051,13 +3035,8 @@
           <EntitySetMapping Name="PreRequisitTasks">
             <EntityTypeMapping TypeName="EPMSModel.PreRequisitTask">
               <MappingFragment StoreEntitySet="PreRequisitTask">
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="PreReqTask" ColumnName="PreReqTask" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="PreReqTaskId" ColumnName="PreReqTaskId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3091,10 +3070,6 @@
           <EntitySetMapping Name="ProjectDocuments">
             <EntityTypeMapping TypeName="EPMSModel.ProjectDocument">
               <MappingFragment StoreEntitySet="ProjectDocuments">
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -3213,7 +3188,7 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -3234,6 +3209,80 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1">
+        <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="10.125" PointY="17.125" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="7.875" PointY="28" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="12.375" PointY="27.25" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="12.375" PointY="24.625" />
+        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="10.125" PointY="22.625" />
+        <EntityTypeShape EntityType="EPMSModel.CompanyBankDetail" Width="1.5" PointX="21.625" PointY="17" />
+        <EntityTypeShape EntityType="EPMSModel.CompanyDocumentDetail" Width="1.5" PointX="21.625" PointY="1.875" />
+        <EntityTypeShape EntityType="EPMSModel.CompanyProfile" Width="1.5" PointX="19.375" PointY="10.125" />
+        <EntityTypeShape EntityType="EPMSModel.CompanySocialDetail" Width="1.5" PointX="21.625" PointY="7.625" />
+        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="5.625" PointY="12.875" />
+        <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="3.375" PointY="10.75" />
+        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="3.375" PointY="18.625" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="7.875" PointY="20.625" />
+        <EntityTypeShape EntityType="EPMSModel.EmployeeJobHistory" Width="1.5" PointX="13.125" PointY="21.375" />
+        <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="10.125" PointY="31.75" />
+        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="10.125" PointY="9.375" />
+        <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="7.875" PointY="9.5" />
+        <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="5.625" PointY="18" />
+        <EntityTypeShape EntityType="EPMSModel.JobTitleHistory" Width="1.5" PointX="7.875" PointY="14.25" />
+        <EntityTypeShape EntityType="EPMSModel.Meeting" Width="1.5" PointX="10.375" PointY="2.25" />
+        <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="12.625" PointY="4.5" />
+        <EntityTypeShape EntityType="EPMSModel.MeetingDocument" Width="1.5" PointX="12.625" PointY="1.125" />
+        <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="10.125" PointY="14.375" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="10.125" PointY="36.375" />
+        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="3.375" PointY="22.375" />
+        <EntityTypeShape EntityType="EPMSModel.PreRequisitTask" Width="1.5" PointX="17.125" PointY="13.125" />
+        <EntityTypeShape EntityType="EPMSModel.Project" Width="1.5" PointX="12.625" PointY="14.625" />
+        <EntityTypeShape EntityType="EPMSModel.ProjectDocument" Width="1.5" PointX="14.875" PointY="24.625" />
+        <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.5" PointX="14.875" PointY="13" />
+        <EntityTypeShape EntityType="EPMSModel.Quotation" Width="1.5" PointX="5.625" PointY="2.875" />
+        <EntityTypeShape EntityType="EPMSModel.QuotationItemDetail" Width="1.5" PointX="7.875" PointY="4.125" />
+        <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="12.375" PointY="31.125" />
+        <EntityTypeShape EntityType="EPMSModel.TaskEmployee" Width="1.5" PointX="17.125" PointY="15.5" />
+        <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_CompanyBankDetails_CompanyProfile" />
+        <AssociationConnector Association="EPMSModel.FK_CompanyDocuments_CompanyProfile" />
+        <AssociationConnector Association="EPMSModel.FK_CompanySocialDetails_CompanyProfile" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_Orders_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_Project_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_Quotation_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" />
+        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" />
+        <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" />
+        <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingDocuments_Meeting" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
+        <AssociationConnector Association="EPMSModel.FK_Project_Orders" />
+        <AssociationConnector Association="EPMSModel.FK_PreRequisitTask_ProjectTask" />
+        <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" />
+        <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
+        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Task" />
+        <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" />
+        <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
+        </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

@@ -8,6 +8,7 @@ namespace EPMS.Web.ModelMappers.PMS
         public static Models.ProjectTask CreateFromServerToClient(this ProjectTask source)
         {
             Models.ProjectTask projectTask = new Models.ProjectTask();
+            projectTask.TaskId = source.TaskId;
             projectTask.ProjectId = source.ProjectId;
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
