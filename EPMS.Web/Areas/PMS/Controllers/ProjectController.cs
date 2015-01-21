@@ -112,10 +112,14 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 if (projectViewModel.Project.ProjectId > 0)//Update
                 {
-                    
+                    projectViewModel.Project.RecLastUpdatedBy = User.Identity.GetUserId();
+                    projectViewModel.Project.RecLastUpdatedDate = DateTime.Now;
+                    //Update Project to Db
+                    projectViewModel.Project.ProjectId = projectService.UpdateProject(projectViewModel.Project.CreateFromClientToServer());
+                    SaveProjectDocuments(projectViewModel);
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Complaint.ComplaintRepliedMsg,
+                        Message = Resources.PMS.Project.ProjectUpdatedMsg,
                         IsUpdated = true
                     };
                 }
@@ -128,26 +132,15 @@ namespace EPMS.Web.Areas.PMS.Controllers
 
                     //Add Project to Db
                     projectViewModel.Project.ProjectId=projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
-                    
-                    
-                    //Save file names in db
-                    if (!string.IsNullOrEmpty(projectViewModel.DocsNames))
-                    {
-                        var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 2).Split('~').ToList();
-                        foreach (var projectDocument in projectDocuments)
-                        {
-                            ProjectDocument doc = new ProjectDocument();
-                            doc.FileName = projectDocument;
-                            doc.ProjectId = projectViewModel.Project.ProjectId;
-                            projectDocumentService.AddProjectDocument(doc);
-                        }
-                    }
 
-                    //TempData["message"] = new MessageViewModel
-                    //{
-                    //    Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
-                    //    IsUpdated = true
-                    //};
+                    SaveProjectDocuments(projectViewModel);
+                    
+
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.PMS.Project.ProjectCreatedMsg,
+                        IsSaved = true
+                    };
                 }
             }
             catch (Exception e)
@@ -157,6 +150,21 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return RedirectToAction("OnGoing", "Project");
         }
 
+        public void SaveProjectDocuments(ProjectViewModel projectViewModel)
+        {
+            //Save file names in db
+            if (!string.IsNullOrEmpty(projectViewModel.DocsNames))
+            {
+                var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 2).Split('~').ToList();
+                foreach (var projectDocument in projectDocuments)
+                {
+                    ProjectDocument doc = new ProjectDocument();
+                    doc.FileName = projectDocument;
+                    doc.ProjectId = projectViewModel.Project.ProjectId;
+                    projectDocumentService.AddProjectDocument(doc);
+                }
+            }
+        }
         public ActionResult UploadDocuments()
         {
             HttpPostedFileBase doc = Request.Files[0];

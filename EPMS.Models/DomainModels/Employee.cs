@@ -33,6 +33,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual JobTitle JobTitle { get; set; }
         public virtual ICollection<EmployeeRequest> EmployeeRequests { get; set; }
+        public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<EmployeeJobHistory> EmployeeJobHistories { get; set; }
     }

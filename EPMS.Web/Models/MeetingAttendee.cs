@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Web.Models
 {
     public class MeetingAttendee
     {
@@ -14,7 +17,5 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual Meeting Meeting { get; set; }
     }
 }

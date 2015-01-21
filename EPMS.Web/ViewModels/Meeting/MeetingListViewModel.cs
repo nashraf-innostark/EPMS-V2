@@ -24,6 +24,5 @@ namespace EPMS.Web.ViewModels.Meeting
         public int iTotalDisplayRecords;
 
         public string sEcho;
-        public string DocsNames { get; set; }
     }
 }
