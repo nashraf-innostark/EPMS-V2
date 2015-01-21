@@ -98,5 +98,8 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<ProjectTask> ProjectTasks { get; set; }
         public DbSet<TaskEmployee> TaskEmployees { get; set; }
         public DbSet<PreRequisitTask> PreRequisitTasks { get; set; }
+        public DbSet<MeetingDocument> MeetingDocuments { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Web.Models
 {
     public class Meeting
     {
@@ -13,15 +15,12 @@ namespace EPMS.Models.DomainModels
         public string Agenda { get; set; }
         public string AgendaAr { get; set; }
         public string Discussion { get; set; }
-        public string DiscussionAr { get; set; }
+        public string DiscusionAr { get; set; }
         public string Decisions { get; set; }
         public string DecisionsAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
-
-        public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
-        public virtual ICollection<MeetingDocument> MeetingDocuments { get; set; }
     }
 }

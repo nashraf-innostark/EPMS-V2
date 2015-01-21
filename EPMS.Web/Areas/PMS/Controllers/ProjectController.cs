@@ -85,13 +85,13 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project = project.CreateFromServerToClient();
                     if (project.OrderId > 0)
                     {
-                        //projectViewModel.Installment = quotationService..Select(x => x.CreateFromServerToClient());
+                        //projectViewModel.Installment = quotationService.FindQuotationByOrderNo(project.OrderId).Select(x => x.CreateFromServerToClient());
                     }
 
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        //projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
                     }
                 }
             }
@@ -139,10 +139,6 @@ namespace EPMS.Web.Areas.PMS.Controllers
                             ProjectDocument doc = new ProjectDocument();
                             doc.FileName = projectDocument;
                             doc.ProjectId = projectViewModel.Project.ProjectId;
-                            doc.RecCreatedBy = Session["UserID"].ToString();
-                            doc.RecCreatedDate = DateTime.Now;
-                            doc.RecLastUpdatedBy = Session["UserID"].ToString();
-                            doc.RecLastUpdatedDate = DateTime.Now;
                             projectDocumentService.AddProjectDocument(doc);
                         }
                     }

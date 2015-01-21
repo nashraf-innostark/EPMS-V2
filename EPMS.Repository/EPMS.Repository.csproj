@@ -145,6 +145,9 @@
     <Compile Include="Repositories\JobOfferedRepository.cs" />
     <Compile Include="Repositories\JobTitleHistoryRepository.cs" />
     <Compile Include="Repositories\JobTitleRepository.cs" />
+    <Compile Include="Repositories\MeetingAttendeeRepository.cs" />
+    <Compile Include="Repositories\MeetingDocumentRepository.cs" />
+    <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />

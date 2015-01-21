@@ -257,6 +257,7 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
     <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
     <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\MeetingMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
     <Compile Include="ModelMappers\PMS\PreRequisitTasksMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
@@ -318,6 +320,8 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PreRequisitTask.cs" />
     <Compile Include="Models\Project.cs" />
@@ -556,6 +560,8 @@
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\Meeting\MeetingListViewModel.cs" />
+    <Compile Include="ViewModels\Meeting\MeetingViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
@@ -584,6 +590,7 @@
     <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
     <Content Include="Areas\Meeting\Views\web.config" />
+    <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2980,7 +2987,6 @@
     <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
-    <Folder Include="Areas\Meeting\Controllers\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\Notification\Controllers\" />
