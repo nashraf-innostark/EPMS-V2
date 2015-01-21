@@ -24,10 +24,10 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
-            projectTask.PreReqTasks = "";
+            //projectTask.PreReqTasks = " - ";
             foreach (var preRequisitTask in source.PreRequisitTasks)
             {
-                projectTask.PreReqTasks = projectTask.PreReqTasks +" - "+ preRequisitTask.ProjectTask.TaskNameE;
+                projectTask.PreReqTasks = projectTask.PreReqTasks+ " - " + preRequisitTask.ProjectTask.TaskNameE;
             }
             return projectTask;
         }
