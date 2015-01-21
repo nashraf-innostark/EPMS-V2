@@ -13,7 +13,7 @@ namespace EPMS.Web.ViewModels.Project
         public IEnumerable<Models.Customer> Customers { get; set; }
         public IEnumerable<Models.Order> Orders { get; set; }
         public IEnumerable<Models.ProjectTask> ProjectTasks { get; set; }
-        public Models.Quotation Installments { get; set; }
+        public Models.Quotation Installment { get; set; }
         public string DocsNames { get; set; }
     }
 }
