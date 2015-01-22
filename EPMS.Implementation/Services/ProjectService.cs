@@ -43,7 +43,7 @@ namespace EPMS.Implementation.Services
             return project.ProjectId;
         }
 
-        public IEnumerable<Project> LoadAllOnGoingProjects()
+        public IEnumerable<Project> LoadAllUnfinishedProjects()
         {
             return projectRepository.GetAllOnGoingProjects();
         }
@@ -53,14 +53,14 @@ namespace EPMS.Implementation.Services
             return projectRepository.GetAllFinishedProjects();
         }
 
-        public IEnumerable<Project> LoadAllOnGoingProjectsByCustomerId(long id)
+        public IEnumerable<Project> LoadAllUnfinishedProjectsByCustomerId(long id)
         {
-            throw new System.NotImplementedException();
+            return projectRepository.GetAllOnGoingProjectsByCustomerId(id);
         }
 
         public IEnumerable<Project> LoadAllFinishedProjectsByCustomerId(long id)
         {
-            throw new System.NotImplementedException();
+            return projectRepository.GetAllFinishedProjectsByCustomerId(id);
         }
 
         public IEnumerable<Project> LoadProjectsForDashboard(string requester)

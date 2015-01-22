@@ -586,7 +586,7 @@
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
-    <Content Include="Areas\PMS\Views\Project\OnGoing.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Create.cshtml" />

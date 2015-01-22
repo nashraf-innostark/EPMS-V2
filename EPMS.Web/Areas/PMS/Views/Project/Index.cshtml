@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = EPMS.Web.Resources.PMS.Project.ListPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -22,7 +23,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.PMS.Project.ListPageHeading</small></h2>
-    <h3> <small><a href="~/PMS/Project/Create">@EPMS.Web.Resources.PMS.Project.AddNew</a></small></h3>
+    @if (ViewBag.UserRole != "Customer")
+    {
+        <h3> <small><a href="~/PMS/Project/Create">@EPMS.Web.Resources.PMS.Project.AddNew</a></small></h3>
+    }
     <h3> <small><a href="~/PMS/Project/Finished">@EPMS.Web.Resources.PMS.Project.FinishedProjects</a></small></h3>
 </header>
 <!-- Page Heading End-->
@@ -51,8 +55,23 @@
                         {
                             <tr>
                                 <td>@item.ProjectId</td>
-                                <td class="center"><a href="/PMS/Project/Create/@item.ProjectId">@item.NameE</a></td>
-                                <td class="center"><a href="/CMS/Customer/Details/@item.CustomerId">@item.CustomerNameE</a></td>
+                                <td class="center">
+                                    @if (ViewBag.UserRole != "Customer")
+                                    {
+                                        <a href="/PMS/Project/Create/@item.ProjectId">
+                                            @(direction == "ltr" ? @item.NameE : @item.NameA)
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/PMS/Project/Details/@item.ProjectId">@(direction == "ltr" ? @item.NameE : @item.NameA)</a>
+                                    }
+                                </td>
+                                <td class="center">
+                                    <a href="/CMS/Customer/Details/@item.CustomerId">
+                                              @(direction == "ltr" ? @item.CustomerNameE : @item.CustomerNameA)
+                                          </a>
+                                </td>
                                 <th>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</th>
                                 <th>@(Convert.ToDateTime(item.EndDate).ToShortDateString())</th>
                                 <th>@item.Price</th>
@@ -83,7 +102,7 @@
                   null,
                   null,
             ],
-            "aaSorting": [[3,'asc']],
+            "aaSorting": [[1,'asc']],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'

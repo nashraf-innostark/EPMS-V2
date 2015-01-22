@@ -1,11 +1,23 @@
-﻿@using System.Web.UI.HtmlControls
-@using iTextSharp.text.pdf.qrcode
-@model EPMS.Web.ViewModels.Project.ProjectViewModel
+﻿@model EPMS.Web.ViewModels.Project.ProjectViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var pageheading = "";
+    var breadcrumb="";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Model.Project.ProjectId > 0)
+    {
+        ViewBag.Title=EPMS.Web.Resources.PMS.Project.Edit + " " + (direction == "ltr" ? " " + Model.Project.NameE : " " + Model.Project.NameA);
+        pageheading = ViewBag.Title;
+        breadcrumb = ViewBag.Title;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
+        breadcrumb = ViewBag.Title;
+        pageheading = EPMS.Web.Resources.PMS.Project.AddNewProject;
+    }
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -16,10 +28,10 @@
             </a>
         </li>
         <li>
-            <a href="~/PMS/Project/OnGoing">@EPMS.Web.Resources.PMS.Project.ProjectsList</a>
+            <a href="~/PMS/Project/Index">@EPMS.Web.Resources.PMS.Project.ProjectsList</a>
         </li>
         <li class="current">
-            @EPMS.Web.Resources.PMS.Project.NewProject
+            @breadcrumb
         </li>
     </ul>
 </div>
@@ -27,7 +39,9 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.PMS.Project.AddNewProject</small></h2>
+    <h2>
+        <small> @pageheading </small>
+    </h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -38,14 +52,13 @@
     <div class="container-fluid">
 
         @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" })
-        @Html.HiddenFor(model => model.Project.Status, new { @id = "ProjectStatus" })
         @Html.HiddenFor(model => model.Project.ProjectId)
         @Html.HiddenFor(model => model.Project.RecCreatedDate)
         @Html.HiddenFor(model => model.Project.RecCreatedBy)
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectName</label>
+                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectNameE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -163,12 +176,11 @@
                 </div>
             </div>
         </div>
-        @if (Model.Project.ProjectId > 0)
-        {
+        
        <!--Input Field begin-->
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Price</label>
+                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectPrice</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -177,7 +189,8 @@
                 </div>
             </div>
         <!--Input Field end-->
-
+@if (Model.Project.ProjectId > 0)
+{
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
                 <strong><a>@EPMS.Web.Resources.PMS.Project.Tasks</a></strong>
@@ -269,8 +282,6 @@
 
 
 
-
-
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>@EPMS.Web.Resources.PMS.Project.InstallmentPlan</strong>
@@ -284,7 +295,17 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Installment</th>
+                                <th>
+                                    @if (Model.Installment != null)
+                                    {
+                                        <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a>
+                                    }
+                                    else
+                                    {
+                                        @EPMS.Web.Resources.PMS.Project.Installment
+                                    }
+                                    
+                                </th>
                                 <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
@@ -356,16 +377,16 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Project Status </label>
+                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectStatus</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.Project.Status, new[]
                     {
-                        new SelectListItem { Value = "1" , Text = "On Going" },
-                        new SelectListItem { Value = "2" , Text = "On Hold" },
-                        new SelectListItem { Value = "3" , Text = "Canceled" },
-                        new SelectListItem { Value = "4" , Text = "Finished" }
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Shared.Common.OnGoing },
+                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Shared.Common.OnHold },
+                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Shared.Common.Canceled },
+                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Shared.Common.Finished }
                     }, new { @id = "ProjectStatusDDL" })
                 </div>
             </div>
@@ -436,10 +457,30 @@
             </div>
 
         </div>
+        @if (Model.ProjectDocsNames != null)
+        {
+            <div class="control-group row-fluid">
+                @foreach (var doc in Model.ProjectDocsNames)
+                {
+                    <div class="controls">
+                        <div class="span-inset">
+                            <button type="button" class="btn" onclick="DeleteDoc(this,@doc.Id)">@EPMS.Web.Resources.PMS.Project.DeleteFile @doc.FileName</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
+                @if (Model.Project.ProjectId > 0)
+                {
+                    <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Project.UpdateProject</button>
+                }
+                else
+                {
+                    <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
+                }
             </div>
 
         </div>
@@ -492,8 +533,8 @@
             maxsize: 1,
             post_upload: url,
             folder: "./",
-            ini_text: "Drag your file(s) here or click (max: 1MB each)",
-            over_text: "Drop Here",
+            ini_text: "@EPMS.Web.Resources.PMS.Project.DocumentUpload",
+            over_text: "@EPMS.Web.Resources.PMS.Project.DocumentHoverText",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
 
@@ -567,13 +608,13 @@
         $("#OrderNo").empty();
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
-                //set first order's no as a project name
-                var orderTitle = data[0].OrderNo;
-                SetNames(orderTitle);
                 $("#OrderNo").append(
                     $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
                 );
             }
+            //set first order's no as a project name
+            var orderTitle = data[0].OrderNo;
+            SetNames(orderTitle);
         } else {
             $("#OrderNo").append(
                     $('<option></option>').val("").html("none")
@@ -582,19 +623,47 @@
         }
         $.unblockUI();
     }
-
+    function DeleteDoc(button,fileId) {
+        var url = $('#siteURL').val() + "/PMS/Project/DeleteProjectDocument";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: "json",
+            data: {
+                fileId: fileId
+            },
+            success: function (data) {
+                if (data) {
+                    button.remove();
+                }
+                $.unblockUI();
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+            }
+        });
+    }
     function addDocName(filename) {
         var lis = $("#DocsNames").val();
         lis += filename + "~";
         $("#DocsNames").val(lis);
     }
+    function ProjectNameReadOnly(flag) {
+        $("#ProjectNameE").attr("readonly", flag);//empty project name
+        $("#ProjectNameA").attr("readonly", flag);
+    }
     function SetNames(value) {
-        $("#ProjectNameE").val(value);//empty project name
-        $("#ProjectNameA").val(value);
+        //$("#ProjectNameE").val(value);//empty project name
+        //$("#ProjectNameA").val(value);
         $("#ProjectSerialNo").val(value);
+        //if (value == "") {
+        //    ProjectNameReadOnly(false);
+        //} else {
+        //    ProjectNameReadOnly(true);
+        //}
     }
     function Profit() {
-        var other=$("#ProjectOtherCost").val();//empty project name 
+        var other=$("#ProjectOtherCost").val();//empty project name
         var price=$("#ProjectPrice").val();
         var cost=$("#TotalTasksCost").val();
         var profit = parseFloat(price) + parseFloat(other) - parseFloat(cost);

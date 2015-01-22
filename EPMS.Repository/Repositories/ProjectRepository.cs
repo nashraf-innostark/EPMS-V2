@@ -31,7 +31,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Project> GetAllOnGoingProjects()
         {
-            return DbSet.Where(x => x.Status == 1);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
+            return DbSet.Where(x => x.Status != 4);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
 
         public IEnumerable<Project> GetAllFinishedProjects()
@@ -41,7 +41,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Project> GetAllOnGoingProjectsByCustomerId(long id)
         {
-            return DbSet.Where(x => x.Status == 1 && x.CustomerId==id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
+            return DbSet.Where(x => x.Status != 4 && x.CustomerId == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
 
         public IEnumerable<Project> GetAllFinishedProjectsByCustomerId(long id)

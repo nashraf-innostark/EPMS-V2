@@ -106,6 +106,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete File.
+        /// </summary>
+        public static string DeleteFile {
+            get {
+                return ResourceManager.GetString("DeleteFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delivery Date.
         /// </summary>
         public static string DeliveryDate {
@@ -142,6 +151,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drop Here.
+        /// </summary>
+        public static string DocumentHoverText {
+            get {
+                return ResourceManager.GetString("DocumentHoverText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documents.
         /// </summary>
         public static string Documents {
@@ -151,11 +169,29 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag your file(s) here or click (max: 1MB each).
+        /// </summary>
+        public static string DocumentUpload {
+            get {
+                return ResourceManager.GetString("DocumentUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Due At Project Porgress.
         /// </summary>
         public static string DueAtProjectPorgress {
             get {
                 return ResourceManager.GetString("DueAtProjectPorgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit  .
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -394,11 +430,29 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Name.
+        /// </summary>
+        public static string ProjectNameE {
+            get {
+                return ResourceManager.GetString("ProjectNameE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project name in english is required.
         /// </summary>
         public static string ProjectNameERequiredMsg {
             get {
                 return ResourceManager.GetString("ProjectNameERequiredMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Price.
+        /// </summary>
+        public static string ProjectPrice {
+            get {
+                return ResourceManager.GetString("ProjectPrice", resourceCulture);
             }
         }
         
@@ -417,6 +471,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string ProjectsList {
             get {
                 return ResourceManager.GetString("ProjectsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Status.
+        /// </summary>
+        public static string ProjectStatus {
+            get {
+                return ResourceManager.GetString("ProjectStatus", resourceCulture);
             }
         }
         
@@ -480,6 +543,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string TotalTasksCost {
             get {
                 return ResourceManager.GetString("TotalTasksCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Project.
+        /// </summary>
+        public static string UpdateProject {
+            get {
+                return ResourceManager.GetString("UpdateProject", resourceCulture);
             }
         }
     }

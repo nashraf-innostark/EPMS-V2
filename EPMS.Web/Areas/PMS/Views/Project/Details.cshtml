@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a href="~/PMS/Project/OnGoing">@EPMS.Web.Resources.PMS.Project.ProjectsList</a>
+            <a href="~/PMS/Project/Index">@EPMS.Web.Resources.PMS.Project.ProjectsList</a>
         </li>
         <li class="current">
             @ViewBag.Title
@@ -42,7 +42,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectName</label>
+                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectNameE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -161,7 +161,7 @@
         <!--Input Field begin-->
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Price</label>
+                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectPrice</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -277,7 +277,17 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th><a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a></th>
+                                <th>
+                                    @if (Model.Installment != null)
+                                    {
+                                        <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a>
+                                    }
+                                    else
+                                    {
+                                        @EPMS.Web.Resources.PMS.Project.Installment
+                                    }
+
+                                </th>
                                 <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
@@ -348,7 +358,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Project Status </label>
+                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectStatus</label>
             </div>
             <div class="span2">
                 <div class="controls">

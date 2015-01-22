@@ -481,7 +481,7 @@
           <Property Name="NameA" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="CustomerId" Type="bigint" />
           <Property Name="OrderId" Type="bigint" />
-          <Property Name="SerialNo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="SerialNo" Type="nchar" MaxLength="10" />
           <Property Name="DescriptionE" Type="nvarchar(max)" />
           <Property Name="DescriptionA" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" />
@@ -2034,7 +2034,7 @@
           <Property Name="NameA" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="CustomerId" Type="Int64" />
           <Property Name="OrderId" Type="Int64" />
-          <Property Name="SerialNo" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SerialNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />

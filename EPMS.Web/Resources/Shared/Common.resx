@@ -126,6 +126,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Finished" xml:space="preserve">
+    <value>Finished</value>
+  </data>
   <data name="Heading" xml:space="preserve">
     <value>Welcome</value>
   </data>
@@ -158,6 +164,12 @@
   </data>
   <data name="Notice" xml:space="preserve">
     <value>Notice</value>
+  </data>
+  <data name="OnGoing" xml:space="preserve">
+    <value>On Going</value>
+  </data>
+  <data name="OnHold" xml:space="preserve">
+    <value>On Hold</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>Page</value>
