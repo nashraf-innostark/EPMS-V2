@@ -43,16 +43,17 @@ namespace EPMS.Web.Areas.PMS.Controllers
         #region Loading Lists
         // GET: PMS/Project/OnGoing
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
-        public ActionResult OnGoing()
+        public ActionResult Index()
         {
             ProjectListViewModel projectsList=new ProjectListViewModel
             {
                 Projects =
                     Session["RoleName"].ToString() == "Customer"
-                        ? projectService.LoadAllOnGoingProjectsByCustomerId(
+                        ? projectService.LoadAllUnfinishedProjectsByCustomerId(
                             Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllOnGoingProjects().Select(x => x.CreateFromServerToClient())
+                        : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient())
             };
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             return View(projectsList);
         }
         // GET: PMS/Project/Finished
@@ -71,7 +72,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         }
         #endregion
 
-        #region Create
+        #region Create/Update
         [SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Create(long? id)
         {
@@ -103,6 +104,14 @@ namespace EPMS.Web.Areas.PMS.Controllers
                             projectViewModel.Project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
                         }
                     }
+                    //Load project documents
+                    var projectDocument = projectDocumentService.FindProjectDocumentsByProjectId((long)id);
+                    var projectDocsNames = projectDocument as IList<ProjectDocument> ?? projectDocument.ToList();
+                    if (projectDocsNames.Any())
+                    {
+                        projectViewModel.ProjectDocsNames = projectDocsNames;
+                    }
+                    //Calculate prjoect profit
                     projectViewModel.Project.Profit = (projectViewModel.Project.Price +
                                                        projectViewModel.Project.OtherCost) -
                                                       projectViewModel.Project.TotalTasksCost;
@@ -160,7 +169,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 return View(projectViewModel);
             }
-            return RedirectToAction("OnGoing", "Project");
+            return RedirectToAction("Index", "Project");
         }
 
         public void SaveProjectDocuments(ProjectViewModel projectViewModel)
@@ -168,7 +177,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             //Save file names in db
             if (!string.IsNullOrEmpty(projectViewModel.DocsNames))
             {
-                var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 2).Split('~').ToList();
+                var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 1).Split('~').ToList();
                 foreach (var projectDocument in projectDocuments)
                 {
                     ProjectDocument doc = new ProjectDocument();
@@ -201,10 +210,29 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult DeleteProjectDocument(long fileId)
+        {
+            
+            var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"]);
+            var document = projectDocumentService.FindProjectDocumentsById(fileId);
+            if (document != null)
+            {
+                string savedFilePhysicalPath = Path.Combine(filePathOriginal, document.FileName);
+                if ((System.IO.File.Exists(savedFilePhysicalPath)))
+                {
+                    System.IO.File.Delete(savedFilePhysicalPath);
+                    var documentDeleted = projectDocumentService.Delete(fileId);
+                    return Json(documentDeleted, JsonRequestBehavior.AllowGet);
+                }
+                
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region Detail
-        [SiteAuthorize(PermissionKey = "ProjectCreate")]
+        [SiteAuthorize(PermissionKey = "ProjectDetails")]
         public ActionResult Details(long? id)
         {
             
@@ -239,6 +267,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project.Profit = (projectViewModel.Project.Price +
                                                        projectViewModel.Project.OtherCost) -
                                                       projectViewModel.Project.TotalTasksCost;
+                    //Load project documents
                     var projectDocument = projectDocumentService.FindProjectDocumentsByProjectId((long)id);
                     var projectDocsNames = projectDocument as IList<ProjectDocument> ?? projectDocument.ToList();
                     if (projectDocsNames.Any())

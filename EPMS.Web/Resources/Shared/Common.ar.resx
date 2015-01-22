@@ -126,6 +126,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>إلغاء</value>
   </data>
+  <data name="Canceled" xml:space="preserve">
+    <value>الغي</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>اتصال</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
   </data>
+  <data name="Finished" xml:space="preserve">
+    <value>قديمة</value>
+  </data>
   <data name="Heading" xml:space="preserve">
     <value>مرحبا</value>
   </data>
@@ -155,6 +161,12 @@
   </data>
   <data name="Notice" xml:space="preserve">
     <value>إشعار</value>
+  </data>
+  <data name="OnGoing" xml:space="preserve">
+    <value>تحت العمل</value>
+  </data>
+  <data name="OnHold" xml:space="preserve">
+    <value>موقف</value>
   </data>
   <data name="Page" xml:space="preserve">
     <value>صفحة</value>

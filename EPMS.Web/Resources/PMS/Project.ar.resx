@@ -118,99 +118,168 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNew" xml:space="preserve">
-    <value>Add New</value>
+    <value>اضافة مشروع جديد</value>
   </data>
   <data name="AddNewProject" xml:space="preserve">
-    <value>Add New Project</value>
+    <value>اضافة مشروع جديد</value>
   </data>
   <data name="ClientName" xml:space="preserve">
-    <value>Client Name</value>
+    <value>اسم العميل</value>
   </data>
   <data name="CreateProject" xml:space="preserve">
-    <value>Create Project</value>
+    <value>انشاء مشروع</value>
+  </data>
+  <data name="CreateShowReceipt" xml:space="preserve">
+    <value>انشاء/مشاهدة سند القبض</value>
+  </data>
+  <data name="DeleteFile" xml:space="preserve">
+    <value>حذف ملف</value>
   </data>
   <data name="DeliveryDate" xml:space="preserve">
-    <value>Delivery Date</value>
+    <value>تاريخ تسليم المشروع</value>
   </data>
   <data name="DescriptionA" xml:space="preserve">
-    <value>Description arabic</value>
+    <value>تفاصيل المشروع بالعربي</value>
   </data>
   <data name="DescriptionE" xml:space="preserve">
-    <value>Description</value>
+    <value>تفاليل المشروع بالانجليزي</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>تفاصيل</value>
+  </data>
+  <data name="DocumentHoverText" xml:space="preserve">
+    <value>اضغط هنا</value>
   </data>
   <data name="Documents" xml:space="preserve">
-    <value>Documents</value>
+    <value>الوثائق</value>
+  </data>
+  <data name="DocumentUpload" xml:space="preserve">
+    <value>اسحب ملف الخاص بك (ق ) هنا أو اضغط ( الحد الأقصى: 1MB لكل منهما)</value>
+  </data>
+  <data name="DueAtProjectPorgress" xml:space="preserve">
+    <value>الدفعة مطلوبة عند انتهاء</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل  </value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>موظفين</value>
   </data>
   <data name="EndDate" xml:space="preserve">
-    <value>End Date</value>
+    <value>تاريخ نهاية المشروع</value>
   </data>
   <data name="FileSize" xml:space="preserve">
-    <value>file size shouldn't exceed 1MB</value>
+    <value>وينبغي ألا يتجاوز حجم الملف 1 ميغا</value>
   </data>
   <data name="FinishedProjects" xml:space="preserve">
-    <value>Finished Projects</value>
+    <value>مشاريع المنتهية</value>
   </data>
   <data name="FinishedProjectsList" xml:space="preserve">
-    <value>Finished Projects List</value>
+    <value>قائمة المشاريع المنتهية</value>
+  </data>
+  <data name="Installment" xml:space="preserve">
+    <value>الدفعة</value>
+  </data>
+  <data name="InstallmentPlan" xml:space="preserve">
+    <value>خطة الدفعات</value>
   </data>
   <data name="ListPageHeading" xml:space="preserve">
-    <value>Projects</value>
+    <value>المشاريع</value>
   </data>
   <data name="ListPageTitle" xml:space="preserve">
-    <value>Project Management</value>
+    <value>قائمة المشاريع</value>
+  </data>
+  <data name="MethodOfPayment" xml:space="preserve">
+    <value>طريقة الدفع</value>
   </data>
   <data name="NewProject" xml:space="preserve">
-    <value>New Project</value>
+    <value>مشروع جديد</value>
   </data>
   <data name="NotesA" xml:space="preserve">
-    <value>Notes arabic</value>
+    <value>ملاحظات بالعربي</value>
   </data>
   <data name="NotesCustomerA" xml:space="preserve">
-    <value>Notes For Customer arabic</value>
+    <value>ملاحظات للعميل بالعربي</value>
   </data>
   <data name="NotesCustomerE" xml:space="preserve">
-    <value>Notes For Customer</value>
+    <value>ملاحظات للعميل بالانجليزي</value>
   </data>
   <data name="NotesE" xml:space="preserve">
-    <value>Notes</value>
+    <value>ملاحظات بالانجليزي</value>
   </data>
   <data name="OrderNo" xml:space="preserve">
-    <value>Order Name - Number</value>
+    <value>اسم الطلب - رقم الطلب</value>
+  </data>
+  <data name="OtherCost" xml:space="preserve">
+    <value>تكاليف اخرى</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>مدفوع</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Price</value>
+    <value>السعر</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>الفائدة</value>
   </data>
   <data name="Progress" xml:space="preserve">
-    <value>Progress</value>
+    <value>مستوى التقدم</value>
+  </data>
+  <data name="ProjectCreatedMsg" xml:space="preserve">
+    <value>وقد تم إنشاء المشروع!</value>
+  </data>
+  <data name="ProjectDetails" xml:space="preserve">
+    <value>مشروع تفاصيل</value>
   </data>
   <data name="ProjectName" xml:space="preserve">
-    <value>Project Name</value>
+    <value>اسم المشروع</value>
   </data>
   <data name="ProjectNameAr" xml:space="preserve">
-    <value>Project Name arabic</value>
+    <value>اسم المشروع بالعربي</value>
   </data>
   <data name="ProjectNameARequiredMsg" xml:space="preserve">
-    <value>Project name in arabic is required</value>
+    <value>مطلوب اسم المشروع باللغة العربية</value>
+  </data>
+  <data name="ProjectNameE" xml:space="preserve">
+    <value>اسم المشروع بالانجليزي</value>
   </data>
   <data name="ProjectNameERequiredMsg" xml:space="preserve">
-    <value>Project name in english is required</value>
+    <value>مطلوب اسم المشروع باللغة الإنجليزية</value>
+  </data>
+  <data name="ProjectPrice" xml:space="preserve">
+    <value>سعر المشروع</value>
   </data>
   <data name="ProjectSerialNo" xml:space="preserve">
-    <value>Project Serial Number</value>
+    <value>رقم المشروع</value>
   </data>
   <data name="ProjectsList" xml:space="preserve">
-    <value>Projects List</value>
+    <value>قائمة المشاريع</value>
+  </data>
+  <data name="ProjectStatus" xml:space="preserve">
+    <value>حالة المشروع</value>
+  </data>
+  <data name="ProjectUpdatedMsg" xml:space="preserve">
+    <value>وقد تم تحديث المشروع!</value>
   </data>
   <data name="SelectClientName" xml:space="preserve">
-    <value>- Select Client -</value>
+    <value>- اسم العميل -</value>
   </data>
   <data name="StartDate" xml:space="preserve">
-    <value>Start Date</value>
+    <value>تاريخ بداية المشروع</value>
   </data>
   <data name="TaskDate" xml:space="preserve">
-    <value>Date</value>
+    <value>تاريخ</value>
+  </data>
+  <data name="TaskPreReq" xml:space="preserve">
+    <value>مهام المطلوبة قبل</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Tasks</value>
+    <value>مهام</value>
+  </data>
+  <data name="TotalTasksCost" xml:space="preserve">
+    <value>تكاليف المهام</value>
+  </data>
+  <data name="UpdateProject" xml:space="preserve">
+    <value>تعديل</value>
   </data>
 </root>

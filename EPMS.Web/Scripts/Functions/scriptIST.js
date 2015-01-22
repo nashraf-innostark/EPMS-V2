@@ -218,7 +218,7 @@ $(document).ready(function() {
     $(".datepickerGregorian").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat:"dd/mm/yyyy"
+        dateFormat:"dd/mm/yy"
     });
     // Arabic Date Picker
     var calendar = $.calendars.instance('islamic');

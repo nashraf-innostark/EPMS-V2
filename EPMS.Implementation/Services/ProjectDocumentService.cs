@@ -42,5 +42,10 @@ namespace EPMS.Implementation.Services
             documentRepository.SaveChanges();
             return true;
         }
+
+        public ProjectDocument FindProjectDocumentsById(long documentId)
+        {
+            return documentRepository.Find(documentId);
+        }
     }
 }
