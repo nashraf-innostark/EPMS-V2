@@ -54,6 +54,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                         : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient())
             };
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+            ViewBag.UserRole = Session["RoleName"];
             return View(projectsList);
         }
         // GET: PMS/Project/Finished
@@ -139,7 +140,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     //Update Project to Db
                     projectViewModel.Project.ProjectId = projectService.UpdateProject(projectViewModel.Project.CreateFromClientToServer());
                     SaveProjectDocuments(projectViewModel);
-                    TempData["message"] = new MessageViewModel
+                    TempData["MessageVm"] = new MessageViewModel
                     {
                         Message = Resources.PMS.Project.ProjectUpdatedMsg,
                         IsUpdated = true
@@ -156,9 +157,9 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project.ProjectId=projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
 
                     SaveProjectDocuments(projectViewModel);
-                    
 
-                    TempData["message"] = new MessageViewModel
+
+                    TempData["MessageVm"] = new MessageViewModel
                     {
                         Message = Resources.PMS.Project.ProjectCreatedMsg,
                         IsSaved = true

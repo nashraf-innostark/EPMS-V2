@@ -277,7 +277,17 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th><a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a></th>
+                                <th>
+                                    @if (Model.Installment != null)
+                                    {
+                                        <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a>
+                                    }
+                                    else
+                                    {
+                                        @EPMS.Web.Resources.PMS.Project.Installment
+                                    }
+
+                                </th>
                                 <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
                                 <th>@EPMS.Web.Resources.PMS.Project.Paid</th>

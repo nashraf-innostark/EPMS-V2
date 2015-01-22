@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = EPMS.Web.Resources.PMS.Project.FinishedProjects;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -53,8 +54,23 @@
                         {
                             <tr>
                                 <td>@item.ProjectId</td>
-                                <td class="center"><a href="/PMS/Project/Create/@item.ProjectId">@item.NameE</a></td>
-                                <td class="center"><a href="/CMS/Customer/Details/@item.CustomerId">@item.CustomerNameE</a></td>
+                                <td class="center">
+                                    @if (ViewBag.UserRole != "Customer")
+                                    {
+                                        <a href="/PMS/Project/Create/@item.ProjectId">
+                                            @(direction == "ltr" ? @item.NameE : @item.NameA)
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/PMS/Project/Details/@item.ProjectId">@(direction == "ltr" ? @item.NameE : @item.NameA)</a>
+                                    }
+                                </td>
+                                <td class="center">
+                                    <a href="/CMS/Customer/Details/@item.CustomerId">
+                                        @(direction == "ltr" ? @item.CustomerNameE : @item.CustomerNameA)
+                                    </a>
+                                </td>
                                 <th>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</th>
                                 <th>@(Convert.ToDateTime(item.EndDate).ToShortDateString())</th>
                                 <th>@item.Price</th>

@@ -52,7 +52,6 @@
     <div class="container-fluid">
 
         @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" })
-        @Html.HiddenFor(model => model.Project.Status, new { @id = "ProjectStatus" })
         @Html.HiddenFor(model => model.Project.ProjectId)
         @Html.HiddenFor(model => model.Project.RecCreatedDate)
         @Html.HiddenFor(model => model.Project.RecCreatedBy)
@@ -649,10 +648,19 @@
         lis += filename + "~";
         $("#DocsNames").val(lis);
     }
+    function ProjectNameReadOnly(flag) {
+        $("#ProjectNameE").attr("readonly", flag);//empty project name
+        $("#ProjectNameA").attr("readonly", flag);
+    }
     function SetNames(value) {
-        $("#ProjectNameE").val(value);//empty project name
-        $("#ProjectNameA").val(value);
+        //$("#ProjectNameE").val(value);//empty project name
+        //$("#ProjectNameA").val(value);
         $("#ProjectSerialNo").val(value);
+        //if (value == "") {
+        //    ProjectNameReadOnly(false);
+        //} else {
+        //    ProjectNameReadOnly(true);
+        //}
     }
     function Profit() {
         var other=$("#ProjectOtherCost").val();//empty project name
