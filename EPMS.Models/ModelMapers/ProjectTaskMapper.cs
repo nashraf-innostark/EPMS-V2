@@ -7,36 +7,38 @@ namespace EPMS.Models.ModelMapers
     {
         public static ProjectTask CreateFromClientToServer(this ProjectTask source, ProjectTask projectTask)
         {
-            //ProjectTask projectTask = new ProjectTask();
-            projectTask.TaskId = source.TaskId;
-            projectTask.ProjectId = source.ProjectId;
-            projectTask.CustomerId = source.CustomerId;
-            projectTask.TaskNameE = source.TaskNameE;
-            projectTask.TaskNameA = source.TaskNameA;
-            projectTask.DescriptionE = source.DescriptionE;
-            projectTask.DescriptionA = source.DescriptionA;
-            projectTask.StartDate = source.StartDate;
-            projectTask.EndDate = source.EndDate;
-            projectTask.TotalCost = source.TotalCost;
-            projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgress = source.TaskProgress;
-            projectTask.NotesE = source.NotesE;
-            projectTask.NotesA = source.NotesA;
-            projectTask.RecCreatedBy = source.RecCreatedBy;
-            projectTask.RecCreatedDt = source.RecCreatedDt;
-            projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
-            projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
-            projectTask.PreRequisitTask = source.PreRequisitTask.Select(x => x.CreateFromClientToServer(null)).ToList();
-            return projectTask;
+            source.TaskId = projectTask.TaskId;
+            source.ProjectId = projectTask.ProjectId;
+            source.CustomerId = projectTask.CustomerId;
+            source.TaskNameE = projectTask.TaskNameE;
+            source.TaskNameA = projectTask.TaskNameA;
+            source.DescriptionE = projectTask.DescriptionE;
+            source.DescriptionA = projectTask.DescriptionA;
+            source.StartDate = projectTask.StartDate;
+            source.EndDate = projectTask.EndDate;
+            source.TotalCost = projectTask.TotalCost;
+            source.TotalWeight = projectTask.TotalWeight;
+            source.TaskProgress = projectTask.TaskProgress;
+            source.NotesE = projectTask.NotesE;
+            source.NotesA = projectTask.NotesA;
+            source.RecCreatedBy = projectTask.RecCreatedBy;
+            source.RecCreatedDt = projectTask.RecCreatedDt;
+            source.RecLastUpdatedBy = projectTask.RecLastUpdatedBy;
+            source.RecLastUpdatedDt = projectTask.RecLastUpdatedDt;
+            return source;
         }
-        public static PreRequisitTask CreateFromServerToClient(this PreRequisitTask source)
+        public static TaskEmployee CreateFromServerToClient(this TaskEmployee source)
         {
-            PreRequisitTask caseType = new PreRequisitTask
+            return new TaskEmployee
             {
+                TaskEmployeeId = source.TaskEmployeeId,
                 TaskId = source.TaskId,
-                PreReqTaskId = source.PreReqTaskId,
+                EmployeeId = source.EmployeeId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
-            return caseType;
         }
     }
 }

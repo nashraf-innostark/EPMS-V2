@@ -8,6 +8,7 @@ namespace EPMS.Web.Models
         public ProjectTask()
         {
             RequisitTasks = new List<ProjectTask>();
+            TaskEmployees = new List<TaskEmployee>();
         }
         public long TaskId { get; set; }
         public long CustomerId { get; set; }

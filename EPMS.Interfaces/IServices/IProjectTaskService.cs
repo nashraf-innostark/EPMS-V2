@@ -10,8 +10,8 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid);
         IEnumerable<ProjectTask> GetAll();
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
-        bool AddProjectTask(ProjectTask task, List<long> preReqList);
-        bool UpdateProjectTask(ProjectTask task, List<long> dbList, List<long> clientList);
+        bool AddProjectTask(ProjectTask task, List<long> preReqList, List<long> assignedEmployee);
+        bool UpdateProjectTask(ProjectTask task, List<long> dbTaskList, List<long> clientTaskList, List<long> dbEmployeeList, List<long> clientEmployeeList);
         void DeleteProjectTask(ProjectTask task);
     }
 }

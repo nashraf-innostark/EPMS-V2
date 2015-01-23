@@ -43,6 +43,13 @@
             @Html.HiddenFor(model => model.OldRequisitTasks[i])
         }
     }
+    if (Model.OldAssignedEmployees != null)
+    {
+        for (int i = 0; i < Model.OldAssignedEmployees.Count(); i++)
+        {
+            @Html.HiddenFor(model => model.OldAssignedEmployees[i])
+        }
+    }
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">

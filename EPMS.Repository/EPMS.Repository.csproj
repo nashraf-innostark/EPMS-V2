@@ -157,6 +157,7 @@
     <Compile Include="Repositories\ProjectTaskRepository.cs" />
     <Compile Include="Repositories\QuotationItemRepository.cs" />
     <Compile Include="Repositories\QuotationRepository.cs" />
+    <Compile Include="Repositories\TaskEmployeeRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />
     <Compile Include="TypeRegistrations.cs" />
