@@ -8,5 +8,6 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<ProjectDocument> FindProjectDocumentsByProjectId(long projectId);
         bool AddProjectDocument(ProjectDocument complaint);
         bool Delete(long documentId);
+        ProjectDocument FindProjectDocumentsById(long documentId);
     }
 }

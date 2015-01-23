@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
     public class ProjectTask
     {
+        public ProjectTask()
+        {
+            RequisitTasks = new List<ProjectTask>();
+        }
         public long TaskId { get; set; }
         public long CustomerId { get; set; }
         public long ProjectId { get; set; }
@@ -24,5 +29,8 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
 
         public string PreReqTasks { get; set; }
+        public List<ProjectTask> RequisitTasks { get; set; }
+        public List<TaskEmployee> TaskEmployees { get; set; }
+        public string EmployeesAssigned { get; set; }
     }
 }

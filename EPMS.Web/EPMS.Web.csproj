@@ -301,8 +301,10 @@
     <Compile Include="ModelMappers\MeetingAttendeeMapper.cs" />
     <Compile Include="ModelMappers\MeetingMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
+    <Compile Include="ModelMappers\PMS\PreRequisitTasksMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectTaskMapper.cs" />
+    <Compile Include="ModelMappers\PMS\TaskEmployeeMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -585,13 +587,14 @@
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
-    <Content Include="Areas\PMS\Views\Project\OnGoing.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
@@ -2500,6 +2503,7 @@
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
     <Content Include="Scripts\jquery.leanModal.min.js" />
+    <Content Include="Scripts\plugins\jquery-picklist.js" />
     <Content Include="Scripts\plugins\jquery.blockUI.js" />
     <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
     <Content Include="Areas\CMS\Views\web.config" />

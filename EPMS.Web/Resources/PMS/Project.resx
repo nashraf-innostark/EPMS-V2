@@ -219,8 +219,8 @@
   <data name="DueAtProjectPorgress" xml:space="preserve">
     <value>Due At Project Porgress</value>
   </data>
-  <data name="Employee" xml:space="preserve">
-    <value>Employee</value>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
   </data>
   <data name="Installment" xml:space="preserve">
     <value>Installment</value>
@@ -246,10 +246,40 @@
   <data name="TotalTasksCost" xml:space="preserve">
     <value>Total Tasks Cost</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
   <data name="ProjectCreatedMsg" xml:space="preserve">
     <value>Project has been created!</value>
   </data>
+  <data name="ProjectDetails" xml:space="preserve">
+    <value>Project Details</value>
+  </data>
   <data name="ProjectUpdatedMsg" xml:space="preserve">
     <value>Project has been updated!</value>
+  </data>
+  <data name="DeleteFile" xml:space="preserve">
+    <value>Delete File</value>
+  </data>
+  <data name="DocumentHoverText" xml:space="preserve">
+    <value>Drop Here</value>
+  </data>
+  <data name="DocumentUpload" xml:space="preserve">
+    <value>Drag your file(s) here or click (max: 1MB each)</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit  </value>
+  </data>
+  <data name="ProjectNameE" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="ProjectPrice" xml:space="preserve">
+    <value>Project Price</value>
+  </data>
+  <data name="ProjectStatus" xml:space="preserve">
+    <value>Project Status</value>
+  </data>
+  <data name="UpdateProject" xml:space="preserve">
+    <value>Update Project</value>
   </data>
 </root>

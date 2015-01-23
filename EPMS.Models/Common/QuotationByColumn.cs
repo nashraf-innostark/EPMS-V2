@@ -2,7 +2,7 @@
 {
     public enum QuotationByColumn
     {
-        OrderNo = 1,
+        OrderId = 1,
         ClientName = 2,
     }
 }

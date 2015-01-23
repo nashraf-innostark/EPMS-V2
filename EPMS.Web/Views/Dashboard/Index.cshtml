@@ -55,22 +55,26 @@
                             </div>
                         </div>
                         <ul id="employeeRequests">
+                            @*@if (Model.EmployeeRequests.Any())
+                            {
+                                
+                            }*@
                             @foreach (var item in Model.EmployeeRequests.ToList())
                             {
-                            <li>
-                                <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
-                                <div>
-                                    <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
-                                    @if (item.IsReplied)
-                                    {
-                                        <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
-                                    }
-                                    else
-                                    {
-                                        <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
-                                    }
-                                </div>
-                            </li>
+                                <li>
+                                    <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
+                                    <div>
+                                        <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                        @if (item.IsReplied)
+                                        {
+                                            <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                        }
+                                    </div>
+                                </li>
                             }
                         </ul>
                     </div>

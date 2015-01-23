@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -21,10 +23,10 @@ namespace EPMS.Implementation.Services
 
         public ProjectTask FindProjectTaskById(long id)
         {
-            return Repository.Find(id);
+            return Repository.FindTaskWithPreRequisites(id);
         }
 
-        public ProjectTask FindProjectTaskByProjectId(long projectid)
+        public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid)
         {
             return Repository.FindProjectTaskByProjectId(projectid);
         }
@@ -39,18 +41,50 @@ namespace EPMS.Implementation.Services
             return Repository.GetTasksByProjectId(projectId);
         }
 
-        public long AddProjectTask(ProjectTask task)
+        public bool AddProjectTask(ProjectTask task, List<long> preReqList)
         {
-            Repository.Add(task);
-            Repository.SaveChanges();
-            return task.TaskId;
+            try
+            {
+                Repository.Add(task);
+                if (preReqList.Any())
+                {
+                    task.PreRequisitTask = new Collection<ProjectTask>();
+                    foreach (long taskId in preReqList)
+                    {
+                        var projTask = Repository.Find(taskId);
+                        if (projTask != null)
+                        {
+                            task.PreRequisitTask.Add(projTask);
+                        }
+                    }
+                }
+                Repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
 
-        public bool UpdateProjectTask(ProjectTask task)
+        public bool UpdateProjectTask(ProjectTask task, List<long> preReqList)
         {
             try
             {
                 Repository.Update(task);
+                if (preReqList.Any())
+                {
+                    task.PreRequisitTask = new Collection<ProjectTask>();
+                    foreach (long taskId in preReqList)
+                    {
+                        var projTask = Repository.Find(taskId);
+                        if (projTask != null)
+                        {
+                            task.PreRequisitTask.Add(projTask);
+                        }
+                    }
+                }
                 Repository.SaveChanges();
                 return true;
             }
@@ -62,7 +96,7 @@ namespace EPMS.Implementation.Services
 
         public void DeleteProjectTask(ProjectTask task)
         {
-            
+
         }
     }
 }

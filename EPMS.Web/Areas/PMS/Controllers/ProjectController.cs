@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IO;
@@ -42,16 +43,18 @@ namespace EPMS.Web.Areas.PMS.Controllers
         #region Loading Lists
         // GET: PMS/Project/OnGoing
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
-        public ActionResult OnGoing()
+        public ActionResult Index()
         {
             ProjectListViewModel projectsList=new ProjectListViewModel
             {
                 Projects =
                     Session["RoleName"].ToString() == "Customer"
-                        ? projectService.LoadAllOnGoingProjectsByCustomerId(
+                        ? projectService.LoadAllUnfinishedProjectsByCustomerId(
                             Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllOnGoingProjects().Select(x => x.CreateFromServerToClient())
+                        : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient())
             };
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
+            ViewBag.UserRole = Session["RoleName"];
             return View(projectsList);
         }
         // GET: PMS/Project/Finished
@@ -69,7 +72,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return View(projectsList);
         }
         #endregion
-        #region Create
+
+        #region Create/Update
         [SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Create(long? id)
         {
@@ -83,16 +87,35 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 if (project != null)
                 {
                     projectViewModel.Project = project.CreateFromServerToClient();
+                    //Map Installments
                     if (project.OrderId > 0)
                     {
-                        //projectViewModel.Installment = quotationService.FindQuotationByOrderNo(project.OrderId).Select(x => x.CreateFromServerToClient());
+                        var quotation = quotationService.FindQuotationByOrderId(Convert.ToInt64(project.OrderId));
+                        if (quotation != null)
+                            projectViewModel.Installment = quotation.CreateFromServerToClientLv();
                     }
-
+                    //Map Project Tasks
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        //projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        foreach (var projectTask in projectViewModel.ProjectTasks)
+                        {
+                            projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
+                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
+                        }
                     }
+                    //Load project documents
+                    var projectDocument = projectDocumentService.FindProjectDocumentsByProjectId((long)id);
+                    var projectDocsNames = projectDocument as IList<ProjectDocument> ?? projectDocument.ToList();
+                    if (projectDocsNames.Any())
+                    {
+                        projectViewModel.ProjectDocsNames = projectDocsNames;
+                    }
+                    //Calculate prjoect profit
+                    projectViewModel.Project.Profit = (projectViewModel.Project.Price +
+                                                       projectViewModel.Project.OtherCost) -
+                                                      projectViewModel.Project.TotalTasksCost;
                 }
             }
             projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
@@ -117,7 +140,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     //Update Project to Db
                     projectViewModel.Project.ProjectId = projectService.UpdateProject(projectViewModel.Project.CreateFromClientToServer());
                     SaveProjectDocuments(projectViewModel);
-                    TempData["message"] = new MessageViewModel
+                    TempData["MessageVm"] = new MessageViewModel
                     {
                         Message = Resources.PMS.Project.ProjectUpdatedMsg,
                         IsUpdated = true
@@ -134,9 +157,9 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     projectViewModel.Project.ProjectId=projectService.AddProject(projectViewModel.Project.CreateFromClientToServer());
 
                     SaveProjectDocuments(projectViewModel);
-                    
 
-                    TempData["message"] = new MessageViewModel
+
+                    TempData["MessageVm"] = new MessageViewModel
                     {
                         Message = Resources.PMS.Project.ProjectCreatedMsg,
                         IsSaved = true
@@ -147,7 +170,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 return View(projectViewModel);
             }
-            return RedirectToAction("OnGoing", "Project");
+            return RedirectToAction("Index", "Project");
         }
 
         public void SaveProjectDocuments(ProjectViewModel projectViewModel)
@@ -155,7 +178,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             //Save file names in db
             if (!string.IsNullOrEmpty(projectViewModel.DocsNames))
             {
-                var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 2).Split('~').ToList();
+                var projectDocuments = projectViewModel.DocsNames.Substring(0, projectViewModel.DocsNames.Length - 1).Split('~').ToList();
                 foreach (var projectDocument in projectDocuments)
                 {
                     ProjectDocument doc = new ProjectDocument();
@@ -188,7 +211,84 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public JsonResult DeleteProjectDocument(long fileId)
+        {
+            
+            var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"]);
+            var document = projectDocumentService.FindProjectDocumentsById(fileId);
+            if (document != null)
+            {
+                string savedFilePhysicalPath = Path.Combine(filePathOriginal, document.FileName);
+                if ((System.IO.File.Exists(savedFilePhysicalPath)))
+                {
+                    System.IO.File.Delete(savedFilePhysicalPath);
+                    var documentDeleted = projectDocumentService.Delete(fileId);
+                    return Json(documentDeleted, JsonRequestBehavior.AllowGet);
+                }
+                
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
         #endregion
+
+        #region Detail
+        [SiteAuthorize(PermissionKey = "ProjectDetails")]
+        public ActionResult Details(long? id)
+        {
+            
+            if (id != null)
+            {
+                var project = projectService.FindProjectById((long)id);
+                if (project != null)
+                {
+                    ProjectViewModel projectViewModel = new ProjectViewModel();
+                    ViewBag.UserRole = Session["RoleName"].ToString();
+                    var customers = customerService.GetAll();
+                    var orders = ordersService.GetAll();
+                    projectViewModel.Project = project.CreateFromServerToClient();
+                    //Map Installments
+                    if (project.OrderId > 0)
+                    {
+                        var quotation = quotationService.FindQuotationByOrderId(Convert.ToInt64(project.OrderId));
+                        if (quotation!=null)
+                            projectViewModel.Installment = quotation.CreateFromServerToClientLv();
+                    }
+                    //Map Project Tasks
+                    var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
+                    if (projectTasks != null)
+                    {
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        foreach (var projectTask in projectViewModel.ProjectTasks)
+                        {
+                            projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
+                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
+                        }
+                    }
+                    projectViewModel.Project.Profit = (projectViewModel.Project.Price +
+                                                       projectViewModel.Project.OtherCost) -
+                                                      projectViewModel.Project.TotalTasksCost;
+                    //Load project documents
+                    var projectDocument = projectDocumentService.FindProjectDocumentsByProjectId((long)id);
+                    var projectDocsNames = projectDocument as IList<ProjectDocument> ?? projectDocument.ToList();
+                    if (projectDocsNames.Any())
+                    {
+                        projectViewModel.ProjectDocsNames = projectDocsNames;
+                    }
+                    projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
+                    projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
+                    return View(projectViewModel);
+                }
+            }
+            return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
+        }
+        public FileResult Download(string fileName)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"] + fileName));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+        #endregion
+
         #region Get Customer Orders
         [HttpGet]
         public JsonResult GetCustomerOrders(long customerId)

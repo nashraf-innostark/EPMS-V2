@@ -1,4 +1,5 @@
-﻿using EPMS.Web.Models;
+﻿using System.Collections.Generic;
+using EPMS.Web.Models;
 
 namespace EPMS.Web.ViewModels.Tasks
 {
@@ -7,8 +8,15 @@ namespace EPMS.Web.ViewModels.Tasks
         public TaskCreateViewModel()
         {
             ProjectTask = new ProjectTask();
+            RequisitTasks = new List<long>();
         }
         public ProjectTask ProjectTask { get; set; }
+        public List<long> RequisitTasks { get; set; }
+        public List<long> OldRequisitTasks { get; set; }
+        public List<long> AssignedEmployees { get; set; }
+        public IEnumerable<Models.Project> Projects { get; set; }
+        public IEnumerable<Models.ProjectTask> ProjectAllTasks { get; set; }
+        public IEnumerable<Models.Employee> AllEmployees { get; set; }
         public string PageTitle { get; set; }
         public string BtnText { get; set; }
         public string Header { get; set; }

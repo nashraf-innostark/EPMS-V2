@@ -30,7 +30,7 @@ namespace EPMS.Web.ModelMappers
         public static Models.Order CreateFromServerToClientLv(this Order source)
         {
             Models.Order order;
-            if (source.Customer.Quotations.Any(x => x.OrderNumber == source.OrderNo))
+            if (source.Customer.Quotations.Any(x => x.OrderId == source.OrderId))
             {
                 order = new Models.Order
                 {
@@ -48,7 +48,7 @@ namespace EPMS.Web.ModelMappers
                     OrderStatus = source.OrderStatus,
                     CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
                     CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
-                    QuotationId = source.Customer.Quotations.FirstOrDefault(x => x.OrderNumber == source.OrderNo).CreateFromServerToClient().QuotationId,
+                    QuotationId = source.Customer.Quotations.FirstOrDefault(x => x.OrderId == source.OrderId).CreateFromServerToClient().QuotationId,
                 };
                 //order.Link = "<a href='CMS/Quotation/Create/" + order.QuotationId + "'>" + "Quotation " + order.QuotationId + "</a>";
             }
@@ -102,7 +102,7 @@ namespace EPMS.Web.ModelMappers
             {
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
-                OrderDate = Convert.ToDateTime(source.OrderDate).ToShortDateString(),
+                OrderDate = Convert.ToDateTime(source.OrderDate.ToString()).ToShortDateString(),
                 OrderStatus = source.OrderStatus
             };
         }
