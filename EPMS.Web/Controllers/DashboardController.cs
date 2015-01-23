@@ -56,6 +56,7 @@ namespace EPMS.Web.Controllers
         public ActionResult Index()
         {
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            ViewBag.UserRole = Session["RoleName"];
             if ((string)Session["RoleName"] != "Customer")
             {
                 var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
@@ -64,14 +65,7 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
             #endregion
 
-            #region Complaints Widget
-            dashboardViewModel.Complaints = GetComplaints(requester);
-            dashboardViewModel.Customers = GetAllCustomers();
-            #endregion
-
-            #region Orders Widget
-            dashboardViewModel.Orders = GetOrders(requester,0);//0 means all
-            #endregion
+           
 
             #region Recruitment Widget
             dashboardViewModel.Recruitments = GetRecruitments();
@@ -93,9 +87,17 @@ namespace EPMS.Web.Controllers
             #endregion
                 
             }
-            else
+            if ((string)Session["RoleName"] == "Customer" || (string)Session["RoleName"] == "Admin")
             {
-                return RedirectToAction("Index", "Orders", new { area = "CMS" });
+                var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+                #region Complaints Widget
+                dashboardViewModel.Complaints = GetComplaints(requester);
+                dashboardViewModel.Customers = GetAllCustomers();
+                #endregion
+
+                #region Orders Widget
+                dashboardViewModel.Orders = GetOrders(requester, 0);//0 means all
+                #endregion
             }
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();

@@ -42,7 +42,7 @@ namespace EPMS.Repository.Repositories
                 return DbSet.OrderByDescending(x => x.ComplaintDate).Take(5);
             }
             long customerId = Convert.ToInt64(requester);
-            return DbSet.Where(x => x.CustomerId == customerId).OrderByDescending(x => x.ComplaintDate).Take(5);
+            return DbSet.Where(x => x.CustomerId == customerId).OrderByDescending(x => x.ComplaintDate).Take(4);
         }
     }
 }

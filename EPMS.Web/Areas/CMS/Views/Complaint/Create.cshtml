@@ -65,7 +65,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Complaint.ComplaintDate, new { @class="date",@readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Complaint.ComplaintDate, new { @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Complaint.ComplaintDate, "", new { @class = "required" })
                 </div>
             </div>
         </div>

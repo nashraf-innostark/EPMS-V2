@@ -604,10 +604,17 @@ function LoadComplaints(control) {
                         $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
                     }
                 });
+                if ($("#userRole").val() == "Customer")
+                {
+                    $('#complaints').append('<li><a href="/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
+                }
             }
             else {
                 $(".tempLoader").click();
                 $('#complaints').append('<li>No record found</li>');
+                if ($("#userRole").val() == "Customer") {
+                    $('#complaints').append('<li><a href="/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
+                }
             }
         },
         error: function (e) {
@@ -642,13 +649,13 @@ function LoadOrders(control) {
                 $.each(data, function (itemIndex, item) {
                      switch (item.OrderStatus)
                     {
-                         case 1: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                         case 2: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                             break;
-                         case 2: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
+                         case 1: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
                             break;
                          case 3: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
                             break;
-                         case 4: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/workDone.png" alt="Completed" title="Completed" class="status"></div></li>');
+                         case 4: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
                             break;
                     }
                 });

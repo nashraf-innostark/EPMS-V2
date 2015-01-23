@@ -142,6 +142,15 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Make new complaint.
+        /// </summary>
+        public static string MakeComplaint {
+            get {
+                return ResourceManager.GetString("MakeComplaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Profile.
         /// </summary>
         public static string MyProfile {
