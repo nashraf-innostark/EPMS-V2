@@ -55,26 +55,29 @@
                             </div>
                         </div>
                         <ul id="employeeRequests">
-                            @*@if (Model.EmployeeRequests.Any())
+                            @if (Model.EmployeeRequests.Any())
                             {
-                                
-                            }*@
-                            @foreach (var item in Model.EmployeeRequests.ToList())
+                                foreach (var item in Model.EmployeeRequests.ToList())
+                                 {
+                                     <li>
+                                         <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
+                                         <div>
+                                             <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                             @if (item.IsReplied)
+                                             {
+                                                 <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                             }
+                                             else
+                                             {
+                                                 <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                             }
+                                         </div>
+                                     </li>
+                                 }
+                            }
+                            else
                             {
-                                <li>
-                                    <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
-                                    <div>
-                                        <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
-                                        @if (item.IsReplied)
-                                        {
-                                            <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
-                                        }
-                                        else
-                                        {
-                                            <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
-                                        }
-                                    </div>
-                                </li>
+                                <li>No record found</li>
                             }
                         </ul>
                     </div>
@@ -120,13 +123,15 @@
                                 </div>
                             </div>
                             <ul id="customerOrders">
-                                @foreach (var item in Model.Orders.ToList())
+                                @if (Model.Orders.Any())
                                 {
-                                    <li>
-                                        <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
-                                        <div class="dateFormatter">
-                                            @item.OrderDate
-                                            @switch (item.OrderStatus)
+                                    foreach (var item in Model.Orders.ToList())
+                                {
+                                        <li>
+                                            <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
+                                            <div class="dateFormatter">
+                                                @item.OrderDate
+                                                @switch (item.OrderStatus)
                                             {
                                                 case 1: <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
                                                     break;
@@ -137,9 +142,15 @@
                                                 case 4: <img src="~/Images/photon/workDone.png" alt="Completed" title="Completed" class="status" />
                                                     break;
                                             }
-                                        </div>
-                                    </li>
+                                            </div>
+                                        </li>
                                 }
+                                }
+                                else
+                                {
+                                        <li>No record found</li>
+                                }
+                                
                             </ul>
                         </div>
                         <!-- Back -->
@@ -205,23 +216,31 @@
                                 </div>
                             </div>
                             <ul id="complaints">
-                                @foreach (var item in Model.Complaints.ToList())
+                                @if (Model.Complaints.Any())
                                 {
-                                <li>
-                                    <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
-                                    <div>
-                                        <span title="@item.ClientName">@item.ClientNameShort</span>
-                                        @if (item.IsReplied)
-                                        {
-                                            <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
-                                        }
-                                        else
-                                        {
-                                            <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
-                                        }
-                                    </div>
-                                </li>
+                                    foreach (var item in Model.Complaints.ToList())
+                                {
+                                        <li>
+                                            <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                            <div>
+                                                <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                @if (item.IsReplied)
+                                            {
+                                                    <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                            }
+                                            else
+                                            {
+                                                    <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
+                                            }
+                                            </div>
+                                        </li>
                                 }
+                                }
+                                else
+                                {
+                                    <li>No record found</li>
+                                }
+                                
                             </ul>
 
                         </div>
@@ -449,15 +468,23 @@
                                 </div>
                             </div>
                             <ul id="recruitments">
-                                    @foreach (var item in Model.Recruitments.ToList())
-                                    {
+                                @if (Model.Recruitments.Any())
+                                {
+                                    foreach (var item in Model.Recruitments.ToList())
+                                {
                                         <li>
                                             <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
                                             <div>
                                                 @item.NoOfApplicants
                                             </div>
                                         </li>
-                                    }
+                                }
+                                }
+                                else
+                                {
+                                    <li>No record found</li>
+                                }
+                                
                             </ul>
                         </div>
 
@@ -650,18 +677,26 @@
                                 </div>
                             </div>
                             <ul id="recentEmployees">
-                                @foreach (var item in Model.EmployeesRecent.ToList())
+                                @if (Model.EmployeesRecent.Any())
                                 {
-                                    <li>
-                                        <div class="avatar-image">
-                                            <img src="@item.EmployeeImagePath" alt="profile image" />
-                                        </div>
-                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
-                                        <div>
-                                            @item.EmployeeJobId
-                                        </div>
-                                    </li>
+                                    foreach (var item in Model.EmployeesRecent.ToList())
+                                    {
+                                        <li>
+                                            <div class="avatar-image">
+                                                <img src="@item.EmployeeImagePath" alt="profile image" />
+                                            </div>
+                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                            <div>
+                                                @item.EmployeeJobId
+                                            </div>
+                                        </li>
+                                    }
                                 }
+                                else
+                                {
+                                    <li>No record found</li>
+                                }
+                                
                             </ul>
                         </div>
                         <!-- Back -->

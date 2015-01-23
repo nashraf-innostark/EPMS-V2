@@ -282,4 +282,10 @@
   <data name="UpdateProject" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="ProjectEndDateRequiredMsg" xml:space="preserve">
+    <value>حدد تاريخ تسليم المشروع.</value>
+  </data>
+  <data name="ProjectStartDateRequiredMsg" xml:space="preserve">
+    <value>حدد تاريخ بدء المشروع.</value>
+  </data>
 </root>

@@ -403,6 +403,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select project delivery date..
+        /// </summary>
+        public static string ProjectEndDateRequiredMsg {
+            get {
+                return ResourceManager.GetString("ProjectEndDateRequiredMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project Name.
         /// </summary>
         public static string ProjectName {
@@ -471,6 +480,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string ProjectsList {
             get {
                 return ResourceManager.GetString("ProjectsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select project start date..
+        /// </summary>
+        public static string ProjectStartDateRequiredMsg {
+            get {
+                return ResourceManager.GetString("ProjectStartDateRequiredMsg", resourceCulture);
             }
         }
         

@@ -56,16 +56,7 @@
                             <tr>
                                 <td>@item.ProjectId</td>
                                 <td class="center">
-                                    @if (ViewBag.UserRole != "Customer")
-                                    {
-                                        <a href="/PMS/Project/Create/@item.ProjectId">
-                                            @(direction == "ltr" ? @item.NameE : @item.NameA)
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a href="/PMS/Project/Details/@item.ProjectId">@(direction == "ltr" ? @item.NameE : @item.NameA)</a>
-                                    }
+                                    <a href="/PMS/Project/Details/@item.ProjectId">@(direction == "ltr" ? @item.NameE : @item.NameA)</a>
                                 </td>
                                 <td class="center">
                                     <a href="/CMS/Customer/Details/@item.CustomerId">
