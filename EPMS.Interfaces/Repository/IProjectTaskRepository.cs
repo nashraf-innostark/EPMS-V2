@@ -7,5 +7,8 @@ namespace EPMS.Interfaces.Repository
     {
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
         IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid);
+
+        ProjectTask FindTaskWithPreRequisites(long id);
+
     }
 }

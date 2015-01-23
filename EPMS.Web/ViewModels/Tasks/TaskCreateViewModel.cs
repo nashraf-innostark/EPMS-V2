@@ -8,10 +8,15 @@ namespace EPMS.Web.ViewModels.Tasks
         public TaskCreateViewModel()
         {
             ProjectTask = new ProjectTask();
-            RequisitTasks = new List<PreRequisitTask>();
+            RequisitTasks = new List<long>();
         }
         public ProjectTask ProjectTask { get; set; }
-        public IList<PreRequisitTask> RequisitTasks { get; set; }
+        public List<long> RequisitTasks { get; set; }
+        public List<long> OldRequisitTasks { get; set; }
+        public List<long> AssignedEmployees { get; set; }
+        public IEnumerable<Models.Project> Projects { get; set; }
+        public IEnumerable<Models.ProjectTask> ProjectAllTasks { get; set; }
+        public IEnumerable<Models.Employee> AllEmployees { get; set; }
         public string PageTitle { get; set; }
         public string BtnText { get; set; }
         public string Header { get; set; }

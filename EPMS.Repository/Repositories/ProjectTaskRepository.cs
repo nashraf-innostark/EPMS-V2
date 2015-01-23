@@ -37,5 +37,9 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.ProjectId == projectid);
         }
+        public ProjectTask FindTaskWithPreRequisites(long id)
+        {
+            return DbSet.Include(x => x.PreRequisitTask).SingleOrDefault(x => x.TaskId == id);
+        }
     }
 }
