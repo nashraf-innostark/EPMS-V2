@@ -127,7 +127,7 @@
             <div class="span9">
                 <div class="controls">
 
-                    @if (Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any())
+                    @if ((Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any()) || (Model.ProjectAllTasks != null))
                     {
                         @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new { @class = "", @id = "dualMulti", })
                     }
@@ -140,7 +140,7 @@
         </div>
         <div id="Date_Picker" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="datepicker">
+                <label class="control-label" for="StartDate">
                     Start Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
@@ -152,7 +152,7 @@
         </div>
         <div id="Date_Picker2" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="datepicker2">
+                <label class="control-label" for="EndDate">
                     End Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
@@ -168,7 +168,14 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                    @if ((Model.ProjectTask != null && Model.ProjectTask.TaskEmployees != null))
+                    {
+                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new {@class = "", @id = "dualMulti2",})
+                    }
+                    else
+                    {
+                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                    }
                 </div>
             </div>
         </div>
@@ -239,8 +246,8 @@
         debugger;
         if ('@Model.ProjectTask.RequisitTasks.Count' > 0) {
 
-            var jobsList = '@Html.Raw(Json.Encode(Model.ProjectTask.RequisitTasks))';
-            var parsed = JSON.parse(jobsList);
+            var tasksList = '@Html.Raw(Json.Encode(Model.ProjectTask.RequisitTasks))';
+            var parsed = JSON.parse(tasksList);
             $("#dualMulti option").each(function (key, value) {
                 var id = parseInt($(this).val());
                 var element = $(this);
@@ -251,10 +258,21 @@
                 });
             });
 
-            //$("#dualMulti").pickList({
-            //    sourceListLabel: "Tasks",
-            //    targetListLabel: "Prerquisit Tasks",
-            //});
+        }
+        if ('@Model.ProjectTask.TaskEmployees.Count' > 0) {
+
+            var employeeList = '@Html.Raw(Json.Encode(Model.ProjectTask.TaskEmployees))';
+            parsed = JSON.parse(employeeList);
+            $("#dualMulti2 option").each(function (key, value) {
+                var id = parseInt($(this).val());
+                var element = $(this);
+                $.each(parsed, function (key, value) {
+                    if (value.EmployeeId == id) {
+                        $(element).attr("selected", "selected");
+                    }
+                });
+            });
+
         }
         $("#dualMulti").pickList({
             sourceListLabel: "Tasks",

@@ -157,6 +157,7 @@
     <Compile Include="MenuModels\Rights.cs" />
     <Compile Include="MenuModels\UserMenuResponse.cs" />
     <Compile Include="ModelMapers\EmployeeMapper.cs" />
+    <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\DepartmentSearchRequest.cs" />
     <Compile Include="RequestModels\EmployeeRequestSearchRequest.cs" />

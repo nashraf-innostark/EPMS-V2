@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
@@ -68,6 +69,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            projectTask.PreRequisitTask = source.RequisitTasks.Select(x=>x.CreateFromClientToServer()).ToList();
             return projectTask;
         }
     }

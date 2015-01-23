@@ -67,34 +67,10 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             if (viewModel.ProjectTask.TaskId > 0)
             {
-                List<long> newPreReqTasks = new List<long>();
-                // Check if pre-req task updated
-                if (IfPreReqTasksUpdated(viewModel.OldRequisitTasks,viewModel.RequisitTasks))
-                {
-                    // new added
-                    if (viewModel.OldRequisitTasks.Count < viewModel.RequisitTasks.Count)
-                    {
-                        foreach (var requisitTask in viewModel.RequisitTasks)
-                        {
-                            if (!viewModel.OldRequisitTasks.Contains(requisitTask))
-                            {
-                                newPreReqTasks.Add(requisitTask);
-                            }
-                        }
-                    }
-                    // removed
-                    if (viewModel.OldRequisitTasks.Count > viewModel.RequisitTasks.Count)
-                    {
-
-                    }
-                    // no change
-                    if (viewModel.OldRequisitTasks.Count == viewModel.RequisitTasks.Count)
-                    {
-
-                    }
-                }
+                viewModel.ProjectTask.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.ProjectTask.RecLastUpdatedDt = DateTime.Now;
                 var projectTaskToUpdate = viewModel.ProjectTask.CreateFromClientToServer();
-                if (TaskService.UpdateProjectTask(projectTaskToUpdate, newPreReqTasks))
+                if (TaskService.UpdateProjectTask(projectTaskToUpdate, viewModel.OldRequisitTasks, viewModel.RequisitTasks))
                 {
                     TempData["message"] = new MessageViewModel
                     {

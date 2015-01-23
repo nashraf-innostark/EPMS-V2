@@ -76,6 +76,7 @@
     <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
+    <Compile Include="IServices\IPreRequisitTaskService.cs" />
     <Compile Include="IServices\IProjectDocumentService.cs" />
     <Compile Include="IServices\IProjectService.cs" />
     <Compile Include="IServices\IProjectTaskService.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\IMenuRightRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
     <Compile Include="Repository\IProjectTaskRepository.cs" />

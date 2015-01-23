@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<ProjectTask> GetAll();
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
         bool AddProjectTask(ProjectTask task, List<long> preReqList);
-        bool UpdateProjectTask(ProjectTask task, List<long> preReqList);
+        bool UpdateProjectTask(ProjectTask task, List<long> dbList, List<long> clientList);
         void DeleteProjectTask(ProjectTask task);
     }
 }
