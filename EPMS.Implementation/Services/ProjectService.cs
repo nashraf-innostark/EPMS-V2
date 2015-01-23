@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -8,15 +9,19 @@ namespace EPMS.Implementation.Services
     public class ProjectService:IProjectService
     {
         private readonly IProjectRepository projectRepository;
+        private readonly IOrdersRepository ordersRepository;
+
         #region Constructor
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectService(IProjectRepository projectRepository)
+        public ProjectService(IProjectRepository projectRepository,IOrdersRepository ordersRepository)
         {
             this.projectRepository = projectRepository;
+            this.ordersRepository = ordersRepository;
         }
+
         #endregion
 
         public Project FindProjectById(long id)
@@ -33,13 +38,24 @@ namespace EPMS.Implementation.Services
         {
             projectRepository.Add(project);
             projectRepository.SaveChanges();
+            SetOrderStatus(project);
             return project.ProjectId;
+        }
+
+        private void SetOrderStatus(Project project)
+        {
+            var order = ordersRepository.Find(Convert.ToInt32(project.OrderId));
+            if (order == null) return;
+            order.OrderStatus = project.Status;
+            ordersRepository.Update(order);
+            ordersRepository.SaveChanges();
         }
 
         public long UpdateProject(Project project)
         {
             projectRepository.Update(project);
             projectRepository.SaveChanges();
+            SetOrderStatus(project);
             return project.ProjectId;
         }
 
