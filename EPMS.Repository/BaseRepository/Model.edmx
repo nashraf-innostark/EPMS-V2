@@ -380,6 +380,12 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="AttendeeName1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttendeeEmail1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AttendeeName2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttendeeEmail2" Type="nvarchar" MaxLength="50" />
+          <Property Name="AttendeeName3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttendeeEmail3" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MeetingAttendees">
           <Key>
@@ -387,14 +393,8 @@
           </Key>
           <Property Name="AttendeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MeetingId" Type="bigint" Nullable="false" />
-          <Property Name="EmployeeId" Type="bigint" />
-          <Property Name="AttendeeName" Type="nvarchar" MaxLength="200" />
-          <Property Name="AttendeeEmail" Type="nvarchar" MaxLength="50" />
-          <Property Name="Status" Type="bit" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDt" Type="datetime" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="EmployeeId" Type="bigint" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="MeetingDocuments">
           <Key>
@@ -902,7 +902,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MeetingAttendees_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="MeetingAttendees" Type="Self.MeetingAttendees" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
@@ -1366,9 +1366,6 @@
           <EntitySet Name="JobOffereds" EntityType="EPMSModel.JobOffered" />
           <EntitySet Name="JobTitles" EntityType="EPMSModel.JobTitle" />
           <EntitySet Name="JobTitleHistories" EntityType="EPMSModel.JobTitleHistory" />
-          <EntitySet Name="Meetings" EntityType="EPMSModel.Meeting" />
-          <EntitySet Name="MeetingAttendees" EntityType="EPMSModel.MeetingAttendee" />
-          <EntitySet Name="MeetingDocuments" EntityType="EPMSModel.MeetingDocument" />
           <EntitySet Name="MenuRights" EntityType="EPMSModel.MenuRight" />
           <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
           <EntitySet Name="Orders" EntityType="EPMSModel.Order" />
@@ -1459,10 +1456,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK_MeetingAttendees_Employee" Association="EPMSModel.FK_MeetingAttendees_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
-          </AssociationSet>
           <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Notification" EntitySet="Notifications" />
@@ -1486,14 +1479,6 @@
           <AssociationSet Name="FK_JobTitleHistory_JobTitle" Association="EPMSModel.FK_JobTitleHistory_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobTitleHistory" EntitySet="JobTitleHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MeetingAttendees_Meeting" Association="EPMSModel.FK_MeetingAttendees_Meeting">
-            <End Role="Meeting" EntitySet="Meetings" />
-            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MeetingDocuments_Meeting" Association="EPMSModel.FK_MeetingDocuments_Meeting">
-            <End Role="Meeting" EntitySet="Meetings" />
-            <End Role="MeetingDocument" EntitySet="MeetingDocuments" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
             <End Role="Menu" EntitySet="Menus" />
@@ -1530,6 +1515,21 @@
           <AssociationSet Name="FK_TaskEmployee_Employee" Association="EPMSModel.FK_TaskEmployee_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
+          </AssociationSet>
+          <EntitySet Name="Meetings" EntityType="EPMSModel.Meeting" />
+          <EntitySet Name="MeetingAttendees" EntityType="EPMSModel.MeetingAttendee" />
+          <EntitySet Name="MeetingDocuments" EntityType="EPMSModel.MeetingDocument" />
+          <AssociationSet Name="FK_MeetingAttendees_Employee" Association="EPMSModel.FK_MeetingAttendees_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingAttendees_Meeting" Association="EPMSModel.FK_MeetingAttendees_Meeting">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingDocuments_Meeting" Association="EPMSModel.FK_MeetingDocuments_Meeting">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="MeetingDocument" EntitySet="MeetingDocuments" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Allowance">
@@ -1823,9 +1823,9 @@
           <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
           <NavigationProperty Name="EmployeeJobHistories" Relationship="EPMSModel.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
           <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
-          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
           <NavigationProperty Name="Notifications" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
           <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
+          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -1927,58 +1927,6 @@
           <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_JobTitleHistory_JobTitle" FromRole="JobTitleHistory" ToRole="JobTitle" />
-        </EntityType>
-        <EntityType Name="Meeting">
-          <Key>
-            <PropertyRef Name="MeetingId" />
-          </Key>
-          <Property Name="MeetingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TopicName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="TopicNameAr" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="RelatedProject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="Agenda" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="AgendaAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="Discussion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DiscussionAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Decisions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DecisionsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="Meeting" ToRole="MeetingAttendee" />
-          <NavigationProperty Name="MeetingDocuments" Relationship="EPMSModel.FK_MeetingDocuments_Meeting" FromRole="Meeting" ToRole="MeetingDocument" />
-        </EntityType>
-        <EntityType Name="MeetingAttendee">
-          <Key>
-            <PropertyRef Name="AttendeeId" />
-          </Key>
-          <Property Name="AttendeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MeetingId" Type="Int64" Nullable="false" />
-          <Property Name="EmployeeId" Type="Int64" />
-          <Property Name="AttendeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttendeeEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="MeetingAttendee" ToRole="Employee" />
-          <NavigationProperty Name="Meeting" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="MeetingAttendee" ToRole="Meeting" />
-        </EntityType>
-        <EntityType Name="MeetingDocument">
-          <Key>
-            <PropertyRef Name="DocumentId" />
-          </Key>
-          <Property Name="DocumentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MeetingId" Type="Int64" Nullable="false" />
-          <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Meeting" Relationship="EPMSModel.FK_MeetingDocuments_Meeting" FromRole="MeetingDocument" ToRole="Meeting" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -2418,18 +2366,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MeetingAttendees_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Notification_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
           <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="*" />
@@ -2499,30 +2435,6 @@
             </Principal>
             <Dependent Role="JobTitleHistory">
               <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingAttendees_Meeting">
-          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Meeting">
-              <PropertyRef Name="MeetingId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="MeetingId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingDocuments_Meeting">
-          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
-          <End Type="EPMSModel.MeetingDocument" Role="MeetingDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Meeting">
-              <PropertyRef Name="MeetingId" />
-            </Principal>
-            <Dependent Role="MeetingDocument">
-              <PropertyRef Name="MeetingId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2615,6 +2527,94 @@
             </Principal>
             <Dependent Role="TaskEmployee">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="MeetingId" />
+          </Key>
+          <Property Name="MeetingId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TopicName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="TopicNameAr" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="RelatedProject" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Agenda" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="AgendaAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="Discussion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DiscussionAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Decisions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DecisionsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="AttendeeName1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttendeeEmail1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AttendeeName2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttendeeEmail2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AttendeeName3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttendeeEmail3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="Meeting" ToRole="MeetingAttendee" />
+          <NavigationProperty Name="MeetingDocuments" Relationship="EPMSModel.FK_MeetingDocuments_Meeting" FromRole="Meeting" ToRole="MeetingDocument" />
+        </EntityType>
+        <EntityType Name="MeetingAttendee">
+          <Key>
+            <PropertyRef Name="AttendeeId" />
+          </Key>
+          <Property Name="AttendeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeetingId" Type="Int64" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="MeetingAttendee" ToRole="Employee" />
+          <NavigationProperty Name="Meeting" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="MeetingAttendee" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="MeetingDocument">
+          <Key>
+            <PropertyRef Name="DocumentId" />
+          </Key>
+          <Property Name="DocumentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeetingId" Type="Int64" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Meeting" Relationship="EPMSModel.FK_MeetingDocuments_Meeting" FromRole="MeetingDocument" ToRole="Meeting" />
+        </EntityType>
+        <Association Name="FK_MeetingAttendees_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="MeetingAttendee">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingAttendees_Meeting">
+          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
+          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="MeetingId" />
+            </Principal>
+            <Dependent Role="MeetingAttendee">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingDocuments_Meeting">
+          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
+          <End Type="EPMSModel.MeetingDocument" Role="MeetingDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="MeetingId" />
+            </Principal>
+            <Dependent Role="MeetingDocument">
+              <PropertyRef Name="MeetingId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3007,56 +3007,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Meetings">
-            <EntityTypeMapping TypeName="EPMSModel.Meeting">
-              <MappingFragment StoreEntitySet="Meeting">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DecisionsAr" ColumnName="DecisionsAr" />
-                <ScalarProperty Name="Decisions" ColumnName="Decisions" />
-                <ScalarProperty Name="DiscussionAr" ColumnName="DiscussionAr" />
-                <ScalarProperty Name="Discussion" ColumnName="Discussion" />
-                <ScalarProperty Name="AgendaAr" ColumnName="AgendaAr" />
-                <ScalarProperty Name="Agenda" ColumnName="Agenda" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="RelatedProject" ColumnName="RelatedProject" />
-                <ScalarProperty Name="TopicNameAr" ColumnName="TopicNameAr" />
-                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
-                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MeetingAttendees">
-            <EntityTypeMapping TypeName="EPMSModel.MeetingAttendee">
-              <MappingFragment StoreEntitySet="MeetingAttendees">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="AttendeeEmail" ColumnName="AttendeeEmail" />
-                <ScalarProperty Name="AttendeeName" ColumnName="AttendeeName" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
-                <ScalarProperty Name="AttendeeId" ColumnName="AttendeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MeetingDocuments">
-            <EntityTypeMapping TypeName="EPMSModel.MeetingDocument">
-              <MappingFragment StoreEntitySet="MeetingDocuments">
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
-                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
             <EntityTypeMapping TypeName="EPMSModel.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
@@ -3255,6 +3205,56 @@
               <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Meetings">
+            <EntityTypeMapping TypeName="EPMSModel.Meeting">
+              <MappingFragment StoreEntitySet="Meeting">
+                <ScalarProperty Name="AttendeeEmail3" ColumnName="AttendeeEmail3" />
+                <ScalarProperty Name="AttendeeName3" ColumnName="AttendeeName3" />
+                <ScalarProperty Name="AttendeeEmail2" ColumnName="AttendeeEmail2" />
+                <ScalarProperty Name="AttendeeName2" ColumnName="AttendeeName2" />
+                <ScalarProperty Name="AttendeeEmail1" ColumnName="AttendeeEmail1" />
+                <ScalarProperty Name="AttendeeName1" ColumnName="AttendeeName1" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DecisionsAr" ColumnName="DecisionsAr" />
+                <ScalarProperty Name="Decisions" ColumnName="Decisions" />
+                <ScalarProperty Name="DiscussionAr" ColumnName="DiscussionAr" />
+                <ScalarProperty Name="Discussion" ColumnName="Discussion" />
+                <ScalarProperty Name="AgendaAr" ColumnName="AgendaAr" />
+                <ScalarProperty Name="Agenda" ColumnName="Agenda" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="RelatedProject" ColumnName="RelatedProject" />
+                <ScalarProperty Name="TopicNameAr" ColumnName="TopicNameAr" />
+                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingAttendees">
+            <EntityTypeMapping TypeName="EPMSModel.MeetingAttendee">
+              <MappingFragment StoreEntitySet="MeetingAttendees">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="AttendeeId" ColumnName="AttendeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingDocuments">
+            <EntityTypeMapping TypeName="EPMSModel.MeetingDocument">
+              <MappingFragment StoreEntitySet="MeetingDocuments">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3277,7 +3277,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="62">
+      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="10.125" PointY="21.875" />
@@ -3299,9 +3299,6 @@
         <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="7.875" PointY="11.75" />
         <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="5.625" PointY="20.25" />
         <EntityTypeShape EntityType="EPMSModel.JobTitleHistory" Width="1.5" PointX="7.875" PointY="30.75" />
-        <EntityTypeShape EntityType="EPMSModel.Meeting" Width="1.5" PointX="7.875" PointY="6.125" />
-        <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="10.125" PointY="17.625" />
-        <EntityTypeShape EntityType="EPMSModel.MeetingDocument" Width="1.5" PointX="10.125" PointY="7" />
         <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="13.125" PointY="14.125" />
         <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="10.125" PointY="27.25" />
         <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="3.375" PointY="13" />
@@ -3332,15 +3329,12 @@
         <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
         <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" />
         <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" />
         <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingDocuments_Meeting" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
         <AssociationConnector Association="EPMSModel.FK_Project_Orders" />
         <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" />
@@ -3350,6 +3344,12 @@
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
+        <EntityTypeShape EntityType="EPMSModel.Meeting" Width="1.5" PointX="7.875" PointY="4.625" />
+        <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="4.75" PointY="6.125" />
+        <EntityTypeShape EntityType="EPMSModel.MeetingDocument" Width="1.5" PointX="10.125" PointY="6.125" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingDocuments_Meeting" />
         </Diagram>
     </Diagrams>
   </Designer>

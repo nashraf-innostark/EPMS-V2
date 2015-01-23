@@ -20,7 +20,13 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
-
+        public string AttendeeName1 { get; set; }
+        public string AttendeeEmail1 { get; set; }
+        public string AttendeeName2 { get; set; }
+        public string AttendeeEmail2 { get; set; }
+        public string AttendeeName3 { get; set; }
+        public string AttendeeEmail3 { get; set; }
+        
         public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual ICollection<MeetingDocument> MeetingDocuments { get; set; }
     }
