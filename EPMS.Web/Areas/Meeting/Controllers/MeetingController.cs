@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -7,8 +8,10 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobOffered;
 using EPMS.Web.ViewModels.Meeting;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Meeting.Controllers
 {
@@ -80,7 +83,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
                     meetingViewModel.Meeting = meeting.CreateFromServertoClient();
                     if (meeting.MeetingAttendees.Count > 0)
                     {
-                        meetingViewModel.MeetingAttendees = meetingAttendeeService.FindAttendeeByMeetingId((long)id);
+                        meetingViewModel.MeetingAttendees = meetingAttendeeService.FindAttendeeByMeetingId((long)id).Select(x => x.CreateFromServertoClient());
                     }
                     if (meeting.MeetingDocuments.Count > 0)
                     {
@@ -91,7 +94,18 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             meetingViewModel.Employees = employeeService.GetAll().Select(x => x.CreateFromServerToClient());
             return View(meetingViewModel);
         }
-
+        [HttpPost]
+        public ActionResult Create(MeetingViewModel meetingViewModel)
+        {
+            MeetingRequest toBeSaveMeeting = meetingViewModel.Meeting.CreateFrom();
+            if (meetingService.SaveMeeting(toBeSaveMeeting))
+            {
+                TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
+                meetingViewModel.Meeting.MeetingId = toBeSaveMeeting.Meeting.MeetingId;
+                return RedirectToAction("Index");
+            }
+            return null;
+        }
         #endregion
     }
 }

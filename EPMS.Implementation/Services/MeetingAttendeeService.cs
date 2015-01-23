@@ -32,6 +32,18 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
+        public bool DeleteAttendeeByMeetingAndEmployeeId(long meetingId, long employeeId)
+        {
+            var attendee = meetingAttendeeRepository.GetAttendeeByEmployeeId(employeeId);
+            if (attendee !=null)
+            {
+                meetingAttendeeRepository.Delete(attendee);
+                meetingAttendeeRepository.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         public IEnumerable<MeetingAttendee> FindAttendeeByMeetingId(long meetingId)
         {
             return meetingAttendeeRepository.GetAttendeesByMeetingId(meetingId);

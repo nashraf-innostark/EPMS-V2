@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Meeting.MeetingViewModel
 
 @{
-    ViewBag.Title = "Create Meeting";
+    ViewBag.Title = "Create New Meeting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -33,10 +33,12 @@
 @using (Html.BeginForm("Create", "Meeting", FormMethod.Post, new { @id = "meetingForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
+        @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Meeting.MeetingId)
         @Html.HiddenFor(m => m.Meeting.RecCreatedBy)
         @Html.HiddenFor(m => m.Meeting.RecCreatedDt)
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="department">Topic Name</label>
@@ -76,13 +78,13 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.ListBoxFor(m => m.EmployeeId, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee" })
+                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee" })
                 </div>
             </div>
         </div>
-        @if (Model.MeetingAttendee != null)
+        @if (Model.MeetingAttendees != null)
         {
-            if (Model.MeetingAttendees != null)
+            if (Model.MeetingAttendees.Any())
             {
                 <div id="Dual_Multi_Select_with_Filter_Search2" class="control-group row-fluid">
                     <div class="span3">
@@ -90,39 +92,218 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-
-                            @Html.ListBoxFor(m => m.EmployeeId, new MultiSelectList(Model.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
-
+                            @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
                         </div>
                     </div>
-
                 </div>
             }
-
         }
+        <!--Attendees Other than Employees-->
+        <div class="control-group row-fluid">
+            <div class="span12">
+                <label class="control-label" for="Attendees">Attendees (Not Employees)</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeName, new { @dir = "ltr", id = "attendee1", @class = "attendee1", @placeholder = "Attendee 1" })
+                    @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeName, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeEmail, new { @dir = "ltr", id = "email1", @class = "email1", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeEmail, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeName, new { @dir = "ltr", id = "attendee2", @class = "attendee2", @placeholder = "Attendee 2" })
+                    @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeName, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeEmail, new { @dir = "ltr", id = "email2", @class = "email2", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeEmail, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeName, new { @dir = "ltr", id = "attendee3", @class = "attendee3", @placeholder = "Attendee 3" })
+                    @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeName, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeEmail, new { @dir = "ltr", id = "email3", @class = "email3", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeEmail, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--Input Fields-->
+        <div id="Date_Picker" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="datepicker">
+                    Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "metingDateAr", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })
+                </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "metingDate", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Agenda</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.Agenda, new { @dir = "ltr", id = "Agenda"})
+                    @Html.ValidationMessageFor(m => m.Meeting.Agenda, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Agenda arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.AgendaAr, new { @dir = "ltr", id = "AgendaAr" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AgendaAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Discussion</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.Discussion, new { @dir = "ltr", id = "Discussion" })
+                    @Html.ValidationMessageFor(m => m.Meeting.Discussion, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Discussion arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.DiscussionAr, new { @dir = "ltr", id = "DiscussionAr" })
+                    @Html.ValidationMessageFor(m => m.Meeting.DiscussionAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Decisions</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.Decisions, new { @dir = "ltr", id = "Decisions" })
+                    @Html.ValidationMessageFor(m => m.Meeting.Decisions, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Decisions arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.DecisionsAr, new { @dir = "ltr", id = "DecisionsAr" })
+                    @Html.ValidationMessageFor(m => m.Meeting.DecisionsAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <!--Drag And Drop Upload begin-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">
+                    Attach Files<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB each"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+        </div>
+        <!--Drag And Drop Upload end-->
+
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" class="btn">Send Invitation</button>
+            </div>
+
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">Create Meeting</button>
+            </div>
+
+        </div>
+
     </div>
 }
 
 <script>
     $().ready(function () {
-        //Dual for Employees
-        $("#dualMultiEmployee").pickList({
-            sourceListLabel: "Emloyees",
-            targetListLabel: "Attending Employees",
-        });
-        $("#dualMulti2Employee").pickList({
-            sourceListLabel: "Employees ",
-            targetListLabel: "Absent Employees",
-        });
+        debugger;
+        var meetingId = $("#Meeting_MeetingId").val();
+        if (meetingId == 0) {
+            //Dual for Employees
+            $("#dualMultiEmployee").pickList({
+                sourceListLabel: "Emloyees",
+                targetListLabel: "Attending Employees",
+            });
+        }
+        var jobsList = '@Html.Raw(Json.Encode(Model.MeetingAttendees))';
+        var parsed = JSON.parse(jobsList);
 
-        //Dual for Atendees
+        if (meetingId > 0) {
+
+            //Set Attribute of Selected Items to 'Selected' to Populate Target List
+            $("#dualMultiEmployee option").each(function () {
+                debugger;
+                var id = parseInt($(this).val());
+                var element = $(this);
+                $.each(parsed, function (key, value) {
+                    debugger;
+                    if (value.EmployeeId == id) {
+                        debugger;
+                        $(element).attr("selected", "selected");
+                    }
+                });
+            });
+
+            //Dual for Employees
+            $("#dualMultiEmployee").pickList({
+                sourceListLabel: "Emloyees",
+                targetListLabel: "Attending Employees",
+            });
+        }
+        
+        //Dual for Attendees
         $("#dualMultiAttendee").pickList({
             sourceListLabel: "Emloyees",
             targetListLabel: "Attending Employees",
-        });
-        $("#dualMulti2Attendee").pickList({
-            sourceListLabel: "Employees ",
-            targetListLabel: "Absent Employees",
         });
     });
 </script>

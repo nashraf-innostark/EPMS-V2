@@ -10,18 +10,17 @@ namespace EPMS.Web.ViewModels.Meeting
     {
         public MeetingViewModel()
         {
-            Meeting = new Models.Meeting();
-            MeetingAttendee = new MeetingAttendee();
-            MeetingDocument = new MeetingDocument();
+            Meeting = new Models.Meeting();            
+            //MeetingDocument = new MeetingDocument();
         }
         public Models.Meeting Meeting { get; set; }
-        public IEnumerable<Models.Meeting> MeetingList { get; set; }
-        public MeetingAttendee MeetingAttendee { get; set; }
-        public IEnumerable<MeetingAttendee> MeetingAttendees { get; set; }
-        public MeetingDocument MeetingDocument { get; set; }
+
+        public Models.MeetingAttendee MeetingAttendee { get; set; }
+        public IEnumerable<Models.MeetingAttendee> MeetingAttendees { get; set; }
+        //public MeetingDocument MeetingDocument { get; set; }
         public IEnumerable<MeetingDocument> MeetingDocuments { get; set; }
         public IEnumerable<Models.Employee> Employees { get; set; }
-        public List<int> EmployeeId { get; set; }
+        
         public string AttendeeName { get; set; }
         public string AttendeeEmail { get; set; }
         public bool? Status { get; set; }

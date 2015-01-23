@@ -298,6 +298,7 @@
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\MeetingAttendeeMapper.cs" />
     <Compile Include="ModelMappers\MeetingMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />

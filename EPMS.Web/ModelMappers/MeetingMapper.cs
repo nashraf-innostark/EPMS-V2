@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using EPMS.Models.RequestModels;
 using DomainModels = EPMS.Models.DomainModels;
-using Models = EPMS.Web.Models;
+
 
 namespace EPMS.Web.ModelMappers
 {
@@ -18,7 +21,7 @@ namespace EPMS.Web.ModelMappers
                 TopicNameAr = source.TopicNameAr,
                 RelatedProject = source.RelatedProject,
                 Date = source.Date,
-                DateString = Convert.ToDateTime(source.Date.ToString()).ToShortDateString()
+                DateString = source.Date != null ? Convert.ToDateTime(source.Date.ToString()).ToShortDateString() : ""
             };
         }
 
@@ -34,7 +37,7 @@ namespace EPMS.Web.ModelMappers
                 Agenda = source.Agenda,
                 AgendaAr = source.AgendaAr,
                 Discussion = source.Discussion,
-                DiscusionAr = source.DiscussionAr,
+                DiscussionAr = source.DiscussionAr,
                 Decisions = source.Decisions,
                 DecisionsAr = source.DecisionsAr,
                 RecCreatedBy = source.RecCreatedBy,
@@ -42,6 +45,32 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
+        }
+
+        public static MeetingRequest CreateFrom(this Models.Meeting source)
+        {
+            var meeting = new DomainModels.Meeting
+            {
+                MeetingId = source.MeetingId,
+                TopicName = source.TopicName,
+                TopicNameAr = source.TopicNameAr,
+                RelatedProject = source.RelatedProject,
+                Date = source.Date,
+                Agenda = source.Agenda,
+                AgendaAr = source.AgendaAr,
+                Discussion = source.Discussion,
+                DiscussionAr = source.DiscussionAr,
+                Decisions = source.Decisions,
+                DecisionsAr = source.DecisionsAr,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+            var meetingrequest = new MeetingRequest();
+            meetingrequest.EmployeeIds = source.EmployeeIds;
+            meetingrequest.Meeting = meeting;
+            return meetingrequest;
         }
     }
 }

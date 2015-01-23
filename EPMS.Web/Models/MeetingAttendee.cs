@@ -17,5 +17,8 @@ namespace EPMS.Web.Models
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+        public string EmployeeNameE { get; set; }
+        public string EmployeeNameA { get; set; }
+        public string EmployeeEmail { get; set; }
     }
 }
