@@ -105,6 +105,7 @@
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
+    <Compile Include="Common\TaskByColumn.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
+    <Compile Include="RequestModels\TaskSearchRequest.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
+    <Compile Include="ResponseModels\TaskResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

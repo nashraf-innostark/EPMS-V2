@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.Models;
@@ -35,6 +36,22 @@ namespace EPMS.Web.Areas.PMS.Controllers
             TaskListViewModel viewModel = new TaskListViewModel();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(TaskSearchRequest searchRequest)
+        {
+            var tasks = TaskService.GetAllTasks(searchRequest);
+            IEnumerable<ProjectTask> projectTaskList =
+                tasks.ProjectTasks.Select(x => x.CreateFromServerToClient()).ToList();
+            TaskListViewModel viewModel = new TaskListViewModel
+            {
+                aaData = projectTaskList,
+                iTotalRecords = Convert.ToInt32(tasks.TotalRecords),
+                iTotalDisplayRecords = Convert.ToInt32(tasks.TotalDisplayRecords),
+                sEcho = searchRequest.sEcho
+            };
+            return Json(viewModel, JsonRequestBehavior.AllowGet); ;
         }
 
         public ActionResult Create(long? id)

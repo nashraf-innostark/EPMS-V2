@@ -28,6 +28,8 @@ namespace EPMS.Web.Models
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public string ProjectNameE { get; set; }
+        public string ProjectNameA { get; set; }
 
         public string PreReqTasks { get; set; }
         public List<ProjectTask> RequisitTasks { get; set; }

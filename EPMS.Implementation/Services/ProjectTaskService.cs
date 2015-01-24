@@ -6,6 +6,8 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using FaceSharp.Api.Objects;
 
 namespace EPMS.Implementation.Services
@@ -26,6 +28,10 @@ namespace EPMS.Implementation.Services
             TaskEmployeeService = taskEmployeeService;
         }
 
+        public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
+        {
+            return Repository.GetAllTasks(searchRequest);
+        }
         public ProjectTask FindProjectTaskById(long id)
         {
             return Repository.FindTaskWithPreRequisites(id);

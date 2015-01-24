@@ -120,22 +120,88 @@
   <data name="AddMessage" xml:space="preserve">
     <value>Task has been Added</value>
   </data>
+  <data name="AddNewTask" xml:space="preserve">
+    <value>Add New Task</value>
+  </data>
+  <data name="AssignEmployee" xml:space="preserve">
+    <value>Assign Employee</value>
+  </data>
+  <data name="BtnCreate" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
+  <data name="BtnDelete" xml:space="preserve">
+    <value>Delete Task</value>
+  </data>
   <data name="BtnTextCreate" xml:space="preserve">
     <value>Create Task</value>
   </data>
   <data name="BtnTextEdit" xml:space="preserve">
     <value>Save Changes</value>
   </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>Client Name</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>Create Task</value>
   </data>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>Delivery Date</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionA" xml:space="preserve">
+    <value>Description arabic</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit Task</value>
+  </data>
+  <data name="MyTasks" xml:space="preserve">
+    <value>My Tasks</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NotesA" xml:space="preserve">
+    <value>Notes arabic</value>
   </data>
   <data name="PageTitleCreate" xml:space="preserve">
     <value>Create Task's Name</value>
   </data>
   <data name="PageTitleEdit" xml:space="preserve">
     <value>Edit Task's Name</value>
+  </data>
+  <data name="PageTitleIndex" xml:space="preserve">
+    <value>Tasks' List</value>
+  </data>
+  <data name="Pre_ReqTask" xml:space="preserve">
+    <value>Pre-Requisit Tasks</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Task Name</value>
+  </data>
+  <data name="TaskNameA" xml:space="preserve">
+    <value>Task Name arabic</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="TaskWeight" xml:space="preserve">
+    <value>Task Wight</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>Total Cost</value>
   </data>
 </root>
