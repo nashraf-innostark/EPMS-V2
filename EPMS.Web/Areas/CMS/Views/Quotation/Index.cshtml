@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.PTIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var userRole = (string)Session["RoleName"];
 }
 
 <!-- Navigation Bar -->
@@ -23,7 +24,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.CMS.Quotation.QuotList</small></h2>
-    <h3> <small><a href="~/CMS/Quotation/Create">@EPMS.Web.Resources.CMS.Quotation.CreateNew</a></small></h3>
+    @if (userRole == "Admin")
+    {
+        <h3> <small><a href="~/CMS/Quotation/Create">@EPMS.Web.Resources.CMS.Quotation.CreateNew</a></small></h3>
+    }
 </header>
 
 <!--Notifications begin-->
@@ -75,10 +79,15 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var element;
+                        var element = "";
                         var val = full["QuotationId"];
                         var quoId = full["QuotationId"];
-                        element = '<a href="Create/' + quoId + '">' + "Quotation " + val + '</a>';
+                        if ('@userRole' == "Admin") {
+                            element = '<a href="Create/' + quoId + '">' + "Quotation " + val + '</a>';
+                        }
+                        if ('@userRole' == "Customer") {
+                            element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
+                        }
                         return element;
                     },
                     "bSortable": true

@@ -13,6 +13,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Orders;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Order = EPMS.Web.Models.Order;
@@ -35,6 +36,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Public
         // GET: HR/Orders
+        [SiteAuthorize(PermissionKey = "OrdersIndex")]
         public ActionResult Index()
         {
             OrdersListViewModel viewModel = new OrdersListViewModel();
@@ -88,6 +90,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
+        [SiteAuthorize(PermissionKey = "OrderCreate")]
         public ActionResult Create(long? id)
         {
             var direction = Resources.Shared.Common.TextDirection;

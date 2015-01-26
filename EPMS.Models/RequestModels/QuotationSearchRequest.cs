@@ -6,6 +6,7 @@ namespace EPMS.Models.RequestModels
     {
         public string ClientName { get; set; }
         public long OrderNo { get; set; }
+        public long CustomerId { get; set; }
         public QuotationByColumn QuotationByColumn
         {
             get

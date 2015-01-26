@@ -24,7 +24,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    @if (Model.SearchRequest.Role == "Customer")
+    @if (userRole == "Customer")
     {
         <h3><small><a href="~/CMS/Orders/Create">@EPMS.Web.Resources.CMS.Order.CreateNew</a></small></h3>
     }

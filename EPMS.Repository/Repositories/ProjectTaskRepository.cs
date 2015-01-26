@@ -41,7 +41,7 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<TaskByColumn, Func<ProjectTask, object>>
                     {
-                        { TaskByColumn.TashName,  c => c.TaskNameE},
+                        { TaskByColumn.TaskName,  c => c.TaskNameE},
                         { TaskByColumn.ProjectName,  c => c.Project.NameE},
                         { TaskByColumn.StartDate,  c => c.StartDate},
                         { TaskByColumn.DeliveryDate,  c => c.EndDate},

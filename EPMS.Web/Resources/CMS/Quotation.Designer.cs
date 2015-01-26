@@ -88,6 +88,24 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Order.
+        /// </summary>
+        public static string BtnCancelOrder {
+            get {
+                return ResourceManager.GetString("BtnCancelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place Order.
+        /// </summary>
+        public static string BtnPlaceOrder {
+            get {
+                return ResourceManager.GetString("BtnPlaceOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client Name.
         /// </summary>
         public static string ClientName {
@@ -124,6 +142,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -147,6 +174,24 @@ namespace EPMS.Web.Resources.CMS {
         public static string DueAt {
             get {
                 return ResourceManager.GetString("DueAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Name.
+        /// </summary>
+        public static string EmpName {
+            get {
+                return ResourceManager.GetString("EmpName", resourceCulture);
             }
         }
         
@@ -277,6 +322,24 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print.
+        /// </summary>
+        public static string Print {
+            get {
+                return ResourceManager.GetString("Print", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quotations&apos; List.
         /// </summary>
         public static string PTIndex {
@@ -304,6 +367,15 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quotation #.
+        /// </summary>
+        public static string QuotationNo {
+            get {
+                return ResourceManager.GetString("QuotationNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quotation Detail.
         /// </summary>
         public static string QuotDetail {
@@ -327,6 +399,15 @@ namespace EPMS.Web.Resources.CMS {
         public static string SecondInstallment {
             get {
                 return ResourceManager.GetString("SecondInstallment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street Address.
+        /// </summary>
+        public static string StreetAddress {
+            get {
+                return ResourceManager.GetString("StreetAddress", resourceCulture);
             }
         }
         
@@ -381,6 +462,15 @@ namespace EPMS.Web.Resources.CMS {
         public static string UpdateQuotation {
             get {
                 return ResourceManager.GetString("UpdateQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website.
+        /// </summary>
+        public static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
             }
         }
     }
