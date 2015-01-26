@@ -27,7 +27,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Total Cost is required.")]
         public decimal TotalCost { get; set; }
         [Required(ErrorMessage = "Total Weight is required.")]
-        public decimal TotalWeight { get; set; }
+        public string TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
         public int? TaskProgress { get; set; }

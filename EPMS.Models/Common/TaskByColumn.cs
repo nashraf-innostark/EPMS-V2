@@ -2,7 +2,7 @@
 {
     public enum TaskByColumn
     {
-        TashName = 1,
+        TaskName = 1,
         ProjectName = 2,
         StartDate = 3,
         DeliveryDate = 4,
