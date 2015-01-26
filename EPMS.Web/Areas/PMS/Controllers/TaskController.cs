@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.Models;
@@ -37,6 +38,22 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Index(TaskSearchRequest searchRequest)
+        {
+            var tasks = TaskService.GetAllTasks(searchRequest);
+            IEnumerable<ProjectTask> projectTaskList =
+                tasks.ProjectTasks.Select(x => x.CreateFromServerToClient()).ToList();
+            TaskListViewModel viewModel = new TaskListViewModel
+            {
+                aaData = projectTaskList,
+                iTotalRecords = Convert.ToInt32(tasks.TotalRecords),
+                iTotalDisplayRecords = Convert.ToInt32(tasks.TotalDisplayRecords),
+                sEcho = searchRequest.sEcho
+            };
+            return Json(viewModel, JsonRequestBehavior.AllowGet); ;
+        }
+
         public ActionResult Create(long? id)
         {
             TaskCreateViewModel viewModel = new TaskCreateViewModel();
@@ -52,6 +69,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             viewModel.ProjectTask = TaskService.FindProjectTaskById((long) id).CreateFromServerToClient();
             viewModel.OldRequisitTasks = viewModel.ProjectTask.RequisitTasks.Select(x => x.TaskId).ToList();
+            viewModel.OldAssignedEmployees = viewModel.ProjectTask.TaskEmployees.Select(x => x.EmployeeId).ToList();
             viewModel.Projects = ProjectService.FindProjectByCustomerId(viewModel.ProjectTask.CustomerId).Select(x => x.CreateFromServerToClient());
             viewModel.ProjectAllTasks = TaskService.FindProjectTaskByProjectId(viewModel.ProjectTask.ProjectId).Select(x => x.CreateFromServerToClient());
             viewModel.AllEmployees = EmployeeService.GetAll().Select(x => x.CreateFromServerToClient());
@@ -67,34 +85,10 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             if (viewModel.ProjectTask.TaskId > 0)
             {
-                List<long> newPreReqTasks = new List<long>();
-                // Check if pre-req task updated
-                if (IfPreReqTasksUpdated(viewModel.OldRequisitTasks,viewModel.RequisitTasks))
-                {
-                    // new added
-                    if (viewModel.OldRequisitTasks.Count < viewModel.RequisitTasks.Count)
-                    {
-                        foreach (var requisitTask in viewModel.RequisitTasks)
-                        {
-                            if (!viewModel.OldRequisitTasks.Contains(requisitTask))
-                            {
-                                newPreReqTasks.Add(requisitTask);
-                            }
-                        }
-                    }
-                    // removed
-                    if (viewModel.OldRequisitTasks.Count > viewModel.RequisitTasks.Count)
-                    {
-
-                    }
-                    // no change
-                    if (viewModel.OldRequisitTasks.Count == viewModel.RequisitTasks.Count)
-                    {
-
-                    }
-                }
+                viewModel.ProjectTask.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.ProjectTask.RecLastUpdatedDt = DateTime.Now;
                 var projectTaskToUpdate = viewModel.ProjectTask.CreateFromClientToServer();
-                if (TaskService.UpdateProjectTask(projectTaskToUpdate, newPreReqTasks))
+                if (TaskService.UpdateProjectTask(projectTaskToUpdate, viewModel.OldRequisitTasks, viewModel.RequisitTasks, viewModel.OldAssignedEmployees, viewModel.AssignedEmployees))
                 {
                     TempData["message"] = new MessageViewModel
                     {
@@ -107,7 +101,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
             viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
             var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
-            if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks))
+            if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks, viewModel.AssignedEmployees))
             {
                 TempData["message"] = new MessageViewModel
                 {
@@ -125,21 +119,6 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return View(viewModel);
         }
 
-        bool IfPreReqTasksUpdated(List<long> oldTasks, List<long> newTasks )
-        {
-            if (oldTasks.Count != newTasks.Count)
-            {
-                for (int i=0; i < oldTasks.Count; i++)
-                {
-                    if (oldTasks[i] != newTasks[i])
-                    {
-                        return true;
-                    }
-                }
-                return true;
-            }
-            return false;
-        }
         [HttpGet]
         public JsonResult GetCustomerProjects(long customerId)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
@@ -26,8 +27,10 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
-            //projectTask.RequisitTasks = source.PreRequisitTask.Select(x => x.CreateFromServerToClient()).ToList();
-            //projectTask.TaskEmployees = source.TaskEmployees.Select(x => x.CreateFromServerToClient()).ToList();
+            projectTask.ProjectNameE = source.Project.NameE;
+            projectTask.ProjectNameA = source.Project.NameA;
+            projectTask.RequisitTasks = source.PreRequisitTask.Select(x => x.CreateFromServerToClientChild()).ToList();
+            projectTask.TaskEmployees = source.TaskEmployees.Select(x => x.CreateFromServerToClient()).ToList();
             if (source.PreRequisitTask.Count > 0)
             {
                 foreach (var preRequisitTask in source.PreRequisitTask)
@@ -68,6 +71,18 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            projectTask.PreRequisitTask = source.RequisitTasks.Select(x=>x.CreateFromClientToServer()).ToList();
+            return projectTask;
+        }
+
+        public static Models.ProjectTask CreateFromServerToClientChild(this ProjectTask source)
+        {
+            Models.ProjectTask projectTask = new Models.ProjectTask();
+            projectTask.TaskId = source.TaskId;
+            projectTask.ProjectId = source.ProjectId;
+            projectTask.CustomerId = source.CustomerId;
+            projectTask.TaskNameE = source.TaskNameE;
+            projectTask.TaskNameA = source.TaskNameA;
             return projectTask;
         }
     }

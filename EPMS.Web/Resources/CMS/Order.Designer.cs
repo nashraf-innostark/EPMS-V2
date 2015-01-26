@@ -61,7 +61,7 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Accepted.
+        ///   Looks up a localized string similar to Finished.
         /// </summary>
         public static string Accepted {
             get {
