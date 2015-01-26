@@ -1,6 +1,5 @@
 ﻿using System;
 using DomainModels = EPMS.Models.DomainModels;
-using Models = EPMS.Web.Models;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -41,6 +40,17 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+        }
+
+        public static DashboardModels.Meeting CreateForDashboard(this DomainModels.Meeting source)
+        {
+            return new DashboardModels.Meeting
+            {
+                MeetingId = source.MeetingId,
+                TopicName = source.TopicName,
+                TopicNameAr = source.TopicNameAr,
+                MeetingDate = Convert.ToDateTime(source.Date.ToString()).ToShortDateString()
             };
         }
     }

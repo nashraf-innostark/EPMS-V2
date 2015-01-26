@@ -41,5 +41,10 @@ namespace EPMS.Implementation.Services
             meetingRepository.SaveChanges();
             return true;
         }
+
+        public IEnumerable<Meeting> LoadMeetingsForDashboard(string requester)
+        {
+            meetingRepository.GetMeetingsForDashboard(requester);
+        }
     }
 }

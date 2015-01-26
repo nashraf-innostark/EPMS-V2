@@ -478,7 +478,7 @@
                 $("#ClientName").val($("#Client option:selected").text());
                 //$('#SearchRequest_JobId').empty();
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({
@@ -546,7 +546,7 @@
         function reActivateDelete() {
             $('.deleteRow').on("click", function () {
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 var id = parseInt($(this).closest('tr').children(".itemDetailId").val());

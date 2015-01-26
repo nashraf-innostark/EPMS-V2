@@ -17,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         MeetingResponse GetMeetings(MeetingSearchRequest meetingResponse);
         Meeting FindMeetingById(long id);
         bool AddMeeting(Meeting meeting);
+        IEnumerable<Meeting> LoadMeetingsForDashboard(string requester);
     }
 }

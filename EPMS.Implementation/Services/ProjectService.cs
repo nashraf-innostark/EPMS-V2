@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
-using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
+using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Implementation.Services
 {
@@ -79,9 +80,10 @@ namespace EPMS.Implementation.Services
             return projectRepository.GetAllFinishedProjectsByCustomerId(id);
         }
 
-        public IEnumerable<Project> LoadProjectsForDashboard(string requester)
+        public ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId, int status)
         {
-            throw new System.NotImplementedException();
+            var project = projectRepository.GetProjectForDashboard(requester, projectId, status);
+            return null;
         }
     }
 }

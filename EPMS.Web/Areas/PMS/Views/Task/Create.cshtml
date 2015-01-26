@@ -272,7 +272,7 @@
             var url = siteUrl + "/PMS/Task/GetCustomerProjects";
             if (customerId > 0) {
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({
@@ -297,7 +297,7 @@
             var url = siteUrl + "/PMS/Task/GetProjectTasks";
             if (projectId > 0) {
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({

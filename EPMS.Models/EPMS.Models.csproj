@@ -182,6 +182,9 @@
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
+    <Compile Include="ResponseModels\Project.cs" />
+    <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
+    <Compile Include="ResponseModels\ProjectTask.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
   </ItemGroup>
   <ItemGroup>

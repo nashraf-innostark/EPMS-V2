@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 
 namespace EPMS.Web.ViewModels.Dashboard
@@ -19,6 +20,8 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<Order> Orders { get; set; }
         public IEnumerable<DashboardModels.Recruitment> Recruitments { get; set; }
         public Profile Profile { get; set; }
+        public IEnumerable<DashboardModels.Meeting> Meetings { get; set; }
         public DashboardModels.Payroll Payroll { get; set; }
+        public ProjectResponseForDashboard Project { get; set; }
     }
 }

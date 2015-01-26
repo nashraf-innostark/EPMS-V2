@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
@@ -49,9 +50,18 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.Status == 4 && x.CustomerId == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
 
-        public IEnumerable<Project> GetProjectsForDashboard(string requester)
+        public Project GetProjectForDashboard(string requester, long projectId, int status)
         {
-            throw new System.NotImplementedException();
+            if (requester == "Admin")
+            {
+                if (projectId == 0)
+                {
+                    return DbSet.Where(x => x.ProjectId == projectId && x.Status == status).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+                }
+                return DbSet.Where(x=>x.ProjectId==projectId && x.Status==status).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            }
+            long customerId = Convert.ToInt64(requester);
+            return DbSet.Where(x => x.ProjectId == projectId && x.Status == status && x.CustomerId == customerId).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
         }
 
         public IEnumerable<Project> FindProjectByCustomerId(long id)
