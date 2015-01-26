@@ -178,6 +178,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Task Details.
+        /// </summary>
+        public static string Detail {
+            get {
+                return ResourceManager.GetString("Detail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Task.
         /// </summary>
         public static string Edit {
@@ -219,6 +228,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string PageTitleCreate {
             get {
                 return ResourceManager.GetString("PageTitleCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task Name&apos;s Details.
+        /// </summary>
+        public static string PageTitleDetail {
+            get {
+                return ResourceManager.GetString("PageTitleDetail", resourceCulture);
             }
         }
         

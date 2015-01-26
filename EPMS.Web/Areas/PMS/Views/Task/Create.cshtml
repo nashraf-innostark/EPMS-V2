@@ -1,6 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Tasks.TaskCreateViewModel
 
 @{
+    string userRole = (string)Session["RoleName"];
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
@@ -93,7 +94,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameE, new { @id = "TaskNameE", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameE, new { @id = "TaskNameE", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -103,7 +105,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameA, new { @id = "TaskNameA", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameA, new { @id = "TaskNameA", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -113,7 +116,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionE, new { @id = "DescriptionE", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionE, new { @id = "DescriptionE", @class = "readonly" })
                 </div>
             </div>
         </div>
@@ -123,7 +126,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionA, new { @id = "DescriptionA", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionA, new { @id = "DescriptionA", @class = "readonly" })
                 </div>
             </div>
         </div>
@@ -153,7 +156,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepicker" })
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepicker readonly" })
                 </div>
             </div>
         </div>
@@ -165,7 +168,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepicker" })
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepicker readonly" })
                 </div>
             </div>
         </div>
@@ -177,7 +180,7 @@
                 <div class="controls">
                     @if ((Model.ProjectTask != null && Model.ProjectTask.TaskEmployees != null))
                     {
-                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new {@class = "", @id = "dualMulti2",})
+                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
                     }
                     else
                     {
@@ -192,7 +195,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "readonly" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TotalCost, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -203,13 +206,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TotalWeight, new { @id = "TotalWeight", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalWeight, new { @id = "TotalWeight", @class = "readonly" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TotalWeight, String.Empty, new { @class = "required" })
-                    <script>
-                        $(document).ready(function () {
-                            $('#TaskWeight').mask("99%");
-                        });
-                    </script>
                 </div>
             </div>
         </div>
@@ -219,7 +217,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.NotesE, new { @id = "NotesE", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesE, new { @id = "NotesE", @class = "readonly" })
                 </div>
             </div>
         </div>
@@ -229,20 +227,23 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.NotesA, new { @id = "NotesA", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesA, new { @id = "NotesA", @class = "readonly" })
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
+        @if (userRole == "Admin" || userRole == "PM")
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
+                </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="button" class="btn">@EPMS.Web.Resources.PMS.Task.BtnDelete</button>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn">@EPMS.Web.Resources.PMS.Task.BtnDelete</button>
+                </div>
             </div>
-        </div>
+        }
     </div>
 }
 
@@ -254,6 +255,10 @@
         CKEDITOR.replace('DescriptionA');
         CKEDITOR.replace('NotesE');
         CKEDITOR.replace('NotesA');
+        if ('@userRole' == "Customer") {
+            $(".readonly").attr("readonly", "true");
+        }
+        $('#TotalWeight').mask("99%");
         if ('@Model.ProjectTask.RequisitTasks.Count' > 0) {
 
             var tasksList = '@Html.Raw(Json.Encode(Model.ProjectTask.RequisitTasks))';

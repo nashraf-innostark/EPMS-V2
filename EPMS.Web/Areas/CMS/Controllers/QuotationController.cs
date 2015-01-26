@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Quotation;
@@ -14,7 +15,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.CMS.Controllers
 {
     [Authorize]
-    public class QuotationController : Controller
+    public class QuotationController : BaseController
     {
         #region Private
         private readonly ICustomerService CustomerService;
