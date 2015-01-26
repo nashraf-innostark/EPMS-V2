@@ -50,23 +50,37 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.Status == 4 && x.CustomerId == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
 
-        public Project GetProjectForDashboard(string requester, long projectId, int status)
+        public Project GetProjectForDashboard(string requester, long projectId)
         {
             if (requester == "Admin")
             {
                 if (projectId == 0)
                 {
-                    return DbSet.Where(x => x.ProjectId == projectId && x.Status == status).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+                    return DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
                 }
-                return DbSet.Where(x=>x.ProjectId==projectId && x.Status==status).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+                return DbSet.Where(x=>x.ProjectId==projectId).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
             }
             long customerId = Convert.ToInt64(requester);
-            return DbSet.Where(x => x.ProjectId == projectId && x.Status == status && x.CustomerId == customerId).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (projectId == 0)
+            {
+                return DbSet.Where(x=> x.CustomerId == customerId).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            }
+            return DbSet.Where(x => x.ProjectId == projectId && x.CustomerId == customerId).OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
         }
 
         public IEnumerable<Project> FindProjectByCustomerId(long id)
         {
             return DbSet.Where(project => project.CustomerId == id);
+        }
+
+        public IEnumerable<Project> GetAllProjects(string requester, int status)
+        {
+            if (requester == "Admin")
+            {
+                return DbSet.Where(x => x.Status == status);
+            }
+           long customerId = Convert.ToInt64(requester);
+                return DbSet.Where(x => x.CustomerId==customerId && x.Status == status);
         }
     }
 }

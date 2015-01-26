@@ -546,10 +546,10 @@
                                 {
                                     <li>No record found</li>
                                 }
-                                @if (ViewBag.UserRole == "Customer")
+                                @if (ViewBag.UserRole == "Admin")
                                 {
                                     <li>
-                                        <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
+                                        <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting</a>
                                     </li>
                                 }
                             </ul>
@@ -747,120 +747,91 @@
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
-                                <a href="ProjectDetails(Admin,PM)En.html" class="lightBlue">  Project</a>
+                                <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
                                 <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                    <img src="images/photon/w_task@2x.png" alt="arrows" />
+                                    <img src="/Images/photon/w_task@2x.png" alt="arrows" />
                                 </div>
                             </div>
                             <ul id="progressId">
-                                <li class="dashProject dashTask">
-                                    <a data-overall="62">Project</a>
+                                @if (Model.Project != null)
+                                {
+                                    <li class="dashProject dashTask">
+                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameE</a>
 
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="20">Task 1</a>
+                                    </li>
+                                    if (Model.Project.ProjectTasks != null)
+                                    {
+                                        foreach (var task in Model.Project.ProjectTasks.ToList())
+                                        {
+                                            <li class="dashTask">
+                                                <a data-task="@task.TaskProgress">@task.TaskNameE</a>
+                                            </li>
+                                        }
+                                    }
 
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="50">Task 2</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="80">Task 3</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="100">Task 4</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="50">Task 5</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="20">Task 6</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="50">Task 7</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="80">Task 8</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="100">Task 9</a>
-
-                                </li>
-
-                                <li class="dashBack">
-                                    <a><i class='icon-photon arrow_left'></i></a>
-
-                                </li>
-                                <li class="dashNext">
-                                    <a><i class='icon-photon arrow_right'></i></a>
-
-                                </li>
-                                <li class="processed-pct">
-                                    <span>Project</span>
-                                    <div class="progress progress-info">
-                                        <div class="bar" data-target="62" style="width: 0;">62%</div>
-                                    </div>
-                                </li>
+                                    <li class="dashBack">
+                                        <a><i class='icon-photon arrow_left'></i></a>
+                                    </li>
+                                    <li class="dashNext">
+                                        <a><i class='icon-photon arrow_right'></i></a>
+                                    </li>
+                                    <li class="processed-pct">
+                                        <span>@Model.Project.Project.NameE</span>
+                                        <div class="progress progress-info">
+                                            <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="processed-pct">
+                                        <span>No record found</span>
+                                    </li>
+                                }
                             </ul>
                         </div>
                         <div class="widget-area task-completion widget-back">
                             <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadProjects(this)"><i class='icon-photon cog'></i>Done</a>
                             </div>
                             <form>
                                 <div class="container-fluid widget-settings">
                                     <div class="control-group row-fluid">
                                         <div class="span12">
-                                            <label class="control-label">Filter by Project Progress:</label>
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
                                         </div>
                                     </div>
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="Current">Current</option>
-                                                    <option value="Finished">Finished</option>
-
+                                                <select id="projectStatusDDL">
+                                                    <option selected="" value="1">Current</option>
+                                                    <option value="4">Finished</option>
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="container-fluid widget-settings">
                                     <div class="control-group row-fluid">
                                         <div class="span12">
-                                            <label class="control-label">Filter by Projects:</label>
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
                                         </div>
                                     </div>
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="project1">project 1</option>
-                                                    <option value="project2">project 2</option>
-
-                                                </select>
+                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.Projects, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </form>
                         </div>
                     </div>
-                    <div class="tempLoader" style="display:none;"></div>
+                    <div class="tempLoader" style="display:none;" id="projectLoader"></div>
                 </div>
             }
             @if (ViewBag.UserRole != "Customer")

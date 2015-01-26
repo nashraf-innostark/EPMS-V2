@@ -9,6 +9,7 @@ namespace EPMS.Web.ViewModels.Dashboard
         public long employeeId { get; set; }
         public long customerId { get; set; }
         public long departmentId { get; set; }
+        public long projectId { get; set; }
         public long customerIdForOrder { get; set; }
         public long complaintId { get; set; }
         public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
@@ -23,5 +24,6 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<DashboardModels.Meeting> Meetings { get; set; }
         public DashboardModels.Payroll Payroll { get; set; }
         public ProjectResponseForDashboard Project { get; set; }
+        public IEnumerable<DashboardModels.Project> Projects { get; set; }
     }
 }

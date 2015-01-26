@@ -61,6 +61,15 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add meeting.
+        /// </summary>
+        public static string AddMeeting {
+            get {
+                return ResourceManager.GetString("AddMeeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any.
         /// </summary>
         public static string Any {
@@ -133,6 +142,24 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by Project Progress.
+        /// </summary>
+        public static string FilterByProjectProgress {
+            get {
+                return ResourceManager.GetString("FilterByProjectProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter by Projects.
+        /// </summary>
+        public static string FilterByProjects {
+            get {
+                return ResourceManager.GetString("FilterByProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter by Status.
         /// </summary>
         public static string FilterByStatus {
@@ -174,6 +201,15 @@ namespace EPMS.Web.Resources.Dashboard {
         public static string Payroll {
             get {
                 return ResourceManager.GetString("Payroll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project.
+        /// </summary>
+        public static string Project {
+            get {
+                return ResourceManager.GetString("Project", resourceCulture);
             }
         }
         

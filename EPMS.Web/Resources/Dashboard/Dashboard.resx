@@ -156,7 +156,19 @@
   <data name="MakeComplaint" xml:space="preserve">
     <value>Make new complaint</value>
   </data>
+  <data name="AddMeeting" xml:space="preserve">
+    <value>Add meeting</value>
+  </data>
+  <data name="FilterByProjectProgress" xml:space="preserve">
+    <value>Filter by Project Progress</value>
+  </data>
+  <data name="FilterByProjects" xml:space="preserve">
+    <value>Filter by Projects</value>
+  </data>
   <data name="Meeting" xml:space="preserve">
     <value>Meeting</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>Project</value>
   </data>
 </root>

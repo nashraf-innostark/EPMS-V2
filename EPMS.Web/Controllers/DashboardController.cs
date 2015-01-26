@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 
@@ -114,7 +116,9 @@ namespace EPMS.Web.Controllers
                 #endregion
 
                 #region Projects Widget
-                //dashboardViewModel.Project = GetProjects(requester, 0, 1);//0 means all, 1 means Current
+                dashboardViewModel.Project = GetProjects(requester, 0);//0 means all projects, 1 means Current project
+                dashboardViewModel.Projects = GetProjectsDDL(requester, 1);
+
                 #endregion
             }
             
@@ -179,9 +183,13 @@ namespace EPMS.Web.Controllers
         {
             return ordersService.GetRecentOrders(requester,status).Select(x => x.CreateForDashboard());
         }
-        private ProjectResponseForDashboard GetProjects(string requester, long projectId, int status)
+        private ProjectResponseForDashboard GetProjects(string requester, long projectId)
         {
-            return projectService.LoadProjectForDashboard(requester,projectId,status);
+            return projectService.LoadProjectForDashboard(requester,projectId);
+        }
+        private IEnumerable<DashboardModels.Project> GetProjectsDDL(string requester, int status)
+        {
+            return projectService.LoadAllProjects(requester, status).Select(x => x.CreateForDashboardDDL());
         }
         /// <summary>
         /// Load recent jobs offered
@@ -310,6 +318,20 @@ namespace EPMS.Web.Controllers
             var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
             var meetings = GetMeetings(requester);
             return Json(meetings, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult LoadProjects(long projectId)
+        {
+            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+            var projects = GetProjects(requester, projectId);
+            return Json(projects, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult LoadProjectsDDL(int projectStatus)
+        {
+            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+            var projects = GetProjectsDDL(requester, projectStatus);
+            return Json(projects, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }
