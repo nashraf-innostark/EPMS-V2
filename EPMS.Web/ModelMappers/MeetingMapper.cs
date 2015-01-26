@@ -48,8 +48,10 @@ namespace EPMS.Web.ModelMappers
             return new DashboardModels.Meeting
             {
                 MeetingId = source.MeetingId,
-                TopicName = source.TopicName,
-                TopicNameAr = source.TopicNameAr,
+                Topic = source.TopicName,
+                TopicShort = source.TopicName.Length > 25 ? source.TopicName.Substring(0, 25) + "..." : source.TopicName,
+                TopicA = source.TopicNameAr,
+                TopicAShort = source.TopicNameAr.Length > 25 ? source.TopicNameAr.Substring(0, 25) + "..." : source.TopicNameAr,
                 MeetingDate = Convert.ToDateTime(source.Date.ToString()).ToShortDateString()
             };
         }

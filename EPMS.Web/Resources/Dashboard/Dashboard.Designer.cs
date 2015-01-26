@@ -151,6 +151,15 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meeting.
+        /// </summary>
+        public static string Meeting {
+            get {
+                return ResourceManager.GetString("Meeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Profile.
         /// </summary>
         public static string MyProfile {

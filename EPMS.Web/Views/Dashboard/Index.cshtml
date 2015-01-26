@@ -223,10 +223,10 @@
                                 <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Complaints</a>
                                 <div>
                                     <a href="javascript:;" class="refresher" onclick=" LoadComplaints(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
-@if (ViewBag.UserRole != "Customer")
-{
-    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-}
+                                        @if (ViewBag.UserRole != "Customer")
+                                        {
+                                            <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                        }
                                     
                                     <i class="icon-photon user opc1"></i>
                                 </div>
@@ -523,49 +523,35 @@
                     <div class="widget-flipper">
                         <div class="widget-area widget-general-stats widget-front">
                             <div class="widget-head ">
-                                <a href="" class="lightYellow">  Meeting</a>
+                                <a href="~/HR/JobOffered/Index" class="lightYellow">@EPMS.Web.Resources.Dashboard.Dashboard.Meeting</a>
                                 <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-
+                                    <a href="javascript:;" class="refresher" onclick="LoadMeetings(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <i class="icon-photon calendar_alt_stroke opc1"></i>
                                 </div>
                             </div>
-                            <ul>
-                                <li>
-                                    <a href="">    <span>Meeting Name 1</span></a>
-                                    <div>
-                                        22/2/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">   <span>Meeting Name 2</span></a>
-                                    <div>
-                                        12/5/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">     <span>Meeting Name 3</span></a>
-                                    <div>
-                                        1/2/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">     <span>Meeting Name 4</span></a>
-                                    <div>
-                                        9/12/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">   <span>Meeting Name 5</span></a>
-                                    <div>
-                                        4/8/2014
-
-                                    </div>
-                                </li>
+                            <ul id="meetings">
+                                @if (Model.Meetings.Any())
+                                {
+                                    foreach (var item in Model.Meetings.ToList())
+                                    {
+                                        <li>
+                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                            <div>
+                                                @item.MeetingDate
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                                else
+                                {
+                                    <li>No record found</li>
+                                }
+                                @if (ViewBag.UserRole == "Customer")
+                                {
+                                    <li>
+                                        <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
 

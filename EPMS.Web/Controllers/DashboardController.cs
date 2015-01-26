@@ -299,6 +299,18 @@ namespace EPMS.Web.Controllers
             var payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), filterDateTime);
             return Json(payroll, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Load meetings
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadMeetings()
+        {
+            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
+            var meetings = GetMeetings(requester);
+            return Json(meetings, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

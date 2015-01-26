@@ -792,5 +792,33 @@ function LoadPayroll(control) {
         }
     });
 };
+function LoadMeetings(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var url = siteUrl + "/Dashboard/LoadMeetings";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#meetings').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create/' + item.MeetingId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div>'+item.MeetingDate+'</div></li>');
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#meetings').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
 //#endregion
 //#endregion
