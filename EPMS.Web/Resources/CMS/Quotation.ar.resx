@@ -220,9 +220,39 @@
     <value>تم تحديث الاقتباس بنجاح</value>
   </data>
   <data name="QuotDetail" xml:space="preserve">
-    <value />
+    <value>عرض سعر</value>
   </data>
   <data name="UpdateQuotation" xml:space="preserve">
     <value>تحديث الاقتباس</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكتروني</value>
+  </data>
+  <data name="EmpName" xml:space="preserve">
+    <value>اسم الموظف</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>الجوال</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>اطبع</value>
+  </data>
+  <data name="QuotationNo" xml:space="preserve">
+    <value>رقم عرض السعر #</value>
+  </data>
+  <data name="StreetAddress" xml:space="preserve">
+    <value>عنوان الشارع المدينة</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>الموقع الالكتروني</value>
+  </data>
+  <data name="BtnCancelOrder" xml:space="preserve">
+    <value>إلغاء النظام</value>
+  </data>
+  <data name="BtnPlaceOrder" xml:space="preserve">
+    <value>ترتيب مكان</value>
   </data>
 </root>
