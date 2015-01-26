@@ -27,10 +27,16 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
             projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
-            projectTask.ProjectNameE = source.Project.NameE;
-            projectTask.ProjectNameA = source.Project.NameA;
+            if (source.Project != null)
+            {
+                projectTask.ProjectNameE = source.Project.NameE;
+                projectTask.ProjectNameA = source.Project.NameA;
+            }
             projectTask.RequisitTasks = source.PreRequisitTask.Select(x => x.CreateFromServerToClientChild()).ToList();
-            projectTask.TaskEmployees = source.TaskEmployees.Select(x => x.CreateFromServerToClient()).ToList();
+            if (source.TaskEmployees != null)
+            {
+                projectTask.TaskEmployees = source.TaskEmployees.Select(x => x.CreateFromServerToClient()).ToList();
+            }
             if (source.PreRequisitTask.Count > 0)
             {
                 foreach (var preRequisitTask in source.PreRequisitTask)
@@ -39,7 +45,7 @@ namespace EPMS.Web.ModelMappers.PMS
                 }
                 projectTask.PreReqTasks = projectTask.PreReqTasks.Substring(0, projectTask.PreReqTasks.Length - 3);
             }
-            if (source.TaskEmployees.Count > 0)
+            if (source.TaskEmployees != null && source.TaskEmployees.Count > 0)
             {
                 foreach (var employee in source.TaskEmployees)
                 {

@@ -40,6 +40,7 @@
                 <table class="table table-striped table-responsive" id="projectTaskTable">
                     <thead class="">
                         <tr>
+                            <th></th>
                             <th>@EPMS.Web.Resources.PMS.Task.TaskName</th>
                             <th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>
                             <th>@EPMS.Web.Resources.PMS.Task.StartDate</th>
@@ -97,18 +98,29 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["StartDate"];
+                        if (dir == "ltr") {
+                            return full["ProjectNameE"];
+                        } else {
+                            return full["ProjectNameA"];
+                        }
                     }
                 },
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["EndDate"];
+                        return full["StartDate"];
                     }
                 },
                 {
                     "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["EndDate"];
+                    }
+                },
+                {
+                    "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         return full["TotalCost"];

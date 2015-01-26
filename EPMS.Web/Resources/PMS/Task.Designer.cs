@@ -196,6 +196,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error Deleting Task..
+        /// </summary>
+        public static string ErrorDelete {
+            get {
+                return ResourceManager.GetString("ErrorDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Tasks.
         /// </summary>
         public static string MyTasks {

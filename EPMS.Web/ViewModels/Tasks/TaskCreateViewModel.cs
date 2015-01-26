@@ -11,6 +11,8 @@ namespace EPMS.Web.ViewModels.Tasks
             ProjectTask = new ProjectTask();
             RequisitTasks = new List<long>();
             AssignedEmployees = new List<long>();
+            OldRequisitTasks = new List<long>();
+            OldAssignedEmployees = new List<long>();
         }
         public ProjectTask ProjectTask { get; set; }
         public List<long> RequisitTasks { get; set; }

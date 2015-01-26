@@ -74,7 +74,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             viewModel.OldRequisitTasks = viewModel.ProjectTask.RequisitTasks.Select(x => x.TaskId).ToList();
             viewModel.OldAssignedEmployees = viewModel.ProjectTask.TaskEmployees.Select(x => x.EmployeeId).ToList();
             viewModel.Projects = ProjectService.FindProjectByCustomerId(viewModel.ProjectTask.CustomerId).Select(x => x.CreateFromServerToClient());
-            viewModel.ProjectAllTasks = TaskService.FindProjectTaskByProjectId(viewModel.ProjectTask.ProjectId).Select(x => x.CreateFromServerToClient());
+            viewModel.ProjectAllTasks = TaskService.FindProjectTaskByProjectId(viewModel.ProjectTask.ProjectId,viewModel.ProjectTask.TaskId).Select(x => x.CreateFromServerToClient());
             viewModel.AllEmployees = EmployeeService.GetAll().Select(x => x.CreateFromServerToClient());
             viewModel.BtnText = Resources.PMS.Task.BtnTextEdit;
             string userRole = (string)Session["RoleName"];
@@ -95,12 +95,29 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [ValidateInput(false)]
         public ActionResult Create(TaskCreateViewModel viewModel)
         {
-            if (viewModel.ProjectTask.TaskId > 0)
+            if (Request.Form["Save"] != null)
             {
-                viewModel.ProjectTask.RecLastUpdatedBy = User.Identity.GetUserId();
-                viewModel.ProjectTask.RecLastUpdatedDt = DateTime.Now;
-                var projectTaskToUpdate = viewModel.ProjectTask.CreateFromClientToServer();
-                if (TaskService.UpdateProjectTask(projectTaskToUpdate, viewModel.OldRequisitTasks, viewModel.RequisitTasks, viewModel.OldAssignedEmployees, viewModel.AssignedEmployees))
+                // Add/Update Task
+                if (viewModel.ProjectTask.TaskId > 0)
+                {
+                    viewModel.ProjectTask.RecLastUpdatedBy = User.Identity.GetUserId();
+                    viewModel.ProjectTask.RecLastUpdatedDt = DateTime.Now;
+                    var projectTaskToUpdate = viewModel.ProjectTask.CreateFromClientToServer();
+                    if (TaskService.UpdateProjectTask(projectTaskToUpdate, viewModel.OldRequisitTasks, viewModel.RequisitTasks, viewModel.OldAssignedEmployees, viewModel.AssignedEmployees))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.PMS.Task.AddMessage,
+                            IsSaved = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+                // Add case
+                viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
+                viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
+                var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
+                if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks, viewModel.AssignedEmployees))
                 {
                     TempData["message"] = new MessageViewModel
                     {
@@ -109,24 +126,33 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     };
                     return RedirectToAction("Index");
                 }
+                
             }
-            viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
-            viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
-            var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
-            if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks, viewModel.AssignedEmployees))
+            if (Request.Form["Delete"] != null)
             {
-                TempData["message"] = new MessageViewModel
+                // Delete Task
+                try
                 {
-                    Message = Resources.PMS.Task.AddMessage,
-                    IsSaved = true
-                };
-                return RedirectToAction("Index");
+                    var taskId = viewModel.ProjectTask.TaskId;
+                    TaskService.DeleteProjectTask(taskId);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.PMS.Task.ErrorDelete,
+                        IsError = true
+                    };
+                    ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+                }
             }
+            // Error
             var customers = CustomerService.GetAll();
             ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
             viewModel.ProjectTask = TaskService.FindProjectTaskById(viewModel.ProjectTask.TaskId).CreateFromServerToClient();
             viewModel.Projects = ProjectService.FindProjectByCustomerId(viewModel.ProjectTask.CustomerId).Select(x => x.CreateFromServerToClient());
-            viewModel.ProjectAllTasks = TaskService.FindProjectTaskByProjectId(viewModel.ProjectTask.ProjectId).Select(x => x.CreateFromServerToClient());
+            viewModel.ProjectAllTasks = TaskService.FindProjectTaskByProjectId(viewModel.ProjectTask.ProjectId, viewModel.ProjectTask.TaskId).Select(x => x.CreateFromServerToClient());
             viewModel.AllEmployees = EmployeeService.GetAll().Select(x => x.CreateFromServerToClient());
             return View(viewModel);
         }
@@ -140,7 +166,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [HttpGet]
         public JsonResult GetProjectTasks(long projectId)
         {
-            var projects = TaskService.FindProjectTaskByProjectId(projectId).Select(x => x.CreateFromServerToClient());
+            var projects = TaskService.FindProjectTaskByProjectId(projectId,0).Select(x => x.CreateFromServerToClient());
             return Json(projects.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
