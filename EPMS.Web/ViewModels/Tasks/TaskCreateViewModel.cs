@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using EPMS.Web.Models;
 
 namespace EPMS.Web.ViewModels.Tasks

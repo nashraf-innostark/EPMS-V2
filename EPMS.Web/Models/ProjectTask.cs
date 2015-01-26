@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -11,15 +12,21 @@ namespace EPMS.Web.Models
             TaskEmployees = new List<TaskEmployee>();
         }
         public long TaskId { get; set; }
+        [Required(ErrorMessage = "Please select Customer.")]
         public long CustomerId { get; set; }
+        [Required(ErrorMessage = "Please select Project.")]
         public long ProjectId { get; set; }
+        [Required(ErrorMessage = "Task Name (English) is required.")]
         public string TaskNameE { get; set; }
+        [Required(ErrorMessage = "Task Name (Arabic) is required.")]
         public string TaskNameA { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        [Required(ErrorMessage = "Total Cost is required.")]
         public decimal TotalCost { get; set; }
+        [Required(ErrorMessage = "Total Weight is required.")]
         public decimal TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }

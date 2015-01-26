@@ -5,17 +5,19 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Tasks;
+using EPMS.WebBase.Mvc;
 using iTextSharp.text;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.PMS.Controllers
 {
-    public class TaskController : Controller
+    public class TaskController : BaseController
     {
         private readonly ICustomerService CustomerService;
         private readonly IProjectService ProjectService;
@@ -31,6 +33,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         }
 
         // GET: PMS/Task
+        [SiteAuthorize(PermissionKey = "TaskIndex")]
         public ActionResult Index()
         {
             TaskListViewModel viewModel = new TaskListViewModel();
@@ -53,7 +56,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet); ;
         }
-
+        [SiteAuthorize(PermissionKey = "CreateTask")]
         public ActionResult Create(long? id)
         {
             TaskCreateViewModel viewModel = new TaskCreateViewModel();
@@ -73,9 +76,18 @@ namespace EPMS.Web.Areas.PMS.Controllers
             viewModel.Projects = ProjectService.FindProjectByCustomerId(viewModel.ProjectTask.CustomerId).Select(x => x.CreateFromServerToClient());
             viewModel.ProjectAllTasks = TaskService.FindProjectTaskByProjectId(viewModel.ProjectTask.ProjectId).Select(x => x.CreateFromServerToClient());
             viewModel.AllEmployees = EmployeeService.GetAll().Select(x => x.CreateFromServerToClient());
-            viewModel.PageTitle = Resources.PMS.Task.PageTitleEdit;
             viewModel.BtnText = Resources.PMS.Task.BtnTextEdit;
-            viewModel.Header = Resources.PMS.Task.Edit;
+            string userRole = (string)Session["RoleName"];
+            if (userRole == "Customer")
+            {
+                viewModel.PageTitle = Resources.PMS.Task.PageTitleDetail;
+                viewModel.Header = Resources.PMS.Task.Detail;
+            }
+            else
+            {
+                viewModel.PageTitle = Resources.PMS.Task.PageTitleEdit;
+                viewModel.Header = Resources.PMS.Task.Edit;
+            }
             return View(viewModel);
         }
 
