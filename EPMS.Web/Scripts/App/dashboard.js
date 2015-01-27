@@ -711,7 +711,8 @@ function LoadOrders(control) {
         }
     });
 };
-function LoadRecruitments() {
+function LoadRecruitments(control) {
+    Loader(control);
     var siteUrl = $('#siteURL').val();
     var url = siteUrl + "/Dashboard/LoadRecruitments";
     $.ajax({
