@@ -54,7 +54,9 @@ namespace EPMS.Implementation.Services
             meetingRepository.SaveChanges();
             return true;
         }
-
+        /// <summary>
+        /// Save Meeting from Model
+        /// </summary>
         public bool SaveMeeting(MeetingRequest meetingToBeSaved)
         {
             //System.Security.Principal.GenericPrincipal.Current.Identity.Name
@@ -80,7 +82,9 @@ namespace EPMS.Implementation.Services
 
             return true;
         }
-
+        /// <summary>
+        /// Add New Meeting
+        /// </summary>
         private void AddNewMeeting(Meeting meeting)
         {
             meeting.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -90,7 +94,10 @@ namespace EPMS.Implementation.Services
             meetingRepository.Add(meeting);
             meetingRepository.SaveChanges();
         }
-
+        /// <summary>
+        /// Update Existing Meeting
+        /// </summary>
+        /// <param name="meeting"></param>
         private void UpdateExistingMeeting(Meeting meeting)
         {
             meeting.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -98,7 +105,9 @@ namespace EPMS.Implementation.Services
             meetingRepository.Update(meeting);
             meetingRepository.SaveChanges();
         }
-
+        /// <summary>
+        /// Add New Meeting Attendees if Any
+        /// </summary>
         private void SaveMeetingAttendees(MeetingRequest meetingToBeSaved)
         {
             if (meetingToBeSaved.EmployeeIds != null)
@@ -113,9 +122,13 @@ namespace EPMS.Implementation.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Update Meeting Attendees in case of Update Meeting
+        /// </summary>
+        /// <param name="meetingToBeSaved"></param>
         private void UpdateMeetingAttendees(MeetingRequest meetingToBeSaved)
         {
+            //Add or Delete Meeting Attendees in case of Update Meeting
             IEnumerable<MeetingAttendee> listOfAttendees =
                 meetingAttendeeRepository.GetAttendeesByMeetingId(meetingToBeSaved.Meeting.MeetingId);
             var dbList = listOfAttendees.ToList();
@@ -124,6 +137,7 @@ namespace EPMS.Implementation.Services
                 var clientList = meetingToBeSaved.EmployeeIds.ToList();
                 if (clientList != null || clientList.Count > 0)
                 {
+                    //Add New Meeting Attendes 
                     #region Add
 
                     foreach (var empId in clientList)
@@ -139,7 +153,7 @@ namespace EPMS.Implementation.Services
                     }
 
                     #endregion
-
+                    //Delete Meeting Attendees
                     #region Delete
 
                     foreach (var attendee in dbList)
@@ -158,6 +172,7 @@ namespace EPMS.Implementation.Services
             }
             else
             {
+                //Delete Attendees if List from Client is Empty
                 foreach (var attendee in dbList)
                 {
                     var attendeeToDelete =
@@ -167,6 +182,7 @@ namespace EPMS.Implementation.Services
                 }
             }
 
+            //Update Attendees Status to Absent
             IEnumerable<MeetingAttendee> meetingAttendees = meetingAttendeeRepository.GetAttendeesByMeetingId(meetingToBeSaved.Meeting.MeetingId);
             var absenteeDbList = meetingAttendees.ToList();
             if (meetingToBeSaved.EmployeeIds != null && meetingToBeSaved.AbsentEmployeeIds != null)
@@ -208,6 +224,7 @@ namespace EPMS.Implementation.Services
             }
             else
             {
+                //Set Status False if List from Client is Empty
                 foreach (var attendee in absenteeDbList)
                 {
                     var attendeeToUpdate =

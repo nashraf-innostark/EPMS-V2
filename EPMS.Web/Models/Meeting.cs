@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using EPMS.Models.DomainModels;
@@ -9,12 +10,19 @@ namespace EPMS.Web.Models
     public class Meeting
     {
         public long MeetingId { get; set; }
+        [Required(ErrorMessage = "Topic Name is required.")]
+        [StringLength(200, ErrorMessage = "Topic Name cannot exceed 300 characters. ")]
         public string TopicName { get; set; }
+        [Required(ErrorMessage = "Topic Name is required.")]
+        [StringLength(200, ErrorMessage = "Topic Name cannot exceed 300 characters. ")]
         public string TopicNameAr { get; set; }
+        [StringLength(200, ErrorMessage = "Cannot exceed 300 characters. ")]
         public string RelatedProject { get; set; }
         public DateTime? Date { get; set; }
         public DateTime? DateAr { get; set; }
+        [StringLength(200, ErrorMessage = "Cannot exceed 1000 characters. ")]
         public string Agenda { get; set; }
+        [StringLength(200, ErrorMessage = "Cannot exceed 1000 characters. ")]
         public string AgendaAr { get; set; }
         public string Discussion { get; set; }
         public string DiscussionAr { get; set; }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -16,9 +15,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.JobOffered;
 using EPMS.Web.ViewModels.Meeting;
-using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Meeting.Controllers
 {
@@ -102,6 +99,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             return View(meetingViewModel);
         }
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(MeetingViewModel meetingViewModel)
         {
             MeetingRequest toBeSaveMeeting = meetingViewModel.Meeting.CreateFrom();
@@ -110,9 +108,13 @@ namespace EPMS.Web.Areas.Meeting.Controllers
                 TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
                 meetingViewModel.Meeting.MeetingId = toBeSaveMeeting.Meeting.MeetingId;
                 SaveMeetingDocuments(meetingViewModel);
-                return RedirectToAction("Index");
             }
-            return null;
+            if (Request.Form["SendInvitation"] != null)
+            {
+                SendInvitation(meetingViewModel);
+            }
+            
+            return RedirectToAction("Index");
         }
 
         public void SaveMeetingDocuments(MeetingViewModel meetingViewModel)
@@ -179,8 +181,17 @@ namespace EPMS.Web.Areas.Meeting.Controllers
 
         public FileResult Download(string fileName)
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"] + fileName));
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["MeetingDocuments"] + fileName));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public void SendInvitation(MeetingViewModel meetingViewModel)
+        {
+            var empEmails = employeeService.FindEmployeeEmailByIds(meetingViewModel.Meeting.EmployeeIds);
+            var email = meetingViewModel.Meeting.AttendeeEmail1 + meetingViewModel.Meeting.AttendeeEmail2 +
+                        meetingViewModel.Meeting.AttendeeEmail3;
+            //var employeeEmail = meetingViewModel.MeetingAttendee.
+            //return RedirectToAction("Create");
         }
 
         #endregion

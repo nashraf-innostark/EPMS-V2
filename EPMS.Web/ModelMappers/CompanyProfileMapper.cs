@@ -27,7 +27,7 @@ namespace EPMS.Web.ModelMappers
             companyProfileViewModel.CompanyProfile.RecLastUpdatedDate = source.RecLastUpdatedDate;
             if (source.CompanyDocumentDetail != null)
             {
-                companyProfileViewModel.CompanyDocuments.CompanyId = source.CompanySocialDetail.CompanyId;
+                companyProfileViewModel.CompanyDocuments.CompanyId = source.CompanyId;
                 companyProfileViewModel.CompanyDocuments.CommercialRegister = source.CompanyDocumentDetail.CommercialRegister;
                 companyProfileViewModel.CompanyDocuments.CommercialRegisterIssueDate = source.CompanyDocumentDetail.CommercialRegisterIssueDate;
                 companyProfileViewModel.CompanyDocuments.CommercialRegisterExpiryDate = source.CompanyDocumentDetail.CommercialRegisterExpiryDate;
@@ -46,7 +46,7 @@ namespace EPMS.Web.ModelMappers
             }
             if (source.CompanyBankDetail != null)
             {
-                companyProfileViewModel.CompanyBank.CompanyId = source.CompanyBankDetail.CompanyId;
+                companyProfileViewModel.CompanyBank.CompanyId = source.CompanyId;
                 companyProfileViewModel.CompanyBank.Bank1Name = source.CompanyBankDetail.Bank1Name;
                 companyProfileViewModel.CompanyBank.Bank1NameArabic = source.CompanyBankDetail.Bank1NameArabic;
                 companyProfileViewModel.CompanyBank.Bank1AccountNumber = source.CompanyBankDetail.Bank1AccountNumber;
@@ -72,7 +72,7 @@ namespace EPMS.Web.ModelMappers
             if (source.CompanySocialDetail != null)
             {
 
-                companyProfileViewModel.CompanySocial.CompanyId = source.CompanySocialDetail.CompanyId;
+                companyProfileViewModel.CompanySocial.CompanyId = source.CompanyId;
                 companyProfileViewModel.CompanySocial.Twitter = source.CompanySocialDetail.Twitter;
                 companyProfileViewModel.CompanySocial.TwitterUserName = source.CompanySocialDetail.TwitterUserName;
                 companyProfileViewModel.CompanySocial.TwitterPassword= source.CompanySocialDetail.TwitterPassword;

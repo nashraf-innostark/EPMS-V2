@@ -1087,6 +1087,19 @@
 
 <script>
     $().ready(function () {
+
+        //Set Arabic and Gregorian Dates
+        $("#CommercialRegisterIssueDateAr").val(ConvertDates($("#CommercialRegisterIssueDate").val(), "gregorian", "islamic"));
+        $("#CommercialRegisterExpiryDateAr").val(ConvertDates($("#CommercialRegisterExpiryDate").val(), "gregorian", "islamic"));
+        $("#InsuranceCertificateIssueDateAr").val(ConvertDates($("#InsuranceCertificateIssueDate").val(), "gregorian", "islamic"));
+        $("#InsuranceCertificateExpiryDateAr").val(ConvertDates($("#InsuranceCertificateExpiryDate").val(), "gregorian", "islamic"));
+        $("#ChamberCertificateIssueDateAr").val(ConvertDates($("#ChamberCertificateIssueDate").val(), "gregorian", "islamic"));
+        $("#ChamberCertificateExpiryDateAr").val(ConvertDates($("#ChamberCertificateExpiryDate").val(), "gregorian", "islamic"));
+        $("#IncomeAndZakaCertificateIssueDateAr").val(ConvertDates($("#IncomeAndZakaCertificateIssueDate").val(), "gregorian", "islamic"));
+        $("#IncomeAndZakaCertificateExpiryDateAr").val(ConvertDates($("#IncomeAndZakaCertificateExpiryDate").val(), "gregorian", "islamic"));
+        $("#SaudilizationCertificateIssueDateAr").val(ConvertDates($("#SaudilizationCertificateIssueDate").val(), "gregorian", "islamic"));
+        $("#SaudilizationCertificateExpiryDateAr").val(ConvertDates($("#SaudilizationCertificateExpiryDate").val(), "gregorian", "islamic"));
+
         var companyId = $('#CompanyProfile_CompanyId').val();
         if (companyId == 0) {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
