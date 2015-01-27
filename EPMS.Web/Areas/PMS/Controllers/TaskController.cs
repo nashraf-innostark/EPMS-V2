@@ -116,6 +116,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 // Add case
                 viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
                 viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
+                viewModel.ProjectTask.TaskProgress = 0;
                 var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
                 if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks, viewModel.AssignedEmployees))
                 {
@@ -135,6 +136,12 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 {
                     var taskId = viewModel.ProjectTask.TaskId;
                     TaskService.DeleteProjectTask(taskId);
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.PMS.Task.DeleteMessage,
+                        IsUpdated = true
+                    };
+                    ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                     return RedirectToAction("Index");
                 }
                 catch (Exception)

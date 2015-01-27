@@ -224,9 +224,10 @@ namespace EPMS.Implementation.Services
                     int count = task.PreRequisitTask.Count();
                     for (int i = 0; i < count; i++)
                     {
-                        Repository.Delete(task.PreRequisitTask.FirstOrDefault());
-                        Repository.SaveChanges();
+                        //Repository.Delete(task.PreRequisitTask.FirstOrDefault());
+                        task.PreRequisitTask.Remove(task.PreRequisitTask.FirstOrDefault());
                     }
+                    Repository.SaveChanges();
                 }
             }
             Repository.Delete(task);
