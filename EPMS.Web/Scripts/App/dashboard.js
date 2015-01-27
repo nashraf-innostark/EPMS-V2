@@ -569,7 +569,6 @@ function NoRecord(control, msg) {
     $(control).append('<li class="processed-pct"><span>' + msg + '</span></li>');
 }
 //#region Widgets Loaders
-//#region Employee Requests Loaders
 function Loader(control) {
     if (control.className != "refresher") {
         flipit(control);
@@ -974,5 +973,4 @@ function LoadMyTasks(control) {
             }
         });
 };
-//#endregion
 //#endregion
