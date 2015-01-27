@@ -81,6 +81,11 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
+            var meetingrequest = new MeetingRequest();
+            meetingrequest.EmployeeIds = source.EmployeeIds;
+            meetingrequest.AbsentEmployeeIds = source.AbsentEmployeeIds;
+            meetingrequest.Meeting = meeting;
+            return meetingrequest;
         }
 
         public static DashboardModels.Meeting CreateForDashboard(this DomainModels.Meeting source)
@@ -94,11 +99,7 @@ namespace EPMS.Web.ModelMappers
                 TopicAShort = source.TopicNameAr.Length > 25 ? source.TopicNameAr.Substring(0, 25) + "..." : source.TopicNameAr,
                 MeetingDate = Convert.ToDateTime(source.Date.ToString()).ToShortDateString()
             };
-            var meetingrequest = new MeetingRequest();
-            meetingrequest.EmployeeIds = source.EmployeeIds;
-            meetingrequest.AbsentEmployeeIds = source.AbsentEmployeeIds;
-            meetingrequest.Meeting = meeting;
-            return meetingrequest;
+            
         }
     }
 }
