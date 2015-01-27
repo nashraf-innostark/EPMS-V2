@@ -103,5 +103,10 @@ namespace EPMS.Implementation.Services
         {
             return projectRepository.GetAllProjects(requester, status);
         }
+
+        public IEnumerable<Project> LoadAllProjectsByEmployeeId(long employeeId)
+        {
+            return projectRepository.GetAllProjectsByEmployeeId(employeeId);
+        }
     }
 }

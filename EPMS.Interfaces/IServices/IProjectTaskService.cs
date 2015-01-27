@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -10,6 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         ProjectTask FindProjectTaskById(long id);
         IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid);
+        IEnumerable<ProjectTaskResponse> LoadProjectTasksByEmployeeId(long employeeId, long projectId);
         IEnumerable<ProjectTask> GetAll();
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
         bool AddProjectTask(ProjectTask task, List<long> preReqList, List<long> assignedEmployee);

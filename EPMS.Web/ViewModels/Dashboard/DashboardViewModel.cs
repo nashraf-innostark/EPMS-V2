@@ -24,6 +24,8 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<DashboardModels.Meeting> Meetings { get; set; }
         public DashboardModels.Payroll Payroll { get; set; }
         public ProjectResponseForDashboard Project { get; set; }
-        public IEnumerable<DashboardModels.Project> Projects { get; set; }
+        public IEnumerable<DashboardModels.Project> ProjectsDDL { get; set; }
+        public IEnumerable<DashboardModels.Project> TaskProjectsDDL { get; set; }
+        public IEnumerable<ProjectTaskResponse> ProjectTasks { get; set; }
     }
 }

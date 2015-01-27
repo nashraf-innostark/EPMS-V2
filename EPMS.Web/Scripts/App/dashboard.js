@@ -171,153 +171,9 @@
     }, 1000);
 
     $(".task-completion select").select2();
-
-    
     ProjectWidgetEvents();
-
+    MyTasksWidgetEvents();
     $(".tempLoader").on('click', removeTempLoader);
-
-    
-    $("#progressId2 li.dashTask").on("click", function () {
-        //$(".progress")
-        //if($(this).hasClass("processed-pct")){
-        var target = 0;
-        if ($(this).find("a").is('[data-task]')) {
-            target = parseInt($(this).find("a").attr('data-task'));
-            $('.processed-pct2').find("span").text($(this).find("a").text());
-        }
-        else if ($(this).find("a").is('[data-overall]')) {
-
-            target = parseInt($(this).find("a").attr('data-overall'));
-            $('.processed-pct2').find("span").text($(this).find("a").text());
-
-        }
-
-        setTimeout(function () {
-
-            $('.processed-pct2 .bar').attr('style', 'width: ' + target + '%');
-            $('.processed-pct2 .bar').text(target + "%");
-        }, 200);
-    });
-    
-    count = 0;
-    $("#progressId2 li.dashTask").each(function () {
-
-        if (count >= 4) {
-            $(this).addClass("hideIt");
-        }
-        count++;
-
-    });
-
-    if (count >= 4) {
-        $("#progressId2 .dashNext").show();
-    }
-    $("#progressId2 .dashNext").on("click", function () {
-        var liCont = $("#progressId2 li.dashTask").length;
-        var firstLiShow = 0;
-        var lastLiShow = 0;
-        var lastShow = 0;
-        var firstShowIndex = 0;
-        var lastShowIndex = 0;
-
-        $("#progressId2 li").each(function () {
-
-            if ($(this).hasClass("dashTask")) {
-
-                if (!$(this).hasClass("hideIt")) {
-
-
-
-                    if (firstLiShow == 0) {
-                        firstShowIndex = $(this).index();
-                    }
-                    firstLiShow++;
-
-                    if (lastLiShow == 3) {
-                        lastShowIndex = $(this).index();
-                    }
-                    lastLiShow++;
-
-                    $(this).addClass("hideIt");
-                }
-            }
-
-
-        });
-        var n = 0;
-        var nextNum = lastShowIndex + 1;
-        while (liCont > nextNum && n < 4) {
-
-            $("#progressId2 li.dashTask").eq(nextNum).removeClass("hideIt");
-            nextNum++;
-            n++;
-            var dd = nextNum;
-            if (dd == liCont) {
-                $("#progressId2 .dashNext").hide();
-            }
-        }
-
-
-
-
-
-
-
-        $("#progressId2 .dashBack").show();
-
-
-
-    });
-
-    $("#progressId2 .dashBack").on("click", function () {
-        var liCont = $("#progressId2 li.dashTask").length;
-        var firstLiShow = 0;
-        var lastLiShow = 0;
-        var lastShow = 0;
-        var firstShowIndex = 0;
-        var lastShowIndex = 0;
-
-        $("#progressId2 li").each(function () {
-
-            if ($(this).hasClass("dashTask")) {
-
-                if (!$(this).hasClass("hideIt")) {
-
-
-
-                    if (firstLiShow == 0) {
-                        firstShowIndex = $(this).index();
-                    }
-                    firstLiShow++;
-
-                    if (lastLiShow == 3) {
-                        lastShowIndex = $(this).index();
-                    }
-                    lastLiShow++;
-
-                    $(this).addClass("hideIt");
-                }
-            }
-
-
-        });
-        var n = 0;
-
-        var nextNum = firstShowIndex - 1;
-
-        while ((liCont >= nextNum) && n < 4) {
-            var dd = nextNum;
-            $("#progressId2 li.dashTask").eq(nextNum).removeClass("hideIt");
-            nextNum = nextNum - 1;
-            n++;
-
-            if (nextNum == 0) {
-                $("#progressId2 .dashBack").hide();
-            }
-        }
-        $("#progressId2 .dashNext").show();
-    });
     $("#multiFilter").select2();
 
     //#endregion
@@ -562,6 +418,148 @@ function ProjectWidgetEvents() {
             }
         }
         $("#progressId .dashNext").show();
+    });
+}
+function MyTasksWidgetEvents() {
+    $("#progressId2 li.dashTask").on("click", function () {
+        //$(".progress")
+        //if($(this).hasClass("processed-pct")){
+        var target = 0;
+        if ($(this).find("a").is('[data-task]')) {
+            target = parseInt($(this).find("a").attr('data-task'));
+            $('.processed-pct2').find("span").text($(this).find("a").text());
+        }
+        else if ($(this).find("a").is('[data-overall]')) {
+
+            target = parseInt($(this).find("a").attr('data-overall'));
+            $('.processed-pct2').find("span").text($(this).find("a").text());
+
+        }
+
+        setTimeout(function () {
+
+            $('.processed-pct2 .bar').attr('style', 'width: ' + target + '%');
+            $('.processed-pct2 .bar').text(target + "%");
+        }, 200);
+    });
+
+    var count = 0;
+    $("#progressId2 li.dashTask").each(function () {
+
+        if (count >= 4) {
+            $(this).addClass("hideIt");
+        }
+        count++;
+
+    });
+
+    if (count >= 4) {
+        $("#progressId2 .dashNext").show();
+    }
+    $("#progressId2 .dashNext").on("click", function () {
+        var liCont = $("#progressId2 li.dashTask").length;
+        var firstLiShow = 0;
+        var lastLiShow = 0;
+        var lastShow = 0;
+        var firstShowIndex = 0;
+        var lastShowIndex = 0;
+
+        $("#progressId2 li").each(function () {
+
+            if ($(this).hasClass("dashTask")) {
+
+                if (!$(this).hasClass("hideIt")) {
+
+
+
+                    if (firstLiShow == 0) {
+                        firstShowIndex = $(this).index();
+                    }
+                    firstLiShow++;
+
+                    if (lastLiShow == 3) {
+                        lastShowIndex = $(this).index();
+                    }
+                    lastLiShow++;
+
+                    $(this).addClass("hideIt");
+                }
+            }
+
+
+        });
+        var n = 0;
+        var nextNum = lastShowIndex + 1;
+        while (liCont > nextNum && n < 4) {
+
+            $("#progressId2 li.dashTask").eq(nextNum).removeClass("hideIt");
+            nextNum++;
+            n++;
+            var dd = nextNum;
+            if (dd == liCont) {
+                $("#progressId2 .dashNext").hide();
+            }
+        }
+
+
+
+
+
+
+
+        $("#progressId2 .dashBack").show();
+
+
+
+    });
+
+    $("#progressId2 .dashBack").on("click", function () {
+        var liCont = $("#progressId2 li.dashTask").length;
+        var firstLiShow = 0;
+        var lastLiShow = 0;
+        var lastShow = 0;
+        var firstShowIndex = 0;
+        var lastShowIndex = 0;
+
+        $("#progressId2 li").each(function () {
+
+            if ($(this).hasClass("dashTask")) {
+
+                if (!$(this).hasClass("hideIt")) {
+
+
+
+                    if (firstLiShow == 0) {
+                        firstShowIndex = $(this).index();
+                    }
+                    firstLiShow++;
+
+                    if (lastLiShow == 3) {
+                        lastShowIndex = $(this).index();
+                    }
+                    lastLiShow++;
+
+                    $(this).addClass("hideIt");
+                }
+            }
+
+
+        });
+        var n = 0;
+
+        var nextNum = firstShowIndex - 1;
+
+        while ((liCont >= nextNum) && n < 4) {
+            var dd = nextNum;
+            $("#progressId2 li.dashTask").eq(nextNum).removeClass("hideIt");
+            nextNum = nextNum - 1;
+            n++;
+
+            if (nextNum == 0) {
+                $("#progressId2 .dashBack").hide();
+            }
+        }
+        $("#progressId2 .dashNext").show();
     });
 }
 //#endregion
@@ -882,6 +880,7 @@ function LoadProjects(control) {
                 $(".tempLoader").click();
                 $('#progressId').empty();
                 if (data != null) {
+                    $("#projectDetailId").attr("href", "/PMS/Project/Details/" + data.Project.ProjectId);
                     $('#progressId').append(
                         '<li class="dashProject dashTask">' +
                         '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameE + '">' + data.Project.NameEShort + '</a>' +
@@ -890,7 +889,7 @@ function LoadProjects(control) {
                         $.each(data.ProjectTasks, function (itemIndex, item) {
                             $('#progressId').append(
                                 '<li class="dashTask">' +
-                                '<a data-task=' + item.TaskProgress + '>' + item.TaskNameE + '</a>' +
+                                '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
                                 '</li>');
                         });
                     }
@@ -902,7 +901,7 @@ function LoadProjects(control) {
                         '<a><i class="icon-photon arrow_right"></i></a>' +
                     '</li>' +
                     '<li class="processed-pct">' +
-                        '<span>' + data.Project.NameE + '</span>' +
+                        '<span title="' + data.Project.NameE + '">' + data.Project.NameEShort + '</span>' +
                         '<div class="progress progress-info">' +
                             '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
                         '</div>' +
@@ -922,6 +921,57 @@ function LoadProjects(control) {
         var msg = "Select a project.";
         NoRecord('#progressId', msg);
     }
+};
+function LoadMyTasks(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var id = $("#projectIdTaskFilter").val();
+   
+        if (id == "" || control.className == "refresher") {
+            id = 0;
+        }
+        var url = siteUrl + "/Dashboard/LoadMyTasks";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: "json",
+            data: {
+                projectId: id
+            },
+            success: function (data) {
+                $(".tempLoader").click();
+                $('#progressId2').empty();
+                if (data!=null) {
+                    $.each(data, function (itemIndex, item) {
+                        $('#progressId2').append(
+                            '<li class="dashTask">' +
+                            '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
+                            '</li>');
+                    });
+                    $('#progressId2').append(
+                    '<li class="dashBack">' +
+                        '<a><i class="icon-photon arrow_left"></i></a>' +
+                    '</li>' +
+                    '<li class="dashNext">' +
+                        '<a><i class="icon-photon arrow_right"></i></a>' +
+                    '</li>' +
+                    '<li class="processed-pct2">' +
+                        '<span title="' + data[0].TaskNameE + '">' + data[0].TaskNameEShort + '</span>' +
+                        '<div class="progress progress-info">' +
+                            '<div class="bar" data-target=' + data[0].TaskProgress + ' style="width:' + data[0].TaskProgress + '%;">' + data[0].TaskProgress + '%</div>' +
+                        '</div>' +
+                    '</li>');
+                    MyTasksWidgetEvents();
+                }
+                else {
+                    NoRecord('#progressId2', "No record found");
+                }
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+                $(".tempLoader").click();
+            }
+        });
 };
 //#endregion
 //#endregion
