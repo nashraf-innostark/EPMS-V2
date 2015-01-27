@@ -36,6 +36,11 @@ namespace EPMS.Implementation.Services
             return Repository.FindTaskWithPreRequisites(id);
         }
 
+        public TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId)
+        {
+            return Repository.GetProjectTasksForEmployee(searchRequest, employeeId);
+        }
+
         public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId)
         {
             return Repository.FindProjectTaskByProjectId(projectid, taskId);

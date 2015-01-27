@@ -59,7 +59,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 iTotalDisplayRecords = Convert.ToInt32(tasks.TotalDisplayRecords),
                 sEcho = searchRequest.sEcho
             };
-            return Json(viewModel, JsonRequestBehavior.AllowGet); ;
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         public ActionResult MyTasks()
         {
@@ -71,7 +71,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [HttpPost]
         public ActionResult MyTasks(TaskSearchRequest searchRequest)
         {
-            var tasks = TaskService.GetAllTasks(searchRequest);
+            long employeeId = (long) Session["EmployeeID"];
+            var tasks = TaskService.GetProjectTasksForEmployee(searchRequest,employeeId);
             IEnumerable<ProjectTask> projectTaskList =
                 tasks.ProjectTasks.Select(x => x.CreateFromServerToClient()).ToList();
             TaskListViewModel viewModel = new TaskListViewModel
@@ -81,7 +82,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 iTotalDisplayRecords = Convert.ToInt32(tasks.TotalDisplayRecords),
                 sEcho = searchRequest.sEcho
             };
-            return Json(viewModel, JsonRequestBehavior.AllowGet); ;
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
         [SiteAuthorize(PermissionKey = "CreateTask")]
         public ActionResult Create(long? id)
