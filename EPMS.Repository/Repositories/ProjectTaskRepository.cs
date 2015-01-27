@@ -64,6 +64,13 @@ namespace EPMS.Repository.Repositories
             return DbSet.Include(x => x.PreRequisitTask).SingleOrDefault(x => x.TaskId == id);
         }
 
+        public IEnumerable<ProjectTask> GetProjectTasksByEmployeeId(long employeeId, long projectId)
+        {
+            if(projectId>0)
+                return DbSet.Where(x => x.ProjectId==projectId && x.TaskEmployees.Any(y => y.EmployeeId == employeeId));
+            return DbSet.Where(x => x.TaskEmployees.Any(y => y.EmployeeId == employeeId));
+        }
+
         public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;

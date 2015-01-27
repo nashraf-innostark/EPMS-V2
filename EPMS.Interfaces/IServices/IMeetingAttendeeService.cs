@@ -14,6 +14,10 @@ namespace EPMS.Interfaces.IServices
         /// </summary>
         bool UpdateMeetingAttendee(MeetingAttendee attendee);
         /// <summary>
+        /// Delete Meeting Attendee by MeetingId
+        /// </summary>
+        bool DeleteAttendeeByMeetingAndEmployeeId(long meetingId, long employeeId);
+        /// <summary>
         /// Find Attendees by Meeting
         /// </summary>
         IEnumerable<MeetingAttendee> FindAttendeeByMeetingId(long meetingId);

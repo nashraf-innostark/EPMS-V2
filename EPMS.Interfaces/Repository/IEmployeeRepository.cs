@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -16,6 +17,7 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<Employee> GetRecentEmployees(string requester);
 
         Employee FindForPayroll(long id, DateTime currTime);
+        IQueryable<string> FindEmployeeEmailById(List<long> employeeId);
         
     }
 }

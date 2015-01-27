@@ -312,7 +312,7 @@
                                     <a href="">  <span>1st Installment</span></a>
                                     <div>
                                         5000
-                                        <img src="images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                        <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
                                     </div>
 
                                 </li>
@@ -320,21 +320,21 @@
                                     <a href="">  <span>2nd Installment</span></a>
                                     <div>
                                         10000
-                                        <img src="images/photon/workDone.png" alt="Paid" title="Paid" class="status">
+                                        <img src="~/images/photon/workDone.png" alt="Paid" title="Paid" class="status">
                                     </div>
                                 </li>
                                 <li>
                                     <a href="">    <span>3rd Installment </span></a>
                                     <div>
                                         4000
-                                        <img src="images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                        <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
                                     </div>
                                 </li>
                                 <li>
                                     <a href="">  <span>4th Installment </span></a>
                                     <div>
                                         6000
-                                        <img src="images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                        <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
                                     </div>
                                 </li>
 
@@ -747,7 +747,7 @@
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
-                                <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
                                 <div>
                                     <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
@@ -758,7 +758,7 @@
                                 @if (Model.Project != null)
                                 {
                                     <li class="dashProject dashTask">
-                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameE</a>
+                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
 
                                     </li>
                                     if (Model.Project.ProjectTasks != null)
@@ -766,7 +766,7 @@
                                         foreach (var task in Model.Project.ProjectTasks.ToList())
                                         {
                                             <li class="dashTask">
-                                                <a data-task="@task.TaskProgress">@task.TaskNameE</a>
+                                                <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
                                             </li>
                                         }
                                     }
@@ -778,7 +778,7 @@
                                         <a><i class='icon-photon arrow_right'></i></a>
                                     </li>
                                     <li class="processed-pct">
-                                        <span>@Model.Project.Project.NameE</span>
+                                        <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
                                         <div class="progress progress-info">
                                             <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
                                         </div>
@@ -823,7 +823,7 @@
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.Projects, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
                                             </div>
                                         </div>
                                     </div>
@@ -841,92 +841,57 @@
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
-                                <a href="ProjectDetails(Admin,PM)En.html" class="lightBlue">  My Tasks</a>
+                                <a href="#" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
                                 <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                    <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    <img src="images/photon/w_task@2x.png" alt="arrows" />
+                                    <img src="/Images/photon/w_task@2x.png" alt="arrows" />
                                 </div>
                             </div>
                             <ul id="progressId2">
-                                <li class="dashTask">
-                                    <a data-task="20">Task 1</a>
+                                @if (Model.ProjectTasks != null)
+                                {
+                                    foreach (var task in Model.ProjectTasks.ToList())
+                                    {
+                                        <li class="dashTask">
+                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                        </li>
+                                    }
+                                    <li class="dashBack">
+                                        <a><i class='icon-photon arrow_left'></i></a>
 
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="50">Task 2</a>
+                                    </li>
+                                    <li class="dashNext">
+                                        <a><i class='icon-photon arrow_right'></i></a>
 
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="80">Task 3</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="100">Task 4</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="50">Task 5</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="20">Task 6</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="50">Task 7</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="80">Task 8</a>
-
-                                </li>
-                                <li class="dashTask">
-                                    <a data-task="100">Task 9</a>
-
-                                </li>
-
-                                <li class="dashBack">
-                                    <a><i class='icon-photon arrow_left'></i></a>
-
-                                </li>
-                                <li class="dashNext">
-                                    <a><i class='icon-photon arrow_right'></i></a>
-
-                                </li>
-                                <li class="processed-pct2">
-                                    <span>Task 1</span>
-                                    <div class="progress progress-info">
-                                        <div class="bar" data-target="20" style="width: 0;">20%</div>
-                                    </div>
-                                </li>
+                                    </li>
+                                    <li class="processed-pct2">
+                                        <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                        <div class="progress progress-info">
+                                            <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
+                                        </div>
+                                    </li>
+                                }
                             </ul>
                         </div>
                         <div class="widget-area task-completion widget-back">
                             <div class="widget-savehead">
-
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" flipit(this) "><i class='icon-photon cog'></i>Done</a>
+                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadMyTasks(this)"><i class='icon-photon cog'></i>Done</a>
                             </div>
                             <form>
                                 <div class="container-fluid widget-settings">
                                     <div class="control-group row-fluid">
                                         <div class="span12">
-                                            <label class="control-label">Filter by Projects:</label>
+                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
                                         </div>
                                     </div>
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="Current">Current</option>
-                                                    <option value="Finished">Finished</option>
-
-                                                </select>
+                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </form>
                         </div>

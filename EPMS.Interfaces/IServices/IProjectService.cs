@@ -17,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId);
         IEnumerable<Project> LoadAllProjects(string requester, int status);
         IEnumerable<Project> GetAllProjects();
+        IEnumerable<Project> LoadAllProjectsByEmployeeId(long employeeId);
     }
 }

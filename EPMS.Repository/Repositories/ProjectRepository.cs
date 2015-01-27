@@ -82,5 +82,10 @@ namespace EPMS.Repository.Repositories
            long customerId = Convert.ToInt64(requester);
                 return DbSet.Where(x => x.CustomerId==customerId && x.Status == status);
         }
+
+        public IEnumerable<Project> GetAllProjectsByEmployeeId(long employeeId)
+        {
+            return DbSet.Where(x => x.ProjectTasks.Any(y => y.TaskEmployees.Any(z => z.EmployeeId == employeeId)));
+        }
     }
 }

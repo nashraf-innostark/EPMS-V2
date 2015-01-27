@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
@@ -100,6 +101,15 @@ namespace EPMS.Repository.Repositories
         public Employee FindForPayroll(long employeeId, DateTime currTime)
         {
             return DbSet.FirstOrDefault(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
+        }
+
+        public IQueryable<string> FindEmployeeEmailById(List<long> employeeId)
+        {
+            var lst = new List<long>();
+            lst.AddRange(employeeId);
+            //int[] test = new[] {10, 10, 10};
+            var empIds =  DbSet.Where(x => lst.Contains(x.EmployeeId)).Select(x=>x.Email);
+            return empIds;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -20,5 +21,6 @@ namespace EPMS.Interfaces.IServices
         long AddEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);
         void DeleteEmployee(Employee employee);
+        IQueryable<string> FindEmployeeEmailByIds(List<long> employeeId);
     }
 }

@@ -168,6 +168,7 @@
     <Compile Include="RequestModels\JobApplicantSearchRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
+    <Compile Include="RequestModels\MeetingRequest.cs" />
     <Compile Include="RequestModels\MeetingSearchRequest.cs" />
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
