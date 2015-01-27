@@ -24,9 +24,21 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
+        public bool Delete(long documentId)
+        {
+            meetingDocumentRepository.Delete(meetingDocumentRepository.Find(documentId));
+            meetingDocumentRepository.SaveChanges();
+            return true;
+        }
+
         public IEnumerable<MeetingDocument> FindDocumentByMeetingId(long meetingId)
         {
             return meetingDocumentRepository.LoadDocumentByMeetingId(meetingId);
+        }
+
+        public MeetingDocument FindMeetingDocumentById(long documentId)
+        {
+            return meetingDocumentRepository.Find(documentId);
         }
     }
 }

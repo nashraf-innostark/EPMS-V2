@@ -210,4 +210,10 @@
   <data name="PageTitleDetail" xml:space="preserve">
     <value>تفاصيل همة اسم الموظف</value>
   </data>
+  <data name="ErrorDelete" xml:space="preserve">
+    <value>خطأ في حذف المهام.</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>لقد تم حذف مهمة</value>
+  </data>
 </root>

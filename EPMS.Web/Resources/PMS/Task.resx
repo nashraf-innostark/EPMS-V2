@@ -210,4 +210,10 @@
   <data name="PageTitleDetail" xml:space="preserve">
     <value>Task Name's Details</value>
   </data>
+  <data name="ErrorDelete" xml:space="preserve">
+    <value>Error Deleting Task.</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>Task has been Deleted</value>
+  </data>
 </root>

@@ -36,9 +36,9 @@ namespace EPMS.Implementation.Services
             return Repository.FindTaskWithPreRequisites(id);
         }
 
-        public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid)
+        public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId)
         {
-            return Repository.FindProjectTaskByProjectId(projectid);
+            return Repository.FindProjectTaskByProjectId(projectid, taskId);
         }
 
         public IEnumerable<ProjectTaskResponse> LoadProjectTasksByEmployeeId(long employeeId, long projectId)
@@ -212,9 +212,35 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeleteProjectTask(ProjectTask task)
+        public void DeleteProjectTask(long taskId)
         {
-
+            ProjectTask task = Repository.Find(taskId);
+            if (task != null)
+            {
+                if (task.TaskEmployees.Any())
+                {
+                    int count = task.TaskEmployees.Count();
+                    for (int i = 0; i < count; i++)
+                    {
+                        TaskEmployeeService.DeleteTaskEmployee(task.TaskEmployees.FirstOrDefault());
+                    }
+                }
+            }
+            if (task != null)
+            {
+                if (task.PreRequisitTask.Any())
+                {
+                    int count = task.PreRequisitTask.Count();
+                    for (int i = 0; i < count; i++)
+                    {
+                        //Repository.Delete(task.PreRequisitTask.FirstOrDefault());
+                        task.PreRequisitTask.Remove(task.PreRequisitTask.FirstOrDefault());
+                    }
+                    Repository.SaveChanges();
+                }
+            }
+            Repository.Delete(task);
+            Repository.SaveChanges();
         }
     }
 }
