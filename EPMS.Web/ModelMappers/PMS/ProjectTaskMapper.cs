@@ -20,7 +20,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.EndDate = source.EndDate;
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgress = source.TaskProgress;
+            projectTask.TaskProgress = source.TaskProgress ?? 0;
             projectTask.NotesE = source.NotesE;
             projectTask.NotesA = source.NotesA;
             projectTask.RecCreatedBy = source.RecCreatedBy;
