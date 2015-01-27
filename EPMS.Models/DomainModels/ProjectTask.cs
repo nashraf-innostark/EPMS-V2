@@ -6,7 +6,7 @@ namespace EPMS.Models.DomainModels
     public class ProjectTask
     {
         public long TaskId { get; set; }
-        public long CustomerId { get; set; }
+        public long? CustomerId { get; set; }
         public long ProjectId { get; set; }
         public string TaskNameE { get; set; }
         public string TaskNameA { get; set; }

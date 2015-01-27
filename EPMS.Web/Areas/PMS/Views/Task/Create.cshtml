@@ -66,7 +66,6 @@
                     {
                         @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "Client" })
                     }
-                    @Html.ValidationMessageFor(m => m.ProjectTask.CustomerId, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -76,14 +75,14 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @if (Model.ProjectTask.CustomerId == 0)
+                    @*@if (Model.ProjectTask.CustomerId == null)
                     {
                         @Html.DropDownListFor(m => m.ProjectTask.ProjectId, Enumerable.Empty<SelectListItem>(), "", new { @id = "ProjectId" })
                     }
                     else
-                    {
+                    {*@
                         @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "", new { @id = "ProjectId" })
-                    }
+                    @*}*@
                     @Html.ValidationMessageFor(m => m.ProjectTask.ProjectId, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -156,7 +155,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepicker readonly" })
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepickerGregorian readonly" })
                 </div>
             </div>
         </div>
@@ -168,7 +167,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepicker readonly" })
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepickerGregorian readonly" })
                 </div>
             </div>
         </div>
@@ -356,6 +355,12 @@
 
     function populateProjectDDL(data) {
         $("#ProjectId").empty();
+        $("#dualMulti").empty();
+        $("#dualMulti").pickList("destroy");
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
         if (data.length > 0) {
             $("#ProjectId").append(
                 $('<option></option>').val(0).html("--Select--")

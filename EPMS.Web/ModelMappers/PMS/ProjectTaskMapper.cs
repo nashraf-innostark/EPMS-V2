@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -16,8 +17,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TaskNameA = source.TaskNameA;
             projectTask.DescriptionE = source.DescriptionE;
             projectTask.DescriptionA = source.DescriptionA;
-            projectTask.StartDate = source.StartDate;
-            projectTask.EndDate = source.EndDate;
+            projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToShortDateString();
+            projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToShortDateString();
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
             projectTask.TaskProgress = source.TaskProgress ?? 0;
@@ -66,8 +67,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TaskNameA = source.TaskNameA;
             projectTask.DescriptionE = source.DescriptionE;
             projectTask.DescriptionA = source.DescriptionA;
-            projectTask.StartDate = source.StartDate;
-            projectTask.EndDate = source.EndDate;
+            projectTask.StartDate = source.StartDate == null ? (DateTime?)null : Convert.ToDateTime(source.StartDate);
+            projectTask.EndDate = source.EndDate == null ? (DateTime?)null : Convert.ToDateTime(source.StartDate);
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
             projectTask.TaskProgress = source.TaskProgress;

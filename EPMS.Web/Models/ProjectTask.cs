@@ -12,8 +12,7 @@ namespace EPMS.Web.Models
             TaskEmployees = new List<TaskEmployee>();
         }
         public long TaskId { get; set; }
-        [Required(ErrorMessage = "Please select Customer.")]
-        public long CustomerId { get; set; }
+        public long? CustomerId { get; set; }
         [Required(ErrorMessage = "Please select Project.")]
         public long ProjectId { get; set; }
         [Required(ErrorMessage = "Task Name (English) is required.")]
@@ -22,8 +21,8 @@ namespace EPMS.Web.Models
         public string TaskNameA { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         [Required(ErrorMessage = "Total Cost is required.")]
         public decimal TotalCost { get; set; }
         [Required(ErrorMessage = "Total Weight is required.")]
