@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    var siteUrl = $('#siteURL').val();
     //#region Dashboard basic Scripts
     $(".widget-general-stats select").select2();
     var isDragActive = false;
@@ -171,148 +172,12 @@
 
     $(".task-completion select").select2();
 
-    $("#progressId li.dashTask").on("click", function () {
-        //$(".progress")
-        //if($(this).hasClass("processed-pct")){
-        var target = 0;
-        if ($(this).find("a").is('[data-task]')) {
-            target = parseInt($(this).find("a").attr('data-task'));
-            $('.processed-pct').find("span").text($(this).find("a").text());
-        }
-        else if ($(this).find("a").is('[data-overall]')) {
-
-            target = parseInt($(this).find("a").attr('data-overall'));
-            $('.processed-pct').find("span").text($(this).find("a").text());
-
-        }
-
-        setTimeout(function () {
-
-            $('.processed-pct .bar').attr('style', 'width: ' + target + '%');
-            $('.processed-pct .bar').text(target + "%");
-        }, 200);
-    });
-
+    
+    ProjectWidgetEvents();
 
     $(".tempLoader").on('click', removeTempLoader);
 
-    var count = 0;
-    $("#progressId li.dashTask").each(function () {
-
-        if (count >= 4) {
-            $(this).addClass("hideIt");
-        }
-        count++;
-    });
-
-    if (count >= 4) {
-        $("#progressId .dashNext").show();
-    }
-    $("#progressId .dashNext").on("click", function () {
-        var liCont = $("#progressId li.dashTask").length;
-        var firstLiShow = 0;
-        var lastLiShow = 0;
-        var lastShow = 0;
-        var firstShowIndex = 0;
-        var lastShowIndex = 0;
-
-        $("#progressId li").each(function () {
-
-            if ($(this).hasClass("dashTask")) {
-
-                if (!$(this).hasClass("hideIt")) {
-
-
-
-                    if (firstLiShow == 0) {
-                        firstShowIndex = $(this).index();
-                    }
-                    firstLiShow++;
-
-                    if (lastLiShow == 3) {
-                        lastShowIndex = $(this).index();
-                    }
-                    lastLiShow++;
-
-                    $(this).addClass("hideIt");
-                }
-            }
-
-
-        });
-        var n = 0;
-        var nextNum = lastShowIndex + 1;
-        while (liCont > nextNum && n < 4) {
-
-            $("#progressId li.dashTask").eq(nextNum).removeClass("hideIt");
-            nextNum++;
-            n++;
-            var dd = nextNum;
-            if (dd == liCont) {
-                $("#progressId .dashNext").hide();
-            }
-        }
-
-
-
-
-
-
-
-        $("#progressId .dashBack").show();
-
-
-
-    });
-
-    $("#progressId .dashBack").on("click", function () {
-        var liCont = $("#progressId li.dashTask").length;
-        var firstLiShow = 0;
-        var lastLiShow = 0;
-        var lastShow = 0;
-        var firstShowIndex = 0;
-        var lastShowIndex = 0;
-
-        $("#progressId li").each(function () {
-
-            if ($(this).hasClass("dashTask")) {
-
-                if (!$(this).hasClass("hideIt")) {
-
-
-
-                    if (firstLiShow == 0) {
-                        firstShowIndex = $(this).index();
-                    }
-                    firstLiShow++;
-
-                    if (lastLiShow == 3) {
-                        lastShowIndex = $(this).index();
-                    }
-                    lastLiShow++;
-
-                    $(this).addClass("hideIt");
-                }
-            }
-
-
-        });
-        var n = 0;
-
-        var nextNum = firstShowIndex - 1;
-
-        while ((liCont >= nextNum) && n < 4) {
-            var dd = nextNum;
-            $("#progressId li.dashTask").eq(nextNum).removeClass("hideIt");
-            nextNum = nextNum - 1;
-            n++;
-
-            if (nextNum == 0) {
-                $("#progressId .dashBack").hide();
-            }
-        }
-        $("#progressId .dashNext").show();
-    });
+    
     $("#progressId2 li.dashTask").on("click", function () {
         //$(".progress")
         //if($(this).hasClass("processed-pct")){
@@ -456,7 +321,40 @@
     $("#multiFilter").select2();
 
     //#endregion
-    
+    $("#projectStatusDDL").on("change", function () {
+        var projectStatus = $(this).val();
+        var url = siteUrl + "/Dashboard/LoadProjectsDDL";
+        $("#projectLoader").show();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    projectStatus: projectStatus
+                },
+                success: function (data) {
+                    populateProjectDDL(data);
+                },
+                error: function (e) {
+                    alert('Error=' + e.toString());
+                }
+            });
+    });
+    function populateProjectDDL(data) {
+        $("#projectIdFilter").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                $("#projectIdFilter").append(
+                    $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
+                );
+            }
+        } else {
+            $("#projectIdFilter").append(
+                    $('<option></option>').val("").html("none")
+                );
+        }
+        $("#projectLoader").hide();
+    }
 });
 //#region Dashboard basic functions
 $(function () {
@@ -525,6 +423,146 @@ function scrollToTop() {
     offset = element.offset();
     offsetTop = offset.top;
     $('html, body').animate({ scrollTop: offsetTop }, 500, 'linear');
+}
+function ProjectWidgetEvents() {
+    $("#progressId li.dashTask").on("click", function () {
+        //$(".progress")
+        //if($(this).hasClass("processed-pct")){
+        var target = 0;
+        if ($(this).find("a").is('[data-task]')) {
+            target = parseInt($(this).find("a").attr('data-task'));
+            $('.processed-pct').find("span").text($(this).find("a").text());
+        }
+        else if ($(this).find("a").is('[data-overall]')) {
+
+            target = parseInt($(this).find("a").attr('data-overall'));
+            $('.processed-pct').find("span").text($(this).find("a").text());
+
+        }
+
+        setTimeout(function () {
+
+            $('.processed-pct .bar').attr('style', 'width: ' + target + '%');
+            $('.processed-pct .bar').text(target + "%");
+        }, 200);
+    });
+    var count = 0;
+    $("#progressId li.dashTask").each(function () {
+
+        if (count >= 4) {
+            $(this).addClass("hideIt");
+        }
+        count++;
+    });
+
+    if (count >= 4) {
+        $("#progressId .dashNext").show();
+    }
+    $("#progressId .dashNext").on("click", function () {
+        var liCont = $("#progressId li.dashTask").length;
+        var firstLiShow = 0;
+        var lastLiShow = 0;
+        var lastShow = 0;
+        var firstShowIndex = 0;
+        var lastShowIndex = 0;
+
+        $("#progressId li").each(function () {
+
+            if ($(this).hasClass("dashTask")) {
+
+                if (!$(this).hasClass("hideIt")) {
+
+
+
+                    if (firstLiShow == 0) {
+                        firstShowIndex = $(this).index();
+                    }
+                    firstLiShow++;
+
+                    if (lastLiShow == 3) {
+                        lastShowIndex = $(this).index();
+                    }
+                    lastLiShow++;
+
+                    $(this).addClass("hideIt");
+                }
+            }
+
+
+        });
+        var n = 0;
+        var nextNum = lastShowIndex + 1;
+        while (liCont > nextNum && n < 4) {
+
+            $("#progressId li.dashTask").eq(nextNum).removeClass("hideIt");
+            nextNum++;
+            n++;
+            var dd = nextNum;
+            if (dd == liCont) {
+                $("#progressId .dashNext").hide();
+            }
+        }
+
+
+
+
+
+
+
+        $("#progressId .dashBack").show();
+
+
+
+    });
+
+    $("#progressId .dashBack").on("click", function () {
+        var liCont = $("#progressId li.dashTask").length;
+        var firstLiShow = 0;
+        var lastLiShow = 0;
+        var lastShow = 0;
+        var firstShowIndex = 0;
+        var lastShowIndex = 0;
+
+        $("#progressId li").each(function () {
+
+            if ($(this).hasClass("dashTask")) {
+
+                if (!$(this).hasClass("hideIt")) {
+
+
+
+                    if (firstLiShow == 0) {
+                        firstShowIndex = $(this).index();
+                    }
+                    firstLiShow++;
+
+                    if (lastLiShow == 3) {
+                        lastShowIndex = $(this).index();
+                    }
+                    lastLiShow++;
+
+                    $(this).addClass("hideIt");
+                }
+            }
+
+
+        });
+        var n = 0;
+
+        var nextNum = firstShowIndex - 1;
+
+        while ((liCont >= nextNum) && n < 4) {
+            var dd = nextNum;
+            $("#progressId li.dashTask").eq(nextNum).removeClass("hideIt");
+            nextNum = nextNum - 1;
+            n++;
+
+            if (nextNum == 0) {
+                $("#progressId .dashBack").hide();
+            }
+        }
+        $("#progressId .dashNext").show();
+    });
 }
 //#endregion
 
@@ -604,10 +642,17 @@ function LoadComplaints(control) {
                         $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
                     }
                 });
+                if ($("#userRole").val() == "Customer")
+                {
+                    $('#complaints').append('<li><a href="/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
+                }
             }
             else {
                 $(".tempLoader").click();
                 $('#complaints').append('<li>No record found</li>');
+                if ($("#userRole").val() == "Customer") {
+                    $('#complaints').append('<li><a href="/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
+                }
             }
         },
         error: function (e) {
@@ -642,13 +687,13 @@ function LoadOrders(control) {
                 $.each(data, function (itemIndex, item) {
                      switch (item.OrderStatus)
                     {
-                         case 1: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                         case 2: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                             break;
-                         case 2: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
+                         case 1: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
                             break;
                          case 3: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
                             break;
-                         case 4: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/workDone.png" alt="Completed" title="Completed" class="status"></div></li>');
+                         case 4: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
                             break;
                     }
                 });
@@ -781,6 +826,91 @@ function LoadPayroll(control) {
         },
         error: function (e) {
             alert('Error:' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadMeetings(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var url = siteUrl + "/Dashboard/LoadMeetings";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#meetings').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create/' + item.MeetingId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div>'+item.MeetingDate+'</div></li>');
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#meetings').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadProjects(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var id = $("#projectIdFilter").val();
+    if (control.className == "refresher" || id == "") {
+        id = 0;
+    }
+    var url = siteUrl + "/Dashboard/LoadProjects";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            projectId: id
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            $('#progressId').empty();
+            if (data != null) {
+                    $('#progressId').append(
+                        '<li class="dashProject dashTask">' +
+                        '<a data-overall='+data.Project.ProgressTotal+' title="'+data.Project.NameE+'">'+data.Project.NameEShort+'</a>' +
+                        '</li>');
+                    if (data.ProjectTasks != null) {
+                        $.each(data.ProjectTasks, function(itemIndex, item) {
+                            $('#progressId').append(
+                                '<li class="dashTask">' +
+                                '<a data-task='+item.TaskProgress+'>'+item.TaskNameE+'</a>' +
+                                '</li>');
+                        });
+                    }
+                    $('#progressId').append(
+                    '<li class="dashBack">'+
+                        '<a><i class="icon-photon arrow_left"></i></a>'+
+                    '</li>'+
+                    '<li class="dashNext">'+
+                        '<a><i class="icon-photon arrow_right"></i></a>'+
+                    '</li>'+
+                    '<li class="processed-pct">'+
+                        '<span>'+data.Project.NameE+'</span>'+
+                        '<div class="progress progress-info">'+
+                            '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
+                        '</div>'+
+                    '</li>');
+                ProjectWidgetEvents();
+            }
+            else {
+                $(".tempLoader").click();
+                $('#progressId').append('<li class="processed-pct"><span>No record found</span></li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
             $(".tempLoader").click();
         }
     });

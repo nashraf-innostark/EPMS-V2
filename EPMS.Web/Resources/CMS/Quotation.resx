@@ -225,4 +225,34 @@
   <data name="UpdateQuotation" xml:space="preserve">
     <value>Update Quotation</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmpName" xml:space="preserve">
+    <value>Employee Name</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="QuotationNo" xml:space="preserve">
+    <value>Quotation #</value>
+  </data>
+  <data name="StreetAddress" xml:space="preserve">
+    <value>Street Address</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="BtnCancelOrder" xml:space="preserve">
+    <value>Cancel Order</value>
+  </data>
+  <data name="BtnPlaceOrder" xml:space="preserve">
+    <value>Place Order</value>
+  </data>
 </root>

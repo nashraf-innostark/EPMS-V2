@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.RequestModels;
 using DomainModels = EPMS.Models.DomainModels;
-
+using Models = EPMS.Web.Models;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -80,6 +80,19 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+        }
+
+        public static DashboardModels.Meeting CreateForDashboard(this DomainModels.Meeting source)
+        {
+            return new DashboardModels.Meeting
+            {
+                MeetingId = source.MeetingId,
+                Topic = source.TopicName,
+                TopicShort = source.TopicName.Length > 25 ? source.TopicName.Substring(0, 25) + "..." : source.TopicName,
+                TopicA = source.TopicNameAr,
+                TopicAShort = source.TopicNameAr.Length > 25 ? source.TopicNameAr.Substring(0, 25) + "..." : source.TopicNameAr,
+                MeetingDate = Convert.ToDateTime(source.Date.ToString()).ToShortDateString()
             };
             var meetingrequest = new MeetingRequest();
             meetingrequest.EmployeeIds = source.EmployeeIds;

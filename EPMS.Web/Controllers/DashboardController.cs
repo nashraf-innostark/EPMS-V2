@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ModelMapers;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 
@@ -15,6 +18,8 @@ namespace EPMS.Web.Controllers
     {
         #region Constructor and Private Services objects
 
+        private readonly IMeetingService meetingService;
+        private readonly IProjectService projectService;
         private readonly IPayrollService payrollService;
         private readonly IDepartmentService departmentService;
         private readonly IJobOfferedService jobOfferedService;
@@ -27,6 +32,8 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Dashboard constructor
         /// </summary>
+        /// <param name="meetingService"></param>
+        /// <param name="projectService"></param>
         /// <param name="payrollService"></param>
         /// <param name="departmentService"></param>
         /// <param name="jobOfferedService"></param>
@@ -35,8 +42,10 @@ namespace EPMS.Web.Controllers
         /// <param name="employeeService"></param>
         /// <param name="customerService"></param>
         /// <param name="complaintService"></param>
-        public DashboardController(IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
+        public DashboardController(IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
         {
+            this.meetingService = meetingService;
+            this.projectService = projectService;
             this.payrollService = payrollService;
             this.departmentService = departmentService;
             this.jobOfferedService = jobOfferedService;
@@ -56,21 +65,13 @@ namespace EPMS.Web.Controllers
         public ActionResult Index()
         {
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            ViewBag.UserRole = Session["RoleName"];
             if ((string)Session["RoleName"] != "Customer")
             {
                 var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
             #region Employee Requests Widget
             dashboardViewModel.Employees = GetAllEmployees();
             dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
-            #endregion
-
-            #region Complaints Widget
-            dashboardViewModel.Complaints = GetComplaints(requester);
-            dashboardViewModel.Customers = GetAllCustomers();
-            #endregion
-
-            #region Orders Widget
-            dashboardViewModel.Orders = GetOrders(requester,0);//0 means all
             #endregion
 
             #region Recruitment Widget
@@ -82,7 +83,7 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.EmployeesRecent = GetRecentEmployees(requester);
             #endregion
 
-            #region Employee Requests Widget
+            #region Profile Widget
             if (requester!="Admin")
                 dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
             #endregion
@@ -91,12 +92,36 @@ namespace EPMS.Web.Controllers
             if (requester != "Admin")
                 dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()),DateTime.Now);
             #endregion
-                
+
+            #region Meeting Widget
+
+                dashboardViewModel.Meetings = GetMeetings(requester);
+
+            #endregion
+
+            #region Tasks Widget
+
+            #endregion
             }
-            else
+            if ((string)Session["RoleName"] == "Customer" || (string)Session["RoleName"] == "Admin")
             {
-                return RedirectToAction("Index", "Orders", new { area = "CMS" });
+                var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+                #region Complaints Widget
+                dashboardViewModel.Complaints = GetComplaints(requester);
+                dashboardViewModel.Customers = GetAllCustomers();
+                #endregion
+
+                #region Orders Widget
+                dashboardViewModel.Orders = GetOrders(requester, 0);//0 means all
+                #endregion
+
+                #region Projects Widget
+                dashboardViewModel.Project = GetProjects(requester, 0);//0 means all projects, 1 means Current project
+                dashboardViewModel.Projects = GetProjectsDDL(requester, 1);
+
+                #endregion
             }
+            
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
             return View(dashboardViewModel);
@@ -112,6 +137,15 @@ namespace EPMS.Web.Controllers
         private IEnumerable<EmployeeRequest> GetEmployeeRequests(string requester)
         {
             return employeeRequestService.LoadRequestsForDashboard(requester).Select(x => x.CreateForDashboard());
+        }
+        /// <summary>
+        /// Load Meetings
+        /// </summary>
+        /// <param name="requester"></param>
+        /// <returns></returns>
+        private IEnumerable<Meeting> GetMeetings(string requester)
+        {
+            return meetingService.LoadMeetingsForDashboard(requester).Select(x => x.CreateForDashboard());
         }
         /// <summary>
         /// Load all employees for dropdownlist
@@ -148,6 +182,14 @@ namespace EPMS.Web.Controllers
         private IEnumerable<Order> GetOrders(string requester,int status)
         {
             return ordersService.GetRecentOrders(requester,status).Select(x => x.CreateForDashboard());
+        }
+        private ProjectResponseForDashboard GetProjects(string requester, long projectId)
+        {
+            return projectService.LoadProjectForDashboard(requester,projectId);
+        }
+        private IEnumerable<DashboardModels.Project> GetProjectsDDL(string requester, int status)
+        {
+            return projectService.LoadAllProjects(requester, status).Select(x => x.CreateForDashboardDDL());
         }
         /// <summary>
         /// Load recent jobs offered
@@ -264,6 +306,32 @@ namespace EPMS.Web.Controllers
             DateTime filterDateTime = month == 1 ? DateTime.Now : DateTime.Now.AddMonths(-1);
             var payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), filterDateTime);
             return Json(payroll, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// Load meetings
+        /// </summary>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadMeetings()
+        {
+            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
+            var meetings = GetMeetings(requester);
+            return Json(meetings, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult LoadProjects(long projectId)
+        {
+            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+            var projects = GetProjects(requester, projectId);
+            return Json(projects, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult LoadProjectsDDL(int projectStatus)
+        {
+            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+            var projects = GetProjectsDDL(requester, projectStatus);
+            return Json(projects, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

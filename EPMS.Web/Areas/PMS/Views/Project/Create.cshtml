@@ -157,6 +157,7 @@
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "English", onchange = "GregorianToHijri(this,'#StartDateA')" })
                     @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                    @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -173,6 +174,7 @@
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Project.EndDate, new { @class = "datepickerGregorian cursorHand span3", @id = "EndDateE", @readonly = true, @placeholder = "English", onchange = "GregorianToHijri(this,'#EndDateA')" })
                     @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#EndDateE')" })
+                    @Html.ValidationMessageFor(m => m.Project.EndDate, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -575,7 +577,7 @@
                 $("#ClientName").val($("#Client option:selected").text());
                 //$('#SearchRequest_JobId').empty();
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="'+siteUrl+'/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({

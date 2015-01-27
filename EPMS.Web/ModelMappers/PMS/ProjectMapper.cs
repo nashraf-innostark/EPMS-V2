@@ -63,11 +63,14 @@ namespace EPMS.Web.ModelMappers.PMS
             }
             return project;
         }
-        //public static DashboardModels.Project CreateForDashboard(this Project source)
-        //{
-        //    return new DashboardModels.Project
-        //    {
-        //    };
-        //}
+        public static DashboardModels.Project CreateForDashboardDDL(this Project source)
+        {
+            return new DashboardModels.Project
+            {
+                ProjectId = source.ProjectId,
+                NameA = source.NameA,
+                NameE = source.NameE
+            };
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace EPMS.Interfaces.IServices
         Meeting FindMeetingById(long id);
         Meeting AddMeeting(Meeting meeting);
         bool UpdateMeeting(Meeting meeting);
+        IEnumerable<Meeting> LoadMeetingsForDashboard(string requester);
 
         bool SaveMeeting(MeetingRequest meetinToBeSaved);
     }

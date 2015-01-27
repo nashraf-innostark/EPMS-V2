@@ -282,4 +282,10 @@
   <data name="UpdateProject" xml:space="preserve">
     <value>Update Project</value>
   </data>
+  <data name="ProjectEndDateRequiredMsg" xml:space="preserve">
+    <value>Select project delivery date.</value>
+  </data>
+  <data name="ProjectStartDateRequiredMsg" xml:space="preserve">
+    <value>Select project start date.</value>
+  </data>
 </root>

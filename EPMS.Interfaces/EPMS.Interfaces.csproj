@@ -76,11 +76,13 @@
     <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
+    <Compile Include="IServices\IPreRequisitTaskService.cs" />
     <Compile Include="IServices\IProjectDocumentService.cs" />
     <Compile Include="IServices\IProjectService.cs" />
     <Compile Include="IServices\IProjectTaskService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
+    <Compile Include="IServices\ITaskEmployeeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
@@ -106,11 +108,13 @@
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\IMenuRightRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
     <Compile Include="Repository\IProjectTaskRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
+    <Compile Include="Repository\ITaskEmployeeRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

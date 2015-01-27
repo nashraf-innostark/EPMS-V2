@@ -211,53 +211,57 @@
                 </div>
             </div>
         <!--Sortable Responsive Table end-->
-        <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.TotalTasksCost</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.TotalTasksCost, new { @id = "ProjectTotalTasksCost", @readonly = true })
+        
+            <!--Input Field begin-->
+            if (ViewBag.UserRole != "Customer")
+            {
+                <!--Input Field begin-->
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">@EPMS.Web.Resources.PMS.Project.TotalTasksCost</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Project.TotalTasksCost, new { @id = "ProjectTotalTasksCost", @readonly = true })
+                        </div>
                     </div>
                 </div>
-            </div>
         <!--Input Field end-->
         <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.OtherCost</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.OtherCost, new { @id = "ProjectOtherCost", @disabled = true })
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">@EPMS.Web.Resources.PMS.Project.OtherCost</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Project.OtherCost, new { @id = "ProjectOtherCost", @disabled = true })
+                        </div>
                     </div>
                 </div>
-            </div>
+        <!--Input Field end-->
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">@EPMS.Web.Resources.PMS.Project.Profit</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Project.Profit, new { @id = "ProjectProfit", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+            }
+
         <!--Input Field end-->
         <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Profit</label>
+        <div class="form-legend">@EPMS.Web.Resources.PMS.Project.Progress</div>
+        <div class="control-group row-fluid">
+            <div class="span12 span-inset">
+                <div class="progress progress-info">
+                    <div class="bar" style="width: @Model.Project.ProgressTotal%">@Model.Project.ProgressTotal%</div>
                 </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.Profit, new { @id = "ProjectProfit", @readonly = true })
-                    </div>
-                </div>
+
             </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Progress</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Project.ProgressTotal, new { @id = "ProjectProgress", @disabled = true })
-                    </div>
-                </div>
-            </div>
+        </div>
         <!--Input Field end-->
 
 
@@ -436,7 +440,15 @@
                 }
             </div>
         }
-        
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                @if (ViewBag.UserRole != "Customer")
+                {
+                    <a href="/PMS/Project/Create/@Model.Project.ProjectId" class="btn">@EPMS.Web.Resources.PMS.Project.UpdateProject</a>
+                }
+            </div>
+
+        </div>
     </div>
 </form>
     <!-- end container -->

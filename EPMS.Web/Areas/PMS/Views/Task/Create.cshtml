@@ -1,6 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Tasks.TaskCreateViewModel
 
 @{
+    string userRole = (string)Session["RoleName"];
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
@@ -16,7 +17,7 @@
         </li>
         <li>
             <a href="~/PMS/Task/Index">
-
+                @EPMS.Web.Resources.PMS.Task.PageTitleIndex
             </a>
         </li>
         <li>
@@ -43,10 +44,17 @@
             @Html.HiddenFor(model => model.OldRequisitTasks[i])
         }
     }
+    if (Model.OldAssignedEmployees != null)
+    {
+        for (int i = 0; i < Model.OldAssignedEmployees.Count(); i++)
+        {
+            @Html.HiddenFor(model => model.OldAssignedEmployees[i])
+        }
+    }
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Client">Client Name</label>
+                <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -64,7 +72,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="">Project Name </label>
+                <label class="control-label" for="">@EPMS.Web.Resources.PMS.Task.ProjectName</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -82,52 +90,54 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TaskNameE">Task Name</label>
+                <label class="control-label" for="TaskNameE">@EPMS.Web.Resources.PMS.Task.TaskName</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameE, new { @id = "TaskNameE", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameE, new { @id = "TaskNameE", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TaskNameA">Task Name arabic</label>
+                <label class="control-label" for="TaskNameA">@EPMS.Web.Resources.PMS.Task.TaskNameA</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameA, new { @id = "TaskNameA", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameA, new { @id = "TaskNameA", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DescriptionE">Description</label>
+                <label class="control-label" for="DescriptionE">@EPMS.Web.Resources.PMS.Task.Description</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionE, new { @id = "DescriptionE", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionE, new { @id = "DescriptionE", @class = "readonly" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="DescriptionA">Description arabic</label>
+                <label class="control-label" for="DescriptionA">@EPMS.Web.Resources.PMS.Task.DescriptionA</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionA, new { @id = "DescriptionA", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionA, new { @id = "DescriptionA", @class = "readonly" })
                 </div>
             </div>
         </div>
         <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="dualMulti">Pre-Requisit Tasks</label>
+                <label class="control-label" for="dualMulti">@EPMS.Web.Resources.PMS.Task.Pre_ReqTask</label>
             </div>
             <div class="span9">
                 <div class="controls">
 
-                    @if (Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any())
+                    @if ((Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any()) || (Model.ProjectAllTasks != null))
                     {
                         @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new { @class = "", @id = "dualMulti", })
                     }
@@ -140,95 +150,103 @@
         </div>
         <div id="Date_Picker" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="datepicker">
-                    Start Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                <label class="control-label" for="StartDate">
+                    @EPMS.Web.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepicker" })
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepicker readonly" })
                 </div>
             </div>
         </div>
         <div id="Date_Picker2" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="datepicker2">
-                    End Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                <label class="control-label" for="EndDate">
+                    @EPMS.Web.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepicker" })
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepicker readonly" })
                 </div>
             </div>
         </div>
         <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="dualMulti2">Assign Employees</label>
+                <label class="control-label" for="dualMulti2">@EPMS.Web.Resources.PMS.Task.AssignEmployee</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                    @if ((Model.ProjectTask != null && Model.ProjectTask.TaskEmployees != null))
+                    {
+                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                    }
+                    else
+                    {
+                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                    }
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TotalCost">Task Cost</label>
+                <label class="control-label" for="TotalCost">@EPMS.Web.Resources.PMS.Task.TotalCost</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "readonly" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TotalCost, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TotalWeight">Task Weight</label>
+                <label class="control-label" for="TotalWeight">@EPMS.Web.Resources.PMS.Task.TaskWeight</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TotalWeight, new { @id = "TotalWeight", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalWeight, new { @id = "TotalWeight", @class = "readonly" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TotalWeight, String.Empty, new { @class = "required" })
-                    <script>
-                        $(document).ready(function () {
-                            $('#TaskWeight').mask("99%");
-                        });
-                    </script>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="NotesE">Notes</label>
+                <label class="control-label" for="NotesE">@EPMS.Web.Resources.PMS.Task.Notes</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.NotesE, new { @id = "NotesE", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesE, new { @id = "NotesE", @class = "readonly" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="NotesA">Notes arabic</label>
+                <label class="control-label" for="NotesA">@EPMS.Web.Resources.PMS.Task.NotesA</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.NotesA, new { @id = "NotesA", @class = "" })
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesA, new { @id = "NotesA", @class = "readonly" })
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">Save Changes</button>
+        @if (userRole == "Admin" || userRole == "PM")
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
+                </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="button" class="btn">Delete Task</button>
-            </div>
-        </div>
+            if (Model.ProjectTask.TaskId > 0)
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" name="Delete">@EPMS.Web.Resources.PMS.Task.BtnDelete</button>
+                    </div>
+                </div>
+            }
+        }
     </div>
 }
 
@@ -236,11 +254,19 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        debugger;
+        CKEDITOR.replace('DescriptionE');
+        CKEDITOR.replace('DescriptionA');
+        CKEDITOR.replace('NotesE');
+        CKEDITOR.replace('NotesA');
+        if ('@userRole' == "Customer") {
+            $(".readonly").attr("readonly", "true");
+        }
+        $('#TotalWeight').mask("99%");
+        var idOfTask = parseInt('@Model.ProjectTask.TaskId');
         if ('@Model.ProjectTask.RequisitTasks.Count' > 0) {
 
-            var jobsList = '@Html.Raw(Json.Encode(Model.ProjectTask.RequisitTasks))';
-            var parsed = JSON.parse(jobsList);
+            var tasksList = '@Html.Raw(Json.Encode(Model.ProjectTask.RequisitTasks))';
+            var parsed = JSON.parse(tasksList);
             $("#dualMulti option").each(function (key, value) {
                 var id = parseInt($(this).val());
                 var element = $(this);
@@ -250,11 +276,20 @@
                     }
                 });
             });
+        }
+        if ('@Model.ProjectTask.TaskEmployees.Count' > 0) {
 
-            //$("#dualMulti").pickList({
-            //    sourceListLabel: "Tasks",
-            //    targetListLabel: "Prerquisit Tasks",
-            //});
+            var employeeList = '@Html.Raw(Json.Encode(Model.ProjectTask.TaskEmployees))';
+            parsed = JSON.parse(employeeList);
+            $("#dualMulti2 option").each(function (key, value) {
+                var id = parseInt($(this).val());
+                var element = $(this);
+                $.each(parsed, function (key, value) {
+                    if (value.EmployeeId == id) {
+                        $(element).attr("selected", "selected");
+                    }
+                });
+            });
         }
         $("#dualMulti").pickList({
             sourceListLabel: "Tasks",
@@ -272,7 +307,7 @@
             var url = siteUrl + "/PMS/Task/GetCustomerProjects";
             if (customerId > 0) {
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({
@@ -297,7 +332,7 @@
             var url = siteUrl + "/PMS/Task/GetProjectTasks";
             if (projectId > 0) {
                 $.blockUI({
-                    message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({

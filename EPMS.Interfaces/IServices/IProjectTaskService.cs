@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
     public interface IProjectTaskService
     {
         ProjectTask FindProjectTaskById(long id);
-        IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid);
+        IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId);
         IEnumerable<ProjectTask> GetAll();
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);
-        bool AddProjectTask(ProjectTask task, List<long> preReqList);
-        bool UpdateProjectTask(ProjectTask task, List<long> preReqList);
-        void DeleteProjectTask(ProjectTask task);
+        bool AddProjectTask(ProjectTask task, List<long> preReqList, List<long> assignedEmployee);
+        bool UpdateProjectTask(ProjectTask task, List<long> dbTaskList, List<long> clientTaskList, List<long> dbEmployeeList, List<long> clientEmployeeList);
+        void DeleteProjectTask(long taskId);
+        TaskResponse GetAllTasks(TaskSearchRequest searchRequest);
     }
 }

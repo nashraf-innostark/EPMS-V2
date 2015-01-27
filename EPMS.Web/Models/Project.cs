@@ -15,7 +15,9 @@ namespace EPMS.Web.Models
         public string SerialNo { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.PMS.Project), ErrorMessageResourceName = "ProjectStartDateRequiredMsg")]
         public string StartDate { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.PMS.Project), ErrorMessageResourceName = "ProjectEndDateRequiredMsg")]
         public string EndDate { get; set; }
         public int Status { get; set; }
         public string NotesE { get; set; }

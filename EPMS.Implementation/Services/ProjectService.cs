@@ -1,22 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
-using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
+using EPMS.Models.ResponseModels;
+using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Implementation.Services
 {
     public class ProjectService:IProjectService
     {
         private readonly IProjectRepository projectRepository;
+        private readonly IOrdersRepository ordersRepository;
+        private readonly IProjectTaskRepository projectTaskRepository;
+
         #region Constructor
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectService(IProjectRepository projectRepository)
+        public ProjectService(IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
         {
             this.projectRepository = projectRepository;
+            this.ordersRepository = ordersRepository;
+            this.projectTaskRepository = projectTaskRepository;
         }
+
         #endregion
 
         public Project FindProjectById(long id)
@@ -33,13 +43,24 @@ namespace EPMS.Implementation.Services
         {
             projectRepository.Add(project);
             projectRepository.SaveChanges();
+            SetOrderStatus(project);
             return project.ProjectId;
+        }
+
+        private void SetOrderStatus(Project project)
+        {
+            var order = ordersRepository.Find(Convert.ToInt32(project.OrderId));
+            if (order == null) return;
+            order.OrderStatus = project.Status;
+            ordersRepository.Update(order);
+            ordersRepository.SaveChanges();
         }
 
         public long UpdateProject(Project project)
         {
             projectRepository.Update(project);
             projectRepository.SaveChanges();
+            SetOrderStatus(project);
             return project.ProjectId;
         }
 
@@ -63,9 +84,24 @@ namespace EPMS.Implementation.Services
             return projectRepository.GetAllFinishedProjectsByCustomerId(id);
         }
 
-        public IEnumerable<Project> LoadProjectsForDashboard(string requester)
+        public ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId)
         {
-            throw new System.NotImplementedException();
+            var project = projectRepository.GetProjectForDashboard(requester, projectId);
+            if (project != null)
+            {
+                var projectTasks = projectTaskRepository.GetTasksByProjectId(project.ProjectId);
+                ProjectResponseForDashboard projectResponse = new ProjectResponseForDashboard();
+                projectResponse.Project = project.CreateForDashboard();
+                if (projectTasks.Any())
+                    projectResponse.ProjectTasks = projectTasks.Select(x=>x.CreateForDashboard());
+                return projectResponse;
+            }
+            return null;
+        }
+
+        public IEnumerable<Project> LoadAllProjects(string requester, int status)
+        {
+            return projectRepository.GetAllProjects(requester, status);
         }
     }
 }

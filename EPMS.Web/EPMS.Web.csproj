@@ -277,10 +277,12 @@
     <Compile Include="DashboardModels\Customer.cs" />
     <Compile Include="DashboardModels\Department.cs" />
     <Compile Include="DashboardModels\EmployeeRequest.cs" />
+    <Compile Include="DashboardModels\Meeting.cs" />
     <Compile Include="DashboardModels\Order.cs" />
     <Compile Include="DashboardModels\Payment.cs" />
     <Compile Include="DashboardModels\Payroll.cs" />
     <Compile Include="DashboardModels\Profile.cs" />
+    <Compile Include="DashboardModels\Project.cs" />
     <Compile Include="DashboardModels\Recruitment.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3060,6 +3062,7 @@
     <EmbeddedResource Include="Resources\PMS\Task.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

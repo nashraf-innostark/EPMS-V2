@@ -53,7 +53,7 @@
                                 @*<td>@Html.ActionLink(@item.ClientName, "Details","Customer", new { id = item.CustomerId })</td>*@
                                 <td><a href="/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
                                 <td>@Html.ActionLink(@item.Topic, "Create",new{id=item.ComplaintId})</td>
-                                <td>@item.ComplaintDate.ToShortDateString()</td>
+                                <td>@item.ComplaintDate</td>
                                 <td>@item.IsRepliedString</td>
                             </tr>
                         }

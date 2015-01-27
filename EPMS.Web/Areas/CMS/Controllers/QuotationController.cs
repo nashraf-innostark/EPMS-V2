@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Quotation;
@@ -14,7 +15,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.CMS.Controllers
 {
     [Authorize]
-    public class QuotationController : Controller
+    public class QuotationController : BaseController
     {
         #region Private
         private readonly ICustomerService CustomerService;
@@ -41,7 +42,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Public
         // GET: CMS/Quotation
-        //[SiteAuthorize(PermissionKey = "QuotationIndex")]
+        [SiteAuthorize(PermissionKey = "QuotationIndex")]
         public ActionResult Index()
         {
             QuotationListViewModel viewModel = new QuotationListViewModel
@@ -55,6 +56,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Index(QuotationSearchRequest searchRequest)
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
+            string roleName = (string) Session["RoleName"];
+            if (roleName == "Admin")
+            {
+                searchRequest.CustomerId = 0;
+            }
+            if (roleName == "Customer")
+            {
+                searchRequest.CustomerId = (long)Session["CustomerID"];
+            }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
             viewModel.iTotalRecords = quotationList.TotalCount;
@@ -62,7 +72,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
-        //[SiteAuthorize(PermissionKey = "QuotationsCreate")]
+        [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(long? id)
         {
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
@@ -201,7 +211,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var orders = OrdersService.GetOrdersByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
-
+        [SiteAuthorize(PermissionKey = "QuotationDetail")]
         public ActionResult Detail(long? id)
         {
             QuotationDetailViewModel viewModel = new QuotationDetailViewModel();

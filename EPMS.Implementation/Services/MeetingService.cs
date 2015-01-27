@@ -219,6 +219,11 @@ namespace EPMS.Implementation.Services
             }
 
         }
+        public IEnumerable<Meeting> LoadMeetingsForDashboard(string requester)
+        {
+            return meetingRepository.GetMeetingsForDashboard(requester);
+        }
+
 
     }
 }
