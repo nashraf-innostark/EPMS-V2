@@ -35,6 +35,7 @@
     <div class="container-fluid">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Meeting.MeetingId)
+        @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" })
         @Html.HiddenFor(m => m.Meeting.RecCreatedBy)
         @Html.HiddenFor(m => m.Meeting.RecCreatedDt)
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
@@ -76,28 +77,37 @@
             <div class="span3">
                 <label class="control-label" for="dualMulti">Attendees (Emloyees)</label>
             </div>
-            <div class="span9">
+            <div class="span9" id="checked">
                 <div class="controls">
-                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee" })
+                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox"})
                 </div>
             </div>
         </div>
-        @if (Model.MeetingAttendees != null)
-        {
-            if (Model.MeetingAttendees.Any())
-            {
-                <div id="Dual_Multi_Select_with_Filter_Search2" class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label">Absences (Emloyees)</label>
-                    </div>
-                    <div class="span9">
+
+        <div id="Dual_Multi_Select_with_Filter_Search2" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Absences (Emloyees)</label>
+            </div>
+            <div class="span9">
+                @if (Model.Meeting.MeetingId > 0)
+                {
+                    if (Model.Meeting.MeetingAttendees != null)
+                    {
                         <div class="controls">
-                            @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
-                        </div>
+                        @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new {@name = "dualMultiAttendee", @id = "dualMultiAttendee"})
                     </div>
-                </div>
-            }
-        }
+                    }
+                    
+                    else
+                    {
+                        <div class="controls">
+                            @Html.ListBoxFor(model => model.Meeting.AbsentEmployeeIds, new MultiSelectList(new[] { "" }), new { @id = "dualMultiAttendee" })
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
         <!--Attendees Other than Employees-->
         <div class="control-group row-fluid">
             <div class="span12">
@@ -105,48 +115,48 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeName, new { @dir = "ltr", id = "attendee1", @class = "attendee1", @placeholder = "Attendee 1" })
-                    @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeName, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { @dir = "ltr", id = "attendee1", @class = "attendee1", @placeholder = "Attendee 1" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName1, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeEmail, new { @dir = "ltr", id = "email1", @class = "email1", @placeholder = "Email" })
-                        @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeEmail, "", new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { @dir = "ltr", id = "email1", @class = "email1", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail1, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeName, new { @dir = "ltr", id = "attendee2", @class = "attendee2", @placeholder = "Attendee 2" })
-                    @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeName, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { @dir = "ltr", id = "attendee2", @class = "attendee2", @placeholder = "Attendee 2" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName2, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeEmail, new { @dir = "ltr", id = "email2", @class = "email2", @placeholder = "Email" })
-                        @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeEmail, "", new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { @dir = "ltr", id = "email2", @class = "email2", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail2, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeName, new { @dir = "ltr", id = "attendee3", @class = "attendee3", @placeholder = "Attendee 3" })
-                    @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeName, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { @dir = "ltr", id = "attendee3", @class = "attendee3", @placeholder = "Attendee 3" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName3, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.MeetingAttendee.AttendeeEmail, new { @dir = "ltr", id = "email3", @class = "email3", @placeholder = "Email" })
-                        @Html.ValidationMessageFor(m => m.MeetingAttendee.AttendeeEmail, "", new { @class = "required" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { @dir = "ltr", id = "email3", @class = "email3", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail3, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!--Input Fields-->
         <div id="Date_Picker" class="control-group row-fluid">
             <div class="span3">
@@ -163,14 +173,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">Agenda</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.Agenda, new { @dir = "ltr", id = "Agenda"})
+                    @Html.TextBoxFor(m => m.Meeting.Agenda, new { @dir = "ltr", id = "Agenda" })
                     @Html.ValidationMessageFor(m => m.Meeting.Agenda, "", new { @class = "required" })
                 </div>
             </div>
@@ -230,12 +240,12 @@
                 </div>
             </div>
         </div>
-        
+
         <!--Drag And Drop Upload begin-->
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputField">
-                    Attach Files<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB each"><i class="icon-photon info-circle"></i></a>
+                    Attach Files<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="@EPMS.Web.Resources.PMS.Project.FileSize"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -244,7 +254,21 @@
                     <div class="span9" id="uploaded"></div>
                 </div>
             </div>
+
         </div>
+        @if (Model.MeetingDocuments != null)
+        {
+            <div class="control-group row-fluid">
+                @foreach (var doc in Model.MeetingDocuments)
+                {
+                    <div class="controls">
+                        <div class="span-inset">
+                            <button type="button" class="btn" onclick="deleteDoc(this,@doc.DocumentId)">@EPMS.Web.Resources.PMS.Project.DeleteFile @doc.FileName</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
         <!--Drag And Drop Upload end-->
 
         <div class="control-group row-fluid">
@@ -255,7 +279,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">Create Meeting</button>
+                <button type="submit" class="btn" id="createMeet">Create Meeting</button>
             </div>
 
         </div>
@@ -264,8 +288,7 @@
 }
 
 <script>
-    $().ready(function () {
-        debugger;
+    $(document).ready(function () {
         var meetingId = $("#Meeting_MeetingId").val();
         if (meetingId == 0) {
             //Dual for Employees
@@ -274,39 +297,114 @@
                 targetListLabel: "Attending Employees",
             });
         }
-        var jobsList = '@Html.Raw(Json.Encode(Model.MeetingAttendees))';
-        var parsed = JSON.parse(jobsList);
 
         if (meetingId > 0) {
-
+            var attendeeList = '@Html.Raw(Json.Encode(Model.Meeting.MeetingAttendees))';
+            var parsed = JSON.parse(attendeeList);
             //Set Attribute of Selected Items to 'Selected' to Populate Target List
             $("#dualMultiEmployee option").each(function () {
-                debugger;
                 var id = parseInt($(this).val());
                 var element = $(this);
                 $.each(parsed, function (key, value) {
-                    debugger;
                     if (value.EmployeeId == id) {
-                        debugger;
                         $(element).attr("selected", "selected");
                     }
                 });
             });
-
             //Dual for Employees
             $("#dualMultiEmployee").pickList({
                 sourceListLabel: "Emloyees",
                 targetListLabel: "Attending Employees",
             });
         }
-        
+
+        var absenteeList = '@Html.Raw(Json.Encode(Model.Meeting.AbsenteesList))';
+        var parsed = JSON.parse(absenteeList);
+        //Set Attribute of Selected Items to 'Selected' to Populate Target List
+        $("#dualMultiAttendee option").each(function () {
+            var id = parseInt($(this).val());
+            var element = $(this);
+            $.each(parsed, function (key, value) {
+                if (value.EmployeeId == id) {
+                    $(element).attr("selected", "selected");
+                }
+            });
+        });
+
         //Dual for Attendees
         $("#dualMultiAttendee").pickList({
             sourceListLabel: "Emloyees",
             targetListLabel: "Attending Employees",
         });
+
+        var errors = "";
+        var url = "/Meeting/Meeting/UploadDocuments";
+        $('#upload').mfupload({
+
+            type: '',   //all types
+            maxsize: 1,
+            post_upload: url,
+            folder: "./",
+            ini_text: "@EPMS.Web.Resources.PMS.Project.DocumentUpload",
+            over_text: "@EPMS.Web.Resources.PMS.Project.DocumentHoverText",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                addDocName(result.filename);
+            },
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+
+        function addDocName(filename) {
+            var lis = $("#DocsNames").val();
+            lis += filename + "~";
+            $("#DocsNames").val(lis);
+        }
+
+        if ('@DateTime.Now' >= '@Model.Meeting.Date') {
+            $("#checked").addClass('disableList');
+        }
+
     });
+    function deleteDoc(button,fileId) {
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Meeting/Meeting/DeleteDocument";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: "json",
+            data: {
+                fileId: fileId
+            },
+            success: function (data) {
+                if (data) {
+                    button.remove();
+                }
+                $.unblockUI();
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+            }
+        });
+    }
 </script>
-
-
-

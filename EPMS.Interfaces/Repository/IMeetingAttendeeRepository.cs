@@ -13,5 +13,6 @@ namespace EPMS.Interfaces.Repository
         /// </summary>
         IEnumerable<MeetingAttendee> GetAttendeesByMeetingId(long meetingId);
         MeetingAttendee GetAttendeeByEmployeeId(long employeeId);
+        MeetingAttendee GetAttendeeByEmployeeAndMeetingId(long employeeId, long meetingId);
     }
 }

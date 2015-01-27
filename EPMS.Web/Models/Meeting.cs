@@ -24,6 +24,12 @@ namespace EPMS.Web.Models
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+        public string AttendeeName1 { get; set; }
+        public string AttendeeEmail1 { get; set; }
+        public string AttendeeName2 { get; set; }
+        public string AttendeeEmail2 { get; set; }
+        public string AttendeeName3 { get; set; }
+        public string AttendeeEmail3 { get; set; }
         /// <summary>
         /// Meeting Attendees
         /// </summary>
@@ -32,6 +38,9 @@ namespace EPMS.Web.Models
         /// Meeting Documents
         /// </summary>
         public IEnumerable<MeetingDocument> MeetingDocuments { get; set; }
+
+        public IEnumerable<MeetingAttendee> AbsenteesList { get; set; }
         public List<long> EmployeeIds { get; set; }
+        public List<long> AbsentEmployeeIds { get; set; }
     }
 }

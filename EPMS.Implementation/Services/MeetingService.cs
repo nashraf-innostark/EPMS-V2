@@ -18,7 +18,7 @@ namespace EPMS.Implementation.Services
 
         #region Constructor
 
-        public MeetingService(IMeetingRepository meetingRepository,IMeetingAttendeeRepository meetingAttendeeRepository)
+        public MeetingService(IMeetingRepository meetingRepository, IMeetingAttendeeRepository meetingAttendeeRepository)
         {
             this.meetingRepository = meetingRepository;
             this.meetingAttendeeRepository = meetingAttendeeRepository;
@@ -57,7 +57,7 @@ namespace EPMS.Implementation.Services
 
         public bool SaveMeeting(MeetingRequest meetingToBeSaved)
         {
-                //System.Security.Principal.GenericPrincipal.Current.Identity.Name
+            //System.Security.Principal.GenericPrincipal.Current.Identity.Name
             #region Add
 
             if (meetingToBeSaved.Meeting.MeetingId < 1)
@@ -96,62 +96,128 @@ namespace EPMS.Implementation.Services
             meeting.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             meeting.RecLastUpdatedDt = DateTime.Now;
             meetingRepository.Update(meeting);
-            meetingRepository.Update(meeting);
             meetingRepository.SaveChanges();
         }
 
         private void SaveMeetingAttendees(MeetingRequest meetingToBeSaved)
         {
-            foreach (var attendee in meetingToBeSaved.EmployeeIds)
+            if (meetingToBeSaved.EmployeeIds != null)
             {
-                MeetingAttendee meetingAttendee = new MeetingAttendee();
-                meetingAttendee.MeetingId = meetingToBeSaved.Meeting.MeetingId;
-                meetingAttendee.EmployeeId = attendee;
-                meetingAttendeeRepository.Add(meetingAttendee);
-                meetingAttendeeRepository.SaveChanges();
+                foreach (var attendee in meetingToBeSaved.EmployeeIds)
+                {
+                    MeetingAttendee meetingAttendee = new MeetingAttendee();
+                    meetingAttendee.MeetingId = meetingToBeSaved.Meeting.MeetingId;
+                    meetingAttendee.EmployeeId = attendee;
+                    meetingAttendeeRepository.Add(meetingAttendee);
+                    meetingAttendeeRepository.SaveChanges();
+                }
             }
         }
 
         private void UpdateMeetingAttendees(MeetingRequest meetingToBeSaved)
         {
-            IEnumerable<MeetingAttendee> listOfAttendees = meetingAttendeeRepository.GetAttendeesByMeetingId(meetingToBeSaved.Meeting.MeetingId);
+            IEnumerable<MeetingAttendee> listOfAttendees =
+                meetingAttendeeRepository.GetAttendeesByMeetingId(meetingToBeSaved.Meeting.MeetingId);
             var dbList = listOfAttendees.ToList();
-
-            var clientList = meetingToBeSaved.EmployeeIds.ToList();
-            //clientList.Any(id => dbList.Any(y =>y.EmployeeId == id))
-
-            foreach (var empId in clientList)
+            if (meetingToBeSaved.EmployeeIds != null)
             {
-                #region Add
-
-                if (dbList.Any(a => a.EmployeeId != empId))
+                var clientList = meetingToBeSaved.EmployeeIds.ToList();
+                if (clientList != null || clientList.Count > 0)
                 {
-                    MeetingAttendee meetingAttendee = new MeetingAttendee();
-                    meetingAttendee.MeetingId = meetingToBeSaved.Meeting.MeetingId;
-                    meetingAttendee.EmployeeId = empId;
-                    meetingAttendeeRepository.Add(meetingAttendee);
-                    meetingAttendeeRepository.SaveChanges();
-                    
+                    #region Add
+
+                    foreach (var empId in clientList)
+                    {
+                        if (dbList.Any(a => a.EmployeeId == empId))
+                            continue;
+
+                        MeetingAttendee meetingAttendee = new MeetingAttendee();
+                        meetingAttendee.MeetingId = meetingToBeSaved.Meeting.MeetingId;
+                        meetingAttendee.EmployeeId = empId;
+                        meetingAttendeeRepository.Add(meetingAttendee);
+                        meetingAttendeeRepository.SaveChanges();
+                    }
+
+                    #endregion
+
+                    #region Delete
+
+                    foreach (var attendee in dbList)
+                    {
+                        if (clientList.Any(x => x == attendee.EmployeeId))
+                            continue;
+
+                        var attendeeToDelete =
+                            meetingAttendeeRepository.GetAttendeeByEmployeeId(Convert.ToInt64(attendee.EmployeeId));
+                        meetingAttendeeRepository.Delete(attendeeToDelete);
+                        meetingAttendeeRepository.SaveChanges();
+                    }
+
+                    #endregion
                 }
-                #endregion
             }
-
-            foreach (var attendee in dbList)
+            else
             {
-                #region Delete
-
-                if (clientList.Any(x=>x!=attendee.EmployeeId))
+                foreach (var attendee in dbList)
                 {
-                    var attendeeToDelete = meetingAttendeeRepository.GetAttendeeByEmployeeId(Convert.ToInt64(attendee.EmployeeId));
+                    var attendeeToDelete =
+                    meetingAttendeeRepository.GetAttendeeByEmployeeId(Convert.ToInt64(attendee.EmployeeId));
                     meetingAttendeeRepository.Delete(attendeeToDelete);
                     meetingAttendeeRepository.SaveChanges();
                 }
-                #endregion
             }
 
+            IEnumerable<MeetingAttendee> meetingAttendees = meetingAttendeeRepository.GetAttendeesByMeetingId(meetingToBeSaved.Meeting.MeetingId);
+            var absenteeDbList = meetingAttendees.ToList();
+            if (meetingToBeSaved.EmployeeIds != null && meetingToBeSaved.AbsentEmployeeIds != null)
+            {
+                var absenteeClientList = meetingToBeSaved.AbsentEmployeeIds.ToList();
+                if (absenteeClientList != null || absenteeClientList.Count > 0)
+                {
+                    #region SetStatusTrue
 
-            
-            
+                    foreach (var empId in absenteeClientList)
+                    {
+                        if (absenteeDbList.Any(a => a.EmployeeId != empId))
+                        {
+                            var attendeeToUpdate = meetingAttendeeRepository.GetAttendeeByEmployeeAndMeetingId(Convert.ToInt64(empId), meetingToBeSaved.Meeting.MeetingId);
+                            attendeeToUpdate.Status = true;
+                            meetingAttendeeRepository.Update(attendeeToUpdate);
+                            meetingAttendeeRepository.SaveChanges();
+                        }
+                    }
+
+                    #endregion
+
+                    #region SetStatusFalse
+
+                    foreach (var attendee in absenteeDbList)
+                    {
+                        if (absenteeClientList.Any(x => x == attendee.EmployeeId))
+                            continue;
+
+                        var attendeeToUpdate =
+                        meetingAttendeeRepository.GetAttendeeByEmployeeAndMeetingId(Convert.ToInt64(attendee.EmployeeId), meetingToBeSaved.Meeting.MeetingId);
+                        attendeeToUpdate.Status = false;
+                        meetingAttendeeRepository.Update(attendeeToUpdate);
+                        meetingAttendeeRepository.SaveChanges();
+                    }
+
+                    #endregion
+                }
+            }
+            else
+            {
+                foreach (var attendee in absenteeDbList)
+                {
+                    var attendeeToUpdate =
+                    meetingAttendeeRepository.GetAttendeeByEmployeeAndMeetingId(Convert.ToInt64(attendee.EmployeeId), meetingToBeSaved.Meeting.MeetingId);
+                    attendeeToUpdate.Status = false;
+                    meetingAttendeeRepository.Update(attendeeToUpdate);
+                    meetingAttendeeRepository.SaveChanges();
+                }
+            }
+
         }
 
     }

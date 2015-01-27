@@ -12,13 +12,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeId = source.EmployeeId,
                 EmployeeNameE = source.Employee.EmployeeNameE,
                 EmployeeNameA = source.Employee.EmployeeNameA,
-                AttendeeName = source.AttendeeName,
-                AttendeeEmail = source.AttendeeEmail,
                 Status = source.Status,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
 
@@ -29,13 +23,7 @@ namespace EPMS.Web.ModelMappers
                 AttendeeId = source.AttendeeId,
                 MeetingId = source.MeetingId,
                 EmployeeId = source.EmployeeId,
-                AttendeeName = source.AttendeeName,
-                AttendeeEmail = source.AttendeeEmail,
                 Status = source.Status,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
 

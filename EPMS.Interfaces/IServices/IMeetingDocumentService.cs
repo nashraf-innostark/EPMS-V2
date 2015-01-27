@@ -10,9 +10,14 @@ namespace EPMS.Interfaces.IServices
         /// </summary>
         bool AddMeetingDocument(MeetingDocument document);
         /// <summary>
+        /// Delete Meeting Document
+        /// </summary>
+        bool Delete(long documentId);
+        /// <summary>
         /// Find Document by Meeting Id
         /// </summary>
         IEnumerable<MeetingDocument> FindDocumentByMeetingId(long meetingId);
+        MeetingDocument FindMeetingDocumentById(long documentId);
 
     }
 }

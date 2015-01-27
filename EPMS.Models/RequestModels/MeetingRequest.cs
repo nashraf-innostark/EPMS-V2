@@ -7,5 +7,6 @@ namespace EPMS.Models.RequestModels
     {
         public Meeting Meeting { get; set; }
         public List<long> EmployeeIds { get; set; }
+        public List<long> AbsentEmployeeIds { get; set; }
     }
 }

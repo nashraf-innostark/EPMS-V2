@@ -40,6 +40,14 @@ namespace EPMS.Web.ModelMappers
                 DiscussionAr = source.DiscussionAr,
                 Decisions = source.Decisions,
                 DecisionsAr = source.DecisionsAr,
+                AttendeeName1 = source.AttendeeName1,
+                AttendeeEmail1 = source.AttendeeEmail1,
+                AttendeeName2 = source.AttendeeName2,   
+                AttendeeEmail2 = source.AttendeeEmail2,
+                AttendeeName3 = source.AttendeeName3,
+                AttendeeEmail3 = source.AttendeeEmail3,
+                MeetingAttendees = source.MeetingAttendees.Select(x => x.CreateFromServertoClient()),
+                AbsenteesList = source.MeetingAttendees.Where(x=>x.Status == true).Select(x => x.CreateFromServertoClient()),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -62,6 +70,12 @@ namespace EPMS.Web.ModelMappers
                 DiscussionAr = source.DiscussionAr,
                 Decisions = source.Decisions,
                 DecisionsAr = source.DecisionsAr,
+                AttendeeName1 = source.AttendeeName1,
+                AttendeeEmail1 = source.AttendeeEmail1,
+                AttendeeName2 = source.AttendeeName2,
+                AttendeeEmail2 = source.AttendeeEmail2,
+                AttendeeName3 = source.AttendeeName3,
+                AttendeeEmail3 = source.AttendeeEmail3,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -69,6 +83,7 @@ namespace EPMS.Web.ModelMappers
             };
             var meetingrequest = new MeetingRequest();
             meetingrequest.EmployeeIds = source.EmployeeIds;
+            meetingrequest.AbsentEmployeeIds = source.AbsentEmployeeIds;
             meetingrequest.Meeting = meeting;
             return meetingrequest;
         }

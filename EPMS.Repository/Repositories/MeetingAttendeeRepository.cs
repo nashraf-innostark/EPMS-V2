@@ -30,5 +30,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.FirstOrDefault(x => x.EmployeeId == employeeId);
         }
+
+        public MeetingAttendee GetAttendeeByEmployeeAndMeetingId(long employeeId, long meetingId)
+        {
+            return DbSet.FirstOrDefault(x => x.EmployeeId == employeeId && x.MeetingId == meetingId);
+        }
     }
 }

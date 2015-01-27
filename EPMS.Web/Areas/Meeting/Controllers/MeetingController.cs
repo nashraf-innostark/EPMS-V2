@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Activities.Expressions;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
@@ -77,7 +84,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             MeetingViewModel meetingViewModel = new MeetingViewModel();
             if (id != null)
             {
-                var meeting = meetingService.FindMeetingById((long) id);
+                var meeting = meetingService.FindMeetingById((long)id);
                 if (meeting != null)
                 {
                     meetingViewModel.Meeting = meeting.CreateFromServertoClient();
@@ -102,10 +109,80 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             {
                 TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
                 meetingViewModel.Meeting.MeetingId = toBeSaveMeeting.Meeting.MeetingId;
+                SaveMeetingDocuments(meetingViewModel);
                 return RedirectToAction("Index");
             }
             return null;
         }
+
+        public void SaveMeetingDocuments(MeetingViewModel meetingViewModel)
+        {
+            //Save file names in db
+            if (!string.IsNullOrEmpty(meetingViewModel.DocsNames))
+            {
+                var meetingDocuments = meetingViewModel.DocsNames.Substring(0, meetingViewModel.DocsNames.Length - 1).Split('~').ToList();
+                foreach (var meetingDocument in meetingDocuments)
+                {
+                    MeetingDocument doc = new MeetingDocument();
+                    doc.FileName = meetingDocument;
+                    doc.MeetingId = meetingViewModel.Meeting.MeetingId;
+                    doc.RecCreatedDate = DateTime.Now;
+                    doc.RecLastUpdatedDate = DateTime.Now;
+                    meetingDocumentService.AddMeetingDocument(doc);
+                }
+            }
+        }
+
+        public ActionResult UploadDocuments()
+        {
+            HttpPostedFileBase doc = Request.Files[0];
+            var filename = "";
+            try
+            {
+                //Save File to Folder
+                if ((doc != null))
+                {
+                    filename = (DateTime.Now.ToString(CultureInfo.InvariantCulture) + doc.FileName);//concat date time with file name
+                    Regex pattern = new Regex("[;|:|,|-|_|+|/| ]");
+                    filename = pattern.Replace(filename, "");//remove some characters and spaces from file name
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["MeetingDocuments"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    doc.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult DeleteDocument(long fileId)
+        {
+
+            var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["MeetingDocuments"]);
+            var document = meetingDocumentService.FindMeetingDocumentById(fileId);
+            if (document != null)
+            {
+                string savedFilePhysicalPath = Path.Combine(filePathOriginal, document.FileName);
+                if ((System.IO.File.Exists(savedFilePhysicalPath)))
+                {
+                    System.IO.File.Delete(savedFilePhysicalPath);
+                    var documentDeleted = meetingDocumentService.Delete(fileId);
+                    return Json(documentDeleted, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            return Json(false, JsonRequestBehavior.AllowGet);
+        }
+
+        public FileResult Download(string fileName)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"] + fileName));
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
         #endregion
     }
 }

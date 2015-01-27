@@ -24,6 +24,7 @@ namespace EPMS.Web.ViewModels.Meeting
         public string AttendeeName { get; set; }
         public string AttendeeEmail { get; set; }
         public bool? Status { get; set; }
+        public string DocsNames { get; set; }
 
     }
 }
