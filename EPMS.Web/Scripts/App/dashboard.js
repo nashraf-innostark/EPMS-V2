@@ -565,7 +565,11 @@ function ProjectWidgetEvents() {
     });
 }
 //#endregion
-
+function NoRecord(control, msg) {
+    $(control).empty();
+    $(".tempLoader").click();
+    $(control).append('<li class="processed-pct"><span>' + msg + '</span></li>');
+}
 //#region Widgets Loaders
 //#region Employee Requests Loaders
 function Loader(control) {
@@ -862,58 +866,62 @@ function LoadProjects(control) {
     Loader(control);
     var siteUrl = $('#siteURL').val();
     var id = $("#projectIdFilter").val();
-    if (control.className == "refresher" || id == "") {
-        id = 0;
-    }
-    var url = siteUrl + "/Dashboard/LoadProjects";
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: "json",
-        data: {
-            projectId: id
-        },
-        success: function (data) {
-            $(".tempLoader").click();
-            $('#progressId').empty();
-            if (data != null) {
+    if (id != "" || control.className == "refresher") {
+        if (control.className == "refresher") {
+            id = 0;
+        }
+        var url = siteUrl + "/Dashboard/LoadProjects";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: "json",
+            data: {
+                projectId: id
+            },
+            success: function (data) {
+                $(".tempLoader").click();
+                $('#progressId').empty();
+                if (data != null) {
                     $('#progressId').append(
                         '<li class="dashProject dashTask">' +
-                        '<a data-overall='+data.Project.ProgressTotal+' title="'+data.Project.NameE+'">'+data.Project.NameEShort+'</a>' +
+                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameE + '">' + data.Project.NameEShort + '</a>' +
                         '</li>');
                     if (data.ProjectTasks != null) {
-                        $.each(data.ProjectTasks, function(itemIndex, item) {
+                        $.each(data.ProjectTasks, function (itemIndex, item) {
                             $('#progressId').append(
                                 '<li class="dashTask">' +
-                                '<a data-task='+item.TaskProgress+'>'+item.TaskNameE+'</a>' +
+                                '<a data-task=' + item.TaskProgress + '>' + item.TaskNameE + '</a>' +
                                 '</li>');
                         });
                     }
                     $('#progressId').append(
-                    '<li class="dashBack">'+
-                        '<a><i class="icon-photon arrow_left"></i></a>'+
-                    '</li>'+
-                    '<li class="dashNext">'+
-                        '<a><i class="icon-photon arrow_right"></i></a>'+
-                    '</li>'+
-                    '<li class="processed-pct">'+
-                        '<span>'+data.Project.NameE+'</span>'+
-                        '<div class="progress progress-info">'+
+                    '<li class="dashBack">' +
+                        '<a><i class="icon-photon arrow_left"></i></a>' +
+                    '</li>' +
+                    '<li class="dashNext">' +
+                        '<a><i class="icon-photon arrow_right"></i></a>' +
+                    '</li>' +
+                    '<li class="processed-pct">' +
+                        '<span>' + data.Project.NameE + '</span>' +
+                        '<div class="progress progress-info">' +
                             '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
-                        '</div>'+
+                        '</div>' +
                     '</li>');
-                ProjectWidgetEvents();
-            }
-            else {
+                    ProjectWidgetEvents();
+                }
+                else {
+                    NoRecord('#progressId',"No record found");
+                }
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
                 $(".tempLoader").click();
-                $('#progressId').append('<li class="processed-pct"><span>No record found</span></li>');
             }
-        },
-        error: function (e) {
-            alert('Error=' + e.toString());
-            $(".tempLoader").click();
-        }
-    });
+        });
+    } else {
+        var msg = "Select a project.";
+        NoRecord('#progressId', msg);
+    }
 };
 //#endregion
 //#endregion
