@@ -8,7 +8,6 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
-using FaceSharp.Api.Objects;
 
 namespace EPMS.Implementation.Services
 {
@@ -40,6 +39,16 @@ namespace EPMS.Implementation.Services
         public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId)
         {
             return Repository.FindProjectTaskByProjectId(projectid, taskId);
+        }
+
+        public IEnumerable<ProjectTaskResponse> LoadProjectTasksByEmployeeId(long employeeId, long projectId)
+        {
+            var tasks= Repository.GetProjectTasksByEmployeeId(employeeId, projectId);
+            if (tasks.Any())
+            {
+                return tasks.Select(x => x.CreateForDashboard());
+            }
+            return null;
         }
 
         public IEnumerable<ProjectTask> GetAll()

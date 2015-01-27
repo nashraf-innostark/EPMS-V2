@@ -18,6 +18,7 @@ namespace EPMS.Web.Controllers
     {
         #region Constructor and Private Services objects
 
+        private readonly IProjectTaskService projectTaskService;
         private readonly IMeetingService meetingService;
         private readonly IProjectService projectService;
         private readonly IPayrollService payrollService;
@@ -32,6 +33,7 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Dashboard constructor
         /// </summary>
+        /// <param name="projectTaskService"></param>
         /// <param name="meetingService"></param>
         /// <param name="projectService"></param>
         /// <param name="payrollService"></param>
@@ -42,8 +44,9 @@ namespace EPMS.Web.Controllers
         /// <param name="employeeService"></param>
         /// <param name="customerService"></param>
         /// <param name="complaintService"></param>
-        public DashboardController(IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
+        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
         {
+            this.projectTaskService = projectTaskService;
             this.meetingService = meetingService;
             this.projectService = projectService;
             this.payrollService = payrollService;
@@ -115,10 +118,14 @@ namespace EPMS.Web.Controllers
                 dashboardViewModel.Orders = GetOrders(requester, 0);//0 means all
                 #endregion
 
-                #region Projects Widget
+                #region Projects & tasks Widget
                 dashboardViewModel.Project = GetProjects(requester, 0);//0 means all projects, 1 means Current project
-                dashboardViewModel.Projects = GetProjectsDDL(requester, 1);
+                dashboardViewModel.ProjectsDDL = GetProjectsDDL(requester, 1);
+                #endregion
 
+                #region My Tasks
+                dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
+                dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
                 #endregion
             }
             
@@ -187,9 +194,17 @@ namespace EPMS.Web.Controllers
         {
             return projectService.LoadProjectForDashboard(requester,projectId);
         }
+        private IEnumerable<ProjectTaskResponse> GetMyTasks(long employeeId, long projectId)
+        {
+            return projectTaskService.LoadProjectTasksByEmployeeId(employeeId, projectId);
+        }
         private IEnumerable<DashboardModels.Project> GetProjectsDDL(string requester, int status)
         {
             return projectService.LoadAllProjects(requester, status).Select(x => x.CreateForDashboardDDL());
+        }
+        private IEnumerable<DashboardModels.Project> GetTaskProjectsDDL(long employeeId)
+        {
+            return projectService.LoadAllProjectsByEmployeeId(employeeId).Select(x => x.CreateForDashboardDDL());
         }
         /// <summary>
         /// Load recent jobs offered
@@ -331,6 +346,12 @@ namespace EPMS.Web.Controllers
         {
             var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
             var projects = GetProjectsDDL(requester, projectStatus);
+            return Json(projects, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult LoadMyTasks(long projectId)
+        {
+            var projects = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()),projectId);
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
         #endregion
