@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
+using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -13,6 +14,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Project> LoadAllFinishedProjects();
         IEnumerable<Project> LoadAllUnfinishedProjectsByCustomerId(long id);
         IEnumerable<Project> LoadAllFinishedProjectsByCustomerId(long id);
-        IEnumerable<Project> LoadProjectsForDashboard(string requester);
+        ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId);
+        IEnumerable<Project> LoadAllProjects(string requester, int status);
     }
 }

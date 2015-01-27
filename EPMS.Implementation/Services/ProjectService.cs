@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
-using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
+using EPMS.Models.ResponseModels;
+using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Implementation.Services
 {
@@ -10,16 +13,18 @@ namespace EPMS.Implementation.Services
     {
         private readonly IProjectRepository projectRepository;
         private readonly IOrdersRepository ordersRepository;
+        private readonly IProjectTaskRepository projectTaskRepository;
 
         #region Constructor
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectService(IProjectRepository projectRepository,IOrdersRepository ordersRepository)
+        public ProjectService(IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
         {
             this.projectRepository = projectRepository;
             this.ordersRepository = ordersRepository;
+            this.projectTaskRepository = projectTaskRepository;
         }
 
         #endregion
@@ -79,9 +84,24 @@ namespace EPMS.Implementation.Services
             return projectRepository.GetAllFinishedProjectsByCustomerId(id);
         }
 
-        public IEnumerable<Project> LoadProjectsForDashboard(string requester)
+        public ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId)
         {
-            throw new System.NotImplementedException();
+            var project = projectRepository.GetProjectForDashboard(requester, projectId);
+            if (project != null)
+            {
+                var projectTasks = projectTaskRepository.GetTasksByProjectId(project.ProjectId);
+                ProjectResponseForDashboard projectResponse = new ProjectResponseForDashboard();
+                projectResponse.Project = project.CreateForDashboard();
+                if (projectTasks.Any())
+                    projectResponse.ProjectTasks = projectTasks.Select(x=>x.CreateForDashboard());
+                return projectResponse;
+            }
+            return null;
+        }
+
+        public IEnumerable<Project> LoadAllProjects(string requester, int status)
+        {
+            return projectRepository.GetAllProjects(requester, status);
         }
     }
 }

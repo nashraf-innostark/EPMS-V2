@@ -59,5 +59,15 @@ namespace EPMS.Repository.Repositories
                                            .Where(query).OrderByDescending(meetingClause[meetingSearchRequest.MeetingRequestByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new MeetingResponse { Meetings = meetings, TotalCount = DbSet.Count(query) };
         }
+
+        public IEnumerable<Meeting> GetMeetingsForDashboard(string requester)
+        {
+            if (requester == "Admin")
+            {
+                return DbSet.OrderByDescending(x => x.Date).Take(4);
+            }
+            long employeeId = Convert.ToInt64(requester);
+            return DbSet.Where(x => x.MeetingAttendees.Any(y => y.EmployeeId == employeeId)).OrderByDescending(x=>x.Date).Take(5);
+        }
     }
 }
