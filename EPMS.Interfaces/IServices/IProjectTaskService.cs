@@ -16,5 +16,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateProjectTask(ProjectTask task, List<long> dbTaskList, List<long> clientTaskList, List<long> dbEmployeeList, List<long> clientEmployeeList);
         void DeleteProjectTask(long taskId);
         TaskResponse GetAllTasks(TaskSearchRequest searchRequest);
+        TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId);
     }
 }
