@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,7 +22,27 @@ namespace EPMS.Web.Controllers
 
         private ApplicationUserManager _userManager;
         private IMenuRightsService menuRightService;
-
+        private IUserPrefrencesService userPrefrencesService;
+        private void SetCultureInfo()
+        {
+            CultureInfo info;
+            if (Session["Culture"] != null)
+            {
+                info = new CultureInfo(Session["Culture"].ToString());
+            }
+            else
+            {
+                userPrefrencesService = UnityWebActivator.Container.Resolve<IUserPrefrencesService>();
+                var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(User.Identity.GetUserId());
+                info = userPrefrences != null
+                ? new CultureInfo(userPrefrences.Culture)
+                : new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+                Session["Culture"] = info.Name;
+            }
+            info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            System.Threading.Thread.CurrentThread.CurrentCulture = info;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = info;
+        }
         #endregion
 
         #region Protected
@@ -28,9 +50,13 @@ namespace EPMS.Web.Controllers
         protected override async void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            if (Session["FullName"] == null || Session["FullName"] == string.Empty)
+            if (Session["FullName"] == null || Session["FullName"].ToString() == string.Empty)
                 SetUserDetail();
+            //Set culture info
+            SetCultureInfo();
         }
+
+        
 
         #endregion
 

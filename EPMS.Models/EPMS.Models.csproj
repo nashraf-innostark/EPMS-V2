@@ -141,6 +141,7 @@
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
     <Compile Include="DomainModels\TaskEmployee.cs" />
+    <Compile Include="DomainModels\UserPrefrence.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>

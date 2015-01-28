@@ -16,10 +16,10 @@
     <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
-    @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
+    @*@if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
     {
         <link rel="stylesheet" href="~/Content/css/arabic.css" media="all" />
-    }
+    }*@
     <link href="~/Content/CSS/styleIST.css" rel="stylesheet" media="all" />
     <!-- Calendar -->
     <link rel="stylesheet" href="~/Content/CSS/Admin/style/fullcalendar.css">
@@ -133,12 +133,12 @@
                 </a>
                 <ul class="nav user-sub-menu">
                     <li class="">
-                        <a href="#">
+                        <a href="~/Culture/Set/EN">
                             <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />EN
                         </a>
                     </li>
                     <li class="">
-                        <a href="#">
+                        <a href="~/Culture/Set/AR">
                             <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />AR
                         </a>
                     </li>
