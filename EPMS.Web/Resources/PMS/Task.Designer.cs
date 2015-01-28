@@ -277,6 +277,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My Tasks.
+        /// </summary>
+        public static string PageTitleMyTasks {
+            get {
+                return ResourceManager.GetString("PageTitleMyTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pre-Requisit Tasks.
         /// </summary>
         public static string Pre_ReqTask {
@@ -354,6 +363,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string TotalCost {
             get {
                 return ResourceManager.GetString("TotalCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task has been Updated.
+        /// </summary>
+        public static string UpdateMessage {
+            get {
+                return ResourceManager.GetString("UpdateMessage", resourceCulture);
             }
         }
     }

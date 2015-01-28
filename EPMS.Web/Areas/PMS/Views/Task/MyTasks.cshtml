@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Tasks.TaskListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.PMS.Task.PageTitleIndex;
+    ViewBag.Title = EPMS.Web.Resources.PMS.Task.PageTitleMyTasks;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string date = "";
@@ -24,8 +24,6 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.PMS.Task.Tasks</small></h2>
-    <h3><small><a href="~/PMS/Task/Create">@EPMS.Web.Resources.PMS.Task.AddNewTask</a></small></h3>
-    <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.Web.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
 </header>
 
 <!--Notifications begin-->
@@ -47,7 +45,6 @@
                             <th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>
                             <th>@EPMS.Web.Resources.PMS.Task.StartDate</th>
                             <th>@EPMS.Web.Resources.PMS.Task.DeliveryDate</th>
-                            <th>@EPMS.Web.Resources.PMS.Task.Cost</th>
                             <th>@EPMS.Web.Resources.PMS.Task.Progress</th>
                         </tr>
                     </thead>
@@ -125,13 +122,6 @@
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["TotalCost"];
-                    }
-                },
-                {
-                    "aTargets": [6],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
                         var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
                         return html;
@@ -141,7 +131,7 @@
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
-            "sAjaxSource": siteUrl + "/PMS/Task/Index",
+            "sAjaxSource": siteUrl + "/PMS/Task/MyTasks",
             "sServerMethod": "POST",
             "oLanguage": {
                 "sProcessing": "Fetching record(s)",

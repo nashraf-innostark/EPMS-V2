@@ -238,7 +238,6 @@
             <i class="icon-alert icon-alert-info"></i>
             <strong><a>@EPMS.Web.Resources.CMS.Quotation.InstallmentPlan</a></strong>
         </div>
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Installment1">@EPMS.Web.Resources.CMS.Quotation.FirstInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
@@ -341,7 +340,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return setClientName()">@Model.BtnText</button>
+                <button type="submit" class="btn" onclick="setClientName(event)">@Model.BtnText</button>
             </div>
         </div>
     </div>
@@ -352,8 +351,48 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    function setClientName() {
+    function setClientName(event) {
         $("#ClientName").val($("#Client option:selected").text());
+        var inst1 = $("#Installment1").val();
+        var inst2 = $("#Installment2").val();
+        var inst3 = $("#Installment3").val();
+        var inst4 = $("#Installment4").val();
+        if (inst2 > 0) {
+            if (inst1 >= inst2) {
+                event.preventDefault();
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
+                });
+                $("#Installment2").focus();
+                return false;
+            }
+        }
+        if (inst3 > 0) {
+            if (inst2 >= inst3) {
+                event.preventDefault();
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
+                });
+                $("#Installment3").focus();
+                return false;
+            }
+        }
+        if (inst4 > 0) {
+            if (inst3 >= inst4) {
+                event.preventDefault();
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
+                });
+                $("#Installment4").focus();
+                return false;
+            }
+        }
         return true;
     }
     function checkIfPrevItemExist() {

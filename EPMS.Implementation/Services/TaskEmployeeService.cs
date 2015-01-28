@@ -15,9 +15,13 @@ namespace EPMS.Implementation.Services
             TaskEmployeeRepository = taskEmployeeRepository;
         }
 
-        public TaskEmployee FindAllowanceById(long id)
+        public TaskEmployee FindTaskEmployeeById(long id)
         {
             return TaskEmployeeRepository.Find(id);
+        }
+        public int CountTasksByEmployeeId(long id)
+        {
+            return TaskEmployeeRepository.CountTasksByEmployeeId(id);
         }
 
         public IEnumerable<TaskEmployee> GetAll()

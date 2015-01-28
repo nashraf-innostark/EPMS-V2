@@ -216,4 +216,10 @@
   <data name="DeleteMessage" xml:space="preserve">
     <value>Task has been Deleted</value>
   </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>Task has been Updated</value>
+  </data>
+  <data name="PageTitleMyTasks" xml:space="preserve">
+    <value>My Tasks</value>
+  </data>
 </root>

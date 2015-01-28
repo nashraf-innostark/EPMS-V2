@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Repository.BaseRepository;
 using EPMS.Models.DomainModels;
@@ -26,5 +27,10 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        public int CountTasksByEmployeeId(long id)
+        {
+            return DbSet.Count(x => x.EmployeeId == id);
+        }
     }
 }

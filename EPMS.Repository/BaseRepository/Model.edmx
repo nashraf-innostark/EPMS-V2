@@ -511,7 +511,7 @@
             <PropertyRef Name="TaskId" />
           </Key>
           <Property Name="TaskId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="CustomerId" Type="bigint" />
           <Property Name="ProjectId" Type="bigint" Nullable="false" />
           <Property Name="TaskNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="TaskNameA" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -1022,7 +1022,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProjectTask_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
@@ -2555,7 +2555,7 @@
             <PropertyRef Name="TaskId" />
           </Key>
           <Property Name="TaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="CustomerId" Type="Int64" />
           <Property Name="ProjectId" Type="Int64" Nullable="false" />
           <Property Name="TaskNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TaskNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -2579,7 +2579,7 @@
           <NavigationProperty Name="ProjectTasks" Relationship="EPMSModel.PreRequisitTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
         </EntityType>
         <Association Name="FK_ProjectTask_Customer">
-          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="0..1" />
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">

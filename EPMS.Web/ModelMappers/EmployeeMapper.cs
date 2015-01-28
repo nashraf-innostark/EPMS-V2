@@ -2,6 +2,8 @@
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using EPMS.Implementation.Services;
+using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.ModelMappers;
 
@@ -71,6 +73,40 @@ namespace EPMS.Web.ModelMappers
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
             };
 
+        }
+        public static Models.Employee CreateFromServerToClientForTask(this Employee source)
+        {
+            Models.Employee employee= new Models.Employee
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeImagePath = source.EmployeeImagePath,
+                EmployeeIqama = source.EmployeeIqama ?? 0,
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt ?? DateTime.Now,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt ?? DateTime.Now,
+                EmployeeDOB = source.EmployeeDOB,
+                EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
+                MaritalStatus = source.MaritalStatus,
+                EmployeeMobileNum = source.EmployeeMobileNum ?? "",
+                JobTitleId = source.JobTitleId,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeePassportNum = source.EmployeePassportNum ?? "",
+                EmployeePassportExpiryDt = source.EmployeePassportExpiryDt ?? DateTime.Now,
+                EmployeeDetailsE = source.EmployeeDetailsE,
+                EmployeeDetailsA = source.EmployeeDetailsA,
+                RecCreatedBy = source.RecCreatedBy ?? "",
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Email = source.Email,
+                EmployeeJobId = source.EmployeeJobId,
+                //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
+                JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
+            };
+            var noOfTasks = source.TaskEmployees.Count(x => x.EmployeeId == employee.EmployeeId);
+            employee.EmployeeNameE = source.EmployeeNameE + " - " + noOfTasks;
+            employee.EmployeeNameA = source.EmployeeNameA + " - " + noOfTasks;
+            return employee;
         }
         public static DashboardModels.Employee CreateForDashboard(this Employee source)
         {

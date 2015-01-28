@@ -5,7 +5,8 @@ namespace EPMS.Interfaces.IServices
 {
     public interface ITaskEmployeeService
     {
-        TaskEmployee FindAllowanceById(long id);
+        TaskEmployee FindTaskEmployeeById(long id);
+        int CountTasksByEmployeeId(long id);
         IEnumerable<TaskEmployee> GetAll();
         bool AddTaskEmployee(TaskEmployee employee);
         bool UpdateTaskEmployee(TaskEmployee employee);

@@ -569,7 +569,6 @@ function NoRecord(control, msg) {
     $(control).append('<li class="processed-pct"><span>' + msg + '</span></li>');
 }
 //#region Widgets Loaders
-//#region Employee Requests Loaders
 function Loader(control) {
     if (control.className != "refresher") {
         flipit(control);
@@ -711,7 +710,8 @@ function LoadOrders(control) {
         }
     });
 };
-function LoadRecruitments() {
+function LoadRecruitments(control) {
+    Loader(control);
     var siteUrl = $('#siteURL').val();
     var url = siteUrl + "/Dashboard/LoadRecruitments";
     $.ajax({
@@ -973,5 +973,4 @@ function LoadMyTasks(control) {
             }
         });
 };
-//#endregion
 //#endregion
