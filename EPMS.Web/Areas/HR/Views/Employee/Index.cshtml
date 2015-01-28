@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.HR.Employee.Employees;
+    ViewBag.Title = EPMS.Web.Resources.HR.Employee.PTList;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -21,7 +21,7 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@ViewBag.Title</small></h2>
+    <h2><small>@EPMS.Web.Resources.HR.Employee.Employees</small></h2>
     <h3><small><a href="~/HR/Employee/Create">@EPMS.Web.Resources.HR.Employee.AddNew</a></small></h3>
 </header>
 <!--Notifications begin-->
@@ -108,7 +108,11 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var jobTItle = full["JobTitle"];
-                        return jobTItle.JobTitleNameE;
+                        if (dir == "ltr") {
+                            return jobTItle.JobTitleNameE;
+                        } else {
+                            return jobTItle.JobTitleNameA;
+                        }
                     }
                 },
                 {
@@ -116,8 +120,11 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var jobTitle = full["JobTitle"];
-                        var dept = jobTitle.DepartmentNameE;
-                        return dept;
+                        if (dir == "ltr") {
+                            return jobTitle.DepartmentNameE;
+                        } else {
+                            return jobTitle.DepartmentNameE;
+                        }
                     }
                 }
             ],

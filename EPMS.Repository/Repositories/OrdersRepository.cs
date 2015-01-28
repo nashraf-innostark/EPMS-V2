@@ -45,7 +45,7 @@ namespace EPMS.Repository.Repositories
                     {
                         { OrdersByColumn.OrderNumber,  c => c.OrderNo},
                         { OrdersByColumn.ClientName,  c => c.Customer.CustomerNameE},
-                        //{ OrdersByColumn.Quotation,  c => c.Customer.Quotations},
+                        { OrdersByColumn.Quotation,  c => c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId) != null ? c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId).QuotationDiscount : 0 },
                         //{ OrdersByColumn.Invoice,  c => c.},
                         //{ OrdersByColumn.Reciepts,  c => c.},
                         { OrdersByColumn.Status,  c => c.OrderStatus},
@@ -60,13 +60,25 @@ namespace EPMS.Repository.Repositories
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
             
             Expression<Func<Order, bool>> query =
-                s => ( searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || 
+                s => ((searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId)) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || 
                     (s.OrderNo.Contains(searchRequest.SearchString)) || (s.Customer.CustomerNameE.Contains(searchRequest.SearchString)) ||
                     (s.Customer.CustomerNameA.Contains(searchRequest.SearchString))));
-
+            
             IEnumerable<Order> orders = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
-                .Where(query).OrderBy(orderClause[searchRequest.OrdersByColumn]).Skip(fromRow).Take(toRow).ToList()
+                .Where(query).OrderBy(orderClause[searchRequest.OrdersByColumn])
+                .Skip(fromRow).Take(toRow).Select(s => new Order
+                {
+                    OrderId = s.OrderId,
+                    Customer = new Customer
+                    {
+                        CustomerId = s.Customer.CustomerId,
+                        CustomerNameE = s.Customer.CustomerNameE,
+                        CustomerNameA = s.Customer.CustomerNameA,
+                        Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
+                    }
+
+                }).ToList()
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(orderClause[searchRequest.OrdersByColumn]).Skip(fromRow).Take(toRow).ToList();

@@ -29,22 +29,22 @@ namespace EPMS.Web.Models
         public string EmployeeLandlineNum { get; set; }
         public byte? MaritalStatus { get; set; }
         [Required(ErrorMessage = "Date of Birth is required.")]
-        public DateTime? EmployeeDOB { get; set; }
+        public string EmployeeDOB { get; set; }
         public string EmpDateOfBirthArabic { get; set; }
         public short? EmployeeNationality { get; set; }
         [Required(ErrorMessage = "Iqama Number Or National ID Number is required.")]
         public int? EmployeeIqama { get; set; }
-        public DateTime? EmployeeIqamaIssueDt { get; set; }
-        public DateTime? EmployeeIqamaIssueDtAr { get; set; }
+        public string EmployeeIqamaIssueDt { get; set; }
+        public string EmployeeIqamaIssueDtAr { get; set; }
         [Required(ErrorMessage = "Iqama Expiry Date is required.")]
-        public DateTime? EmployeeIqamaExpiryDt { get; set; }
-        public DateTime? EmployeeIqamaExpiryDtAr { get; set; }
+        public string EmployeeIqamaExpiryDt { get; set; }
+        public string EmployeeIqamaExpiryDtAr { get; set; }
         [Required(ErrorMessage = "Passport ID is required.")]
         [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
         public string EmployeePassportNum { get; set; }
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
-        public DateTime? EmployeePassportExpiryDt { get; set; }
-        public DateTime? EmployeePassportExpiryDtAr { get; set; }
+        public string EmployeePassportExpiryDt { get; set; }
+        public string EmployeePassportExpiryDtAr { get; set; }
         [StringLength(1000, ErrorMessage = "Cannot exceed 1000 characters.")]
         public string EmployeeDetailsE { get; set; }
         public string EmployeeFullName { get; set; }
