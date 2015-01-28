@@ -105,10 +105,10 @@ namespace EPMS.Repository.Repositories
 
         public IQueryable<string> FindEmployeeEmailById(List<long> employeeId)
         {
-            var lst = new List<long>();
-            lst.AddRange(employeeId);
+            var list = new List<long>();
+            list.AddRange(employeeId);
             //int[] test = new[] {10, 10, 10};
-            var empIds =  DbSet.Where(x => lst.Contains(x.EmployeeId)).Select(x=>x.Email);
+            var empIds = DbSet.Where(x => list.Contains(x.EmployeeId)).Select(x => x.Email);
             return empIds;
         }
     }

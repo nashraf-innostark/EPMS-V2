@@ -78,7 +78,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 TempData["message"] = new MessageViewModel { Message = "Customer Updated", IsUpdated = true };
                 result.Email = customerViewModel.User.Email;
                 aspNetUserService.UpdateUser(result);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             return View(customerViewModel);
             
