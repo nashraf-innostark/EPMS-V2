@@ -1088,6 +1088,30 @@
 <script>
     $().ready(function () {
 
+        $("#ProfileForm").validate({
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "req": {
+                    required: true
+                },
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "email": {
+                    email: true
+                },
+                "url": {
+                    url: true
+                },
+                "date": {
+                    date: true
+                }
+            }
+        });
+
         //Set Arabic and Gregorian Dates
         $("#CommercialRegisterIssueDateAr").val(ConvertDates($("#CommercialRegisterIssueDate").val(), "gregorian", "islamic"));
         $("#CommercialRegisterExpiryDateAr").val(ConvertDates($("#CommercialRegisterExpiryDate").val(), "gregorian", "islamic"));

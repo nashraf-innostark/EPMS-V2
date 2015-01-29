@@ -50,5 +50,6 @@ namespace EPMS.Web.Models
         public IEnumerable<MeetingAttendee> AbsenteesList { get; set; }
         public List<long> EmployeeIds { get; set; }
         public List<long> AbsentEmployeeIds { get; set; }
+        public string DocsNames { get; set; }
     }
 }

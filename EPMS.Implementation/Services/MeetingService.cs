@@ -15,13 +15,17 @@ namespace EPMS.Implementation.Services
     {
         private readonly IMeetingRepository meetingRepository;
         private readonly IMeetingAttendeeRepository meetingAttendeeRepository;
+        private readonly IEmployeeRepository employeeRepository;
+        private readonly IMeetingDocumentRepository meetingDocumentRepository;
 
         #region Constructor
 
-        public MeetingService(IMeetingRepository meetingRepository, IMeetingAttendeeRepository meetingAttendeeRepository)
+        public MeetingService(IMeetingRepository meetingRepository, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository)
         {
             this.meetingRepository = meetingRepository;
             this.meetingAttendeeRepository = meetingAttendeeRepository;
+            this.employeeRepository = employeeRepository;
+            this.meetingDocumentRepository = meetingDocumentRepository;
         }
 
         #endregion
@@ -57,7 +61,7 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Save Meeting from Model
         /// </summary>
-        public bool SaveMeeting(MeetingRequest meetingToBeSaved)
+        public SaveMeetingResponse SaveMeeting(MeetingRequest meetingToBeSaved)
         {
             //System.Security.Principal.GenericPrincipal.Current.Identity.Name
             #region Add
@@ -78,9 +82,14 @@ namespace EPMS.Implementation.Services
                 UpdateMeetingAttendees(meetingToBeSaved);
             }
 
+            SaveMeetingDocuments(meetingToBeSaved);
+            return new SaveMeetingResponse
+            {
+                EmployeeEmails = GetEmployeeEmails(meetingToBeSaved)
+            };
+
             #endregion
 
-            return true;
         }
         /// <summary>
         /// Add New Meeting
@@ -240,7 +249,37 @@ namespace EPMS.Implementation.Services
         {
             return meetingRepository.GetMeetingsForDashboard(requester);
         }
-
+        /// <summary>
+        /// Get Employee Emails for Email Invitation
+        /// </summary>m
+        private IEnumerable<string> GetEmployeeEmails(MeetingRequest meetingToBeSaved)
+        {
+            return employeeRepository.FindEmployeeEmailById(meetingToBeSaved.EmployeeIds);
+        }
+        /// <summary>
+        /// Save Meeting Documents
+        /// </summary>
+        private void SaveMeetingDocuments(MeetingRequest meetingToBeSaved)
+        {
+            //Save file names in db
+            if (!string.IsNullOrEmpty(meetingToBeSaved.DocsNames))
+            {
+                //WHAT IF DOCUMENT UPDATE CASE?
+                var meetingDocuments = meetingToBeSaved.DocsNames.Substring(0, meetingToBeSaved.DocsNames.Length - 1).Split('~').ToList();
+                foreach (var meetingDocument in meetingDocuments)
+                {
+                    MeetingDocument doc = new MeetingDocument
+                    {
+                        FileName = meetingDocument,
+                        MeetingId = meetingToBeSaved.Meeting.MeetingId,
+                        RecCreatedDate = DateTime.Now,
+                        RecLastUpdatedDate = DateTime.Now
+                    };
+                    meetingDocumentRepository.Add(doc);
+                    meetingDocumentRepository.SaveChanges();
+                }
+            }
+        }
 
     }
 }

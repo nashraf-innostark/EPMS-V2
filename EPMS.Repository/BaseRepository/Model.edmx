@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -307,7 +307,7 @@
           <Property Name="ApplicantEmail" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="JobOfferedId" Type="bigint" Nullable="false" />
           <Property Name="ApplicantAge" Type="int" />
-          <Property Name="ApplicantCvPath" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="ApplicantCvPath" Type="nvarchar" MaxLength="400" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
@@ -1362,7 +1362,6 @@
           <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
           <EntitySet Name="EmployeeJobHistories" EntityType="EPMSModel.EmployeeJobHistory" />
           <EntitySet Name="EmployeeRequests" EntityType="EPMSModel.EmployeeRequest" />
-          <EntitySet Name="JobApplicants" EntityType="EPMSModel.JobApplicant" />
           <EntitySet Name="JobOffereds" EntityType="EPMSModel.JobOffered" />
           <EntitySet Name="JobTitles" EntityType="EPMSModel.JobTitle" />
           <EntitySet Name="JobTitleHistories" EntityType="EPMSModel.JobTitleHistory" />
@@ -1463,10 +1462,6 @@
             <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
             <End Role="RequestDetail" EntitySet="RequestDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="EPMSModel.FK_JobApplicants_JobOffered">
-            <End Role="JobOffered" EntitySet="JobOffereds" />
-            <End Role="JobApplicant" EntitySet="JobApplicants" />
-          </AssociationSet>
           <AssociationSet Name="FK_JobOffered_JobTitle" Association="EPMSModel.FK_JobOffered_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobOffered" EntitySet="JobOffereds" />
@@ -1530,6 +1525,11 @@
           <AssociationSet Name="PreRequisitTask" Association="EPMSModel.PreRequisitTask">
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <EntitySet Name="JobApplicants" EntityType="EPMSModel.JobApplicant" />
+          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="EPMSModel.FK_JobApplicants_JobOffered">
+            <End Role="JobOffered" EntitySet="JobOffereds" />
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Allowance">
@@ -1855,27 +1855,6 @@
           <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
           <NavigationProperty Name="RequestDetails" Relationship="EPMSModel.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequest" ToRole="RequestDetail" />
         </EntityType>
-        <EntityType Name="JobApplicant">
-          <Key>
-            <PropertyRef Name="ApplicantId" />
-          </Key>
-          <Property Name="ApplicantId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApplicantName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantMobile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantEmail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="JobOfferedId" Type="Int64" Nullable="false" />
-          <Property Name="ApplicantAge" Type="Int32" />
-          <Property Name="ApplicantCvPath" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="MaritalStatus" Type="Boolean" />
-          <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IqamaOrNationalIdNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DrivingLicense" Type="Boolean" />
-          <NavigationProperty Name="JobOffered" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
-        </EntityType>
         <EntityType Name="JobOffered">
           <Key>
             <PropertyRef Name="JobOfferedId" />
@@ -1893,8 +1872,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobApplicants" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
           <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
+          <NavigationProperty Name="JobApplicants" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -2362,18 +2341,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JobApplicants_JobOffered">
-          <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="1" />
-          <End Type="EPMSModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobOffered">
-              <PropertyRef Name="JobOfferedId" />
-            </Principal>
-            <Dependent Role="JobApplicant">
-              <PropertyRef Name="JobOfferedId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_JobOffered_JobTitle">
           <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="1" />
           <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="*" />
@@ -2617,6 +2584,39 @@
         <Association Name="PreRequisitTask">
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask1" Multiplicity="*" />
+        </Association>
+        <EntityType Name="JobApplicant">
+          <Key>
+            <PropertyRef Name="ApplicantId" />
+          </Key>
+          <Property Name="ApplicantId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicantName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantMobile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantEmail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="JobOfferedId" Type="Int64" Nullable="false" />
+          <Property Name="ApplicantAge" Type="Int32" />
+          <Property Name="ApplicantCvPath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="MaritalStatus" Type="Boolean" />
+          <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IqamaOrNationalIdNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DrivingLicense" Type="Boolean" />
+          <NavigationProperty Name="JobOffered" Relationship="EPMSModel.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
+        </EntityType>
+        <Association Name="FK_JobApplicants_JobOffered">
+          <End Type="EPMSModel.JobOffered" Role="JobOffered" Multiplicity="1" />
+          <End Type="EPMSModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOffered">
+              <PropertyRef Name="JobOfferedId" />
+            </Principal>
+            <Dependent Role="JobApplicant">
+              <PropertyRef Name="JobOfferedId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -2939,27 +2939,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="JobApplicants">
-            <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
-              <MappingFragment StoreEntitySet="JobApplicants">
-                <ScalarProperty Name="DrivingLicense" ColumnName="DrivingLicense" />
-                <ScalarProperty Name="IqamaOrNationalIdNo" ColumnName="IqamaOrNationalIdNo" />
-                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="ApplicantCvPath" ColumnName="ApplicantCvPath" />
-                <ScalarProperty Name="ApplicantAge" ColumnName="ApplicantAge" />
-                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
-                <ScalarProperty Name="ApplicantEmail" ColumnName="ApplicantEmail" />
-                <ScalarProperty Name="ApplicantMobile" ColumnName="ApplicantMobile" />
-                <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
-                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="JobOffereds">
             <EntityTypeMapping TypeName="EPMSModel.JobOffered">
               <MappingFragment StoreEntitySet="JobOffered">
@@ -3255,6 +3234,27 @@
               <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="JobApplicants">
+            <EntityTypeMapping TypeName="EPMSModel.JobApplicant">
+              <MappingFragment StoreEntitySet="JobApplicants">
+                <ScalarProperty Name="DrivingLicense" ColumnName="DrivingLicense" />
+                <ScalarProperty Name="IqamaOrNationalIdNo" ColumnName="IqamaOrNationalIdNo" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ApplicantCvPath" ColumnName="ApplicantCvPath" />
+                <ScalarProperty Name="ApplicantAge" ColumnName="ApplicantAge" />
+                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
+                <ScalarProperty Name="ApplicantEmail" ColumnName="ApplicantEmail" />
+                <ScalarProperty Name="ApplicantMobile" ColumnName="ApplicantMobile" />
+                <ScalarProperty Name="ApplicantName" ColumnName="ApplicantName" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3295,7 +3295,6 @@
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="7.875" PointY="19.875" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeJobHistory" Width="1.5" PointX="13.125" PointY="17" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="10.125" PointY="38.875" />
-        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="10.125" PointY="11.625" />
         <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="7.875" PointY="11.75" />
         <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="5.625" PointY="20.25" />
         <EntityTypeShape EntityType="EPMSModel.JobTitleHistory" Width="1.5" PointX="7.875" PointY="30.75" />
@@ -3330,7 +3329,6 @@
         <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" />
-        <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" />
         <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
@@ -3350,6 +3348,8 @@
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Task" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" />
+        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="10.125" PointY="11.625" />
+        <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" />
         </Diagram>
     </Diagrams>
   </Designer>

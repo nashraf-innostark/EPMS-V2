@@ -35,7 +35,7 @@
     <div class="container-fluid">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Meeting.MeetingId)
-        @Html.HiddenFor(model => model.DocsNames, new { @id = "DocsNames" })
+        @Html.HiddenFor(model => model.Meeting.DocsNames, new { @id = "DocsNames" })
         @Html.HiddenFor(m => m.Meeting.RecCreatedBy)
         @Html.HiddenFor(m => m.Meeting.RecCreatedDt)
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
@@ -291,7 +291,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                //<button type="submit" class="btn" name="SendInvitation">Send Invitation</button>
+                <button type="submit" class="btn" name="SendInvitation">Send Invitation</button>
             </div>
 
         </div>
@@ -419,6 +419,10 @@
             $('.' + 'disableOnDate' + ':input').attr('ReadOnly', true);
             $("#checked").addClass('disableList');
         }
+
+        $("#meetingForm").validate({
+            //ignore: ".ignore"
+        }).settings.ignore = ".ignore, .file";
 
     });
 

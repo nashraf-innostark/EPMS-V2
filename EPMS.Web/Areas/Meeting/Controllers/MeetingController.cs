@@ -11,11 +11,13 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Meeting;
+using Microsoft.Ajax.Utilities;
 
 namespace EPMS.Web.Areas.Meeting.Controllers
 {
@@ -28,6 +30,30 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         private readonly IMeetingAttendeeService meetingAttendeeService;
         private readonly IMeetingDocumentService meetingDocumentService;
         private readonly IEmployeeService employeeService;
+
+        #region SendInvitation
+        private void SendInvitation(MeetingViewModel meetingViewModel, SaveMeetingResponse response)
+        {
+            IEnumerable<string> emEmails = response.EmployeeEmails;
+            string empemails = emEmails.Aggregate("", (current, item) => current + "," + item);
+            string emails = empemails.Substring(1, empemails.Length - 1);
+            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail1))
+            {
+                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail1;
+            }
+            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail2))
+            {
+                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail2;
+            }
+            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail3))
+            {
+                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail3;
+            }
+            string emailSubject = "Meeting Invitation";
+            string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName + "on" + meetingViewModel.Meeting.Date;
+            Utility.SendEmailAsync(emails, emailSubject, emailBody);
+        }
+        #endregion
 
         #endregion
 
@@ -45,6 +71,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
 
         #region Public
 
+        #region Index
         public ActionResult Index()
         {
             MeetingSearchRequest meetingSearchRequest = new MeetingSearchRequest();
@@ -75,7 +102,9 @@ namespace EPMS.Web.Areas.Meeting.Controllers
 
             return Json(meetingListViewModel, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Create/Update
         public ActionResult Create(long? id)
         {
             MeetingViewModel meetingViewModel = new MeetingViewModel();
@@ -98,43 +127,48 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             meetingViewModel.Employees = employeeService.GetAll().Select(x => x.CreateFromServerToClient());
             return View(meetingViewModel);
         }
+
         [HttpPost]
-        [ValidateInput(false)]//this is due to CK Editor
+        [ValidateInput(false)] //this is due to CK Editor
         public ActionResult Create(MeetingViewModel meetingViewModel)
         {
             MeetingRequest toBeSaveMeeting = meetingViewModel.Meeting.CreateFrom();
-            if (meetingService.SaveMeeting(toBeSaveMeeting))
+            SaveMeetingResponse response = meetingService.SaveMeeting(toBeSaveMeeting);
             {
-                TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
+                TempData["message"] = new MessageViewModel {Message = "Added", IsSaved = true};
                 meetingViewModel.Meeting.MeetingId = toBeSaveMeeting.Meeting.MeetingId;
-                SaveMeetingDocuments(meetingViewModel);
-            }
-            if (Request.Form["SendInvitation"] != null)
-            {
-                SendInvitation(meetingViewModel);
-            }
-            
-            return RedirectToAction("Index");
-        }
-
-        public void SaveMeetingDocuments(MeetingViewModel meetingViewModel)
-        {
-            //Save file names in db
-            if (!string.IsNullOrEmpty(meetingViewModel.DocsNames))
-            {
-                var meetingDocuments = meetingViewModel.DocsNames.Substring(0, meetingViewModel.DocsNames.Length - 1).Split('~').ToList();
-                foreach (var meetingDocument in meetingDocuments)
+                //SaveMeetingDocuments(meetingViewModel);
+                if (Request.Form["SendInvitation"] != null)
                 {
-                    MeetingDocument doc = new MeetingDocument();
-                    doc.FileName = meetingDocument;
-                    doc.MeetingId = meetingViewModel.Meeting.MeetingId;
-                    doc.RecCreatedDate = DateTime.Now;
-                    doc.RecLastUpdatedDate = DateTime.Now;
-                    meetingDocumentService.AddMeetingDocument(doc);
+                    SendInvitation(meetingViewModel, response);
                 }
+                return RedirectToAction("Index");
             }
         }
 
+        #endregion
+
+        //#region SaveMeetingDocuments
+        //public void SaveMeetingDocuments(MeetingViewModel meetingViewModel)
+        //{
+        //    //Save file names in db
+        //    if (!string.IsNullOrEmpty(meetingViewModel.DocsNames))
+        //    {
+        //        var meetingDocuments = meetingViewModel.DocsNames.Substring(0, meetingViewModel.DocsNames.Length - 1).Split('~').ToList();
+        //        foreach (var meetingDocument in meetingDocuments)
+        //        {
+        //            MeetingDocument doc = new MeetingDocument();
+        //            doc.FileName = meetingDocument;
+        //            doc.MeetingId = meetingViewModel.Meeting.MeetingId;
+        //            doc.RecCreatedDate = DateTime.Now;
+        //            doc.RecLastUpdatedDate = DateTime.Now;
+        //            meetingDocumentService.AddMeetingDocument(doc);
+        //        }
+        //    }
+        //}
+        //#endregion
+
+        #region UploadDocuments
         public ActionResult UploadDocuments()
         {
             HttpPostedFileBase doc = Request.Files[0];
@@ -158,13 +192,15 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             }
             return Json(new { filename = filename, size = doc.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region DeleteDocuments
         [HttpGet]
         public JsonResult DeleteDocument(long fileId)
         {
 
             var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["MeetingDocuments"]);
-            var document = meetingDocumentService.FindMeetingDocumentById(fileId);
+            MeetingDocument document = meetingDocumentService.FindMeetingDocumentById(fileId);
             if (document != null)
             {
                 string savedFilePhysicalPath = Path.Combine(filePathOriginal, document.FileName);
@@ -178,21 +214,16 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region DownloadDocuments
         public FileResult Download(string fileName)
         {
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["MeetingDocuments"] + fileName));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+        #endregion
 
-        public void SendInvitation(MeetingViewModel meetingViewModel)
-        {
-            var empEmails = employeeService.FindEmployeeEmailByIds(meetingViewModel.Meeting.EmployeeIds);
-            var email = meetingViewModel.Meeting.AttendeeEmail1 + meetingViewModel.Meeting.AttendeeEmail2 +
-                        meetingViewModel.Meeting.AttendeeEmail3;
-            //var employeeEmail = meetingViewModel.MeetingAttendee.
-            //return RedirectToAction("Create");
-        }
 
         #endregion
     }

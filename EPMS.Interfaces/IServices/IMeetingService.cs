@@ -20,6 +20,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateMeeting(Meeting meeting);
         IEnumerable<Meeting> LoadMeetingsForDashboard(string requester);
 
-        bool SaveMeeting(MeetingRequest meetinToBeSaved);
+        SaveMeetingResponse SaveMeeting(MeetingRequest meetinToBeSaved);
     }
 }
