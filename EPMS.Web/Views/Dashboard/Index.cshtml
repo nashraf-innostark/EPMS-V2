@@ -24,6 +24,7 @@
 </div>
 <input type="hidden" id="userRole" value="@ViewBag.UserRole" />
 <input type="hidden" id="makeComplaint" value="@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint" />
+<input type="hidden" id="makeMeeting" value="@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting" />
 <!-- dashboard-quick-launch box -->
 @*<div class="container-fluid dashboard dashboard-quick-launch">
         <div class="row-fluid">
@@ -877,6 +878,12 @@
                                         <div class="progress progress-info">
                                             <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
                                         </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="processed-pct">
+                                        <span>No record found</span>
                                     </li>
                                 }
                             </ul>

@@ -143,14 +143,18 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a href="companyWebsite.html">
-                    <i class="icon-photon target"></i>
+            @if (Session["RoleName"].ToString() == "Admin")
+            {
+                <li>
+                    <a href="~/CP/CompanyProfile/Detail">
+                        <i class="icon-photon target"></i>
 
-                </a>
-            </li>
+                    </a>
+                </li>
+            }
+            
             <li>
-                <a href="NotificationList(Admin,Employee with Auth)En.html">
+                <a href="#">
                     <i class="icon-photon comment_alt2_stroke"></i>
                     <div class="notification-count">12</div>
                 </a>
