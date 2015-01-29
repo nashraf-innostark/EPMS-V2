@@ -70,6 +70,9 @@ namespace EPMS.Repository.Repositories
                 .Skip(fromRow).Take(toRow).Select(s => new Order
                 {
                     OrderId = s.OrderId,
+                    OrderNo = s.OrderNo,
+                    OrderStatus = s.OrderStatus,
+                    CustomerId = s.CustomerId,
                     Customer = new Customer
                     {
                         CustomerId = s.Customer.CustomerId,
