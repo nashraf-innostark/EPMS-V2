@@ -98,7 +98,7 @@ namespace EPMS.Web.ModelMappers
                 TopicShort = source.TopicName.Length > 25 ? source.TopicName.Substring(0, 25) + "..." : source.TopicName,
                 TopicA = source.TopicNameAr,
                 TopicAShort = source.TopicNameAr.Length > 25 ? source.TopicNameAr.Substring(0, 25) + "..." : source.TopicNameAr,
-                MeetingDate = Convert.ToDateTime(source.Date.ToString()).ToShortDateString()
+                MeetingDate = source.Date != null ? Convert.ToDateTime(source.Date.ToString()).ToShortDateString() : ""
             };
             
         }

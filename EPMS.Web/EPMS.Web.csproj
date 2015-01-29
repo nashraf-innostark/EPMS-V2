@@ -2615,6 +2615,7 @@
     <EmbeddedResource Include="Resources\CMS\Complaint.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Complaint.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Customer.ar.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2701,6 +2702,7 @@
     <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobTitle.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobTitle.ar.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -99,8 +99,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = " employeeId " })
-                        @Html.ValidationMessageFor(m => m.SelectedEmployee, "", new { @class = "required" })
+                        @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = "selectedEmployee" })
+                        <label id="emloyeeValidate"></label>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                 <div class="span9">
                     <div class="controls">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
-                        <label id="passAuth" class="required"></label>
+                        <label id="passwordAuthentication"></label>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
             placeholder: "Select",
             allowClear: true
         });
-        
+
         //$("#signupuser").click(function (e) {
 
         //    alert($("#employeeId option:selected").val());
@@ -158,16 +158,39 @@
     });
     function validateUserPassword() {
         var userPassword = $("#password").val();
+        var selectedEmployee = $("#selectedEmployee").val();
         var model = @(Model.UserId == null ? "true" : "false");
+        var counter = 0;
         if ((userPassword == null || userPassword == "") && model) {
-            $("#passAuth").text("Password Field is required");
-            return false;
+            $("#passwordAuthentication").text("Password Field is required");
+            $("#passwordAuthentication").addClass("Error");
+            counter++;
         } else if (userPassword.length < 6 && model) {
-            $("#passAuth").text("Password must contain 6 characters");
-            return false;
+            $("#passwordAuthentication").text("Password must contain 6 characters");
+            $("#passwordAuthentication").addClass("Error");
+            counter++;
         }
         else {
-            $("#passAuth").text("");
+            $("#passwordAuthentication").text("");
+            $("#passwordAuthentication").removeClass("Error");
+        }
+        if ((selectedEmployee == null || selectedEmployee == "" || selectedEmployee == undefined) && model) {
+            $("#emloyeeValidate").text("Please select Employee");
+            $("#emloyeeValidate").addClass("Error");
+            counter++;
+        } else {
+            $("#emloyeeValidate").text("");
+            $("#emloyeeValidate").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
         }
         return true;
     }
