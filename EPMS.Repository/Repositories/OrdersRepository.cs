@@ -75,6 +75,14 @@ namespace EPMS.Repository.Repositories
                         CustomerId = s.Customer.CustomerId,
                         CustomerNameE = s.Customer.CustomerNameE,
                         CustomerNameA = s.Customer.CustomerNameA,
+                        CustomerAddress = s.Customer.CustomerAddress,
+                        CustomerMobile = s.Customer.CustomerMobile,
+                        RecCreatedBy = s.Customer.RecCreatedBy,
+                        RecCreatedDt = s.Customer.RecCreatedDt,
+                        RecLastUpdatedBy = s.Customer.RecLastUpdatedBy,
+                        RecLastUpdatedDt = s.Customer.RecLastUpdatedDt,
+                        Complaints = s.Customer.Complaints,
+                        Orders = s.Customer.Orders,
                         Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
                     }
 
