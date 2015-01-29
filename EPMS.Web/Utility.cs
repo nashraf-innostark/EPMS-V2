@@ -7,7 +7,7 @@ namespace EPMS.Web
 {
     public class Utility
     {
-        public void SendEmailAsync(string email, string subject, string body)
+        public static void SendEmailAsync(string email, string subject, string body)
         {
 
             string fromAddress = ConfigurationManager.AppSettings["FromAddress"];
@@ -35,7 +35,7 @@ namespace EPMS.Web
                 Credentials = new NetworkCredential(fromAddress, fromPwd)
             };
 
-            client.SendMailAsync(oEmail);
+            client.Send(oEmail);
 
         }
     }

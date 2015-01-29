@@ -139,7 +139,32 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+
+        $("#JobTitleForm").validate({
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "req": {
+                    required: true
+                },
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "email": {
+                    email: true
+                },
+                "url": {
+                    url: true
+                },
+                "date": {
+                    date: true
+                }
+            }
+        });
+
         var id = $('#JobTitle_JobTitleId').val();
         $("[readonly='false']").removeAttr("readonly");
         $('.select2me').select2({

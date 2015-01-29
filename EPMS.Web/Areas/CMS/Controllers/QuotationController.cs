@@ -134,12 +134,21 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         }
                         else
                         {
-                            // Add item details
-                            itemDetail.QuotationId = viewModel.QuotationId;
-                            itemDetail.RecCreatedBy = User.Identity.GetUserId();
-                            itemDetail.RecCreatedDt = DateTime.Now;
-                            var itemDetailToAdd = itemDetail.CreateFromClientToServer();
-                            isAdded.Add(QuotationItemService.AddQuotationItem(itemDetailToAdd));
+                            if (!string.IsNullOrEmpty(itemDetail.ItemDetails) && itemDetail.ItemQuantity != 0 &&
+                                itemDetail.UnitPrice != 0)
+                            {
+                                // Add item details
+                                itemDetail.QuotationId = viewModel.QuotationId;
+                                itemDetail.RecCreatedBy = User.Identity.GetUserId();
+                                itemDetail.RecCreatedDt = DateTime.Now;
+                                var itemDetailToAdd = itemDetail.CreateFromClientToServer();
+                                isAdded.Add(QuotationItemService.AddQuotationItem(itemDetailToAdd));
+                            }
+                            else if (string.IsNullOrEmpty(itemDetail.ItemDetails) && itemDetail.ItemQuantity == 0 &&
+                                     itemDetail.UnitPrice == 0)
+                            {
+                                isAdded.Add(true);
+                            }
                         }
                     }
                     if (!isUpdated.Contains(false) && !isAdded.Contains(false))
@@ -162,9 +171,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     ViewBag.Orders = OrdersService.GetOrdersByCustomerId(viewModel.CustomerId).Select(x => x.CreateFromServerToClient());
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Quotation.UpdateMessage,
+                        Message = Resources.CMS.Quotation.ErrorMessage,
                         IsUpdated = true
                     };
+                    ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                     return View(viewModel);
                 }
             }

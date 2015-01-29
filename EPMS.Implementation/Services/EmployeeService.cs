@@ -137,9 +137,9 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public IQueryable<string> FindEmployeeEmailByIds(List<long> employeeIds)
+        public IEnumerable<string> FindEmployeeEmailByIds(List<long> employeeIds)
         {
-            var empIds = repository.FindEmployeeEmailById(employeeIds);
+            IEnumerable<string> empIds = repository.FindEmployeeEmailById(employeeIds);
             return empIds;
         }
     }

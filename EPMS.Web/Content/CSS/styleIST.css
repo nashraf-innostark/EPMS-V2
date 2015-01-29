@@ -4,6 +4,12 @@
 .required{
     color: #e02222;
 }
+
+.requiredLeftAlign {
+    color: #e02222;
+    text-align: left !important;
+}
+
 .displayCK {
     display: inline-block;
     vertical-align: middle;

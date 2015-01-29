@@ -12,14 +12,11 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
-        @if (Model.Role == "Admin")
-        {
-            <li>
-                <a href="~/HR/Employee/Index">
-                    Employees
-                </a>
-            </li>
-        }
+        <li>
+            <a href="~/HR/Employee/Index">
+                @EPMS.Web.Resources.HR.Employee.Employeelist
+            </a>
+        </li>
         @if (Model.EmployeeViewModel.Employee != null)
         {
             <li>
@@ -85,7 +82,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="EmployeeNameA">@EPMS.Web.Resources.HR.Employee.Name</label>
+                <label class="control-label" for="EmployeeNameA">@EPMS.Web.Resources.HR.Employee.NameA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -204,7 +201,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true, onchange = "GregorianToHijri(this, EmpDateOfBirthArabic)" })
                 </div>
             </div>
         </div>
@@ -263,7 +260,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @readonly = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -288,7 +285,7 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepicker form-control toBeRequired cursorHand", @readonly = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -548,7 +545,7 @@
                 }
             }
         });
-        
+
         // set JobId and Department Name
         $(".setDeptJobId").on("change", function () {
             var jobId = $(this).val();
@@ -676,10 +673,10 @@
     }
     function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
         var calender = $.calendars.instance(fromCalender);
-        var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);
+        var dateToBeChanged = calender.parseDate("dd/mm/yyyy", dateTobeChanged);
         calender = $.calendars.instance(toCalender);
         var changedDate = calender.fromJD(dateToBeChanged.toJD());
-        return calender.formatDate("mm/dd/yyyy", changedDate);
+        return calender.formatDate("dd/mm/yyyy", changedDate);
     }
     //function validateForm(event) {
     //    event.preventDefault();
