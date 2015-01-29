@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Department.DepartmentListViewModel
 
 @{
     ViewBag.Title = Model.Department.DepartmentId > 0 ? EPMS.Web.Resources.HR.Department.UpdatePageTitle : EPMS.Web.Resources.HR.Department.CreatePageTitle;
@@ -10,7 +11,7 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
@@ -141,7 +142,7 @@
                     <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.HR.Department.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href='/HR/Department/Index'" type="reset">@EPMS.Web.Resources.HR.Department.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"].ToString())/HR/Department/Index'" type="reset">@EPMS.Web.Resources.HR.Department.CancelButton</button>
                 </div>
             </div>
         </div>
