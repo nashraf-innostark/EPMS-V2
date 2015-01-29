@@ -3338,7 +3338,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="46">
+      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="88">
         <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="10.125" PointY="21.875" />
