@@ -22,6 +22,7 @@ using System.Net;
 using EPMS.Web.ModelMappers;
 using EPMS.Models.ModelMapers;
 using EPMS.WebBase.Mvc;
+using System.Globalization;
 
 namespace IdentitySample.Controllers
 {
@@ -37,17 +38,12 @@ namespace IdentitySample.Controllers
         private ApplicationRoleManager _roleManager;
         private IAspNetUserService AspNetUserService;
         private ICustomerService customerService;
-
+        private IUserPrefrencesService userPrefrencesService;
         /// <summary>
         /// Set User Permission
         /// </summary>
         private void SetUserPermissions(string userEmail)
         {
-            //ClaimsIdentity userIdentity = (ClaimsIdentity) User.Identity;
-            //IEnumerable<Claim> claims = userIdentity.Claims;
-            //string roleClaimType = userIdentity.RoleClaimType;
-
-            //IEnumerable<Claim> roles = claims.Where(c => c.Type == roleClaimType).ToList();
             try
             {
                 AspNetUser userResult = UserManager.FindByEmail(userEmail);
@@ -62,17 +58,28 @@ namespace IdentitySample.Controllers
                 throw exception;
             }
         }
-
+        private void SetCultureInfo(string userId)
+        {
+            var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
+            CultureInfo info = userPrefrences != null
+                ? new CultureInfo(userPrefrences.Culture)
+                : new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+            Session["Culture"] = info.Name;
+            info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            System.Threading.Thread.CurrentThread.CurrentCulture = info;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = info;
+        }
         #endregion
 
         #region Constructor
 
-        public AccountController(IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
+        public AccountController(IUserPrefrencesService userPrefrencesService,IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
             this.AspNetUserService = aspNetUserService;
             this.customerService = customerService;
+            this.userPrefrencesService = userPrefrencesService;
         }
 
         #endregion
@@ -212,6 +219,7 @@ namespace IdentitySample.Controllers
                     case SignInStatus.Success:
                         {
                             SetUserPermissions(user.Email);
+                            SetCultureInfo(user.Id);
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Index", "Dashboard");
                             return RedirectToLocal(returnUrl);

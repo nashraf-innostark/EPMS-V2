@@ -24,6 +24,7 @@
 </div>
 <input type="hidden" id="userRole" value="@ViewBag.UserRole" />
 <input type="hidden" id="makeComplaint" value="@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint" />
+<input type="hidden" id="makeMeeting" value="@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting" />
 <!-- dashboard-quick-launch box -->
 @*<div class="container-fluid dashboard dashboard-quick-launch">
         <div class="row-fluid">
@@ -747,11 +748,18 @@
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
-                                <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                @if (Model.Project != null)
+                                {
+                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                }
+                                else
+                                {
+                                    <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                }
                                 <div>
                                     <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                    <img src="/Images/photon/w_task@2x.png" alt="arrows" />
+                                    <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
                                 </div>
                             </div>
                             <ul id="progressId">
@@ -841,11 +849,11 @@
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
-                                <a href="#" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
+                                <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
                                 <div>
                                     <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                     <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    <img src="/Images/photon/w_task@2x.png" alt="arrows" />
+                                    <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
                                 </div>
                             </div>
                             <ul id="progressId2">
@@ -870,6 +878,12 @@
                                         <div class="progress progress-info">
                                             <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
                                         </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="processed-pct">
+                                        <span>No record found</span>
                                     </li>
                                 }
                             </ul>

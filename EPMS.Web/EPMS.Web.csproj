@@ -265,6 +265,7 @@
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CultureController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -3010,6 +3011,7 @@
     <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Culture\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

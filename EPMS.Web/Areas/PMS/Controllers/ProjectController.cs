@@ -55,6 +55,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             };
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             ViewBag.UserRole = Session["RoleName"];
+            
             return View(projectsList);
         }
         // GET: PMS/Project/Finished

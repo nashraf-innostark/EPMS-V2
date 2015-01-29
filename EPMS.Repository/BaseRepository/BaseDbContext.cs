@@ -101,5 +101,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<MeetingDocument> MeetingDocuments { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        public DbSet<UserPrefrence> UserPrefrence { get; set; }
     }
 }

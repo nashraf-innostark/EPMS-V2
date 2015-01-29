@@ -307,7 +307,7 @@
           <Property Name="ApplicantEmail" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="JobOfferedId" Type="bigint" Nullable="false" />
           <Property Name="ApplicantAge" Type="int" />
-          <Property Name="ApplicantCvPath" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="ApplicantCvPath" Type="nvarchar" MaxLength="400" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
@@ -604,6 +604,14 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="UserPrefrences">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Culture" Type="nvarchar" MaxLength="3" />
         </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -1105,6 +1113,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserPrefrences_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserPrefrences" Type="Self.UserPrefrences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPrefrences">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EPMSModelStoreContainer">
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -1141,6 +1161,7 @@
           <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrences" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -1304,6 +1325,10 @@
           <AssociationSet Name="FK_TaskEmployee_Task" Association="Self.FK_TaskEmployee_Task">
             <End Role="ProjectTask" EntitySet="ProjectTask" />
             <End Role="TaskEmployee" EntitySet="TaskEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPrefrences_AspNetUsers" Association="Self.FK_UserPrefrences_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserPrefrences" EntitySet="UserPrefrences" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1531,6 +1556,11 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
+          <EntitySet Name="UserPrefrences" EntityType="EPMSModel.UserPrefrence" />
+          <AssociationSet Name="FK_UserPrefrences_AspNetUsers" Association="EPMSModel.FK_UserPrefrences_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="UserPrefrence" EntitySet="UserPrefrences" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Allowance">
           <Key>
@@ -1609,6 +1639,7 @@
           <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_AspNetUsers_Customer" FromRole="AspNetUser" ToRole="Customer" />
           <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
           <NavigationProperty Name="AspNetRoles" Relationship="EPMSModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+          <NavigationProperty Name="UserPrefrences" Relationship="EPMSModel.FK_UserPrefrences_AspNetUsers" FromRole="AspNetUser" ToRole="UserPrefrence" />
         </EntityType>
         <EntityType Name="CompanyBankDetail">
           <Key>
@@ -1865,7 +1896,7 @@
           <Property Name="ApplicantEmail" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="JobOfferedId" Type="Int64" Nullable="false" />
           <Property Name="ApplicantAge" Type="Int32" />
-          <Property Name="ApplicantCvPath" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantCvPath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -2618,6 +2649,27 @@
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <End Type="EPMSModel.ProjectTask" Role="ProjectTask1" Multiplicity="*" />
         </Association>
+        <EntityType Name="UserPrefrence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Culture" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_UserPrefrences_AspNetUsers" FromRole="UserPrefrence" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="FK_UserPrefrences_AspNetUsers">
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSModel.UserPrefrence" Role="UserPrefrence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPrefrence">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3255,6 +3307,15 @@
               <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="UserPrefrences">
+            <EntityTypeMapping TypeName="EPMSModel.UserPrefrence">
+              <MappingFragment StoreEntitySet="UserPrefrences">
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3277,7 +3338,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="80">
+      <Diagram DiagramId="092626f34e2843fba64d8f3bb0490de8" Name="Diagram1" ZoomLevel="46">
         <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="10.125" PointY="21.875" />
@@ -3350,6 +3411,8 @@
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Task" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" />
+        <EntityTypeShape EntityType="EPMSModel.UserPrefrence" Width="1.5" PointX="15.375" PointY="18.375" />
+        <AssociationConnector Association="EPMSModel.FK_UserPrefrences_AspNetUsers" />
         </Diagram>
     </Diagrams>
   </Designer>

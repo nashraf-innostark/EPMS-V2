@@ -151,6 +151,7 @@
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />
+    <Compile Include="Services\UserPrefrencesService.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>
