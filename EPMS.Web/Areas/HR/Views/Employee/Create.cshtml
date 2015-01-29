@@ -95,9 +95,9 @@
             <div class="span3">
                 <label class="control-label" for="JobTitle">@EPMS.Web.Resources.HR.Employee.JobTitle</label>
             </div>
-            <div class="span9">
+            <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "setDeptJobId", @id = "JobTitle" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitleId, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -184,10 +184,9 @@
             <div class="span3">
                 <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.HR.Employee.MaritalStat</label>
             </div>
-            <div class="span9">
+            <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.MaritalStatus, String.Empty, new { @class = "required" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "select2me" })
                 </div>
             </div>
         </div>
@@ -209,7 +208,7 @@
             <div class="span3">
                 <label class="control-label" for="Nationality">@EPMS.Web.Resources.HR.Employee.Nationality</label>
             </div>
-            <div class="span9">
+            <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.EmployeeNationality, new[]
                     {
@@ -219,8 +218,7 @@
                         new SelectListItem { Value = "2" , Text = "UAE" },
                         new SelectListItem { Value = "3" , Text = "USA" },
                         new SelectListItem { Value = "4" , Text = "UK" },
-                    }, new { @id = "Nationality", @class = "" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNationality, String.Empty, new { @class = "required" })
+                    }, new { @id = "Nationality", @class = "select2me" })
                 </div>
             </div>
         </div>
@@ -296,7 +294,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @dir = "ltr", @id = "ExtraInformationE" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsE)
                 </div>
             </div>
         </div>
@@ -307,7 +304,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsA, new { @id = "ExtraInformationA" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDetailsA)
                 </div>
             </div>
         </div>
@@ -503,6 +499,10 @@
         $("#AddEditEmployeeForm").validate({
             //ignore: ".ignore"
         }).settings.ignore = ".ignore, .file";
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
         // upload Image
         var errors = "";
         var url = "/HR/Employee/UploadEmployeePhoto";

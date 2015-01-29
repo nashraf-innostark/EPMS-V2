@@ -52,6 +52,8 @@ namespace EPMS.Web.Models
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress]
         public string Email { get; set; }
         public string EmployeeDetailsA { get; set; }
 

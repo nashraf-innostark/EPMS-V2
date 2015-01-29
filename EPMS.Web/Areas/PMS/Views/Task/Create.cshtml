@@ -2,9 +2,17 @@
 
 @{
     string userRole = (string)Session["RoleName"];
-    ViewBag.Title = Model.PageTitle;
-    Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.PageTitle;
+    if (!String.IsNullOrEmpty(Model.ProjectTask.TaskNameE) && direction == "ltr")
+    {
+        ViewBag.Title = Model.PageTitle + Model.ProjectTask.TaskNameE;
+    }
+    else if (!String.IsNullOrEmpty(Model.ProjectTask.TaskNameA) && direction == "rtl")
+    {
+        ViewBag.Title = Model.PageTitle + Model.ProjectTask.TaskNameA;
+    }
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Navigation Bar -->
@@ -81,7 +89,7 @@
                     }
                     else
                     {*@
-                        @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "", new { @id = "ProjectId" })
+                        @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId" })
                     @*}*@
                     @Html.ValidationMessageFor(m => m.ProjectTask.ProjectId, String.Empty, new { @class = "required" })
                 </div>

@@ -192,7 +192,7 @@ namespace EPMS.Web.ModelMappers
             {
                 imageName = "profile.jpg";
             }
-            string path = (ConfigurationManager.AppSettings["SiteURL"] + ConfigurationManager.AppSettings["EmployeeImage"] + imageName);
+            string path = (ConfigurationManager.AppSettings["EmployeeImage"] + imageName);
             
             return "<img  data-mfp-src=" + path + " src=" + path + " class='mfp-image image-link cursorHand' height=70 width=100 />";
         }
