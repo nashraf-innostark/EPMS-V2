@@ -112,12 +112,13 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var element = "No Data";
-                        var val = full["QuotationId"];
+                        var val = full["OrderNo"];
+                        var quotationId = full["QuotationId"];
                         if ('@userRole' == "Admin" && val != 0) {
-                            element = '<a href="/CMS/Quotation/Create/' + val + '">' + "Quotation " + val + '</a>';
+                            element = '<a href="/CMS/Quotation/Create/' + quotationId + '">' + val + '</a>';
                         }
                         if ('@userRole' == "Customer" && val != 0) {
-                            element = '<a href="/CMS/Quotation/Detail/' + val + '">' + "Quotation " + val + '</a>';
+                            element = '<a href="/CMS/Quotation/Detail/' + quotationId + '">' + val + '</a>';
                         }
                         return element;
                     },

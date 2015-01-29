@@ -17,7 +17,7 @@
         <li>
             <a href="~/CMS/Complaint/Index">
                 <i>@EPMS.Web.Resources.CMS.Complaint.ComplaintsList</i>
-</a>
+            </a>
         </li>
         <li class="current">
             <a href="javascript:;">@ViewBag.Title</a>
@@ -35,7 +35,7 @@
 <!-- Form starts.  -->
 @using (Html.BeginForm("Create", "Complaint", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
-    
+
     <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
     @Html.HiddenFor(model => model.Complaint.ComplaintId)
     @Html.HiddenFor(model => model.Complaint.CustomerId)
@@ -77,8 +77,8 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired" }) : Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired" }))
-                    @Html.ValidationMessageFor(m => m.Complaint.DepartmentId,"")
+                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired", id = "DepartmentId" }) : Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired", id = "DepartmentId" }))
+                    <label id="departmentValidation"></label>
                 </div>
             </div>
 
@@ -89,8 +89,8 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Complaint.OrderId, "")
+                    @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me toBeRequired", id = "OrderId" })
+                    <label id="orderValidation"></label>
                 </div>
             </div>
 
@@ -102,7 +102,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Complaint.Topic, new { @class = "toBeReadOnly toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Complaint.Topic, "", new { @class = "required" })
+                    <label id="topicValidation"></label>
                 </div>
             </div>
         </div>
@@ -169,29 +169,29 @@
     });
     function validateForm(event) {
         var counter = 0;
-        if ($("#Complaint_DepartmentId").val() == null || $("#Complaint_DepartmentId").val() == "") {
-            $("#Complaint_DepartmentId").prop('placeholder', 'Required');
+        if ($("#DepartmentId").val() == null || $("#DepartmentId").val() == "" || $("#DepartmentId").val() == undefined) {
+            $("#departmentValidation").text("Please Select Department");
+            $("#departmentValidation").addClass("Error");
             counter++;
-            $("#Complaint_DepartmentId").addClass("Error");
-
         } else {
-            $("#Complaint_DepartmentId").removeClass("Error");
+            $("#departmentValidation").text("");
+            $("#departmentValidation").removeClass("Error");
         }
-        if ($("#Complaint_OrderId").val() == null || $("#Complaint_OrderId").val() == "") {
-            $("#Complaint_OrderId").prop('placeholder', 'Required');
+        if ($("#OrderId").val() == null || $("#OrderId").val() == "" || $("#OrderId").val() == undefined) {
+            $("#orderValidation").text("Please Select Order");
+            $("#orderValidation").addClass("Error");
             counter++;
-            $("#Complaint_OrderId").addClass("Error");
-
         } else {
-            $("#Complaint_OrderId").removeClass("Error");
+            $("#orderValidation").text("");
+            $("#orderValidation").removeClass("Error");
         }
-        if ($("#Complaint_Topic").val() == null || $("#Complaint_Topic").val() == "") {
-            $("#Complaint_Topic").prop('placeholder', 'Required');
+        if ($("#Complaint_Topic").val() == null || $("#Complaint_Topic").val() == "" || $("#Complaint_Topic").val() == undefined) {
+            $("#topicValidation").text("Please Select Complaint Topic");
+            $("#topicValidation").addClass("Error");
             counter++;
-            $("#Complaint_Topic").addClass("Error");
-
         } else {
-            $("#Complaint_Topic").removeClass("Error");
+            $("#topicValidation").text("");
+            $("#topicValidation").removeClass("Error");
         }
         if (counter > 0) {
             //implementing focus back to error
