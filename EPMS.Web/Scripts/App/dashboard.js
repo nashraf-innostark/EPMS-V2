@@ -848,10 +848,16 @@ function LoadMeetings(control) {
                 $.each(data, function (itemIndex, item) {
                     $('#meetings').append('<li><a href="/Meeting/Meeting/Create/' + item.MeetingId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div>'+item.MeetingDate+'</div></li>');
                 });
+                if ($("#userRole").val() == "Admin") {
+                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">' + $("#makeMeeting").val() + '</a></li>');
+                }
             }
             else {
                 $(".tempLoader").click();
                 $('#meetings').append('<li>No record found</li>');
+                if ($("#userRole").val() == "Admin") {
+                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">' + $("#makeMeeting").val() + '</a></li>');
+                }
             }
         },
         error: function (e) {

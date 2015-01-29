@@ -41,7 +41,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IMeetingAttendeeRepository, MeetingAttendeeRepository>();
             unityContainer.RegisterType<IMeetingDocumentRepository, MeetingDocumentRepository>();
             unityContainer.RegisterType<ITaskEmployeeRepository, TaskEmployeeRepository>();
-
+            unityContainer.RegisterType<IUserPrefrencesRepository, UserPrefrencesRepository>();
         }
     }
 }

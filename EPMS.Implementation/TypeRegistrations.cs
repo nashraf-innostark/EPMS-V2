@@ -44,6 +44,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IMeetingAttendeeService, MeetingAttendeeService>();
             unityContainer.RegisterType<IMeetingDocumentService, MeetingDocumentService>();
             unityContainer.RegisterType<ITaskEmployeeService, TaskEmployeeService>();
+            unityContainer.RegisterType<IUserPrefrencesService, UserPrefrencesService>();
         }
     }
 }

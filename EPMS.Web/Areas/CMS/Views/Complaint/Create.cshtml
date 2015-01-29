@@ -78,7 +78,7 @@
             <div class="span2">
                 <div class="controls">
                     @(direction == "ltr" ? Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired" }) : Html.DropDownListFor(x => x.Complaint.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me toBeRequired" }))
-                    @Html.ValidationMessageFor(m => m.Complaint.DepartmentId,"", new { @class = "required" })
+                    @Html.ValidationMessageFor(m => m.Complaint.DepartmentId,"")
                 </div>
             </div>
 
@@ -90,7 +90,7 @@
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(x => x.Complaint.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), EPMS.Web.Resources.CMS.Order.SelectOrder, new { @class = "select2me toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Complaint.OrderId, "", new { @class = "required" })
+                    @Html.ValidationMessageFor(m => m.Complaint.OrderId, "")
                 </div>
             </div>
 

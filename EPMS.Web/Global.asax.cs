@@ -135,10 +135,6 @@ namespace IdentitySample
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
             Response.Cache.SetNoStore();
-
-            CultureInfo info = new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
-            info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
-            System.Threading.Thread.CurrentThread.CurrentCulture = info;
         }
     }
 }

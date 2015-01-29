@@ -232,7 +232,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested has been created..
+        ///   Looks up a localized string similar to Request has been created..
         /// </summary>
         public static string RequestCreated {
             get {
@@ -250,7 +250,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested has been deleted..
+        ///   Looks up a localized string similar to Request has been deleted..
         /// </summary>
         public static string RequestDeleted {
             get {
@@ -268,7 +268,7 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested has been replied..
+        ///   Looks up a localized string similar to Request has been replied..
         /// </summary>
         public static string RequestReplied {
             get {

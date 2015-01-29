@@ -100,8 +100,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Request.RequestDate, new { @class = "dateFormatter", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Request.RequestDate)
+                    @Html.TextBoxFor(model => model.Request.RequestDateString, new { @class = "dateFormatter", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Request.RequestDateString)
                 </div>
             </div>
         </div>

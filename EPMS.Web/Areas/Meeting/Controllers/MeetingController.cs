@@ -17,7 +17,6 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Meeting;
-using Microsoft.Ajax.Utilities;
 
 namespace EPMS.Web.Areas.Meeting.Controllers
 {

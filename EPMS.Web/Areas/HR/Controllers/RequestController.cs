@@ -110,7 +110,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 else if (currentUser.EmployeeId > 0)
                 {
-                    requestViewModel.Request.RequestDate = DateTime.Now;
+                    requestViewModel.Request.RequestDateString = DateTime.Now.ToShortDateString();
                     requestViewModel.Request.EmployeeId = Convert.ToInt64(currentUser.EmployeeId);
                     requestViewModel.Request.EmployeeNameA = currentUser.Employee.EmployeeNameA;
                     requestViewModel.Request.EmployeeNameE = currentUser.Employee.EmployeeNameE;
