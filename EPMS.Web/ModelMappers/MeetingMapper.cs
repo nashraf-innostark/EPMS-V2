@@ -85,6 +85,7 @@ namespace EPMS.Web.ModelMappers
             meetingrequest.EmployeeIds = source.EmployeeIds;
             meetingrequest.AbsentEmployeeIds = source.AbsentEmployeeIds;
             meetingrequest.Meeting = meeting;
+            meetingrequest.DocsNames = source.DocsNames;
             return meetingrequest;
         }
 

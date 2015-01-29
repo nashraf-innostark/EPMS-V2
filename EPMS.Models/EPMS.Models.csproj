@@ -192,6 +192,7 @@
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
+    <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
   </ItemGroup>
   <ItemGroup>

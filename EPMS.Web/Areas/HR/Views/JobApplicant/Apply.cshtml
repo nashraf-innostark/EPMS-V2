@@ -32,7 +32,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.JobApplicant.ApplicantName, new { @id = "applicantName", @class="toBeRequired" })
-                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantName, "", new { @class = "required" })
+                    <span style="text-align:left">@Html.ValidationMessageFor(model => model.JobApplicant.ApplicantName, "", new { @class = "requiredLeftAlign" })</span>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.JobApplicant.ApplicantMobile, new { @id = "applicantMobile", @class="toBeRequired" })
-                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantMobile, "", new { @class = "required" })
+                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantMobile, "", new { @class = "requiredLeftAlign" })
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.JobApplicant.ApplicantEmail, new { @id = "applicantEmail", @class="toBeRequired" })
-                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantEmail, "", new { @class = "required" })
+                    @Html.ValidationMessageFor(model => model.JobApplicant.ApplicantEmail, "", new { @class = "requiredLeftAlign" })
                 </div>
             </div>
         </div>
@@ -176,7 +176,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button class="btn" type="submit" onclick="validateForm(event)">Apply</button>
+                    <button class="btn" type="submit" @*onclick="validateForm(event)"*@>Apply</button>
                 </div>
             </div>
         </div>
@@ -228,39 +228,39 @@
                 }
             });
     });
-    function validateForm(event) {
-        var listSimple = $('.toBeRequired');
-        var counter = 0;
-        for (var i = 0; i < (listSimple.length) ; i++) {
-            var control = listSimple[i];
-            var fieldvalue = $(control).val();
-            if (fieldvalue == null || fieldvalue == "") {
-                $(control).prop('placeholder', 'Required');
-                counter++;
-                $(control).addClass("Error");
+    //function validateForm(event) {
+    //    var listSimple = $('.toBeRequired');
+    //    var counter = 0;
+    //    for (var i = 0; i < (listSimple.length) ; i++) {
+    //        var control = listSimple[i];
+    //        var fieldvalue = $(control).val();
+    //        if (fieldvalue == null || fieldvalue == "") {
+    //            $(control).prop('placeholder', 'Required');
+    //            counter++;
+    //            $(control).addClass("Error");
 
-            } else {
-                $(control).removeClass("Error");
-            }
+    //        } else {
+    //            $(control).removeClass("Error");
+    //        }
 
-        }
+    //    }
         
-        if (counter > 0) {
-            //implementing focus back to error
-            if ($(".Error").length > 0) {
-                var divId = $(".Error")[0].id;
-                if ($("#" + divId).length > 0)
-                    $("#" + divId).focus();
-                event.preventDefault();
-                return false;
-            }
-        }
-        if ($(".files").length == 0) {
-            $("#uploaded").text("Attach your CV.");
-            event.preventDefault();
-            return false;
-        }
-        return true;
-    };
+    //    if (counter > 0) {
+    //        //implementing focus back to error
+    //        if ($(".Error").length > 0) {
+    //            var divId = $(".Error")[0].id;
+    //            if ($("#" + divId).length > 0)
+    //                $("#" + divId).focus();
+    //            event.preventDefault();
+    //            return false;
+    //        }
+    //    }
+    //    if ($(".files").length == 0) {
+    //        $("#uploaded").text("Attach your CV.");
+    //        event.preventDefault();
+    //        return false;
+    //    }
+    //    return true;
+    //};
 
 </script>

@@ -21,6 +21,6 @@ namespace EPMS.Interfaces.IServices
         long AddEmployee(Employee employee);
         bool UpdateEmployee(Employee employee);
         void DeleteEmployee(Employee employee);
-        IQueryable<string> FindEmployeeEmailByIds(List<long> employeeId);
+        IEnumerable<string> FindEmployeeEmailByIds(List<long> employeeId);
     }
 }

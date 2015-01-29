@@ -103,12 +103,14 @@ namespace EPMS.Repository.Repositories
             return DbSet.FirstOrDefault(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
         }
 
-        public IQueryable<string> FindEmployeeEmailById(List<long> employeeId)
+        public IEnumerable<string> FindEmployeeEmailById(List<long> employeeId)
         {
             var list = new List<long>();
-            list.AddRange(employeeId);
-            //int[] test = new[] {10, 10, 10};
-            var empIds = DbSet.Where(x => list.Contains(x.EmployeeId)).Select(x => x.Email);
+            if (employeeId !=null)
+            {
+                list.AddRange(employeeId);
+            }
+            IEnumerable<string> empIds = DbSet.Where(x => list.Contains(x.EmployeeId)).Select(x => x.Email).ToList();
             return empIds;
         }
     }
