@@ -14,6 +14,7 @@ namespace EPMS.Interfaces.IServices
         Order GetOrderByOrderNumber(string orderNo);
         OrdersLVResponse GetOrderForListView(OrdersSearchRequest searchRequest);
         IEnumerable<Order> GetAll();
+        IEnumerable<AvailableOrdersDDL> GetAllAvailableOrdersDDL(long customerId);
         bool AddOrder(Order order);
         bool UpdateOrder(Order order);
         void DeleteOrder(Order order);

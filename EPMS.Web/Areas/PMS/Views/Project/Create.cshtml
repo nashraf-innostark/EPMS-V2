@@ -98,11 +98,11 @@
                 <div class="controls">
                     @if (Model.Project.CustomerId > 0)
                     {
-                        @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderNo" })
+                        @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new {@class = "select2me", @id = "OrderNo" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @id = "OrderNo" })
+                        @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                     }
                     @Html.ValidationMessageFor(m => m.Project.OrderId, "", new { @class = "required" })
                 </div>
@@ -525,7 +525,10 @@
         if ($("#EndDateE").val() != null && $("#EndDateE").val() != "") {
             $("#EndDateA").val(ConvertDates($("#EndDateE").val(), "gregorian", "islamic"));
         }
-
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
 
         var errors = "";
         var url = "/PMS/Project/UploadDocuments";

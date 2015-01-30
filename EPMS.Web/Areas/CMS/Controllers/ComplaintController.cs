@@ -49,6 +49,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                             .OrderByDescending(x => x.ComplaintDate)
                             .Select(x => x.CreateFromServerToClient())
             };
+            ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
             return View(viewModel);
         }
         #endregion

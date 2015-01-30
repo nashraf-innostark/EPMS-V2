@@ -63,9 +63,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 customerViewModel = customerService.FindCustomerById((long)id).CreateFromServerToClientVM();
                 ViewBag.UserRole = Session["RoleName"].ToString();
+                ViewBag.ReturnUrl = Request.UrlReferrer;
                 return View(customerViewModel);
             }
             return RedirectToAction("Index", "Dashboard", new {area = ""});
+            
         }
         [HttpPost]
 

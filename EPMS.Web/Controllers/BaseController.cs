@@ -55,9 +55,6 @@ namespace EPMS.Web.Controllers
             //Set culture info
             SetCultureInfo();
         }
-
-        
-
         #endregion
 
         #region Public
@@ -93,9 +90,6 @@ namespace EPMS.Web.Controllers
             string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
             Session["UserPermissionSet"] = userPermissions;
         }
-
-
-
         public ApplicationUserManager UserManager
         {
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
