@@ -159,6 +159,7 @@
     <Compile Include="MenuModels\Rights.cs" />
     <Compile Include="MenuModels\UserMenuResponse.cs" />
     <Compile Include="ModelMapers\EmployeeMapper.cs" />
+    <Compile Include="ModelMapers\OrderMapper.cs" />
     <Compile Include="ModelMapers\ProjectMapper.cs" />
     <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
+    <Compile Include="ResponseModels\AvailableOrdersDDL.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />

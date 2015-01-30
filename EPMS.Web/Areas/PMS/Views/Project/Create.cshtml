@@ -102,7 +102,7 @@
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @id = "OrderNo" })
+                        @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                     }
                     @Html.ValidationMessageFor(m => m.Project.OrderId, "", new { @class = "required" })
                 </div>

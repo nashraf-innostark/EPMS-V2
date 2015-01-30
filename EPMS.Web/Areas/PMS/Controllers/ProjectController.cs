@@ -294,7 +294,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [HttpGet]
         public JsonResult GetCustomerOrders(long customerId)
         {
-            var orders = ordersService.GetOrdersByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
+            var orders = ordersService.GetAllAvailableOrdersDDL(customerId);
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
         #endregion
