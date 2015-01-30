@@ -460,11 +460,32 @@
                     <table class="table table-striped table-responsive" id="tableProjects">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>@EPMS.Web.Resources.HR.Tasks.Task</th>
                                 <th>@EPMS.Web.Resources.HR.Tasks.ProjName</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @if (Model.TaskEmployees != null)
+                            {
+                                foreach (var item in Model.TaskEmployees)
+                                {
+                                    <tr>
+                                        <td>@item.TaskEmployeeId</td>
+                                        @if (direction == "ltr")
+                                        {
+                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameE, "Create", "Task", new {area = "PMS", id = item.TaskId}, null) </td>
+                                            <td>@item.ProjectTask.ProjectNameE</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameA, "Create", "Task", new {area = "PMS", id = item.TaskId}, null) </td>
+                                            <td>@item.ProjectTask.ProjectNameA</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -567,15 +588,19 @@
         });
         $('#tableProjects').dataTable({
             "sPaginationType": "bootstrap",
+            "aoColumns": [
+                { "bVisible": false },
+                  null,
+                  null
+            ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
             }
         });
-        var oTable = $('#tableRequsts').dataTable({
+        $('#tableRequsts').dataTable({
             "sPaginationType": "bootstrap",
-            "iDisplayLength": 5,
             "aoColumns": [
                 { "bVisible": false }, // cloumn to be hide
                   null // not hide

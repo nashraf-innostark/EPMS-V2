@@ -250,7 +250,7 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Task Name&apos;s Details.
+        ///   Looks up a localized string similar to  Details.
         /// </summary>
         public static string PageTitleDetail {
             get {

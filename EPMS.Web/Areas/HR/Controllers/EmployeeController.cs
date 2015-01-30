@@ -13,6 +13,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
@@ -35,17 +36,19 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IAllowanceService AllowanceService;
         private readonly IAspNetUserService AspNetUserService;
         private readonly IEmployeeRequestService EmployeeRequestService;
+        private readonly ITaskEmployeeService TaskEmployeeService;
         #endregion
 
         #region Constructor
 
-        public EmployeeController(IEmployeeService employeeService, IEmployeeRequestService employeeRequestService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService)
+        public EmployeeController(IEmployeeService employeeService, IEmployeeRequestService employeeRequestService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService, IProjectTaskService projectTaskService, ITaskEmployeeService taskEmployeeService)
         {
             EmployeeService = employeeService;
             DepartmentService = departmentService;
             JobTitleService = jobTitleService;
             AllowanceService = allowanceService;
             AspNetUserService = aspNetUserService;
+            TaskEmployeeService = taskEmployeeService;
             EmployeeRequestService = employeeRequestService;
         }
 
@@ -239,6 +242,14 @@ namespace EPMS.Web.Areas.HR.Controllers
                     if (employeeRequests.Any())
                     {
                         viewModel.RequestListViewModel.aaData = employeeRequests;
+                    }
+                    var employeeTaskResponse =
+                        TaskEmployeeService.GetTaskEmployeeByEmployeeId(viewModel.EmployeeViewModel.Employee.EmployeeId);
+                    var taskData = employeeTaskResponse.Select(x => x.CreateFromServerToClient());
+                    var employeeTasks = taskData as IList<Models.TaskEmployee> ?? taskData.ToList();
+                    if (employeeTasks.Any())
+                    {
+                        viewModel.TaskEmployees = employeeTasks;
                     }
                 }
                 return View(viewModel);

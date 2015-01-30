@@ -88,6 +88,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         public ActionResult Create(long? id)
         {
             TaskCreateViewModel viewModel = new TaskCreateViewModel();
+            var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
             var customers = CustomerService.GetAll();
             ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
             if (id == null)
@@ -116,14 +117,23 @@ namespace EPMS.Web.Areas.PMS.Controllers
             viewModel.AllEmployees = EmployeeService.GetAll().Select(x => x.CreateFromServerToClientForTask());
             viewModel.BtnText = Resources.PMS.Task.BtnTextEdit;
             string userRole = (string)Session["RoleName"];
+            string taskName = "";
+            if (direction == "ltr")
+            {
+                taskName = viewModel.ProjectTask.TaskNameE;
+            }
+            else if (direction == "rtl")
+            {
+                taskName = viewModel.ProjectTask.TaskNameA;
+            }
             if (userRole == "Customer")
             {
-                viewModel.PageTitle = Resources.PMS.Task.PageTitleDetail;
+                viewModel.PageTitle = taskName + Resources.PMS.Task.PageTitleDetail;
                 viewModel.Header = Resources.PMS.Task.Detail;
             }
             else
             {
-                viewModel.PageTitle = Resources.PMS.Task.PageTitleEdit;
+                viewModel.PageTitle = Resources.PMS.Task.PageTitleEdit + taskName;
                 viewModel.Header = Resources.PMS.Task.Edit;
             }
             return View(viewModel);

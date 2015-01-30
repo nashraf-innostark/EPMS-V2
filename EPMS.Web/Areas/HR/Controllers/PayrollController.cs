@@ -7,6 +7,7 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Controllers;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.Web.ViewModels.Payroll;
 using EPMS.WebBase.Mvc;
@@ -17,7 +18,8 @@ using EPMS.Models.ResponseModels;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
-    public class PayrollController : Controller
+    [Authorize]
+    public class PayrollController : BaseController
     {
         private readonly IEmployeeService EmployeeService;
         private readonly IAspNetUserService AspNetUserService;

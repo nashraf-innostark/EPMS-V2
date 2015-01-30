@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Repository.BaseRepository;
@@ -28,6 +29,10 @@ namespace EPMS.Repository.Repositories
 
         #endregion
 
+        public IEnumerable<TaskEmployee> GetTaskEmployeeByEmployeeId(long employeeId)
+        {
+            return DbSet.Where(x => x.EmployeeId == employeeId).ToList();
+        }
         public int CountTasksByEmployeeId(long id)
         {
             return DbSet.Count(x => x.EmployeeId == id);

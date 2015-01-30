@@ -4,14 +4,6 @@
     string userRole = (string)Session["RoleName"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     ViewBag.Title = Model.PageTitle;
-    if (!String.IsNullOrEmpty(Model.ProjectTask.TaskNameE) && direction == "ltr")
-    {
-        ViewBag.Title = Model.PageTitle + Model.ProjectTask.TaskNameE;
-    }
-    else if (!String.IsNullOrEmpty(Model.ProjectTask.TaskNameA) && direction == "rtl")
-    {
-        ViewBag.Title = Model.PageTitle + Model.ProjectTask.TaskNameA;
-    }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -68,12 +60,13 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
+                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
                     }
                     @if (direction == "rtl")
                     {
-                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "Client" })
+                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
                     }
+                    <label id="customerValidation"></label>
                 </div>
             </div>
         </div>
@@ -83,15 +76,8 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @*@if (Model.ProjectTask.CustomerId == null)
-                    {
-                        @Html.DropDownListFor(m => m.ProjectTask.ProjectId, Enumerable.Empty<SelectListItem>(), "", new { @id = "ProjectId" })
-                    }
-                    else
-                    {*@
-                        @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId" })
-                    @*}*@
-                    @Html.ValidationMessageFor(m => m.ProjectTask.ProjectId, String.Empty, new { @class = "required" })
+                    @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId", @class = "select2me" })
+                    <label id="projectValidation"></label>
                 </div>
             </div>
         </div>
@@ -143,10 +129,16 @@
             </div>
             <div class="span9">
                 <div class="controls">
-
-                    @if ((Model.ProjectTask.RequisitTasks != null && Model.ProjectTask.RequisitTasks.Any()) || (Model.ProjectAllTasks != null))
+                    @if ((Model.ProjectAllTasks != null))
                     {
-                        @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new { @class = "", @id = "dualMulti", })
+                        if (direction == "ltr")
+                        {
+                            @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new {@class = "", @id = "dualMulti",})
+                        }
+                        else
+                        {
+                            @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameA"), new { @class = "", @id = "dualMulti", })
+                        }
                     }
                     else
                     {
@@ -161,10 +153,11 @@
                     @EPMS.Web.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @id = "StartDate", @class = "span3 datepickerGregorian readonly" })
-                </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskStartDateAr", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskStartDate", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
             </div>
         </div>
         <div id="Date_Picker2" class="control-group row-fluid">
@@ -173,10 +166,11 @@
                     @EPMS.Web.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @id = "EndDate", @class = "span3 datepickerGregorian readonly" })
-                </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskEndDateAr", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly" })
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskEndDate", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly" })
             </div>
         </div>
         <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
@@ -187,11 +181,25 @@
                 <div class="controls">
                     @if ((Model.ProjectTask != null && Model.ProjectTask.TaskEmployees != null))
                     {
-                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                        if (direction == "ltr")
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new {@class = "", @id = "dualMulti2",})
+                        }
+                        else
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new {@class = "", @id = "dualMulti2",})
+                        }
                     }
                     else
                     {
-                        @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                        if (direction == "ltr")
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new {@class = "", @id = "dualMulti2",})
+                        }
+                        else
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new { @class = "", @id = "dualMulti2", })
+                        }
                     }
                 </div>
             </div>
@@ -242,7 +250,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
+                    <button type="submit" class="btn" name="Save" onclick="validateForm(event)">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
                 </div>
             </div>
             if (Model.ProjectTask.TaskId > 0)
@@ -265,6 +273,10 @@
         CKEDITOR.replace('DescriptionA');
         CKEDITOR.replace('NotesE');
         CKEDITOR.replace('NotesA');
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
         if ('@userRole' == "Customer") {
             $(".readonly").attr("readonly", "true");
         }
@@ -359,31 +371,36 @@
                 });
             }
         });
+        if ($("#TaskStartDate").val() != null && $("#TaskStartDate").val() != "") {
+            $("#TaskStartDateAr").val(ConvertDates($("#TaskStartDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#TaskEndDate").val() != null && $("#TaskEndDate").val() != "") {
+            $("#TaskEndDateAr").val(ConvertDates($("#TaskEndDate").val(), "gregorian", "islamic"));
+        }
     });
 
-    function populateProjectDDL(data) {
-        $("#ProjectId").empty();
-        $("#dualMulti").empty();
-        $("#dualMulti").pickList("destroy");
-        $("#dualMulti").pickList({
-            sourceListLabel: "Tasks",
-            targetListLabel: "Prerquisit Tasks",
-        });
-        if (data.length > 0) {
-            $("#ProjectId").append(
-                $('<option></option>').val(0).html("--Select--")
-            );
-            for (var i = 0; i < data.length; i++) {
-                $("#ProjectId").append(
-                    $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
-                );
-            }
+    function validateForm(event) {
+        var counter = 0;
+        var projectId = $("#ProjectId").val();
+        if (projectId == null || projectId == "" || projectId == undefined) {
+            $("#projectValidation").text("Please Select Project");
+            $("#projectValidation").addClass("Error");
+            counter++;
         } else {
-            $("#ProjectId").append(
-                $('<option></option>').val("").html("none")
-            );
+            $("#projectValidation").text("");
+            $("#projectValidation").removeClass("Error");
         }
-        $.unblockUI();
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
     }
     function populateTaskDDL(data) {
         //$('.pickList_sourceList li').remove();
@@ -407,6 +424,30 @@
             sourceListLabel: "Tasks",
             targetListLabel: "Prerquisit Tasks",
         });
+        $.unblockUI();
+    }
+    function populateProjectDDL(data) {
+        $("#ProjectId").empty();
+        $("#dualMulti").empty();
+        $("#dualMulti").pickList("destroy");
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
+        if (data.length > 0) {
+            $("#ProjectId").append(
+                $('<option></option>').val(0).html("--Select--")
+            );
+            for (var i = 0; i < data.length; i++) {
+                $("#ProjectId").append(
+                    $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
+                );
+            }
+        } else {
+            $("#ProjectId").append(
+                $('<option></option>').val("").html("none")
+            );
+        }
         $.unblockUI();
     }
 </script>
