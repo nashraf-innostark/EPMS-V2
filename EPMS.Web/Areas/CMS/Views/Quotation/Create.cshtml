@@ -485,6 +485,14 @@
         if (discount == 0 || isNaN(discount)) {
             $("#Discount").val(0);
         }
+        var n2Val = $(this).parent().parent().find(".n2").val();
+        $(this).parent().parent().find(".n3").val($(this).val() * n2Val);
+        var x = 0;
+        $('.qouteAdd tr .n3').each(function () {
+            x = x + parseInt($(this).val());
+        });
+        $('#subtotal').val(x);
+        calDiscount();
         $("#importEx").on("click", function () {
             var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
             var coln = $(excel).find("tr:first td").length;
@@ -623,43 +631,57 @@
                 });
                 var id = parseInt($(this).closest('tr').children(".itemDetailId").val());
                 elementToDelete = $(this).parent().parent();
-                url = siteUrl + "/CMS/Quotation/Delete";
-                //var isErrorInDeleting = true;
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: "json",
-                    data: {
-                        itemDetailId : id
-                    },
-                    success: function (data) {
-                        if (data.Status == "Success") {
-                            itemsDetailCount = itemsDetailCount - 1;
-                            var count = $('.qouteAdd tr').length;
-                            if (count > 1) {
-                                elementToDelete.remove();
-                                var x = 0;
-                                $('.qouteAdd tr .n3').each(function () {
-                                    x = x + parseInt($(this).val());
-                                });
-                                $('#subtotal').val(x);
-                                calDiscount();
+                var quotationId = parseInt('@Model.QuotationId');
+                if (quotationId > 0) {
+                    
+                    url = siteUrl + "/CMS/Quotation/Delete";
+                    //var isErrorInDeleting = true;
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: "json",
+                        data: {
+                            itemDetailId: id
+                        },
+                        success: function(data) {
+                            if (data.Status == "Success") {
+                                itemsDetailCount = itemsDetailCount - 1;
+                                var count = $('.qouteAdd tr').length;
+                                if (count > 1) {
+                                    elementToDelete.remove();
+                                    var x = 0;
+                                    $('.qouteAdd tr .n3').each(function() {
+                                        x = x + parseInt($(this).val());
+                                    });
+                                    $('#subtotal').val(x);
+                                    calDiscount();
+                                }
+                                //isErrorInDeleting = false;
+                                $.unblockUI();
                             }
-                            //isErrorInDeleting = false;
+                            if (data.Status == "Error") {
+                                $.unblockUI();
+                                alert("Error in deleting Item Detail");
+                                return;
+                            }
+                        },
+                        error: function(e) {
                             $.unblockUI();
-                        }
-                        if (data.Status == "Error") {
-                            $.unblockUI();
-                            alert("Error in deleting Item Detail");
+                            alert('Error: You are not authorized');
                             return;
                         }
-                    },
-                    error: function (e) {
-                        $.unblockUI();
-                        alert('Error: You are not authorized');
-                        return;
-                    }
-                });
+                    });
+                } else {
+                    itemsDetailCount = itemsDetailCount - 1;
+                    elementToDelete.remove();
+                    var x = 0;
+                    $('.qouteAdd tr .n3').each(function () {
+                        x = x + parseInt($(this).val());
+                    });
+                    $('#subtotal').val(x);
+                    calDiscount();
+                    $.unblockUI();
+                }
             });
         }
         function reactivateCount() {
