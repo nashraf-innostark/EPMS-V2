@@ -320,6 +320,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     #region Add
 
                     // Set Employee Values
+                    viewModel.EmployeeViewModel.Employee.EmployeeIqamaIssueDt = DateTime.Now.ToShortDateString();
                     viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
                     viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
                     // Add Employee
