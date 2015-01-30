@@ -371,7 +371,8 @@
         });
 
         var errors = "";
-        var url = "/Meeting/Meeting/UploadDocuments";
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Meeting/Meeting/UploadDocuments";
         $('#upload').mfupload({
 
             type: '',   //all types
