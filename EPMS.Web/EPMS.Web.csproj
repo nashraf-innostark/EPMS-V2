@@ -302,7 +302,6 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
     <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
-    <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
@@ -313,6 +312,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
@@ -2428,7 +2428,6 @@
     </Content>
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\PMS\Views\web.config" />
-    <Content Include="Areas\Notification\Views\web.config" />
     <Content Include="Images\photon\entypo.eot" />
     <Content Include="Areas\HR\Views\Employee\Index.cshtml" />
     <Content Include="Images\photon\entypo.ttf" />
@@ -3052,9 +3051,6 @@
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
-    <Folder Include="Areas\Notification\Controllers\" />
-    <Folder Include="Areas\Notification\Models\" />
-    <Folder Include="Areas\Notification\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Files\MeetingDocuments\" />
@@ -3062,6 +3058,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
+    <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

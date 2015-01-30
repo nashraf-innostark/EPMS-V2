@@ -102,6 +102,7 @@
     <Compile Include="Common\JobApplicantByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
     <Compile Include="Common\MeetingByColumn.cs" />
+    <Compile Include="Common\NotificationRequestByColumn.cs" />
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="MenuModels\Rights.cs" />
     <Compile Include="MenuModels\UserMenuResponse.cs" />
     <Compile Include="ModelMapers\EmployeeMapper.cs" />
+    <Compile Include="ModelMapers\NotificationMapper\NotificationMapper.cs" />
     <Compile Include="ModelMapers\OrderMapper.cs" />
     <Compile Include="ModelMapers\ProjectMapper.cs" />
     <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
     <Compile Include="RequestModels\MeetingRequest.cs" />
     <Compile Include="RequestModels\MeetingSearchRequest.cs" />
+    <Compile Include="RequestModels\NotificationRequestModels\NotificationListViewRequest.cs" />
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
@@ -182,10 +185,13 @@
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
+    <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
     <Compile Include="ResponseModels\MeetingResponse.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
