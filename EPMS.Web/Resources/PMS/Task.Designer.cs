@@ -241,7 +241,7 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Task&apos;s Name.
+        ///   Looks up a localized string similar to Create Task.
         /// </summary>
         public static string PageTitleCreate {
             get {
@@ -250,7 +250,7 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Task Name&apos;s Details.
+        ///   Looks up a localized string similar to  Details.
         /// </summary>
         public static string PageTitleDetail {
             get {
@@ -259,7 +259,7 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Task&apos;s Name.
+        ///   Looks up a localized string similar to Edit Task .
         /// </summary>
         public static string PageTitleEdit {
             get {

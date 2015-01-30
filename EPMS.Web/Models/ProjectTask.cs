@@ -22,7 +22,9 @@ namespace EPMS.Web.Models
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
         public string StartDate { get; set; }
+        public string StartDateAr { get; set; }
         public string EndDate { get; set; }
+        public string EndDateAr { get; set; }
         [Required(ErrorMessage = "Total Cost is required.")]
         public decimal TotalCost { get; set; }
         [Required(ErrorMessage = "Total Weight is required.")]

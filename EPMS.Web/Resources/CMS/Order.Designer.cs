@@ -79,7 +79,16 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Request A Quote.
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        public static string BtnBack {
+            get {
+                return ResourceManager.GetString("BtnBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request A Quotation.
         /// </summary>
         public static string BtnSave {
             get {
@@ -88,7 +97,7 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Quote.
+        ///   Looks up a localized string similar to Update Order.
         /// </summary>
         public static string BtnUpdate {
             get {

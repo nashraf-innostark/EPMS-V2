@@ -4,6 +4,11 @@
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    string backUrl = ViewBag.backUrl.ToString();
+    if (String.IsNullOrEmpty(backUrl))
+    {
+        backUrl = "http://localhost:44305/CMS/Orders/Index";
+    }
 }
 
 <!-- Navigation Bar -->
@@ -71,11 +76,19 @@
                 </div>
             </div>
         </div>
-        @if (Model.RoleName == "Admin" || Model.Orders.OrderId == 0)
+        @if (Model.RoleName == "Customer" || Model.Orders.OrderId == 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
                     <button type="submit" class="btn">@Model.BtnText</button>
+                </div>
+            </div>
+        }
+        @if (Model.RoleName == "Admin" && Model.Orders.OrderId > 0)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <a class="btn" href="@backUrl">@EPMS.Web.Resources.CMS.Order.BtnBack</a>
                 </div>
             </div>
         }

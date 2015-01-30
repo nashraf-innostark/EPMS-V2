@@ -558,6 +558,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tasks.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Meeting\Meeting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Meeting.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\PMS\Project.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3097,6 +3102,11 @@
     <EmbeddedResource Include="Resources\HR\Tasks.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Meeting\Meeting.ar.resx" />
+    <EmbeddedResource Include="Resources\Meeting\Meeting.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\PMS\Project.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
