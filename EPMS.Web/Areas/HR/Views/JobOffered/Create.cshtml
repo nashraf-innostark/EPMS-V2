@@ -162,7 +162,7 @@
 
     </div>
 }
-
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
 
     $(document).ready(function () {
@@ -200,6 +200,10 @@
             if (depId > 0) {
                 $('#SearchRequest_JobId').empty();
                 var url = siteUrl + "/HR/JobOffered/GetJobTitles";
+                $.blockUI({
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -211,6 +215,7 @@
                         $("#jobTitleDesc").val(data.JobTitleDescE);
                         $("#basicSalary").val(data.BasicSalary);
                         $('#departmentName').val(data.DepartmentNameE);
+                        $.unblockUI();
                     },
                     error: function(e) {
                         alert('Error=' + e.toString());
