@@ -28,7 +28,10 @@ namespace EPMS.Implementation.Services
         {
             return TaskEmployeeRepository.GetAll();
         }
-
+        public IEnumerable<TaskEmployee> GetTaskEmployeeByEmployeeId(long employeeId)
+        {
+            return TaskEmployeeRepository.GetTaskEmployeeByEmployeeId(employeeId);
+        }
         public bool AddTaskEmployee(TaskEmployee employee)
         {
             try

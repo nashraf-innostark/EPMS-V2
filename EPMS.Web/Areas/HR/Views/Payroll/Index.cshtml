@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.HR.Payroll.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -49,6 +50,7 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function () {
+        var direc = '@direction';
         var siteUrl = $('#siteURL').val();
         var oTable = $('#employeeTable').dataTable({
             "sPaginationType": "bootstrap",
@@ -76,7 +78,12 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var val = full["EmployeeNameE"];
+                        var val;
+                        if (direc == "ltr") {
+                            val = full["EmployeeNameE"];
+                        } else {
+                            val = full["EmployeeNameA"];
+                        }
                         var empId = full["EmployeeId"];
                         var element = '<a href="Detail/' + empId + '">' + val + '</a>';
                         return element;
@@ -96,7 +103,11 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var jobTItle = full["JobTitle"];
-                        return jobTItle.JobTitleNameE;
+                        if (direc == "ltr") {
+                            return jobTItle.JobTitleNameE;
+                        } else {
+                            return jobTItle.JobTitleNameA;
+                        }
                     },
                     "bSortable": true
                 },
@@ -105,7 +116,11 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var jobTitle = full["JobTitle"];
-                        return jobTitle.DepartmentNameE;
+                        if (direc == "ltr") {
+                            return jobTitle.DepartmentNameE;
+                        } else {
+                            return jobTitle.DepartmentNameE;
+                        }
                     },
                     "bSortable": true
                 }

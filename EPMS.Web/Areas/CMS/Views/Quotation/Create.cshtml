@@ -49,13 +49,13 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "", @id = "Client" })
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
                     }
                     @if (direction == "rtl")
                     {
-                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "", @id = "Client" })
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
                     }
-                    @Html.ValidationMessageFor(m => m.CustomerId, String.Empty, new { @class = "required" })
+                    <label id="customerValidation"></label>
                 </div>
             </div>
         </div>
@@ -67,13 +67,13 @@
                 <div class="controls">
                     @if (Model.CustomerId == 0)
                     {
-                        @Html.DropDownListFor(m => m.OrderId, Enumerable.Empty<SelectListItem>(), "", new { @id = "OrderId" })
+                        @Html.DropDownListFor(m => m.OrderId, Enumerable.Empty<SelectListItem>(), "--Select--", new { @id = "OrderId", @class = "select2me" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId" })
+                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId", @class = "select2me" })
                     }
-                    @Html.ValidationMessageFor(m => m.OrderId, String.Empty, new { @class = "required" })
+                    <label id="orderValidation"></label>
                 </div>
             </div>
         </div>
@@ -393,6 +393,35 @@
                 return false;
             }
         }
+        var counter = 0;
+        var customerId = $("#Client").val();
+        var orderId = $("#OrderId").val();
+        if (customerId == null || customerId == "" || customerId == undefined) {
+            $("#customerValidation").text("Please Select Customer");
+            $("#customerValidation").addClass("Error");
+            counter++;
+        } else {
+            $("#customerValidation").text("");
+            $("#customerValidation").removeClass("Error");
+        }
+        if (orderId == null || orderId == "" || orderId == undefined) {
+            $("#orderValidation").text("Please Select Order");
+            $("#orderValidation").addClass("Error");
+            counter++;
+        } else {
+            $("#orderValidation").text("");
+            $("#orderValidation").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
         return true;
     }
     function checkIfPrevItemExist() {
@@ -431,6 +460,10 @@
     $(document).ready(function () {
         CKEDITOR.replace('ExtraInformationEn');
         CKEDITOR.replace('ExtraInformationAr');
+        $('.select2me').select2({
+            placeholder: "Select",
+            allowClear: true
+        });
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
             $("#Discount").val(0);
@@ -786,6 +819,9 @@
     function populateDDL(data) {
         $("#OrderId").empty();
         if (data.length > 0) {
+            $("#OrderId").append(
+                    $('<option></option>').val("").html("--Select--")
+                );
             for (var i = 0; i < data.length; i++) {
                 $("#OrderId").append(
                     $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)

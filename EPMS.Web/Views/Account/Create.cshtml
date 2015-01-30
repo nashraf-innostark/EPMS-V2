@@ -88,8 +88,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { id = "roleId" })
-                        @Html.ValidationMessageFor(m => m.SelectedRole, "", new { @class = "required" })
+                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { @class = "select2me", id = "roleId" })
+                        <label id="roleValidation"></label>
                     </div>
                 </div>
             </div>
@@ -129,7 +129,7 @@
         }
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return validateUserPassword();">@btnText</button>
+                <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
             </div>
         </div>
     </div>
@@ -156,8 +156,9 @@
         //});
 
     });
-    function validateUserPassword() {
+    function validateUserPassword(event) {
         var userPassword = $("#password").val();
+        var selectedRole = $("#roleId").val();
         var selectedEmployee = $("#selectedEmployee").val();
         var model = @(Model.UserId == null ? "true" : "false");
         var counter = 0;
@@ -166,7 +167,7 @@
             $("#passwordAuthentication").addClass("Error");
             counter++;
         } else if (userPassword.length < 6 && model) {
-            $("#passwordAuthentication").text("Password must contain 6 characters");
+            $("#passwordAuthentication").text("Minimum Password length is 6 characters");
             $("#passwordAuthentication").addClass("Error");
             counter++;
         }
@@ -175,12 +176,20 @@
             $("#passwordAuthentication").removeClass("Error");
         }
         if ((selectedEmployee == null || selectedEmployee == "" || selectedEmployee == undefined) && model) {
-            $("#emloyeeValidate").text("Please select Employee");
+            $("#emloyeeValidate").text("Please Select Employee");
             $("#emloyeeValidate").addClass("Error");
             counter++;
         } else {
             $("#emloyeeValidate").text("");
             $("#emloyeeValidate").removeClass("Error");
+        }
+        if ((selectedRole == null || selectedRole == "" || selectedRole == undefined) && model) {
+            $("#roleValidation").text("Please Select Role");
+            $("#roleValidation").addClass("Error");
+            counter++;
+        } else {
+            $("#roleValidation").text("");
+            $("#roleValidation").removeClass("Error");
         }
         if (counter > 0) {
             //implementing focus back to error

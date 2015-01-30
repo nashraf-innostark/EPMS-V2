@@ -98,14 +98,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var role = result.AspNetRoles.FirstOrDefault();
             if (role != null) viewModel.RoleName = role.Name;
+            ViewBag.backUrl = Request.UrlReferrer;
             if (id != null)
             {
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
-                if (viewModel.RoleName == "Admin")
+                if (viewModel.RoleName == "Customer")
                 {
                     viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
                 }
-                if (viewModel.RoleName == "Customer")
+                if (viewModel.RoleName == "Admin")
                 {
                     viewModel.PageTitle = Resources.CMS.Order.OrderDetail;
                 }

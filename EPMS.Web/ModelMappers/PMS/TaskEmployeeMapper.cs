@@ -14,7 +14,8 @@ namespace EPMS.Web.ModelMappers.PMS
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ProjectTask = source.ProjectTask.CreateFromServerToClientForEmployee()
             };
         }
     }

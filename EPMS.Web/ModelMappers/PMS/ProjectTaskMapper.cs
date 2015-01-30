@@ -92,5 +92,17 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TaskNameA = source.TaskNameA;
             return projectTask;
         }
+        public static Models.ProjectTask CreateFromServerToClientForEmployee(this ProjectTask source)
+        {
+            Models.ProjectTask projectTask = new Models.ProjectTask();
+            projectTask.TaskId = source.TaskId;
+            projectTask.ProjectId = source.ProjectId;
+            projectTask.CustomerId = source.CustomerId;
+            projectTask.ProjectNameE = source.Project.NameE;
+            projectTask.ProjectNameA = source.Project.NameA;
+            projectTask.TaskNameE = source.TaskNameE;
+            projectTask.TaskNameA = source.TaskNameA;
+            return projectTask;
+        }
     }
 }
