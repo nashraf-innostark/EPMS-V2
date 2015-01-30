@@ -1113,16 +1113,36 @@
         });
 
         //Set Arabic and Gregorian Dates
-        $("#CommercialRegisterIssueDateAr").val(ConvertDates($("#CommercialRegisterIssueDate").val(), "gregorian", "islamic"));
-        $("#CommercialRegisterExpiryDateAr").val(ConvertDates($("#CommercialRegisterExpiryDate").val(), "gregorian", "islamic"));
-        $("#InsuranceCertificateIssueDateAr").val(ConvertDates($("#InsuranceCertificateIssueDate").val(), "gregorian", "islamic"));
-        $("#InsuranceCertificateExpiryDateAr").val(ConvertDates($("#InsuranceCertificateExpiryDate").val(), "gregorian", "islamic"));
-        $("#ChamberCertificateIssueDateAr").val(ConvertDates($("#ChamberCertificateIssueDate").val(), "gregorian", "islamic"));
-        $("#ChamberCertificateExpiryDateAr").val(ConvertDates($("#ChamberCertificateExpiryDate").val(), "gregorian", "islamic"));
-        $("#IncomeAndZakaCertificateIssueDateAr").val(ConvertDates($("#IncomeAndZakaCertificateIssueDate").val(), "gregorian", "islamic"));
-        $("#IncomeAndZakaCertificateExpiryDateAr").val(ConvertDates($("#IncomeAndZakaCertificateExpiryDate").val(), "gregorian", "islamic"));
-        $("#SaudilizationCertificateIssueDateAr").val(ConvertDates($("#SaudilizationCertificateIssueDate").val(), "gregorian", "islamic"));
-        $("#SaudilizationCertificateExpiryDateAr").val(ConvertDates($("#SaudilizationCertificateExpiryDate").val(), "gregorian", "islamic"));
+        if ($("#CommercialRegisterIssueDate").val() != null && $("#CommercialRegisterIssueDate").val() != "") {
+            $("#CommercialRegisterIssueDateAr").val(ConvertDates($("#CommercialRegisterIssueDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#CommercialRegisterExpiryDate").val() != null && $("#CommercialRegisterExpiryDate").val() != "") {
+            $("#CommercialRegisterExpiryDateAr").val(ConvertDates($("#CommercialRegisterExpiryDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#InsuranceCertificateIssueDate").val() != null && $("#InsuranceCertificateIssueDate").val() != "") {
+            $("#InsuranceCertificateIssueDateAr").val(ConvertDates($("#InsuranceCertificateIssueDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#InsuranceCertificateExpiryDate").val() != null && $("#InsuranceCertificateExpiryDate").val() != "") {
+            $("#InsuranceCertificateExpiryDateAr").val(ConvertDates($("#InsuranceCertificateExpiryDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#ChamberCertificateIssueDate").val() != null && $("#ChamberCertificateIssueDate").val() != "") {
+            $("#ChamberCertificateIssueDateAr").val(ConvertDates($("#ChamberCertificateIssueDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#ChamberCertificateExpiryDate").val() != null && $("#ChamberCertificateExpiryDate").val() != "") {
+            $("#ChamberCertificateExpiryDateAr").val(ConvertDates($("#ChamberCertificateExpiryDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#IncomeAndZakaCertificateIssueDate").val() != null && $("#IncomeAndZakaCertificateIssueDate").val() != "") {
+            $("#IncomeAndZakaCertificateIssueDateAr").val(ConvertDates($("#IncomeAndZakaCertificateIssueDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#IncomeAndZakaCertificateExpiryDate").val() != null && $("#IncomeAndZakaCertificateExpiryDate").val() != "") {
+            $("#IncomeAndZakaCertificateExpiryDateAr").val(ConvertDates($("#IncomeAndZakaCertificateExpiryDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#SaudilizationCertificateIssueDate").val() != null && $("#SaudilizationCertificateIssueDate").val() != "") {
+            $("#SaudilizationCertificateIssueDateAr").val(ConvertDates($("#SaudilizationCertificateIssueDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#SaudilizationCertificateExpiryDate").val() != null && $("#SaudilizationCertificateExpiryDate").val() != "") {
+            $("#SaudilizationCertificateExpiryDateAr").val(ConvertDates($("#SaudilizationCertificateExpiryDate").val(), "gregorian", "islamic"));
+        }
 
         var companyId = $('#CompanyProfile_CompanyId').val();
         if (companyId == 0) {
