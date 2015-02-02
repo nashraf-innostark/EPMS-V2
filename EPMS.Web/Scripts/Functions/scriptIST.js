@@ -218,7 +218,8 @@ $(document).ready(function() {
     $(".datepickerGregorian").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat:"dd/mm/yy"
+        dateFormat: "dd/mm/yy",
+        yearRange: "1950:2050"
     });
     // Arabic Date Picker
     var calendar = $.calendars.instance('islamic');
