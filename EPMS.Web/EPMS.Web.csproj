@@ -3118,6 +3118,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification\Notification.ar.resx" />
     <EmbeddedResource Include="Resources\Notification\Notification.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Notification.Designer.cs</LastGenOutput>

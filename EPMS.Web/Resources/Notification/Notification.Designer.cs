@@ -79,11 +79,47 @@ namespace EPMS.Web.Resources.Notification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Before One Day.
+        /// </summary>
+        public static string BeforeOneDay {
+            get {
+                return ResourceManager.GetString("BeforeOneDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before One Month.
+        /// </summary>
+        public static string BeforeOneMonth {
+            get {
+                return ResourceManager.GetString("BeforeOneMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before One Week.
+        /// </summary>
+        public static string BeforeOneWeek {
+            get {
+                return ResourceManager.GetString("BeforeOneWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category Name.
         /// </summary>
         public static string CategoryName {
             get {
                 return ResourceManager.GetString("CategoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        public static string Company {
+            get {
+                return ResourceManager.GetString("Company", resourceCulture);
             }
         }
         
@@ -106,6 +142,15 @@ namespace EPMS.Web.Resources.Notification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documents.
+        /// </summary>
+        public static string Documents {
+            get {
+                return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -115,11 +160,56 @@ namespace EPMS.Web.Resources.Notification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee Name.
         /// </summary>
         public static string EmployeeName {
             get {
                 return ResourceManager.GetString("EmployeeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employees.
+        /// </summary>
+        public static string Employees {
+            get {
+                return ResourceManager.GetString("Employees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gregorian.
+        /// </summary>
+        public static string Gregorian {
+            get {
+                return ResourceManager.GetString("Gregorian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hijri.
+        /// </summary>
+        public static string Hijri {
+            get {
+                return ResourceManager.GetString("Hijri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meetings.
+        /// </summary>
+        public static string Meetings {
+            get {
+                return ResourceManager.GetString("Meetings", resourceCulture);
             }
         }
         
@@ -169,11 +259,47 @@ namespace EPMS.Web.Resources.Notification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification has been sent..
+        /// </summary>
+        public static string NotificationSentMsg {
+            get {
+                return ResourceManager.GetString("NotificationSentMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification Type.
         /// </summary>
         public static string NotificationType {
             get {
                 return ResourceManager.GetString("NotificationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notified.
+        /// </summary>
+        public static string Notified {
+            get {
+                return ResourceManager.GetString("Notified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Changes.
+        /// </summary>
+        public static string SaveChanges {
+            get {
+                return ResourceManager.GetString("SaveChanges", resourceCulture);
             }
         }
     }

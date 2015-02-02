@@ -1,5 +1,6 @@
 ﻿using System;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels.EmployeeResponseModel;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Models.ModelMapers.NotificationMapper
@@ -10,6 +11,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
         {
             return new NotificationResponse
             {
+                NotificationId = notification.NotificationId,
                 TitleA = notification.TitleA,
                 TitleE = notification.TitleE,
                 CategoryId = notification.CategoryId,
@@ -31,6 +33,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
         {
             return new Notification
             {
+                NotificationId = notification.NotificationId,
                 TitleA = notification.TitleA,
                 TitleE = notification.TitleE,
                 CategoryId = notification.CategoryId,
@@ -46,6 +49,17 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 RecCreatedDate = notification.RecCreatedDate,
                 RecLastUpdatedBy = notification.RecLastUpdatedBy,
                 RecLastUpdatedDate = notification.RecLastUpdatedDate
+            };
+        }
+        public static EmployeeDDL CreateForEmployeeDDL(this Employee source)
+        {
+            return new EmployeeDDL
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE,
+                EmployeeNameA = source.EmployeeNameA,
+                Email = source.Email,
+                MobileNo = source.EmployeeMobileNum
             };
         }
     }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
-using EPMS.Models.ModelMapers;
+using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers.NotificationMapper;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 
@@ -33,11 +32,14 @@ namespace EPMS.Implementation.Services
         public NotificationViewModel LoadNotificationAndBaseData(long? notificationId)
         {
             NotificationViewModel notificationViewModel=new NotificationViewModel();
-            var employees = employeeRepository.GetAll();
-            notificationViewModel.EmployeeDDL = employees.Select(x => x.CreateForEmployeeDDL());
+            IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
+            if (employees.Any())
+            {                
+                notificationViewModel.EmployeeDDL = employees.Select(x => x.CreateForEmployeeDDL()).ToList();
+            }
             if (notificationId != null && notificationId > 0)
             {
-                var notification = notificationRepository.Find((long) notificationId);
+                Notification notification = notificationRepository.Find((long) notificationId);
                 if(notification!=null)
                     notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
             }
@@ -46,12 +48,16 @@ namespace EPMS.Implementation.Services
 
         public bool AddNotification(NotificationResponse notification)
         {
-            throw new NotImplementedException();
+            notificationRepository.Add(notification.CreateFromClientToServer());
+            notificationRepository.SaveChanges();
+            return true;
         }
 
         public bool UpdateNotification(NotificationResponse notification)
         {
-            throw new NotImplementedException();
+            notificationRepository.Update(notification.CreateFromClientToServer());
+            notificationRepository.SaveChanges();
+            return true;
         }
     }
 }

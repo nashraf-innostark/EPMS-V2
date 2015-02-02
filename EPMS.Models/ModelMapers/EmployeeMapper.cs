@@ -60,14 +60,5 @@ namespace EPMS.Models.ModelMapers
                 Email = source.Email
             };
         }
-        public static EmployeeDDL CreateForEmployeeDDL(this Employee source)
-        {
-            return new EmployeeDDL
-            {
-                EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE,
-                EmployeeNameA = source.EmployeeNameA
-            };
-        }
     }
 }

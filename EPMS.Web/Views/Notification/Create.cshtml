@@ -4,18 +4,21 @@
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     var pageheading = "";
     var breadcrumb = "";
+    var submitBtn = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Model.NotificationResponse.NotificationId > 0)
     {
         ViewBag.Title = EPMS.Web.Resources.Notification.Notification.Edit + " " + (direction == "ltr" ? " " + Model.NotificationResponse.TitleE : " " + Model.NotificationResponse.TitleA);
         pageheading = ViewBag.Title;
         breadcrumb = ViewBag.Title;
+        submitBtn = EPMS.Web.Resources.Notification.Notification.SaveChanges;
     }
     else
     {
         ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NewNotification;
         breadcrumb = ViewBag.Title;
         pageheading = EPMS.Web.Resources.Notification.Notification.CreateNewNotification;
+        submitBtn = EPMS.Web.Resources.Notification.Notification.Create;
     }
 }
 
@@ -47,6 +50,9 @@
 
 @using (Html.BeginForm("Create", "Notification", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
+    @Html.HiddenFor(x => x.NotificationResponse.NotificationId)
+    @Html.HiddenFor(x => x.NotificationResponse.RecCreatedBy)
+    @Html.HiddenFor(x => x.NotificationResponse.RecCreatedDate)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
@@ -76,13 +82,14 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
-                        <option value="1">Documents</option>
-                        <option value="2">Employees</option>
-                        <option value="3">Meetings</option>
-                        <option value="4">Company</option>
-                        <option value="5">Other</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.NotificationResponse.CategoryId, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Documents },
+                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.Employees },
+                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.Meetings },
+                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Notification.Notification.Company },
+                        new SelectListItem { Value = "5" , Text = EPMS.Web.Resources.Notification.Notification.Other }
+                    }, new { @id = "NotificationCategory", @class = "select2me" })
                 </div>
             </div>
         </div>
@@ -93,11 +100,12 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
-                        <option value="1">Before One Month</option>
-                        <option value="2">Before One Week</option>
-                        <option value="3">Before One Day</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.NotificationResponse.AlertBefore, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneMonth },
+                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneWeek },
+                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneDay }
+                    }, new { @id = "NotificationAlertBefore", @class = "select2me" })
                 </div>
             </div>
         </div>
@@ -107,10 +115,11 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
-                        <option value="1">Hijri</option>
-                        <option value="2">Gregorian</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.NotificationResponse.AlertDateType, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Gregorian },
+                        new SelectListItem { Value = "0" , Text = EPMS.Web.Resources.Notification.Notification.Hijri }
+                    }, new { @id = "dateTypeDDl", @class = "select2me", onchange = "AlertDateType('#dateTypeDDl');" })
                 </div>
             </div>
         </div>
@@ -123,8 +132,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian cursorHand span3", @id = "AlertEndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#AlertEndDateA')" })
-                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "AlertEndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#AlertEndDateE')" })
+                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian cursorHand span3", @id = "AlertEndDateE", @readonly = true, @placeholder = "", onchange = "GregorianToHijri(this,'#AlertEndDateA')" })
+                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "AlertEndDateA", @readonly = true, @placeholder = "", onchange = "HijriToGregorian(this,'#AlertEndDateE')" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDate, "", new { @class = "required" })
                 </div>
             </div>
@@ -147,7 +156,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.NotificationResponse.TitleA,new{@class="number"})
+                    @Html.TextBoxFor(model => model.NotificationResponse.MobileNo, new { @class = "number", @id = "mobile" })
                 </div>
             </div>
         </div>
@@ -155,39 +164,90 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="mailAlert">Email</label>
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.Email</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.NotificationResponse.Email)
+                    @Html.TextBoxFor(model => model.NotificationResponse.Email, new { @id = "mailAlert" })
                 </div>
             </div>
         </div>
         <!--Input Field end-->
+        @if (Model.NotificationResponse.NotificationId > 0)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Notification.Notification.Notified</label>
+                </div>
+                <div class="span9 span-inset">
+                    <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                        @Html.CheckBoxFor(model => model.NotificationResponse.ReadStatus)
+                    </div>
+                </div>
 
+            </div>
+        }
+        
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.Notification.Notification.Create</button>
+                <button type="submit" class="btn">@submitBtn</button>
             </div>
         </div>
     </div>
    
 }
 <script>
-    $(function () {
+    $(document).ready(function () {
+        //Convert Gregorian to Hijri
+        if ($("#AlertEndDateE").val() != null && $("#AlertEndDateE").val() != "") {
+            $("#AlertEndDateA").val(ConvertDates($("#AlertEndDateE").val(), "gregorian", "islamic"));
+        }
         $("#emp").on("change", function () {
             var employOrNot = $("#emp option:selected").text();
-            if (employOrNot == "Not Employee") {
-                $("#mobile").removeAttr('readonly');
-                $("#mailAlert").removeAttr('readonly');
-
-            }
-            else {
-                $("#mobile").attr('readonly', 'readonly');
-                $("#mailAlert").attr('readonly', 'readonly');
-            }
+            NotificationContact(employOrNot);
         });
         $(".uniformCheckbox").uniform();
+        AlertDateType("#dateTypeDDl");
+        NotificationContact($("#emp option:selected").text());
     });
+    // set Employee's Email & Mobile number
+    function SetEmployeeContacts() {
+        var empId = $("#emp").val();
+        if (empId != "") {
+            var employeesList = '@Html.Raw(Json.Encode(Model.EmployeeDDL))';
+            var parsed = JSON.parse(employeesList);
+
+            $.each(parsed, function (key, value) {
+                if (value.EmployeeId == empId) {
+                    $("#mobile").val(value.MobileNo);
+                    $("#mailAlert").val(value.Email);
+                }
+            });
+        } else {
+            $("#mobile").val("");
+            $("#mailAlert").val("");
+        }
+    };
+    function NotificationContact(employOrNot) {
+        if (employOrNot == "Not Employee") {
+            $("#mobile").removeAttr('readonly').val("");
+            $("#mailAlert").removeAttr('readonly').val("");
+
+        }
+        else {
+            $("#mobile").attr('readonly', 'readonly');
+            $("#mailAlert").attr('readonly', 'readonly');
+            SetEmployeeContacts();
+        }
+    }
+    function AlertDateType(dateType) {
+        if ($(dateType).val()==1) {
+            $("#AlertEndDateA").hide();
+            $("#AlertEndDateE").show();
+        } else {
+            $("#AlertEndDateE").hide();
+            $("#AlertEndDateA").show();
+        }
+    }
 </script>
