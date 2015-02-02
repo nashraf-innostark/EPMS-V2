@@ -22,7 +22,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.HR.Employee.Employees</small></h2>
-    <h3><small><a href="~/HR/Employee/Create">@EPMS.Web.Resources.HR.Employee.AddNew</a></small></h3>
+    @if (Convert.ToString(Session["RoleName"]) == "Admin")
+    {
+        <h3><small><a href="~/HR/Employee/Create">@EPMS.Web.Resources.HR.Employee.AddNew</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")

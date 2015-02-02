@@ -64,26 +64,19 @@ namespace EPMS.Web.Areas.HR.Controllers
         [SiteAuthorize(PermissionKey = "EmployeeIndex")]
         public ActionResult Index()
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
-            if (userRole != null && (userRole.Name == "Admin" || userRole.Name == "PM"))
-            {
-                EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
-
-                EmployeeViewModel employeeViewModel = new EmployeeViewModel
-                {
-                    SearchRequest = employeeSearchRequest,
-                    Role = userRole.Name,
-                };
-                ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-                return View(employeeViewModel);
-            }
-            if (userRole != null && userRole.Name == "Employee")
+            if (Convert.ToString(Session["RoleName"]) == "Employee")
             {
                 long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
                 return RedirectToAction("Create", new { id });
             }
-            return null;
+            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
+            EmployeeViewModel employeeViewModel = new EmployeeViewModel
+            {
+                SearchRequest = employeeSearchRequest,
+                //Role = userRole.Name,
+            };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(employeeViewModel);
         }
 
         /// <summary>
@@ -94,8 +87,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset searchRequest)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
             searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             searchRequest.SearchString = Request["search"];
             var employees = EmployeeService.GetAllEmployees(searchRequest);
@@ -108,10 +99,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                 iTotalDisplayRecords = Convert.ToInt32(employees.TotalDisplayRecords),
                 sEcho = searchRequest.sEcho
             };
-            if (userRole != null)
-            {
-                employeeViewModel.Role = userRole.Name;
-            }
 
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
@@ -141,8 +128,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         [SiteAuthorize(PermissionKey = "EmployeeCreate")]
         public ActionResult Create(long? id)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
             var direction = Resources.Shared.Common.TextDirection;
             if (id == null)
             {
@@ -160,19 +145,12 @@ namespace EPMS.Web.Areas.HR.Controllers
                 string employeeJobId = GetEmployeeJobId();
                 viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                if (userRole != null) viewModel.Role = userRole.Name;
                 viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
                 viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
                 viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
                 return View(viewModel);
             }
-            long empId = 0;
-            if (userRole != null && userRole.Name != "Admin")
-            {
-                var users = AspNetUserService.FindById(User.Identity.GetUserId());
-                empId = users.Employee.EmployeeId;
-            }
-            if (id > 0 && (id == empId || (userRole != null && userRole.Name == "Admin")))
+            if (id > 0)
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
                 {
@@ -186,75 +164,70 @@ namespace EPMS.Web.Areas.HR.Controllers
                     }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-
-                if (userRole != null && id > 0)
+                // Get Employee
+                viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                // Get Allowances
+                var allowance =
+                    AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId, DateTime.Now);
+                if (allowance != null)
                 {
-                    viewModel.Role = userRole.Name;
-                    // Get Employee
-                    viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
-                    // Get Allowances
-                    var allowance =
-                        AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId, DateTime.Now);
-                    if (allowance != null)
-                    {
-                        viewModel.EmployeeViewModel.Allowance = allowance.CreateFromServerToClient();
-                        viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
-                    }
-                    // Set Employee Name for Header
-                    
-                    viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeNameE : viewModel.EmployeeViewModel.Employee.EmployeeNameA;
-                    if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
-                    {
-                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
-                                                                "profile.jpg";
-                    }
-                    else
-                    {
-                        viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
-                                              viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
-                    }
-                    if (userRole.Name == "Admin")
-                    {
-                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTList;
-                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
-                    }
-                    if (userRole.Name == "Employee" || userRole.Name == "PM")
-                    {
-                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTProfile;
-                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
-                    }
-                    // get Employee requests
-                    var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
-                    var requests = empRequests.Select(x => x.CreateFromServerToClientPayroll());
-                    // get Employee request details
-                    foreach (var reqDetail in requests)
-                    {
-                        var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
-                        if (firstOrDefault != null)
-                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
-                        var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
-                        if (lastOrDefault != null)
-                            viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
-                    }
-                    var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
-                    var data = employeeRequestResponse.Select(x => x.CreateFromServerToClient());
-                    var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
-                    if (employeeRequests.Any())
-                    {
-                        viewModel.RequestListViewModel.aaData = employeeRequests;
-                    }
-                    var employeeTaskResponse =
-                        TaskEmployeeService.GetTaskEmployeeByEmployeeId(viewModel.EmployeeViewModel.Employee.EmployeeId);
-                    var taskData = employeeTaskResponse.Select(x => x.CreateFromServerToClient());
-                    var employeeTasks = taskData as IList<Models.TaskEmployee> ?? taskData.ToList();
-                    if (employeeTasks.Any())
-                    {
-                        viewModel.TaskEmployees = employeeTasks;
-                    }
+                    viewModel.EmployeeViewModel.Allowance = allowance.CreateFromServerToClient();
+                    viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
+                }
+                // Set Employee Name for Header
+
+                viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeNameE : viewModel.EmployeeViewModel.Employee.EmployeeNameA;
+                if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
+                {
+                    viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
+                                                            "profile.jpg";
+                }
+                else
+                {
+                    viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +
+                                          viewModel.EmployeeViewModel.Employee.EmployeeImagePath;
+                }
+                if (Convert.ToString(Session["RoleName"]) == "Admin")
+                {
+                    viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTList;
+                    viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
+                }
+                else
+                {
+                    viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTProfile;
+                    viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
+                }
+                // get Employee requests
+                var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
+                var requests = empRequests.Select(x => x.CreateFromServerToClientPayroll());
+                // get Employee request details
+                foreach (var reqDetail in requests)
+                {
+                    var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
+                    if (firstOrDefault != null)
+                        viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
+                    var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
+                    if (lastOrDefault != null)
+                        viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
+                }
+                var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
+                var data = employeeRequestResponse.Select(x => x.CreateFromServerToClient());
+                var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
+                if (employeeRequests.Any())
+                {
+                    viewModel.RequestListViewModel.aaData = employeeRequests;
+                }
+                var employeeTaskResponse =
+                    TaskEmployeeService.GetTaskEmployeeByEmployeeId(viewModel.EmployeeViewModel.Employee.EmployeeId);
+                var taskData = employeeTaskResponse.Select(x => x.CreateFromServerToClient());
+                var employeeTasks = taskData as IList<Models.TaskEmployee> ?? taskData.ToList();
+                if (employeeTasks.Any())
+                {
+                    viewModel.TaskEmployees = employeeTasks;
                 }
                 return View(viewModel);
             }
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return null;
         }
 
         /// <summary>
@@ -320,6 +293,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     #region Add
 
                     // Set Employee Values
+                    viewModel.EmployeeViewModel.Employee.EmployeeIqamaIssueDt = DateTime.Now.ToShortDateString();
                     viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
                     viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
                     // Add Employee

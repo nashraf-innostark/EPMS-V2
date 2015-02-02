@@ -318,90 +318,87 @@
                 </div>
             </div>
         </div>
-        @if (Model.Role == "Admin" || Model.Role == "PM")
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allownce1">@EPMS.Web.Resources.HR.Employee.Allow1</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance1, new { @id = "Allownce1" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance1)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allownce2">@EPMS.Web.Resources.HR.Employee.Allow2</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance2, new { @id = "Allownce2" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance2)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allownce3">@EPMS.Web.Resources.HR.Employee.Allow3</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance3, new { @id = "Allownce3" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance3)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allownce4">@EPMS.Web.Resources.HR.Employee.Allow4</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance4, new { @id = "Allownce4" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance4)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allownce5">@EPMS.Web.Resources.HR.Employee.Allow5</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance5, new { @id = "Allownce5" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance5)
+                </div>
+            </div>
+        </div>
+        @if (Model.EmployeeViewModel.Employee != null && Convert.ToString(Session["RoleName"]) == "Admin" && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Allownce1">@EPMS.Web.Resources.HR.Employee.Allow1</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance1, new { @id = "Allownce1" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance1)
-                    </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
                 </div>
             </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Allownce2">@EPMS.Web.Resources.HR.Employee.Allow2</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance2, new { @id = "Allownce2" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance2)
-                    </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
                 </div>
             </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Allownce3">@EPMS.Web.Resources.HR.Employee.Allow3</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance3, new { @id = "Allownce3" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance3)
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Allownce4">@EPMS.Web.Resources.HR.Employee.Allow4</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance4, new { @id = "Allownce4" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance4)
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Allownce5">@EPMS.Web.Resources.HR.Employee.Allow5</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance5, new { @id = "Allownce5" })
-                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance5)
-                    </div>
-                </div>
-            </div>
-            if (Model.EmployeeViewModel.Employee != null && Model.Role == "Admin" && Model.EmployeeViewModel.Employee.EmployeeId > 0)
-            {
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
-                    </div>
-                    <div class="span9">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group row-fluid">
-                    <div class="span3">
-                        <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
-                    </div>
-                    <div class="span9">
-                        <div class="controls">
-                            @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
-                        </div>
-                    </div>
-                </div>
-            }
+        </div>
         }
         @if (Model.EmployeeViewModel.Employee != null && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
-            if (Model.Role == "Employee")
+            if (Convert.ToString(Session["RoleName"]) == "Employee")
             {
                 <div class="control-group row-fluid">
                     <div class="span3">
@@ -413,7 +410,7 @@
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>@EPMS.Web.Resources.HR.Employee.ReqHistory</strong>
             </div>
-            if (Model.Role != "Admin")
+            if (Convert.ToString(Session["RoleName"]) != "Admin")
             {
                 <div>
                     <header>
@@ -474,12 +471,12 @@
                                         <td>@item.TaskEmployeeId</td>
                                         @if (direction == "ltr")
                                         {
-                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameE, "Create", "Task", new {area = "PMS", id = item.TaskId}, null) </td>
+                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameE, "Create", "Task", new { area = "PMS", id = item.TaskId }, null) </td>
                                             <td>@item.ProjectTask.ProjectNameE</td>
                                         }
                                         else
                                         {
-                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameA, "Create", "Task", new {area = "PMS", id = item.TaskId}, null) </td>
+                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameA, "Create", "Task", new { area = "PMS", id = item.TaskId }, null) </td>
                                             <td>@item.ProjectTask.ProjectNameA</td>
                                         }
                                     </tr>
@@ -490,7 +487,7 @@
                 </div>
             </div>
         }
-        @if ((Model.Role == "Admin") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
+        @if ((Convert.ToString(Session["RoleName"]) == "Admin") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -501,7 +498,7 @@
                 </div>
             </div>
         }
-        else if (Model.Role == "Admin")
+        else if (Convert.ToString(Session["RoleName"]) == "Admin")
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">

@@ -126,6 +126,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.FirstOrDefault(order => order.OrderNo == orderNo);
         }
 
+        public IEnumerable<Order> GetAllAvailableOrdersDDL(long customerId)
+        {
+            return DbSet.Where(x => x.Projects.Count==0 && x.CustomerId==customerId);
+        }
+
         #endregion
     }
 }

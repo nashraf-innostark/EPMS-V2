@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
-using EPMS.Repository.Repositories;
 
 namespace EPMS.Implementation.Services
 {
@@ -29,7 +30,13 @@ namespace EPMS.Implementation.Services
 
         #region Public
 
-       public bool AddOrder(Order order)
+        public IEnumerable<AvailableOrdersDDL> GetAllAvailableOrdersDDL(long customerId)
+        {
+            var ordersDDL = ordersRepository.GetAllAvailableOrdersDDL(customerId);
+            return ordersDDL.Select(x => x.CreateForDDL());
+        }
+
+        public bool AddOrder(Order order)
         {
             try
             {

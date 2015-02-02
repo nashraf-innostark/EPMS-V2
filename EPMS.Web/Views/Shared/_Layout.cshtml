@@ -128,7 +128,14 @@
             </li>
             <li class="user-sub-menu-container">
                 <a href="javascript:;">
-                    <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>EN</i>
+                    @if (Session["Culture"].ToString() == "en")
+                    {
+                        <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>EN</i>
+                    }
+                    else
+                    {
+                        <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" /><i>AR</i>
+                    }
                 </a>
                 <ul class="nav user-sub-menu">
                     <li class="">

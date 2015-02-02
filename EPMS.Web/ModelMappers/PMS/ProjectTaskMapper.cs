@@ -68,7 +68,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.DescriptionE = source.DescriptionE;
             projectTask.DescriptionA = source.DescriptionA;
             projectTask.StartDate = source.StartDate == null ? (DateTime?)null : Convert.ToDateTime(source.StartDate);
-            projectTask.EndDate = source.EndDate == null ? (DateTime?)null : Convert.ToDateTime(source.StartDate);
+            projectTask.EndDate = source.EndDate == null ? (DateTime?)null : Convert.ToDateTime(source.EndDate);
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
             projectTask.TaskProgress = source.TaskProgress;

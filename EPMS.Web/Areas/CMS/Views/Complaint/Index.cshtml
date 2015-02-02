@@ -24,7 +24,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/CMS/Complaint/Create">@EPMS.Web.Resources.CMS.Complaint.CreateNewComplaint</a></small></h3>
+    @if (ViewBag.UserRole == "Customer")
+    {
+        <h3> <small><a href="~/CMS/Complaint/Create">@EPMS.Web.Resources.CMS.Complaint.CreateNewComplaint</a></small></h3>
+    }
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
