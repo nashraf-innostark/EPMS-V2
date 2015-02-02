@@ -22,7 +22,7 @@ namespace EPMS.Web.Resources.Meeting {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Meeting {
+    public class Meeting {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EPMS.Web.Resources.Meeting {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Meeting.Meeting", typeof(Meeting).Assembly);
@@ -51,12 +51,228 @@ namespace EPMS.Web.Resources.Meeting {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absences (Emloyees).
+        /// </summary>
+        public static string Absences {
+            get {
+                return ResourceManager.GetString("Absences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Absent Employees.
+        /// </summary>
+        public static string AbsentEmployees {
+            get {
+                return ResourceManager.GetString("AbsentEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agenda.
+        /// </summary>
+        public static string Agenda {
+            get {
+                return ResourceManager.GetString("Agenda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agenda Arabic.
+        /// </summary>
+        public static string AgendaAr {
+            get {
+                return ResourceManager.GetString("AgendaAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drag your file here or click (max: 1MB each).
+        /// </summary>
+        public static string AttachBoxText {
+            get {
+                return ResourceManager.GetString("AttachBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attach Files.
+        /// </summary>
+        public static string AttachFiles {
+            get {
+                return ResourceManager.GetString("AttachFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attendees (Employees).
+        /// </summary>
+        public static string Attendees {
+            get {
+                return ResourceManager.GetString("Attendees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attendees (Not Employees).
+        /// </summary>
+        public static string AttendeesNotEmployees {
+            get {
+                return ResourceManager.GetString("AttendeesNotEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attending Employees.
+        /// </summary>
+        public static string AttendingEmployees {
+            get {
+                return ResourceManager.GetString("AttendingEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Meeting.
+        /// </summary>
+        public static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decisions.
+        /// </summary>
+        public static string Decisions {
+            get {
+                return ResourceManager.GetString("Decisions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decisions Arabic.
+        /// </summary>
+        public static string DecisionsAr {
+            get {
+                return ResourceManager.GetString("DecisionsAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discussion.
+        /// </summary>
+        public static string Discussion {
+            get {
+                return ResourceManager.GetString("Discussion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discussion Arabic.
+        /// </summary>
+        public static string DiscussionAr {
+            get {
+                return ResourceManager.GetString("DiscussionAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employees.
+        /// </summary>
+        public static string Employees {
+            get {
+                return ResourceManager.GetString("Employees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string MeetingDate {
+            get {
+                return ResourceManager.GetString("MeetingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meeting List.
+        /// </summary>
+        public static string MeetingList {
+            get {
+                return ResourceManager.GetString("MeetingList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Related Project.
+        /// </summary>
+        public static string RelatedProj {
+            get {
+                return ResourceManager.GetString("RelatedProj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save &amp; Send Invitation.
+        /// </summary>
+        public static string SendButton {
+            get {
+                return ResourceManager.GetString("SendButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Name.
+        /// </summary>
+        public static string TopicName {
+            get {
+                return ResourceManager.GetString("TopicName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topic Name Arabic.
+        /// </summary>
+        public static string TopicNameAr {
+            get {
+                return ResourceManager.GetString("TopicNameAr", resourceCulture);
             }
         }
     }
