@@ -2657,7 +2657,7 @@
           <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TitleA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Category" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="AlertBefore" Type="Int32" Nullable="false" />
           <Property Name="AlertDateType" Type="Int32" Nullable="false" />
           <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -3367,7 +3367,7 @@
                 <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
                 <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
                 <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CategoryId" ColumnName="Category" />
                 <ScalarProperty Name="TitleA" ColumnName="TitleA" />
                 <ScalarProperty Name="TitleE" ColumnName="TitleE" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />

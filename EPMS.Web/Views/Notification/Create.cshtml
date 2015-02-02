@@ -1,0 +1,193 @@
+﻿@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationViewModel
+@{
+    ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NewNotification;
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var pageheading = "";
+    var breadcrumb = "";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (Model.NotificationResponse.NotificationId > 0)
+    {
+        ViewBag.Title = EPMS.Web.Resources.Notification.Notification.Edit + " " + (direction == "ltr" ? " " + Model.NotificationResponse.TitleE : " " + Model.NotificationResponse.TitleA);
+        pageheading = ViewBag.Title;
+        breadcrumb = ViewBag.Title;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NewNotification;
+        breadcrumb = ViewBag.Title;
+        pageheading = EPMS.Web.Resources.Notification.Notification.CreateNewNotification;
+    }
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container" dir="ltr">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Notification/Index">
+                @EPMS.Web.Resources.Notification.Notification.NotificationList
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@breadcrumb</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@pageheading</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+@using (Html.BeginForm("Create", "Notification", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationNameE</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.TitleE)
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationNameA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.TitleA)
+                </div>
+            </div>
+        </div>
+
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.CategoryName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    <select>
+                        <option value="1">Documents</option>
+                        <option value="2">Employees</option>
+                        <option value="3">Meetings</option>
+                        <option value="4">Company</option>
+                        <option value="5">Other</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.AlertTime</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    <select>
+                        <option value="1">Before One Month</option>
+                        <option value="2">Before One Week</option>
+                        <option value="3">Before One Day</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationType</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    <select>
+                        <option value="1">Hijri</option>
+                        <option value="2">Gregorian</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.Web.Resources.Notification.Notification.AlertEndDate
+                    <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian cursorHand span3", @id = "AlertEndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#AlertEndDateA')" })
+                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "AlertEndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#AlertEndDateE')" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDate, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.EmployeeName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @(direction == "ltr" ? @Html.DropDownListFor(m => m.NotificationResponse.EmployeeId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameE"), "Not Employee", new { @class = "select2me", @id = "emp" }) : @Html.DropDownListFor(m => m.NotificationResponse.EmployeeId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameA"), "Not Employee", new { @class = "select2me", @id = "emp" }))
+                </div>
+            </div>
+        </div>
+
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.MobileNumber</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.TitleA,new{@class="number"})
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="mailAlert">Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.Email)
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+
+
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">@EPMS.Web.Resources.Notification.Notification.Create</button>
+            </div>
+        </div>
+    </div>
+   
+}
+<script>
+    $(function () {
+        $("#emp").on("change", function () {
+            var employOrNot = $("#emp option:selected").text();
+            if (employOrNot == "Not Employee") {
+                $("#mobile").removeAttr('readonly');
+                $("#mailAlert").removeAttr('readonly');
+
+            }
+            else {
+                $("#mobile").attr('readonly', 'readonly');
+                $("#mailAlert").attr('readonly', 'readonly');
+            }
+        });
+        $(".uniformCheckbox").uniform();
+    });
+</script>

@@ -1,4 +1,5 @@
 ﻿using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels.EmployeeResponseModel;
 
 namespace EPMS.Models.ModelMapers
 {
@@ -57,6 +58,15 @@ namespace EPMS.Models.ModelMapers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email
+            };
+        }
+        public static EmployeeDDL CreateForEmployeeDDL(this Employee source)
+        {
+            return new EmployeeDDL
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE,
+                EmployeeNameA = source.EmployeeNameA
             };
         }
     }

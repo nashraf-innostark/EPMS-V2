@@ -563,6 +563,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Meeting.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Notification\Notification.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\PMS\Project.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -649,6 +654,7 @@
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Views\Notification\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1002,6 +1008,8 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="EmailTexts\ContactUs.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\MeetingDocuments\dummy.txt" />
+    <Content Include="Files\ProjectDocuments\dummy.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -3053,12 +3061,9 @@
     <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
-    <Folder Include="Files\MeetingDocuments\" />
-    <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
-    <Folder Include="Views\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -3104,6 +3109,10 @@
     <EmbeddedResource Include="Resources\Meeting\Meeting.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification\Notification.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\PMS\Project.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -155,8 +155,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "English", onchange = "GregorianToHijri(this,'#StartDateA')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Arabic", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                    @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
                     @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
                 </div>
             </div>

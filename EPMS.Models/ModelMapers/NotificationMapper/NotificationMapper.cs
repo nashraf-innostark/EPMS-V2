@@ -12,7 +12,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             {
                 TitleA = notification.TitleA,
                 TitleE = notification.TitleE,
-                Category = notification.Category,
+                CategoryId = notification.CategoryId,
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = notification.AlertDate.ToShortDateString(),
@@ -33,7 +33,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             {
                 TitleA = notification.TitleA,
                 TitleE = notification.TitleE,
-                Category = notification.Category,
+                CategoryId = notification.CategoryId,
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = Convert.ToDateTime(notification.AlertDate),

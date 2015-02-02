@@ -190,6 +190,8 @@
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
     <Compile Include="ResponseModels\MeetingResponse.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationListView.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationSearchRequest.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
