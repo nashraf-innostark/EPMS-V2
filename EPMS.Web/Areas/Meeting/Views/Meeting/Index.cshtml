@@ -1,8 +1,9 @@
 ﻿@model EPMS.Web.ViewModels.Meeting.MeetingListViewModel
 
 @{
-    ViewBag.Title = "Meeting List";
+    ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.MeetingList;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <!-- Navigation Bar Start-->
@@ -15,7 +16,7 @@
         </li>
         <li>
             <a href="">
-                Meeting List
+                @EPMS.Web.Resources.Meeting.Meeting.MeetingList
             </a>
         </li>
     </ul>
@@ -26,7 +27,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Meeting/Meeting/Create">Add New meeting</a></small></h3>
+    <h3> <small><a href="~/Meeting/Meeting/Create">@EPMS.Web.Resources.Meeting.Meeting.Create</a></small></h3>
 </header>
 <!-- Page Heading End-->
 
@@ -39,10 +40,16 @@
                     <thead class="cf sorthead">
                         <tr>
                             <th></th>
-                            <th>Topic</th>
-                            <th>Topic Arabic</th>
-                            <th>Related Project</th>
-                            <th>Date</th>
+                            @if (direction == "ltr")
+                            {
+                                <th>@EPMS.Web.Resources.Meeting.Meeting.TopicName</th>
+                            }
+                            else
+                            {
+                                <th>@EPMS.Web.Resources.Meeting.Meeting.TopicNameAr</th>
+                            }
+                            <th>@EPMS.Web.Resources.Meeting.Meeting.RelatedProj</th>
+                            <th>@EPMS.Web.Resources.Meeting.Meeting.MeetingDate</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -80,17 +87,17 @@
                     },
                     "bSortable": false
                 },
-                {
-                    "aTargets": [2],
-                    "sDefaultContent": "No Data",
-                    "mRender": function(data, type, full) {
-                        var name = full["TopicNameAr"];
-                        var id = full["MeetingId"];
-                        var element = '<a href="Create/' + id + '">' + name + '</a>';
-                        return element;
-                    },
-                    "bSortable": false
-                },
+                //{
+                //    "aTargets": [2],
+                //    "sDefaultContent": "No Data",
+                //    "mRender": function(data, type, full) {
+                //        var name = full["TopicNameAr"];
+                //        var id = full["MeetingId"];
+                //        var element = '<a href="Create/' + id + '">' + name + '</a>';
+                //        return element;
+                //    },
+                //    "bSortable": false
+                //},
                 {
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
