@@ -152,29 +152,38 @@ namespace EPMS.Web.ModelMappers
         }
         public static DomainModels.CompanyDocumentDetail CreateFromDocument(this Models.CompanyDocumentDetail source)
         {
-            return new DomainModels.CompanyDocumentDetail
-            {
-                CompanyId = source.CompanyId,
-                CommercialRegister = source.CommercialRegister,
-                CommercialRegisterIssueDate = Convert.ToDateTime(source.CommercialRegisterIssueDate),
-                CommercialRegisterExpiryDate = Convert.ToDateTime(source.CommercialRegisterExpiryDate),
-                InsuranceCertificate = source.InsuranceCertificate,
-                InsuranceCertificateIssueDate = Convert.ToDateTime(source.InsuranceCertificateIssueDate),
-                InsuranceCertificateExpiryDate = Convert.ToDateTime(source.InsuranceCertificateExpiryDate),
-                ChamberCertificate = source.ChamberCertificate,
-                ChamberCertificateIssueDate = Convert.ToDateTime(source.ChamberCertificateIssueDate),
-                ChamberCertificateExpiryDate = Convert.ToDateTime(source.ChamberCertificateExpiryDate),
-                IncomeAndZakaCertificate = source.IncomeAndZakaCertificate,
-                IncomeAndZakaCertificateIssueDate = Convert.ToDateTime(source.IncomeAndZakaCertificateIssueDate),
-                IncomeAndZakaCertificateExpiryDate = Convert.ToDateTime(source.IncomeAndZakaCertificateExpiryDate),
-                SaudilizationCertificate = source.SaudilizationCertificate,
-                SaudilizationCertificateIssueDate = Convert.ToDateTime(source.SaudilizationCertificateIssueDate),
-                SaudilizationCertificateExpiryDate = Convert.ToDateTime(source.SaudilizationCertificateExpiryDate),
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate,
-            };
+            DomainModels.CompanyDocumentDetail documentDetail=new DomainModels.CompanyDocumentDetail();
+            documentDetail.CompanyId = source.CompanyId;
+            documentDetail.CommercialRegister = source.CommercialRegister;
+            if (source.CommercialRegisterIssueDate != null)
+                documentDetail.CommercialRegisterIssueDate = Convert.ToDateTime(source.CommercialRegisterIssueDate);
+            if (source.CommercialRegisterExpiryDate != null)
+                documentDetail.CommercialRegisterExpiryDate = Convert.ToDateTime(source.CommercialRegisterExpiryDate);
+            documentDetail.InsuranceCertificate = source.InsuranceCertificate;
+            if (source.InsuranceCertificateIssueDate != null)
+                documentDetail.InsuranceCertificateIssueDate = Convert.ToDateTime(source.InsuranceCertificateIssueDate);
+            if (source.InsuranceCertificateExpiryDate != null)
+                documentDetail.InsuranceCertificateExpiryDate = Convert.ToDateTime(source.InsuranceCertificateExpiryDate);
+            documentDetail.ChamberCertificate = source.ChamberCertificate;
+            if (source.ChamberCertificateIssueDate != null)
+                documentDetail.ChamberCertificateIssueDate = Convert.ToDateTime(source.ChamberCertificateIssueDate);
+            if (source.ChamberCertificateExpiryDate != null)
+            documentDetail.ChamberCertificateExpiryDate = Convert.ToDateTime(source.ChamberCertificateExpiryDate);
+            documentDetail.IncomeAndZakaCertificate = source.IncomeAndZakaCertificate;
+            if (source.IncomeAndZakaCertificateIssueDate != null)
+            documentDetail.IncomeAndZakaCertificateIssueDate = Convert.ToDateTime(source.IncomeAndZakaCertificateIssueDate);
+            if (source.IncomeAndZakaCertificateExpiryDate != null)
+            documentDetail.IncomeAndZakaCertificateExpiryDate = Convert.ToDateTime(source.IncomeAndZakaCertificateExpiryDate);
+            documentDetail.SaudilizationCertificate = source.SaudilizationCertificate;
+            if (source.SaudilizationCertificateIssueDate != null)
+            documentDetail.SaudilizationCertificateIssueDate = Convert.ToDateTime(source.SaudilizationCertificateIssueDate);
+            if (source.SaudilizationCertificateExpiryDate != null)
+            documentDetail.SaudilizationCertificateExpiryDate = Convert.ToDateTime(source.SaudilizationCertificateExpiryDate);
+            documentDetail.RecCreatedBy = source.RecCreatedBy;
+            documentDetail.RecCreatedDate = source.RecCreatedDate;
+            documentDetail.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            documentDetail.RecLastUpdatedDate = source.RecLastUpdatedDate;
+            return documentDetail;
         }
         public static DomainModels.CompanyBankDetail CreateFromBank(this Models.CompanyBankDetail source)
         {
