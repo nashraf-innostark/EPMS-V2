@@ -40,7 +40,6 @@ namespace EPMS.Web.Controllers
                 Session["Culture"] = info.Name;
             }
             info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
-            info.DateTimeFormat.LongDatePattern = "dd/MM/yyyy";
             System.Threading.Thread.CurrentThread.CurrentCulture = info;
             System.Threading.Thread.CurrentThread.CurrentUICulture = info;
         }

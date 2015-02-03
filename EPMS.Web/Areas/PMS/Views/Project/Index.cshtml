@@ -63,8 +63,8 @@
                                               @(direction == "ltr" ? @item.CustomerNameE : @item.CustomerNameA)
                                           </a>
                                 </td>
-                                <th>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</th>
-                                <th>@(Convert.ToDateTime(item.EndDate).ToShortDateString())</th>
+                                <th>@item.StartDate</th>
+                                <th>@item.EndDate</th>
                                 <th>@item.Price</th>
                                 <th>
                                     <div class="progress progress-info">

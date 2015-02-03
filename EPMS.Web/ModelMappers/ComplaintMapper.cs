@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -19,7 +20,7 @@ namespace EPMS.Web.ModelMappers
                 Reply = source.Reply,
                 IsReplied = source.IsReplied,
                 Status = source.Status,
-                ComplaintDate = Convert.ToDateTime(source.ComplaintDate),
+                ComplaintDate = DateTime.ParseExact(source.ComplaintDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -42,7 +43,7 @@ namespace EPMS.Web.ModelMappers
                 IsReplied = source.IsReplied,
                 IsRepliedString = source.IsReplied?"Yes":"No",
                 Status = source.Status,
-                ComplaintDate = source.ComplaintDate.ToShortDateString(),
+                ComplaintDate = source.ComplaintDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
