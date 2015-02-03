@@ -14,13 +14,13 @@ namespace EPMS.Models.DomainModels
         public string EmployeeMobileNum { get; set; }
         public string EmployeeLandlineNum { get; set; }
         public byte? MaritalStatus { get; set; }
-        public DateTime? EmployeeDOB { get; set; }
+        public DateTime EmployeeDOB { get; set; }
         public short? EmployeeNationality { get; set; }
-        public int? EmployeeIqama { get; set; }
+        public int EmployeeIqama { get; set; }
         public DateTime? EmployeeIqamaIssueDt { get; set; }
-        public DateTime? EmployeeIqamaExpiryDt { get; set; }
+        public DateTime EmployeeIqamaExpiryDt { get; set; }
         public string EmployeePassportNum { get; set; }
-        public DateTime? EmployeePassportExpiryDt { get; set; }
+        public DateTime EmployeePassportExpiryDt { get; set; }
         public string EmployeeDetailsE { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
