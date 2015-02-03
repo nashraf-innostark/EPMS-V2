@@ -153,7 +153,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired"})
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -196,11 +196,11 @@
             </div>
             <div class="span9">
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmpDateOfBirthArabic, new { @class = "col-lg-2 datepickerArabic form-control", onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
+                    @Html.TextBox("Date",null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @readonly = true, onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true, onchange = "GregorianToHijri(this, EmpDateOfBirthArabic)" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true, onchange = "GregorianToHijri(this, '#EmpDateOfBirthArabic')" })
                 </div>
             </div>
         </div>
@@ -254,11 +254,11 @@
             </div>
             <div class="span9">
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "col-lg-2 datepickerArabic form-control " })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -279,11 +279,11 @@
             </div>
             <div class="span9">
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "col-lg-2 datepickerArabic form-control " })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
                 </div>
             </div>
         </div>
@@ -375,26 +375,26 @@
         </div>
         @if (Model.EmployeeViewModel.Employee != null && Convert.ToString(Session["RoleName"]) == "Admin" && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
+                    </div>
                 </div>
             </div>
-        </div>
         }
         @if (Model.EmployeeViewModel.Employee != null && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
@@ -515,8 +515,28 @@
         CKEDITOR.replace('ExtraInformationE');
         CKEDITOR.replace('ExtraInformationA');
         $("#AddEditEmployeeForm").validate({
-            //ignore: ".ignore"
-        }).settings.ignore = ".ignore, .file";
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "req": {
+                    required: true
+                },
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "email": {
+                    email: true
+                },
+                "url": {
+                    url: true
+                },
+                "date": {
+                    date: true
+                }
+            }
+        });
         $('.select2me').select2({
             placeholder: "Select",
             allowClear: true
@@ -630,48 +650,6 @@
         if ('@Model.EmployeeViewModel.Employee.EmployeeId' > 0) {
             ConvertGregorianToIslamic();
         }
-        // Date from Gregorian to Islamic Starts
-        $("#EmployeeDOB").on("change", function () {
-            if ($('#EmployeeDOB').val() == "") {
-                $('#EmpDateOfBirthArabic').val("");
-            }
-            else {
-                var dateToBeChanged = $('#EmployeeDOB').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#EmpDateOfBirthArabic').val(newDate);
-            }
-        });
-        //$("#IqamaIssueDate").on("change", function () {
-        //    if ($('#IqamaIssueDate').val() == "") {
-        //        $('#IqamaIssueDateAr').val("");
-        //    }
-        //    else {
-        //        var dateToBeChanged = $('#IqamaIssueDate').val();
-        //        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-        //        $('#IqamaIssueDateAr').val(newDate);
-        //    }
-        //});
-        $("#IqamaExpiryDate").on("change", function () {
-            if ($('#IqamaExpiryDate').val() == "") {
-                $('#IqamaExpiryDateAr').val("");
-            }
-            else {
-                var dateToBeChanged = $('#IqamaExpiryDate').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#IqamaExpiryDateAr').val(newDate);
-            }
-        });
-        $("#PassportExpiryDate").on("change", function () {
-            if ($('#PassportExpiryDate').val() == "") {
-                $('#PassportExpiryDateAr').val("");
-            }
-            else {
-                var dateToBeChanged = $('#PassportExpiryDate').val();
-                var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
-                $('#PassportExpiryDateAr').val(newDate);
-            }
-        });
-        // Date from Gregorian to Islamic Ends
 
     });
 
@@ -681,18 +659,6 @@
         $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
         $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
     }
-    function HijriToGregorian(currElement, toValue) {
-        if ($(currElement).val() == "") {
-            $(toValue).val("");
-        }
-        else {
-            var splittedDate = $(currElement).val().split('/');
-            $(currElement).val(splittedDate[1] + '/' + splittedDate[2] + '/' + splittedDate[0]);
-            var dateToBeChanged = $(currElement).val();
-            var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
-            $(toValue).val(newDate);
-        }
-    }
     function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
         var calender = $.calendars.instance(fromCalender);
         var dateToBeChanged = calender.parseDate("dd/mm/yyyy", dateTobeChanged);
@@ -700,15 +666,6 @@
         var changedDate = calender.fromJD(dateToBeChanged.toJD());
         return calender.formatDate("dd/mm/yyyy", changedDate);
     }
-    //function validateForm(event) {
-    //    event.preventDefault();
-    //    // Ignore Image Validation in Data Annotation
-    //    $("#AddEditEmployeeForm").validate({
-    //        ignore: mf_file_upload,
-    //        rules: {
-    //        }
-    //    });
-    //}
     function validateForm(event) {
         var listSimple = $('.toBeRequired');
         var counter = 0;

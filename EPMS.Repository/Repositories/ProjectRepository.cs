@@ -70,7 +70,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Project> FindProjectByCustomerId(long id)
         {
-            return DbSet.Where(project => project.CustomerId == id);
+            return DbSet.Where(project => project.CustomerId == id && project.Status != 4);
         }
 
         public IEnumerable<Project> GetAllProjects(string requester, int status)

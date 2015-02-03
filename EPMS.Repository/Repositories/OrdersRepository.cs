@@ -92,7 +92,29 @@ namespace EPMS.Repository.Repositories
                 }).ToList()
                                            :
                                            DbSet
-                                           .Where(query).OrderByDescending(orderClause[searchRequest.OrdersByColumn]).Skip(fromRow).Take(toRow).ToList();
+                                           .Where(query).OrderByDescending(orderClause[searchRequest.OrdersByColumn]).Skip(fromRow).Take(toRow).Select(s => new Order
+                                           {
+                                               OrderId = s.OrderId,
+                                               OrderNo = s.OrderNo,
+                                               OrderStatus = s.OrderStatus,
+                                               CustomerId = s.CustomerId,
+                                               Customer = new Customer
+                                               {
+                                                   CustomerId = s.Customer.CustomerId,
+                                                   CustomerNameE = s.Customer.CustomerNameE,
+                                                   CustomerNameA = s.Customer.CustomerNameA,
+                                                   CustomerAddress = s.Customer.CustomerAddress,
+                                                   CustomerMobile = s.Customer.CustomerMobile,
+                                                   RecCreatedBy = s.Customer.RecCreatedBy,
+                                                   RecCreatedDt = s.Customer.RecCreatedDt,
+                                                   RecLastUpdatedBy = s.Customer.RecLastUpdatedBy,
+                                                   RecLastUpdatedDt = s.Customer.RecLastUpdatedDt,
+                                                   Complaints = s.Customer.Complaints,
+                                                   Orders = s.Customer.Orders,
+                                                   Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
+                                               }
+
+                                           }).ToList();
             return new OrdersResponse { Orders = orders, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
 

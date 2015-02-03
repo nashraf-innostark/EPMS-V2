@@ -626,6 +626,10 @@
                 );
             SetNames("");
         }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
         $.unblockUI();
     }
     function DeleteDoc(button,fileId) {

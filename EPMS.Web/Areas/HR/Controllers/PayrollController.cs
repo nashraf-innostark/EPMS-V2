@@ -130,7 +130,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     allowances = viewModel.Allowances.Allowance1 + viewModel.Allowances.Allowance2 +
                                  viewModel.Allowances.Allowance3 + viewModel.Allowances.Allowance4 +
-                                 viewModel.Allowances.Allowance5;
+                                 viewModel.Allowances.Allowance5 ?? 0;
                 }
                 viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
                 viewModel.Date = DateTime.Now.ToShortDateString();
@@ -178,7 +178,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     allowances = viewModel.Allowances.Allowance1 + viewModel.Allowances.Allowance2 +
                                  viewModel.Allowances.Allowance3 + viewModel.Allowances.Allowance4 +
-                                 viewModel.Allowances.Allowance5;
+                                 viewModel.Allowances.Allowance5 ?? 0;
                 }
                 viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
             }
