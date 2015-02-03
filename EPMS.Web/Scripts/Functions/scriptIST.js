@@ -210,7 +210,10 @@ function GregorianToHijri(englishCalendar,arabicCalendar) {
         $(arabicCalendar).val(newDate);
     }
 }
-$(document).ready(function() {
+$(document).ready(function () {
+    $('.select2me').select2({
+        placeholder: "Select"
+    });
     //$(".datepickerArabic").mask('99/99/9999');
     //$.datepicker.setDefaults($.datepicker.regional['en-US']);
     $(".dateFormatter").mask('99/99/9999');

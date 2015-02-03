@@ -8,7 +8,7 @@ namespace EPMS.Models.DomainModels
         public long NotificationId { get; set; }
         public string TitleE { get; set; }
         public string TitleA { get; set; }
-        public int Category { get; set; }
+        public int CategoryId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
         public DateTime AlertDate { get; set; }

@@ -442,7 +442,7 @@
           <Property Name="NotificationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TitleE" Type="nvarchar(max)" Nullable="false" />
           <Property Name="TitleA" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Category" Type="int" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="AlertBefore" Type="int" Nullable="false" />
           <Property Name="AlertDateType" Type="int" Nullable="false" />
           <Property Name="AlertDate" Type="datetime" Nullable="false" />
@@ -2618,18 +2618,18 @@
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
           <EntitySet Name="MeetingAttendees" EntityType="EPMSModel.MeetingAttendee" />
-          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
           <AssociationSet Name="FK_MeetingAttendees_Employee" Association="EPMSModel.FK_MeetingAttendees_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
           <AssociationSet Name="FK_MeetingAttendees_Meeting" Association="EPMSModel.FK_MeetingAttendees_Meeting">
             <End Role="Meeting" EntitySet="Meetings" />
             <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
+          </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
+          <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Notification" EntitySet="Notifications" />
           </AssociationSet>
           <AssociationSet Name="FK_MeetingAttendees_Notification" Association="EPMSModel.FK_MeetingAttendees_Notification">
             <End Role="Notification" EntitySet="Notifications" />
@@ -2650,6 +2650,30 @@
           <NavigationProperty Name="Meeting" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="MeetingAttendee" ToRole="Meeting" />
           <NavigationProperty Name="Notification" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="MeetingAttendee" ToRole="Notification" />
         </EntityType>
+        <Association Name="FK_MeetingAttendees_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="MeetingAttendee">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingAttendees_Meeting">
+          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
+          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="MeetingId" />
+            </Principal>
+            <Dependent Role="MeetingAttendee">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Notification">
           <Key>
             <PropertyRef Name="NotificationId" />
@@ -2657,7 +2681,7 @@
           <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TitleE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TitleA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Category" Type="Int32" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="AlertBefore" Type="Int32" Nullable="false" />
           <Property Name="AlertDateType" Type="Int32" Nullable="false" />
           <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
@@ -2672,18 +2696,6 @@
           <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
           <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendee" />
         </EntityType>
-        <Association Name="FK_MeetingAttendees_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Notification_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
           <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="*" />
@@ -2693,18 +2705,6 @@
             </Principal>
             <Dependent Role="Notification">
               <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingAttendees_Meeting">
-          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Meeting">
-              <PropertyRef Name="MeetingId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="MeetingId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3367,7 +3367,7 @@
                 <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
                 <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
                 <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="TitleA" ColumnName="TitleA" />
                 <ScalarProperty Name="TitleE" ColumnName="TitleE" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />

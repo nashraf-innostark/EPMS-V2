@@ -150,6 +150,7 @@
     <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
+    <Compile Include="Repositories\NotificationRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\PreRequisitTaskRepository.cs" />
     <Compile Include="Repositories\ProjectDocumentRepository.cs" />

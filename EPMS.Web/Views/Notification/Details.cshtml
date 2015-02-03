@@ -1,0 +1,224 @@
+﻿@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationViewModel
+@{
+    ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NotificationDetails;
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container" dir="ltr">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Notification/Index">
+                @EPMS.Web.Resources.Notification.Notification.NotificationList
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+@using (Html.BeginForm("Create", "Notification", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.NotificationResponse.NotificationId)
+    @Html.HiddenFor(x => x.NotificationResponse.RecCreatedBy)
+    @Html.HiddenFor(x => x.NotificationResponse.RecCreatedDate)
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationNameE</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.TitleE,new {@disabled="disabled"})
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationNameA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.TitleA, new { @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.CategoryName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.NotificationResponse.CategoryId, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Documents },
+                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.Employees },
+                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.Meetings },
+                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Notification.Notification.Company },
+                        new SelectListItem { Value = "5" , Text = EPMS.Web.Resources.Notification.Notification.Other }
+                    }, new { @id = "NotificationCategory", @class = "select2me"})
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.AlertTime</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.NotificationResponse.AlertBefore, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneMonth },
+                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneWeek },
+                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneDay }
+                    }, new { @id = "NotificationAlertBefore", @class = "select2me"})
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationType</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.NotificationResponse.AlertDateType, new[]
+                    {
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Gregorian },
+                        new SelectListItem { Value = "0" , Text = EPMS.Web.Resources.Notification.Notification.Hijri }
+                    }, new { @id = "dateTypeDDl", @class = "select2me"})
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.Web.Resources.Notification.Notification.AlertEndDate
+                    <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian span3", @id = "AlertEndDateE", @readonly = true, @disabled = "disabled" })
+                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic span3", @id = "AlertEndDateA", @readonly = true, @disabled = "disabled" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDate, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.EmployeeName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @(direction == "ltr" ? @Html.DropDownListFor(m => m.NotificationResponse.EmployeeId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameE"), "Not Employee", new { @class = "select2me", @id = "emp", @disabled = "disabled" }) : @Html.DropDownListFor(m => m.NotificationResponse.EmployeeId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameA"), "ليس موظف", new { @class = "select2me", @id = "emp", @disabled = "disabled" }))
+                </div>
+            </div>
+        </div>
+
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.MobileNumber</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.MobileNo, new { @class = "number", @id = "mobile", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.NotificationResponse.Email, new { @id = "mailAlert", @disabled = "disabled" })
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Notification.Notification.Notified</label>
+                </div>
+                <div class="span9 span-inset">
+                    <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                        @Html.CheckBoxFor(model => model.NotificationResponse.ReadStatus)
+                    </div>
+                </div>
+
+            </div>
+    </div>
+
+}
+<script>
+    $(document).ready(function () {
+        //Convert Gregorian to Hijri
+        if ($("#AlertEndDateE").val() != null && $("#AlertEndDateE").val() != "") {
+            $("#AlertEndDateA").val(ConvertDates($("#AlertEndDateE").val(), "gregorian", "islamic"));
+        }
+        
+        $(".uniformCheckbox").uniform();
+        AlertDateType("#dateTypeDDl");
+        NotificationContact($("#emp option:selected").text());
+    });
+    // set Employee's Email & Mobile number
+    function SetEmployeeContacts() {
+        var empId = $("#emp").val();
+        if (empId != "") {
+            var employeesList = '@Html.Raw(Json.Encode(Model.EmployeeDDL))';
+            var parsed = JSON.parse(employeesList);
+
+            $.each(parsed, function (key, value) {
+                if (value.EmployeeId == empId) {
+                    $("#mobile").val(value.MobileNo);
+                    $("#mailAlert").val(value.Email);
+                }
+            });
+        } else {
+            $("#mobile").val("");
+            $("#mailAlert").val("");
+        }
+    };
+    function NotificationContact(employOrNot) {
+        if (employOrNot == "Not Employee") {
+            $("#mobile").removeAttr('readonly').val("");
+            $("#mailAlert").removeAttr('readonly').val("");
+
+        }
+        else {
+            $("#mobile").attr('readonly', 'readonly');
+            $("#mailAlert").attr('readonly', 'readonly');
+            SetEmployeeContacts();
+        }
+    }
+    function AlertDateType(dateType) {
+        if ($(dateType).val()==1) {
+            $("#AlertEndDateA").hide();
+            $("#AlertEndDateE").show();
+        } else {
+            $("#AlertEndDateE").hide();
+            $("#AlertEndDateA").show();
+        }
+    }
+</script>

@@ -75,10 +75,10 @@
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="13.25" PointY="29.75" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.25" PointY="39" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
-        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.875" PointY="39.5" />
+        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" />
       </Diagram>
     </edmx:Diagrams>

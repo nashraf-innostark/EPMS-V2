@@ -70,6 +70,15 @@ namespace EPMS.Web.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AR.
+        /// </summary>
+        public static string AR {
+            get {
+                return ResourceManager.GetString("AR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back To List.
         /// </summary>
         public static string BackToList {
@@ -124,6 +133,15 @@ namespace EPMS.Web.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark Version.
+        /// </summary>
+        public static string DarkVersion {
+            get {
+                return ResourceManager.GetString("DarkVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -147,6 +165,15 @@ namespace EPMS.Web.Resources.Shared {
         public static string Employee {
             get {
                 return ResourceManager.GetString("Employee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EN.
+        /// </summary>
+        public static string EN {
+            get {
+                return ResourceManager.GetString("EN", resourceCulture);
             }
         }
         
@@ -187,11 +214,29 @@ namespace EPMS.Web.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Light Version.
+        /// </summary>
+        public static string LightVersion {
+            get {
+                return ResourceManager.GetString("LightVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
         
@@ -291,6 +336,15 @@ namespace EPMS.Web.Resources.Shared {
         public static string TextDirection {
             get {
                 return ResourceManager.GetString("TextDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme Options.
+        /// </summary>
+        public static string ThemeOptions {
+            get {
+                return ResourceManager.GetString("ThemeOptions", resourceCulture);
             }
         }
         

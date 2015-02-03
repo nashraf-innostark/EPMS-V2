@@ -15,6 +15,7 @@ namespace EPMS.Web.Models
         public string ApplicantMobile { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.HR.JobApplicant), ErrorMessageResourceName = "ApplicantEmailValidation")]
         [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
+        [EmailAddress]
         public string ApplicantEmail { get; set; }
         [Range(0, int.MaxValue, ErrorMessage = "Please enter valid Number")]
         public int? ApplicantAge { get; set; }

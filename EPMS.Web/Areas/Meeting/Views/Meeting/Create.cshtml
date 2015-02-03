@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.Meeting.MeetingViewModel
 
 @{
-    ViewBag.Title = "Create New Meeting";
+    ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.Create;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,7 @@
         </li>
         <li>
             <a href="~/Meeting/Meeting/Index">
-                Meeting List
+                @EPMS.Web.Resources.Meeting.Meeting.MeetingList
             </a>
         </li>
         <li class="current">
@@ -42,40 +42,40 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Topic Name</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.TopicName</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.TopicName, new { @dir = "ltr", id = "TopicName", @class = "disableOnDate" })
+                    @Html.TextBoxFor(m => m.Meeting.TopicName, new { id = "TopicName", @class = "disableOnDate" })
                     @Html.ValidationMessageFor(m => m.Meeting.TopicName, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Topic Name arabic</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.TopicNameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.TopicNameAr, new { @dir = "ltr", id = "TopicNameAr", @class = "disableOnDate" })
+                    @Html.TextBoxFor(m => m.Meeting.TopicNameAr, new { id = "TopicNameAr", @class = "disableOnDate" })
                     @Html.ValidationMessageFor(m => m.Meeting.TopicNameAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Related Project</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.RelatedProj</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.RelatedProject, new { @dir = "ltr", id = "RelatedProject", @class = "disableOnDate" })
+                    @Html.TextBoxFor(m => m.Meeting.RelatedProject, new { id = "RelatedProject", @class = "disableOnDate" })
                     @Html.ValidationMessageFor(m => m.Meeting.RelatedProject, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Attendees (Emloyees)</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Attendees</label>
             </div>
             <div class="span9" id="checked">
                 <div class="controls">
@@ -90,7 +90,7 @@
                 {
                     <div id="Dual_Multi_Select_with_Filter_Search2" class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">Absences (Emloyees)</label>
+                            <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Absences</label>
                         </div>
                         <div class="span9">
 
@@ -111,46 +111,46 @@
         <!--Attendees Other than Employees-->
         <div class="control-group row-fluid">
             <div class="span12">
-                <label class="control-label">Attendees (Not Employees)</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AttendeesNotEmployees</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { @dir = "ltr", id = "attendee1", @class = "disableOnDate", @placeholder = "Attendee 1" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { id = "attendee1", @class = "disableOnDate", @placeholder = "Attendee 1" })
                     @Html.ValidationMessageFor(m => m.Meeting.AttendeeName1, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { @dir = "ltr", id = "email1", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { id = "email1", @class = "disableOnDate", @placeholder = "Email" })
                         @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail1, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { @dir = "ltr", id = "attendee2", @class = "disableOnDate", @placeholder = "Attendee 2" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { id = "attendee2", @class = "disableOnDate", @placeholder = "Attendee 2" })
                     @Html.ValidationMessageFor(m => m.Meeting.AttendeeName2, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { @dir = "ltr", id = "email2", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { id = "email2", @class = "disableOnDate", @placeholder = "Email" })
                         @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail2, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { @dir = "ltr", id = "attendee3", @class = "disableOnDate", @placeholder = "Attendee 3" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { id = "attendee3", @class = "disableOnDate", @placeholder = "Attendee 3" })
                     @Html.ValidationMessageFor(m => m.Meeting.AttendeeName3, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { @dir = "ltr", id = "email3", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { id = "email3", @class = "disableOnDate", @placeholder = "Email" })
                         @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail3, "", new { @class = "required" })
                     </div>
                 </div>
@@ -161,7 +161,7 @@
         <div id="Date_Picker" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">
-                    Date<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.Web.Resources.Meeting.Meeting.MeetingDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9">
@@ -176,66 +176,66 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Agenda</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Agenda</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.Agenda, new { @dir = "ltr", id = "Agenda", @class = "tbdisable" })
+                    @Html.TextAreaFor(m => m.Meeting.Agenda, new { id = "Agenda", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.Agenda, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Agenda arabic</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AgendaAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.AgendaAr, new { @dir = "ltr", id = "AgendaAr", @class = "tbdisable" })
+                    @Html.TextAreaFor(m => m.Meeting.AgendaAr, new { id = "AgendaAr", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.AgendaAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Discussion</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Discussion</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.Discussion, new { @dir = "ltr", id = "Discussion", @class = "tbdisable" })
+                    @Html.TextAreaFor(m => m.Meeting.Discussion, new { id = "Discussion", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.Discussion, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Discussion arabic</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DiscussionAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.DiscussionAr, new { @dir = "ltr", id = "DiscussionAr", @class = "tbdisable" })
+                    @Html.TextAreaFor(m => m.Meeting.DiscussionAr, new { id = "DiscussionAr", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.DiscussionAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Decisions</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Decisions</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.Decisions, new { @dir = "ltr", id = "Decisions", @class = "tbdisable" })
+                    @Html.TextAreaFor(m => m.Meeting.Decisions, new { id = "Decisions", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.Decisions, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Decisions arabic</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DecisionsAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.DecisionsAr, new { @dir = "ltr", id = "DecisionsAr", @class = "tbdisable" })
+                    @Html.TextAreaFor(m => m.Meeting.DecisionsAr, new { id = "DecisionsAr", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.DecisionsAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -245,7 +245,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">
-                    Attach Files<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="@EPMS.Web.Resources.PMS.Project.FileSize"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.Web.Resources.Meeting.Meeting.AttachFiles<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="@EPMS.Web.Resources.Meeting.Meeting.AttachBoxText"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -260,7 +260,7 @@
         @if (Model.MeetingDocuments != null)
         {
             <div class="span3">
-                <label class="control-label">Download Files</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Download</label>
             </div>
             <div class="control-group row-fluid">
                 @foreach (var doc in Model.MeetingDocuments)
@@ -273,7 +273,7 @@
                 }
             </div>
             <div class="span3">
-                <label class="control-label">Delete Files</label>
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Delete</label>
             </div>
             <div class="control-group row-fluid">
                 @foreach (var doc in Model.MeetingDocuments)
@@ -291,13 +291,13 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" name="SendInvitation">Send Invitation</button>
+                <button type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
             </div>
 
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" id="createMeet">Create Meeting</button>
+                <button type="submit" class="btn" id="createMeet">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
             </div>
 
         </div>
@@ -328,8 +328,8 @@
         if (meetingId == 0) {
             //Dual for Employees
             $("#dualMultiEmployee").pickList({
-                sourceListLabel: "Emloyees",
-                targetListLabel: "Attending Employees",
+                sourceListLabel: "@EPMS.Web.Resources.Meeting.Meeting.Employees",
+                targetListLabel: "@EPMS.Web.Resources.Meeting.Meeting.AttendingEmployees",
             });
         }
         var parsed;
@@ -347,8 +347,8 @@
             });
             //Dual for Employees
             $("#dualMultiEmployee").pickList({
-                sourceListLabel: "Emloyees",
-                targetListLabel: "Attending Employees",
+                sourceListLabel: "@EPMS.Web.Resources.Meeting.Meeting.Employees",
+                targetListLabel: "@EPMS.Web.Resources.Meeting.Meeting.AttendingEmployees",
             });
         }
 

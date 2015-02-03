@@ -1,4 +1,5 @@
 ﻿using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels.EmployeeResponseModel;
 
 namespace EPMS.Models.ModelMapers
 {

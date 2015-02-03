@@ -95,6 +95,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
         public Customer Customer{ get; set; }
         public long CustomerId { get; set; }
         public long UserId   { get; set; }
+        [Required(ErrorMessage = "User Name is required.")]
         public string UserName { get; set; }
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -105,8 +106,12 @@ namespace EPMS.Models.IdentityModels.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
         public string CustomerNameE { get; set; }
+        [Required(ErrorMessage = "Arabic Name is required.")]
         public string CustomerNameA { get; set; }
         public string Address { get; set; }
         public string MobileNumber { get; set; }
