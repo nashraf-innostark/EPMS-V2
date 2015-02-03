@@ -10,7 +10,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
     {
         public static NotificationResponse CreateFromServerToClient(this Notification notification)
         {
-            CultureInfo culture = new CultureInfo("en-US");
+            CultureInfo culture = new CultureInfo("en");
             return new NotificationResponse
             {
                 NotificationId = notification.NotificationId,
