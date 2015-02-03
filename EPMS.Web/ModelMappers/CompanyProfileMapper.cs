@@ -32,19 +32,29 @@ namespace EPMS.Web.ModelMappers
             {
                 companyProfileViewModel.CompanyDocuments.CompanyId = source.CompanyId;
                 companyProfileViewModel.CompanyDocuments.CommercialRegister = source.CompanyDocumentDetail.CommercialRegister;
+                if (source.CompanyDocumentDetail.CommercialRegisterIssueDate != null)
                 companyProfileViewModel.CompanyDocuments.CommercialRegisterIssueDate = Convert.ToDateTime(source.CompanyDocumentDetail.CommercialRegisterIssueDate).ToString("dd/MM/yyyy", culture);
+                if (source.CompanyDocumentDetail.CommercialRegisterExpiryDate != null)
                 companyProfileViewModel.CompanyDocuments.CommercialRegisterExpiryDate = Convert.ToDateTime(source.CompanyDocumentDetail.CommercialRegisterExpiryDate).ToString("dd/MM/yyyy", culture);
                 companyProfileViewModel.CompanyDocuments.InsuranceCertificate = source.CompanyDocumentDetail.InsuranceCertificate;
+                if (source.CompanyDocumentDetail.InsuranceCertificateIssueDate != null)
                 companyProfileViewModel.CompanyDocuments.InsuranceCertificateIssueDate = Convert.ToDateTime(source.CompanyDocumentDetail.InsuranceCertificateIssueDate).ToString("dd/MM/yyyy", culture);
+                if (source.CompanyDocumentDetail.InsuranceCertificateExpiryDate != null)
                 companyProfileViewModel.CompanyDocuments.InsuranceCertificateExpiryDate = Convert.ToDateTime(source.CompanyDocumentDetail.InsuranceCertificateExpiryDate).ToString("dd/MM/yyyy", culture);
                 companyProfileViewModel.CompanyDocuments.ChamberCertificate = source.CompanyDocumentDetail.ChamberCertificate;
+                if (source.CompanyDocumentDetail.ChamberCertificateIssueDate != null)
                 companyProfileViewModel.CompanyDocuments.ChamberCertificateIssueDate = Convert.ToDateTime(source.CompanyDocumentDetail.ChamberCertificateIssueDate).ToString("dd/MM/yyyy", culture);
+                if (source.CompanyDocumentDetail.ChamberCertificateExpiryDate != null)
                 companyProfileViewModel.CompanyDocuments.ChamberCertificateExpiryDate = Convert.ToDateTime(source.CompanyDocumentDetail.ChamberCertificateExpiryDate).ToString("dd/MM/yyyy", culture);
                 companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificate = source.CompanyDocumentDetail.IncomeAndZakaCertificate;
+                if (source.CompanyDocumentDetail.IncomeAndZakaCertificateIssueDate != null)
                 companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificateIssueDate = Convert.ToDateTime(source.CompanyDocumentDetail.IncomeAndZakaCertificateIssueDate).ToString("dd/MM/yyyy", culture);
+                if (source.CompanyDocumentDetail.IncomeAndZakaCertificateExpiryDate != null)
                 companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificateExpiryDate = Convert.ToDateTime(source.CompanyDocumentDetail.IncomeAndZakaCertificateExpiryDate).ToString("dd/MM/yyyy", culture);
                 companyProfileViewModel.CompanyDocuments.SaudilizationCertificate = source.CompanyDocumentDetail.SaudilizationCertificate;
+                if (source.CompanyDocumentDetail.SaudilizationCertificateIssueDate != null)
                 companyProfileViewModel.CompanyDocuments.SaudilizationCertificateIssueDate = Convert.ToDateTime(source.CompanyDocumentDetail.SaudilizationCertificateIssueDate).ToString("dd/MM/yyyy", culture);
+                if (source.CompanyDocumentDetail.SaudilizationCertificateExpiryDate != null)
                 companyProfileViewModel.CompanyDocuments.SaudilizationCertificateExpiryDate = Convert.ToDateTime(source.CompanyDocumentDetail.SaudilizationCertificateExpiryDate).ToString("dd/MM/yyyy", culture);
             }
             if (source.CompanyBankDetail != null)
@@ -131,7 +141,7 @@ namespace EPMS.Web.ModelMappers
                 CompanyMobileNumber = source.CompanyMobileNumber,
             };
         }
-        public static DomainModels.CompanyProfile CreateFromProfile(this Models.CompanyProfile source)
+        public static DomainModels.CompanyProfile CreateFromProfile(this CompanyProfile source)
         {
             return new DomainModels.CompanyProfile
             {
@@ -152,42 +162,39 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
         }
-        public static DomainModels.CompanyDocumentDetail CreateFromDocument(this Models.CompanyDocumentDetail source)
+        public static DomainModels.CompanyDocumentDetail CreateFromDocument(this CompanyDocumentDetail source)
         {
             DomainModels.CompanyDocumentDetail documentDetail=new DomainModels.CompanyDocumentDetail();
             documentDetail.CompanyId = source.CompanyId;
             documentDetail.CommercialRegister = source.CommercialRegister;
             if (source.CommercialRegisterIssueDate != null)
-                documentDetail.CommercialRegisterIssueDate = Convert.ToDateTime(source.CommercialRegisterIssueDate);
+                documentDetail.CommercialRegisterIssueDate = DateTime.ParseExact(source.CommercialRegisterIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.CommercialRegisterExpiryDate != null)
-                documentDetail.CommercialRegisterExpiryDate = Convert.ToDateTime(source.CommercialRegisterExpiryDate);
-            documentDetail.InsuranceCertificate = source.InsuranceCertificate;
+                documentDetail.CommercialRegisterExpiryDate = DateTime.ParseExact(source.CommercialRegisterExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.InsuranceCertificateIssueDate != null)
-                documentDetail.InsuranceCertificateIssueDate = Convert.ToDateTime(source.InsuranceCertificateIssueDate);
+                documentDetail.InsuranceCertificateIssueDate = DateTime.ParseExact(source.InsuranceCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.InsuranceCertificateExpiryDate != null)
-                documentDetail.InsuranceCertificateExpiryDate = Convert.ToDateTime(source.InsuranceCertificateExpiryDate);
+                documentDetail.InsuranceCertificateExpiryDate = DateTime.ParseExact(source.InsuranceCertificateExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
             documentDetail.ChamberCertificate = source.ChamberCertificate;
             if (source.ChamberCertificateIssueDate != null)
-                documentDetail.ChamberCertificateIssueDate = Convert.ToDateTime(source.ChamberCertificateIssueDate);
+                documentDetail.ChamberCertificateIssueDate = DateTime.ParseExact(source.ChamberCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.ChamberCertificateExpiryDate != null)
-            documentDetail.ChamberCertificateExpiryDate = Convert.ToDateTime(source.ChamberCertificateExpiryDate);
-            documentDetail.IncomeAndZakaCertificate = source.IncomeAndZakaCertificate;
+                documentDetail.ChamberCertificateExpiryDate = DateTime.ParseExact(source.ChamberCertificateExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.IncomeAndZakaCertificateIssueDate != null)
-            documentDetail.IncomeAndZakaCertificateIssueDate = Convert.ToDateTime(source.IncomeAndZakaCertificateIssueDate);
+                documentDetail.IncomeAndZakaCertificateIssueDate = DateTime.ParseExact(source.IncomeAndZakaCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.IncomeAndZakaCertificateExpiryDate != null)
-            documentDetail.IncomeAndZakaCertificateExpiryDate = Convert.ToDateTime(source.IncomeAndZakaCertificateExpiryDate);
-            documentDetail.SaudilizationCertificate = source.SaudilizationCertificate;
+                documentDetail.IncomeAndZakaCertificateExpiryDate = DateTime.ParseExact(source.IncomeAndZakaCertificateExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.SaudilizationCertificateIssueDate != null)
-            documentDetail.SaudilizationCertificateIssueDate = Convert.ToDateTime(source.SaudilizationCertificateIssueDate);
+                documentDetail.SaudilizationCertificateIssueDate = DateTime.ParseExact(source.SaudilizationCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.SaudilizationCertificateExpiryDate != null)
-            documentDetail.SaudilizationCertificateExpiryDate = Convert.ToDateTime(source.SaudilizationCertificateExpiryDate);
+                documentDetail.SaudilizationCertificateExpiryDate = DateTime.ParseExact(source.SaudilizationCertificateExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
             documentDetail.RecCreatedBy = source.RecCreatedBy;
             documentDetail.RecCreatedDate = source.RecCreatedDate;
             documentDetail.RecLastUpdatedBy = source.RecLastUpdatedBy;
             documentDetail.RecLastUpdatedDate = source.RecLastUpdatedDate;
             return documentDetail;
         }
-        public static DomainModels.CompanyBankDetail CreateFromBank(this Models.CompanyBankDetail source)
+        public static DomainModels.CompanyBankDetail CreateFromBank(this CompanyBankDetail source)
         {
             return new DomainModels.CompanyBankDetail
             {
@@ -218,7 +225,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
         }
-        public static DomainModels.CompanySocialDetail CreateFromSocial(this Models.CompanySocialDetail source)
+        public static DomainModels.CompanySocialDetail CreateFromSocial(this CompanySocialDetail source)
         {
             return new DomainModels.CompanySocialDetail
             {

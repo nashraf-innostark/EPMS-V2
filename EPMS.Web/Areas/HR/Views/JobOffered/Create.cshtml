@@ -167,33 +167,7 @@
 
     $(document).ready(function () {
         DivHideShow('ShowBasicSalary', 'basicSal');
-        @*$("#jobTitle").on("change", function() {
-            var selectedVal = $(this).val();
-            if (selectedVal != "") {
-                debugger
-                var jobtitlelist = '@Html.Raw(Json.Encode(Model.JobTitleList))';
-                var parsed = JSON.parse(jobtitlelist);
 
-                $.each(parsed, function (key, value) {
-                    if (value.JobTitleId == selectedVal) {
-                        $("#jobTitleDesc").val(value.JobTitleDescE);
-                        $("#basicSalary").val(value.BasicSalary);
-                        $('#departmentName').val(value.DepartmentNameE);
-                    }
-                });
-            }
-            else {
-                $("#jobTitleDesc").val(selectedVal);
-                $("#basicSalary").val(selectedVal);
-                $('#departmentName').val(selectedVal);
-            }
-      
-        });*@
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true,
-
-        });
         var siteUrl = $('#siteURL').val();
         $("#jobTitle").on("change", function() {
             var depId = $(this).val();
