@@ -41,7 +41,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #region Constructor
 
-        public EmployeeController(IEmployeeService employeeService, IEmployeeRequestService employeeRequestService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService, IProjectTaskService projectTaskService, ITaskEmployeeService taskEmployeeService)
+        public EmployeeController(IEmployeeService employeeService, IEmployeeRequestService employeeRequestService, IDepartmentService departmentService, IJobTitleService jobTitleService, IAllowanceService allowanceService, IAspNetUserService aspNetUserService, ITaskEmployeeService taskEmployeeService)
         {
             EmployeeService = employeeService;
             DepartmentService = departmentService;
@@ -199,16 +199,26 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 // get Employee requests
                 var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
-                var requests = empRequests.Select(x => x.CreateFromServerToClientPayroll());
+                var requests = empRequests.Select(x => x.CreateFromServerToClientEmpDetail());
                 // get Employee request details
                 foreach (var reqDetail in requests)
                 {
-                    var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
-                    if (firstOrDefault != null)
-                        viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
-                    var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
-                    if (lastOrDefault != null)
-                        viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
+                    var requestDetails = reqDetail.RequestDetails.ToList();
+                    if (requestDetails.Count == 2 )
+                    {
+                        var first = requestDetails[0];
+                        if (first != null)
+                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(first.InstallmentAmount ?? 0);
+                        var last = requestDetails[1];
+                        if (last != null)
+                            viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(last.InstallmentAmount ?? 0);
+                    }
+                    else if (requestDetails.Count == 1)
+                    {
+                        var first = requestDetails[0];
+                        if (first != null)
+                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(first.InstallmentAmount ?? 0);
+                    }
                 }
                 var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
                 var data = employeeRequestResponse.Select(x => x.CreateFromServerToClient());
