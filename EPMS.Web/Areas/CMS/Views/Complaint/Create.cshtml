@@ -142,10 +142,6 @@
     $(document).ready(function () {
         CKEDITOR.replace('DescriptionCK');
         CKEDITOR.replace('ReplyCK');
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
         $(".date").mask('99/99/9999');
         //If complaint has been resolved, disable all fields, and just show records
         if ($("#UserRole").val() == "Customer") {
