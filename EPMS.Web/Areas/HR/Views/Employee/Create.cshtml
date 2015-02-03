@@ -153,7 +153,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired"})
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -195,13 +195,18 @@
                 <label class="control-label" for="EmployeeDOB">@EPMS.Web.Resources.HR.Employee.DOB</label>
             </div>
             <div class="span9">
-                <div class="controls span4">
-                    @Html.TextBox("Date",null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @readonly = true, onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "datepickerGregorian cursorHand span4", @id = "EmployeeDOB", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EmpDateOfBirthArabic')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "EmpDateOfBirthArabic", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EmployeeDOB')" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, "", new { @class = "required" })
                 </div>
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true, onchange = "GregorianToHijri(this, '#EmpDateOfBirthArabic')" })
-                </div>
+                @*<div class="controls span4">
+                        @Html.TextBox("Date",null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @readonly = true, onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
+                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, String.Empty, new { @class = "required" })
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @id = "EmployeeDOB", @readonly = true, onchange = "GregorianToHijri(this, '#EmpDateOfBirthArabic')" })
+                    </div>*@
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -253,13 +258,18 @@
                 <label class="control-label" for="IqamaExpiryDate">@EPMS.Web.Resources.HR.Employee.IqamaExpiryDate</label>
             </div>
             <div class="span9">
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "IqamaExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "IqamaExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#IqamaExpiryDateAr')" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, "", new { @class = "required" })
                 </div>
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
-                </div>
+                @*<div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
+                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, String.Empty, new { @class = "required" })
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @id = "IqamaExpiryDate", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
+                    </div>*@
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -278,13 +288,18 @@
                 <label class="control-label" for="PassportExpiryDate">@EPMS.Web.Resources.HR.Employee.PassExpiryDate</label>
             </div>
             <div class="span9">
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, "", new { @class = "required" })
                 </div>
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
-                </div>
+                @*<div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
+                        @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, String.Empty, new { @class = "required" })
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @id = "PassportExpiryDate", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')", @class = "col-lg-2 datepickerGregorian form-control toBeRequired cursorHand", @readonly = true })
+                    </div>*@
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -537,10 +552,7 @@
                 }
             }
         });
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
+        
         // upload Image
         var errors = "";
         var url = "/HR/Employee/UploadEmployeePhoto";
@@ -607,25 +619,19 @@
             "sPaginationType": "bootstrap",
             "aoColumns": [
                 { "bVisible": false },
-                  null,
-                  null
+                null,
+                null
             ],
             "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
-                });
             }
         });
         $('#tableRequsts').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
                 { "bVisible": false }, // cloumn to be hide
-                  null // not hide
+                null // not hide
             ],
             "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
-                });
             }
         });
         $(".dataTables_length select").select2({
@@ -648,17 +654,11 @@
             }
         });
         if ('@Model.EmployeeViewModel.Employee.EmployeeId' > 0) {
-            ConvertGregorianToIslamic();
+            $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
+            $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
+            $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
         }
-
     });
-
-    function ConvertGregorianToIslamic() {
-        $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
-        //$("#IqamaIssueDateAr").val(ConvertDates($("#IqamaIssueDate").val(), "gregorian", "islamic"));
-        $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
-        $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
-    }
     function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
         var calender = $.calendars.instance(fromCalender);
         var dateToBeChanged = calender.parseDate("dd/mm/yyyy", dateTobeChanged);
