@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.RequestModels;
 using DomainModels = EPMS.Models.DomainModels;
@@ -27,13 +28,14 @@ namespace EPMS.Web.ModelMappers
 
         public static Models.Meeting CreateFromServertoClient(this DomainModels.Meeting source)
         {
+            CultureInfo culture = new CultureInfo("en-US");
             return new Models.Meeting
             {
                 MeetingId = source.MeetingId,
                 TopicName = source.TopicName,
                 TopicNameAr = source.TopicNameAr,
                 RelatedProject = source.RelatedProject,
-                Date = source.Date.ToString(),
+                Date = Convert.ToDateTime(source.Date).ToString("dd/MM/yyyy", culture),
                 Agenda = source.Agenda,
                 AgendaAr = source.AgendaAr,
                 Discussion = source.Discussion,
