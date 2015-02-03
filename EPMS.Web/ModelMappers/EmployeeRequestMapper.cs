@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using EPMS.Models.DomainModels;
+using EPMS.Web.Models;
+using RequestDetail = EPMS.Models.DomainModels.RequestDetail;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -94,6 +96,15 @@ namespace EPMS.Web.ModelMappers
                     InstallmentAmount = source.InstallmentAmount,
                 };
             }
+            public static Models.RequestDetail CreateFromServerToClientEmpDetail(this RequestDetail source)
+            {
+                return new Models.RequestDetail
+                {
+                    RequestDetailId = source.RequestDetailId,
+                    RequestId = source.RequestId,
+                    InstallmentAmount = source.InstallmentAmount,
+                };
+            }
             public static RequestDetail CreateFromClientToServer(this Models.RequestDetail source)
             {
                 return new RequestDetail
@@ -131,6 +142,19 @@ namespace EPMS.Web.ModelMappers
                     RequestDate = source.RequestDate,
                     RequestDetails = source.RequestDetails.Select(x => x.CreateFromServerToClientPayroll())
                 };
+            }
+            public static Models.Payroll CreateFromServerToClientEmpDetail(this EmployeeRequest source)
+            {
+                Models.Payroll retVal = new Payroll();
+                retVal.RequestId = source.RequestId;
+                retVal.EmployeeId = source.EmployeeId;
+                retVal.IsMonetary = source.IsMonetary;
+                retVal.RequestTopic = source.RequestTopic;
+                retVal.RequestDate = source.RequestDate;
+                retVal.RequestDetails =
+                    source.RequestDetails.Where(x => x.RowVersion == 1)
+                        .Select(x => x.CreateFromServerToClientEmpDetail());
+                return retVal;
             }
         #endregion
     }

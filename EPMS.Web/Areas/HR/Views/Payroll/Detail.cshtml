@@ -49,11 +49,11 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Employeeid">@EPMS.Web.Resources.HR.Payroll.EmpId</label>
+                <label class="control-label" for="EmployeeName">@EPMS.Web.Resources.HR.Payroll.EmpId</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.EmployeeId, new { @id = "EmployeeId", @disabled = "disabled" })
+                    @(direction == "ltr" ? Html.TextBoxFor(model => model.Employee.EmployeeNameE, new { @id = "EmployeeName", @disabled = "disabled" }) : Html.TextBoxFor(model => model.Employee.EmployeeNameA, new { @id = "EmployeeName", @disabled = "disabled" }))
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameE, new { @id = "JobTitle", @disabled = "disabled" })
+                    @(direction == "ltr" ? Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameE, new { @id = "JobTitle", @disabled = "disabled" }) : Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameA, new { @id = "JobTitle", @disabled = "disabled" }))
                 </div>
             </div>
         </div>
@@ -199,8 +199,14 @@
         });
     }
     function setControlsValues(data) {
-        $("#EmployeeId").val(data["Employee"].EmployeeId);
-        $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameE);
+        var direc = '@direction';
+        if (direc == "ltr") {
+            $("#EmployeeName").val(data["Employee"].EmployeeNameE);
+            $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameE);
+        } else {
+            $("#EmployeeName").val(data["Employee"].EmployeeNameA);
+            $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameA);
+        }
         $("#BasicSalary").val(data["Employee"].JobTitle.BasicSalary);
         $("#Allowance1").val(data["Allowances"].Allowance1);
         $("#Allowance2").val(data["Allowances"].Allowance2);

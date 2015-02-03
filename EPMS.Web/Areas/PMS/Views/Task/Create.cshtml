@@ -133,7 +133,7 @@
                     {
                         if (direction == "ltr")
                         {
-                            @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new {@class = "", @id = "dualMulti",})
+                            @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new { @class = "", @id = "dualMulti", })
                         }
                         else
                         {
@@ -183,18 +183,18 @@
                     {
                         if (direction == "ltr")
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new {@class = "", @id = "dualMulti2",})
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
                         }
                         else
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new {@class = "", @id = "dualMulti2",})
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new { @class = "", @id = "dualMulti2", })
                         }
                     }
                     else
                     {
                         if (direction == "ltr")
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new {@class = "", @id = "dualMulti2",})
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
                         }
                         else
                         {
@@ -275,7 +275,6 @@
         CKEDITOR.replace('NotesA');
         $('.select2me').select2({
             placeholder: "Select",
-            allowClear: true
         });
         if ('@userRole' == "Customer") {
             $(".readonly").attr("readonly", "true");
@@ -382,7 +381,7 @@
     function validateForm(event) {
         var counter = 0;
         var projectId = $("#ProjectId").val();
-        if (projectId == null || projectId == "" || projectId == undefined) {
+        if (projectId == null || projectId == "" || projectId == 0 || projectId == undefined) {
             $("#projectValidation").text("Please Select Project");
             $("#projectValidation").addClass("Error");
             counter++;
@@ -445,9 +444,13 @@
             }
         } else {
             $("#ProjectId").append(
-                $('<option></option>').val("").html("none")
+                $('<option></option>').val(0).html("none")
             );
         }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
         $.unblockUI();
     }
 </script>

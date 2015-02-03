@@ -65,7 +65,25 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<EmployeeRequest> GetAllMonetaryRequests(DateTime currentMonth, long id)
         {
-            return DbSet.Where(x => (x.IsMonetary) && (x.EmployeeId == id) && (x.RequestDetails.Count(y => (y.IsApproved))>0) && (x.RequestDetails.Count(z => ((currentMonth >= z.FirstInstallmentDate) && (currentMonth <= z.LastInstallmentDate))) > 0));
+            return
+                DbSet.Where(
+                    request =>
+                        (request.IsMonetary) && (request.EmployeeId == id)).Select(s => new
+                        {
+                            s.RequestId,
+                            s.EmployeeId,
+                            s.IsMonetary,
+                            s.RequestTopic,
+                            RequestDetails = s.RequestDetails.Where(detail => detail.RowVersion == 1 
+                                && currentMonth >= detail.FirstInstallmentDate && currentMonth <= detail.LastInstallmentDate).ToList(),
+                        }).ToList().Select(s => new EmployeeRequest 
+                        {
+                            RequestId = s.RequestId,
+                            EmployeeId = s.EmployeeId,
+                            IsMonetary = s.IsMonetary,
+                            RequestTopic = s.RequestTopic,
+                            RequestDetails = s.RequestDetails.ToList(),
+                        }).ToList();
         }
 
         public EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset)
