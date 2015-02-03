@@ -23,6 +23,7 @@ namespace EPMS.Web.Models
         public long OrdersCount { get; set; }
         public string LatestComplaint { get; set; }
         public string LatestOrder { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
         public string UserId { get; set; }
 

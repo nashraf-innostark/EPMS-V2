@@ -16,7 +16,7 @@
 
 
                 <div class="login-input-area">
-                    @using (Html.BeginForm("Signup", "Account", FormMethod.Post, new {@class = "", role = "form"}))
+                    @using (Html.BeginForm("Signup", "Account", FormMethod.Post, new {@id = "signupForm", @class = "", role = "form"}))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.UserId)
@@ -66,3 +66,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $("#signupForm").validate({
+            //ignore: ".ignore"
+    
+        }).settings.ignore = ".ignore, .file";
+    });
+</script>

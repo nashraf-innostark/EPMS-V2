@@ -1,4 +1,5 @@
-﻿using EPMS.Web.Models;
+﻿using System;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.CompanyProfile;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -29,20 +30,20 @@ namespace EPMS.Web.ModelMappers
             {
                 companyProfileViewModel.CompanyDocuments.CompanyId = source.CompanyId;
                 companyProfileViewModel.CompanyDocuments.CommercialRegister = source.CompanyDocumentDetail.CommercialRegister;
-                companyProfileViewModel.CompanyDocuments.CommercialRegisterIssueDate = source.CompanyDocumentDetail.CommercialRegisterIssueDate;
-                companyProfileViewModel.CompanyDocuments.CommercialRegisterExpiryDate = source.CompanyDocumentDetail.CommercialRegisterExpiryDate;
+                companyProfileViewModel.CompanyDocuments.CommercialRegisterIssueDate = source.CompanyDocumentDetail.CommercialRegisterIssueDate.ToString();
+                companyProfileViewModel.CompanyDocuments.CommercialRegisterExpiryDate = source.CompanyDocumentDetail.CommercialRegisterExpiryDate.ToString();
                 companyProfileViewModel.CompanyDocuments.InsuranceCertificate = source.CompanyDocumentDetail.InsuranceCertificate;
-                companyProfileViewModel.CompanyDocuments.InsuranceCertificateIssueDate = source.CompanyDocumentDetail.InsuranceCertificateIssueDate;
-                companyProfileViewModel.CompanyDocuments.InsuranceCertificateExpiryDate = source.CompanyDocumentDetail.InsuranceCertificateExpiryDate;
+                companyProfileViewModel.CompanyDocuments.InsuranceCertificateIssueDate = source.CompanyDocumentDetail.InsuranceCertificateIssueDate.ToString();
+                companyProfileViewModel.CompanyDocuments.InsuranceCertificateExpiryDate = source.CompanyDocumentDetail.InsuranceCertificateExpiryDate.ToString();
                 companyProfileViewModel.CompanyDocuments.ChamberCertificate = source.CompanyDocumentDetail.ChamberCertificate;
-                companyProfileViewModel.CompanyDocuments.ChamberCertificateIssueDate = source.CompanyDocumentDetail.ChamberCertificateIssueDate;
-                companyProfileViewModel.CompanyDocuments.ChamberCertificateExpiryDate = source.CompanyDocumentDetail.ChamberCertificateExpiryDate;
+                companyProfileViewModel.CompanyDocuments.ChamberCertificateIssueDate = source.CompanyDocumentDetail.ChamberCertificateIssueDate.ToString();
+                companyProfileViewModel.CompanyDocuments.ChamberCertificateExpiryDate = source.CompanyDocumentDetail.ChamberCertificateExpiryDate.ToString();
                 companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificate = source.CompanyDocumentDetail.IncomeAndZakaCertificate;
-                companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificateIssueDate = source.CompanyDocumentDetail.IncomeAndZakaCertificateIssueDate;
-                companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificateExpiryDate = source.CompanyDocumentDetail.IncomeAndZakaCertificateExpiryDate;
+                companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificateIssueDate = source.CompanyDocumentDetail.IncomeAndZakaCertificateIssueDate.ToString();
+                companyProfileViewModel.CompanyDocuments.IncomeAndZakaCertificateExpiryDate = source.CompanyDocumentDetail.IncomeAndZakaCertificateExpiryDate.ToString();
                 companyProfileViewModel.CompanyDocuments.SaudilizationCertificate = source.CompanyDocumentDetail.SaudilizationCertificate;
-                companyProfileViewModel.CompanyDocuments.SaudilizationCertificateIssueDate = source.CompanyDocumentDetail.SaudilizationCertificateIssueDate;
-                companyProfileViewModel.CompanyDocuments.SaudilizationCertificateExpiryDate = source.CompanyDocumentDetail.SaudilizationCertificateExpiryDate;
+                companyProfileViewModel.CompanyDocuments.SaudilizationCertificateIssueDate = source.CompanyDocumentDetail.SaudilizationCertificateIssueDate.ToString();
+                companyProfileViewModel.CompanyDocuments.SaudilizationCertificateExpiryDate = source.CompanyDocumentDetail.SaudilizationCertificateExpiryDate.ToString();
             }
             if (source.CompanyBankDetail != null)
             {
@@ -155,20 +156,20 @@ namespace EPMS.Web.ModelMappers
             {
                 CompanyId = source.CompanyId,
                 CommercialRegister = source.CommercialRegister,
-                CommercialRegisterIssueDate = source.CommercialRegisterIssueDate,
-                CommercialRegisterExpiryDate = source.CommercialRegisterExpiryDate,
+                CommercialRegisterIssueDate = Convert.ToDateTime(source.CommercialRegisterIssueDate),
+                CommercialRegisterExpiryDate = Convert.ToDateTime(source.CommercialRegisterExpiryDate),
                 InsuranceCertificate = source.InsuranceCertificate,
-                InsuranceCertificateIssueDate = source.InsuranceCertificateIssueDate,
-                InsuranceCertificateExpiryDate = source.InsuranceCertificateExpiryDate,
+                InsuranceCertificateIssueDate = Convert.ToDateTime(source.InsuranceCertificateIssueDate),
+                InsuranceCertificateExpiryDate = Convert.ToDateTime(source.InsuranceCertificateExpiryDate),
                 ChamberCertificate = source.ChamberCertificate,
-                ChamberCertificateIssueDate = source.ChamberCertificateIssueDate,
-                ChamberCertificateExpiryDate = source.ChamberCertificateExpiryDate,
+                ChamberCertificateIssueDate = Convert.ToDateTime(source.ChamberCertificateIssueDate),
+                ChamberCertificateExpiryDate = Convert.ToDateTime(source.ChamberCertificateExpiryDate),
                 IncomeAndZakaCertificate = source.IncomeAndZakaCertificate,
-                IncomeAndZakaCertificateIssueDate = source.IncomeAndZakaCertificateIssueDate,
-                IncomeAndZakaCertificateExpiryDate = source.IncomeAndZakaCertificateExpiryDate,
+                IncomeAndZakaCertificateIssueDate = Convert.ToDateTime(source.IncomeAndZakaCertificateIssueDate),
+                IncomeAndZakaCertificateExpiryDate = Convert.ToDateTime(source.IncomeAndZakaCertificateExpiryDate),
                 SaudilizationCertificate = source.SaudilizationCertificate,
-                SaudilizationCertificateIssueDate = source.SaudilizationCertificateIssueDate,
-                SaudilizationCertificateExpiryDate = source.SaudilizationCertificateExpiryDate,
+                SaudilizationCertificateIssueDate = Convert.ToDateTime(source.SaudilizationCertificateIssueDate),
+                SaudilizationCertificateExpiryDate = Convert.ToDateTime(source.SaudilizationCertificateExpiryDate),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
