@@ -154,7 +154,7 @@
     <value>البريد الالكتروني</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
-    <value>اسم المرسل له</value>
+    <value>اسم الموظف</value>
   </data>
   <data name="Employees" xml:space="preserve">
     <value>موظفين</value>
@@ -173,6 +173,9 @@
   </data>
   <data name="NewNotification" xml:space="preserve">
     <value>انذار جديد</value>
+  </data>
+  <data name="NotificationDetails" xml:space="preserve">
+    <value>تفاصيل الانذار</value>
   </data>
   <data name="NotificationList" xml:space="preserve">
     <value>قائمة الانذارات</value>

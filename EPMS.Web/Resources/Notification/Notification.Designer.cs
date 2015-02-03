@@ -232,6 +232,15 @@ namespace EPMS.Web.Resources.Notification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification&apos;s Details.
+        /// </summary>
+        public static string NotificationDetails {
+            get {
+                return ResourceManager.GetString("NotificationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification List.
         /// </summary>
         public static string NotificationList {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels.EmployeeResponseModel;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
@@ -9,6 +10,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
     {
         public static NotificationResponse CreateFromServerToClient(this Notification notification)
         {
+            CultureInfo culture = new CultureInfo("en-US");
             return new NotificationResponse
             {
                 NotificationId = notification.NotificationId,
@@ -17,7 +19,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 CategoryId = notification.CategoryId,
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
-                AlertDate = notification.AlertDate.ToShortDateString(),
+                AlertDate = notification.AlertDate.ToString("dd/MM/yyyy", culture),
                 EmployeeId = notification.EmployeeId,
                 MobileNo = notification.MobileNo,
                 Email = notification.Email,

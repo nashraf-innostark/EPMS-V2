@@ -67,9 +67,10 @@ namespace EPMS.Web.Controllers
             }
             return View(notificationViewModel);
         }
-        public ActionResult Detail(long id)
+        public ActionResult Details(long id)
         {
-            return View();
+            NotificationViewModel notificationViewModel = notificationService.LoadNotificationAndBaseData(id);
+            return View(notificationViewModel);
         }
     }
 }
