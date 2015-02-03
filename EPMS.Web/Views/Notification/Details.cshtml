@@ -115,8 +115,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian span3", @id = "AlertEndDateE", @readonly = true, @placeholder = "", onchange = "GregorianToHijri(this,'#AlertEndDateA')", @disabled = "disabled" })
-                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic span3", @id = "AlertEndDateA", @readonly = true, @placeholder = "", onchange = "HijriToGregorian(this,'#AlertEndDateE')", @disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian span3", @id = "AlertEndDateE", @readonly = true, @disabled = "disabled" })
+                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic span3", @id = "AlertEndDateA", @readonly = true, @disabled = "disabled" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDate, "", new { @class = "required" })
                 </div>
             </div>
