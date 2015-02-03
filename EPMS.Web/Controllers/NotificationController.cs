@@ -6,6 +6,7 @@ using EPMS.Web.ViewModels.Common;
 
 namespace EPMS.Web.Controllers
 {
+    [Authorize]
     public class NotificationController : BaseController
     {
         private readonly INotificationService notificationService;
