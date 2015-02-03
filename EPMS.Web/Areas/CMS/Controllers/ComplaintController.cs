@@ -82,7 +82,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 else if (ViewBag.UserRole != "Admin")
                 {
 
-                    requestViewModel.Complaint.ComplaintDate = DateTime.Now.ToShortDateString();
+                    requestViewModel.Complaint.ComplaintDateString = DateTime.Now.ToShortDateString();
                     requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerNameE;
                     requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
                     requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
@@ -121,7 +121,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     viewModel.Complaint.RecCreatedDt = DateTime.Now;
                     viewModel.Complaint.RecLastUpdatedBy = User.Identity.GetUserId();
                     viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
-
+                    viewModel.Complaint.ComplaintDate = DateTime.Now;
                     //Add Complaint to Db
                     complaintService.AddComplaint(viewModel.Complaint.CreateFromClientToServer());
                     TempData["message"] = new MessageViewModel

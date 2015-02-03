@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
+using Complaint = EPMS.Models.DomainModels.Complaint;
 using EmployeeRequest = EPMS.Models.DomainModels.EmployeeRequest;
 using Project = EPMS.Models.DomainModels.Project;
 
@@ -39,6 +40,18 @@ namespace EPMS.Web.ModelMappers
                 RequestTopicShort = source.RequestTopic.Length > 9 ? source.RequestTopic.Substring(0, 9) + "..." : source.RequestTopic,
                 RequestDateString = source.RequestDate.ToShortDateString(),
                 IsReplied = source.RequestDetails.OrderByDescending(x => x.RowVersion).FirstOrDefault().IsReplied
+            };
+        }
+        public static DashboardModels.Complaint CreateForDashboard(this Complaint source)
+        {
+            return new DashboardModels.Complaint
+            {
+                ComplaintId = source.ComplaintId,
+                ClientName = source.Customer.CustomerNameE,
+                Topic = source.Topic,
+                ClientNameShort = source.Customer.CustomerNameE.Length > 7 ? source.Customer.CustomerNameE.Substring(0, 7) + "..." : source.Customer.CustomerNameE,
+                TopicShort = source.Topic.Length > 9 ? source.Topic.Substring(0, 9) + "..." : source.Topic,
+                IsReplied = source.IsReplied
             };
         }
     }
