@@ -4,6 +4,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers.NotificationMapper;
+using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
@@ -58,6 +59,11 @@ namespace EPMS.Implementation.Services
             notificationRepository.Update(notification.CreateFromClientToServer());
             notificationRepository.SaveChanges();
             return true;
+        }
+
+        public NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

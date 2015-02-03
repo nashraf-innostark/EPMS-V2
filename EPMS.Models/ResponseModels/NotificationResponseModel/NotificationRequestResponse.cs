@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ResponseModels.NotificationResponseModel
 {
-    public class NotificationSearchRequest
+    public class NotificationRequestResponse
     {
-        public NotificationSearchRequest()
+        public NotificationRequestResponse()
         {
-            Notifications = new List<NotificationResponse>();
+            Notifications = new List<Notification>();
         }
-        public IEnumerable<NotificationResponse> Notifications { get; set; }
+        public IEnumerable<Notification> Notifications { get; set; }
 
         /// <summary>
         /// Total Count

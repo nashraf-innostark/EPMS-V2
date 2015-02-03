@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 using EPMS.Web.ViewModels.Common;
 
@@ -19,7 +20,16 @@ namespace EPMS.Web.Controllers
         // GET: Notification
         public ActionResult Index()
         {
-            return View();
+            NotificationListView viewModel = new NotificationListView();
+            viewModel.NotificationSearchRequest = new NotificationListViewRequest();
+
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Index(NotificationListViewRequest searchRequest)
+        {
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Create(long? id)
         {

@@ -5,11 +5,11 @@ namespace EPMS.Models.RequestModels.NotificationRequestModels
     public class NotificationListViewRequest : GetPagedListRequest
     {
         public string Requester { get; set; }
-        public NotificationRequestByColumn EmployeeRequestByColumn
+        public NotificationByColumn NotificationByColumn
         {
             get
             {
-                return (NotificationRequestByColumn)iSortCol_0;
+                return (NotificationByColumn)iSortCol_0;
             }
             set
             {
