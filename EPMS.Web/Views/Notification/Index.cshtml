@@ -1,0 +1,162 @@
+﻿@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationListView
+@{
+    ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NotificationList;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container" dir="ltr">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+    <h3> <small><a href="~/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+
+<form class="form-horizontal">
+    @Html.HiddenFor(model => model.NotificationSearchRequest.SearchString, new { id = "searchString" });
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <table id="dataTable" class="table table-responsive">
+                    <thead class="cf sorthead">
+                            <tr>
+                                <th>@EPMS.Web.Resources.Notification.Notification.Serial</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.NotificationNameE</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.CategoryName</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.AlertTime</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.AlertEndDate</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.EmployeeName</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.MobileNumber</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.Email</th>
+                                <th>@EPMS.Web.Resources.Notification.Notification.Notified</th>
+                            </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var siteUrl = $('#siteURL').val();
+
+            var oTable = $('#dataTable').dataTable({
+                "bProcessing": true,
+                "bServerSide": true,
+                "sPaginationType": "bootstrap",
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["SerialNo"];
+                        }
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var val = full["NotificationName"];
+                            var id = full["NotificationId"];
+                            var element = '<a href="Details/' + id + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["CategoryName"];
+                        }
+                    },
+                    {
+                        "aTargets": [3],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["AlertTime"];
+                        }
+                    },
+                    {
+                        "aTargets": [4],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["AlertEndTime"];
+                        }
+                    },
+                    {
+                        "aTargets": [5],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["EmployeeName"];
+                        }
+                    },
+                    {
+                        "aTargets": [6],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["MobileNo"];
+                        }
+                    },
+                    {
+                        "aTargets": [7],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["Email"];
+                        }
+                    },
+                    {
+                        "aTargets": [8],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            return full["Notified"];
+                        }
+                    }
+                ],
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "sAjaxSource": siteUrl + "/Notification/Index",
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    "sLoadingRecords": "Please wait - loading records...",
+                    "sZeroRecords": "No records to display.",
+                    "sProcessing": "Processing...",
+                    "sInfoEmpty": "No entries to display."
+                },
+            });
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+        $(".dataTables_filter input").unbind()
+            .bind("input", function(e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    //oTable.fnClearTable();
+                    //$('#employeeTable').empty();
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+    });
+</script>

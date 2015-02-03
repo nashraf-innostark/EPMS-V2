@@ -23,39 +23,35 @@
                         @Html.HiddenFor(model => model.CustomerId)
                         <div>
                             @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", @placeholder = "Username", @id = "Username" })
-                            @Html.ValidationMessageFor(model => model.UserName)
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "required" })
                         </div>
                         <div>
                             @Html.TextBoxFor(model => model.CustomerNameE, new { @class = "form-control ", @placeholder = "NameE" })
-                            @Html.ValidationMessageFor(model => model.CustomerNameE)
+                            @Html.ValidationMessageFor(model => model.CustomerNameE, "", new { @class = "required" })
                         </div>
                         <div>
                             @Html.TextBoxFor(model => model.CustomerNameA, new { @class = "form-control ", @placeholder = "NameA" })
-                            @Html.ValidationMessageFor(model => model.CustomerNameA)
+                            @Html.ValidationMessageFor(model => model.CustomerNameA, "", new { @class = "required" })
                         </div>
-                        @*<div>
-                            @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control ", @placeholder = "Arabic Name" })
-                            @Html.ValidationMessageFor(model => model.CustomerName)
-                        </div>*@
                         <div>
                             @Html.PasswordFor(model => model.Password, new { @class = "form-control ", @placeholder = "Password" })
-                            @Html.ValidationMessageFor(model => model.Password)
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "required" })
                         </div>
                         <div>
                             @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", @placeholder = "Confirm Password" })
-                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "required" })
                         </div>
                         <div>
                             @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", @placeholder = "Email" })
-                            @Html.ValidationMessageFor(model => model.Email)
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "required" })
                         </div>
                         <div>
                             @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control ", @placeholder = "Mobile Number" })
-                            @Html.ValidationMessageFor(model => model.MobileNumber)
+                            @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "required" })
                         </div>
                         <div>
                             @Html.TextBoxFor(model => model.Address, new { @class = "form-control ", @placeholder = "Address" })
-                            @Html.ValidationMessageFor(model => model.Address)
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "required" })
                         </div>
                         
                         <button type="submit" class="btn btn-large btn-success btn-login">Create Account</button>

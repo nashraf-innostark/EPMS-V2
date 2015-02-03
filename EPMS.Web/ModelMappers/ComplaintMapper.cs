@@ -20,7 +20,7 @@ namespace EPMS.Web.ModelMappers
                 Reply = source.Reply,
                 IsReplied = source.IsReplied,
                 Status = source.Status,
-                ComplaintDate = DateTime.ParseExact(source.ComplaintDate, "dd/MM/yyyy", new CultureInfo("en")),
+                ComplaintDate = source.ComplaintDate,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -43,25 +43,15 @@ namespace EPMS.Web.ModelMappers
                 IsReplied = source.IsReplied,
                 IsRepliedString = source.IsReplied?"Yes":"No",
                 Status = source.Status,
-                ComplaintDate = source.ComplaintDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
+                ComplaintDate = source.ComplaintDate,
+                ComplaintDateString = source.ComplaintDate.ToShortDateString(),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
-        public static DashboardModels.Complaint CreateForDashboard(this Complaint source)
-        {
-            return new DashboardModels.Complaint
-            {
-                ComplaintId = source.ComplaintId,
-                ClientName = source.Customer.CustomerNameE,
-                Topic = source.Topic,
-                ClientNameShort = source.Customer.CustomerNameE.Length > 7 ? source.Customer.CustomerNameE.Substring(0, 7) + "..." : source.Customer.CustomerNameE,
-                TopicShort = source.Topic.Length > 9 ? source.Topic.Substring(0, 9) + "..." : source.Topic,
-                IsReplied = source.IsReplied
-            };
-        }
+        
         #endregion
     }
 }

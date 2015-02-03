@@ -63,5 +63,34 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 MobileNo = source.EmployeeMobileNum
             };
         }
+        public static NotificationListResponse CreateFromServerToClientList(this Notification notification)
+        {
+            NotificationListResponse notificationListResponse=new NotificationListResponse();
+            notificationListResponse.NotificationId = notification.NotificationId;
+            notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;      
+            notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
+            notificationListResponse.EmployeeId = Convert.ToInt64(notification.EmployeeId);
+            notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.Employee.EmployeeNameE:notification.Employee.EmployeeNameA;
+            notificationListResponse.MobileNo = notification.MobileNo;
+            notificationListResponse.Email = notification.Email;
+            notificationListResponse.Notified = notification.ReadStatus ? Resources.Notification.Yes : Resources.Notification.No;
+           
+            switch (notification.CategoryId)
+            {
+                case 1: notificationListResponse.CategoryName = Resources.Notification.Documents; break;
+                case 2: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
+                case 3: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
+                case 4: notificationListResponse.CategoryName = Resources.Notification.Company; break;
+                case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
+            }
+            switch (notification.AlertBefore)
+            {
+                case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
+                case 2: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
+                case 3: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+            }
+
+            return notificationListResponse;
+        }
     }
 }

@@ -661,6 +661,7 @@
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

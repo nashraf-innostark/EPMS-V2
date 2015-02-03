@@ -102,7 +102,7 @@
     <Compile Include="Common\JobApplicantByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />
     <Compile Include="Common\MeetingByColumn.cs" />
-    <Compile Include="Common\NotificationRequestByColumn.cs" />
+    <Compile Include="Common\NotificationByColumn.cs" />
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
@@ -189,6 +189,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>General.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Notification.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Notification.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResponseModels\AvailableOrdersDDL.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
@@ -200,8 +210,9 @@
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
     <Compile Include="ResponseModels\MeetingResponse.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationListResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListView.cs" />
-    <Compile Include="ResponseModels\NotificationResponseModel\NotificationSearchRequest.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationRequestResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
@@ -229,6 +240,14 @@
     <EmbeddedResource Include="Resources\General.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>General.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

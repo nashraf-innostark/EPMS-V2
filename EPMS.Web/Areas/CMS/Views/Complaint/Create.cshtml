@@ -43,6 +43,7 @@
     @Html.HiddenFor(model => model.Complaint.RecCreatedDt)
     @Html.HiddenFor(model => model.Complaint.IsReplied)
     @Html.HiddenFor(model => model.Complaint.ComplaintDesc)
+    @Html.HiddenFor(model => model.Complaint.ComplaintDate)
     @Html.AntiForgeryToken()
     <div class="container-fluid">
 
@@ -65,8 +66,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Complaint.ComplaintDate, new { @readonly = "readonly" })
-                    @Html.ValidationMessageFor(m => m.Complaint.ComplaintDate, "", new { @class = "required" })
+                    @Html.TextBoxFor(model => model.Complaint.ComplaintDateString, new { @class = "dateFormatter", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(m => m.Complaint.ComplaintDateString, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -142,10 +143,6 @@
     $(document).ready(function () {
         CKEDITOR.replace('DescriptionCK');
         CKEDITOR.replace('ReplyCK');
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
         $(".date").mask('99/99/9999');
         //If complaint has been resolved, disable all fields, and just show records
         if ($("#UserRole").val() == "Customer") {

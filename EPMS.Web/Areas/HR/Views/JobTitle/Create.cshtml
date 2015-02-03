@@ -167,10 +167,6 @@
 
         var id = $('#JobTitle_JobTitleId').val();
         $("[readonly='false']").removeAttr("readonly");
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
         if (id == 0) {
             CKEDITOR.replace('JobTitleDescE');
             CKEDITOR.replace('JobTitleDescA');

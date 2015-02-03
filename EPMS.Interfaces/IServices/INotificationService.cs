@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Interfaces.IServices
@@ -10,5 +11,6 @@ namespace EPMS.Interfaces.IServices
         NotificationViewModel LoadNotificationAndBaseData(long? notificationId);
         bool AddNotification(NotificationResponse notification);
         bool UpdateNotification(NotificationResponse notification);
+        NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset);
     }
 }
