@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
@@ -17,8 +18,8 @@ namespace EPMS.Web.ModelMappers.PMS
                 SerialNo = source.SerialNo,
                 DescriptionE = source.DescriptionE,
                 DescriptionA = source.DescriptionA,
-                StartDate = Convert.ToDateTime(source.StartDate),
-                EndDate = Convert.ToDateTime(source.EndDate),
+                StartDate = DateTime.ParseExact(source.StartDate, "dd/MM/yyyy", new CultureInfo("en")),
+                EndDate = DateTime.ParseExact(source.EndDate, "dd/MM/yyyy", new CultureInfo("en")),
                 Price = source.Price,
                 OtherCost = source.OtherCost,
                 Status = source.Status,
@@ -43,8 +44,8 @@ namespace EPMS.Web.ModelMappers.PMS
             project.SerialNo = source.SerialNo;
             project.DescriptionE = source.DescriptionE;
             project.DescriptionA = source.DescriptionA;
-            project.StartDate = Convert.ToDateTime(source.StartDate).ToShortDateString();
-            project.EndDate = Convert.ToDateTime(source.EndDate).ToShortDateString();
+            project.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            project.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             project.Price = Convert.ToInt64(source.Price);
             project.OtherCost = Convert.ToInt64(source.OtherCost);
             project.Status = source.Status;
@@ -62,15 +63,6 @@ namespace EPMS.Web.ModelMappers.PMS
                 project.CustomerNameA = source.Customer.CustomerNameA;
             }
             return project;
-        }
-        public static DashboardModels.Project CreateForDashboardDDL(this Project source)
-        {
-            return new DashboardModels.Project
-            {
-                ProjectId = source.ProjectId,
-                NameA = source.NameA,
-                NameE = source.NameE
-            };
         }
     }
 }
