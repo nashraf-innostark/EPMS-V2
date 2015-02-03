@@ -36,7 +36,7 @@ namespace EPMS.Web.Controllers
                 var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(User.Identity.GetUserId());
                 info = userPrefrences != null
                 ? new CultureInfo(userPrefrences.Culture)
-                : new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+                : new CultureInfo("en");
                 Session["Culture"] = info.Name;
             }
             info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";

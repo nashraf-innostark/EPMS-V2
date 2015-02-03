@@ -63,7 +63,7 @@ namespace IdentitySample.Controllers
             var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
             CultureInfo info = userPrefrences != null
                 ? new CultureInfo(userPrefrences.Culture)
-                : new CultureInfo(System.Threading.Thread.CurrentThread.CurrentCulture.ToString());
+                : new CultureInfo("en");
             Session["Culture"] = info.Name;
             info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             System.Threading.Thread.CurrentThread.CurrentCulture = info;

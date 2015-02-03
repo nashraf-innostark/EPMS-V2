@@ -525,11 +525,6 @@
         if ($("#EndDateE").val() != null && $("#EndDateE").val() != "") {
             $("#EndDateA").val(ConvertDates($("#EndDateE").val(), "gregorian", "islamic"));
         }
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
-
         var errors = "";
         var url = "/PMS/Project/UploadDocuments";
         $('#upload').mfupload({
