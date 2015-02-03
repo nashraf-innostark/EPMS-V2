@@ -10,7 +10,6 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
     {
         public static NotificationResponse CreateFromServerToClient(this Notification notification)
         {
-            CultureInfo culture = new CultureInfo("en");
             return new NotificationResponse
             {
                 NotificationId = notification.NotificationId,
@@ -19,7 +18,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 CategoryId = notification.CategoryId,
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
-                AlertDate = notification.AlertDate.ToString("dd/MM/yyyy", culture),
+                AlertDate = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 EmployeeId = notification.EmployeeId,
                 MobileNo = notification.MobileNo,
                 Email = notification.Email,
@@ -41,7 +40,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 CategoryId = notification.CategoryId,
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
-                AlertDate = Convert.ToDateTime(notification.AlertDate),
+                AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
                 EmployeeId = notification.EmployeeId,
                 MobileNo = notification.MobileNo,
                 Email = notification.Email,

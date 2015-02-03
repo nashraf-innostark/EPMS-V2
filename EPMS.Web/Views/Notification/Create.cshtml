@@ -61,6 +61,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.NotificationResponse.TitleE)
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.TitleE, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -71,6 +72,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.NotificationResponse.TitleA)
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.TitleA, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -90,6 +92,7 @@
                         new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Notification.Notification.Company },
                         new SelectListItem { Value = "5" , Text = EPMS.Web.Resources.Notification.Notification.Other }
                     }, new { @id = "NotificationCategory", @class = "select2me" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.CategoryId, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -106,6 +109,7 @@
                         new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneWeek },
                         new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneDay }
                     }, new { @id = "NotificationAlertBefore", @class = "select2me" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.AlertBefore, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -120,6 +124,7 @@
                         new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Gregorian },
                         new SelectListItem { Value = "0" , Text = EPMS.Web.Resources.Notification.Notification.Hijri }
                     }, new { @id = "dateTypeDDl", @class = "select2me", onchange = "AlertDateType('#dateTypeDDl');" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDateType, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -133,8 +138,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.NotificationResponse.AlertDate, new { @class = "datepickerGregorian cursorHand span3", @id = "AlertEndDateE", @readonly = true, @placeholder = "", onchange = "GregorianToHijri(this,'#AlertEndDateA')" })
-                    @Html.TextBox("Alert End Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "AlertEndDateA", @readonly = true, @placeholder = "", onchange = "HijriToGregorian(this,'#AlertEndDateE')" })
-                    @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDate, "", new { @class = "required" })
+                    @Html.TextBoxFor(model => model.NotificationResponse.AlertDateHijri, new { @class = "datepickerArabic cursorHand span3", @id = "AlertEndDateA", @readonly = true, @placeholder = "", onchange = "HijriToGregorian(this,'#AlertEndDateE')" })
                 </div>
             </div>
         </div>
@@ -157,6 +161,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.NotificationResponse.MobileNo, new { @class = "number", @id = "mobile" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.MobileNo, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -169,6 +174,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.NotificationResponse.Email, new { @id = "mailAlert" })
+                    @Html.ValidationMessageFor(m => m.NotificationResponse.Email, "", new { @class = "required" })
                 </div>
             </div>
         </div>
