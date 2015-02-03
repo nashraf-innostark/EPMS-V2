@@ -302,7 +302,6 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
     <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
-    <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
@@ -313,6 +312,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
@@ -568,6 +568,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Meeting.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Notification\Notification.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\PMS\Project.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -654,6 +659,7 @@
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Views\Notification\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1007,6 +1013,8 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="EmailTexts\ContactUs.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\MeetingDocuments\dummy.txt" />
+    <Content Include="Files\ProjectDocuments\dummy.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -2433,7 +2441,6 @@
     </Content>
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\PMS\Views\web.config" />
-    <Content Include="Areas\Notification\Views\web.config" />
     <Content Include="Images\photon\entypo.eot" />
     <Content Include="Areas\HR\Views\Employee\Index.cshtml" />
     <Content Include="Images\photon\entypo.ttf" />
@@ -3057,13 +3064,8 @@
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
-    <Folder Include="Areas\Notification\Controllers\" />
-    <Folder Include="Areas\Notification\Models\" />
-    <Folder Include="Areas\Notification\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
-    <Folder Include="Files\MeetingDocuments\" />
-    <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
@@ -3115,6 +3117,11 @@
     <EmbeddedResource Include="Resources\Meeting\Meeting.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification\Notification.ar.resx" />
+    <EmbeddedResource Include="Resources\Notification\Notification.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\PMS\Project.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

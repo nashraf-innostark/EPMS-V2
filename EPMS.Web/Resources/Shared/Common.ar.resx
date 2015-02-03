@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>حول</value>
   </data>
+  <data name="AR" xml:space="preserve">
+    <value>عربي</value>
+  </data>
   <data name="BackToList" xml:space="preserve">
     <value>العودة إلى قائمة</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="EditDelete" xml:space="preserve">
     <value>تحرير / حذف</value>
+  </data>
+  <data name="EN" xml:space="preserve">
+    <value>انجليزي</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
@@ -194,5 +200,17 @@
   </data>
   <data name="TotalRecords" xml:space="preserve">
     <value>إجمالي عدد السجلات:</value>
+  </data>
+  <data name="DarkVersion" xml:space="preserve">
+    <value>النسخة الغامقة</value>
+  </data>
+  <data name="LightVersion" xml:space="preserve">
+    <value>النسخة الخفيفة</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>تسجيل خروج</value>
+  </data>
+  <data name="ThemeOptions" xml:space="preserve">
+    <value>خيارات الالوان</value>
   </data>
 </root>

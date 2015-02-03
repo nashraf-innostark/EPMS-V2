@@ -74,6 +74,7 @@
     <Compile Include="IServices\IMeetingDocumentService.cs" />
     <Compile Include="IServices\IMeetingService.cs" />
     <Compile Include="IServices\IMenuRightService.cs" />
+    <Compile Include="IServices\INotificationService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
     <Compile Include="IServices\IPreRequisitTaskService.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Repository\IMeetingRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\IMenuRightRepository.cs" />
+    <Compile Include="Repository\INotificationRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
     <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />

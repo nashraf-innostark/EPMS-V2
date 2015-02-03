@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Models.ResponseModels.NotificationResponseModel
 {
-    public class Notification
+    public class NotificationResponse
     {
         public long NotificationId { get; set; }
         public string TitleE { get; set; }
@@ -11,7 +10,7 @@ namespace EPMS.Models.DomainModels
         public int CategoryId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
-        public DateTime AlertDate { get; set; }
+        public string AlertDate { get; set; }
         public long? EmployeeId { get; set; }
         public string MobileNo { get; set; }
         public string Email { get; set; }
@@ -20,8 +19,5 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDate { get; set; }
-
-        public virtual Employee Employee { get; set; }
-        public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
     }
 }
