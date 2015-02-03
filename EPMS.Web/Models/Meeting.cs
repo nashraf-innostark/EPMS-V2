@@ -18,7 +18,7 @@ namespace EPMS.Web.Models
         public string TopicNameAr { get; set; }
         [StringLength(200, ErrorMessage = "Cannot exceed 300 characters. ")]
         public string RelatedProject { get; set; }
-        public DateTime? Date { get; set; }
+        public string Date { get; set; }
         public DateTime? DateAr { get; set; }
         [StringLength(200, ErrorMessage = "Cannot exceed 1000 characters. ")]
         public string Agenda { get; set; }

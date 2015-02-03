@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Project.ProjectViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Project.ProjectViewModel
 
 @{
     ViewBag.Title = Model.Project.NameE +" "+ EPMS.Web.Resources.PMS.Project.Details;
@@ -443,9 +444,9 @@
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 @if (ViewBag.UserRole != "Customer")
-                {
-                    <a href="/PMS/Project/Create/@Model.Project.ProjectId" class="btn">@EPMS.Web.Resources.PMS.Project.UpdateProject</a>
-                }
+{
+    <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/PMS/Project/Create/@Model.Project.ProjectId" class="btn">@EPMS.Web.Resources.PMS.Project.UpdateProject</a>
+}
             </div>
 
         </div>
