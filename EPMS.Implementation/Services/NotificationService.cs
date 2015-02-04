@@ -65,9 +65,16 @@ namespace EPMS.Implementation.Services
         {
             NotificationListView notificationListView=new NotificationListView();
             var notifications = notificationRepository.GetAllNotifications(searchRequset);
-            notificationListView.aaData = notifications.Notifications.Any() ? notifications.Notifications.Select(x => x.CreateFromServerToClientList()) : Enumerable.Empty<NotificationListResponse>();
-            notificationListView.iTotalDisplayRecords = notifications.TotalCount;
-            notificationListView.iTotalDisplayRecords = notifications.TotalCount;
+            if (notifications.Notifications.Any())
+            {
+                notificationListView.aaData = notifications.Notifications.Select(x => x.CreateFromServerToClientList());
+
+            }
+            else
+                notificationListView.aaData = Enumerable.Empty<NotificationListResponse>();
+
+            notificationListView.iTotalDisplayRecords = notifications.TotalFiltered;
+            notificationListView.iTotalRecords = notifications.TotalCount;
             notificationListView.sEcho = searchRequset.sEcho;
             return notificationListView;
         }

@@ -86,10 +86,10 @@
                 <div class="controls">
                     @Html.DropDownListFor(model => model.NotificationResponse.CategoryId, new[]
                     {
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Documents },
-                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.Employees },
-                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.Meetings },
-                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Notification.Notification.Company },
+                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.Documents },
+                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.Employees },
+                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Notification.Notification.Meetings },
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Company },
                         new SelectListItem { Value = "5" , Text = EPMS.Web.Resources.Notification.Notification.Other }
                     }, new { @id = "NotificationCategory", @class = "select2me" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.CategoryId, "", new { @class = "required" })

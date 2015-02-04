@@ -32,22 +32,22 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-                <table id="dataTable" class="table table-responsive">
+                <table id="dataTable" class="table table-striped table-responsive">
                     <thead class="cf sorthead">
-                            <tr>
-                                <th>@EPMS.Web.Resources.Notification.Notification.Serial</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.NotificationNameE</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.CategoryName</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.AlertTime</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.AlertEndDate</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.EmployeeName</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.MobileNumber</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.Email</th>
-                                <th>@EPMS.Web.Resources.Notification.Notification.Notified</th>
+                        <tr>
+                            <th>@EPMS.Web.Resources.Notification.Notification.Serial</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.NotificationNameE</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.CategoryName</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.AlertTime</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.AlertEndDate</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.EmployeeName</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.MobileNumber</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.Email</th>
+                            <th>@EPMS.Web.Resources.Notification.Notification.Notified</th>
                             </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
             </div>
         </div>
     </div>
@@ -66,7 +66,8 @@
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["SerialNo"];
-                        }
+                        },
+                        "bSortable":false
                     },
                     {
                         "aTargets": [1],
@@ -130,6 +131,10 @@
                 ],
                 "fnServerParams": function(aoData) {
                     aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    $("td:first", nRow).html(iDisplayIndex + 1);
+                    return nRow;
                 },
                 "sAjaxSource": siteUrl + "/Notification/Index",
                 "sServerMethod": "POST",

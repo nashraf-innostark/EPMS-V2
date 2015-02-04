@@ -77,10 +77,10 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
            
             switch (notification.CategoryId)
             {
-                case 1: notificationListResponse.CategoryName = Resources.Notification.Documents; break;
-                case 2: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
-                case 3: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
-                case 4: notificationListResponse.CategoryName = Resources.Notification.Company; break;
+                case 2: notificationListResponse.CategoryName = Resources.Notification.Documents; break;
+                case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
+                case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
+                case 1: notificationListResponse.CategoryName = Resources.Notification.Company; break;
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
             switch (notification.AlertBefore)

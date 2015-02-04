@@ -44,7 +44,7 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<NotificationByColumn, Func<Notification, object>>
                     {
-                        { NotificationByColumn.TitleA, c => c.TitleA},
+                        { NotificationByColumn.SerialNo, c => c.NotificationId},
                         { NotificationByColumn.TitleE,  c => c.TitleE},
                         { NotificationByColumn.CategoryId, c => c.CategoryId},
                         { NotificationByColumn.AlertBefore, c => c.AlertBefore},
@@ -59,40 +59,28 @@ namespace EPMS.Repository.Repositories
         {
             int fromRow = searchRequset.iDisplayStart;
             int toRow = searchRequset.iDisplayStart + searchRequset.iDisplayLength;
-            Expression<Func<Notification, bool>> query;
-            IEnumerable<Notification> employeeRequests;
-            if (searchRequset.Requester == "Admin")
-            {
-                query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
+            Expression<Func<Notification, bool>> query =
+                s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
                     (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
-                    (s.Employee.EmployeeJobId.Contains(searchRequset.SearchString)) ||
-                    (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchString)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchString))
+                    (s.MobileNo.Contains(searchRequset.SearchString)) || (s.Email.Contains(searchRequset.SearchString))) && (s.SystemGenerated)
                     );
-            }
-            else
-            {
-                long employeeId = Convert.ToInt64(searchRequset.Requester);
-                query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchString) || (s.TitleE.Contains(searchRequset.SearchString))) &&
-                    (s.EmployeeId.Equals(employeeId)));
-            }
+            IEnumerable<Notification> notifications;
 
             if (searchRequset.iSortCol_0 == 0)
             {
-                employeeRequests = DbSet
+                notifications = DbSet
                 .Where(query).OrderByDescending(x => x.AlertDate).Skip(fromRow).Take(toRow).ToList();
             }
             else
             {
-                employeeRequests = searchRequset.sSortDir_0 == "asc" ?
+                notifications = searchRequset.sSortDir_0 == "asc" ?
                 DbSet
                 .Where(query).OrderBy(notificationRequestClause[searchRequset.NotificationByColumn]).Skip(fromRow).Take(toRow).ToList()
                 :
                 DbSet
                 .Where(query).OrderByDescending(notificationRequestClause[searchRequset.NotificationByColumn]).Skip(fromRow).Take(toRow).ToList();
             }
-            return new NotificationRequestResponse { Notifications = employeeRequests, TotalCount = DbSet.Count(query) };
+            return new NotificationRequestResponse { Notifications = notifications, TotalCount = DbSet.Count(), TotalFiltered = DbSet.Count(query) };
         }
     }
 }

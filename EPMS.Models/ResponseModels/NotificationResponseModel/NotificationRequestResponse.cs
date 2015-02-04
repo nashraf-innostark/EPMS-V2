@@ -14,6 +14,7 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         /// <summary>
         /// Total Count
         /// </summary>
+        public int TotalFiltered{ get; set; }
         public int TotalCount { get; set; }
     }
 }
