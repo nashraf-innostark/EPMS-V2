@@ -16,6 +16,10 @@ namespace EPMS.Models.DomainModels
         public string MobileNo { get; set; }
         public string Email { get; set; }
         public bool ReadStatus { get; set; }
+
+        public string UserId { get; set; }
+        public bool SystemGenerated { get; set; }
+
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }

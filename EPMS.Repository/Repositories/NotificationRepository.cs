@@ -62,7 +62,7 @@ namespace EPMS.Repository.Repositories
             Expression<Func<Notification, bool>> query =
                 s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
                     (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
-                    (s.MobileNo.Contains(searchRequset.SearchString)) || (s.Email.Contains(searchRequset.SearchString))) && (s.)
+                    (s.MobileNo.Contains(searchRequset.SearchString)) || (s.Email.Contains(searchRequset.SearchString))) && (s.SystemGenerated)
                     );
             IEnumerable<Notification> notifications;
 

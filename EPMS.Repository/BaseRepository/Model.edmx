@@ -454,6 +454,8 @@
           <Property Name="RecCreatedDate" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDate" Type="datetime" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="SystemGenerated" Type="bit" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -2575,6 +2577,8 @@
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendee" />
           <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SystemGenerated" Type="Boolean" />
         </EntityType>
         <Association Name="FK_MeetingAttendees_Notification">
           <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="0..1" />
@@ -3327,6 +3331,8 @@
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="EPMSModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
