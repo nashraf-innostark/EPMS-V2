@@ -2,9 +2,9 @@
 {
     public class DashboardWidgetPreferences
     {
-        public int WidgetPerferences { get; set; }
+        public int WidgetPerferencesId { get; set; }
         public string UserId { get; set; }
         public string WidgetId { get; set; }
-        public string SortNumber { get; set; }
+        public int SortNumber { get; set; }
     }
 }
