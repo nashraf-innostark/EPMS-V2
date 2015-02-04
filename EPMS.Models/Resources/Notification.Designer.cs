@@ -61,7 +61,7 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before One Day.
+        ///   Looks up a localized string similar to Before one day.
         /// </summary>
         public static string BeforeOneDay {
             get {
@@ -70,7 +70,7 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before One Month.
+        ///   Looks up a localized string similar to Before one month.
         /// </summary>
         public static string BeforeOneMonth {
             get {
@@ -79,7 +79,7 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before One Week.
+        ///   Looks up a localized string similar to Before one week.
         /// </summary>
         public static string BeforeOneWeek {
             get {

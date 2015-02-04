@@ -64,10 +64,11 @@ namespace EPMS.Web.Controllers
                     IList<AspNetRole> roles = userResult.AspNetRoles.ToList();   
                     if (roles.Count > 0)
                     {
-                        IEnumerable<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(roles[0].Id);
+                        IList<MenuRight> menuItems = menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
 
-                        //save menu items in session
-                        //Session["UserPermissionSet"] = menuItems;
+                        //save menu permissions in session
+                        string[] userPermissions = menuItems.Select(user => user.Menu.PermissionKey).ToArray();
+                        Session["UserPermissionSet"] = userPermissions;
 
                         menuVM = new MenuViewModel
                                  {

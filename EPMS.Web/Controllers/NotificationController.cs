@@ -4,6 +4,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 using EPMS.Web.ViewModels.Common;
+using EPMS.WebBase.Mvc;
 
 namespace EPMS.Web.Controllers
 {
@@ -18,6 +19,7 @@ namespace EPMS.Web.Controllers
         }
 
         // GET: Notification
+        [SiteAuthorize(PermissionKey = "NS")]
         public ActionResult Index()
         {
             NotificationListView viewModel = new NotificationListView();
@@ -30,17 +32,19 @@ namespace EPMS.Web.Controllers
         public ActionResult Index(NotificationListViewRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Admin")
+            if (Session["UserID"] != null)
             {
-                searchRequest.Requester = "Admin";
+                searchRequest.RoleName = Session["RoleName"].ToString();
+                searchRequest.CustomerId = Convert.ToInt64(Session["CustomerID"]);
+                searchRequest.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
+                searchRequest.UserId = Session["UserID"].ToString();
+                var resultData = notificationService.LoadAllNotifications(searchRequest);
+                return Json(resultData, JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                searchRequest.Requester = Session["EmployeeID"].ToString();
-            }
-            var resultData = notificationService.LoadAllNotifications(searchRequest);
-            return Json(resultData, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Login", "Account");
         }
+
+        [SiteAuthorize(PermissionKey = "NotificationCreate")]
         public ActionResult Create(long? id)
         {
             NotificationViewModel notificationViewModel = notificationService.LoadNotificationAndBaseData(id);
@@ -87,6 +91,7 @@ namespace EPMS.Web.Controllers
             }
             return View(notificationViewModel);
         }
+
         public ActionResult Details(long? id)
         {
             NotificationViewModel notificationViewModel = notificationService.LoadNotificationAndBaseData(id);
