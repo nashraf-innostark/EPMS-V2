@@ -60,9 +60,9 @@ namespace EPMS.Repository.Repositories
             int fromRow = searchRequset.iDisplayStart;
             int toRow = searchRequset.iDisplayStart + searchRequset.iDisplayLength;
             Expression<Func<Notification, bool>> query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
+                s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
                     (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
-                    (s.MobileNo.Contains(searchRequset.SearchString)) || (s.Email.Contains(searchRequset.SearchString))
+                    (s.MobileNo.Contains(searchRequset.SearchString)) || (s.Email.Contains(searchRequset.SearchString))) && (s.)
                     );
             IEnumerable<Notification> notifications;
 
