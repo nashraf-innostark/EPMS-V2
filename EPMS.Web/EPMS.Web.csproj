@@ -364,6 +364,7 @@
     <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\ContactList.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DashboardWidgetPreferences.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />

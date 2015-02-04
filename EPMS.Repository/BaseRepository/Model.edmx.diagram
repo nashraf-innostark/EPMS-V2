@@ -80,6 +80,7 @@
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
         <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
+        <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreferences" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
