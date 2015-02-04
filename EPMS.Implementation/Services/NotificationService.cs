@@ -63,7 +63,13 @@ namespace EPMS.Implementation.Services
 
         public NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset)
         {
-            throw new System.NotImplementedException();
+            NotificationListView notificationListView=new NotificationListView();
+            var notifications = notificationRepository.GetAllNotifications(searchRequset);
+            notificationListView.aaData = notifications.Notifications.Any() ? notifications.Notifications.Select(x => x.CreateFromServerToClientList()) : Enumerable.Empty<NotificationListResponse>();
+            notificationListView.iTotalDisplayRecords = notifications.TotalCount;
+            notificationListView.iTotalDisplayRecords = notifications.TotalCount;
+            notificationListView.sEcho = searchRequset.sEcho;
+            return notificationListView;
         }
     }
 }

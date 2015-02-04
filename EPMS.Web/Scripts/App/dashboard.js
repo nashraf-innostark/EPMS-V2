@@ -177,40 +177,7 @@
     $("#multiFilter").select2();
 
     //#endregion
-    $("#projectStatusDDL").on("change", function () {
-        var projectStatus = $(this).val();
-        var url = siteUrl + "/Dashboard/LoadProjectsDDL";
-        $("#projectLoader").show();
-            $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: "json",
-                data: {
-                    projectStatus: projectStatus
-                },
-                success: function (data) {
-                    populateProjectDDL(data);
-                },
-                error: function (e) {
-                    alert('Error=' + e.toString());
-                }
-            });
-    });
-    function populateProjectDDL(data) {
-        $("#projectIdFilter").empty();
-        if (data.length > 0) {
-            for (var i = 0; i < data.length; i++) {
-                $("#projectIdFilter").append(
-                    $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
-                );
-            }
-        } else {
-            $("#projectIdFilter").append(
-                    $('<option></option>').val("").html("none")
-                );
-        }
-        $("#projectLoader").hide();
-    }
+    
 });
 //#region Dashboard basic functions
 $(function () {
@@ -279,6 +246,15 @@ function scrollToTop() {
     offset = element.offset();
     offsetTop = offset.top;
     $('html, body').animate({ scrollTop: offsetTop }, 500, 'linear');
+}
+
+//#endregion
+
+//#region Widgets Loaders
+function NoRecord(control, msg) {
+    $(control).empty();
+    $(".tempLoader").click();
+    $(control).append('<li class="processed-pct"><span>' + msg + '</span></li>');
 }
 function ProjectWidgetEvents() {
     $("#progressId li.dashTask").on("click", function () {
@@ -562,13 +538,6 @@ function MyTasksWidgetEvents() {
         $("#progressId2 .dashNext").show();
     });
 }
-//#endregion
-function NoRecord(control, msg) {
-    $(control).empty();
-    $(".tempLoader").click();
-    $(control).append('<li class="processed-pct"><span>' + msg + '</span></li>');
-}
-//#region Widgets Loaders
 function Loader(control) {
     if (control.className != "refresher") {
         flipit(control);
@@ -576,6 +545,43 @@ function Loader(control) {
         $(control).parents('.widget-holder').find(".tempLoader").show();
     }
 }
+
+$("#projectStatusDDL").on("change", function () {
+    var projectStatus = $(this).val();
+    var url = siteUrl + "/Dashboard/LoadProjectsDDL";
+    $("#projectLoader").show();
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            projectStatus: projectStatus
+        },
+        success: function (data) {
+            populateProjectDDL(data);
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+        }
+    });
+});
+function populateProjectDDL(data) {
+    $("#projectIdFilter").empty();
+    if (data.length > 0) {
+        for (var i = 0; i < data.length; i++) {
+            $("#projectIdFilter").append(
+                $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
+            );
+        }
+    } else {
+        $("#projectIdFilter").append(
+                $('<option></option>').val("").html("none")
+            );
+    }
+    $("#projectLoader").hide();
+}
+
+
 function LoadEmployeeRequests(control) {
     Loader(control);
     var siteUrl = $('#siteURL').val();
@@ -979,4 +985,5 @@ function LoadMyTasks(control) {
             }
         });
 };
+
 //#endregion

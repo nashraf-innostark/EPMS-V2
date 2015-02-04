@@ -29,7 +29,17 @@ namespace EPMS.Web.Controllers
         [HttpPost]
         public ActionResult Index(NotificationListViewRequest searchRequest)
         {
-            return Json(null, JsonRequestBehavior.AllowGet);
+            searchRequest.SearchString = Request["search"];
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Admin")
+            {
+                searchRequest.Requester = "Admin";
+            }
+            else
+            {
+                searchRequest.Requester = Session["EmployeeID"].ToString();
+            }
+            var resultData = notificationService.LoadAllNotifications(searchRequest);
+            return Json(resultData, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Create(long? id)
         {
