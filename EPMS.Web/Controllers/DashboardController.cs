@@ -247,6 +247,16 @@ namespace EPMS.Web.Controllers
             var employeeRequests = GetEmployeeRequests(requester);
             return Json(employeeRequests, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// Save Dashboard Widgets Preferences
+        /// </summary>
+        /// <param name="preferences"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult SaveWidgetPreferences(string[] preferences)
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
 
         /// <summary>
         /// Load complaints

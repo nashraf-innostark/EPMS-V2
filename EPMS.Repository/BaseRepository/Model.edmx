@@ -232,6 +232,20 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMS.dbo.DashboardWidgetPreferences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DashboardWidgetPreferences">
+          <Key>
+            <PropertyRef Name="WidgetPerferences" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="WidgetId" />
+            <PropertyRef Name="SortNumber" />
+          </Key>
+          <Property Name="WidgetPerferences" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="WidgetId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SortNumber" Type="nchar" MaxLength="3" Nullable="false" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -1184,6 +1198,14 @@
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardWidgetPreferences" EntityType="Self.DashboardWidgetPreferences" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DashboardWidgetPreferences].[WidgetPerferences] AS [WidgetPerferences], 
+    [DashboardWidgetPreferences].[UserId] AS [UserId], 
+    [DashboardWidgetPreferences].[WidgetId] AS [WidgetId], 
+    [DashboardWidgetPreferences].[SortNumber] AS [SortNumber]
+    FROM [dbo].[DashboardWidgetPreferences] AS [DashboardWidgetPreferences]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -2529,6 +2551,7 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
+          <EntitySet Name="DashboardWidgetPreferences" EntityType="EPMSModel.DashboardWidgetPreferences" />
         </EntityContainer>
         <EntityType Name="MeetingAttendee">
           <Key>
@@ -2724,6 +2747,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DashboardWidgetPreferences">
+          <Key>
+            <PropertyRef Name="WidgetPerferences" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="WidgetId" />
+            <PropertyRef Name="SortNumber" />
+          </Key>
+          <Property Name="WidgetPerferences" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="WidgetId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SortNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3380,6 +3415,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DashboardWidgetPreferences">
+            <EntityTypeMapping TypeName="EPMSModel.DashboardWidgetPreferences">
+              <MappingFragment StoreEntitySet="DashboardWidgetPreferences">
+                <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
+                <ScalarProperty Name="WidgetId" ColumnName="WidgetId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="WidgetPerferences" ColumnName="WidgetPerferences" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3394,7 +3439,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
