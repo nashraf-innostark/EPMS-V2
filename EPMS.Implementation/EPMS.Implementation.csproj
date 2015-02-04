@@ -130,6 +130,7 @@
     <Compile Include="Services\CompanySocialService.cs" />
     <Compile Include="Services\ComplaintService.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\DashboardWidgetPreferencesService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />

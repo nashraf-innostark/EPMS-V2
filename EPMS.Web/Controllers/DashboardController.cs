@@ -255,6 +255,7 @@ namespace EPMS.Web.Controllers
         [HttpPost]
         public JsonResult SaveWidgetPreferences(string[] preferences)
         {
+
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
