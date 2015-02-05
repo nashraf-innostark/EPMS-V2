@@ -148,7 +148,7 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchItems();
 
             var userId = User.Identity.GetUserId();
-            dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromServerToClient());
+            dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
 
             #endregion
             ViewBag.UserName = Session["FullName"].ToString();
@@ -313,7 +313,7 @@ namespace EPMS.Web.Controllers
                 foreach (var pref in preferences)
                 {
                     Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences { UserId = userId, WidgetId = pref, SortNumber = i };
-                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
                     if (PreferencesService.Addpreferences(preferenceToUpdate))
                     {
                         i++;
@@ -335,7 +335,7 @@ namespace EPMS.Web.Controllers
                         WidgetId = pref,
                         SortNumber = i+1
                     };
-                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
                     if (PreferencesService.UpdatePreferences(preferenceToUpdate))
                     {
                         i++;

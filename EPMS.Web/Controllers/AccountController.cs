@@ -436,39 +436,39 @@ namespace IdentitySample.Controllers
                             case "Admin":
                                 for (int i = 0; i < 10; i++)
                                 {
-                                    DashboardWidgetPreferences preferences = new DashboardWidgetPreferences
+                                    EPMS.Web.Models.DashboardWidgetPreferences preferences = new EPMS.Web.Models.DashboardWidgetPreferences
                                     {
                                         UserId = userId,
                                         WidgetId = adminWidgets[i],
                                         SortNumber = i + 1
                                     };
-                                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                                    var preferenceToUpdate = preferences.CreateFromClientToServerWidgetPreferences();
                                     PreferencesService.UpdatePreferences(preferenceToUpdate);
                                 }
                                 break;
                             case "Employee":
                                 for (int i = 0; i < 5; i++)
                                 {
-                                    DashboardWidgetPreferences preferences = new DashboardWidgetPreferences
+                                    EPMS.Web.Models.DashboardWidgetPreferences preferences = new EPMS.Web.Models.DashboardWidgetPreferences
                                     {
                                         UserId = userId,
                                         WidgetId = employeeWidgets[i],
                                         SortNumber = i + 1
                                     };
-                                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                                    var preferenceToUpdate = preferences.CreateFromClientToServerWidgetPreferences();
                                     PreferencesService.UpdatePreferences(preferenceToUpdate);
                                 }
                                 break;
                             case "Customer":
                                 for (int i = 0; i < 3; i++)
                                 {
-                                    DashboardWidgetPreferences preferences = new DashboardWidgetPreferences
+                                    EPMS.Web.Models.DashboardWidgetPreferences preferences = new EPMS.Web.Models.DashboardWidgetPreferences
                                     {
                                         UserId = userId,
                                         WidgetId = customerWidgets[i],
                                         SortNumber = i + 1
                                     };
-                                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                                    var preferenceToUpdate = preferences.CreateFromClientToServerWidgetPreferences();
                                     PreferencesService.UpdatePreferences(preferenceToUpdate);
                                 }
                                 break;
