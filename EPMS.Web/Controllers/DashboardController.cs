@@ -86,6 +86,7 @@ namespace EPMS.Web.Controllers
         /// Load dashborad and all its widgets
         /// </summary>
         /// <returns></returns>
+        [SiteAuthorize(PermissionKey = "Dashboard")]
         public ActionResult Index()
         {
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
