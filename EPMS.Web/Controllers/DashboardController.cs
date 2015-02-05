@@ -24,9 +24,6 @@ using Meeting = EPMS.Web.DashboardModels.Meeting;
 using Order = EPMS.Web.DashboardModels.Order;
 using Payroll = EPMS.Web.DashboardModels.Payroll;
 using EmployeeRequest = EPMS.Web.DashboardModels.EmployeeRequest;
-using Meeting = EPMS.Web.DashboardModels.Meeting;
-using Order = EPMS.Web.DashboardModels.Order;
-using Payroll = EPMS.Web.DashboardModels.Payroll;
 
 namespace EPMS.Web.Controllers
 {
@@ -316,7 +313,7 @@ namespace EPMS.Web.Controllers
                 int i = 1;
                 foreach (var pref in preferences)
                 {
-                    DashboardWidgetPreferences preference = new DashboardWidgetPreferences {UserId = userId, WidgetId = pref, SortNumber = i};
+                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences { UserId = userId, WidgetId = pref, SortNumber = i };
                     var preferenceToUpdate = preference.CreateFromClientToServer();
                     if (PreferencesService.Addpreferences(preferenceToUpdate))
                     {
@@ -332,7 +329,7 @@ namespace EPMS.Web.Controllers
                 int i = 0;
                 foreach (var pref in preferences)
                 {
-                    DashboardWidgetPreferences preference = new DashboardWidgetPreferences
+                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences
                     {
                         WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
                         UserId = userpreferences[i].UserId,
