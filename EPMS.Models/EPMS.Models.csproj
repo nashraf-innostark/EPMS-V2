@@ -176,6 +176,7 @@
     <Compile Include="RequestModels\MeetingRequest.cs" />
     <Compile Include="RequestModels\MeetingSearchRequest.cs" />
     <Compile Include="RequestModels\NotificationRequestModels\NotificationListViewRequest.cs" />
+    <Compile Include="RequestModels\NotificationRequestModels\NotificationRequestParams.cs" />
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />

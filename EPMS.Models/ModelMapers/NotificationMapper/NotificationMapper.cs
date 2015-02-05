@@ -32,6 +32,13 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
         }
         public static Notification CreateFromClientToServer(this NotificationResponse notification)
         {
+            DateTime alertAppearDate = new DateTime(); 
+            switch (notification.AlertBefore)
+            {
+                case 1: alertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddMonths(-1); break;
+                case 2: alertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-7); break;
+                case 3: alertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-1); break;
+            }
             return new Notification
             {
                 NotificationId = notification.NotificationId,
@@ -41,7 +48,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
-                //Alerta = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
+                AlertAppearDate = alertAppearDate,
                 EmployeeId = notification.EmployeeId,
                 MobileNo = notification.MobileNo,
                 Email = notification.Email,

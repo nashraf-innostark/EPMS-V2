@@ -12,5 +12,6 @@ namespace EPMS.Interfaces.IServices
         bool AddNotification(NotificationResponse notification);
         bool UpdateNotification(NotificationResponse notification);
         NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset);
+        NotificationListView LoadAllSentNotifications(NotificationListViewRequest searchRequset);
     }
 }

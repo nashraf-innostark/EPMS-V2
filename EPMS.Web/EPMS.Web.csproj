@@ -663,6 +663,7 @@
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\Sent.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

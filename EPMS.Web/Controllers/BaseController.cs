@@ -23,6 +23,7 @@ namespace EPMS.Web.Controllers
         private ApplicationUserManager _userManager;
         private IMenuRightsService menuRightService;
         private IUserPrefrencesService userPrefrencesService;
+        private INotificationService notificationService;
         private void SetCultureInfo()
         {
             CultureInfo info;
@@ -43,6 +44,11 @@ namespace EPMS.Web.Controllers
             System.Threading.Thread.CurrentThread.CurrentCulture = info;
             System.Threading.Thread.CurrentThread.CurrentUICulture = info;
         }
+
+        private int GetNotifications()
+        {
+            //GetUnreadNotificationsCount
+        }
         #endregion
 
         #region Protected
@@ -54,6 +60,7 @@ namespace EPMS.Web.Controllers
                 SetUserDetail();
             //Set culture info
             SetCultureInfo();
+            
         }
         #endregion
 

@@ -78,5 +78,22 @@ namespace EPMS.Implementation.Services
             notificationListView.sEcho = searchRequset.sEcho;
             return notificationListView;
         }
+        public NotificationListView LoadAllSentNotifications(NotificationListViewRequest searchRequset)
+        {
+            NotificationListView notificationListView = new NotificationListView();
+            var notifications = notificationRepository.GetAllSentNotifications(searchRequset);
+            if (notifications.Notifications.Any())
+            {
+                notificationListView.aaData = notifications.Notifications.Select(x => x.CreateFromServerToClientList());
+
+            }
+            else
+                notificationListView.aaData = Enumerable.Empty<NotificationListResponse>();
+
+            notificationListView.iTotalDisplayRecords = notifications.TotalFiltered;
+            notificationListView.iTotalRecords = notifications.TotalFiltered;
+            notificationListView.sEcho = searchRequset.sEcho;
+            return notificationListView;
+        }
     }
 }

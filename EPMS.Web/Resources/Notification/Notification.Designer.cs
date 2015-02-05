@@ -277,6 +277,15 @@ namespace EPMS.Web.Resources.Notification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sent Notification List.
+        /// </summary>
+        public static string NotificationSentList {
+            get {
+                return ResourceManager.GetString("NotificationSentList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notification has been sent..
         /// </summary>
         public static string NotificationSentMsg {
