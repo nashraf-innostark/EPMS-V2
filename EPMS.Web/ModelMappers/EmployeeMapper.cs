@@ -20,11 +20,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeNameE = source.EmployeeNameE ?? "",
                 EmployeeNameA = source.EmployeeNameA?? "",
                 EmployeeImagePath = source.EmployeeImagePath,
-<<<<<<< HEAD
-                EmployeeIqama = source.EmployeeIqama,
-=======
                 EmployeeIqama = source.EmployeeIqama ?? string.Empty,
->>>>>>> d9278435bf755b106d3d83f96df41acf42d1f58d
                 EmployeeIqamaExpiryDt = DateTime.ParseExact(source.EmployeeIqamaExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
                 EmployeeDOB = DateTime.ParseExact(source.EmployeeDOB, "dd/MM/yyyy", new CultureInfo("en")),
                 EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
