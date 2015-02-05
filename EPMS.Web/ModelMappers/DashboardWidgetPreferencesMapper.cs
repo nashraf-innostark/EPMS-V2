@@ -4,9 +4,9 @@ namespace EPMS.Web.ModelMappers
 {
     public static class DashboardWidgetPreferencesMapper
     {
-        public static DashboardWidgetPreferences CreateFromClientToServer(this Models.DashboardWidgetPreferences source)
+        public static DashboardWidgetPreference CreateFromClientToServerWidgetPreferences(this Models.DashboardWidgetPreference source)
         {
-            return new DashboardWidgetPreferences
+            return new DashboardWidgetPreference
             {
                 WidgetPerferencesId = source.WidgetPerferencesId,
                 UserId = source.UserId,
@@ -15,9 +15,9 @@ namespace EPMS.Web.ModelMappers
             };
         }
 
-        public static Models.DashboardWidgetPreferences CreateFromServerToClient(this DashboardWidgetPreferences source)
+        public static Models.DashboardWidgetPreference CreateFromClientToServerWidgetPreferences(this DashboardWidgetPreference source)
         {
-            return new Models.DashboardWidgetPreferences
+            return new Models.DashboardWidgetPreference
             {
                 WidgetPerferencesId = source.WidgetPerferencesId,
                 UserId = source.UserId,

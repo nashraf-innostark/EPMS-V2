@@ -20,10 +20,10 @@ namespace EPMS.Web.Models
         public long? JobTitleId { get; set; }
         public string EmployeeJobId { get; set; }
         [Required(ErrorMessage = "Mobile Number is required.")]
-        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
+        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeMobileNum { get; set; }
         [Required(ErrorMessage = "Telephone Number is required.")]
-        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
+        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeLandlineNum { get; set; }
         public byte? MaritalStatus { get; set; }
         [Required(ErrorMessage = "Date of Birth is required.")]
@@ -31,7 +31,7 @@ namespace EPMS.Web.Models
         public string EmpDateOfBirthArabic { get; set; }
         public short? EmployeeNationality { get; set; }
         [Required(ErrorMessage = "Iqama Number Or National ID Number is required.")]
-        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
+        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeIqama { get; set; }
         public string EmployeeIqamaIssueDt { get; set; }
         public string EmployeeIqamaIssueDtAr { get; set; }
@@ -39,7 +39,7 @@ namespace EPMS.Web.Models
         public string EmployeeIqamaExpiryDt { get; set; }
         public string EmployeeIqamaExpiryDtAr { get; set; }
         [Required(ErrorMessage = "Passport ID is required.")]
-        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
+        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeePassportNum { get; set; }
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public string EmployeePassportExpiryDt { get; set; }

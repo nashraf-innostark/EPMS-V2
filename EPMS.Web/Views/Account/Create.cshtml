@@ -75,7 +75,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = " useremail ", placeholder = "Enter Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "useremail", placeholder = "Enter Email" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "required" })
                 </div>
             </div>
@@ -95,7 +95,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="employeeId">Employee</label>
+                    <label class="control-label" for="selectedEmployee">Employee</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -140,20 +140,6 @@
     $(function () {
 
         $("[readonly='false']").removeAttr("readonly");
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
-
-        //$("#signupuser").click(function (e) {
-
-        //    alert($("#employeeId option:selected").val());
-        //    if ($('#employeeId :selected').val() == "") {
-        //        toastr.error("Please select an Employee");
-        //        return false;
-        //    }
-        //    return true;
-        //});
 
     });
     function validateUserPassword(event) {

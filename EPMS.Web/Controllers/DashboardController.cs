@@ -63,7 +63,7 @@ namespace EPMS.Web.Controllers
         /// <param name="complaintService"></param>
         /// <param name="preferencesService"></param>
         /// <param name="menuRightsService"></param>
-        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService,IMenuRightsService menuRightsService)
+        public DashboardController(IProjectTaskService projectTaskService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService)
         {
             this.projectTaskService = projectTaskService;
             this.meetingService = meetingService;
@@ -98,40 +98,40 @@ namespace EPMS.Web.Controllers
             if ((string)Session["RoleName"] != "Customer")
             {
                 var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
-            #region Employee Requests Widget
-            dashboardViewModel.Employees = GetAllEmployees();
-            dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
-            #endregion
+                #region Employee Requests Widget
+                dashboardViewModel.Employees = GetAllEmployees();
+                dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
+                #endregion
 
-            #region Recruitment Widget
-            dashboardViewModel.Recruitments = GetRecruitments();
-            #endregion
+                #region Recruitment Widget
+                dashboardViewModel.Recruitments = GetRecruitments();
+                #endregion
 
-            #region Recent Employees Widget
-            dashboardViewModel.Departments = GetAllDepartments();
-            dashboardViewModel.EmployeesRecent = GetRecentEmployees(requester);
-            #endregion
+                #region Recent Employees Widget
+                dashboardViewModel.Departments = GetAllDepartments();
+                dashboardViewModel.EmployeesRecent = GetRecentEmployees(requester);
+                #endregion
 
-            #region Profile Widget
-            if (requester!="Admin")
-                dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
-            #endregion
+                #region Profile Widget
+                if (requester != "Admin")
+                    dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
+                #endregion
 
-            #region Payroll Widget
-            if (requester != "Admin")
-                dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()),DateTime.Now);
-            #endregion
+                #region Payroll Widget
+                if (requester != "Admin")
+                    dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), DateTime.Now);
+                #endregion
 
-            #region Meeting Widget
+                #region Meeting Widget
 
                 dashboardViewModel.Meetings = GetMeetings(requester);
 
-            #endregion
+                #endregion
 
-            #region My Tasks
-            dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
-            dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
-            #endregion
+                #region My Tasks
+                dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
+                dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
+                #endregion
             }
             if ((string)Session["RoleName"] == "Customer" || (string)Session["RoleName"] == "Admin")
             {
@@ -154,7 +154,7 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchItems();
 
             var userId = User.Identity.GetUserId();
-            dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromServerToClient());
+            dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
 
             #endregion
             ViewBag.UserName = Session["FullName"].ToString();
@@ -214,13 +214,13 @@ namespace EPMS.Web.Controllers
         /// Load recent 5 orders
         /// </summary>
         /// <returns></returns>
-        private IEnumerable<Order> GetOrders(string requester,int status)
+        private IEnumerable<Order> GetOrders(string requester, int status)
         {
-            return ordersService.GetRecentOrders(requester,status).Select(x => x.CreateForDashboard());
+            return ordersService.GetRecentOrders(requester, status).Select(x => x.CreateForDashboard());
         }
         private ProjectResponseForDashboard GetProjects(string requester, long projectId)
         {
-            return projectService.LoadProjectForDashboard(requester,projectId);
+            return projectService.LoadProjectForDashboard(requester, projectId);
         }
         private IEnumerable<ProjectTaskResponse> GetMyTasks(long employeeId, long projectId)
         {
@@ -260,7 +260,7 @@ namespace EPMS.Web.Controllers
         {
             return employeeService.FindEmployeeById(employeeId).CreateForDashboardProfile();
         }
-        private Payroll GetPayroll(long employeeId,DateTime date)
+        private Payroll GetPayroll(long employeeId, DateTime date)
         {
             return payrollService.LoadPayroll(employeeId, date).CreatePayrollForDashboard();
         }
@@ -284,10 +284,10 @@ namespace EPMS.Web.Controllers
                 }
             }
             return Enumerable.Empty<Models.QuickLaunchMenuItems>();
-            
+
         }
 
-            #endregion
+        #endregion
 
         #region Ajax response Methods
         /// <summary>
@@ -318,8 +318,8 @@ namespace EPMS.Web.Controllers
                 int i = 1;
                 foreach (var pref in preferences)
                 {
-                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences { UserId = userId, WidgetId = pref, SortNumber = i };
-                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
+                    var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
                     if (PreferencesService.Addpreferences(preferenceToUpdate))
                     {
                         i++;
@@ -334,15 +334,15 @@ namespace EPMS.Web.Controllers
                 int i = 0;
                 foreach (var pref in preferences)
                 {
-                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences
+                    Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference
                     {
                         WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
                         UserId = userpreferences[i].UserId,
                         WidgetId = pref,
-                        SortNumber = i+1
+                        SortNumber = i + 1
                     };
-                    var preferenceToUpdate = preference.CreateFromClientToServer();
-                    if (PreferencesService.Updatepreferences(preferenceToUpdate))
+                    var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
+                    if (PreferencesService.UpdatePreferences(preferenceToUpdate))
                     {
                         i++;
                     }
@@ -451,7 +451,7 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadMyTasks(long projectId)
         {
-            var projects = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()),projectId);
+            var projects = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), projectId);
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
         #endregion
