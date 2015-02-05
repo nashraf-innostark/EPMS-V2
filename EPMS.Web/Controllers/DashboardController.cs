@@ -62,7 +62,8 @@ namespace EPMS.Web.Controllers
         /// <param name="customerService"></param>
         /// <param name="complaintService"></param>
         /// <param name="preferencesService"></param>
-        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService)
+        /// <param name="menuRightsService"></param>
+        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService,IMenuRightsService menuRightsService)
         {
             this.projectTaskService = projectTaskService;
             this.meetingService = meetingService;
@@ -282,8 +283,6 @@ namespace EPMS.Web.Controllers
                 }
             }
             return Enumerable.Empty<QuickLaunchItem>();
-
-
             
         }
 
