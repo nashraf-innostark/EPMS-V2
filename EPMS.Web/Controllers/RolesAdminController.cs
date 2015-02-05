@@ -13,6 +13,7 @@ using EPMS.Models.MenuModels;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.ViewModels.RightsManagement;
 using EPMS.Web.ViewModels.Common;
+using EPMS.WebBase.Mvc;
 
 namespace IdentitySample.Controllers
 {
@@ -224,10 +225,9 @@ namespace IdentitySample.Controllers
             }
             return View();
         }
-
+        [SiteAuthorize(PermissionKey = "RightsManagement")]
         public ActionResult RightsManagement()
         {
-
             UserMenuResponse userMenuRights = menuRightsService.GetRoleMenuRights(string.Empty);
             RightsManagementViewModel viewModel = new RightsManagementViewModel();
 

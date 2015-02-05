@@ -50,6 +50,29 @@ namespace EPMS.Implementation.Services
             return notificationViewModel;
         }
 
+        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+            IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
+            if (employees.Any())
+            {
+                notificationViewModel.EmployeeDDL = employees.Select(x => x.CreateForEmployeeDDL()).ToList();
+            }
+            if (notificationId != null && notificationId > 0)
+            {
+                Notification notification = notificationRepository.Find((long)notificationId);
+                if (notification != null)
+                {
+                    //Mark the notification as READ
+                    notification.ReadStatus = true;
+                    notificationRepository.Update(notification);
+                    notificationRepository.SaveChanges();
+                    notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
+                }
+            }
+            return notificationViewModel;
+        }
+
         public bool AddUpdateNotification(NotificationViewModel notificationViewModel)
         {
             if (notificationViewModel.NotificationResponse.NotificationId > 0)
@@ -69,17 +92,31 @@ namespace EPMS.Implementation.Services
                 AddNotification(notificationViewModel.NotificationResponse);
             }
             //Send Email
-            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
-            {
-                string emailBody = notificationViewModel.NotificationResponse.TitleE + "<br/>" + notificationViewModel.NotificationResponse.TitleA;
-                Utility.SendEmail(notificationViewModel.NotificationResponse.Email, ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
-            }
+            SentNotificationEmail(notificationViewModel);
             //Send SMS
+            SendNotificationSMS(notificationViewModel);
+            return true;
+        }
+
+        private static void SendNotificationSMS(NotificationViewModel notificationViewModel)
+        {
             if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.MobileNo))
             {
-
+                string smsText = "Notification:\n" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
+                                 notificationViewModel.NotificationResponse.TitleA;
+                Utility.SendNotificationSms(smsText, notificationViewModel.NotificationResponse.MobileNo);
             }
-            return true;
+        }
+
+        private static void SentNotificationEmail(NotificationViewModel notificationViewModel)
+        {
+            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
+            {
+                string emailBody = "Notification:<br/>" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
+                                   notificationViewModel.NotificationResponse.TitleA;
+                Utility.SendEmail(notificationViewModel.NotificationResponse.Email,
+                    ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
+            }
         }
 
         public bool AddNotification(NotificationResponse notification)
