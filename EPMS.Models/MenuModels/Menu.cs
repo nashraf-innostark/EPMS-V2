@@ -56,6 +56,6 @@ namespace EPMS.Models.MenuModels
         /// </summary>
         public virtual Menu ParentItem { get; set; }
         public virtual ICollection<MenuRight> MenuRights { get; set; }
-        public virtual ICollection<QuickLaunchItems> QuickLaunchItems { get; set; }
+        public virtual ICollection<QuickLaunchItem> QuickLaunchItems { get; set; }
     }
 }

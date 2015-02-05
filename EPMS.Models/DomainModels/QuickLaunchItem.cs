@@ -2,7 +2,7 @@
 
 namespace EPMS.Models.DomainModels
 {
-    public class QuickLaunchItems
+    public class QuickLaunchItem
     {
         public long QuickLaunchId { get; set; }
         public long UserId { get; set; }

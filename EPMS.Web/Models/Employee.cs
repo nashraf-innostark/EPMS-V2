@@ -32,7 +32,7 @@ namespace EPMS.Web.Models
         public short? EmployeeNationality { get; set; }
         [Required(ErrorMessage = "Iqama Number Or National ID Number is required.")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
-        public int? EmployeeIqama { get; set; }
+        public string EmployeeIqama { get; set; }
         public string EmployeeIqamaIssueDt { get; set; }
         public string EmployeeIqamaIssueDtAr { get; set; }
         [Required(ErrorMessage = "Iqama Expiry Date is required.")]

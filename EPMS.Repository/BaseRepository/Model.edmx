@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -268,8 +268,8 @@
           <Property Name="EmployeeLandlineNum" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="MaritalStatus" Type="tinyint" />
           <Property Name="EmployeeDOB" Type="date" Nullable="false" />
-          <Property Name="EmployeeNationality" Type="smallint" />
-          <Property Name="EmployeeIqama" Type="int" Nullable="false" />
+          <Property Name="EmployeeNationality" Type="bigint" />
+          <Property Name="EmployeeIqama" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="EmployeeIqamaIssueDt" Type="date" />
           <Property Name="EmployeeIqamaExpiryDt" Type="date" Nullable="false" />
           <Property Name="EmployeePassportNum" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -456,7 +456,7 @@
           <Property Name="AlertDateType" Type="int" Nullable="false" />
           <Property Name="AlertDate" Type="datetime" Nullable="false" />
           <Property Name="EmployeeId" Type="bigint" />
-          <Property Name="MobileNo" Type="nchar" MaxLength="15" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="20" />
           <Property Name="Email" Type="nvarchar" MaxLength="200" />
           <Property Name="ReadStatus" Type="bit" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
@@ -1394,10 +1394,11 @@
             <End Role="UserPrefrences" EntitySet="UserPrefrences" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -1420,7 +1421,7 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="AllowanceDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1473,9 +1474,9 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_AspNetUsers_Customer" FromRole="AspNetUsers" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
           <NavigationProperty Name="UserPrefrences" Relationship="Self.FK_UserPrefrences_AspNetUsers" FromRole="AspNetUsers" ToRole="UserPrefrences" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
         </EntityType>
         <EntityType Name="CompanyBankDetail">
           <Key>
@@ -1643,6 +1644,15 @@
           <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
           <NavigationProperty Name="Quotations" Relationship="Self.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
         </EntityType>
+        <EntityType Name="DashboardWidgetPreference">
+          <Key>
+            <PropertyRef Name="WidgetPerferencesId" />
+          </Key>
+          <Property Name="WidgetPerferencesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WidgetId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SortNumber" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -1658,6 +1668,42 @@
           <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
           <NavigationProperty Name="JobTitles" Relationship="Self.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
         </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeNameA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitleId" Type="Int64" />
+          <Property Name="EmployeeJobId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeMobileNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeLandlineNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaritalStatus" Type="Byte" />
+          <Property Name="EmployeeDOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EmployeeNationality" Type="Int16" />
+          <Property Name="EmployeeIqama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeIqamaIssueDt" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeIqamaExpiryDt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EmployeePassportNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeePassportExpiryDt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EmployeeDetailsE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeDetailsA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Allowances" Relationship="Self.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUsers" />
+          <NavigationProperty Name="JobTitle" Relationship="Self.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
+          <NavigationProperty Name="EmployeeJobHistories" Relationship="Self.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
+          <NavigationProperty Name="EmployeeRequests" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequests" />
+          <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendees" />
+          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
+          <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
+        </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -1667,8 +1713,8 @@
           <Property Name="JobTitleId" Type="Int64" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeJobHistory_Employee" FromRole="EmployeeJobHistory" ToRole="Employee" />
           <NavigationProperty Name="JobTitle" Relationship="Self.FK_EmployeeJobHistory_JobTitle" FromRole="EmployeeJobHistory" ToRole="JobTitle" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_EmployeeJobHistory_Employee" FromRole="EmployeeJobHistory" ToRole="Employee" />
         </EntityType>
         <EntityType Name="EmployeeRequest">
           <Key>
@@ -1683,8 +1729,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="EmployeeRequests" ToRole="Employee" />
           <NavigationProperty Name="RequestDetails" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="EmployeeRequests" ToRole="RequestDetails" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="EmployeeRequest" ToRole="Employee" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -1743,10 +1789,10 @@
           <Property Name="JobTitleNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="JobTitleDescA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Department" Relationship="Self.FK_JobTitle_Department" FromRole="JobTitle" ToRole="Department" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
           <NavigationProperty Name="EmployeeJobHistories" Relationship="Self.FK_EmployeeJobHistory_JobTitle" FromRole="JobTitle" ToRole="EmployeeJobHistory" />
           <NavigationProperty Name="JobOffereds" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobTitle" ToRole="JobOffered" />
           <NavigationProperty Name="JobTitleHistories" Relationship="Self.FK_JobTitleHistory_JobTitle" FromRole="JobTitle" ToRole="JobTitleHistory" />
-          <NavigationProperty Name="Employees" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="JobTitle" ToRole="Employee" />
         </EntityType>
         <EntityType Name="JobTitleHistory">
           <Key>
@@ -1784,8 +1830,22 @@
           <Property Name="AttendeeEmail2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AttendeeName3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttendeeEmail3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Meeting" FromRole="Meeting" ToRole="MeetingAttendees" />
           <NavigationProperty Name="MeetingDocuments" Relationship="Self.FK_MeetingDocuments_Meeting" FromRole="Meeting" ToRole="MeetingDocuments" />
-          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="Meeting" ToRole="MeetingAttendee" />
+        </EntityType>
+        <EntityType Name="MeetingAttendee">
+          <Key>
+            <PropertyRef Name="AttendeeId" />
+          </Key>
+          <Property Name="AttendeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MeetingId" Type="Int64" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <Property Name="NotificationId" Type="Int64" />
+          <Property Name="NotificationStatus" Type="Boolean" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_MeetingAttendees_Employee" FromRole="MeetingAttendees" ToRole="Employee" />
+          <NavigationProperty Name="Meeting" Relationship="Self.FK_MeetingAttendees_Meeting" FromRole="MeetingAttendees" ToRole="Meeting" />
+          <NavigationProperty Name="Notification" Relationship="Self.FK_MeetingAttendees_Notification" FromRole="MeetingAttendees" ToRole="Notification" />
         </EntityType>
         <EntityType Name="MeetingDocument">
           <Key>
@@ -1818,7 +1878,7 @@
           <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ParentItem" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
-          <NavigationProperty Name="QuickLaunchItems" Relationship="EPMSModel.FK_QuickLaunchItems_Menu" FromRole="Menu" ToRole="QuickLaunchItems" />
+          <NavigationProperty Name="QuickLaunchItems" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="Menu" ToRole="QuickLaunchItems" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -1829,6 +1889,31 @@
           <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRoles" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TitleA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="AlertBefore" Type="Int32" Nullable="false" />
+          <Property Name="AlertDateType" Type="Int32" Nullable="false" />
+          <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ReadStatus" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SystemGenerated" Type="Boolean" />
+          <Property Name="AlertAppearDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
+          <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendees" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1917,6 +2002,16 @@
           <NavigationProperty Name="PreRequisitTask" Relationship="Self.PreRequisitTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
           <NavigationProperty Name="ProjectTasks" Relationship="Self.PreRequisitTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
         </EntityType>
+        <EntityType Name="QuickLaunchItem">
+          <Key>
+            <PropertyRef Name="QuickLaunchId" />
+          </Key>
+          <Property Name="QuickLaunchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItems" ToRole="Menu" />
+        </EntityType>
         <EntityType Name="Quotation">
           <Key>
             <PropertyRef Name="QuotationId" />
@@ -1996,8 +2091,8 @@
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_TaskEmployee_Employee" FromRole="TaskEmployee" ToRole="Employee" />
           <NavigationProperty Name="ProjectTask" Relationship="Self.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="TaskEmployee" ToRole="Employee" />
         </EntityType>
         <EntityType Name="UserPrefrence">
           <Key>
@@ -2008,6 +2103,18 @@
           <Property Name="Culture" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_UserPrefrences_AspNetUsers" FromRole="UserPrefrences" ToRole="AspNetUsers" />
         </EntityType>
+        <Association Name="FK_Allowance_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Allowance">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="0..1" />
           <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
@@ -2057,6 +2164,18 @@
             </Principal>
             <Dependent Role="AspNetUsers">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUsers_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2204,6 +2323,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_JobTitle">
+          <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobTitle">
+              <PropertyRef Name="JobTitleId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="JobTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeJobHistory_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeJobHistory" Type="Self.EmployeeJobHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeJobHistory">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeRequests_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="EmployeeRequests" Type="Self.EmployeeRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="EmployeeRequests">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingAttendees_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="MeetingAttendees" Type="Self.MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="MeetingAttendees">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notification_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskEmployee_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="TaskEmployee">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeJobHistory_JobTitle">
           <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
           <End Role="EmployeeJobHistory" Type="Self.EmployeeJobHistory" Multiplicity="*" />
@@ -2264,6 +2455,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MeetingAttendees_Meeting">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="1" />
+          <End Role="MeetingAttendees" Type="Self.MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="MeetingId" />
+            </Principal>
+            <Dependent Role="MeetingAttendees">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MeetingDocuments_Meeting">
           <End Role="Meeting" Type="Self.Meeting" Multiplicity="1" />
           <End Role="MeetingDocuments" Type="Self.MeetingDocument" Multiplicity="*" />
@@ -2273,6 +2476,18 @@
             </Principal>
             <Dependent Role="MeetingDocuments">
               <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingAttendees_Notification">
+          <End Role="Notification" Type="Self.Notification" Multiplicity="0..1" />
+          <End Role="MeetingAttendees" Type="Self.MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="MeetingAttendees">
+              <PropertyRef Name="NotificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2297,6 +2512,18 @@
             </Principal>
             <Dependent Role="MenuRight">
               <PropertyRef Name="Menu_MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuickLaunchItems_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="QuickLaunchItems" Type="Self.QuickLaunchItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="QuickLaunchItems">
+              <PropertyRef Name="MenuId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2380,7 +2607,9 @@
           <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetail" />
           <EntitySet Name="Complaints" EntityType="Self.Complaint" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="DashboardWidgetPreferences" EntityType="Self.DashboardWidgetPreference" />
           <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="EmployeeJobHistories" EntityType="Self.EmployeeJobHistory" />
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequest" />
           <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
@@ -2388,18 +2617,25 @@
           <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
           <EntitySet Name="JobTitleHistories" EntityType="Self.JobTitleHistory" />
           <EntitySet Name="Meetings" EntityType="Self.Meeting" />
+          <EntitySet Name="MeetingAttendees" EntityType="Self.MeetingAttendee" />
           <EntitySet Name="MeetingDocuments" EntityType="Self.MeetingDocument" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocument" />
           <EntitySet Name="ProjectTasks" EntityType="Self.ProjectTask" />
+          <EntitySet Name="QuickLaunchItems" EntityType="Self.QuickLaunchItem" />
           <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
           <EntitySet Name="TaskEmployees" EntityType="Self.TaskEmployee" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrence" />
+          <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Allowance" EntitySet="Allowances" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="MenuRight" EntitySet="MenuRights" />
@@ -2414,6 +2650,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_AspNetUsers_Customer" Association="Self.FK_AspNetUsers_Customer">
             <End Role="Customer" EntitySet="Customers" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
+            <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_UserPrefrences_AspNetUsers" Association="Self.FK_UserPrefrences_AspNetUsers">
@@ -2464,6 +2704,30 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="JobTitle" EntitySet="JobTitles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_JobTitle" Association="Self.FK_Employee_JobTitle">
+            <End Role="JobTitle" EntitySet="JobTitles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeJobHistory_Employee" Association="Self.FK_EmployeeJobHistory_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingAttendees_Employee" Association="Self.FK_MeetingAttendees_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeJobHistory_JobTitle" Association="Self.FK_EmployeeJobHistory_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
@@ -2484,9 +2748,17 @@
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobTitleHistory" EntitySet="JobTitleHistories" />
           </AssociationSet>
+          <AssociationSet Name="FK_MeetingAttendees_Meeting" Association="Self.FK_MeetingAttendees_Meeting">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
+          </AssociationSet>
           <AssociationSet Name="FK_MeetingDocuments_Meeting" Association="Self.FK_MeetingDocuments_Meeting">
             <End Role="Meeting" EntitySet="Meetings" />
             <End Role="MeetingDocuments" EntitySet="MeetingDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingAttendees_Notification" Association="Self.FK_MeetingAttendees_Notification">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
             <End Role="Menu" EntitySet="Menus" />
@@ -2495,6 +2767,10 @@
           <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
             <End Role="Menu" EntitySet="Menus" />
             <End Role="MenuRight" EntitySet="MenuRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuickLaunchItems_Menu" Association="Self.FK_QuickLaunchItems_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="QuickLaunchItems" EntitySet="QuickLaunchItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_Orders" Association="Self.FK_Project_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -2524,282 +2800,7 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
-          <EntitySet Name="MeetingAttendees" EntityType="EPMSModel.MeetingAttendee" />
-          <AssociationSet Name="FK_MeetingAttendees_Meeting" Association="EPMSModel.FK_MeetingAttendees_Meeting">
-            <End Role="Meeting" EntitySet="Meetings" />
-            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
-          </AssociationSet>
-          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
-          <AssociationSet Name="FK_MeetingAttendees_Notification" Association="EPMSModel.FK_MeetingAttendees_Notification">
-            <End Role="Notification" EntitySet="Notifications" />
-            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
-          </AssociationSet>
-          <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
-          <AssociationSet Name="FK_Allowance_Employee" Association="EPMSModel.FK_Allowance_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Allowance" EntitySet="Allowances" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Employee" Association="EPMSModel.FK_AspNetUsers_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_JobTitle" Association="EPMSModel.FK_Employee_JobTitle">
-            <End Role="JobTitle" EntitySet="JobTitles" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeJobHistory_Employee" Association="EPMSModel.FK_EmployeeJobHistory_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EmployeeRequests_Employee" Association="EPMSModel.FK_EmployeeRequests_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="EmployeeRequest" EntitySet="EmployeeRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MeetingAttendees_Employee" Association="EPMSModel.FK_MeetingAttendees_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaskEmployee_Employee" Association="EPMSModel.FK_TaskEmployee_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
-          </AssociationSet>
-          <EntitySet Name="DashboardWidgetPreferences" EntityType="EPMSModel.DashboardWidgetPreferences" />
-          <EntitySet Name="QuickLaunchItems" EntityType="EPMSModel.QuickLaunchItems" />
-          <AssociationSet Name="FK_QuickLaunchItems_Menu" Association="EPMSModel.FK_QuickLaunchItems_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="QuickLaunchItems" EntitySet="QuickLaunchItems" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="MeetingAttendee">
-          <Key>
-            <PropertyRef Name="AttendeeId" />
-          </Key>
-          <Property Name="AttendeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MeetingId" Type="Int64" Nullable="false" />
-          <Property Name="EmployeeId" Type="Int64" Nullable="false" />
-          <Property Name="Status" Type="Boolean" Nullable="false" />
-          <Property Name="NotificationId" Type="Int64" />
-          <Property Name="NotificationStatus" Type="Boolean" />
-          <NavigationProperty Name="Meeting" Relationship="EPMSModel.FK_MeetingAttendees_Meeting" FromRole="MeetingAttendee" ToRole="Meeting" />
-          <NavigationProperty Name="Notification" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="MeetingAttendee" ToRole="Notification" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="MeetingAttendee" ToRole="Employee" />
-        </EntityType>
-        <Association Name="FK_MeetingAttendees_Meeting">
-          <End Type="EPMSModel.Meeting" Role="Meeting" Multiplicity="1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Meeting">
-              <PropertyRef Name="MeetingId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="MeetingId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="NotificationId" />
-          </Key>
-          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TitleE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TitleA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="AlertBefore" Type="Int32" Nullable="false" />
-          <Property Name="AlertDateType" Type="Int32" Nullable="false" />
-          <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EmployeeId" Type="Int64" />
-          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ReadStatus" Type="Boolean" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendee" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="SystemGenerated" Type="Boolean" />
-          <Property Name="AlertAppearDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK_MeetingAttendees_Notification">
-          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="0..1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Notification">
-              <PropertyRef Name="NotificationId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="NotificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="EmployeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="JobTitleId" Type="Int64" />
-          <Property Name="EmployeeJobId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeMobileNum" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLandlineNum" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="MaritalStatus" Type="Byte" />
-          <Property Name="EmployeeDOB" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EmployeeNationality" Type="Int16" />
-          <Property Name="EmployeeIqama" Type="Int32" Nullable="false" />
-          <Property Name="EmployeeIqamaIssueDt" Type="DateTime" Precision="0" />
-          <Property Name="EmployeeIqamaExpiryDt" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EmployeePassportNum" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeePassportExpiryDt" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EmployeeDetailsE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeDetailsA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Allowances" Relationship="EPMSModel.FK_Allowance_Employee" FromRole="Employee" ToRole="Allowance" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="Employee" ToRole="AspNetUser" />
-          <NavigationProperty Name="JobTitle" Relationship="EPMSModel.FK_Employee_JobTitle" FromRole="Employee" ToRole="JobTitle" />
-          <NavigationProperty Name="EmployeeJobHistories" Relationship="EPMSModel.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
-          <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
-          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
-          <NavigationProperty Name="Notifications" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
-          <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
-        </EntityType>
-        <Association Name="FK_Allowance_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.Allowance" Role="Allowance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Allowance">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUsers_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="AspNetUser">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_JobTitle">
-          <End Type="EPMSModel.JobTitle" Role="JobTitle" Multiplicity="0..1" />
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTitle">
-              <PropertyRef Name="JobTitleId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="JobTitleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeJobHistory_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.EmployeeJobHistory" Role="EmployeeJobHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmployeeJobHistory">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EmployeeRequests_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.EmployeeRequest" Role="EmployeeRequest" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="EmployeeRequest">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingAttendees_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="MeetingAttendee">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Notification_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TaskEmployee_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.TaskEmployee" Role="TaskEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="TaskEmployee">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="DashboardWidgetPreferences">
-          <Key>
-            <PropertyRef Name="WidgetPerferencesId" />
-          </Key>
-          <Property Name="WidgetPerferencesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="WidgetId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SortNumber" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="QuickLaunchItems">
-          <Key>
-            <PropertyRef Name="QuickLaunchId" />
-          </Key>
-          <Property Name="QuickLaunchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int64" Nullable="false" />
-          <Property Name="MenuId" Type="Int32" Nullable="false" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Menu" Relationship="EPMSModel.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItems" ToRole="Menu" />
-        </EntityType>
-        <Association Name="FK_QuickLaunchItems_Menu">
-          <End Type="EPMSModel.Menu" Role="Menu" Multiplicity="1" />
-          <End Type="EPMSModel.QuickLaunchItems" Role="QuickLaunchItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="QuickLaunchItems">
-              <PropertyRef Name="MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3034,6 +3035,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DashboardWidgetPreferences">
+            <EntityTypeMapping TypeName="EPMSModel.DashboardWidgetPreference">
+              <MappingFragment StoreEntitySet="DashboardWidgetPreferences">
+                <ScalarProperty Name="WidgetPerferencesId" ColumnName="WidgetPerferencesId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="WidgetId" ColumnName="WidgetId" />
+                <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="EPMSModel.Department">
               <MappingFragment StoreEntitySet="Department">
@@ -3045,6 +3056,35 @@
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EPMSModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmployeeNameE" ColumnName="EmployeeNameE" />
+                <ScalarProperty Name="EmployeeNameA" ColumnName="EmployeeNameA" />
+                <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
+                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
+                <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
+                <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
+                <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
+                <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
+                <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
+                <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
+                <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
+                <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
+                <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
+                <ScalarProperty Name="EmployeeDetailsE" ColumnName="EmployeeDetailsE" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmployeeDetailsA" ColumnName="EmployeeDetailsA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3169,6 +3209,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="MeetingAttendees">
+            <EntityTypeMapping TypeName="EPMSModel.MeetingAttendee">
+              <MappingFragment StoreEntitySet="MeetingAttendees">
+                <ScalarProperty Name="AttendeeId" ColumnName="AttendeeId" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="NotificationStatus" ColumnName="NotificationStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="MeetingDocuments">
             <EntityTypeMapping TypeName="EPMSModel.MeetingDocument">
               <MappingFragment StoreEntitySet="MeetingDocuments">
@@ -3206,6 +3258,30 @@
                 <ScalarProperty Name="MenuRightId" ColumnName="MenuRightId" />
                 <ScalarProperty Name="Menu_MenuId" ColumnName="Menu_MenuId" />
                 <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="EPMSModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
+                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
+                <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
+                <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ReadStatus" ColumnName="ReadStatus" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
+                <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3284,6 +3360,16 @@
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuickLaunchItems">
+            <EntityTypeMapping TypeName="EPMSModel.QuickLaunchItem">
+              <MappingFragment StoreEntitySet="QuickLaunchItems">
+                <ScalarProperty Name="QuickLaunchId" ColumnName="QuickLaunchId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3392,91 +3478,6 @@
               <ScalarProperty Name="TaskId" ColumnName="TaskId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="MeetingAttendees">
-            <EntityTypeMapping TypeName="EPMSModel.MeetingAttendee">
-              <MappingFragment StoreEntitySet="MeetingAttendees">
-                <ScalarProperty Name="NotificationStatus" ColumnName="NotificationStatus" />
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
-                <ScalarProperty Name="AttendeeId" ColumnName="AttendeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="EPMSModel.Notification">
-              <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
-                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="ReadStatus" ColumnName="ReadStatus" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
-                <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
-                <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
-                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="EPMSModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="EmployeeDetailsA" ColumnName="EmployeeDetailsA" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="EmployeeDetailsE" ColumnName="EmployeeDetailsE" />
-                <ScalarProperty Name="EmployeePassportExpiryDt" ColumnName="EmployeePassportExpiryDt" />
-                <ScalarProperty Name="EmployeePassportNum" ColumnName="EmployeePassportNum" />
-                <ScalarProperty Name="EmployeeIqamaExpiryDt" ColumnName="EmployeeIqamaExpiryDt" />
-                <ScalarProperty Name="EmployeeIqamaIssueDt" ColumnName="EmployeeIqamaIssueDt" />
-                <ScalarProperty Name="EmployeeIqama" ColumnName="EmployeeIqama" />
-                <ScalarProperty Name="EmployeeNationality" ColumnName="EmployeeNationality" />
-                <ScalarProperty Name="EmployeeDOB" ColumnName="EmployeeDOB" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="EmployeeLandlineNum" ColumnName="EmployeeLandlineNum" />
-                <ScalarProperty Name="EmployeeMobileNum" ColumnName="EmployeeMobileNum" />
-                <ScalarProperty Name="EmployeeJobId" ColumnName="EmployeeJobId" />
-                <ScalarProperty Name="JobTitleId" ColumnName="JobTitleId" />
-                <ScalarProperty Name="EmployeeImagePath" ColumnName="EmployeeImagePath" />
-                <ScalarProperty Name="EmployeeNameA" ColumnName="EmployeeNameA" />
-                <ScalarProperty Name="EmployeeNameE" ColumnName="EmployeeNameE" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DashboardWidgetPreferences">
-            <EntityTypeMapping TypeName="EPMSModel.DashboardWidgetPreferences">
-              <MappingFragment StoreEntitySet="DashboardWidgetPreferences">
-                <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
-                <ScalarProperty Name="WidgetId" ColumnName="WidgetId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="WidgetPerferencesId" ColumnName="WidgetPerferencesId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="QuickLaunchItems">
-            <EntityTypeMapping TypeName="EPMSModel.QuickLaunchItems">
-              <MappingFragment StoreEntitySet="QuickLaunchItems">
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="QuickLaunchId" ColumnName="QuickLaunchId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3491,94 +3492,13 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams>
-      <Diagram DiagramId="2bacf6f43e1546c88d6131127d588695" Name="Diagram1">
-        <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="8.25" PointY="53.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="12.75" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUserLogin" Width="1.5" PointX="12.75" PointY="37.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.AspNetUser" Width="1.5" PointX="10.5" PointY="35.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.CompanyBankDetail" Width="1.5" PointX="12" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.CompanyDocumentDetail" Width="1.5" PointX="12" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.CompanyProfile" Width="1.5" PointX="9.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.CompanySocialDetail" Width="1.5" PointX="12" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="0.75" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.EmployeeJobHistory" Width="1.5" PointX="7.5" PointY="36.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="44.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="7.5" PointY="22.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.JobOffered" Width="1.5" PointX="5.25" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.JobTitle" Width="1.5" PointX="3" PointY="29.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.JobTitleHistory" Width="1.5" PointX="5.25" PointY="27.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Meeting" Width="1.5" PointX="7.5" PointY="62.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.MeetingDocument" Width="1.5" PointX="9.75" PointY="63.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="10.5" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="0.75" PointY="28.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Project" Width="1.5" PointX="3" PointY="43.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.ProjectDocument" Width="1.5" PointX="5.25" PointY="50.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.5" PointX="5.25" PointY="43.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Quotation" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.QuotationItemDetail" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="9.75" PointY="43.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.TaskEmployee" Width="1.5" PointX="7.5" PointY="39.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.UserPrefrence" Width="1.5" PointX="12.75" PointY="40" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="9.75" PointY="49.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.5" PointY="56" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreferences" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_UserPrefrences_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_CompanyBankDetails_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_CompanyDocuments_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_CompanySocialDetails_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Orders_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Project_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Quotation_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_JobOffered_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingDocuments_Meeting" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Project_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Task" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EPMSModel.QuickLaunchItems" Width="1.5" PointX="3" PointY="3.5" />
-        <AssociationConnector Association="EPMSModel.FK_QuickLaunchItems_Menu" />
-      </Diagram>
-    </Diagrams>
+    <Diagrams></Diagrams>
   </Designer>
 </edmx:Edmx>
