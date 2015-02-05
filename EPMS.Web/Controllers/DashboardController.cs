@@ -1,15 +1,29 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
+using EPMS.Models.MenuModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
+using EPMS.Web.Models;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
+using Complaint = EPMS.Web.DashboardModels.Complaint;
+using Customer = EPMS.Web.DashboardModels.Customer;
+using Department = EPMS.Web.DashboardModels.Department;
+using Employee = EPMS.Web.DashboardModels.Employee;
+using Meeting = EPMS.Web.DashboardModels.Meeting;
+using Order = EPMS.Web.DashboardModels.Order;
+using Payroll = EPMS.Web.DashboardModels.Payroll;
+using EmployeeRequest = EPMS.Web.DashboardModels.EmployeeRequest;
 
 namespace EPMS.Web.Controllers
 {
@@ -29,6 +43,8 @@ namespace EPMS.Web.Controllers
         private readonly IEmployeeService employeeService;
         private readonly ICustomerService customerService;
         private readonly IComplaintService complaintService;
+        private readonly IDashboardWidgetPreferencesService PreferencesService;
+        private readonly IMenuRightsService menuRightsService;
 
         /// <summary>
         /// Dashboard constructor
@@ -44,7 +60,8 @@ namespace EPMS.Web.Controllers
         /// <param name="employeeService"></param>
         /// <param name="customerService"></param>
         /// <param name="complaintService"></param>
-        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
+        /// <param name="preferencesService"></param>
+        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService)
         {
             this.projectTaskService = projectTaskService;
             this.meetingService = meetingService;
@@ -57,6 +74,8 @@ namespace EPMS.Web.Controllers
             this.employeeService = employeeService;
             this.customerService = customerService;
             this.complaintService = complaintService;
+            PreferencesService = preferencesService;
+            this.menuRightsService = menuRightsService;
         }
         #endregion
 
@@ -124,7 +143,13 @@ namespace EPMS.Web.Controllers
                 dashboardViewModel.ProjectsDDL = GetProjectsDDL(requester, 1);
                 #endregion
             }
-            
+            #region Widget Preferences
+            dashboardViewModel.QuickLaunchItems = LoadQuickLaunchItems();
+
+            var userId = User.Identity.GetUserId();
+            dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromServerToClient());
+
+            #endregion
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
             return View(dashboardViewModel);
@@ -232,7 +257,32 @@ namespace EPMS.Web.Controllers
         {
             return payrollService.LoadPayroll(employeeId, date).CreatePayrollForDashboard();
         }
-        #endregion
+        /// <summary>
+        /// Loads All Quick Launch Items
+        /// </summary>
+        private IEnumerable<QuickLaunchItem> LoadQuickLaunchItems()
+        {
+            string userName = HttpContext.User.Identity.Name;
+            if (!String.IsNullOrEmpty(userName))
+            {
+                AspNetUser userResult = UserManager.FindByName(userName);
+                if (userResult != null)
+                {
+                    IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
+                    if (roles.Count > 0)
+                    {
+                        IEnumerable<QuickLaunchItem> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
+                        return menuItems;
+                    }
+                }
+            }
+            return Enumerable.Empty<QuickLaunchItem>();
+
+
+            
+        }
+
+            #endregion
 
         #region Ajax response Methods
         /// <summary>
@@ -255,8 +305,46 @@ namespace EPMS.Web.Controllers
         [HttpPost]
         public JsonResult SaveWidgetPreferences(string[] preferences)
         {
-
-            return Json("", JsonRequestBehavior.AllowGet);
+            var userId = User.Identity.GetUserId();
+            var result = PreferencesService.LoadPreferencesByUserId(userId);
+            if (result == null)
+            {
+                // Add
+                int i = 1;
+                foreach (var pref in preferences)
+                {
+                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences { UserId = userId, WidgetId = pref, SortNumber = i };
+                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    if (PreferencesService.Addpreferences(preferenceToUpdate))
+                    {
+                        i++;
+                    }
+                }
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var userpreferences = PreferencesService.LoadAllPreferencesByUserId(userId).ToList();
+                // Update
+                int i = 0;
+                foreach (var pref in preferences)
+                {
+                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences
+                    {
+                        WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
+                        UserId = userpreferences[i].UserId,
+                        WidgetId = pref,
+                        SortNumber = i+1
+                    };
+                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    if (PreferencesService.Updatepreferences(preferenceToUpdate))
+                    {
+                        i++;
+                    }
+                }
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

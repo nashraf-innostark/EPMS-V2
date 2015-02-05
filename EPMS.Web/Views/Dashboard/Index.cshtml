@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
+﻿@using iTextSharp.text.pdf.qrcode
+@model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
 
 @{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
@@ -25,275 +26,746 @@
 <input type="hidden" id="userRole" value="@ViewBag.UserRole" />
 <input type="hidden" id="makeComplaint" value="@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint" />
 <input type="hidden" id="makeMeeting" value="@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting" />
+
+
 <!-- dashboard-quick-launch box -->
-@*<div class="container-fluid dashboard dashboard-quick-launch">
-        <div class="row-fluid">
-            <div class="span12">
-                <ul id="sortable">
-                    <li class="add-ql">
-                        <a href="#modal-add-quick-launch-custom" data-toggle="modal">
-                            <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<div class="container-fluid dashboard dashboard-quick-launch">
+    <div class="row-fluid">
+        <div class="span12">
+            <ul id="sortable">
+                <li class="add-ql">
+                    <a href="#modal-add-quick-launch-custom" data-toggle="modal">
+                        <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>*@
+    </div>
+</div>
+
 <div class="container-fluid dashboard dashboard-widget-group">
     <div class="row-fluid">
         <div id="photon_widgets" class="span12 ui-sortable">
             <!-- General Stats Widget begin -->
-            @if (ViewBag.UserRole != "Customer")
+            @foreach (var sortOrder in Model.WidgetPreferenceses)
             {
+                switch (sortOrder.WidgetId)
+                {
+                    case "EmployeeRequestsWidget":
+                        if (ViewBag.UserRole != "Customer")
+                        {
                 <!-- Employee Requests Widget -->
-                <div class="widget-holder" id="EmployeeRequestsWidget">
-                    <div class="widget-flipper">
-                        <!-- Front -->
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="~/HR/Request/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.EmployeeRequests</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
-                                    @if (ViewBag.UserRole == "Admin")
-                                    {
-                                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    }
-                                    <i class="icon-photon user opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="employeeRequests">
-                                @if (Model.EmployeeRequests.Any())
-                                {
-                                    foreach (var item in Model.EmployeeRequests.ToList())
-                                    {
-                                        <li>
-                                            <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
+                            <div class="widget-holder" id="EmployeeRequestsWidget">
+                                <div class="widget-flipper">
+                                    <!-- Front -->
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/HR/Request/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.EmployeeRequests</a>
                                             <div>
-                                                <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
-                                                @if (item.IsReplied)
+                                                <a href="javascript:;" class="refresher" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                                                @if (ViewBag.UserRole == "Admin")
                                                 {
-                                                    <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                                                 }
-                                                else
-                                                {
-                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
-                                                }
+                                                <i class="icon-photon user opc1"></i>
                                             </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No record found</li>
-                                }
-                            </ul>
-                        </div>
-                        <!-- Back -->
-                        <div class="widget-area widget-general-stats widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
                                         </div>
+                                        <ul id="employeeRequests">
+                                            @if (Model.EmployeeRequests.Any())
+                                            {
+                                                foreach (var item in Model.EmployeeRequests.ToList())
+                                                {
+                                                    <li>
+                                                        <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
+                                                        <div>
+                                                            <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                            @if (item.IsReplied)
+                                                            {
+                                                                <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                            }
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+                                        </ul>
                                     </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                    <!-- Back -->
+                                    <div class="widget-area widget-general-stats widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "OrderWidget":
+                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        {
+                        <!-- Orders Widget -->
+                            <div class="widget-holder" id="OrderWidget">
+                                <div class="widget-flipper">
+                                    <!-- Front -->
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/CMS/Orders/Index" class="darkGreen"> Orders</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                                                <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                <i class="icon-photon calendar_alt_stroke  opc1"></i>
                                             </div>
                                         </div>
+                                        <ul id="customerOrders">
+                                            @if (Model.Orders.Any())
+                                            {
+                                                foreach (var item in Model.Orders.ToList())
+                                                {
+                                                    <li>
+                                                        <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
+                                                        <div class="dateFormatter">
+                                                            @item.OrderDate
+                                                            @switch (item.OrderStatus)
+                                                            {
+                                                                case 2:
+                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                                    break;
+                                                                case 1:
+                                                                <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
+                                                                    break;
+                                                                case 3:
+                                                                <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
+                                                                    break;
+                                                                case 4:
+                                                                <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
+                                                                    break;
+                                                            }
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                    <!-- Back -->
+                                    <div class="widget-area widget-general-stats widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadOrders(this); "><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerIdForOrder" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            <select id="orderStatus">
+                                                                <option selected="" value="0">Any</option>
+                                                                <option value="1">Pending</option>
+                                                                <option value="2">On Going</option>
+                                                                <option value="4">Completed</option>
+                                                                <option value="3">Canceled</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "ComplaintsWidget":
+                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        {
+                        <!-- Complaints Widget -->
+                            <div class="widget-holder" id="ComplaintsWidget">
+                                <div class="widget-flipper">
+                                    <!-- Front -->
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Complaints</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick=" LoadComplaints(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                @if (ViewBag.UserRole != "Customer")
+                                                {
+                                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                }
+
+                                                <i class="icon-photon user opc1"></i>
+                                            </div>
+                                        </div>
+                                        <ul id="complaints">
+                                            @if (Model.Complaints.Any())
+                                            {
+                                                foreach (var item in Model.Complaints.ToList())
+                                                {
+                                                    <li>
+                                                        <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        <div>
+                                                            <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                            @if (item.IsReplied)
+                                                            {
+                                                                <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
+                                                            }
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+                                            @if (ViewBag.UserRole == "Customer")
+                                            {
+                                                <li>
+                                                    <a href="~/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+                                    </div>
+                                    <!-- Back -->
+                                    <div class="widget-area widget-general-stats widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadComplaints(this); "><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.customerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerId" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "RecruitmentWidget":
+                        if (ViewBag.UserRole == "Admin")
+                        {
+                        <!-- Recruitment Widget -->
+                            <div class="widget-holder" id="RecruitmentWidget">
+                                <div class="widget-flipper">
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/HR/JobOffered/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Recruitment</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick="LoadRecruitments(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <i class="icon-photon hash opc1"></i>
+                                            </div>
+                                        </div>
+                                        <ul id="recruitments">
+                                            @if (Model.Recruitments.Any())
+                                            {
+                                                foreach (var item in Model.Recruitments.ToList())
+                                                {
+                                                    <li>
+                                                        <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
+                                                        <div>
+                                                            @item.NoOfApplicants
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+
+                                        </ul>
                                     </div>
 
                                 </div>
-                            </form>
+                                <div class="tempLoader" style="display:none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "MeetingWidget":
+                        if (ViewBag.UserRole != "Customer")
+                        {
+                        <!-- Meeting Widget -->
+                            <div class="widget-holder" id="MeetingWidget">
+                                <div class="widget-flipper">
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/Meeting/Meeting/Index" class="lightYellow">@EPMS.Web.Resources.Dashboard.Dashboard.Meeting</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick="LoadMeetings(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <i class="icon-photon calendar_alt_stroke opc1"></i>
+                                            </div>
+                                        </div>
+                                        <ul id="meetings">
+                                            @if (Model.Meetings.Any())
+                                            {
+                                                foreach (var item in Model.Meetings.ToList())
+                                                {
+                                                    <li>
+                                                        <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        <div>
+                                                            @item.MeetingDate
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+                                            @if (ViewBag.UserRole == "Admin")
+                                            {
+                                                <li>
+                                                    <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "MyProfileWidget":
+                        if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
+                        {
+                            <!-- My Profile Widget -->
+                            <div class="widget-holder" id="MyProfileWidget">
+                                <div class="widget-flipper">
+                                    <div class="widget-area widget-general-stats widget-front profile">
+                                        <div class="widget-head ">
+                                            <a href="~/HR/Employee/Index" class="lightPurpule">@EPMS.Web.Resources.Dashboard.Dashboard.MyProfile</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick=" LoadMyProfile(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <i class="icon-photon folder_stroke opc1"></i>
+                                            </div>
+                                        </div>
+                                        <ul id="myprofile">
+                                            <li>
+                                                <div class="avatar-image">
+                                                    <img src="@Model.Profile.EmployeeImagePath" alt="profile">
+                                                </div>
+                                                <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
+
+                                            </li>
+                                            <li>
+                                                <span>Job ID</span>
+                                                <div>
+                                                    @Model.Profile.EmployeeJobId
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <span>Job Title</span>
+                                                <div>
+                                                    @Model.Profile.EmployeeJobTitleE
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <span>ID Expiry Date</span>
+                                                <div>
+                                                    @Model.Profile.EmployeeIqamaExpiryDt
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "PayrollWidget":
+                        if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
+                        {
+            <!-- Payroll Widget -->
+                            <div class="widget-holder" id="PayrollWidget">
+                                <div class="widget-flipper">
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/HR/Payroll/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Payroll</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick="LoadPayroll(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                                <i class="icon-photon document_stroke opc1"></i>
+                                            </div>
+                                        </div>
+                                        <ul id="mypayroll">
+                                            <li id="basicSal">
+                                                <span>Basic Salary</span>
+                                                <div>
+                                                    @Model.Payroll.BasicSalary
+                                                </div>
+                                            </li>
+                                            <li id="totalAllownces">
+                                                <span>Allowances</span>
+                                                <div>
+                                                    @Model.Payroll.Allowances
+                                                </div>
+                                            </li>
+                                            <li id="totalDeductions">
+                                                <span>Deductions</span>
+                                                <div>
+                                                    @Model.Payroll.Deductions
+                                                </div>
+                                            </li>
+                                            <li id="totalSal">
+                                                <span>Total</span>
+                                                <div>
+                                                    @Model.Payroll.Total
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="widget-area widget-general-stats widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadPayroll(this);"><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterbyMonth:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            <select id="selectedmonth">
+                                                                <option selected="" value="1">Current</option>
+                                                                <option value="2">Previous</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tempLoader" style="display:none;"></div>
+                            </div>
+                        }
+                        break;
+                    case "EmployeesWidget":
+                    if (ViewBag.UserRole == "Admin")
+                    {
+            <!-- Latest Recent Employees Widget begins -->
+                        <div class="widget-holder" id="EmployeesWidget">
+                            <div class="widget-flipper">
+                                <!-- Front -->
+                                <div class="widget-area widget-latest-users widget-front">
+                                    <div class="widget-head ">
+                                        <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Employees</a>
+                                        <div>
+                                            <a href="javascript:;" class="refresher" onclick=" LoadRecentEmployees(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                            <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                            <i class="icon-photon hash opc1"></i>
+                                        </div>
+                                    </div>
+                                    <ul id="recentEmployees">
+                                        @if (Model.EmployeesRecent.Any())
+                                        {
+                                            foreach (var item in Model.EmployeesRecent.ToList())
+                                            {
+                                                <li>
+                                                    <div class="avatar-image">
+                                                        <img src="@item.EmployeeImagePath" alt="profile image" />
+                                                    </div>
+                                                    <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                    <div>
+                                                        @item.EmployeeJobId
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li>No record found</li>
+                                        }
+
+                                    </ul>
+                                </div>
+                                <!-- Back -->
+                                <div class="widget-area widget-latest-users widget-back">
+                                    <div class="widget-savehead">
+                                        <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRecentEmployees(this); "><i class='icon-photon cog'></i>Done</a>
+                                    </div>
+                                    <form>
+                                        <div class="container-fluid widget-settings">
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
+                                                </div>
+                                            </div>
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <div class="controls">
+                                                        @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tempLoader" style="display: none;"></div>
                         </div>
-                    </div>
-                    <div class="tempLoader" style="display: none;"></div>
-                </div>
+            <!-- Latest Recent Employees Widget ends -->
+                    }
+                    break;
+                    case "ProjectWidget":
+                    if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                    {
+                            <!-- Project Widget -->
+                        <div class="widget-holder" id="ProjectWidget">
+                            <div class="widget-flipper">
+                                <div class="widget-area task-completion widget-front">
+                                    <div class="widget-head ">
+                                        @if (Model.Project != null)
+                                        {
+                                            <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                        }
+                                        <div>
+                                            <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                            <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                            <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
+                                        </div>
+                                    </div>
+                                    <ul id="progressId">
+                                        @if (Model.Project != null)
+                                        {
+                                            <li class="dashProject dashTask">
+                                                <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
+
+                                            </li>
+                                            if (Model.Project.ProjectTasks != null)
+                                            {
+                                                foreach (var task in Model.Project.ProjectTasks.ToList())
+                                                {
+                                                    <li class="dashTask">
+                                                        <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                    </li>
+                                                }
+                                            }
+
+                                            <li class="dashBack">
+                                                <a><i class='icon-photon arrow_left'></i></a>
+                                            </li>
+                                            <li class="dashNext">
+                                                <a><i class='icon-photon arrow_right'></i></a>
+                                            </li>
+                                            <li class="processed-pct">
+                                                <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                <div class="progress progress-info">
+                                                    <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
+                                                </div>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="processed-pct">
+                                                <span>No record found</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="widget-area task-completion widget-back">
+                                    <div class="widget-savehead">
+                                        <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadProjects(this)"><i class='icon-photon cog'></i>Done</a>
+                                    </div>
+                                    <form>
+                                        <div class="container-fluid widget-settings">
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
+                                                </div>
+                                            </div>
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <div class="controls">
+                                                        <select id="projectStatusDDL">
+                                                            <option selected="" value="1">Current</option>
+                                                            <option value="4">Finished</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid widget-settings">
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                                </div>
+                                            </div>
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <div class="controls">
+                                                        @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tempLoader" style="display:none;" id="projectLoader"></div>
+                        </div>
+                    }
+                    break;
+                    case "MyTasksWidget":
+                    if (ViewBag.UserRole != "Customer")
+                    {
+            <!-- My Tasks Widget -->
+                        <div class="widget-holder" id="MyTasksWidget">
+                            <div class="widget-flipper">
+                                <div class="widget-area task-completion widget-front">
+                                    <div class="widget-head ">
+                                        <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
+                                        <div>
+                                            <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                            <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                            <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
+                                        </div>
+                                    </div>
+                                    <ul id="progressId2">
+                                        @if (Model.ProjectTasks != null)
+                                        {
+                                            foreach (var task in Model.ProjectTasks.ToList())
+                                            {
+                                                <li class="dashTask">
+                                                    <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                </li>
+                                            }
+                                            <li class="dashBack">
+                                                <a><i class='icon-photon arrow_left'></i></a>
+
+                                            </li>
+                                            <li class="dashNext">
+                                                <a><i class='icon-photon arrow_right'></i></a>
+
+                                            </li>
+                                            <li class="processed-pct2">
+                                                <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                                <div class="progress progress-info">
+                                                    <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
+                                                </div>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="processed-pct">
+                                                <span>No record found</span>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                                <div class="widget-area task-completion widget-back">
+                                    <div class="widget-savehead">
+                                        <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadMyTasks(this)"><i class='icon-photon cog'></i>Done</a>
+                                    </div>
+                                    <form>
+                                        <div class="container-fluid widget-settings">
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                                </div>
+                                            </div>
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <div class="controls">
+                                                        @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tempLoader" style="display: none;"></div>
+                        </div>
+            <!-- Task Completion Widget ends -->
+                    }
+                    break;
+                    default:
+                    break;
+                }
             }
 
-            @if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
-            {
-                <!-- Orders Widget -->
-                <div class="widget-holder" id="OrderWidget">
-                    <div class="widget-flipper">
-                        <!-- Front -->
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="~/CMS/Orders/Index" class="darkGreen"> Orders</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
-                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    <i class="icon-photon calendar_alt_stroke  opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="customerOrders">
-                                @if (Model.Orders.Any())
-                                {
-                                    foreach (var item in Model.Orders.ToList())
-                                    {
-                                        <li>
-                                            <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
-                                            <div class="dateFormatter">
-                                                @item.OrderDate
-                                                @switch (item.OrderStatus)
-                                                {
-                                                    case 2:
-                                                        <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
-                                                        break;
-                                                    case 1:
-                                                    <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
-                                                        break;
-                                                    case 3:
-                                                    <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
-                                                        break;
-                                                    case 4:
-                                                    <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
-                                                        break;
-                                                }
-                                            </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No record found</li>
-                                }
 
-                            </ul>
-                        </div>
-                        <!-- Back -->
-                        <div class="widget-area widget-general-stats widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadOrders(this); "><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerIdForOrder" })
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
 
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                <select id="orderStatus">
-                                                    <option selected="" value="0">Any</option>
-                                                    <option value="1">Pending</option>
-                                                    <option value="2">On Going</option>
-                                                    <option value="4">Completed</option>
-                                                    <option value="3">Canceled</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tempLoader" style="display: none;"></div>
-                </div>
-
-        <!-- Complaints Widget -->
-                <div class="widget-holder" id="ComplaintsWidget">
-                    <div class="widget-flipper">
-                        <!-- Front -->
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Complaints</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick=" LoadComplaints(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    @if (ViewBag.UserRole != "Customer")
-                                    {
-                                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    }
-
-                                    <i class="icon-photon user opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="complaints">
-                                @if (Model.Complaints.Any())
-                                {
-                                    foreach (var item in Model.Complaints.ToList())
-                                    {
-                                        <li>
-                                            <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
-                                            <div>
-                                                <span title="@item.ClientName">@item.ClientNameShort</span>
-                                                @if (item.IsReplied)
-                                                {
-                                                    <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
-                                                }
-                                                else
-                                                {
-                                                    <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
-                                                }
-                                            </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No record found</li>
-                                }
-                                @if (ViewBag.UserRole == "Customer")
-                                {
-                                    <li>
-                                        <a href="~/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
-                                    </li>
-                                }
-
-                            </ul>
-
-                        </div>
-                        <!-- Back -->
-                        <div class="widget-area widget-general-stats widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadComplaints(this); "><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                @Html.DropDownListFor(x => x.customerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerId" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tempLoader" style="display: none;"></div>
-                </div>
-            }
             @if (ViewBag.UserRole == "Admin")
             {
                 @*<!-- Payment Widget -->
@@ -481,438 +953,7 @@
                         <div class="tempLoader" style="display:none;"></div>
                     </div>*@
 
-            <!-- Recruitment Widget -->
-                <div class="widget-holder" id="RecruitmentWidget">
-                    <div class="widget-flipper">
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="~/HR/JobOffered/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Recruitment</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick="LoadRecruitments(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <i class="icon-photon hash opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="recruitments">
-                                @if (Model.Recruitments.Any())
-                                {
-                                    foreach (var item in Model.Recruitments.ToList())
-                                    {
-                                        <li>
-                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
-                                            <div>
-                                                @item.NoOfApplicants
-                                            </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No record found</li>
-                                }
 
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="tempLoader" style="display:none;"></div>
-                </div>
-            }
-            @if (ViewBag.UserRole != "Customer")
-            {
-            <!-- Meeting Widget -->
-                <div class="widget-holder" id="MeetingWidget">
-                    <div class="widget-flipper">
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="~/Meeting/Meeting/Index" class="lightYellow">@EPMS.Web.Resources.Dashboard.Dashboard.Meeting</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick="LoadMeetings(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <i class="icon-photon calendar_alt_stroke opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="meetings">
-                                @if (Model.Meetings.Any())
-                                {
-                                    foreach (var item in Model.Meetings.ToList())
-                                    {
-                                        <li>
-                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
-                                            <div>
-                                                @item.MeetingDate
-                                            </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No record found</li>
-                                }
-                                @if (ViewBag.UserRole == "Admin")
-                                {
-                                    <li>
-                                        <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting</a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="tempLoader" style="display: none;"></div>
-                </div>
-            }
-            @if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
-            {
-            <!-- My Profile Widget -->
-                <div class="widget-holder" id="MyProfileWidget">
-                    <div class="widget-flipper">
-                        <div class="widget-area widget-general-stats widget-front profile">
-                            <div class="widget-head ">
-                                <a href="~/HR/Employee/Index" class="lightPurpule">@EPMS.Web.Resources.Dashboard.Dashboard.MyProfile</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick="LoadMyProfile(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <i class="icon-photon folder_stroke opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="myprofile">
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="@Model.Profile.EmployeeImagePath" alt="profile">
-                                    </div>
-                                    <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
-
-                                </li>
-                                <li>
-                                    <span>Job ID</span>
-                                    <div>
-                                        @Model.Profile.EmployeeJobId
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Job Title</span>
-                                    <div>
-                                        @Model.Profile.EmployeeJobTitleE
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>ID Expiry Date</span>
-                                    <div>
-                                        @Model.Profile.EmployeeIqamaExpiryDt
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="tempLoader" style="display:none;"></div>
-                </div>
-
-            <!-- Payroll Widget -->
-                <div class="widget-holder" id="PayrollWidget">
-                    <div class="widget-flipper">
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="~/HR/Payroll/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Payroll</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick="LoadPayroll(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                    <i class="icon-photon document_stroke opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="mypayroll">
-                                <li id="basicSal">
-                                    <span>Basic Salary</span>
-                                    <div>
-                                        @Model.Payroll.BasicSalary
-                                    </div>
-                                </li>
-                                <li id="totalAllownces">
-                                    <span>Allowances</span>
-                                    <div>
-                                        @Model.Payroll.Allowances
-                                    </div>
-                                </li>
-                                <li id="totalDeductions">
-                                    <span>Deductions</span>
-                                    <div>
-                                        @Model.Payroll.Deductions
-                                    </div>
-                                </li>
-                                <li id="totalSal">
-                                    <span>Total</span>
-                                    <div>
-                                        @Model.Payroll.Total
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="widget-area widget-general-stats widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadPayroll(this);"><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterbyMonth:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                <select id="selectedmonth">
-                                                    <option selected="" value="1">Current</option>
-                                                    <option value="2">Previous</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tempLoader" style="display:none;"></div>
-                </div>
-            }
-            <!-- General Stats Widget end -->
-            @if (ViewBag.UserRole == "Admin")
-            {
-            <!-- Latest Recent Employees Widget begins -->
-                <div class="widget-holder" id="EmployeesWidget">
-                    <div class="widget-flipper">
-                        <!-- Front -->
-                        <div class="widget-area widget-latest-users widget-front">
-                            <div class="widget-head ">
-                                <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Employees</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick=" LoadRecentEmployees(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    <i class="icon-photon hash opc1"></i>
-                                </div>
-                            </div>
-                            <ul id="recentEmployees">
-                                @if (Model.EmployeesRecent.Any())
-                                {
-                                    foreach (var item in Model.EmployeesRecent.ToList())
-                                    {
-                                        <li>
-                                            <div class="avatar-image">
-                                                <img src="@item.EmployeeImagePath" alt="profile image" />
-                                            </div>
-                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
-                                            <div>
-                                                @item.EmployeeJobId
-                                            </div>
-                                        </li>
-                                    }
-                                }
-                                else
-                                {
-                                    <li>No record found</li>
-                                }
-
-                            </ul>
-                        </div>
-                        <!-- Back -->
-                        <div class="widget-area widget-latest-users widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRecentEmployees(this); "><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tempLoader" style="display: none;"></div>
-                </div>
-            <!-- Latest Recent Employees Widget ends -->
-            }
-            @if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
-            {
-            <!-- Task Completion Widget begins -->
-            <!-- Project Widget -->
-                <div class="widget-holder" id="ProjectWidget">
-                    <div class="widget-flipper">
-                        <div class="widget-area task-completion widget-front">
-                            <div class="widget-head ">
-                                @if (Model.Project != null)
-                                {
-                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
-                                }
-                                else
-                                {
-                                    <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
-                                }
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                    <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
-                                </div>
-                            </div>
-                            <ul id="progressId">
-                                @if (Model.Project != null)
-                                {
-                                    <li class="dashProject dashTask">
-                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
-
-                                    </li>
-                                    if (Model.Project.ProjectTasks != null)
-                                    {
-                                        foreach (var task in Model.Project.ProjectTasks.ToList())
-                                        {
-                                            <li class="dashTask">
-                                                <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
-                                            </li>
-                                        }
-                                    }
-
-                                    <li class="dashBack">
-                                        <a><i class='icon-photon arrow_left'></i></a>
-                                    </li>
-                                    <li class="dashNext">
-                                        <a><i class='icon-photon arrow_right'></i></a>
-                                    </li>
-                                    <li class="processed-pct">
-                                        <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
-                                        <div class="progress progress-info">
-                                            <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
-                                        </div>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="processed-pct">
-                                        <span>No record found</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="widget-area task-completion widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadProjects(this)"><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                <select id="projectStatusDDL">
-                                                    <option selected="" value="1">Current</option>
-                                                    <option value="4">Finished</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tempLoader" style="display:none;" id="projectLoader"></div>
-                </div>
-            }
-            @if (ViewBag.UserRole != "Customer")
-            {
-            <!-- My Tasks Widget -->
-                <div class="widget-holder" id="MyTasksWidget">
-                    <div class="widget-flipper">
-                        <div class="widget-area task-completion widget-front">
-                            <div class="widget-head ">
-                                <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                    <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
-                                </div>
-                            </div>
-                            <ul id="progressId2">
-                                @if (Model.ProjectTasks != null)
-                                {
-                                    foreach (var task in Model.ProjectTasks.ToList())
-                                    {
-                                        <li class="dashTask">
-                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
-                                        </li>
-                                    }
-                                    <li class="dashBack">
-                                        <a><i class='icon-photon arrow_left'></i></a>
-
-                                    </li>
-                                    <li class="dashNext">
-                                        <a><i class='icon-photon arrow_right'></i></a>
-
-                                    </li>
-                                    <li class="processed-pct2">
-                                        <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
-                                        <div class="progress progress-info">
-                                            <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
-                                        </div>
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li class="processed-pct">
-                                        <span>No record found</span>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="widget-area task-completion widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadMyTasks(this)"><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tempLoader" style="display: none;"></div>
-                </div>
-            <!-- Task Completion Widget ends -->
             }
         </div>
     </div>
@@ -972,7 +1013,7 @@
     </div>
     <div class="modal-body predefined-icons">
         <ul>
-            <li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
+            @*<li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
@@ -992,10 +1033,12 @@
             <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>
-
-
-
+            <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>*@
+            @foreach (var item in Model.QuickLaunchItems)
+            {
+                @*<li>@item.Name</li>*@
+                <li title="@item.Name"><img src="~/Images/photon/icons/@item.ImageIconPath" alt=" predefined"></li>
+            }
 
         </ul>
     </div>
