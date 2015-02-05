@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -268,7 +268,7 @@
           <Property Name="EmployeeLandlineNum" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="MaritalStatus" Type="tinyint" />
           <Property Name="EmployeeDOB" Type="date" Nullable="false" />
-          <Property Name="EmployeeNationality" Type="bigint" />
+          <Property Name="EmployeeNationality" Type="smallint" />
           <Property Name="EmployeeIqama" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="EmployeeIqamaIssueDt" Type="date" />
           <Property Name="EmployeeIqamaExpiryDt" Type="date" Nullable="false" />
@@ -1398,7 +1398,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -3500,7 +3500,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="2b6202933dcc491f9ef55bc36e177b15" Name="Diagram1">
+      <Diagram DiagramId="f2fd5285ff0945a6b5bee9c9e0e36a11" Name="Diagram1">
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="19.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="5.25" PointY="32.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="19.875" IsExpanded="true" />
@@ -3512,7 +3512,7 @@
         <EntityTypeShape EntityType="EPMSModel.CompanySocialDetail" Width="1.5" PointX="15" PointY="14.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="24.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="0.75" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreference" Width="1.5" PointX="4.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreference" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="23.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeJobHistory" Width="1.5" PointX="10.5" PointY="27.5" IsExpanded="true" />

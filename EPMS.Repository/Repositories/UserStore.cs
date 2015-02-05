@@ -84,7 +84,6 @@ namespace EPMS.Repository.Repositories
                 .Include(u => u.AspNetUserLogins).Include(u => u.AspNetRoles).Include(u => u.AspNetUserClaims)
                 .FirstOrDefaultAsync(u => u.Id.Equals(userId));
         }
-
         public Task<AspNetUser> FindByNameAsync(string userName)
         {
             return _db.Users

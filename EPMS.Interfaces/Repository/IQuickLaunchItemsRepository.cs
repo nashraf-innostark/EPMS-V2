@@ -3,8 +3,8 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IQuickLaunchItemsRepository : IBaseRepository<QuickLaunchItems, long>
+    public interface IQuickLaunchItemsRepository : IBaseRepository<QuickLaunchItem, long>
     {
-        IEnumerable<QuickLaunchItems> FindItemsbyEmployeeId(long? employeeId);
+        IEnumerable<QuickLaunchItem> FindItemsbyEmployeeId(long? employeeId);
     }
 }
