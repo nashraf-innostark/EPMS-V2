@@ -11,9 +11,9 @@ namespace EPMS.Web.ModelMappers
         /// <summary>
         /// Create Quick Launch Item from Menu
         /// </summary>
-        public static QuickLaunchItem CreateFrom(this MenuRight source)
+        public static QuickLaunchMenuItems CreateFrom(this MenuRight source)
         {
-            return new QuickLaunchItem
+            return new QuickLaunchMenuItems
             {
                 MenuID = source.Menu.MenuId,
                 ImageIconPath = source.Menu.MenuImagePath,
