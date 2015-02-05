@@ -351,6 +351,7 @@
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectTaskMapper.cs" />
     <Compile Include="ModelMappers\PMS\TaskEmployeeMapper.cs" />
+    <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -375,6 +376,7 @@
     <Compile Include="Models\PreRequisitTask.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectTask.cs" />
+    <Compile Include="Models\QuickLaunchItem.cs" />
     <Compile Include="Models\Quotation.cs" />
     <Compile Include="Models\QuotationItemDetail.cs" />
     <Compile Include="Models\Request.cs" />
