@@ -22,7 +22,7 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public long? EmployeeId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
-        public long MobileNo { get; set; }
+        public string MobileNo { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         [StringLength(200, ErrorMessage = "Title cannot exceed 200 characters.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]

@@ -69,8 +69,6 @@
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="13.25" PointY="29.75" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.875" PointY="39.5" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" />
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5" PointY="21" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
@@ -78,9 +76,11 @@
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
-        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
         <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreferences" Width="1.5" PointX="1" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.25" PointY="39" />
+        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
