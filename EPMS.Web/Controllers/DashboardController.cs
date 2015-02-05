@@ -16,6 +16,7 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Complaint = EPMS.Web.DashboardModels.Complaint;
 using Customer = EPMS.Web.DashboardModels.Customer;
 using Department = EPMS.Web.DashboardModels.Department;
@@ -87,6 +88,10 @@ namespace EPMS.Web.Controllers
         public ActionResult Index()
         {
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            if (Session["RoleName"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewBag.UserRole = Session["RoleName"];
             if ((string)Session["RoleName"] != "Customer")
             {
