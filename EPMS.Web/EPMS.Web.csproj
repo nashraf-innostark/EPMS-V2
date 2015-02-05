@@ -337,6 +337,7 @@
     <Compile Include="ModelMappers\ComplaintMapper.cs" />
     <Compile Include="ModelMappers\CustomerMapper.cs" />
     <Compile Include="ModelMappers\DashboardMappers.cs" />
+    <Compile Include="ModelMappers\DashboardWidgetPreferencesMapper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
