@@ -136,6 +136,7 @@
     <Compile Include="Repositories\CompanySocialRepository.cs" />
     <Compile Include="Repositories\ComplaintRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\DashboardWidgetPreferencesRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\EmployeeJobHistoryRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />

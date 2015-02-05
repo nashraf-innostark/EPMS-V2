@@ -59,17 +59,47 @@ namespace EPMS.Repository.Repositories
         {
             int fromRow = searchRequset.iDisplayStart;
             int toRow = searchRequset.iDisplayStart + searchRequset.iDisplayLength;
-            Expression<Func<Notification, bool>> query =
-                s => ((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
-                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
-                    (s.MobileNo.Contains(searchRequset.SearchString)) || (s.Email.Contains(searchRequset.SearchString))
+            Expression<Func<Notification, bool>> query;
+            var today = DateTime.Now;
+            if (searchRequset.RoleName == "Admin")
+            {
+                query =
+                    s =>
+                        (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) ||
+                          (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) ||
+                          (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
+                          (s.MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.Email.Contains(searchRequset.SearchString))) 
+                          
+                          &&
+
+                          (s.SystemGenerated || s.UserId == searchRequset.UserId || s.EmployeeId == searchRequset.EmployeeId ||
+                           s.MeetingAttendees.Any(x => x.EmployeeId == searchRequset.EmployeeId)) &&
+                           (s.AlertDate <= today)
+                            );
+            }
+            else
+            {
+                query =
+                s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || 
+                    (s.TitleE.Contains(searchRequset.SearchString)) || 
+                    (s.TitleA.Contains(searchRequset.SearchString)) ||
+                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || 
+                    (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
+                    (s.MobileNo.Contains(searchRequset.SearchString)) || 
+                    (s.Email.Contains(searchRequset.SearchString))) &&
+                    (s.UserId == searchRequset.UserId || s.EmployeeId == searchRequset.EmployeeId || 
+                    s.MeetingAttendees.Any(x => x.EmployeeId == searchRequset.EmployeeId))
                     );
+            }
             IEnumerable<Notification> notifications;
 
             if (searchRequset.iSortCol_0 == 0)
             {
                 notifications = DbSet
-                .Where(query).OrderByDescending(x => x.AlertDate).Skip(fromRow).Take(toRow).ToList();
+                .Where(query).OrderByDescending(x=>x.AlertDate).Skip(fromRow).Take(toRow).ToList();
             }
             else
             {

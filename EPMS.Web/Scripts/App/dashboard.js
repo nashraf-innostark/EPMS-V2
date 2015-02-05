@@ -26,9 +26,36 @@
             $('.widget-holder').addClass('noPerspective');
             $('.dashboard-quick-launch li img').tooltip('hide');
         },
-        stop: function (event, ui) {
+        stop: function (event, ui, a, b) {
+            var elems = document.getElementsByClassName("noPerspective");
+            var arr = $.makeArray(elems);
+            var widgets = new Array();
+            for (var i = 0; i < arr.length; i++) {
+                widgets.push(arr[i].id);
+            }
+            // Save Preferences
+            var siteURL = $('#siteURL').val();
+            var url = siteURL + "/Dashboard/SaveWidgetPreferences";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    preferences: widgets
+                },
+                success: function (data) {
+                    
+                },
+                error: function (e) {
+                    alert('Error=' + e.toString());
+                    $(".tempLoader").click();
+                }
+            });
             isDragActive = false;
             $('.widget-holder').removeClass('noPerspective');
+            //var selectedElement = $(ui.item).attr('id');
+            //alert("SelectedElement = " + selectedElement);
         },
         tolerance: 'pointer'
     });

@@ -49,7 +49,7 @@
             @if (ViewBag.UserRole != "Customer")
             {
                 <!-- Employee Requests Widget -->
-                <div class="widget-holder">
+                <div class="widget-holder" id="EmployeeRequestsWidget">
                     <div class="widget-flipper">
                         <!-- Front -->
                         <div class="widget-area widget-general-stats widget-front">
@@ -59,7 +59,7 @@
                                     <a href="javascript:;" class="refresher" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                     @if (ViewBag.UserRole == "Admin")
                                     {
-                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                                     }
                                     <i class="icon-photon user opc1"></i>
                                 </div>
@@ -69,25 +69,25 @@
                                 {
                                     foreach (var item in Model.EmployeeRequests.ToList())
                                     {
-                                <li>
-                                    <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
-                                    <div>
-                                        <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
-                                        @if (item.IsReplied)
+                                        <li>
+                                            <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
+                                            <div>
+                                                <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                @if (item.IsReplied)
                                                 {
-                                                <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                                    <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
                                                 }
                                                 else
                                                 {
-                                                <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
                                                 }
-                                    </div>
-                                </li>
+                                            </div>
+                                        </li>
                                     }
                                 }
                                 else
                                 {
-                                <li>No record found</li>
+                                    <li>No record found</li>
                                 }
                             </ul>
                         </div>
@@ -106,7 +106,7 @@
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@
             @if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
             {
                 <!-- Orders Widget -->
-                <div class="widget-holder">
+                <div class="widget-holder" id="OrderWidget">
                     <div class="widget-flipper">
                         <!-- Front -->
                         <div class="widget-area widget-general-stats widget-front">
@@ -139,32 +139,32 @@
                                 {
                                     foreach (var item in Model.Orders.ToList())
                                     {
-                                <li>
-                                    <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
-                                    <div class="dateFormatter">
-                                        @item.OrderDate
-                                        @switch (item.OrderStatus)
+                                        <li>
+                                            <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
+                                            <div class="dateFormatter">
+                                                @item.OrderDate
+                                                @switch (item.OrderStatus)
                                                 {
                                                     case 2:
-                                                <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                        <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
                                                         break;
                                                     case 1:
-                                                <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
+                                                    <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
                                                         break;
                                                     case 3:
-                                                <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
+                                                    <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
                                                         break;
                                                     case 4:
-                                                <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
+                                                    <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
                                                         break;
                                                 }
-                                    </div>
-                                </li>
+                                            </div>
+                                        </li>
                                     }
                                 }
                                 else
                                 {
-                                <li>No record found</li>
+                                    <li>No record found</li>
                                 }
 
                             </ul>
@@ -184,7 +184,7 @@
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "customerIdForOrder"})
+                                                @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerIdForOrder" })
                                             </div>
                                         </div>
                                     </div>
@@ -218,8 +218,8 @@
                     <div class="tempLoader" style="display: none;"></div>
                 </div>
 
-                <!-- Complaints Widget -->
-                <div class="widget-holder">
+        <!-- Complaints Widget -->
+                <div class="widget-holder" id="ComplaintsWidget">
                     <div class="widget-flipper">
                         <!-- Front -->
                         <div class="widget-area widget-general-stats widget-front">
@@ -227,11 +227,11 @@
                                 <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Complaints</a>
                                 <div>
                                     <a href="javascript:;" class="refresher" onclick=" LoadComplaints(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                        @if (ViewBag.UserRole != "Customer")
-                                        {
-                                            <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                        }
-                                    
+                                    @if (ViewBag.UserRole != "Customer")
+                                    {
+                                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                    }
+
                                     <i class="icon-photon user opc1"></i>
                                 </div>
                             </div>
@@ -299,193 +299,193 @@
             }
             @if (ViewBag.UserRole == "Admin")
             {
-            @*<!-- Payment Widget -->
-                <div class="widget-holder">
-                    <div class="widget-flipper">
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head ">
-                                <a href="" class="darkGreen">  Payment </a>
-                                <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                    <i class="icon-photon document_stroke opc1"></i>
+                @*<!-- Payment Widget -->
+                    <div class="widget-holder">
+                        <div class="widget-flipper">
+                            <div class="widget-area widget-general-stats widget-front">
+                                <div class="widget-head ">
+                                    <a href="" class="darkGreen">  Payment </a>
+                                    <div>
+                                        <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                        <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                        <i class="icon-photon document_stroke opc1"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <ul>
-                                <li>
-                                    <a href="">  <span>1st Installment</span></a>
-                                    <div>
-                                        5000
-                                        <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <a href="">  <span>2nd Installment</span></a>
-                                    <div>
-                                        10000
-                                        <img src="~/images/photon/workDone.png" alt="Paid" title="Paid" class="status">
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">    <span>3rd Installment </span></a>
-                                    <div>
-                                        4000
-                                        <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">  <span>4th Installment </span></a>
-                                    <div>
-                                        6000
-                                        <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <span>Project Name:</span> <div>50%</div>
-
-                                </li>
-
-
-                            </ul>
-                        </div>
-                        <div class="widget-area widget-general-stats widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">Filter by Clients:</label>
+                                <ul>
+                                    <li>
+                                        <a href="">  <span>1st Installment</span></a>
+                                        <div>
+                                            5000
+                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
                                         </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="1">Ali</option>
-                                                    <option value="2">Said</option>
-                                                    <option value="3">Mohammed</option>
-                                                    <option value="4">Mazin</option>
-                                                </select>
+
+                                    </li>
+                                    <li>
+                                        <a href="">  <span>2nd Installment</span></a>
+                                        <div>
+                                            10000
+                                            <img src="~/images/photon/workDone.png" alt="Paid" title="Paid" class="status">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="">    <span>3rd Installment </span></a>
+                                        <div>
+                                            4000
+                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="">  <span>4th Installment </span></a>
+                                        <div>
+                                            6000
+                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <span>Project Name:</span> <div>50%</div>
+
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                            <div class="widget-area widget-general-stats widget-back">
+                                <div class="widget-savehead">
+                                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                                </div>
+                                <form>
+                                    <div class="container-fluid widget-settings">
+                                        <div class="control-group row-fluid">
+                                            <div class="span12">
+                                                <label class="control-label">Filter by Clients:</label>
                                             </div>
                                         </div>
-                                    </div>
-
-                                </div>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">Filter by Project:</label>
-                                        </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="1">Project 1</option>
-                                                    <option value="2">Project 2</option>
-                                                    <option value="3">Project 3</option>
-                                                    <option value="4">Project 4</option>
-                                                </select>
+                                        <div class="control-group row-fluid">
+                                            <div class="span12">
+                                                <div class="controls">
+                                                    <select>
+                                                        <option selected="" value="Any">Any</option>
+                                                        <option value="1">Ali</option>
+                                                        <option value="2">Said</option>
+                                                        <option value="3">Mohammed</option>
+                                                        <option value="4">Mazin</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                            </form>
+                                    </div>
+                                    <div class="container-fluid widget-settings">
+                                        <div class="control-group row-fluid">
+                                            <div class="span12">
+                                                <label class="control-label">Filter by Project:</label>
+                                            </div>
+                                        </div>
+                                        <div class="control-group row-fluid">
+                                            <div class="span12">
+                                                <div class="controls">
+                                                    <select>
+                                                        <option selected="" value="Any">Any</option>
+                                                        <option value="1">Project 1</option>
+                                                        <option value="2">Project 2</option>
+                                                        <option value="3">Project 3</option>
+                                                        <option value="4">Project 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
+                        <div class="tempLoader" style="display:none;"></div>
                     </div>
-                    <div class="tempLoader" style="display:none;"></div>
-                </div>
 
-            <!-- Alerts Widget -->
-                <div class="widget-holder">
-                    <div class="widget-flipper">
-                        <div class="widget-area widget-general-stats widget-front">
-                            <div class="widget-head">
-                                <a href="" class="lightRed">   Alerts</a>
-                                <div>
-                                    <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                    <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                    <i class="icon-photon bolt opc1"></i>
+                    <!-- Alerts Widget -->
+                    <div class="widget-holder">
+                        <div class="widget-flipper">
+                            <div class="widget-area widget-general-stats widget-front">
+                                <div class="widget-head">
+                                    <a href="" class="lightRed">   Alerts</a>
+                                    <div>
+                                        <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                        <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                        <i class="icon-photon bolt opc1"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <ul>
-                                <li>
-                                    <a href="">  <span>Ali Nasir</span></a>
-                                    <div>
-                                        22/2/2014
+                                <ul>
+                                    <li>
+                                        <a href="">  <span>Ali Nasir</span></a>
+                                        <div>
+                                            22/2/2014
 
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">  <span>Mahmood Ameen</span></a>
-                                    <div>
-                                        12/5/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href=""> <span>Chamber of Commerce</span></a>
-                                    <div>
-                                        1/2/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="">  <span>Rent</span></a>
-                                    <div>
-                                        9/12/2014
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href=""> <span>Telephone Bill</span></a>
-                                    <div>
-                                        4/8/2014
-
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="widget-area widget-general-stats widget-back">
-                            <div class="widget-savehead">
-                                <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
-                            </div>
-                            <form>
-                                <div class="container-fluid widget-settings">
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <label class="control-label">Filter by Alert Type:</label>
                                         </div>
-                                    </div>
-                                    <div class="control-group row-fluid">
-                                        <div class="span12">
-                                            <div class="controls">
-                                                <select>
-                                                    <option selected="" value="Any">Any</option>
-                                                    <option value="1">Employees</option>
-                                                    <option value="2">Documents</option>
+                                    </li>
+                                    <li>
+                                        <a href="">  <span>Mahmood Ameen</span></a>
+                                        <div>
+                                            12/5/2014
 
-                                                </select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href=""> <span>Chamber of Commerce</span></a>
+                                        <div>
+                                            1/2/2014
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="">  <span>Rent</span></a>
+                                        <div>
+                                            9/12/2014
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href=""> <span>Telephone Bill</span></a>
+                                        <div>
+                                            4/8/2014
+
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="widget-area widget-general-stats widget-back">
+                                <div class="widget-savehead">
+                                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
+                                </div>
+                                <form>
+                                    <div class="container-fluid widget-settings">
+                                        <div class="control-group row-fluid">
+                                            <div class="span12">
+                                                <label class="control-label">Filter by Alert Type:</label>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="control-group row-fluid">
+                                            <div class="span12">
+                                                <div class="controls">
+                                                    <select>
+                                                        <option selected="" value="Any">Any</option>
+                                                        <option value="1">Employees</option>
+                                                        <option value="2">Documents</option>
 
-                                </div>
-                            </form>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tempLoader" style="display:none;"></div>
-                </div>*@
+                        <div class="tempLoader" style="display:none;"></div>
+                    </div>*@
 
             <!-- Recruitment Widget -->
-                <div class="widget-holder">
+                <div class="widget-holder" id="RecruitmentWidget">
                     <div class="widget-flipper">
                         <div class="widget-area widget-general-stats widget-front">
                             <div class="widget-head ">
@@ -499,18 +499,18 @@
                                 @if (Model.Recruitments.Any())
                                 {
                                     foreach (var item in Model.Recruitments.ToList())
-                                {
-                                <li>
-                                    <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
-                                    <div>
-                                        @item.NoOfApplicants
-                                    </div>
-                                </li>
-                                }
+                                    {
+                                        <li>
+                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
+                                            <div>
+                                                @item.NoOfApplicants
+                                            </div>
+                                        </li>
+                                    }
                                 }
                                 else
                                 {
-                                <li>No record found</li>
+                                    <li>No record found</li>
                                 }
 
                             </ul>
@@ -522,8 +522,8 @@
             }
             @if (ViewBag.UserRole != "Customer")
             {
-                <!-- Meeting Widget -->
-                <div class="widget-holder">
+            <!-- Meeting Widget -->
+                <div class="widget-holder" id="MeetingWidget">
                     <div class="widget-flipper">
                         <div class="widget-area widget-general-stats widget-front">
                             <div class="widget-head ">
@@ -566,7 +566,7 @@
             @if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
             {
             <!-- My Profile Widget -->
-                <div class="widget-holder">
+                <div class="widget-holder" id="MyProfileWidget">
                     <div class="widget-flipper">
                         <div class="widget-area widget-general-stats widget-front profile">
                             <div class="widget-head ">
@@ -610,7 +610,7 @@
                 </div>
 
             <!-- Payroll Widget -->
-                <div class="widget-holder">
+                <div class="widget-holder" id="PayrollWidget">
                     <div class="widget-flipper">
                         <div class="widget-area widget-general-stats widget-front">
                             <div class="widget-head ">
@@ -680,8 +680,8 @@
             <!-- General Stats Widget end -->
             @if (ViewBag.UserRole == "Admin")
             {
-                <!-- Latest Recent Employees Widget begins -->
-                <div class="widget-holder">
+            <!-- Latest Recent Employees Widget begins -->
+                <div class="widget-holder" id="EmployeesWidget">
                     <div class="widget-flipper">
                         <!-- Front -->
                         <div class="widget-area widget-latest-users widget-front">
@@ -698,20 +698,20 @@
                                 {
                                     foreach (var item in Model.EmployeesRecent.ToList())
                                     {
-                                <li>
-                                    <div class="avatar-image">
-                                        <img src="@item.EmployeeImagePath" alt="profile image" />
-                                    </div>
-                                    <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
-                                    <div>
-                                        @item.EmployeeJobId
-                                    </div>
-                                </li>
+                                        <li>
+                                            <div class="avatar-image">
+                                                <img src="@item.EmployeeImagePath" alt="profile image" />
+                                            </div>
+                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                            <div>
+                                                @item.EmployeeJobId
+                                            </div>
+                                        </li>
                                     }
                                 }
                                 else
                                 {
-                                <li>No record found</li>
+                                    <li>No record found</li>
                                 }
 
                             </ul>
@@ -731,7 +731,7 @@
                                     <div class="control-group row-fluid">
                                         <div class="span12">
                                             <div class="controls">
-                                                @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "departmentId"})
+                                                @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
                                             </div>
                                         </div>
                                     </div>
@@ -741,13 +741,13 @@
                     </div>
                     <div class="tempLoader" style="display: none;"></div>
                 </div>
-                <!-- Latest Recent Employees Widget ends -->
+            <!-- Latest Recent Employees Widget ends -->
             }
             @if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
             {
             <!-- Task Completion Widget begins -->
             <!-- Project Widget -->
-                <div class="widget-holder">
+                <div class="widget-holder" id="ProjectWidget">
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
@@ -847,8 +847,8 @@
             }
             @if (ViewBag.UserRole != "Customer")
             {
-                <!-- My Tasks Widget -->
-                <div class="widget-holder">
+            <!-- My Tasks Widget -->
+                <div class="widget-holder" id="MyTasksWidget">
                     <div class="widget-flipper">
                         <div class="widget-area task-completion widget-front">
                             <div class="widget-head ">
@@ -915,7 +915,7 @@
                     </div>
                     <div class="tempLoader" style="display: none;"></div>
                 </div>
-                <!-- Task Completion Widget ends -->
+            <!-- Task Completion Widget ends -->
             }
         </div>
     </div>

@@ -41,6 +41,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
+                //Alerta = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
                 EmployeeId = notification.EmployeeId,
                 MobileNo = notification.MobileNo,
                 Email = notification.Email,
@@ -69,8 +70,12 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             notificationListResponse.NotificationId = notification.NotificationId;
             notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;      
             notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
-            notificationListResponse.EmployeeId = Convert.ToInt64(notification.EmployeeId);
-            notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.Employee.EmployeeNameE:notification.Employee.EmployeeNameA;
+            if (notification.EmployeeId != null)
+            {
+                notificationListResponse.EmployeeId = Convert.ToInt64(notification.EmployeeId);
+                notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.Employee.EmployeeNameE : notification.Employee.EmployeeNameA;
+            }
+            
             notificationListResponse.MobileNo = notification.MobileNo;
             notificationListResponse.Email = notification.Email;
             notificationListResponse.Notified = notification.ReadStatus ? Resources.Notification.Yes : Resources.Notification.No;

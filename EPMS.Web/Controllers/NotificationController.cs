@@ -91,7 +91,7 @@ namespace EPMS.Web.Controllers
             }
             return View(notificationViewModel);
         }
-
+        [SiteAuthorize(PermissionKey = "NotificationDetails")]
         public ActionResult Details(long? id)
         {
             NotificationViewModel notificationViewModel = notificationService.LoadNotificationAndBaseData(id);
