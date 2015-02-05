@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -70,7 +71,8 @@ namespace EPMS.Implementation.Services
             //Send Email
             if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
             {
-                
+                string emailBody = notificationViewModel.NotificationResponse.TitleE + "<br/>" + notificationViewModel.NotificationResponse.TitleA;
+                Utility.SendEmail(notificationViewModel.NotificationResponse.Email, ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
             }
             //Send SMS
             if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.MobileNo))

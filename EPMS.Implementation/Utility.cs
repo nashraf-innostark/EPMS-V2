@@ -8,7 +8,7 @@ namespace EPMS.Implementation
 {
     public class Utility
     {
-        public static void SendEmailAsync(string email, string subject, string body)
+        public static void SendEmail(string email, string subject, string body)
         {
 
             string fromAddress = ConfigurationManager.AppSettings["FromAddress"];
@@ -36,7 +36,6 @@ namespace EPMS.Implementation
             };
 
             client.Send(oEmail);
-
         }
         public static bool SendNotificationSms(string smsText, string mobileNo)
         {
