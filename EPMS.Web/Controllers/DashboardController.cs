@@ -319,7 +319,7 @@ namespace EPMS.Web.Controllers
                 {
                     Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
                     var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
-                    if (PreferencesService.Addpreferences(preferenceToUpdate))
+                    if (PreferencesService.AddPreferences(preferenceToUpdate))
                     {
                         i++;
                     }

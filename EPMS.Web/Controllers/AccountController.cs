@@ -74,13 +74,15 @@ namespace IdentitySample.Controllers
 
         #region Constructor
 
-        public AccountController(IUserPrefrencesService userPrefrencesService,IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
+        public AccountController(IDashboardWidgetPreferencesService preferencesService, IUserPrefrencesService userPrefrencesService,IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
             this.AspNetUserService = aspNetUserService;
             this.customerService = customerService;
             this.userPrefrencesService = userPrefrencesService;
+            this.PreferencesService = preferencesService;
+
         }
 
         #endregion
@@ -442,8 +444,8 @@ namespace IdentitySample.Controllers
                                         WidgetId = adminWidgets[i],
                                         SortNumber = i + 1
                                     };
-                                    var preferenceToUpdate = preferences.CreateFromClientToServerWidgetPreferences();
-                                    PreferencesService.UpdatePreferences(preferenceToUpdate);
+                                    var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                                    PreferencesService.AddPreferences(preferenceToAdd);
                                 }
                                 break;
                             case "Employee":
@@ -455,8 +457,8 @@ namespace IdentitySample.Controllers
                                         WidgetId = employeeWidgets[i],
                                         SortNumber = i + 1
                                     };
-                                    var preferenceToUpdate = preferences.CreateFromClientToServerWidgetPreferences();
-                                    PreferencesService.UpdatePreferences(preferenceToUpdate);
+                                    var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                                    PreferencesService.AddPreferences(preferenceToAdd);
                                 }
                                 break;
                             case "Customer":
@@ -468,8 +470,8 @@ namespace IdentitySample.Controllers
                                         WidgetId = customerWidgets[i],
                                         SortNumber = i + 1
                                     };
-                                    var preferenceToUpdate = preferences.CreateFromClientToServerWidgetPreferences();
-                                    PreferencesService.UpdatePreferences(preferenceToUpdate);
+                                    var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                                    PreferencesService.AddPreferences(preferenceToAdd);
                                 }
                                 break;
                         }
