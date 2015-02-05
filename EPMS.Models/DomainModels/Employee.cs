@@ -16,7 +16,7 @@ namespace EPMS.Models.DomainModels
         public byte? MaritalStatus { get; set; }
         public DateTime EmployeeDOB { get; set; }
         public short? EmployeeNationality { get; set; }
-        public int EmployeeIqama { get; set; }
+        public string EmployeeIqama { get; set; }
         public DateTime? EmployeeIqamaIssueDt { get; set; }
         public DateTime EmployeeIqamaExpiryDt { get; set; }
         public string EmployeePassportNum { get; set; }

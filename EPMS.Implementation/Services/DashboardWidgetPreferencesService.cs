@@ -45,7 +45,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public bool Updatepreferences(DashboardWidgetPreferences preferences)
+        public bool UpdatePreferences(DashboardWidgetPreferences preferences)
         {
             try
             {

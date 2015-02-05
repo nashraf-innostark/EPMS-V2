@@ -39,6 +39,7 @@ namespace IdentitySample.Controllers
         private IAspNetUserService AspNetUserService;
         private ICustomerService customerService;
         private IUserPrefrencesService userPrefrencesService;
+        private IDashboardWidgetPreferencesService PreferencesService;
         /// <summary>
         /// Set User Permission
         /// </summary>
@@ -425,7 +426,53 @@ namespace IdentitySample.Controllers
                         var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                         var roleName = roleManager.FindById(model.SelectedRole).Name;
                         UserManager.AddToRole(user.Id, roleName);
-
+                        // Add User Preferences for Dashboards Widgets
+                        var userId = User.Identity.GetUserId();
+                        string[] adminWidgets = { "MeetingWidget", "OrderWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget", "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget" };
+                        string[] employeeWidgets = { "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget" };
+                        string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
+                        switch (roleName)
+                        {
+                            case "Admin":
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    DashboardWidgetPreferences preferences = new DashboardWidgetPreferences
+                                    {
+                                        UserId = userId,
+                                        WidgetId = adminWidgets[i],
+                                        SortNumber = i + 1
+                                    };
+                                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                                    PreferencesService.UpdatePreferences(preferenceToUpdate);
+                                }
+                                break;
+                            case "Employee":
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    DashboardWidgetPreferences preferences = new DashboardWidgetPreferences
+                                    {
+                                        UserId = userId,
+                                        WidgetId = employeeWidgets[i],
+                                        SortNumber = i + 1
+                                    };
+                                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                                    PreferencesService.UpdatePreferences(preferenceToUpdate);
+                                }
+                                break;
+                            case "Customer":
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    DashboardWidgetPreferences preferences = new DashboardWidgetPreferences
+                                    {
+                                        UserId = userId,
+                                        WidgetId = customerWidgets[i],
+                                        SortNumber = i + 1
+                                    };
+                                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                                    PreferencesService.UpdatePreferences(preferenceToUpdate);
+                                }
+                                break;
+                        }
                         TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.AddUser, IsSaved = true };
                         return RedirectToAction("Users");
                     }

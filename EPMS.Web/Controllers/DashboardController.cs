@@ -262,20 +262,20 @@ namespace EPMS.Web.Controllers
         /// </summary>
         private IEnumerable<QuickLaunchItem> LoadQuickLaunchItems()
         {
-            string userName = HttpContext.User.Identity.Name;
-            if (!String.IsNullOrEmpty(userName))
-            {
-                AspNetUser userResult = UserManager.FindByName(userName);
-                if (userResult != null)
-                {
-                    IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
-                    if (roles.Count > 0)
-                    {
-                        IEnumerable<QuickLaunchItem> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
-                        return menuItems;
-                    }
-                }
-            }
+            //string userName = HttpContext.User.Identity.Name;
+            //if (!String.IsNullOrEmpty(userName))
+            //{
+            //    AspNetUser userResult = UserManager.FindByName(userName);
+            //    if (userResult != null)
+            //    {
+            //        IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
+            //        if (roles.Count > 0)
+            //        {
+            //            IEnumerable<QuickLaunchItem> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
+            //            return menuItems;
+            //        }
+            //    }
+            //}
             return Enumerable.Empty<QuickLaunchItem>();
 
 
@@ -337,7 +337,7 @@ namespace EPMS.Web.Controllers
                         SortNumber = i+1
                     };
                     var preferenceToUpdate = preference.CreateFromClientToServer();
-                    if (PreferencesService.Updatepreferences(preferenceToUpdate))
+                    if (PreferencesService.UpdatePreferences(preferenceToUpdate))
                     {
                         i++;
                     }
