@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.MenuModels
 {
@@ -55,5 +56,6 @@ namespace EPMS.Models.MenuModels
         /// </summary>
         public virtual Menu ParentItem { get; set; }
         public virtual ICollection<MenuRight> MenuRights { get; set; }
+        public virtual ICollection<QuickLaunchItems> QuickLaunchItems { get; set; }
     }
 }
