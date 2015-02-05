@@ -150,12 +150,13 @@
     <Compile Include="Services\ProjectDocumentService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ProjectTaskService.cs" />
-    <Compile Include="Services\QuickLaunchItemsService.cs" />
+    <Compile Include="Services\QuickLaunchItemService.cs" />
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />
     <Compile Include="Services\UserPrefrencesService.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

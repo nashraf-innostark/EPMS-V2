@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Implementation.Services
 {
-    class QuickLaunchItemsService : IQuickLaunchItemsService
+    class QuickLaunchItemService : IQuickLaunchItemService
     {
         #region Private
 
-        private readonly IQuickLaunchItemsRepository quickLaunchItemsRepository;
+        private readonly IQuickLaunchItemRepository quickLaunchItemsRepository;
         
         #endregion
         #region Constructor
-        public QuickLaunchItemsService(IQuickLaunchItemsRepository quickLaunchItemsRepository)
+        public QuickLaunchItemService(IQuickLaunchItemRepository quickLaunchItemsRepository)
         {
             this.quickLaunchItemsRepository = quickLaunchItemsRepository;
         }

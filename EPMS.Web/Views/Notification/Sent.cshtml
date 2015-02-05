@@ -1,6 +1,6 @@
 ﻿@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationListView
 @{
-    ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NotificationList;
+    ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NotificationSentList;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -21,7 +21,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    @*<h3> <small><a href="~/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>*@
+    <h3> <small><a href="~/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -76,7 +76,7 @@
                         "mRender": function(data, type, full) {
                             var val = full["NotificationName"];
                             var id = full["NotificationId"];
-                            var element = '<a href="Details/' + id + '">' + val + '</a>';
+                            var element = '<a href="Create/' + id + '">' + val + '</a>';
                             return element;
                         }
                     },
@@ -137,7 +137,7 @@
                     $("td:first", nRow).html(iDisplayIndex + 1);
                     return nRow;
                 },
-                "sAjaxSource": siteUrl + "/Notification/Index",
+                "sAjaxSource": siteUrl + "/Notification/Sent",
                 "sServerMethod": "POST",
                 "oLanguage": {
                     "sLoadingRecords": "Please wait - loading records...",

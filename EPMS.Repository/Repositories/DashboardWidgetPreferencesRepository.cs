@@ -8,7 +8,7 @@ using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    public class DashboardWidgetPreferencesRepository : BaseRepository<DashboardWidgetPreferences>, IDashboardWidgetPreferencesRepository
+    public class DashboardWidgetPreferencesRepository : BaseRepository<DashboardWidgetPreference>, IDashboardWidgetPreferencesRepository
     {
         #region Constructor
         /// <summary>
@@ -22,19 +22,19 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<DashboardWidgetPreferences> DbSet
+        protected override IDbSet<DashboardWidgetPreference> DbSet
         {
-            get { return db.Preferenceses; }
+            get { return db.Preferences; }
         }
 
         #endregion
 
-        public DashboardWidgetPreferences LoadPreferencesByUserId(string userId)
+        public DashboardWidgetPreference LoadPreferencesByUserId(string userId)
         {
             return DbSet.FirstOrDefault(pref => pref.UserId == userId);
         }
 
-        public IEnumerable<DashboardWidgetPreferences> LoadAllPreferencesByUserId(string userId)
+        public IEnumerable<DashboardWidgetPreference> LoadAllPreferencesByUserId(string userId)
         {
             return DbSet.Where(pref => pref.UserId == userId).ToList();
         }

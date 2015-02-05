@@ -16,6 +16,7 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Complaint = EPMS.Web.DashboardModels.Complaint;
 using Customer = EPMS.Web.DashboardModels.Customer;
 using Department = EPMS.Web.DashboardModels.Department;
@@ -88,6 +89,10 @@ namespace EPMS.Web.Controllers
         public ActionResult Index()
         {
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            if (Session["RoleName"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             ViewBag.UserRole = Session["RoleName"];
             if ((string)Session["RoleName"] != "Customer")
             {
@@ -261,7 +266,7 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Loads All Quick Launch Items
         /// </summary>
-        private IEnumerable<Models.QuickLaunchItem> LoadQuickLaunchItems()
+        private IEnumerable<Models.QuickLaunchMenuItems> LoadQuickLaunchItems()
         {
             string userName = HttpContext.User.Identity.Name;
             if (!String.IsNullOrEmpty(userName))
@@ -272,12 +277,12 @@ namespace EPMS.Web.Controllers
                     IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
                     if (roles.Count > 0)
                     {
-                        IEnumerable<Models.QuickLaunchItem> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
+                        IEnumerable<Models.QuickLaunchMenuItems> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
                         return menuItems;
                     }
                 }
             }
-            return Enumerable.Empty<Models.QuickLaunchItem>();
+            return Enumerable.Empty<Models.QuickLaunchMenuItems>();
 
         }
 
@@ -312,7 +317,7 @@ namespace EPMS.Web.Controllers
                 int i = 1;
                 foreach (var pref in preferences)
                 {
-                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences { UserId = userId, WidgetId = pref, SortNumber = i };
+                    Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
                     var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
                     if (PreferencesService.Addpreferences(preferenceToUpdate))
                     {
@@ -328,7 +333,7 @@ namespace EPMS.Web.Controllers
                 int i = 0;
                 foreach (var pref in preferences)
                 {
-                    Models.DashboardWidgetPreferences preference = new Models.DashboardWidgetPreferences
+                    Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference
                     {
                         WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
                         UserId = userpreferences[i].UserId,

@@ -5,10 +5,10 @@ namespace EPMS.Interfaces.IServices
 {
     public interface IDashboardWidgetPreferencesService
     {
-        DashboardWidgetPreferences LoadPreferencesByUserId(string userId);
-        IEnumerable<DashboardWidgetPreferences> LoadAllPreferencesByUserId(string userId);
-        bool Addpreferences(DashboardWidgetPreferences preferences);
-        bool UpdatePreferences(DashboardWidgetPreferences preferences);
-        void Deletepreferences(DashboardWidgetPreferences preferences);
+        DashboardWidgetPreference LoadPreferencesByUserId(string userId);
+        IEnumerable<DashboardWidgetPreference> LoadAllPreferencesByUserId(string userId);
+        bool Addpreferences(DashboardWidgetPreference preferences);
+        bool UpdatePreferences(DashboardWidgetPreference preferences);
+        void Deletepreferences(DashboardWidgetPreference preferences);
     }
 }

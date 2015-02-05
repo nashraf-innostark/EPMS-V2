@@ -3,7 +3,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.IServices
 {
-    public interface IQuickLaunchItemsService
+    public interface IQuickLaunchItemService
     {
         bool AddQuickLaunchItems(QuickLaunchItem quickLaunchItems);
         void DeletequickLaunchItems(QuickLaunchItem quickLaunchItems);

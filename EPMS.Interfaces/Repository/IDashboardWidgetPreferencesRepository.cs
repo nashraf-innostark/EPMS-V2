@@ -3,9 +3,9 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.Repository
 {
-    public interface IDashboardWidgetPreferencesRepository : IBaseRepository<DashboardWidgetPreferences, long>
+    public interface IDashboardWidgetPreferencesRepository : IBaseRepository<DashboardWidgetPreference, long>
     {
-        DashboardWidgetPreferences LoadPreferencesByUserId(string userId);
-        IEnumerable<DashboardWidgetPreferences> LoadAllPreferencesByUserId(string userId);
+        DashboardWidgetPreference LoadPreferencesByUserId(string userId);
+        IEnumerable<DashboardWidgetPreference> LoadAllPreferencesByUserId(string userId);
     }
 }

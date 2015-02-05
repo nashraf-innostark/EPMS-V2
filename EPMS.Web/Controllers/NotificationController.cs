@@ -34,10 +34,10 @@ namespace EPMS.Web.Controllers
             searchRequest.SearchString = Request["search"];
             if (Session["UserID"] != null)
             {
-                searchRequest.RoleName = Session["RoleName"].ToString();
-                searchRequest.CustomerId = Convert.ToInt64(Session["CustomerID"]);
-                searchRequest.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
-                searchRequest.UserId = Session["UserID"].ToString();
+                searchRequest.NotificationRequestParams.RoleName = Session["RoleName"].ToString();
+                searchRequest.NotificationRequestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
+                searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
+                searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
                 var resultData = notificationService.LoadAllNotifications(searchRequest);
                 return Json(resultData, JsonRequestBehavior.AllowGet);
             }
@@ -55,35 +55,16 @@ namespace EPMS.Web.Controllers
         {
             try
             {
-                if (notificationViewModel.NotificationResponse.NotificationId > 0)
+                notificationViewModel.UserId = Session["UserID"].ToString();
+                if(notificationService.AddUpdateNotification(notificationViewModel))
                 {
-                    notificationViewModel.NotificationResponse.RecLastUpdatedBy = Session["UserID"].ToString();
-                    notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-                    if (notificationService.UpdateNotification(notificationViewModel.NotificationResponse))
+                    TempData["message"] = new MessageViewModel
                     {
-                        TempData["message"] = new MessageViewModel
-                        {
-                            Message = Resources.Notification.Notification.NotificationSentMsg,
-                            IsUpdated = true
-                        };
-                    }
+                        Message = Resources.Notification.Notification.NotificationSentMsg,
+                        IsSaved = true
+                    };
+                    return RedirectToAction("Sent");
                 }
-                else
-                {
-                    notificationViewModel.NotificationResponse.RecCreatedBy = Session["UserID"].ToString();
-                    notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
-                    notificationViewModel.NotificationResponse.RecLastUpdatedBy = Session["UserID"].ToString();
-                    notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-                    if (notificationService.AddNotification(notificationViewModel.NotificationResponse))
-                    {
-                        TempData["message"] = new MessageViewModel
-                        {
-                            Message = Resources.Notification.Notification.NotificationSentMsg,
-                            IsSaved = true
-                        };
-                    }
-                }
-                return RedirectToAction("Index");
             }
             catch (Exception exception)
             {
@@ -98,6 +79,31 @@ namespace EPMS.Web.Controllers
             if(notificationViewModel.NotificationResponse.NotificationId>0)
                 return View(notificationViewModel);
             return RedirectToAction("Index");
+        }
+
+        [SiteAuthorize(PermissionKey = "NotificationSent")]
+        public ActionResult Sent()
+        {
+            NotificationListView viewModel = new NotificationListView();
+            viewModel.NotificationSearchRequest = new NotificationListViewRequest();
+
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Sent(NotificationListViewRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            if (Session["UserID"] != null)
+            {
+                searchRequest.NotificationRequestParams.RoleName = Session["RoleName"].ToString();
+                searchRequest.NotificationRequestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
+                searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
+                searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
+                var resultData = notificationService.LoadAllSentNotifications(searchRequest);
+                return Json(resultData, JsonRequestBehavior.AllowGet);
+            }
+            return RedirectToAction("Login", "Account");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,7 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
+using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.WebBase.UnityConfiguration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -23,6 +25,7 @@ namespace EPMS.Web.Controllers
         private ApplicationUserManager _userManager;
         private IMenuRightsService menuRightService;
         private IUserPrefrencesService userPrefrencesService;
+        private INotificationService notificationService;
         private void SetCultureInfo()
         {
             CultureInfo info;
@@ -43,6 +46,25 @@ namespace EPMS.Web.Controllers
             System.Threading.Thread.CurrentThread.CurrentCulture = info;
             System.Threading.Thread.CurrentThread.CurrentUICulture = info;
         }
+
+        private void GetNotifications()
+        {
+            notificationService = UnityWebActivator.Container.Resolve<INotificationService>();
+            NotificationRequestParams requestParams=new NotificationRequestParams();
+            object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
+            if (userPermissionSet != null)
+            {
+                string[] userPermissionsSet = (string[]) userPermissionSet;
+                requestParams.SystemGenerated = userPermissionsSet.Contains("SystemGenerated");
+
+                requestParams.RoleName = Session["RoleName"].ToString();
+                requestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
+                requestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
+                requestParams.UserId = Session["UserID"].ToString();
+
+                Session["NotificationCount"] = notificationService.LoadUnreadNotificationsCount(requestParams);
+            }
+        }
         #endregion
 
         #region Protected
@@ -54,6 +76,8 @@ namespace EPMS.Web.Controllers
                 SetUserDetail();
             //Set culture info
             SetCultureInfo();
+            //Get Notifications Count
+            GetNotifications();
         }
         #endregion
 

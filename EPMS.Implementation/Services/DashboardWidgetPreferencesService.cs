@@ -22,16 +22,16 @@ namespace EPMS.Implementation.Services
 
         #endregion
 
-        public DashboardWidgetPreferences LoadPreferencesByUserId(string userId)
+        public DashboardWidgetPreference LoadPreferencesByUserId(string userId)
         {
             return Repository.LoadPreferencesByUserId(userId);
         }
 
-        public IEnumerable<DashboardWidgetPreferences> LoadAllPreferencesByUserId(string userId)
+        public IEnumerable<DashboardWidgetPreference> LoadAllPreferencesByUserId(string userId)
         {
             return Repository.LoadAllPreferencesByUserId(userId);
         }
-        public bool Addpreferences(DashboardWidgetPreferences preferences)
+        public bool Addpreferences(DashboardWidgetPreference preferences)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public bool UpdatePreferences(DashboardWidgetPreferences preferences)
+        public bool UpdatePreferences(DashboardWidgetPreference preferences)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void Deletepreferences(DashboardWidgetPreferences preferences)
+        public void Deletepreferences(DashboardWidgetPreference preferences)
         {
             try
             {

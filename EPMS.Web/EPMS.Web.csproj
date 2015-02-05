@@ -378,7 +378,7 @@
     <Compile Include="Models\PreRequisitTask.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectTask.cs" />
-    <Compile Include="Models\QuickLaunchItem.cs" />
+    <Compile Include="Models\QuickLaunchMenuItems.cs" />
     <Compile Include="Models\QuickLaunchItems.cs" />
     <Compile Include="Models\Quotation.cs" />
     <Compile Include="Models\QuotationItemDetail.cs" />
@@ -667,6 +667,7 @@
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\Sent.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

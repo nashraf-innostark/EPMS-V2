@@ -436,7 +436,7 @@ namespace IdentitySample.Controllers
                             case "Admin":
                                 for (int i = 0; i < 10; i++)
                                 {
-                                    EPMS.Web.Models.DashboardWidgetPreferences preferences = new EPMS.Web.Models.DashboardWidgetPreferences
+                                    EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
                                     {
                                         UserId = userId,
                                         WidgetId = adminWidgets[i],
@@ -449,7 +449,7 @@ namespace IdentitySample.Controllers
                             case "Employee":
                                 for (int i = 0; i < 5; i++)
                                 {
-                                    EPMS.Web.Models.DashboardWidgetPreferences preferences = new EPMS.Web.Models.DashboardWidgetPreferences
+                                    EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
                                     {
                                         UserId = userId,
                                         WidgetId = employeeWidgets[i],
@@ -462,7 +462,7 @@ namespace IdentitySample.Controllers
                             case "Customer":
                                 for (int i = 0; i < 3; i++)
                                 {
-                                    EPMS.Web.Models.DashboardWidgetPreferences preferences = new EPMS.Web.Models.DashboardWidgetPreferences
+                                    EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
                                     {
                                         UserId = userId,
                                         WidgetId = customerWidgets[i],

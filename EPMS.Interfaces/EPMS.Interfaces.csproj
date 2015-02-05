@@ -86,7 +86,7 @@
     <Compile Include="IServices\IQuotationService.cs" />
     <Compile Include="IServices\ITaskEmployeeService.cs" />
     <Compile Include="IServices\IUserPrefrencesService.cs" />
-    <Compile Include="IServices\IQuickLaunchItemsService.cs" />
+    <Compile Include="IServices\IQuickLaunchItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
     <Compile Include="Repository\IProjectTaskRepository.cs" />
-    <Compile Include="Repository\IQuickLaunchItemsRepository.cs" />
+    <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />

@@ -11,5 +11,6 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         }
         public IEnumerable<EmployeeDDL> EmployeeDDL { get; set; }
         public NotificationResponse NotificationResponse { get; set; }
+        public string UserId { get; set; }
     }
 }
