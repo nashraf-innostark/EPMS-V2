@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -6,6 +7,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers.NotificationMapper;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
+using Microsoft.Practices.EnterpriseLibrary.Common.Properties;
 
 namespace EPMS.Implementation.Services
 {
@@ -47,6 +49,37 @@ namespace EPMS.Implementation.Services
             return notificationViewModel;
         }
 
+        public bool AddUpdateNotification(NotificationViewModel notificationViewModel)
+        {
+            if (notificationViewModel.NotificationResponse.NotificationId > 0)
+            {
+                notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
+
+                UpdateNotification(notificationViewModel.NotificationResponse);
+            }
+            else
+            {
+                notificationViewModel.NotificationResponse.RecCreatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
+                notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
+
+                AddNotification(notificationViewModel.NotificationResponse);
+            }
+            //Send Email
+            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
+            {
+                
+            }
+            //Send SMS
+            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.MobileNo))
+            {
+
+            }
+            return true;
+        }
+
         public bool AddNotification(NotificationResponse notification)
         {
             notificationRepository.Add(notification.CreateFromClientToServer());
@@ -59,6 +92,11 @@ namespace EPMS.Implementation.Services
             notificationRepository.Update(notification.CreateFromClientToServer());
             notificationRepository.SaveChanges();
             return true;
+        }
+
+        public int LoadUnreadNotificationsCount(NotificationRequestParams requestParams)
+        {
+            return notificationRepository.GetUnreadNotificationsCount(requestParams);
         }
 
         public NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset)

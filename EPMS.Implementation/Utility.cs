@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 
-namespace EPMS.Web
+namespace EPMS.Implementation
 {
     public class Utility
     {
@@ -17,7 +17,6 @@ namespace EPMS.Web
             //string cc = ConfigurationManager.AppSettings["CC"];
             //string bcc = ConfigurationManager.AppSettings["BCC"];
 
-            //Getting the file from config, to send
             MailMessage oEmail = new MailMessage
             {
                 From = new MailAddress(fromAddress, fromDisplayName),
@@ -39,7 +38,7 @@ namespace EPMS.Web
             client.Send(oEmail);
 
         }
-        public bool SendSms(string smsText, string mobileNo)
+        public static bool SendNotificationSms(string smsText, string mobileNo)
         {
             string username = ConfigurationManager.AppSettings["MobileUsername"];
             string password = ConfigurationManager.AppSettings["MobilePassword"];

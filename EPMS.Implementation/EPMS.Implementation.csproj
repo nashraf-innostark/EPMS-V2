@@ -155,6 +155,7 @@
     <Compile Include="Services\TaskEmployeeService.cs" />
     <Compile Include="Services\UserPrefrencesService.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -55,35 +55,16 @@ namespace EPMS.Web.Controllers
         {
             try
             {
-                if (notificationViewModel.NotificationResponse.NotificationId > 0)
+                notificationViewModel.UserId = Session["UserID"].ToString();
+                if(notificationService.AddUpdateNotification(notificationViewModel))
                 {
-                    notificationViewModel.NotificationResponse.RecLastUpdatedBy = Session["UserID"].ToString();
-                    notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-                    if (notificationService.UpdateNotification(notificationViewModel.NotificationResponse))
+                    TempData["message"] = new MessageViewModel
                     {
-                        TempData["message"] = new MessageViewModel
-                        {
-                            Message = Resources.Notification.Notification.NotificationSentMsg,
-                            IsUpdated = true
-                        };
-                    }
+                        Message = Resources.Notification.Notification.NotificationSentMsg,
+                        IsSaved = true
+                    };
+                    return RedirectToAction("Sent");
                 }
-                else
-                {
-                    notificationViewModel.NotificationResponse.RecCreatedBy = Session["UserID"].ToString();
-                    notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
-                    notificationViewModel.NotificationResponse.RecLastUpdatedBy = Session["UserID"].ToString();
-                    notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-                    if (notificationService.AddNotification(notificationViewModel.NotificationResponse))
-                    {
-                        TempData["message"] = new MessageViewModel
-                        {
-                            Message = Resources.Notification.Notification.NotificationSentMsg,
-                            IsSaved = true
-                        };
-                    }
-                }
-                return RedirectToAction("Sent");
             }
             catch (Exception exception)
             {

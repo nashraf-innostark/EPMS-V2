@@ -4,6 +4,10 @@ namespace EPMS.Models.RequestModels.NotificationRequestModels
 {
     public class NotificationListViewRequest : GetPagedListRequest
     {
+        public NotificationListViewRequest()
+        {
+            NotificationRequestParams=new NotificationRequestParams();
+        }
         public NotificationRequestParams NotificationRequestParams { get; set; }
         public NotificationByColumn NotificationByColumn
         {

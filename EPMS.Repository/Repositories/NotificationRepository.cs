@@ -59,7 +59,7 @@ namespace EPMS.Repository.Repositories
             int toRow = searchRequset.iDisplayStart + searchRequset.iDisplayLength;
             Expression<Func<Notification, bool>> query;
             var today = DateTime.Now;
-            if (searchRequset.NotificationRequestParams.RoleName == "Admin")
+            if (searchRequset.NotificationRequestParams.SystemGenerated)
             {
                 query =
                     s =>
@@ -75,9 +75,7 @@ namespace EPMS.Repository.Repositories
 
                           (s.SystemGenerated || s.UserId == searchRequset.NotificationRequestParams.UserId || s.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId ||
                            s.MeetingAttendees.Any(x => x.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
-                           (s.AlertAppearDate <= today
-                           //&& today <= s.AlertDate
-                           )
+                           (s.AlertAppearDate <= today)
                             );
             }
             else
@@ -151,11 +149,22 @@ namespace EPMS.Repository.Repositories
             var today = DateTime.Now;
             Expression<Func<Notification, bool>> query;
 
-            query = s => ((s.SystemGenerated == requestParams.SystemGenerated || s.UserId == requestParams.UserId || s.EmployeeId == requestParams.EmployeeId ||
-                           s.MeetingAttendees.Any(x => x.EmployeeId == requestParams.EmployeeId)) 
+            if (requestParams.SystemGenerated)
+            {
+                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || s.UserId == requestParams.UserId || s.EmployeeId == requestParams.EmployeeId ||
+                           s.MeetingAttendees.Any(x => x.EmployeeId == requestParams.EmployeeId))
                            &&
-                           ((s.AlertAppearDate <= today) && (s.ReadStatus==false))
+                           ((s.AlertAppearDate <= today) && (s.ReadStatus == false))
                            );
+            }
+            else
+            {
+                query = s => ((s.UserId == requestParams.UserId || s.EmployeeId == requestParams.EmployeeId ||
+                           s.MeetingAttendees.Any(x => x.EmployeeId == requestParams.EmployeeId))
+                           &&
+                           ((s.AlertAppearDate <= today) && (s.ReadStatus == false))
+                           );
+            }
             return DbSet.Count(query);
         }
     }
