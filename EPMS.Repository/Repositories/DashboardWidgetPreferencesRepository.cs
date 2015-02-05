@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -26,5 +28,15 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        public DashboardWidgetPreferences LoadPreferencesByUserId(string userId)
+        {
+            return DbSet.FirstOrDefault(pref => pref.UserId == userId);
+        }
+
+        public IEnumerable<DashboardWidgetPreferences> LoadAllPreferencesByUserId(string userId)
+        {
+            return DbSet.Where(pref => pref.UserId == userId).ToList();
+        }
     }
 }

@@ -232,19 +232,14 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMS.dbo.DashboardWidgetPreferences' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DashboardWidgetPreferences">
           <Key>
-            <PropertyRef Name="WidgetPerferences" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="WidgetId" />
-            <PropertyRef Name="SortNumber" />
+            <PropertyRef Name="WidgetPerferencesId" />
           </Key>
-          <Property Name="WidgetPerferences" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WidgetPerferencesId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="WidgetId" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="SortNumber" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="SortNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -1174,6 +1169,7 @@ warning 6002: The table/view 'EPMS.dbo.DashboardWidgetPreferences' does not have
           <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardWidgetPreferences" EntityType="Self.DashboardWidgetPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeJobHistory" EntityType="Self.EmployeeJobHistory" Schema="dbo" store:Type="Tables" />
@@ -1198,14 +1194,6 @@ warning 6002: The table/view 'EPMS.dbo.DashboardWidgetPreferences' does not have
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrences" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DashboardWidgetPreferences" EntityType="Self.DashboardWidgetPreferences" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [DashboardWidgetPreferences].[WidgetPerferences] AS [WidgetPerferences], 
-    [DashboardWidgetPreferences].[UserId] AS [UserId], 
-    [DashboardWidgetPreferences].[WidgetId] AS [WidgetId], 
-    [DashboardWidgetPreferences].[SortNumber] AS [SortNumber]
-    FROM [dbo].[DashboardWidgetPreferences] AS [DashboardWidgetPreferences]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -2749,15 +2737,12 @@ warning 6002: The table/view 'EPMS.dbo.DashboardWidgetPreferences' does not have
         </Association>
         <EntityType Name="DashboardWidgetPreferences">
           <Key>
-            <PropertyRef Name="WidgetPerferences" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="WidgetId" />
-            <PropertyRef Name="SortNumber" />
+            <PropertyRef Name="WidgetPerferencesId" />
           </Key>
-          <Property Name="WidgetPerferences" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WidgetPerferencesId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="WidgetId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SortNumber" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="SortNumber" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3421,7 +3406,7 @@ warning 6002: The table/view 'EPMS.dbo.DashboardWidgetPreferences' does not have
                 <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
                 <ScalarProperty Name="WidgetId" ColumnName="WidgetId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="WidgetPerferences" ColumnName="WidgetPerferences" />
+                <ScalarProperty Name="WidgetPerferencesId" ColumnName="WidgetPerferencesId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

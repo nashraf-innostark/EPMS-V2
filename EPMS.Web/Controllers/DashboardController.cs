@@ -8,8 +8,17 @@ using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
+using Complaint = EPMS.Web.DashboardModels.Complaint;
+using Customer = EPMS.Web.DashboardModels.Customer;
+using Department = EPMS.Web.DashboardModels.Department;
+using Employee = EPMS.Web.DashboardModels.Employee;
+using Meeting = EPMS.Web.DashboardModels.Meeting;
+using Order = EPMS.Web.DashboardModels.Order;
+using Payroll = EPMS.Web.DashboardModels.Payroll;
 
 namespace EPMS.Web.Controllers
 {
@@ -29,6 +38,7 @@ namespace EPMS.Web.Controllers
         private readonly IEmployeeService employeeService;
         private readonly ICustomerService customerService;
         private readonly IComplaintService complaintService;
+        private readonly IDashboardWidgetPreferencesService PreferencesService;
 
         /// <summary>
         /// Dashboard constructor
@@ -44,7 +54,8 @@ namespace EPMS.Web.Controllers
         /// <param name="employeeService"></param>
         /// <param name="customerService"></param>
         /// <param name="complaintService"></param>
-        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService)
+        /// <param name="preferencesService"></param>
+        public DashboardController(IProjectTaskService projectTaskService,IMeetingService meetingService,IProjectService projectService,IPayrollService payrollService,IDepartmentService departmentService,IJobOfferedService jobOfferedService,IOrdersService ordersService,IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService)
         {
             this.projectTaskService = projectTaskService;
             this.meetingService = meetingService;
@@ -57,6 +68,7 @@ namespace EPMS.Web.Controllers
             this.employeeService = employeeService;
             this.customerService = customerService;
             this.complaintService = complaintService;
+            PreferencesService = preferencesService;
         }
         #endregion
 
@@ -124,7 +136,12 @@ namespace EPMS.Web.Controllers
                 dashboardViewModel.ProjectsDDL = GetProjectsDDL(requester, 1);
                 #endregion
             }
-            
+            #region Widget Preferences
+
+            var userId = User.Identity.GetUserId();
+            dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromServerToClient());
+
+            #endregion
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
             return View(dashboardViewModel);
@@ -255,8 +272,46 @@ namespace EPMS.Web.Controllers
         [HttpPost]
         public JsonResult SaveWidgetPreferences(string[] preferences)
         {
-
-            return Json("", JsonRequestBehavior.AllowGet);
+            var userId = User.Identity.GetUserId();
+            var result = PreferencesService.LoadPreferencesByUserId(userId);
+            if (result == null)
+            {
+                // Add
+                int i = 1;
+                foreach (var pref in preferences)
+                {
+                    DashboardWidgetPreferences preference = new DashboardWidgetPreferences {UserId = userId, WidgetId = pref, SortNumber = i};
+                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    if (PreferencesService.Addpreferences(preferenceToUpdate))
+                    {
+                        i++;
+                    }
+                }
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var userpreferences = PreferencesService.LoadAllPreferencesByUserId(userId).ToList();
+                // Update
+                int i = 0;
+                foreach (var pref in preferences)
+                {
+                    DashboardWidgetPreferences preference = new DashboardWidgetPreferences
+                    {
+                        WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
+                        UserId = userpreferences[i].UserId,
+                        WidgetId = pref,
+                        SortNumber = i+1
+                    };
+                    var preferenceToUpdate = preference.CreateFromClientToServer();
+                    if (PreferencesService.Updatepreferences(preferenceToUpdate))
+                    {
+                        i++;
+                    }
+                }
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

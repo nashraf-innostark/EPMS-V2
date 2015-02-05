@@ -43,6 +43,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<ITaskEmployeeRepository, TaskEmployeeRepository>();
             unityContainer.RegisterType<IUserPrefrencesRepository, UserPrefrencesRepository>();
             unityContainer.RegisterType<INotificationRepository, NotificationRepository>();
+            unityContainer.RegisterType<IDashboardWidgetPreferencesRepository, DashboardWidgetPreferencesRepository>();
         }
     }
 }
