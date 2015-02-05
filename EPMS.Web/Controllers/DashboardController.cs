@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
+using EPMS.Models.MenuModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
 using EPMS.Web.Models;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
@@ -16,6 +20,10 @@ using Complaint = EPMS.Web.DashboardModels.Complaint;
 using Customer = EPMS.Web.DashboardModels.Customer;
 using Department = EPMS.Web.DashboardModels.Department;
 using Employee = EPMS.Web.DashboardModels.Employee;
+using Meeting = EPMS.Web.DashboardModels.Meeting;
+using Order = EPMS.Web.DashboardModels.Order;
+using Payroll = EPMS.Web.DashboardModels.Payroll;
+using EmployeeRequest = EPMS.Web.DashboardModels.EmployeeRequest;
 using Meeting = EPMS.Web.DashboardModels.Meeting;
 using Order = EPMS.Web.DashboardModels.Order;
 using Payroll = EPMS.Web.DashboardModels.Payroll;
@@ -39,6 +47,7 @@ namespace EPMS.Web.Controllers
         private readonly ICustomerService customerService;
         private readonly IComplaintService complaintService;
         private readonly IDashboardWidgetPreferencesService PreferencesService;
+        private readonly IMenuRightsService menuRightsService;
 
         /// <summary>
         /// Dashboard constructor
@@ -69,6 +78,7 @@ namespace EPMS.Web.Controllers
             this.customerService = customerService;
             this.complaintService = complaintService;
             PreferencesService = preferencesService;
+            this.menuRightsService = menuRightsService;
         }
         #endregion
 
@@ -137,6 +147,7 @@ namespace EPMS.Web.Controllers
                 #endregion
             }
             #region Widget Preferences
+            dashboardViewModel.QuickLaunchItems = LoadQuickLaunchItems();
 
             var userId = User.Identity.GetUserId();
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromServerToClient());
@@ -249,7 +260,32 @@ namespace EPMS.Web.Controllers
         {
             return payrollService.LoadPayroll(employeeId, date).CreatePayrollForDashboard();
         }
-        #endregion
+        /// <summary>
+        /// Loads All Quick Launch Items
+        /// </summary>
+        private IEnumerable<QuickLaunchItem> LoadQuickLaunchItems()
+        {
+            string userName = HttpContext.User.Identity.Name;
+            if (!String.IsNullOrEmpty(userName))
+            {
+                AspNetUser userResult = UserManager.FindByName(userName);
+                if (userResult != null)
+                {
+                    IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
+                    if (roles.Count > 0)
+                    {
+                        IEnumerable<QuickLaunchItem> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
+                        return menuItems;
+                    }
+                }
+            }
+            return Enumerable.Empty<QuickLaunchItem>();
+
+
+            
+        }
+
+            #endregion
 
         #region Ajax response Methods
         /// <summary>

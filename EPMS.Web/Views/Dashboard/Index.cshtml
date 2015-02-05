@@ -26,20 +26,23 @@
 <input type="hidden" id="userRole" value="@ViewBag.UserRole" />
 <input type="hidden" id="makeComplaint" value="@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint" />
 <input type="hidden" id="makeMeeting" value="@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting" />
+
+
 <!-- dashboard-quick-launch box -->
-@*<div class="container-fluid dashboard dashboard-quick-launch">
-        <div class="row-fluid">
-            <div class="span12">
-                <ul id="sortable">
-                    <li class="add-ql">
-                        <a href="#modal-add-quick-launch-custom" data-toggle="modal">
-                            <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+<div class="container-fluid dashboard dashboard-quick-launch">
+    <div class="row-fluid">
+        <div class="span12">
+            <ul id="sortable">
+                <li class="add-ql">
+                    <a href="#modal-add-quick-launch-custom" data-toggle="modal">
+                        <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </div>*@
+    </div>
+</div>
+
 <div class="container-fluid dashboard dashboard-widget-group">
     <div class="row-fluid">
         <div id="photon_widgets" class="span12 ui-sortable">
@@ -1010,7 +1013,7 @@
     </div>
     <div class="modal-body predefined-icons">
         <ul>
-            <li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
+            @*<li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
@@ -1030,10 +1033,12 @@
             <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
             <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>
-
-
-
+            <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>*@
+            @foreach (var item in Model.QuickLaunchItems)
+            {
+                @*<li>@item.Name</li>*@
+                <li title="@item.Name"><img src="~/Images/photon/icons/@item.ImageIconPath" alt=" predefined"></li>
+            }
 
         </ul>
     </div>

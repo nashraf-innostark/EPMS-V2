@@ -74,7 +74,7 @@ namespace EPMS.Implementation.Services
                 notificationListView.aaData = Enumerable.Empty<NotificationListResponse>();
 
             notificationListView.iTotalDisplayRecords = notifications.TotalFiltered;
-            notificationListView.iTotalRecords = notifications.TotalCount;
+            notificationListView.iTotalRecords = notifications.TotalFiltered;
             notificationListView.sEcho = searchRequset.sEcho;
             return notificationListView;
         }

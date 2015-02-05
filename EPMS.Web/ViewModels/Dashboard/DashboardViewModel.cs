@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.MenuModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.Models;
@@ -30,5 +31,6 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<DashboardModels.Project> TaskProjectsDDL { get; set; }
         public IEnumerable<ProjectTaskResponse> ProjectTasks { get; set; }
         public IEnumerable<DashboardWidgetPreferences> WidgetPreferenceses { get; set; }
+        public IEnumerable<QuickLaunchItem> QuickLaunchItems { get; set; } 
     }
 }

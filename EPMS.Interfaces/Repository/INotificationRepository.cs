@@ -7,5 +7,6 @@ namespace EPMS.Interfaces.Repository
     public interface INotificationRepository:IBaseRepository<Notification,long>
     {
         NotificationRequestResponse GetAllNotifications(NotificationListViewRequest searchRequset);
+        //int GetUnreadNotificationsCount(NotificationListViewRequest searchRequset);
     }
 }
