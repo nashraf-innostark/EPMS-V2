@@ -104,5 +104,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<UserPrefrence> UserPrefrence { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<DashboardWidgetPreferences> Preferenceses { get; set; }
+        public DbSet<QuickLaunchItem> QuickLaunchItems { get; set; }
     }
 }

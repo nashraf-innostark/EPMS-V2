@@ -5,7 +5,7 @@ namespace EPMS.Web.Models
     /// <summary>
     /// Quick Launch items class
     /// </summary>
-    public sealed class QuickLaunchItem
+    public sealed class QuickLaunchMenuItems
     {
         public int MenuID { get; set; }
 

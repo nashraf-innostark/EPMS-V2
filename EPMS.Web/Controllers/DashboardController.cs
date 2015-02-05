@@ -261,7 +261,7 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Loads All Quick Launch Items
         /// </summary>
-        private IEnumerable<Models.QuickLaunchItem> LoadQuickLaunchItems()
+        private IEnumerable<Models.QuickLaunchMenuItems> LoadQuickLaunchItems()
         {
             string userName = HttpContext.User.Identity.Name;
             if (!String.IsNullOrEmpty(userName))
@@ -272,12 +272,12 @@ namespace EPMS.Web.Controllers
                     IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
                     if (roles.Count > 0)
                     {
-                        IEnumerable<Models.QuickLaunchItem> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
+                        IEnumerable<Models.QuickLaunchMenuItems> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
                         return menuItems;
                     }
                 }
             }
-            return Enumerable.Empty<Models.QuickLaunchItem>();
+            return Enumerable.Empty<Models.QuickLaunchMenuItems>();
             
         }
 
