@@ -7,7 +7,7 @@ namespace EPMS.Models.DomainModels
         public long QuickLaunchId { get; set; }
         public long UserId { get; set; }
         public int MenuId { get; set; }
-        public string SortOrder { get; set; }
+        public int SortOrder { get; set; }
 
         public virtual Menu Menu { get; set; }
     }
