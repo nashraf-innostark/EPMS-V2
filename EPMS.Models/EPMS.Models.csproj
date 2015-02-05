@@ -139,7 +139,7 @@
     <Compile Include="DomainModels\Project.cs" />
     <Compile Include="DomainModels\ProjectTask.cs" />
     <Compile Include="DomainModels\ProjectDocument.cs" />
-    <Compile Include="DomainModels\QuickLaunchItems.cs" />
+    <Compile Include="DomainModels\QuickLaunchItem.cs" />
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />

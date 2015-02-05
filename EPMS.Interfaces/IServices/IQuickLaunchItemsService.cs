@@ -1,14 +1,15 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.IServices
 {
     public interface IQuickLaunchItemsService
     {
-        bool AddQuickLaunchItems(QuickLaunchItems quickLaunchItems);
-        void DeletequickLaunchItems(QuickLaunchItems quickLaunchItems);
+        bool AddQuickLaunchItems(QuickLaunchItem quickLaunchItems);
+        void DeletequickLaunchItems(QuickLaunchItem quickLaunchItems);
         /// <summary>
         /// Get all Items by Employee Id
         /// </summary>
-        QuickLaunchItems FindItemsByEmployeeId(long? id);
+        IEnumerable<QuickLaunchItem> FindItemsByEmployeeId(long? id);
     }
 }

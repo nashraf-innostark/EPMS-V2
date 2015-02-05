@@ -23,22 +23,22 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
-        public bool AddQuickLaunchItems(QuickLaunchItems quickLaunchItems)
+        public bool AddQuickLaunchItems(QuickLaunchItem quickLaunchItems)
         {
             quickLaunchItemsRepository.Add(quickLaunchItems);
             quickLaunchItemsRepository.SaveChanges();
             return true;
         }
 
-        public void DeletequickLaunchItems(QuickLaunchItems quickLaunchItems)
+        public void DeletequickLaunchItems(QuickLaunchItem quickLaunchItems)
         {
             quickLaunchItemsRepository.Delete(quickLaunchItems);
             quickLaunchItemsRepository.SaveChanges();
         }
 
-        public QuickLaunchItems FindItemsByEmployeeId(long? id)
+        public IEnumerable<QuickLaunchItem> FindItemsByEmployeeId(long? id)
         {
-            return null;
+            return quickLaunchItemsRepository.FindItemsbyEmployeeId(id);
         }
     }
 }
