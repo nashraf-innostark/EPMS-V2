@@ -31,7 +31,7 @@ namespace EPMS.Implementation.Services
         {
             return Repository.LoadAllPreferencesByUserId(userId);
         }
-        public bool Addpreferences(DashboardWidgetPreference preferences)
+        public bool AddPreferences(DashboardWidgetPreference preferences)
         {
             try
             {

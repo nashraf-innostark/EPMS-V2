@@ -7,7 +7,7 @@ namespace EPMS.Interfaces.IServices
     {
         DashboardWidgetPreference LoadPreferencesByUserId(string userId);
         IEnumerable<DashboardWidgetPreference> LoadAllPreferencesByUserId(string userId);
-        bool Addpreferences(DashboardWidgetPreference preferences);
+        bool AddPreferences(DashboardWidgetPreference preferences);
         bool UpdatePreferences(DashboardWidgetPreference preferences);
         void Deletepreferences(DashboardWidgetPreference preferences);
     }
