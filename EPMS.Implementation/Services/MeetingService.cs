@@ -7,6 +7,7 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Implementation.Services
@@ -14,15 +15,17 @@ namespace EPMS.Implementation.Services
     public class MeetingService : IMeetingService
     {
         private readonly IMeetingRepository meetingRepository;
+        private readonly INotificationService notificationService;
         private readonly IMeetingAttendeeRepository meetingAttendeeRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IMeetingDocumentRepository meetingDocumentRepository;
 
         #region Constructor
 
-        public MeetingService(IMeetingRepository meetingRepository, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository)
+        public MeetingService(IMeetingRepository meetingRepository,INotificationService notificationService, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository)
         {
             this.meetingRepository = meetingRepository;
+            this.notificationService = notificationService;
             this.meetingAttendeeRepository = meetingAttendeeRepository;
             this.employeeRepository = employeeRepository;
             this.meetingDocumentRepository = meetingDocumentRepository;
@@ -280,6 +283,24 @@ namespace EPMS.Implementation.Services
                 }
             }
         }
+        public void SendNotification(MeetingAttendee meetingAttendee)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
 
+            #region Send notification to admin
+
+            notificationViewModel.NotificationResponse.TitleE = "Meeting invitation.";
+            notificationViewModel.NotificationResponse.TitleA = "Meeting invitation.";
+
+            notificationViewModel.NotificationResponse.CategoryId = 4; //Meetings
+            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.AddDays(-1).ToShortDateString();
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            notificationViewModel.NotificationResponse.EmployeeId = meetingAttendee.EmployeeId;
+
+            notificationService.AddUpdateNotification(notificationViewModel);
+
+            #endregion
+        }
     }
 }

@@ -8,6 +8,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
@@ -15,16 +16,19 @@ namespace EPMS.Implementation.Services
     {
         private readonly IProjectTaskRepository Repository;
         private readonly ITaskEmployeeService TaskEmployeeService;
+        private readonly INotificationService notificationService;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="repository"></param>
         /// <param name="taskEmployeeService"></param>
-        public ProjectTaskService(IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService)
+        /// <param name="notificationService"></param>
+        public ProjectTaskService(IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService,INotificationService notificationService)
         {
             Repository = repository;
             TaskEmployeeService = taskEmployeeService;
+            this.notificationService = notificationService;
         }
 
         public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
@@ -93,6 +97,7 @@ namespace EPMS.Implementation.Services
                     }
                 }
                 Repository.SaveChanges();
+                //SendNotification(task);
                 return true;
             }
             catch (Exception)
@@ -209,6 +214,9 @@ namespace EPMS.Implementation.Services
                 #endregion
                 Repository.Update(tasks);
                 Repository.SaveChanges();
+
+                //SendNotification(tasks);
+
                 return true;
             }
             catch (Exception)
@@ -246,6 +254,27 @@ namespace EPMS.Implementation.Services
             }
             Repository.Delete(task);
             Repository.SaveChanges();
+        }
+
+        public void SendNotification(ProjectTask task)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+
+            #region Send notification to admin
+            if (Utility.IsDate(task.EndDate))
+            {
+                notificationViewModel.NotificationResponse.TitleE = "Task delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Task delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(task.EndDate).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            #endregion
         }
     }
 }

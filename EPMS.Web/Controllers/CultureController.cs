@@ -39,5 +39,9 @@ namespace EPMS.Web.Controllers
             }
             return Redirect(redirectUrl);
         }
+        public void SendNotifications()
+        {
+            Utility.SendEmailAsync("nadir@innostark.com","Auto Send","Test Email");
+        }
     }
 }

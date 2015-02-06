@@ -218,6 +218,8 @@
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationRequestResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\UserNotification.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\UserNotificationType.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
