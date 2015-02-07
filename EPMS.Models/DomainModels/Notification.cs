@@ -20,6 +20,9 @@ namespace EPMS.Models.DomainModels
         public string UserId { get; set; }
         public bool SystemGenerated { get; set; }
         public DateTime? AlertAppearDate { get; set; }
+        public long? ItemId { get; set; }
+
+
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
