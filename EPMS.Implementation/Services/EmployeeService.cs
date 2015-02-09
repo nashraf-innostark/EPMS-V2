@@ -6,11 +6,13 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
     public class EmployeeService : IEmployeeService
     {
+        private readonly INotificationService notificationService;
         private readonly IEmployeeRepository repository;
         private readonly IAllowanceRepository allowanceRepository;
         private readonly IEmployeeJobHistoryRepository employeeJobHistoryRepository;
@@ -18,12 +20,15 @@ namespace EPMS.Implementation.Services
 
 
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="notificationService"></param>
         /// <param name="xRepository"></param>
-        public EmployeeService(IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository)
+        public EmployeeService(INotificationService notificationService,IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository)
         {
+            this.notificationService = notificationService;
             repository = xRepository;
             this.requestRepository = requestRepository;
             this.allowanceRepository = allowanceRepository;
@@ -86,6 +91,8 @@ namespace EPMS.Implementation.Services
         {
             repository.Add(employee);
             repository.SaveChanges();
+
+            //SendNotification(employee);
             return employee.EmployeeId;
         }
         /// <summary>
@@ -112,6 +119,8 @@ namespace EPMS.Implementation.Services
                 }
                 repository.Update(employee);
                 repository.SaveChanges();
+
+                //SendNotification(employee);
                 return true;
             }
             catch (Exception e)
@@ -141,6 +150,51 @@ namespace EPMS.Implementation.Services
         {
             IEnumerable<string> empIds = repository.FindEmployeeEmailById(employeeIds);
             return empIds;
+        }
+
+        public void SendNotification(Employee employee)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+
+            #region Iqama Expiry Date
+
+            if (Utility.IsDate(employee.EmployeeIqamaExpiryDt))
+            {
+                notificationViewModel.NotificationResponse.TitleE = "Employee Iqama";
+                notificationViewModel.NotificationResponse.TitleA = "Employee Iqama";
+
+                notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+                notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
+                notificationViewModel.NotificationResponse.AlertDate =
+                    Convert.ToDateTime(employee.EmployeeIqamaExpiryDt).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+                notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+
+            #endregion
+
+            #region Passport Expiry Date
+
+            if (Utility.IsDate(employee.EmployeePassportExpiryDt))
+            {
+                notificationViewModel.NotificationResponse.TitleE = "Employee Passport";
+                notificationViewModel.NotificationResponse.TitleA = "Employee Passport";
+
+                notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+                notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
+                notificationViewModel.NotificationResponse.AlertDate =
+                    Convert.ToDateTime(employee.EmployeePassportExpiryDt).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+                notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+
+            #endregion
         }
     }
 }

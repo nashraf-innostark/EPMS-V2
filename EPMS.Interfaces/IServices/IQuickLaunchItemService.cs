@@ -11,5 +11,7 @@ namespace EPMS.Interfaces.IServices
         /// Get all Items by Employee Id
         /// </summary>
         IEnumerable<QuickLaunchItem> FindItemsByEmployeeId(long? id);
+
+        void SaveItems(IEnumerable<int> menuIds);
     }
 }

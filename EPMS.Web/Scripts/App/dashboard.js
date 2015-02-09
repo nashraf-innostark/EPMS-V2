@@ -82,18 +82,22 @@
 
     $("#addSelectedQuickLink").on("click", function () {
         var hml = "";
-
+        var widgets = new Array();
         $(".predefined-icons ul li").each(function () {
 
             var ttis = $(this);
-
+            
             if (ttis.hasClass("selectedPredefinedIcon")) {
                 var title = ttis.find("img").attr("title");
                 var img = ttis.find("img").attr('src');
                 var href = ttis.find("img").attr('data-hrf');
-                var ok = "ok"
+                var ok = "ok";
+                var tt12 = $(this).attr('id');
+                widgets.push(tt12);
+                
+                
                 $("#sortable li").each(function () {
-
+                    
 
                     if ($(this).find("p").text() == title) {
                         ok = "no";
@@ -112,6 +116,24 @@
             }
 
 
+        });
+        var siteURL = $('#siteURL').val();
+        var url = siteURL + "/Dashboard/SaveQuickLaunchItems";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            traditional: true,
+            data: {
+                menuIds: widgets
+            },
+            success: function (data) {
+
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+                $(".tempLoader").click();
+            }
         });
 
         $("#sortable ").prepend(hml);

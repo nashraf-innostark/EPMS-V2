@@ -1037,7 +1037,7 @@
             @foreach (var item in Model.QuickLaunchItems)
             {
                 @*<li>@item.Name</li>*@
-                <li title="@item.Name"><img src="~/Images/photon/icons/@item.ImageIconPath" alt=" predefined"></li>
+                <li title="@item.Name" id="@item.MenuID"><img src="~/Images/photon/icons/@item.ImageIconPath" alt=" predefined"></li>
             }
 
         </ul>

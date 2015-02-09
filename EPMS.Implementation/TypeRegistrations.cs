@@ -47,6 +47,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IUserPrefrencesService, UserPrefrencesService>();
             unityContainer.RegisterType<INotificationService, NotificationService>();
             unityContainer.RegisterType<IDashboardWidgetPreferencesService, DashboardWidgetPreferencesService>();
+            unityContainer.RegisterType<IQuickLaunchItemService, QuickLaunchItemService>();
         }
     }
 }

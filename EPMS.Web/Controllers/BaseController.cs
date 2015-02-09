@@ -63,7 +63,8 @@ namespace EPMS.Web.Controllers
                 requestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 requestParams.UserId = Session["UserID"].ToString();
 
-                Session["NotificationCount"] = notificationService.LoadUnreadNotificationsCount(requestParams);
+                //Session["NotificationCount"] = notificationService.LoadUnreadNotificationsCount(requestParams);
+                ViewBag.Notifications = notificationService.LoadUnreadNotificationsCount(requestParams);
             }
         }
         #endregion

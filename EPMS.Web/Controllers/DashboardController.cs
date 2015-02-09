@@ -46,6 +46,7 @@ namespace EPMS.Web.Controllers
         private readonly IComplaintService complaintService;
         private readonly IDashboardWidgetPreferencesService PreferencesService;
         private readonly IMenuRightsService menuRightsService;
+        private readonly IQuickLaunchItemService quickLaunchItemService;
 
         /// <summary>
         /// Dashboard constructor
@@ -63,7 +64,7 @@ namespace EPMS.Web.Controllers
         /// <param name="complaintService"></param>
         /// <param name="preferencesService"></param>
         /// <param name="menuRightsService"></param>
-        public DashboardController(IProjectTaskService projectTaskService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService)
+        public DashboardController(IProjectTaskService projectTaskService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
         {
             this.projectTaskService = projectTaskService;
             this.meetingService = meetingService;
@@ -78,6 +79,7 @@ namespace EPMS.Web.Controllers
             this.complaintService = complaintService;
             PreferencesService = preferencesService;
             this.menuRightsService = menuRightsService;
+            this.quickLaunchItemService = quickLaunchItemService;
         }
         #endregion
 
@@ -454,6 +456,14 @@ namespace EPMS.Web.Controllers
             var projects = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), projectId);
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult SaveQuickLaunchItems(int[] menuIds)
+        {
+            IEnumerable<int> idsToBeSaved = menuIds.ToList();
+            quickLaunchItemService.SaveItems(idsToBeSaved);
+            return null;
+        }
+
         #endregion
     }
 }

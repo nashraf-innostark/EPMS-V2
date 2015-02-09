@@ -18,6 +18,8 @@ namespace EPMS.Web.Controllers
             this.notificationService = notificationService;
         }
 
+        #region List Views
+        
         // GET: Notification
         [SiteAuthorize(PermissionKey = "NS")]
         public ActionResult Index()
@@ -43,6 +45,34 @@ namespace EPMS.Web.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
+
+        [SiteAuthorize(PermissionKey = "NotificationSent")]
+        public ActionResult Sent()
+        {
+            NotificationListView viewModel = new NotificationListView();
+            viewModel.NotificationSearchRequest = new NotificationListViewRequest();
+
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Sent(NotificationListViewRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            if (Session["UserID"] != null)
+            {
+                searchRequest.NotificationRequestParams.RoleName = Session["RoleName"].ToString();
+                searchRequest.NotificationRequestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
+                searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
+                searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
+                var resultData = notificationService.LoadAllSentNotifications(searchRequest);
+                return Json(resultData, JsonRequestBehavior.AllowGet);
+            }
+            return RedirectToAction("Login", "Account");
+        }
+        #endregion
+
+        #region Create/Update/Details
 
         [SiteAuthorize(PermissionKey = "NotificationCreate")]
         public ActionResult Create(long? id)
@@ -80,30 +110,6 @@ namespace EPMS.Web.Controllers
                 return View(notificationViewModel);
             return RedirectToAction("Index");
         }
-
-        [SiteAuthorize(PermissionKey = "NotificationSent")]
-        public ActionResult Sent()
-        {
-            NotificationListView viewModel = new NotificationListView();
-            viewModel.NotificationSearchRequest = new NotificationListViewRequest();
-
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(viewModel);
-        }
-        [HttpPost]
-        public ActionResult Sent(NotificationListViewRequest searchRequest)
-        {
-            searchRequest.SearchString = Request["search"];
-            if (Session["UserID"] != null)
-            {
-                searchRequest.NotificationRequestParams.RoleName = Session["RoleName"].ToString();
-                searchRequest.NotificationRequestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
-                searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
-                searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
-                var resultData = notificationService.LoadAllSentNotifications(searchRequest);
-                return Json(resultData, JsonRequestBehavior.AllowGet);
-            }
-            return RedirectToAction("Login", "Account");
-        }
+        #endregion
     }
 }
