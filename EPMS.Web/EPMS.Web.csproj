@@ -300,6 +300,8 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\LCP\Controllers\LicenseController.cs" />
+    <Compile Include="Areas\LCP\LCPAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
     <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
@@ -345,6 +347,7 @@
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\LicenseMapper.cs" />
     <Compile Include="ModelMappers\MeetingAttendeeMapper.cs" />
     <Compile Include="ModelMappers\MeetingMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
@@ -371,6 +374,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\LicenseControlPanel.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\MeetingAttendee.cs" />
     <Compile Include="Models\MeetingModel.cs" />
@@ -630,6 +634,8 @@
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\License\LicenseCreateViewModel.cs" />
+    <Compile Include="ViewModels\License\LicenseIndexViewModel.cs" />
     <Compile Include="ViewModels\Meeting\MeetingListViewModel.cs" />
     <Compile Include="ViewModels\Meeting\MeetingViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
@@ -668,6 +674,9 @@
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\Sent.cshtml" />
+    <Content Include="Areas\LCP\Views\web.config" />
+    <Content Include="Areas\LCP\Views\License\Index.cshtml" />
+    <Content Include="Areas\LCP\Views\License\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3071,6 +3080,8 @@
     <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\LCP\Models\" />
+    <Folder Include="Areas\LCP\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
