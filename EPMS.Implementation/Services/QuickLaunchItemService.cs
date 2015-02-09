@@ -36,5 +36,10 @@ namespace EPMS.Implementation.Services
         {
             return quickLaunchItemsRepository.FindItemsbyEmployeeId(id);
         }
+
+        public void SaveItems(IEnumerable<long> menuIds)
+        {
+
+        }
     }
 }
