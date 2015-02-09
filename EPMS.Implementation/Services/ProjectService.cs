@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Implementation.Services
 {
     public class ProjectService:IProjectService
     {
+        private readonly INotificationService notificationService;
         private readonly IProjectRepository projectRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IProjectTaskRepository projectTaskRepository;
@@ -20,8 +23,9 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectService(IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
+        public ProjectService(INotificationService notificationService,IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
         {
+            this.notificationService = notificationService;
             this.projectRepository = projectRepository;
             this.ordersRepository = ordersRepository;
             this.projectTaskRepository = projectTaskRepository;
@@ -49,6 +53,7 @@ namespace EPMS.Implementation.Services
             projectRepository.Add(project);
             projectRepository.SaveChanges();
             SetOrderStatus(project);
+            //SendNotification(project);
             return project.ProjectId;
         }
 
@@ -66,6 +71,7 @@ namespace EPMS.Implementation.Services
             projectRepository.Update(project);
             projectRepository.SaveChanges();
             SetOrderStatus(project);
+            //SendNotification(project);
             return project.ProjectId;
         }
 
@@ -112,6 +118,27 @@ namespace EPMS.Implementation.Services
         public IEnumerable<Project> LoadAllProjectsByEmployeeId(long employeeId)
         {
             return projectRepository.GetAllProjectsByEmployeeId(employeeId);
+        }
+
+        public void SendNotification(Project project)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+
+            #region Send notification to admin
+            if (Utility.IsDate(project.EndDate))
+            {
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            #endregion
         }
     }
 }

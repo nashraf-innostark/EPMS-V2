@@ -6,20 +6,25 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
     public class EmployeeRequestService:IEmployeeRequestService
     {
+        private readonly INotificationService notificationService;
         private readonly IEmployeeRequestRepository repository;
         private readonly IEmployeeRequestDetailRepository repositoryRequestDetail;
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="notificationService"></param>
         /// <param name="xRepository"></param>
-        public EmployeeRequestService(IEmployeeRequestRepository xRepository, IEmployeeRequestDetailRepository xRepositoryRequestDetail)
+        public EmployeeRequestService(INotificationService notificationService,IEmployeeRequestRepository xRepository, IEmployeeRequestDetailRepository xRepositoryRequestDetail)
         {
+            this.notificationService = notificationService;
             repository = xRepository;
             repositoryRequestDetail = xRepositoryRequestDetail;
         }
@@ -129,12 +134,39 @@ namespace EPMS.Implementation.Services
             {
                 repositoryRequestDetail.Update(requestDetail);
                 repositoryRequestDetail.SaveChanges();
+
+                if (requestDetail.IsApproved)
+                {
+                    //SendNotification(requestDetail);
+                }
                 return true;
             }
             catch (Exception exception)
             {
                 return false;
             }
+        }
+
+
+        public void SendNotification(RequestDetail requestDetail)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+
+            #region Request Approved
+            notificationViewModel.NotificationResponse.TitleE = requestDetail.EmployeeRequest.RequestTopic;
+            notificationViewModel.NotificationResponse.TitleA = requestDetail.EmployeeRequest.RequestTopic;
+
+            notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
+            notificationViewModel.NotificationResponse.AlertDate =
+                Convert.ToDateTime(DateTime.Now.AddDays(-1)).ToShortDateString();
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.EmployeeId;
+
+            notificationService.AddUpdateNotification(notificationViewModel);
+
+            #endregion
         }
     }
 }
