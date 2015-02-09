@@ -466,6 +466,7 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" />
           <Property Name="SystemGenerated" Type="bit" />
           <Property Name="AlertAppearDate" Type="datetime" />
+          <Property Name="ItemId" Type="bigint" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -554,7 +555,7 @@
             <PropertyRef Name="QuickLaunchId" />
           </Key>
           <Property Name="QuickLaunchId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="MenuId" Type="int" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
         </EntityType>
@@ -1868,7 +1869,7 @@
           <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ParentItem" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
           <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
-          <NavigationProperty Name="QuickLaunchItems" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="Menu" ToRole="QuickLaunchItems" />
+          <NavigationProperty Name="QuickLaunchItems" Relationship="EPMSModel.FK_QuickLaunchItems_Menu" FromRole="Menu" ToRole="QuickLaunchItem" />
         </EntityType>
         <EntityType Name="MenuRight">
           <Key>
@@ -1904,6 +1905,7 @@
           <Property Name="AlertAppearDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
           <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendees" />
+          <Property Name="ItemId" Type="Int64" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1991,16 +1993,6 @@
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
           <NavigationProperty Name="PreRequisitTask" Relationship="Self.PreRequisitTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
           <NavigationProperty Name="ProjectTasks" Relationship="Self.PreRequisitTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
-        </EntityType>
-        <EntityType Name="QuickLaunchItem">
-          <Key>
-            <PropertyRef Name="QuickLaunchId" />
-          </Key>
-          <Property Name="QuickLaunchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int64" Nullable="false" />
-          <Property Name="MenuId" Type="Int32" Nullable="false" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Menu" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItems" ToRole="Menu" />
         </EntityType>
         <EntityType Name="Quotation">
           <Key>
@@ -2505,18 +2497,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QuickLaunchItems_Menu">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
-          <End Role="QuickLaunchItems" Type="Self.QuickLaunchItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="QuickLaunchItems">
-              <PropertyRef Name="MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Project_Orders">
           <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
           <End Role="Project" Type="Self.Project" Multiplicity="*" />
@@ -2615,7 +2595,6 @@
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocument" />
           <EntitySet Name="ProjectTasks" EntityType="Self.ProjectTask" />
-          <EntitySet Name="QuickLaunchItems" EntityType="Self.QuickLaunchItem" />
           <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
@@ -2757,10 +2736,6 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="MenuRight" EntitySet="MenuRights" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuickLaunchItems_Menu" Association="Self.FK_QuickLaunchItems_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="QuickLaunchItems" EntitySet="QuickLaunchItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_Project_Orders" Association="Self.FK_Project_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Project" EntitySet="Projects" />
@@ -2790,6 +2765,11 @@
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
           <EntitySet Name="DashboardWidgetPreferences" EntityType="EPMSModel.DashboardWidgetPreference" />
+          <EntitySet Name="QuickLaunchItems" EntityType="EPMSModel.QuickLaunchItem" />
+          <AssociationSet Name="FK_QuickLaunchItems_Menu" Association="EPMSModel.FK_QuickLaunchItems_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="QuickLaunchItem" EntitySet="QuickLaunchItems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="DashboardWidgetPreference">
           <Key>
@@ -2800,6 +2780,28 @@
           <Property Name="WidgetId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SortNumber" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="QuickLaunchItem">
+          <Key>
+            <PropertyRef Name="QuickLaunchId" />
+          </Key>
+          <Property Name="QuickLaunchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Menu" Relationship="EPMSModel.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItem" ToRole="Menu" />
+        </EntityType>
+        <Association Name="FK_QuickLaunchItems_Menu">
+          <End Type="EPMSModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="EPMSModel.QuickLaunchItem" Role="QuickLaunchItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="QuickLaunchItem">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3253,6 +3255,7 @@
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="EPMSModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="TitleE" ColumnName="TitleE" />
                 <ScalarProperty Name="TitleA" ColumnName="TitleA" />
@@ -3349,16 +3352,6 @@
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="QuickLaunchItems">
-            <EntityTypeMapping TypeName="EPMSModel.QuickLaunchItem">
-              <MappingFragment StoreEntitySet="QuickLaunchItems">
-                <ScalarProperty Name="QuickLaunchId" ColumnName="QuickLaunchId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3477,6 +3470,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="QuickLaunchItems">
+            <EntityTypeMapping TypeName="EPMSModel.QuickLaunchItem">
+              <MappingFragment StoreEntitySet="QuickLaunchItems">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="QuickLaunchId" ColumnName="QuickLaunchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3529,7 +3532,6 @@
         <EntityTypeShape EntityType="EPMSModel.Project" Width="1.5" PointX="6" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.ProjectDocument" Width="1.5" PointX="8.25" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.5" PointX="8.25" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.QuickLaunchItem" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Quotation" Width="1.5" PointX="3" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.QuotationItemDetail" Width="1.5" PointX="5.25" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="9.75" PointY="36" IsExpanded="true" />
@@ -3569,7 +3571,6 @@
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_QuickLaunchItems_Menu" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_Project_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" ManuallyRouted="false" />
@@ -3578,6 +3579,8 @@
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreference" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSModel.QuickLaunchItem" Width="1.5" PointX="3.375" PointY="3.375" />
+        <AssociationConnector Association="EPMSModel.FK_QuickLaunchItems_Menu" />
       </Diagram>
     </Diagrams>
   </Designer>

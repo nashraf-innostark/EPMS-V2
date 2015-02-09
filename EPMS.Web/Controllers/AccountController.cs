@@ -429,7 +429,7 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(model.SelectedRole).Name;
                         UserManager.AddToRole(user.Id, roleName);
                         // Add User Preferences for Dashboards Widgets
-                        var userId = User.Identity.GetUserId();
+                        var userId = user.Id;
                         string[] adminWidgets = { "MeetingWidget", "OrderWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget", "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget" };
                         string[] employeeWidgets = { "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget" };
                         string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };

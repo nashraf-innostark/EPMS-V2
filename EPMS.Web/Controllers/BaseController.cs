@@ -18,6 +18,7 @@ using Microsoft.Practices.Unity;
 
 namespace EPMS.Web.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
         #region Private
