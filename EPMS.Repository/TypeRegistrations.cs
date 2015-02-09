@@ -44,6 +44,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IUserPrefrencesRepository, UserPrefrencesRepository>();
             unityContainer.RegisterType<INotificationRepository, NotificationRepository>();
             unityContainer.RegisterType<IDashboardWidgetPreferencesRepository, DashboardWidgetPreferencesRepository>();
+            unityContainer.RegisterType<IQuickLaunchItemRepository, QuickLaunchItemRepository>();
         }
     }
 }

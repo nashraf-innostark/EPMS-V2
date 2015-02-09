@@ -457,11 +457,12 @@ namespace EPMS.Web.Controllers
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult SaveQuickLaunchItems(long[] menuIds)
-        //{
-        //    IEnumerable<long> idsToBeSaved = menuIds.ToList();
-        //    //quickLaunchItemService.SaveItems;
-        //}
+        public JsonResult SaveQuickLaunchItems(int[] menuIds)
+        {
+            IEnumerable<int> idsToBeSaved = menuIds.ToList();
+            quickLaunchItemService.SaveItems(idsToBeSaved);
+            return null;
+        }
 
         #endregion
     }
