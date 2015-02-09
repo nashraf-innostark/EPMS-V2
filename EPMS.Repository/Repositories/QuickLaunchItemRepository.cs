@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -25,7 +22,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<QuickLaunchItem> FindItemsbyEmployeeId(long? employeeId)
         {
-            return DbSet.Where(s => s.UserId == employeeId).ToList();
+            return DbSet.Where(s => s.UserId == "").ToList();
         }
     }
 }
