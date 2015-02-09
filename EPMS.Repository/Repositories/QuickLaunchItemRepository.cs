@@ -22,7 +22,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<QuickLaunchItem> FindItemsbyEmployeeId(long? employeeId)
         {
-            return DbSet.Where(s => s.UserId == employeeId).ToList();
+            return DbSet.Where(s => s.UserId == "").ToList();
         }
     }
 }

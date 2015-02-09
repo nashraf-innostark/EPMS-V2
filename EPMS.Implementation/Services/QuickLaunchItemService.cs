@@ -49,7 +49,8 @@ namespace EPMS.Implementation.Services
                 {
                     QuickLaunchItem itemToAdd = new QuickLaunchItem
                     {
-                        UserId = Convert.ToInt64(ClaimsPrincipal.Current.Identity.GetUserId()),
+                        //UserId = Convert.ToInt64(ClaimsPrincipal.Current.Identity.GetUserId()),
+                        UserId = "",
                         MenuId = id,
                     };
                     quickLaunchItemsRepository.Add(itemToAdd);
