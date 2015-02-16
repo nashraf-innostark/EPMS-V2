@@ -60,6 +60,53 @@
         tolerance: 'pointer'
     });
 
+    // Make QUickLaunchItems Sortable sortable
+    $("#quickLaunchItems").sortable({
+        start: function (event, ui) {
+            isDragActive = true;
+            $('.liItem').addClass('testClass');
+            //$('.dashboard-quick-launch li img').tooltip('hide');
+        },
+        stop: function (event, ui, a, b) {
+            var elems = document.getElementsByClassName("liItem");
+            var arr = $.makeArray(elems);
+            //var widgets = new Array();
+            //for (var i = 0; i < arr.length; i++) {
+            //    widgets.push(arr[i].id);
+            //}
+            var elements = [];
+            $(".liItem[id^='Menu_']").each(function() {
+                //alert(this.id);
+                var result = (this.id).replace('Menu_', '');
+                elements.push(result);
+            });
+            // Save Preferences
+            var siteURL = $('#siteURL').val();
+            var url = siteURL + "/Dashboard/SaveQuickLaunchPrefrences";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    preferences: elements
+                },
+                success: function (data) {
+
+                },
+                error: function (e) {
+                    alert('Error=' + e.toString());
+                    $(".tempLoader").click();
+                }
+            });
+            isDragActive = false;
+            $('.widget-holder').removeClass('noPerspective');
+            //var selectedElement = $(ui.item).attr('id');
+            //alert("SelectedElement = " + selectedElement);
+        },
+        tolerance: 'pointer'
+    });
+
 
     $('.dashboard-quick-launch li img ').not('.dashboard-quick-launch li:last-child').tooltip({
         placement: 'top',
@@ -75,9 +122,29 @@
 
     });
 
+    //Delete Quick Launch Items
     $("body").delegate(".deleteTip", "click", function () {
-        $(this).closest('li').remove();
+        var widgets = document.getElementById('userMenuId').innerText;
+        var siteURL = $('#siteURL').val();
+        var url = siteURL + "/Dashboard/DeleteItem";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            traditional: true,
+            data: {
+                menuId: widgets
+            },
+            success: function (data) {
 
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+                $(".tempLoader").click();
+            }
+        });
+        $(this).closest('li').remove();
+        
     });
 
     $("#addSelectedQuickLink").on("click", function () {

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.Models;
+using DashboardWidgetPreference = EPMS.Web.Models.DashboardWidgetPreference;
+using EmployeeRequest = EPMS.Web.DashboardModels.EmployeeRequest;
 using Order = EPMS.Web.DashboardModels.Order;
 
 namespace EPMS.Web.ViewModels.Dashboard
@@ -31,6 +34,7 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<DashboardModels.Project> TaskProjectsDDL { get; set; }
         public IEnumerable<ProjectTaskResponse> ProjectTasks { get; set; }
         public IEnumerable<DashboardWidgetPreference> WidgetPreferenceses { get; set; }
-        public IEnumerable<QuickLaunchMenuItems> QuickLaunchItems { get; set; } 
+        public IEnumerable<QuickLaunchMenuItems> QuickLaunchItems { get; set; }
+        public IEnumerable<QuickLaunchItem> QuickLaunchUserItems { get; set; }
     }
 }

@@ -20,9 +20,24 @@ namespace EPMS.Repository.Repositories
             get { return db.QuickLaunchItems; }
         }
 
-        public IEnumerable<QuickLaunchItem> FindItemsbyEmployeeId(long? employeeId)
+        public IEnumerable<QuickLaunchItem> FindItemsbyEmployeeId(string employeeId)
         {
-            return DbSet.Where(s => s.UserId == "").ToList();
+            return DbSet.Where(s => s.UserId == employeeId).ToList().OrderBy(x => x.SortOrder);
+        }
+
+        public QuickLaunchItem GetItemByUserAndMenuId(string userId, int menuId)
+        {
+            return DbSet.FirstOrDefault(item => item.UserId == userId && item.MenuId == menuId);
+        }
+
+        public int GetMaxSortOrder(string userId)
+        {
+            var quickLaunchItem = DbSet.Where(item => item.UserId == userId).OrderByDescending(x => x.SortOrder).FirstOrDefault();
+            if (quickLaunchItem != null)
+            {
+                return quickLaunchItem.SortOrder;
+            }
+            return 0;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using EPMS.Models.MenuModels;
+﻿using EPMS.Models.DomainModels;
+using EPMS.Models.MenuModels;
 using EPMS.Web.Models;
 
 namespace EPMS.Web.ModelMappers
@@ -19,6 +20,15 @@ namespace EPMS.Web.ModelMappers
                 ImageIconPath = source.Menu.MenuImagePath,
                 UrlPath = source.Menu.MenuTargetController + "/" + source.Menu.MenuFunction,
                 Name = source.Menu.MenuTitle
+            };
+        }
+        public static QuickLaunchItem CreateFromClientToServer(this QuickLaunchItem source)
+        {
+            return new QuickLaunchItem
+            {
+                UserId = source.UserId,
+                MenuId = source.MenuId,
+                SortOrder = source.SortOrder,
             };
         }
     }

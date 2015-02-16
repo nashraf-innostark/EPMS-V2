@@ -10,8 +10,10 @@ namespace EPMS.Interfaces.IServices
         /// <summary>
         /// Get all Items by Employee Id
         /// </summary>
-        IEnumerable<QuickLaunchItem> FindItemsByEmployeeId(long? id);
+        IEnumerable<QuickLaunchItem> FindItemsByEmployeeId(string id);
+        bool DeleteItem(string userId, int menuId);
 
         void SaveItems(IEnumerable<int> menuIds);
+        void SaveItemPrefrences(string userId, int[] preferences);
     }
 }

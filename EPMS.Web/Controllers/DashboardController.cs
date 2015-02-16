@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
@@ -17,6 +18,7 @@ using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using WebGrease.Css.Extensions;
 using Complaint = EPMS.Web.DashboardModels.Complaint;
 using Customer = EPMS.Web.DashboardModels.Customer;
 using Department = EPMS.Web.DashboardModels.Department;
@@ -153,7 +155,8 @@ namespace EPMS.Web.Controllers
                 #endregion
             }
             #region Widget Preferences
-            dashboardViewModel.QuickLaunchItems = LoadQuickLaunchItems();
+            dashboardViewModel.QuickLaunchItems = LoadQuickLaunchMenuItems();
+            dashboardViewModel.QuickLaunchUserItems = LoadQuickLaunchUserItems();
 
             var userId = User.Identity.GetUserId();
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
@@ -269,7 +272,7 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Loads All Quick Launch Items
         /// </summary>
-        private IEnumerable<Models.QuickLaunchMenuItems> LoadQuickLaunchItems()
+        private IEnumerable<Models.QuickLaunchMenuItems> LoadQuickLaunchMenuItems()
         {
             string userName = HttpContext.User.Identity.Name;
             if (!String.IsNullOrEmpty(userName))
@@ -280,13 +283,31 @@ namespace EPMS.Web.Controllers
                     IList<AspNetRole> roles = userResult.AspNetRoles.ToList();
                     if (roles.Count > 0)
                     {
-                        IEnumerable<Models.QuickLaunchMenuItems> menuItems = menuRightsService.FindMenuItemsByRoleId(roles[0].Id).Where(menuR => menuR.Menu.IsRootItem == false).ToList().Select(menuR => menuR.CreateFrom());
+                        List<QuickLaunchMenuItems> menuItems =
+                            menuRightsService.FindMenuItemsByRoleId(roles[0].Id)
+                                .Where(menuR => menuR.Menu.IsRootItem == false)
+                                .ToList()
+                                .Select(menuR => menuR.CreateFrom())
+                                .ToList();
+                        IEnumerable<QuickLaunchItem> userItems =
+                            quickLaunchItemService.FindItemsByEmployeeId(ClaimsPrincipal.Current.Identity.GetUserId());
+
+                        foreach (QuickLaunchItem userItem in userItems)
+                        {
+                            menuItems.RemoveAll(item => item.MenuID == userItem.MenuId);
+                        }
+
                         return menuItems;
                     }
                 }
             }
             return Enumerable.Empty<Models.QuickLaunchMenuItems>();
 
+        }
+        public IEnumerable<QuickLaunchItem> LoadQuickLaunchUserItems()
+        {
+            IEnumerable<QuickLaunchItem> items = quickLaunchItemService.FindItemsByEmployeeId(ClaimsPrincipal.Current.Identity.GetUserId());
+            return items;
         }
 
         #endregion
@@ -354,6 +375,16 @@ namespace EPMS.Web.Controllers
             return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult SaveQuickLaunchPrefrences(int[] preferences)
+        {
+            var userId = User.Identity.GetUserId();
+            if (preferences != null)
+            {
+                quickLaunchItemService.SaveItemPrefrences(userId, preferences);
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// Load complaints
         /// </summary>
@@ -412,6 +443,15 @@ namespace EPMS.Web.Controllers
             var myProfile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
             return Json(myProfile, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetQuickLaunchUserItem()
+        {
+            var menuItems = LoadQuickLaunchUserItems();
+            return Json(menuItems, JsonRequestBehavior.AllowGet);
+        }
+
+
         /// <summary>
         /// Load emloyees' payroll
         /// </summary>
@@ -459,9 +499,20 @@ namespace EPMS.Web.Controllers
 
         public JsonResult SaveQuickLaunchItems(int[] menuIds)
         {
-            IEnumerable<int> idsToBeSaved = menuIds.ToList();
-            quickLaunchItemService.SaveItems(idsToBeSaved);
-            return null;
+            IEnumerable<int> idsToBeSaved = null;
+            if (menuIds != null)
+            {
+                idsToBeSaved = menuIds.ToList();
+                quickLaunchItemService.SaveItems(idsToBeSaved);
+            }
+            return Json(idsToBeSaved, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteItem(int menuId)
+        {
+            string userId = ClaimsPrincipal.Current.Identity.GetUserId();
+            quickLaunchItemService.DeleteItem(userId, menuId);
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

@@ -31,8 +31,19 @@
 <!-- dashboard-quick-launch box -->
 <div class="container-fluid dashboard dashboard-quick-launch">
     <div class="row-fluid">
-        <div class="span12">
-            <ul id="sortable">
+        <div id =""class="span12">
+            <ul id="quickLaunchItems" class="ui-sortable">
+                @foreach (var item in Model.QuickLaunchUserItems)
+                {
+                    <li class="liItem" id="Menu_@item.Menu.MenuId">
+                        <span id="userMenuId" style="display: none">@item.Menu.MenuId</span>
+                        <a href="/@item.Menu.MenuTargetController/@item.Menu.MenuFunction" data-toggle="modal">
+                            <img class="" src="~/Images/photon/icons/@item.Menu.MenuImagePath" alt=" predefined">
+                        </a>
+                        <p>@item.Menu.MenuTitle</p>
+                    </li>
+
+                }
                 <li class="add-ql">
                     <a href="#modal-add-quick-launch-custom" data-toggle="modal">
                         <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
@@ -1043,10 +1054,28 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal">Add Item</a>
+        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" onclick="loadItems()" >Add Item</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
     </div>
 </div>
-
+<script type="text/javascript">
+    function loadItems() {
+        var siteURL = $('#siteURL').val();
+        var url = siteURL + "/Dashboard/GetQuickLaunchUserItem";
+        $.ajax({
+            url: url,
+            type: 'Get',
+            dataType: 'json',
+            traditional: true,
+            success: function (data) {
+                alert(data.d);
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+                
+            }
+        });
+    }
+</script>
 
 <script src="~/Scripts/App/dashboard.js"></script>
