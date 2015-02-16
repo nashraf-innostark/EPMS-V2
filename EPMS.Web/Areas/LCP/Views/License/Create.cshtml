@@ -1,0 +1,183 @@
+﻿@model EPMS.Web.ViewModels.License.LicenseCreateViewModel
+
+@{
+    ViewBag.Title = "Create new License";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container" dir="ltr">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/LCP/License/Index">
+                Licenses' List
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+@using (Html.BeginForm("Create", "License", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.LicenseCoP.LicenseControlPanelId)
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="CompanyName">Company Name</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.CompanyName, new { @id = "CompanyName", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.CompanyName, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="CompanyWebsite">Website</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.Website, new { @id = "CompanyWebsite", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.Website, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="CompanyEmail">Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.Email, new { @id = "CompanyEmail", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.Email, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="CompanyAddress">Address</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.Address, new { @id = "CompanyAddress", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.Address, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="LandLine">LandLine</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.LandLine, new { @id = "LandLine", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.LandLine, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MobileNumber">Mobile</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.Mobile, new { @id = "MobileNumber", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.Mobile, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="CommercialRegister">Commercial Register</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.CommercialRegister, new { @id = "CommercialRegister", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.CommercialRegister, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ProductNumber">Product Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.ProductNumber, new { @id = "ProductNumber", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.ProductNumber, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NumberofUsers">Number of Users</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.NoOfUsers, new { @id = "NumberofUsers", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.NoOfUsers, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="LicenseNumber">License Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.LicenseCoP.LicenseNumber, new { @id = "LicenseNumber", @class = "" })
+                    @Html.ValidationMessageFor(m => m.LicenseCoP.LicenseNumber, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="StartDate">Start Date</label>
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.LicenseCoP.StartDate, new { @id = "LicStartDate", @class = "col-lg-2 datepickerGregorian form-control cursorHand", onchange = "GregorianToHijri(this, LicStartDateAr)", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.LicenseCoP.StartDate, String.Empty, new { @class = "required" })
+            </div>
+            <div class="controls span4">
+                @Html.TextBox("Start Date", null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "LicStartDateAr", onchange = "HijriToGregorian(this,'#LicStartDate')", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="StartDate">End Date</label>
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.LicenseCoP.EndDate, new { @id = "LicEndDate", @class = "col-lg-2 datepickerGregorian form-control cursorHand", onchange = "GregorianToHijri(this, LicEndDateAr)", @readonly = "readonly" })
+                @Html.ValidationMessageFor(m => m.LicenseCoP.EndDate, String.Empty, new { @class = "required" })
+            </div>
+            <div class="controls span4">
+                @Html.TextBox("Start Date", null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "LicEndDateAr", onchange = "HijriToGregorian(this,'#LicEndDate')", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn" name="Activate">Activate</button>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn" name="Deactivate">Deactivate</button>
+            </div>
+        </div>
+    </div>
+}

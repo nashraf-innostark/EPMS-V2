@@ -130,6 +130,7 @@
     <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
     <Compile Include="DomainModels\JobTitleHistory.cs" />
+    <Compile Include="DomainModels\LicenseControlPanel.cs" />
     <Compile Include="DomainModels\Meeting.cs" />
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="RequestModels\JobApplicantSearchRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
+    <Compile Include="RequestModels\LicensrSearchRequest.cs" />
     <Compile Include="RequestModels\MeetingRequest.cs" />
     <Compile Include="RequestModels\MeetingSearchRequest.cs" />
     <Compile Include="RequestModels\NotificationRequestModels\NotificationListViewRequest.cs" />

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -369,6 +369,24 @@
           <Property Name="BasicSalary" Type="float" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LicenseControlPanel">
+          <Key>
+            <PropertyRef Name="LicenseControlPanelId" />
+          </Key>
+          <Property Name="LicenseControlPanelId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Website" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="LandLine" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CommercialRegister" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ProductNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NoOfUsers" Type="int" Nullable="false" />
+          <Property Name="LicenseNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Meeting">
           <Key>
@@ -1201,6 +1219,7 @@
           <EntitySet Name="JobOffered" EntityType="Self.JobOffered" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTitleHistory" EntityType="Self.JobTitleHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LicenseControlPanel" EntityType="Self.LicenseControlPanel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MeetingAttendees" EntityType="Self.MeetingAttendees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MeetingDocuments" EntityType="Self.MeetingDocuments" Schema="dbo" store:Type="Tables" />
@@ -1395,8 +1414,7 @@
             <End Role="UserPrefrences" EntitySet="UserPrefrences" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1702,8 +1720,8 @@
           <NavigationProperty Name="EmployeeJobHistories" Relationship="Self.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
           <NavigationProperty Name="EmployeeRequests" Relationship="Self.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequests" />
           <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendees" />
-          <NavigationProperty Name="Notifications" Relationship="Self.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
+          <NavigationProperty Name="Notifications" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Employee" ToRole="Notification" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -1846,7 +1864,7 @@
           <Property Name="NotificationStatus" Type="Boolean" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_MeetingAttendees_Employee" FromRole="MeetingAttendees" ToRole="Employee" />
           <NavigationProperty Name="Meeting" Relationship="Self.FK_MeetingAttendees_Meeting" FromRole="MeetingAttendees" ToRole="Meeting" />
-          <NavigationProperty Name="Notification" Relationship="Self.FK_MeetingAttendees_Notification" FromRole="MeetingAttendees" ToRole="Notification" />
+          <NavigationProperty Name="Notification" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="MeetingAttendee" ToRole="Notification" />
         </EntityType>
         <EntityType Name="MeetingDocument">
           <Key>
@@ -1890,32 +1908,6 @@
           <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRoles" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
-        </EntityType>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="NotificationId" />
-          </Key>
-          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TitleE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TitleA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="AlertBefore" Type="Int32" Nullable="false" />
-          <Property Name="AlertDateType" Type="Int32" Nullable="false" />
-          <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EmployeeId" Type="Int64" />
-          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ReadStatus" Type="Boolean" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="SystemGenerated" Type="Boolean" />
-          <Property Name="AlertAppearDate" Type="DateTime" Precision="3" />
-          <Property Name="ItemId" Type="Int64" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
-          <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendees" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -2009,7 +2001,7 @@
             <PropertyRef Name="QuickLaunchId" />
           </Key>
           <Property Name="QuickLaunchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="MenuId" Type="Int32" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Menu" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItems" ToRole="Menu" />
@@ -2373,18 +2365,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Notification_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Notification" Type="Self.Notification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Notification">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TaskEmployee_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
@@ -2478,18 +2458,6 @@
             </Principal>
             <Dependent Role="MeetingDocuments">
               <PropertyRef Name="MeetingId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingAttendees_Notification">
-          <End Role="Notification" Type="Self.Notification" Multiplicity="0..1" />
-          <End Role="MeetingAttendees" Type="Self.MeetingAttendee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Notification">
-              <PropertyRef Name="NotificationId" />
-            </Principal>
-            <Dependent Role="MeetingAttendees">
-              <PropertyRef Name="NotificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2623,7 +2591,6 @@
           <EntitySet Name="MeetingDocuments" EntityType="Self.MeetingDocument" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
-          <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocument" />
@@ -2722,10 +2689,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Notification_Employee" Association="Self.FK_Notification_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Notification" EntitySet="Notifications" />
-          </AssociationSet>
           <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
@@ -2757,10 +2720,6 @@
           <AssociationSet Name="FK_MeetingDocuments_Meeting" Association="Self.FK_MeetingDocuments_Meeting">
             <End Role="Meeting" EntitySet="Meetings" />
             <End Role="MeetingDocuments" EntitySet="MeetingDocuments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MeetingAttendees_Notification" Association="Self.FK_MeetingAttendees_Notification">
-            <End Role="Notification" EntitySet="Notifications" />
-            <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
             <End Role="Menu" EntitySet="Menus" />
@@ -2802,7 +2761,85 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
+          <EntitySet Name="LicenseControlPanels" EntityType="EPMSModel.LicenseControlPanel" />
+          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
+          <AssociationSet Name="FK_Notification_Employee" Association="EPMSModel.FK_Notification_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Notification" EntitySet="Notifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingAttendees_Notification" Association="EPMSModel.FK_MeetingAttendees_Notification">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="MeetingAttendee" EntitySet="MeetingAttendees" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="LicenseControlPanel">
+          <Key>
+            <PropertyRef Name="LicenseControlPanelId" />
+          </Key>
+          <Property Name="LicenseControlPanelId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LandLine" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CommercialRegister" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProductNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfUsers" Type="Int32" Nullable="false" />
+          <Property Name="LicenseNumber" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TitleA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="AlertBefore" Type="Int32" Nullable="false" />
+          <Property Name="AlertDateType" Type="Int32" Nullable="false" />
+          <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ReadStatus" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SystemGenerated" Type="Boolean" />
+          <Property Name="AlertAppearDate" Type="DateTime" Precision="3" />
+          <Property Name="ItemId" Type="Int64" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Notification_Employee" FromRole="Notification" ToRole="Employee" />
+          <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Notification" FromRole="Notification" ToRole="MeetingAttendee" />
+        </EntityType>
+        <Association Name="FK_Notification_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingAttendees_Notification">
+          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="0..1" />
+          <End Type="EPMSModel.MeetingAttendee" Role="MeetingAttendee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="MeetingAttendee">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3263,31 +3300,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="EPMSModel.Notification">
-              <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
-                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
-                <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
-                <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="ReadStatus" ColumnName="ReadStatus" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
-                <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="EPMSModel.Order">
               <MappingFragment StoreEntitySet="Orders">
@@ -3481,6 +3493,50 @@
               <ScalarProperty Name="TaskId" ColumnName="TaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="LicenseControlPanels">
+            <EntityTypeMapping TypeName="EPMSModel.LicenseControlPanel">
+              <MappingFragment StoreEntitySet="LicenseControlPanel">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+                <ScalarProperty Name="NoOfUsers" ColumnName="NoOfUsers" />
+                <ScalarProperty Name="ProductNumber" ColumnName="ProductNumber" />
+                <ScalarProperty Name="CommercialRegister" ColumnName="CommercialRegister" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="LandLine" ColumnName="LandLine" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="LicenseControlPanelId" ColumnName="LicenseControlPanelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="EPMSModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
+                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ReadStatus" ColumnName="ReadStatus" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
+                <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
+                <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
+                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3529,7 +3585,6 @@
         <EntityTypeShape EntityType="EPMSModel.MeetingDocument" Width="1.5" PointX="9.75" PointY="57.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="10.5" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.5" PointY="44.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Order" Width="1.5" PointX="0.75" PointY="28.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Project" Width="1.5" PointX="6" PointY="9.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.ProjectDocument" Width="1.5" PointX="8.25" PointY="6.625" IsExpanded="true" />
@@ -3562,7 +3617,6 @@
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
@@ -3571,7 +3625,6 @@
         <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_MeetingDocuments_Meeting" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_QuickLaunchItems_Menu" ManuallyRouted="false" />
@@ -3582,6 +3635,10 @@
         <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPMSModel.LicenseControlPanel" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.5" PointY="41" />
+        <AssociationConnector Association="EPMSModel.FK_Notification_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Notification" />
       </Diagram>
     </Diagrams>
   </Designer>
