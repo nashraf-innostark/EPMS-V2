@@ -36,5 +36,6 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<DashboardWidgetPreference> WidgetPreferenceses { get; set; }
         public IEnumerable<QuickLaunchMenuItems> QuickLaunchItems { get; set; }
         public IEnumerable<QuickLaunchItem> QuickLaunchUserItems { get; set; }
+        public IEnumerable<QuickLaunchUserItems> LaunchItems { get; set; }
     }
 }

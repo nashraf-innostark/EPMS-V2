@@ -384,6 +384,7 @@
     <Compile Include="Models\ProjectTask.cs" />
     <Compile Include="Models\QuickLaunchMenuItems.cs" />
     <Compile Include="Models\QuickLaunchItems.cs" />
+    <Compile Include="Models\QuickLaunchUserItems.cs" />
     <Compile Include="Models\Quotation.cs" />
     <Compile Include="Models\QuotationItemDetail.cs" />
     <Compile Include="Models\Request.cs" />

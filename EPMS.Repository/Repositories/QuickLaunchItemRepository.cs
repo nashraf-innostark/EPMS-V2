@@ -22,7 +22,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<QuickLaunchItem> FindItemsbyEmployeeId(string employeeId)
         {
-            return DbSet.Where(s => s.UserId == employeeId).ToList().OrderBy(x => x.SortOrder);
+            return DbSet.Include(m=>m.Menu).Where(s => s.UserId == employeeId).ToList().OrderBy(x => x.SortOrder);
         }
 
         public QuickLaunchItem GetItemByUserAndMenuId(string userId, int menuId)

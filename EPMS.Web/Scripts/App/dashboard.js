@@ -69,14 +69,8 @@
         },
         stop: function (event, ui, a, b) {
             var elems = document.getElementsByClassName("liItem");
-            var arr = $.makeArray(elems);
-            //var widgets = new Array();
-            //for (var i = 0; i < arr.length; i++) {
-            //    widgets.push(arr[i].id);
-            //}
             var elements = [];
             $(".liItem[id^='Menu_']").each(function() {
-                //alert(this.id);
                 var result = (this.id).replace('Menu_', '');
                 elements.push(result);
             });
@@ -124,7 +118,9 @@
 
     //Delete Quick Launch Items
     $("body").delegate(".deleteTip", "click", function () {
-        var widgets = document.getElementById('userMenuId').innerText;
+        var aa = $(this).closest('li').attr('id');
+        var result = aa.replace('Menu_', '');
+        //var widgets = document.getElementById('userMenuId').innerText;
         var siteURL = $('#siteURL').val();
         var url = siteURL + "/Dashboard/DeleteItem";
         $.ajax({
@@ -133,7 +129,7 @@
             dataType: 'json',
             traditional: true,
             data: {
-                menuId: widgets
+                menuId: result
             },
             success: function (data) {
 
@@ -195,7 +191,11 @@
                 menuIds: widgets
             },
             success: function (data) {
-
+                for (var item in data)
+                {
+                    var liHtml = "<li><a href=/" + data[item].Url + "><img src=/Images/photon/icons/" + data[item].ImagePath + " alt='Quick Launch Icon' data-original-title title><p>" + data[item].Title + "</p></a></li>";
+                    $(liHtml).insertBefore('#addItemButton');
+                }
             },
             error: function (e) {
                 alert('Error=' + e.toString());

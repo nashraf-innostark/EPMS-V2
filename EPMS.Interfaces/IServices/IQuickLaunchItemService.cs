@@ -15,5 +15,7 @@ namespace EPMS.Interfaces.IServices
 
         void SaveItems(IEnumerable<int> menuIds);
         void SaveItemPrefrences(string userId, int[] preferences);
+
+        QuickLaunchItem GetItemByUserAndMenuId(string userId, int menuId);
     }
 }

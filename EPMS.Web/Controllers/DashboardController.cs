@@ -156,7 +156,7 @@ namespace EPMS.Web.Controllers
             }
             #region Widget Preferences
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchMenuItems();
-            dashboardViewModel.QuickLaunchUserItems = LoadQuickLaunchUserItems();
+            dashboardViewModel.LaunchItems = LoadQuickLaunchUserItems();
 
             var userId = User.Identity.GetUserId();
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
@@ -304,9 +304,10 @@ namespace EPMS.Web.Controllers
             return Enumerable.Empty<Models.QuickLaunchMenuItems>();
 
         }
-        public IEnumerable<QuickLaunchItem> LoadQuickLaunchUserItems()
+        public IEnumerable<QuickLaunchUserItems> LoadQuickLaunchUserItems()
         {
-            IEnumerable<QuickLaunchItem> items = quickLaunchItemService.FindItemsByEmployeeId(ClaimsPrincipal.Current.Identity.GetUserId());
+            IList<QuickLaunchUserItems> items = new List<QuickLaunchUserItems>();
+            items = quickLaunchItemService.FindItemsByEmployeeId(ClaimsPrincipal.Current.Identity.GetUserId()).Select(x => x.CreateForUserItems()).ToList();
             return items;
         }
 
@@ -447,8 +448,9 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult GetQuickLaunchUserItem()
         {
-            var menuItems = LoadQuickLaunchUserItems();
-            return Json(menuItems, JsonRequestBehavior.AllowGet);
+            DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            dashboardViewModel.LaunchItems = quickLaunchItemService.FindItemsByEmployeeId(ClaimsPrincipal.Current.Identity.GetUserId()).Select(x => x.CreateForUserItems());
+            return Json(dashboardViewModel, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -505,7 +507,17 @@ namespace EPMS.Web.Controllers
                 idsToBeSaved = menuIds.ToList();
                 quickLaunchItemService.SaveItems(idsToBeSaved);
             }
-            return Json(idsToBeSaved, JsonRequestBehavior.AllowGet);
+            LoadQuickLaunchUserItems();
+            List<QuickLaunchUserItems> menus = new List<QuickLaunchUserItems>();
+            foreach (var id in idsToBeSaved)
+            {
+                QuickLaunchUserItems userItems =
+                    quickLaunchItemService.GetItemByUserAndMenuId(ClaimsPrincipal.Current.Identity.GetUserId(), id)
+                        .CreateForUserItems();
+                menus.Add(userItems);
+                //return Json(userItems, JsonRequestBehavior.AllowGet);
+            }
+            return Json(menus, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DeleteItem(int menuId)

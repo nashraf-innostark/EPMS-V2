@@ -5,6 +5,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
+using FaceSharp.Api.Objects;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Implementation.Services
@@ -113,6 +114,11 @@ namespace EPMS.Implementation.Services
                 quickLaunchItemsRepository.SaveChanges();
                 maxOrder++;
             }
+        }
+
+        public QuickLaunchItem GetItemByUserAndMenuId(string userId, int menuId)
+        {
+            return quickLaunchItemsRepository.GetItemByUserAndMenuId(userId, menuId);
         }
     }
 }

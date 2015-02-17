@@ -31,5 +31,16 @@ namespace EPMS.Web.ModelMappers
                 SortOrder = source.SortOrder,
             };
         }
+
+        public static QuickLaunchUserItems CreateForUserItems(this QuickLaunchItem source)
+        {
+            QuickLaunchUserItems retVal = new QuickLaunchUserItems();
+            retVal.MenuId = source.MenuId;
+            retVal.UserId = source.UserId;
+            retVal.Url = source.Menu.MenuTargetController + "/" + source.Menu.MenuFunction;
+            retVal.ImagePath = source.Menu.MenuImagePath;
+            retVal.Title = source.Menu.MenuTitle;
+            return retVal;
+        }
     }
 }

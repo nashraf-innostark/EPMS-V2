@@ -33,18 +33,18 @@
     <div class="row-fluid">
         <div id =""class="span12">
             <ul id="quickLaunchItems" class="ui-sortable">
-                @foreach (var item in Model.QuickLaunchUserItems)
+                @foreach (var item in Model.LaunchItems)
                 {
-                    <li class="liItem" id="Menu_@item.Menu.MenuId">
-                        <span id="userMenuId" style="display: none">@item.Menu.MenuId</span>
-                        <a href="/@item.Menu.MenuTargetController/@item.Menu.MenuFunction" data-toggle="modal">
-                            <img class="" src="~/Images/photon/icons/@item.Menu.MenuImagePath" alt=" predefined">
+                    <li class="liItem" id="Menu_@item.MenuId">
+                        <span id="userMenuId" style="display: none">@item.MenuId</span>
+                        <a href="/@item.Url" data-toggle="modal">
+                            <img class="" src="~/Images/photon/icons/@item.ImagePath" alt=" predefined">
                         </a>
-                        <p>@item.Menu.MenuTitle</p>
+                        <p>@item.Title</p>
                     </li>
 
                 }
-                <li class="add-ql">
+                <li class="add-ql" id="addItemButton">
                     <a href="#modal-add-quick-launch-custom" data-toggle="modal">
                         <div class="add-quick-launch" data-toggle="modal" id="addql"></div>
                     </a>
@@ -1054,7 +1054,7 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" onclick="loadItems()" >Add Item</a>
+        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@ >Add Item</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
     </div>
 </div>
@@ -1068,7 +1068,7 @@
             dataType: 'json',
             traditional: true,
             success: function (data) {
-                alert(data.d);
+                var ss = data;
             },
             error: function (e) {
                 alert('Error=' + e.toString());
