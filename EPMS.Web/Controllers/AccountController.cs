@@ -258,27 +258,37 @@ namespace IdentitySample.Controllers
         public ActionResult Create(string userName)
         {
             RegisterViewModel Result = new RegisterViewModel();
-            if (!string.IsNullOrEmpty(userName))
+            // Check allowed no of users
+            // check license
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = LicenseKey.Split('|');
+            var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
+            // get count od users
+            var countOfUsers = UserManager.Users.Count();
+            if (countOfUsers < NoOfUsers)
             {
-                AspNetUser userToEdit = UserManager.FindByName(userName);
-                Result = new RegisterViewModel
+                if (!string.IsNullOrEmpty(userName))
                 {
-                    UserId = userToEdit.Id,
-                    SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                    SelectedEmployee = userToEdit.EmployeeId ?? 0,
-                    UserName = userToEdit.UserName,
-                    Email = userToEdit.Email,
-                    //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
-                };
+                    AspNetUser userToEdit = UserManager.FindByName(userName);
+                    Result = new RegisterViewModel
+                    {
+                        UserId = userToEdit.Id,
+                        SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
+                        SelectedEmployee = userToEdit.EmployeeId ?? 0,
+                        UserName = userToEdit.UserName,
+                        Email = userToEdit.Email,
+                        //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
+                    };
+                    //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
+                    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+                    Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                    return View(Result);
+                }
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
+                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
                 Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-                return View(Result);
             }
-            //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r=>r.Name).ToList();
-            Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-
             return View(Result);
         }
 
