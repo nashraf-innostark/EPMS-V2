@@ -660,6 +660,12 @@
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
+    <Content Include="403.html" />
+    <Content Include="400.html" />
+    <Content Include="503.html" />
+    <Content Include="401.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
