@@ -3,6 +3,7 @@
     ViewBag.Title = Model.EmployeeViewModel.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] module = (string[])Session["UserModules"];
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -421,86 +422,93 @@
                     </div>
                 </div>
             }
-            <div class="alert alert-info alert-block">
-                <i class="icon-alert icon-alert-info"></i>
-                <strong>@EPMS.Web.Resources.HR.Employee.ReqHistory</strong>
-            </div>
-            if (Convert.ToString(Session["RoleName"]) != "Admin")
+            if (module.Contains("HRS"))
             {
-                <div>
-                    <header>
-                        <i class="icon-big-notepad"></i>
-                        <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
-                        <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
-                    </header>
+                <div class="alert alert-info alert-block">
+                    <i class="icon-alert icon-alert-info"></i>
+                    <strong>@EPMS.Web.Resources.HR.Employee.ReqHistory</strong>
+                </div>
+                if (Convert.ToString(Session["RoleName"]) != "Admin")
+                {
+                    <div>
+                        <header>
+                            <i class="icon-big-notepad"></i>
+                            <h2><small>@EPMS.Web.Resources.HR.Request.Requests</small></h2>
+                            <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+                        </header>
+                    </div>
+                }
+                <!--Sortable Responsive Table begin-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped table-responsive" id="tableRequsts">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@EPMS.Web.Resources.HR.Request.Requests</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.RequestListViewModel.aaData != null)
+                                {
+                                    foreach (var item in Model.RequestListViewModel.aaData.ToList())
+                                    {
+                                        <tr>
+                                            <td>@item.RequestId</td>
+                                            <td>@Html.ActionLink(@item.RequestTopic, "Create", "Request", new { id = item.RequestId }, null) </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             }
-            <!--Sortable Responsive Table begin-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableRequsts">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>@EPMS.Web.Resources.HR.Request.Requests</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.RequestListViewModel.aaData != null)
-                            {
-                                foreach (var item in Model.RequestListViewModel.aaData.ToList())
-                                {
-                                    <tr>
-                                        <td>@item.RequestId</td>
-                                        <td>@Html.ActionLink(@item.RequestTopic, "Create", "Request", new { id = item.RequestId }, null) </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
             <!--Sortable Responsive Table end-->
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
                 <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
             </div>
 
+            if (module.Contains("PMS"))
+            {
             <!--Sortable Responsive Table begin-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableProjects">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>@EPMS.Web.Resources.HR.Tasks.Task</th>
-                                <th>@EPMS.Web.Resources.HR.Tasks.ProjName</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.TaskEmployees != null)
-                            {
-                                foreach (var item in Model.TaskEmployees)
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped table-responsive" id="tableProjects">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@EPMS.Web.Resources.HR.Tasks.Task</th>
+                                    <th>@EPMS.Web.Resources.HR.Tasks.ProjName</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.TaskEmployees != null)
                                 {
-                                    <tr>
-                                        <td>@item.TaskEmployeeId</td>
-                                        @if (direction == "ltr")
-                                        {
-                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameE, "Create", "Task", new { area = "PMS", id = item.TaskId }, null) </td>
-                                            <td>@item.ProjectTask.ProjectNameE</td>
-                                        }
-                                        else
-                                        {
-                                            <td>@Html.ActionLink(@item.ProjectTask.TaskNameA, "Create", "Task", new { area = "PMS", id = item.TaskId }, null) </td>
-                                            <td>@item.ProjectTask.ProjectNameA</td>
-                                        }
-                                    </tr>
+                                    foreach (var item in Model.TaskEmployees)
+                                    {
+                                        <tr>
+                                            <td>@item.TaskEmployeeId</td>
+                                            @if (direction == "ltr")
+                                            {
+                                                <td>@Html.ActionLink(@item.ProjectTask.TaskNameE, "Create", "Task", new { area = "PMS", id = item.TaskId }, null) </td>
+                                                <td>@item.ProjectTask.ProjectNameE</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@Html.ActionLink(@item.ProjectTask.TaskNameA, "Create", "Task", new { area = "PMS", id = item.TaskId }, null) </td>
+                                                <td>@item.ProjectTask.ProjectNameA</td>
+                                            }
+                                        </tr>
+                                    }
                                 }
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            }
         }
         @if ((Convert.ToString(Session["RoleName"]) == "Admin") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
@@ -552,7 +560,7 @@
                 }
             }
         });
-        
+
         // upload Image
         var errors = "";
         var url = "/HR/Employee/UploadEmployeePhoto";
