@@ -21,6 +21,7 @@ using Order = EPMS.Web.Models.Order;
 namespace EPMS.Web.Areas.CMS.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "CS", IsModule = true)]
     public class OrdersController : BaseController
     {
         #region Private

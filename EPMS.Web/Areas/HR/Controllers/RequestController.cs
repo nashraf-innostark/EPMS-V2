@@ -19,6 +19,7 @@ using EmployeeRequest = EPMS.Web.Models.Request;
 namespace EPMS.Web.Areas.HR.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "HRS", IsModule = true)]
     public class RequestController : BaseController
     {
         private readonly IEmployeeRequestService employeeRequestService;

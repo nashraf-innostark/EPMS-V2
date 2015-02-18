@@ -9,6 +9,7 @@ using EPMS.WebBase.Mvc;
 namespace EPMS.Web.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "NS", IsModule = true)]
     public class NotificationController : BaseController
     {
         private readonly INotificationService notificationService;

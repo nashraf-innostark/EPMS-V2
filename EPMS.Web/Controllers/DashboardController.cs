@@ -32,6 +32,7 @@ using EmployeeRequest = EPMS.Web.DashboardModels.EmployeeRequest;
 namespace EPMS.Web.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "Dashboard", IsModule = true)]
     public class DashboardController : BaseController
     {
         #region Constructor and Private Services objects

@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.CMS.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "CS", IsModule = true)]
     public class ComplaintController : BaseController
     {
         #region Constructor and Services

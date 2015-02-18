@@ -19,6 +19,7 @@ using EPMS.Models.ResponseModels;
 namespace EPMS.Web.Areas.HR.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "HRS", IsModule = true)]
     public class PayrollController : BaseController
     {
         private readonly IEmployeeService EmployeeService;
