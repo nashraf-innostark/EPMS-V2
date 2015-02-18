@@ -19,6 +19,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.CP.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "CP", IsModule = true)]
     public class CompanyProfileController : BaseController
     {
         #region Private

@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.CMS.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "CS", IsModule = true)]
     public class QuotationController : BaseController
     {
         #region Private

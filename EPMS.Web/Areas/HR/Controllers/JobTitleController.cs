@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.HR.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "HRS", IsModule = true)]
     public class JobTitleController : BaseController
     {
         #region Private

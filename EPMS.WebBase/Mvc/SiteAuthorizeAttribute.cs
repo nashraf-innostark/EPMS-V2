@@ -55,22 +55,33 @@ namespace EPMS.WebBase.Mvc
             }
 
             object userPermissionSet = HttpContext.Current.Session["UserPermissionSet"];
-            string[] userPermissionsSet = new string[] {};
-            var permissionToSpecificController = false;
-            if (userPermissionSet != null)
+            string[] userPermissionsSet = new string[] { };
+            var permissionToSpecificController = true;
+            if (PermissionKey != "HR" || PermissionKey != "Mt")
             {
-                userPermissionsSet = (string[]) userPermissionSet;
-                permissionToSpecificController = (userPermissionsSet.Contains(PermissionKey));
-            }
-            // check allowed modules
-            bool permissionToModule = false;
-            foreach (var module in Modules)
-            {
-                if (userPermissionsSet.Contains(module))
+                if (userPermissionSet != null)
                 {
-                    permissionToModule = true;
+                    userPermissionsSet = (string[])userPermissionSet;
+                    permissionToSpecificController = (userPermissionsSet.Contains(PermissionKey));
                 }
             }
+            // check allowed modules
+            bool permissionToModule = true;
+            if (IsModule)
+            {
+                if (!Modules.Contains(PermissionKey))
+                {
+                    permissionToModule = false;
+                }
+            }
+
+            //foreach (var module in Modules)
+            //{
+            //    if (!userPermissionsSet.Contains(module))
+            //    {
+            //        permissionToModule = false;
+            //    }
+            //}
             if (permissionToModule && permissionToSpecificController)
             {
                 return true;
@@ -87,7 +98,7 @@ namespace EPMS.WebBase.Mvc
             {
                 throw new ArgumentNullException("httpContext");
             }
-            
+
             return IsAuthorized();
         }
         /// <summary>
@@ -124,12 +135,13 @@ namespace EPMS.WebBase.Mvc
         }
         #endregion
 
-        public string PermissionKey { get; set; }        
-        public string LicenseKey { get; set; }        
-        public string Domain { get; set; }        
-        public string MacAddress { get; set; }        
-        public string[] Modules { get; set; }        
-        public string NoOfUsers { get; set; }        
-        public DateTime ExpiryDate { get; set; }        
+        public string PermissionKey { get; set; }
+        public bool IsModule { get; set; }
+        public string LicenseKey { get; set; }
+        public string Domain { get; set; }
+        public string MacAddress { get; set; }
+        public string[] Modules { get; set; }
+        public string NoOfUsers { get; set; }
+        public DateTime ExpiryDate { get; set; }
     }
 }

@@ -21,6 +21,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Web.Areas.PMS.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "PMS", IsModule = true)]
     public class ProjectController : BaseController
     {
         private readonly IQuotationService quotationService;

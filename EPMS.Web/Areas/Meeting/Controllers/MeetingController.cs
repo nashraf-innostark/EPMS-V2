@@ -17,10 +17,12 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Meeting;
+using EPMS.WebBase.Mvc;
 
 namespace EPMS.Web.Areas.Meeting.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "Mt", IsModule = true)]
     public class MeetingController : BaseController
     {
         #region Private

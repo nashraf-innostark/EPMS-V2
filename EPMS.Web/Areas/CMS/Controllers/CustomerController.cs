@@ -18,6 +18,7 @@ using Microsoft.AspNet.Identity.Owin;
 namespace EPMS.Web.Areas.CMS.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "CS", IsModule = true)]
     public class CustomerController : BaseController
     {
         #region Private

@@ -10,6 +10,7 @@ using EPMS.WebBase.Mvc;
 namespace EPMS.Web.Areas.HR.Controllers
 {
     [Authorize]
+    [SiteAuthorize(PermissionKey = "CL", IsModule = true)]
     public class ContactListController : Controller
     {
         #region Private
