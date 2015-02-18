@@ -330,6 +330,7 @@
     <Compile Include="DashboardModels\Profile.cs" />
     <Compile Include="DashboardModels\Project.cs" />
     <Compile Include="DashboardModels\Recruitment.cs" />
+    <Compile Include="EncryptDecrypt\StringCipher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
