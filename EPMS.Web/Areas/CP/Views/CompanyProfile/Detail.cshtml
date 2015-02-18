@@ -1149,8 +1149,8 @@
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $(".saveButton").hide();
         }
-
-        var url = "/CP/CompanyProfile/UploadLogo";
+        var siteURL = $('#siteURL').val();
+        var url = siteURL + "/CP/CompanyProfile/UploadLogo";
         var errors = "";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', // type: '', for all types
