@@ -63,11 +63,11 @@ namespace EPMS.Implementation.Services
                 Notification notification = notificationRepository.Find((long)notificationId);
                 if (notification != null)
                 {
-                    //Mark the notification as READ
-                    notification.ReadStatus = true;
-                    notificationRepository.Update(notification);
-                    notificationRepository.SaveChanges();
-                    notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
+                    ////Mark the notification as READ
+                    //notification.NotificationRecipients.FirstOrDefault().IsRead = true;
+                    //notificationRepository.Update(notification);
+                    //notificationRepository.SaveChanges();
+                    //notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
                 }
             }
             return notificationViewModel;
@@ -91,10 +91,12 @@ namespace EPMS.Implementation.Services
 
                 AddNotification(notificationViewModel.NotificationResponse);
             }
-            //Send Email
-            SentNotificationEmail(notificationViewModel);
-            //Send SMS
-            SendNotificationSMS(notificationViewModel);
+            
+            //// if notification alertdate is today, send email and sms
+            ////Send Email
+            //SentNotificationEmail(notificationViewModel);
+            ////Send SMS
+            //SendNotificationSMS(notificationViewModel);
             return true;
         }
 

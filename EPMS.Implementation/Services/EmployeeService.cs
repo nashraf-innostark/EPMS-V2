@@ -169,7 +169,7 @@ namespace EPMS.Implementation.Services
                     Convert.ToDateTime(employee.EmployeeIqamaExpiryDt).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
-                notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
+                //notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
 
                 notificationService.AddUpdateNotification(notificationViewModel);
             }
@@ -189,7 +189,7 @@ namespace EPMS.Implementation.Services
                     Convert.ToDateTime(employee.EmployeePassportExpiryDt).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
-                notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
+                //notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
 
                 notificationService.AddUpdateNotification(notificationViewModel);
             }

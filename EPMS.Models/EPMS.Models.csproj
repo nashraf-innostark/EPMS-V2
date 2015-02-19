@@ -135,6 +135,7 @@
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
     <Compile Include="DomainModels\Notification.cs" />
+    <Compile Include="DomainModels\NotificationRecipient.cs" />
     <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\PreRequisitTask.cs" />
     <Compile Include="DomainModels\Project.cs" />

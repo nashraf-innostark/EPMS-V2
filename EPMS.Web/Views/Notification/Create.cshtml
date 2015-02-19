@@ -148,7 +148,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @(direction == "ltr" ? @Html.DropDownListFor(m => m.NotificationResponse.EmployeeId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameE"), "Not Employee", new { @class = "select2me", @id = "emp" }) : @Html.DropDownListFor(m => m.NotificationResponse.EmployeeId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameA"), "ليس موظف", new { @class = "select2me", @id = "emp" }))
+                    @(direction == "ltr" ? @Html.DropDownListFor(m => m.NotificationResponse.UserId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameE"), "Not Employee", new { @class = "select2me", @id = "emp" }) : @Html.DropDownListFor(m => m.NotificationResponse.UserId, new SelectList(Model.EmployeeDDL, "EmployeeId", "EmployeeNameA"), "ليس موظف", new { @class = "select2me", @id = "emp" }))
                 </div>
             </div>
         </div>

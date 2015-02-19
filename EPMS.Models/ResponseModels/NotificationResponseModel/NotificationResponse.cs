@@ -19,7 +19,7 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public string AlertDate { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         public string AlertDateHijri { get; set; }
-        public long? EmployeeId { get; set; }
+        public string UserId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
         public string MobileNo { get; set; }

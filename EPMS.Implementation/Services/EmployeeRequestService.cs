@@ -162,7 +162,7 @@ namespace EPMS.Implementation.Services
                 Convert.ToDateTime(DateTime.Now.AddDays(-1)).ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
-            notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.EmployeeId;
+            //notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.EmployeeId;
 
             notificationService.AddUpdateNotification(notificationViewModel);
 
