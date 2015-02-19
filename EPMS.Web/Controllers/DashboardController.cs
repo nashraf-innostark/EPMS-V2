@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Claims;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -164,6 +165,7 @@ namespace EPMS.Web.Controllers
             #endregion
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
+            //dashboardViewModel.UserMac = GetMacAddress();
             return View(dashboardViewModel);
         }
         #endregion
@@ -527,6 +529,22 @@ namespace EPMS.Web.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Get MAC Address
+        public static string GetMacAddress()
+        {
+            NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+            String sMacAddress = string.Empty;
+            foreach (NetworkInterface adapter in nics)
+            {
+                if (sMacAddress == String.Empty)// only return MAC Address from first card  
+                {
+                    //IPInterfaceProperties properties = adapter.GetIPProperties(); Line is not required
+                    sMacAddress = adapter.GetPhysicalAddress().ToString();
+                }
+            } return sMacAddress;
+        }
         #endregion
     }
 }

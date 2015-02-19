@@ -12,6 +12,8 @@ namespace EPMS.Web.ViewModels.Dashboard
 {
     public class DashboardViewModel
     {
+        public string UserMac { get; set; }
+        public string LicenseMac { get; set; }
         public long employeeId { get; set; }
         public long customerId { get; set; }
         public long departmentId { get; set; }
