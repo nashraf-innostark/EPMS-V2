@@ -59,7 +59,6 @@ namespace EPMS.Implementation
             }
             return false;
         }
-
         public static bool IsDate(Object obj)
         {
             string strDate = obj.ToString();
