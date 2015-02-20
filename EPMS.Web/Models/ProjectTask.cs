@@ -21,8 +21,10 @@ namespace EPMS.Web.Models
         public string TaskNameA { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
+        [Required(ErrorMessage = "Select Start Date")]
         public string StartDate { get; set; }
         public string StartDateAr { get; set; }
+        [Required(ErrorMessage = "Select End Date")]
         public string EndDate { get; set; }
         public string EndDateAr { get; set; }
         [Required(ErrorMessage = "Total Cost is required.")]
