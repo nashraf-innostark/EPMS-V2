@@ -2,7 +2,6 @@
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.IdentityModels;
-using EPMS.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;

@@ -33,5 +33,6 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDate { get; set; }
         public bool SystemGenerated { get; set; }
+        public long EmployeeId { get; set; }
     }
 }

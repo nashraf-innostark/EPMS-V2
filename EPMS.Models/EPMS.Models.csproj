@@ -218,6 +218,7 @@
     <Compile Include="ResponseModels\MeetingResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListView.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationRecipientResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationRequestResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />

@@ -1,6 +1,6 @@
-﻿namespace EPMS.Models.DomainModels
+﻿namespace EPMS.Models.ResponseModels.NotificationResponseModel
 {
-    public class NotificationRecipient
+    public class NotificationRecipientResponse
     {
         public long Id { get; set; }
         public long NotificationId { get; set; }
@@ -9,8 +9,5 @@
         public string MobileNo { get; set; }
         public string Email { get; set; }
         public long? EmployeeId { get; set; }
-
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Notification Notification { get; set; }
     }
 }

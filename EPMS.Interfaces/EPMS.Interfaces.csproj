@@ -114,6 +114,7 @@
     <Compile Include="Repository\IMeetingRepository.cs" />
     <Compile Include="Repository\IMenuRepository.cs" />
     <Compile Include="Repository\IMenuRightRepository.cs" />
+    <Compile Include="Repository\INotificationRecipientRepository.cs" />
     <Compile Include="Repository\INotificationRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
     <Compile Include="Repository\IPreRequisitTaskRepository.cs" />

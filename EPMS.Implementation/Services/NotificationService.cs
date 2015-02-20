@@ -14,11 +14,15 @@ namespace EPMS.Implementation.Services
 {
     public class NotificationService:INotificationService
     {
+        private readonly AspNetUserService aspNetUserService;
+        private readonly INotificationRecipientRepository notificationRecipientRepository;
         private readonly INotificationRepository notificationRepository;
         private readonly IEmployeeRepository employeeRepository;
 
-        public NotificationService(INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
+        public NotificationService(AspNetUserService aspNetUserService,INotificationRecipientRepository notificationRecipientRepository,INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
         {
+            this.aspNetUserService = aspNetUserService;
+            this.notificationRecipientRepository = notificationRecipientRepository;
             this.notificationRepository = notificationRepository;
             this.employeeRepository = employeeRepository;
         }
@@ -75,12 +79,20 @@ namespace EPMS.Implementation.Services
 
         public bool AddUpdateNotification(NotificationViewModel notificationViewModel)
         {
+            //Get UserId of selected employee
+            if (notificationViewModel.NotificationResponse.EmployeeId > 0)
+                notificationViewModel.NotificationResponse.UserId =
+                    aspNetUserService.GetUserIdByEmployeeId(notificationViewModel.NotificationResponse.EmployeeId);
+
             if (notificationViewModel.NotificationResponse.NotificationId > 0)
             {
                 notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
                 notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-
-                UpdateNotification(notificationViewModel.NotificationResponse);
+                //Update notification
+                notificationViewModel.NotificationResponse.NotificationId = UpdateNotification(notificationViewModel.NotificationResponse);
+                //Delete Notification recipient
+                notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId);
+                notificationRepository.SaveChanges();
             }
             else
             {
@@ -88,10 +100,11 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
                 notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
                 notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-
-                AddNotification(notificationViewModel.NotificationResponse);
+                //Save Notification
+                notificationViewModel.NotificationResponse.NotificationId=AddNotification(notificationViewModel.NotificationResponse);
             }
-            
+            //Save Notification recipient
+            AddNotificationRecipient(notificationViewModel.NotificationResponse.CreateRecipientFromClientToServer());
             //// if notification alertdate is today, send email and sms
             ////Send Email
             //SentNotificationEmail(notificationViewModel);
@@ -99,40 +112,32 @@ namespace EPMS.Implementation.Services
             //SendNotificationSMS(notificationViewModel);
             return true;
         }
-
-        private static void SendNotificationSMS(NotificationViewModel notificationViewModel)
+        
+        public long AddNotification(NotificationResponse notification)
         {
-            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.MobileNo))
-            {
-                string smsText = "Notification:\n" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
-                                 notificationViewModel.NotificationResponse.TitleA;
-                Utility.SendNotificationSms(smsText, notificationViewModel.NotificationResponse.MobileNo);
-            }
-        }
-
-        private static void SentNotificationEmail(NotificationViewModel notificationViewModel)
-        {
-            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
-            {
-                string emailBody = "Notification:<br/>" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
-                                   notificationViewModel.NotificationResponse.TitleA;
-                Utility.SendEmail(notificationViewModel.NotificationResponse.Email,
-                    ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
-            }
-        }
-
-        public bool AddNotification(NotificationResponse notification)
-        {
-            notificationRepository.Add(notification.CreateFromClientToServer());
+            var _notification = notification.CreateFromClientToServer();
+            notificationRepository.Add(_notification);
             notificationRepository.SaveChanges();
-            return true;
+            return _notification.NotificationId;
+        }
+        public long AddNotificationRecipient(NotificationRecipient recipient)
+        {
+            notificationRecipientRepository.Add(recipient);
+            notificationRecipientRepository.SaveChanges();
+            return recipient.Id;
         }
 
-        public bool UpdateNotification(NotificationResponse notification)
+        public long UpdateNotificationRecipient(NotificationRecipient recipient)
+        {
+            notificationRecipientRepository.Update(recipient);
+            notificationRecipientRepository.SaveChanges();
+            return recipient.Id;
+        }
+        public long UpdateNotification(NotificationResponse notification)
         {
             notificationRepository.Update(notification.CreateFromClientToServer());
             notificationRepository.SaveChanges();
-            return true;
+            return notification.NotificationId;
         }
 
         public int LoadUnreadNotificationsCount(NotificationRequestParams requestParams)
@@ -147,7 +152,6 @@ namespace EPMS.Implementation.Services
             if (notifications.Notifications.Any())
             {
                 notificationListView.aaData = notifications.Notifications.Select(x => x.CreateFromServerToClientList());
-
             }
             else
                 notificationListView.aaData = Enumerable.Empty<NotificationListResponse>();
@@ -173,6 +177,27 @@ namespace EPMS.Implementation.Services
             notificationListView.iTotalRecords = notifications.TotalFiltered;
             notificationListView.sEcho = searchRequset.sEcho;
             return notificationListView;
+        }
+
+        private static void SendNotificationSMS(NotificationViewModel notificationViewModel)
+        {
+            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.MobileNo))
+            {
+                string smsText = "Notification:\n" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
+                                 notificationViewModel.NotificationResponse.TitleA;
+                Utility.SendNotificationSms(smsText, notificationViewModel.NotificationResponse.MobileNo);
+            }
+        }
+
+        private static void SentNotificationEmail(NotificationViewModel notificationViewModel)
+        {
+            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
+            {
+                string emailBody = "Notification:<br/>" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
+                                   notificationViewModel.NotificationResponse.TitleA;
+                Utility.SendEmail(notificationViewModel.NotificationResponse.Email,
+                    ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
+            }
         }
     }
 }

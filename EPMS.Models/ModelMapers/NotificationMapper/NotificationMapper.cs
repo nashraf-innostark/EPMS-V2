@@ -24,7 +24,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 MobileNo = notification.NotificationRecipients.FirstOrDefault().MobileNo,
                 Email = notification.NotificationRecipients.FirstOrDefault().Email,
                 ReadStatus = notification.NotificationRecipients.FirstOrDefault().IsRead,
-
+                EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId),
                 RecCreatedBy = notification.RecCreatedBy,
                 RecCreatedDate = notification.RecCreatedDate,
                 RecLastUpdatedBy = notification.RecLastUpdatedBy,
@@ -76,9 +76,9 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             notificationListResponse.NotificationId = notification.NotificationId;
             notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;      
             notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
-            if (notification.NotificationRecipients.FirstOrDefault().UserId != null)
+            if (notification.NotificationRecipients.FirstOrDefault().EmployeeId >0)
             {
-                notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().UserId);
+                notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
                 notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA : notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA;
             }
 
@@ -103,6 +103,20 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             }
 
             return notificationListResponse;
+        }
+        public static NotificationRecipient CreateRecipientFromClientToServer(this NotificationResponse source)
+        {
+            NotificationRecipient recipient=new NotificationRecipient();
+            recipient.NotificationId = source.NotificationId;
+            recipient.UserId = source.UserId;
+            if (string.IsNullOrEmpty(source.UserId))
+            {
+                recipient.MobileNo = source.MobileNo;
+                recipient.Email = source.Email;
+            }
+            recipient.IsRead = source.ReadStatus;
+            recipient.EmployeeId = source.EmployeeId;
+            return recipient;
         }
     }
 }
