@@ -80,6 +80,12 @@ namespace EPMS.Implementation.Services
                             notificationRecipientRepository.Add(recipient);
                             notificationRecipientRepository.SaveChanges();
                         }
+                        else
+                        {
+                            notification.NotificationRecipients.FirstOrDefault().IsRead = true;
+                            notificationRecipientRepository.Update(notification.NotificationRecipients.FirstOrDefault());
+                            notificationRecipientRepository.SaveChanges();
+                        }
                     }
                     //Mark as READ, who viewed Manual notification
                     else if (!notification.NotificationRecipients.FirstOrDefault().IsRead)
