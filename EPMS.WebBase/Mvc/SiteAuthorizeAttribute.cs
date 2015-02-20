@@ -75,13 +75,6 @@ namespace EPMS.WebBase.Mvc
                 }
             }
 
-            //foreach (var module in Modules)
-            //{
-            //    if (!userPermissionsSet.Contains(module))
-            //    {
-            //        permissionToModule = false;
-            //    }
-            //}
             if (permissionToModule && permissionToSpecificController)
             {
                 return true;
