@@ -7,9 +7,9 @@
         CategoryId=2,
         AlertBefore=3,
         AlertDate=4,
-        EmployeeName=5,
-        MobileNo=6,
-        Email=7,
-        ReadStatus=8
+        //EmployeeName=5,
+        //MobileNo=6,
+        //Email=7,
+        //ReadStatus=8
     }
 }

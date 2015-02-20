@@ -54,7 +54,7 @@ namespace EPMS.Implementation.Services
             return notificationViewModel;
         }
 
-        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId)
+        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
             IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
@@ -67,11 +67,28 @@ namespace EPMS.Implementation.Services
                 Notification notification = notificationRepository.Find((long)notificationId);
                 if (notification != null)
                 {
-                    ////Mark the notification as READ
-                    //notification.NotificationRecipients.FirstOrDefault().IsRead = true;
-                    //notificationRepository.Update(notification);
-                    //notificationRepository.SaveChanges();
-                    //notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
+                    //Mark the notification as READ
+                    if (notification.SystemGenerated)
+                    {
+                        //Save, who viewed SystemGenerated notification
+                        if (notification.NotificationRecipients.All(x => x.UserId != userId))
+                        {
+                            NotificationRecipient recipient = new NotificationRecipient();
+                            recipient.UserId = userId;
+                            recipient.NotificationId = notification.NotificationId;
+                            recipient.IsRead = true;
+                            notificationRecipientRepository.Add(recipient);
+                            notificationRecipientRepository.SaveChanges();
+                        }
+                    }
+                    //Mark as READ, who viewed Manual notification
+                    else if (!notification.NotificationRecipients.FirstOrDefault().IsRead)
+                    {
+                        notification.NotificationRecipients.FirstOrDefault().IsRead = true;
+                        notificationRecipientRepository.Update(notification.NotificationRecipients.FirstOrDefault());
+                        notificationRecipientRepository.SaveChanges();
+                    }
+                    notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
                 }
             }
             return notificationViewModel;
@@ -91,8 +108,8 @@ namespace EPMS.Implementation.Services
                 //Update notification
                 notificationViewModel.NotificationResponse.NotificationId = UpdateNotification(notificationViewModel.NotificationResponse);
                 //Delete Notification recipient
-                notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId);
-                notificationRepository.SaveChanges();
+                if(notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId))
+                    notificationRepository.SaveChanges();
             }
             else
             {
@@ -104,7 +121,8 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.NotificationId=AddNotification(notificationViewModel.NotificationResponse);
             }
             //Save Notification recipient
-            AddNotificationRecipient(notificationViewModel.NotificationResponse.CreateRecipientFromClientToServer());
+            if(!(string.IsNullOrEmpty(notificationViewModel.NotificationResponse.UserId) && notificationViewModel.NotificationResponse.EmployeeId==0))
+                AddNotificationRecipient(notificationViewModel.NotificationResponse.CreateRecipientFromClientToServer());
             //// if notification alertdate is today, send email and sms
             ////Send Email
             //SentNotificationEmail(notificationViewModel);
@@ -148,6 +166,13 @@ namespace EPMS.Implementation.Services
         public NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset)
         {
             NotificationListView notificationListView=new NotificationListView();
+            //if (searchRequset.NotificationRequestParams.SystemGenerated)
+            //{
+            //    NotificationRecipient recipient=new NotificationRecipient();
+            //    recipient.UserId = searchRequset.NotificationRequestParams.UserId;
+            //    recipient.NotificationId
+            //    notificationRecipientRepository.Add();
+            //}
             var notifications = notificationRepository.GetAllNotifications(searchRequset);
             if (notifications.Notifications.Any())
             {

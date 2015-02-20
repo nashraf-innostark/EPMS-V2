@@ -5,6 +5,8 @@ using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 using EPMS.Web.ViewModels.Common;
 using EPMS.WebBase.Mvc;
+using System.Linq;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Controllers
 {
@@ -37,10 +39,17 @@ namespace EPMS.Web.Controllers
             searchRequest.SearchString = Request["search"];
             if (Session["UserID"] != null)
             {
+                object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
+                if (userPermissionSet != null)
+                {
+                    string[] userPermissionsSet = (string[]) userPermissionSet;
+                    searchRequest.NotificationRequestParams.SystemGenerated = userPermissionsSet.Contains("SystemGenerated");
+                }
                 searchRequest.NotificationRequestParams.RoleName = Session["RoleName"].ToString();
                 searchRequest.NotificationRequestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
+
                 var resultData = notificationService.LoadAllNotifications(searchRequest);
                 return Json(resultData, JsonRequestBehavior.AllowGet);
             }
@@ -106,7 +115,7 @@ namespace EPMS.Web.Controllers
         [SiteAuthorize(PermissionKey = "NotificationDetails")]
         public ActionResult Details(long? id)
         {
-            NotificationViewModel notificationViewModel = notificationService.LoadNotificationDetailsAndBaseData(id);
+            NotificationViewModel notificationViewModel = notificationService.LoadNotificationDetailsAndBaseData(id,User.Identity.GetUserId());
             if(notificationViewModel.NotificationResponse.NotificationId>0)
                 return View(notificationViewModel);
             return RedirectToAction("Index");

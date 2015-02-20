@@ -47,10 +47,10 @@ namespace EPMS.Repository.Repositories
                         { NotificationByColumn.CategoryId, c => c.CategoryId},
                         { NotificationByColumn.AlertBefore, c => c.AlertBefore},
                         { NotificationByColumn.AlertDate,  c => c.AlertDate},
-                        { NotificationByColumn.EmployeeName,  c => c.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameE},
-                        { NotificationByColumn.MobileNo, c => c.NotificationRecipients.FirstOrDefault().MobileNo},
-                        { NotificationByColumn.Email, c => c.NotificationRecipients.FirstOrDefault().Email},
-                        { NotificationByColumn.ReadStatus,  c => c.NotificationRecipients.FirstOrDefault().IsRead}
+                        //{ NotificationByColumn.EmployeeName,  c => c.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameE},
+                        //{ NotificationByColumn.MobileNo, c => c.NotificationRecipients.FirstOrDefault().MobileNo},
+                        //{ NotificationByColumn.Email, c => c.NotificationRecipients.FirstOrDefault().Email},
+                        //{ NotificationByColumn.ReadStatus,  c => c.NotificationRecipients.FirstOrDefault().IsRead}
                     };
         #endregion
         public NotificationRequestResponse GetAllNotifications(NotificationListViewRequest searchRequset)
@@ -63,18 +63,18 @@ namespace EPMS.Repository.Repositories
             {
                 query =
                     s =>
-                        (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                        (
+                        ((string.IsNullOrEmpty(searchRequset.SearchString)) ||
                           (s.TitleE.Contains(searchRequset.SearchString)) ||
                           (s.TitleA.Contains(searchRequset.SearchString)) ||
-                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameE.Contains(searchRequset.SearchString) ||
                           (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
-                          
+                          )
                           &&
-
-                          (s.SystemGenerated || s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) &&
-                           (s.AlertAppearDate <= today)
+                          ((s.SystemGenerated) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) &&
+                           (s.AlertAppearDate <= today))
                             );
             }
             else
@@ -149,19 +149,27 @@ namespace EPMS.Repository.Repositories
 
             if (requestParams.SystemGenerated)
             {
-                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId)
+                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || (s.NotificationRecipients.Count==0 || s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId))
                            &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.FirstOrDefault().IsRead == false))
+                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count==0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );
             }
             else
             {
-                query = s => ((s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId)
+                query = s => ((s.NotificationRecipients.Count==0 || s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId)
                            &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.FirstOrDefault().IsRead == false))
+                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );
             }
             return DbSet.Count(query);
+        }
+
+        public long GetNotificationsIdByCategories(int categoryId, long subCategoryId)
+        {
+            var notif=  DbSet.FirstOrDefault(x => x.CategoryId == categoryId && x.SubCategoryId == subCategoryId);
+            if (notif != null)
+                return notif.NotificationId;
+            return 0;
         }
     }
 }

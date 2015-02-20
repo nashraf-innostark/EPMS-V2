@@ -35,7 +35,9 @@ namespace EPMS.Repository.Repositories
             {
                 DbSet.Remove(recipient);
             }
-            return true;
+            if (itemsToDelete.Any())
+                return true;
+            return false;
         }
     }
 }

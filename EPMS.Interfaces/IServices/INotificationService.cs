@@ -10,7 +10,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<NotificationResponse> GetAll();
         NotificationResponse FindNotification(long notificationId);
         NotificationViewModel LoadNotificationAndBaseData(long? notificationId);
-        NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId);
+        NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId);
         bool AddUpdateNotification(NotificationViewModel notificationViewModel);
         long AddNotification(NotificationResponse notification);
         long UpdateNotification(NotificationResponse notification);
