@@ -171,6 +171,7 @@ namespace EPMS.Web.ModelMappers
                 documentDetail.CommercialRegisterIssueDate = DateTime.ParseExact(source.CommercialRegisterIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.CommercialRegisterExpiryDate != null)
                 documentDetail.CommercialRegisterExpiryDate = DateTime.ParseExact(source.CommercialRegisterExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
+            documentDetail.InsuranceCertificate = source.InsuranceCertificate;
             if (source.InsuranceCertificateIssueDate != null)
                 documentDetail.InsuranceCertificateIssueDate = DateTime.ParseExact(source.InsuranceCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.InsuranceCertificateExpiryDate != null)
@@ -180,10 +181,12 @@ namespace EPMS.Web.ModelMappers
                 documentDetail.ChamberCertificateIssueDate = DateTime.ParseExact(source.ChamberCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.ChamberCertificateExpiryDate != null)
                 documentDetail.ChamberCertificateExpiryDate = DateTime.ParseExact(source.ChamberCertificateExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
+            documentDetail.IncomeAndZakaCertificate = source.IncomeAndZakaCertificate;
             if (source.IncomeAndZakaCertificateIssueDate != null)
                 documentDetail.IncomeAndZakaCertificateIssueDate = DateTime.ParseExact(source.IncomeAndZakaCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.IncomeAndZakaCertificateExpiryDate != null)
                 documentDetail.IncomeAndZakaCertificateExpiryDate = DateTime.ParseExact(source.IncomeAndZakaCertificateExpiryDate, "dd/MM/yyyy", new CultureInfo("en"));
+            documentDetail.SaudilizationCertificate = source.SaudilizationCertificate;
             if (source.SaudilizationCertificateIssueDate != null)
                 documentDetail.SaudilizationCertificateIssueDate = DateTime.ParseExact(source.SaudilizationCertificateIssueDate, "dd/MM/yyyy", new CultureInfo("en"));
             if (source.SaudilizationCertificateExpiryDate != null)

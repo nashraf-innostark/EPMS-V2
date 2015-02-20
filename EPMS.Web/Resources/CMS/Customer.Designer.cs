@@ -124,6 +124,51 @@ namespace EPMS.Web.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latest Complaint.
+        /// </summary>
+        public static string LatestComplaint {
+            get {
+                return ResourceManager.GetString("LatestComplaint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest Order.
+        /// </summary>
+        public static string LatestOrder {
+            get {
+                return ResourceManager.GetString("LatestOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name (Arabic).
+        /// </summary>
+        public static string NameAr {
+            get {
+                return ResourceManager.GetString("NameAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name (English).
+        /// </summary>
+        public static string NameEn {
+            get {
+                return ResourceManager.GetString("NameEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Of Orders.
+        /// </summary>
+        public static string NoOfOrders {
+            get {
+                return ResourceManager.GetString("NoOfOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         public static string Password {
