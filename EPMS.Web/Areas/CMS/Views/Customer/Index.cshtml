@@ -34,10 +34,15 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>@EPMS.Web.Resources.CMS.Customer.CustomerName</th>
-                            <th>Number of Orders</th>
-                            <th>Complaint</th>
-                            <th>Orders</th>
+                            @if(direction == "ltr"){
+                            <th>@EPMS.Web.Resources.CMS.Customer.NameEn</th>
+                            }
+                            else{
+                            <th>@EPMS.Web.Resources.CMS.Customer.NameAr</th>
+                            }
+                            <th>@EPMS.Web.Resources.CMS.Customer.NoOfOrders</th>
+                            <th>@EPMS.Web.Resources.CMS.Customer.LatestComplaint</th>
+                            <th>@EPMS.Web.Resources.CMS.Customer.LatestOrder</th>
                             <th>@EPMS.Web.Resources.CMS.Customer.CustomerAddress</th>
                             <th>@EPMS.Web.Resources.CMS.Customer.CustomerMobile</th>
                         </tr>
