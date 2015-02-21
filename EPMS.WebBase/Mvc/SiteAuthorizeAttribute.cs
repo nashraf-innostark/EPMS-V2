@@ -67,7 +67,7 @@ namespace EPMS.WebBase.Mvc
             }
             // check allowed modules
             bool permissionToModule = true;
-            if (IsModule && (PermissionKey != "CL" || PermissionKey != "CP" || PermissionKey != "HI"))
+            if (IsModule && PermissionKey != "CL" && PermissionKey != "CP" && PermissionKey != "HI")
             {
                 if (!Modules.Contains(PermissionKey))
                 {
