@@ -8,7 +8,7 @@ namespace EPMS.Web.Models
         public string TopicName { get; set; }
         public string TopicNameAr { get; set; }
         public string RelatedProject { get; set; }
-        public DateTime? Date { get; set; }
+        public string Date { get; set; }
         public string DateString { get; set; }
     }
 }

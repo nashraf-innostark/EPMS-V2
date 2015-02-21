@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using EPMS.Models.RequestModels;
 using DomainModels = EPMS.Models.DomainModels;
-using Models = EPMS.Web.Models;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -21,7 +19,8 @@ namespace EPMS.Web.ModelMappers
             meetingModel.TopicName = source.TopicName;
             meetingModel.TopicNameAr = source.TopicNameAr;
             meetingModel.RelatedProject = source.RelatedProject;
-            meetingModel.Date = source.Date;
+            if (source.Date != null)
+            meetingModel.Date = source.Date != null ? Convert.ToDateTime(source.Date).ToString("dd/MM/yyyy", culture) : "";
             if (source.Date != null)
                 meetingModel.DateString = source.Date != null ? Convert.ToDateTime(source.Date).ToString("dd/MM/yyyy", culture) : "";
             return meetingModel;
@@ -30,32 +29,32 @@ namespace EPMS.Web.ModelMappers
         public static Models.Meeting CreateFromServertoClient(this DomainModels.Meeting source)
         {
             CultureInfo culture = new CultureInfo("en-US");
-            return new Models.Meeting
-            {
-                MeetingId = source.MeetingId,
-                TopicName = source.TopicName,
-                TopicNameAr = source.TopicNameAr,
-                RelatedProject = source.RelatedProject,
-                Date = Convert.ToDateTime(source.Date).ToString("dd/MM/yyyy", culture),
-                Agenda = source.Agenda,
-                AgendaAr = source.AgendaAr,
-                Discussion = source.Discussion,
-                DiscussionAr = source.DiscussionAr,
-                Decisions = source.Decisions,
-                DecisionsAr = source.DecisionsAr,
-                AttendeeName1 = source.AttendeeName1,
-                AttendeeEmail1 = source.AttendeeEmail1,
-                AttendeeName2 = source.AttendeeName2,   
-                AttendeeEmail2 = source.AttendeeEmail2,
-                AttendeeName3 = source.AttendeeName3,
-                AttendeeEmail3 = source.AttendeeEmail3,
-                MeetingAttendees = source.MeetingAttendees.Select(x => x.CreateFromServertoClient()),
-                AbsenteesList = source.MeetingAttendees.Where(x=>x.Status == true).Select(x => x.CreateFromServertoClient()),
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
-            };
+            Models.Meeting meetingModel = new Models.Meeting();
+            meetingModel.MeetingId = source.MeetingId;
+            meetingModel.TopicName = source.TopicName;
+            meetingModel.TopicNameAr = source.TopicNameAr;
+            meetingModel.RelatedProject = source.RelatedProject;
+            if (source.Date != null)
+                meetingModel.Date = Convert.ToDateTime(source.Date).ToString("dd/MM/yyyy", culture);
+            meetingModel.Agenda = source.Agenda;
+            meetingModel.AgendaAr = source.AgendaAr;
+            meetingModel.Discussion = source.Discussion;
+            meetingModel.DiscussionAr = source.DiscussionAr;
+            meetingModel.Decisions = source.Decisions;
+            meetingModel.DecisionsAr = source.DecisionsAr;
+            meetingModel.AttendeeName1 = source.AttendeeName1;
+            meetingModel.AttendeeEmail1 = source.AttendeeEmail1;
+            meetingModel.AttendeeName2 = source.AttendeeName2;   
+            meetingModel.AttendeeEmail2 = source.AttendeeEmail2;
+            meetingModel.AttendeeName3 = source.AttendeeName3;
+            meetingModel.AttendeeEmail3 = source.AttendeeEmail3;
+            meetingModel.MeetingAttendees = source.MeetingAttendees.Select(x => x.CreateFromServertoClient());
+            meetingModel.AbsenteesList = source.MeetingAttendees.Where(x=>x.Status == true).Select(x => x.CreateFromServertoClient());
+            meetingModel.RecCreatedBy = source.RecCreatedBy;
+            meetingModel.RecCreatedDt = source.RecCreatedDt;
+            meetingModel.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            meetingModel.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            return meetingModel;
         }
 
         public static MeetingRequest CreateFrom(this Models.Meeting source)

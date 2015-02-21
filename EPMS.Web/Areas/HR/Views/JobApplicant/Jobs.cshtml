@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.HR.JobOffered.IndexLabel;
@@ -94,7 +95,7 @@
 
                     <div class="control-group row-fluid" style="clear:both;">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn" onclick="location.href = '/HR/JobApplicant/Apply/@item.JobOfferedId'">Apply</button>
+                            <button type="button" class="btn" onclick="location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobApplicant/Apply/@item.JobOfferedId'">Apply</button>
                         </div>
                     </div>
 
