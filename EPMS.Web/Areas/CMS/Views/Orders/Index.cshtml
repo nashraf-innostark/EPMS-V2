@@ -114,11 +114,13 @@
                         var element = "No Data";
                         var val = full["OrderNo"];
                         var quotationId = full["QuotationId"];
-                        if ('@userRole' == "Admin" && val != 0) {
-                            element = '<a href="/CMS/Quotation/Create/' + quotationId + '">' + val + '</a>';
-                        }
-                        if ('@userRole' == "Customer" && val != 0) {
-                            element = '<a href="/CMS/Quotation/Detail/' + quotationId + '">' + val + '</a>';
+                        if (quotationId != 0) {
+                            if ('@userRole' == "Admin" && val != 0) {
+                                element = '<a href="' + siteUrl + '/CMS/Quotation/Create/' + quotationId + '">' + val + '</a>';
+                            }
+                            if ('@userRole' == "Customer" && val != 0) {
+                                element = '<a href="' + siteUrl + '/CMS/Quotation/Detail/' + quotationId + '">' + val + '</a>';
+                            }
                         }
                         return element;
                     },

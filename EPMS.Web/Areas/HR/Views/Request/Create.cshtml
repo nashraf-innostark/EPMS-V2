@@ -413,11 +413,11 @@
         CopyRequestToReply();
     });
     $('#FirstInstallmentDate').change(function () {
-        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "MM/DD/YYYY").add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "DD/MM/YYYY").add($('#NumberOfMonths').val(), 'months').format('DD/MM/YYYY'));
     });
     $('#NumberOfMonths').change(function () {
         if ($('#FirstInstallmentDate').val() != "") {
-            $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "MM/DD/YYYY").add($('#NumberOfMonths').val(), 'months').format('MM/DD/YYYY'));
+            $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "DD/MM/YYYY").add($('#NumberOfMonths').val(), 'months').format('DD/MM/YYYY'));
         }
     });
     //INSTALLMENT CALCULATIONS

@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Employee.EmployeeDetailViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Employee.EmployeeDetailViewModel
 @{
     ViewBag.Title = Model.EmployeeViewModel.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -418,11 +419,11 @@
             {
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for=""><a href="~/HR/Payroll/Detail/@Model.EmployeeViewModel.Employee.EmployeeId">Payroll Page</a></label>
+                        <label class="control-label" for=""><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/HR/Payroll/Detail/@Model.EmployeeViewModel.Employee.EmployeeId">Payroll Page</a></label>
                     </div>
                 </div>
             }
-            if (module.Contains("HRS"))
+            if (module.Contains("Human Resources System"))
             {
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
@@ -471,7 +472,7 @@
                 <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
             </div>
 
-            if (module.Contains("PMS"))
+            if (module.Contains("Project Management System"))
             {
             <!--Sortable Responsive Table begin-->
                 <div class="row-fluid">
