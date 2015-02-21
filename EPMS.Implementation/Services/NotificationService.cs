@@ -136,7 +136,40 @@ namespace EPMS.Implementation.Services
             //SendNotificationSMS(notificationViewModel);
             return true;
         }
-        
+
+        public bool AddUpdateMeetingNotification(NotificationViewModel notificationViewModel, List<long> employeeIds)
+        {
+            if (notificationViewModel.NotificationResponse.NotificationId > 0)
+            {
+                notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
+                //Update notification
+                notificationViewModel.NotificationResponse.NotificationId = UpdateNotification(notificationViewModel.NotificationResponse);
+                //Delete Notification recipient
+                if (notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId))
+                    notificationRepository.SaveChanges();
+            }
+            else
+            {
+                notificationViewModel.NotificationResponse.RecCreatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
+                notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
+                //Save Notification
+                notificationViewModel.NotificationResponse.NotificationId = AddNotification(notificationViewModel.NotificationResponse);
+            }
+            NotificationRecipient newNotificationRecipient = new NotificationRecipient();
+            foreach (var employeeId in employeeIds)
+            {
+                newNotificationRecipient.UserId = aspNetUserService.GetUserIdByEmployeeId(employeeId);
+                newNotificationRecipient.EmployeeId = employeeId;
+                newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
+                AddNotificationRecipient(newNotificationRecipient);
+            }
+            return true;
+        }
+
+
         public long AddNotification(NotificationResponse notification)
         {
             var _notification = notification.CreateFromClientToServer();

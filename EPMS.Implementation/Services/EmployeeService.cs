@@ -162,6 +162,7 @@ namespace EPMS.Implementation.Services
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
 
+            #region For Employee
             #region Iqama Expiry Date
 
             if (Utility.IsDate(employee.EmployeeIqamaExpiryDt))
@@ -173,12 +174,12 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.TitleA = "Employee Iqama";
 
                 notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId+2;
+                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 2;
                 notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
                 notificationViewModel.NotificationResponse.AlertDate =
                     Convert.ToDateTime(employee.EmployeeIqamaExpiryDt).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
-                notificationViewModel.NotificationResponse.SystemGenerated = true;
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
 
                 notificationViewModel.NotificationResponse.UserId = aspNetUserRepository.GetUserIdByEmployeeId(employee.EmployeeId);
                 notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
@@ -204,11 +205,63 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.AlertDate =
                     Convert.ToDateTime(employee.EmployeePassportExpiryDt).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+
+            #endregion
+            #endregion
+
+            #region For Admin
+            #region Iqama Expiry Date
+
+            if (Utility.IsDate(employee.EmployeeIqamaExpiryDt))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(3, employee.EmployeeId + 4);
+
+                notificationViewModel.NotificationResponse.TitleE = "Employee Iqama";
+                notificationViewModel.NotificationResponse.TitleA = "Employee Iqama";
+
+                notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 4;
+                notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
+                notificationViewModel.NotificationResponse.AlertDate =
+                    Convert.ToDateTime(employee.EmployeeIqamaExpiryDt).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+
+                notificationViewModel.NotificationResponse.UserId = "";
+                notificationViewModel.NotificationResponse.EmployeeId = 0;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+
+            #endregion
+
+            #region Passport Expiry Date
+
+            if (Utility.IsDate(employee.EmployeePassportExpiryDt))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(3, employee.EmployeeId + 5);
+
+                notificationViewModel.NotificationResponse.TitleE = "Employee Passport";
+                notificationViewModel.NotificationResponse.TitleA = "Employee Passport";
+
+                notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 5;
+                notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
+                notificationViewModel.NotificationResponse.AlertDate =
+                    Convert.ToDateTime(employee.EmployeePassportExpiryDt).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
 
                 notificationService.AddUpdateNotification(notificationViewModel);
             }
 
+            #endregion
             #endregion
         }
     }

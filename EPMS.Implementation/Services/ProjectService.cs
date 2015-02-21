@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
-using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
@@ -13,6 +12,8 @@ namespace EPMS.Implementation.Services
 {
     public class ProjectService:IProjectService
     {
+        private readonly INotificationRepository notificationRepository;
+        private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly INotificationService notificationService;
         private readonly IProjectRepository projectRepository;
         private readonly IOrdersRepository ordersRepository;
@@ -23,8 +24,10 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectService(INotificationService notificationService,IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
+        public ProjectService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,INotificationService notificationService,IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
         {
+            this.notificationRepository = notificationRepository;
+            this.aspNetUserRepository = aspNetUserRepository;
             this.notificationService = notificationService;
             this.projectRepository = projectRepository;
             this.ordersRepository = ordersRepository;
@@ -53,7 +56,7 @@ namespace EPMS.Implementation.Services
             projectRepository.Add(project);
             projectRepository.SaveChanges();
             SetOrderStatus(project);
-            //SendNotification(project);
+            SendNotification(project);
             return project.ProjectId;
         }
 
@@ -71,7 +74,7 @@ namespace EPMS.Implementation.Services
             projectRepository.Update(project);
             projectRepository.SaveChanges();
             SetOrderStatus(project);
-            //SendNotification(project);
+            SendNotification(project);
             return project.ProjectId;
         }
 
@@ -124,18 +127,61 @@ namespace EPMS.Implementation.Services
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
 
-            #region Send notification to admin
+            #region Project End date for admins
             if (Utility.IsDate(project.EndDate))
             {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(6, project.ProjectId);
+
                 notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
                 notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
 
-                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.CategoryId = 6; //Project
+                notificationViewModel.NotificationResponse.SubCategoryId = project.ProjectId; //Ended
                 notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
 
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            #endregion
+
+            #region Project End date
+            if (Utility.IsDate(project.EndDate))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(9, project.ProjectId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project has been finished.";
+                notificationViewModel.NotificationResponse.TitleA = "Project has been finished.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 9; //Project
+                notificationViewModel.NotificationResponse.SubCategoryId = project.ProjectId; //Ended
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = false;//not for admins
+                notificationViewModel.NotificationResponse.UserId = aspNetUserRepository.GetUserIdByCustomerId(Convert.ToInt64(project.CustomerId));
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            #endregion
+            #region Project Start date
+            if (Utility.IsDate(project.StartDate))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(10, project.ProjectId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project has been started.";
+                notificationViewModel.NotificationResponse.TitleA = "Project has been started.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 10; //Project
+                notificationViewModel.NotificationResponse.SubCategoryId = project.ProjectId; //Started
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.StartDate).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                
                 notificationService.AddUpdateNotification(notificationViewModel);
             }
             #endregion

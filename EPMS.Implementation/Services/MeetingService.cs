@@ -14,6 +14,8 @@ namespace EPMS.Implementation.Services
 {
     public class MeetingService : IMeetingService
     {
+        private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly INotificationRepository notificationRepository;
         private readonly IMeetingRepository meetingRepository;
         private readonly INotificationService notificationService;
         private readonly IMeetingAttendeeRepository meetingAttendeeRepository;
@@ -22,8 +24,10 @@ namespace EPMS.Implementation.Services
 
         #region Constructor
 
-        public MeetingService(IMeetingRepository meetingRepository,INotificationService notificationService, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository)
+        public MeetingService(IAspNetUserRepository aspNetUserRepository,INotificationRepository notificationRepository,IMeetingRepository meetingRepository,INotificationService notificationService, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository)
         {
+            this.aspNetUserRepository = aspNetUserRepository;
+            this.notificationRepository = notificationRepository;
             this.meetingRepository = meetingRepository;
             this.notificationService = notificationService;
             this.meetingAttendeeRepository = meetingAttendeeRepository;
@@ -84,7 +88,7 @@ namespace EPMS.Implementation.Services
                 UpdateExistingMeeting(meetingToBeSaved.Meeting);
                 UpdateMeetingAttendees(meetingToBeSaved);
             }
-
+            SendNotification(meetingToBeSaved.Meeting,meetingToBeSaved.EmployeeIds);
             SaveMeetingDocuments(meetingToBeSaved);
             return new SaveMeetingResponse
             {
@@ -131,6 +135,7 @@ namespace EPMS.Implementation.Services
                     meetingAttendee.EmployeeId = attendee;
                     meetingAttendeeRepository.Add(meetingAttendee);
                     meetingAttendeeRepository.SaveChanges();
+                   
                 }
             }
         }
@@ -283,22 +288,26 @@ namespace EPMS.Implementation.Services
                 }
             }
         }
-        public void SendNotification(MeetingAttendee meetingAttendee)
+        public void SendNotification(Meeting meeting, List<long> employeeIds)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
 
             #region Send notification to admin
+            notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(4, meeting.MeetingId);
 
             notificationViewModel.NotificationResponse.TitleE = "Meeting invitation.";
             notificationViewModel.NotificationResponse.TitleA = "Meeting invitation.";
 
             notificationViewModel.NotificationResponse.CategoryId = 4; //Meetings
-            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.AddDays(-1).ToShortDateString();
-            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            //notificationViewModel.NotificationResponse.EmployeeId = meetingAttendee.EmployeeId;
+            notificationViewModel.NotificationResponse.SubCategoryId = meeting.MeetingId;
 
-            notificationService.AddUpdateNotification(notificationViewModel);
+            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            notificationViewModel.NotificationResponse.SystemGenerated = false;
+
+            notificationService.AddUpdateMeetingNotification(notificationViewModel,employeeIds);
 
             #endregion
         }

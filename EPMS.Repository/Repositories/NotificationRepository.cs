@@ -87,7 +87,8 @@ namespace EPMS.Repository.Repositories
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) &&
-                    (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId)
+                    ((s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) &&
+                           (s.AlertAppearDate <= today))
                     );
             }
             IEnumerable<Notification> notifications;
@@ -149,14 +150,14 @@ namespace EPMS.Repository.Repositories
 
             if (requestParams.SystemGenerated)
             {
-                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || (s.NotificationRecipients.Count==0 || s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId))
+                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || (s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId))
                            &&
                            ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count==0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );
             }
             else
             {
-                query = s => ((s.NotificationRecipients.Count==0 || s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId)
+                query = s => ((s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId)
                            &&
                            ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );

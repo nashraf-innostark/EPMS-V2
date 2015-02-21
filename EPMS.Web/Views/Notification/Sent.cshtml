@@ -60,7 +60,7 @@
                 "bProcessing": true,
                 "bServerSide": true,
                 "sPaginationType": "bootstrap",
-                "aaSorting": [[8, 'asc']],
+                "aaSorting": [[4, 'asc']],
                 "aoColumns": [
                     {
                         "aTargets": [0],
@@ -106,28 +106,32 @@
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["EmployeeName"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [6],
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["MobileNo"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [7],
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["Email"];
-                        }
+                        },
+                        "bSortable": false
                     },
                     {
                         "aTargets": [8],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["Notified"];
-                        }
+                        },
+                        "bSortable": false
                     }
                 ],
                 "fnServerParams": function(aoData) {

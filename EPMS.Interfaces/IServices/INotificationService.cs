@@ -12,6 +12,7 @@ namespace EPMS.Interfaces.IServices
         NotificationViewModel LoadNotificationAndBaseData(long? notificationId);
         NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId);
         bool AddUpdateNotification(NotificationViewModel notificationViewModel);
+        bool AddUpdateMeetingNotification(NotificationViewModel notificationViewModel, List<long> employeeIds);
         long AddNotification(NotificationResponse notification);
         long UpdateNotification(NotificationResponse notification);
         int LoadUnreadNotificationsCount(NotificationRequestParams requestParams);
