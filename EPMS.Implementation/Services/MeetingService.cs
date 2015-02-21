@@ -294,13 +294,14 @@ namespace EPMS.Implementation.Services
 
             #region Send notification to admin
             notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(4, meeting.MeetingId);
+                        notificationRepository.GetNotificationsIdByCategories(4,0, meeting.MeetingId);
 
             notificationViewModel.NotificationResponse.TitleE = "Meeting invitation.";
             notificationViewModel.NotificationResponse.TitleA = "Meeting invitation.";
 
             notificationViewModel.NotificationResponse.CategoryId = 4; //Meetings
-            notificationViewModel.NotificationResponse.SubCategoryId = meeting.MeetingId;
+            notificationViewModel.NotificationResponse.SubCategoryId = 0;
+            notificationViewModel.NotificationResponse.ItemId = meeting.MeetingId;
 
             notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();

@@ -168,13 +168,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(employee.EmployeeIqamaExpiryDt))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(3, employee.EmployeeId + 2);
+                        notificationRepository.GetNotificationsIdByCategories(3,1, employee.EmployeeId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Employee Iqama";
                 notificationViewModel.NotificationResponse.TitleA = "Employee Iqama";
 
                 notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 2;
+                notificationViewModel.NotificationResponse.SubCategoryId = 1;
+                notificationViewModel.NotificationResponse.ItemId = employee.EmployeeId;
                 notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
                 notificationViewModel.NotificationResponse.AlertDate =
                     Convert.ToDateTime(employee.EmployeeIqamaExpiryDt).ToShortDateString();
@@ -194,13 +195,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(employee.EmployeePassportExpiryDt))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(3, employee.EmployeeId + 3);
+                         notificationRepository.GetNotificationsIdByCategories(3, 2, employee.EmployeeId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Employee Passport";
                 notificationViewModel.NotificationResponse.TitleA = "Employee Passport";
 
                 notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 3;
+                notificationViewModel.NotificationResponse.SubCategoryId =2;
+                notificationViewModel.NotificationResponse.ItemId = employee.EmployeeId;
                 notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
                 notificationViewModel.NotificationResponse.AlertDate =
                     Convert.ToDateTime(employee.EmployeePassportExpiryDt).ToShortDateString();
@@ -219,13 +221,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(employee.EmployeeIqamaExpiryDt))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(3, employee.EmployeeId + 4);
+                         notificationRepository.GetNotificationsIdByCategories(3, 3, employee.EmployeeId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Employee Iqama";
                 notificationViewModel.NotificationResponse.TitleA = "Employee Iqama";
 
                 notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 4;
+                notificationViewModel.NotificationResponse.SubCategoryId = 3;
+                notificationViewModel.NotificationResponse.ItemId = employee.EmployeeId;
                 notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
                 notificationViewModel.NotificationResponse.AlertDate =
                     Convert.ToDateTime(employee.EmployeeIqamaExpiryDt).ToShortDateString();
@@ -245,13 +248,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(employee.EmployeePassportExpiryDt))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(3, employee.EmployeeId + 5);
+                        notificationRepository.GetNotificationsIdByCategories(3, 4, employee.EmployeeId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Employee Passport";
                 notificationViewModel.NotificationResponse.TitleA = "Employee Passport";
 
                 notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-                notificationViewModel.NotificationResponse.SubCategoryId = employee.EmployeeId + 5;
+                notificationViewModel.NotificationResponse.SubCategoryId = 4;
+                notificationViewModel.NotificationResponse.ItemId = employee.EmployeeId;
                 notificationViewModel.NotificationResponse.AlertBefore = 1; //Month
                 notificationViewModel.NotificationResponse.AlertDate =
                     Convert.ToDateTime(employee.EmployeePassportExpiryDt).ToShortDateString();

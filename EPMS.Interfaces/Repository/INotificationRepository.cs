@@ -9,6 +9,6 @@ namespace EPMS.Interfaces.Repository
         NotificationRequestResponse GetAllNotifications(NotificationListViewRequest searchRequset);
         NotificationRequestResponse GetAllSentNotifications(NotificationListViewRequest searchRequset);
         int GetUnreadNotificationsCount(NotificationRequestParams requestParams);
-        long GetNotificationsIdByCategories(int categoryId, long subCategoryId);
+        long GetNotificationsIdByCategories(int categoryId, long subCategoryId, long itemId);
     }
 }

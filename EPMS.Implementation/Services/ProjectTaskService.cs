@@ -269,13 +269,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(task.EndDate))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(7, task.TaskId);
+                        notificationRepository.GetNotificationsIdByCategories(5,3, task.TaskId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Task delivery date in near.";
                 notificationViewModel.NotificationResponse.TitleA = "Task delivery date in near.";
 
-                notificationViewModel.NotificationResponse.CategoryId = 7; //Project task
-                notificationViewModel.NotificationResponse.SubCategoryId = task.TaskId; //Task delivery date
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
+                notificationViewModel.NotificationResponse.SubCategoryId = 3; //Task delivery date
+                notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task delivery date
                 notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(task.EndDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
@@ -286,13 +287,14 @@ namespace EPMS.Implementation.Services
             #endregion
             #region Send notification to assigned employees
             notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(8, task.TaskId);
+                        notificationRepository.GetNotificationsIdByCategories(5,10, task.TaskId);
 
             notificationViewModel.NotificationResponse.TitleE = "You have been assigned a task.";
             notificationViewModel.NotificationResponse.TitleA = "You have been assigned a task.";
 
-            notificationViewModel.NotificationResponse.CategoryId = 8; //Project task
-            notificationViewModel.NotificationResponse.SubCategoryId = task.TaskId; //Task delivery date
+            notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
+            notificationViewModel.NotificationResponse.SubCategoryId = 10; //Task delivery date
+            notificationViewModel.NotificationResponse.ItemId = task.TaskId; 
             notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian

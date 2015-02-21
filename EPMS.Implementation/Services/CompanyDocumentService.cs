@@ -55,13 +55,14 @@ namespace EPMS.Implementation.Services
                 if (Utility.IsDate(document.CommercialRegisterExpiryDate))
                 {
                     notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(1, 1);
+                        notificationRepository.GetNotificationsIdByCategories(1, 0, document.CompanyId);
 
                     notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
                     notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
 
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
-                    notificationViewModel.NotificationResponse.SubCategoryId = 1;//CommercialRegisterExpiryDate
+                    notificationViewModel.NotificationResponse.SubCategoryId = 0;
+                    notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
                     notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.CommercialRegisterExpiryDate).ToShortDateString();
                     notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
@@ -75,13 +76,14 @@ namespace EPMS.Implementation.Services
                 if (Utility.IsDate(document.InsuranceCertificateExpiryDate))
                 {
                     notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(1, 2);
+                        notificationRepository.GetNotificationsIdByCategories(1, 1, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.InsuranceCertificate;
-                    notificationViewModel.NotificationResponse.TitleA = document.InsuranceCertificate;
+                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
+                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
 
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
-                    notificationViewModel.NotificationResponse.SubCategoryId = 2;//InsuranceCertificateExpiryDate
+                    notificationViewModel.NotificationResponse.SubCategoryId = 1;
+                    notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
                     notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.InsuranceCertificateExpiryDate).ToShortDateString();
                     notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
@@ -95,14 +97,14 @@ namespace EPMS.Implementation.Services
                 if (Utility.IsDate(document.ChamberCertificateExpiryDate))
                 {
                     notificationViewModel.NotificationResponse.NotificationId =
-                           notificationRepository.GetNotificationsIdByCategories(1, 3);
+                           notificationRepository.GetNotificationsIdByCategories(1, 2, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.ChamberCertificate;
-                    notificationViewModel.NotificationResponse.TitleA = document.ChamberCertificate;
-
+                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
+                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
 
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
-                    notificationViewModel.NotificationResponse.SubCategoryId = 3;//ChamberCertificateExpiryDate
+                    notificationViewModel.NotificationResponse.SubCategoryId = 2;
+                    notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
                     notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.ChamberCertificateExpiryDate).ToShortDateString();
                     notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
@@ -116,13 +118,14 @@ namespace EPMS.Implementation.Services
                 if (Utility.IsDate(document.IncomeAndZakaCertificateExpiryDate))
                 {
                     notificationViewModel.NotificationResponse.NotificationId =
-                           notificationRepository.GetNotificationsIdByCategories(1, 4);
+                           notificationRepository.GetNotificationsIdByCategories(1, 3, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.IncomeAndZakaCertificate;
-                    notificationViewModel.NotificationResponse.TitleA = document.IncomeAndZakaCertificate;
+                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
+                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
 
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
-                    notificationViewModel.NotificationResponse.SubCategoryId = 4;//IncomeAndZakaCertificateExpiryDate
+                    notificationViewModel.NotificationResponse.SubCategoryId = 3;
+                    notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
                     notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.IncomeAndZakaCertificateExpiryDate).ToShortDateString();
                     notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
@@ -136,13 +139,14 @@ namespace EPMS.Implementation.Services
                 if (Utility.IsDate(document.SaudilizationCertificateExpiryDate))
                 {
                     notificationViewModel.NotificationResponse.NotificationId =
-                           notificationRepository.GetNotificationsIdByCategories(1, 5);
+                           notificationRepository.GetNotificationsIdByCategories(1, 4, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.SaudilizationCertificate;
-                    notificationViewModel.NotificationResponse.TitleA = document.SaudilizationCertificate;
+                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
+                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
 
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
-                    notificationViewModel.NotificationResponse.SubCategoryId = 5;//SaudilizationCertificateExpiryDate
+                    notificationViewModel.NotificationResponse.SubCategoryId = 4;
+                    notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
                     notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.SaudilizationCertificateExpiryDate).ToShortDateString();
                     notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian

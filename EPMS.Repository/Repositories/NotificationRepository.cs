@@ -165,9 +165,9 @@ namespace EPMS.Repository.Repositories
             return DbSet.Count(query);
         }
 
-        public long GetNotificationsIdByCategories(int categoryId, long subCategoryId)
+        public long GetNotificationsIdByCategories(int categoryId, long subCategoryId, long itemId)
         {
-            var notif=  DbSet.FirstOrDefault(x => x.CategoryId == categoryId && x.SubCategoryId == subCategoryId);
+            var notif=  DbSet.FirstOrDefault(x => x.CategoryId == categoryId && x.SubCategoryId == subCategoryId && x.ItemId==itemId);
             if (notif != null)
                 return notif.NotificationId;
             return 0;

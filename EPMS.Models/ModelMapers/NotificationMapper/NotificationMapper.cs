@@ -18,6 +18,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 TitleE = notification.TitleE,
                 CategoryId = notification.CategoryId,
                 SubCategoryId = Convert.ToInt64(notification.SubCategoryId),
+                ItemId = Convert.ToInt64(notification.ItemId),
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
@@ -48,6 +49,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 TitleE = notification.TitleE,
                 CategoryId = notification.CategoryId,
                 SubCategoryId = notification.SubCategoryId,
+                ItemId = Convert.ToInt64(notification.ItemId),
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
@@ -99,9 +101,6 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
                 case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
-                case 6: notificationListResponse.CategoryName = Resources.Notification.Project; break;
-                case 7: notificationListResponse.CategoryName = Resources.Notification.ProjectTask; break;
-                case 8: notificationListResponse.CategoryName = Resources.Notification.ProjectTask; break;
                 default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
             switch (notification.AlertBefore)

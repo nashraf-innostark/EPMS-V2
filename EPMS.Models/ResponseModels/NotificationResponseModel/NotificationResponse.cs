@@ -13,7 +13,8 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         [StringLength(160, ErrorMessage = "Title cannot exceed 160 characters.")]
         public string TitleA { get; set; }
         public int CategoryId { get; set; }
-        public long SubCategoryId { get; set; }
+        public long? SubCategoryId { get; set; }
+        public long? ItemId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]

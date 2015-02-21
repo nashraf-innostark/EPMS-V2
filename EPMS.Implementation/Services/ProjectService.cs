@@ -131,13 +131,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(project.EndDate))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(6, project.ProjectId);
+                        notificationRepository.GetNotificationsIdByCategories(5,9, project.ProjectId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
                 notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
 
                 notificationViewModel.NotificationResponse.CategoryId = 6; //Project
-                notificationViewModel.NotificationResponse.SubCategoryId = project.ProjectId; //Ended
+                notificationViewModel.NotificationResponse.SubCategoryId = 9; //Ended
+                notificationViewModel.NotificationResponse.ItemId = project.ProjectId; //Ended
                 notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
@@ -151,13 +152,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(project.EndDate))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(9, project.ProjectId);
+                        notificationRepository.GetNotificationsIdByCategories(5,2, project.ProjectId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Project has been finished.";
                 notificationViewModel.NotificationResponse.TitleA = "Project has been finished.";
 
-                notificationViewModel.NotificationResponse.CategoryId = 9; //Project
-                notificationViewModel.NotificationResponse.SubCategoryId = project.ProjectId; //Ended
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Project
+                notificationViewModel.NotificationResponse.SubCategoryId = 2; //Ended
+                notificationViewModel.NotificationResponse.ItemId = project.ProjectId; //Ended
                 notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
@@ -171,13 +173,14 @@ namespace EPMS.Implementation.Services
             if (Utility.IsDate(project.StartDate))
             {
                 notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(10, project.ProjectId);
+                        notificationRepository.GetNotificationsIdByCategories(5,8, project.ProjectId);
 
                 notificationViewModel.NotificationResponse.TitleE = "Project has been started.";
                 notificationViewModel.NotificationResponse.TitleA = "Project has been started.";
 
-                notificationViewModel.NotificationResponse.CategoryId = 10; //Project
-                notificationViewModel.NotificationResponse.SubCategoryId = project.ProjectId; //Started
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Project
+                notificationViewModel.NotificationResponse.SubCategoryId = 8; //Started
+                notificationViewModel.NotificationResponse.ItemId = project.ProjectId; //Ended
                 notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.StartDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
