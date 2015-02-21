@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
 
 @{
     ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
@@ -130,7 +131,7 @@
                     <button id="savebtn" class="btn" type="submit" onclick="validateForm(event)">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href='/HR/JobTitle/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobTitle/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
