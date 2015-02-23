@@ -16,6 +16,9 @@ namespace EPMS.Models.DomainModels
         public DateTime AlertDate { get; set; }
         public bool SystemGenerated { get; set; }
         public DateTime AlertAppearDate { get; set; }
+        public bool IsEmailSent { get; set; }
+        public bool IsSMSsent { get; set; }
+
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }

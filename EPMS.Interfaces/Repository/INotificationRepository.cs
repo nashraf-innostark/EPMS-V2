@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 
@@ -10,5 +11,6 @@ namespace EPMS.Interfaces.Repository
         NotificationRequestResponse GetAllSentNotifications(NotificationListViewRequest searchRequset);
         int GetUnreadNotificationsCount(NotificationRequestParams requestParams);
         long GetNotificationsIdByCategories(int categoryId, long subCategoryId, long itemId);
+        IEnumerable<Notification> SendEmailNotifications();
     }
 }

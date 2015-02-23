@@ -20,5 +20,6 @@ namespace EPMS.Interfaces.IServices
         NotificationListView LoadAllSentNotifications(NotificationListViewRequest searchRequset);
         long AddNotificationRecipient(NotificationRecipient notification);
         long UpdateNotificationRecipient(NotificationRecipient notification);
+        void SendEmailNotifications();
     }
 }

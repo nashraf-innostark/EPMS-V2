@@ -2,7 +2,6 @@
 using EPMS.Interfaces.Repository;
 using EPMS.Repository.BaseRepository;
 using EPMS.Repository.Repositories;
-using EPMS.Web.Views.RolesAdmin;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository

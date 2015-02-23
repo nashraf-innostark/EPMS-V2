@@ -27,6 +27,10 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 Email = notification.NotificationRecipients.FirstOrDefault().Email,
                 ReadStatus = notification.NotificationRecipients.FirstOrDefault().IsRead,
                 EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId),
+
+                IsEmailSent = notification.IsEmailSent,
+                IsSMSsent = notification.IsSMSsent,
+
                 RecCreatedBy = notification.RecCreatedBy,
                 RecCreatedDate = notification.RecCreatedDate,
                 RecLastUpdatedBy = notification.RecLastUpdatedBy,
@@ -55,6 +59,8 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
                 AlertAppearDate = alertAppearDate,
                 SystemGenerated = notification.SystemGenerated,
+                IsEmailSent = notification.IsEmailSent,
+                IsSMSsent = notification.IsSMSsent,
 
                 RecCreatedBy = notification.RecCreatedBy,
                 RecCreatedDate = notification.RecCreatedDate,

@@ -121,5 +121,12 @@ namespace EPMS.Web.Controllers
             return RedirectToAction("Index");
         }
         #endregion
+
+        #region Send Email/SMS Notifications
+        public void SendEmails()
+        {
+            notificationService.SendEmailNotifications();
+        }
+        #endregion
     }
 }

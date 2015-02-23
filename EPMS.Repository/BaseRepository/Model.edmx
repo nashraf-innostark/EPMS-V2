@@ -475,6 +475,8 @@
           <Property Name="AlertDate" Type="datetime" Nullable="false" />
           <Property Name="SystemGenerated" Type="bit" Nullable="false" />
           <Property Name="AlertAppearDate" Type="datetime" Nullable="false" />
+          <Property Name="IsEmailSent" Type="bit" Nullable="false" />
+          <Property Name="IsSMSsent" Type="bit" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDate" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
@@ -2836,6 +2838,8 @@
           <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SystemGenerated" Type="Boolean" Nullable="false" />
           <Property Name="AlertAppearDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsEmailSent" Type="Boolean" Nullable="false" />
+          <Property Name="IsSMSsent" Type="Boolean" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -3544,6 +3548,8 @@
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="IsSMSsent" ColumnName="IsSMSsent" />
+                <ScalarProperty Name="IsEmailSent" ColumnName="IsEmailSent" />
                 <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
                 <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
                 <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
@@ -3659,7 +3665,7 @@
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
         <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="12.75" PointY="35.5" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.75" PointY="1" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.375" PointY="1" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
       </Diagram>
     </Diagrams>

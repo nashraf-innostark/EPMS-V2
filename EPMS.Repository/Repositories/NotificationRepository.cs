@@ -172,5 +172,11 @@ namespace EPMS.Repository.Repositories
                 return notif.NotificationId;
             return 0;
         }
+
+        public IEnumerable<Notification> SendEmailNotifications()
+        {
+            DateTime today= DateTime.Now;
+            return DbSet.Where(x => x.AlertAppearDate <= today && (x.IsEmailSent==false || x.IsSMSsent==false));
+        }
     }
 }

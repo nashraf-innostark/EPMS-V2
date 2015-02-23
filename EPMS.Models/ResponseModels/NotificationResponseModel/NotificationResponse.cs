@@ -30,6 +30,10 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
         public bool ReadStatus { get; set; }
+        public bool IsEmailSent { get; set; }
+        public bool IsSMSsent { get; set; }
+
+
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
