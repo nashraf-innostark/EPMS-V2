@@ -582,6 +582,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Meeting.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Notification\Notification.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Notification\Notification.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3149,7 +3154,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Notification\Notification.ar.resx" />
+    <EmbeddedResource Include="Resources\Notification\Notification.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Notification\Notification.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Notification.Designer.cs</LastGenOutput>

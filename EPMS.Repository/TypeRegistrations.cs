@@ -2,7 +2,6 @@
 using EPMS.Interfaces.Repository;
 using EPMS.Repository.BaseRepository;
 using EPMS.Repository.Repositories;
-using EPMS.Web.Views.RolesAdmin;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository
@@ -46,6 +45,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IDashboardWidgetPreferencesRepository, DashboardWidgetPreferencesRepository>();
             unityContainer.RegisterType<IQuickLaunchItemRepository, QuickLaunchItemRepository>();
             unityContainer.RegisterType<ILicenseControlPanelRepository, LicenseControlPanelRepository>();
+            unityContainer.RegisterType<INotificationRecipientRepository, NotificationRecipientRepository>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Complaint.ComplaintViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Complaint.ComplaintViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.CMS.Complaint.ComplaintsList;
@@ -26,7 +27,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (ViewBag.UserRole == "Customer")
     {
-        <h3> <small><a href="~/CMS/Complaint/Create">@EPMS.Web.Resources.CMS.Complaint.CreateNewComplaint</a></small></h3>
+        <h3> <small><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/CMS/Complaint/Create">@EPMS.Web.Resources.CMS.Complaint.CreateNewComplaint</a></small></h3>
     }
 </header>
 <!-- Page Heading End-->
@@ -54,7 +55,7 @@
                             <tr>
                                 <td>@item.ComplaintId</td>
                                 @*<td>@Html.ActionLink(@item.ClientName, "Details","Customer", new { id = item.CustomerId })</td>*@
-                                <td><a href="/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
+                                <td><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
                                 <td>@Html.ActionLink(@item.Topic, "Create",new{id=item.ComplaintId})</td>
                                 <td>@item.ComplaintDateString</td>
                                 <td>@item.IsRepliedString</td>

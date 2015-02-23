@@ -8,17 +8,22 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers.NotificationMapper;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
-using Microsoft.Practices.EnterpriseLibrary.Common.Properties;
 
 namespace EPMS.Implementation.Services
 {
     public class NotificationService:INotificationService
     {
+        private readonly IMenuRepository menuRepository;
+        private readonly AspNetUserService aspNetUserService;
+        private readonly INotificationRecipientRepository notificationRecipientRepository;
         private readonly INotificationRepository notificationRepository;
         private readonly IEmployeeRepository employeeRepository;
 
-        public NotificationService(INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
+        public NotificationService(IMenuRepository menuRepository,AspNetUserService aspNetUserService,INotificationRecipientRepository notificationRecipientRepository,INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
         {
+            this.menuRepository = menuRepository;
+            this.aspNetUserService = aspNetUserService;
+            this.notificationRecipientRepository = notificationRecipientRepository;
             this.notificationRepository = notificationRepository;
             this.employeeRepository = employeeRepository;
         }
@@ -50,10 +55,11 @@ namespace EPMS.Implementation.Services
             return notificationViewModel;
         }
 
-        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId)
+        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
             IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
+            
             if (employees.Any())
             {
                 notificationViewModel.EmployeeDDL = employees.Select(x => x.CreateForEmployeeDDL()).ToList();
@@ -64,9 +70,32 @@ namespace EPMS.Implementation.Services
                 if (notification != null)
                 {
                     //Mark the notification as READ
-                    notification.ReadStatus = true;
-                    notificationRepository.Update(notification);
-                    notificationRepository.SaveChanges();
+                    if (notification.SystemGenerated)
+                    {
+                        //Save, who viewed SystemGenerated notification
+                        if (notification.NotificationRecipients.All(x => x.UserId != userId))
+                        {
+                            NotificationRecipient recipient = new NotificationRecipient();
+                            recipient.UserId = userId;
+                            recipient.NotificationId = notification.NotificationId;
+                            recipient.IsRead = true;
+                            notificationRecipientRepository.Add(recipient);
+                            notificationRecipientRepository.SaveChanges();
+                        }
+                        else
+                        {
+                            notification.NotificationRecipients.FirstOrDefault().IsRead = true;
+                            notificationRecipientRepository.Update(notification.NotificationRecipients.FirstOrDefault());
+                            notificationRecipientRepository.SaveChanges();
+                        }
+                    }
+                    //Mark as READ, who viewed Manual notification
+                    else if (!notification.NotificationRecipients.FirstOrDefault().IsRead)
+                    {
+                        notification.NotificationRecipients.FirstOrDefault().IsRead = true;
+                        notificationRecipientRepository.Update(notification.NotificationRecipients.FirstOrDefault());
+                        notificationRecipientRepository.SaveChanges();
+                    }
                     notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
                 }
             }
@@ -75,12 +104,20 @@ namespace EPMS.Implementation.Services
 
         public bool AddUpdateNotification(NotificationViewModel notificationViewModel)
         {
+            //Get UserId of selected employee
+            if (notificationViewModel.NotificationResponse.EmployeeId > 0)
+                notificationViewModel.NotificationResponse.UserId =
+                    aspNetUserService.GetUserIdByEmployeeId(notificationViewModel.NotificationResponse.EmployeeId);
+
             if (notificationViewModel.NotificationResponse.NotificationId > 0)
             {
                 notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
                 notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-
-                UpdateNotification(notificationViewModel.NotificationResponse);
+                //Update notification
+                notificationViewModel.NotificationResponse.NotificationId = UpdateNotification(notificationViewModel.NotificationResponse);
+                //Delete Notification recipient
+                if(notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId))
+                    notificationRepository.SaveChanges();
             }
             else
             {
@@ -88,49 +125,141 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
                 notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
                 notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
-
-                AddNotification(notificationViewModel.NotificationResponse);
+                //Save Notification
+                notificationViewModel.NotificationResponse.NotificationId=AddNotification(notificationViewModel.NotificationResponse);
             }
-            //Send Email
-            SentNotificationEmail(notificationViewModel);
-            //Send SMS
-            SendNotificationSMS(notificationViewModel);
+            //Save Notification recipient
+            if(!(string.IsNullOrEmpty(notificationViewModel.NotificationResponse.UserId) && notificationViewModel.NotificationResponse.EmployeeId==0))
+                AddNotificationRecipient(notificationViewModel.NotificationResponse.CreateRecipientFromClientToServer());
+            //// if notification alertdate is today, send email and sms
+            ////Send Email
+            //SentNotificationEmail(notificationViewModel);
+            ////Send SMS
+            //SendNotificationSMS(notificationViewModel);
             return true;
         }
 
-        private static void SendNotificationSMS(NotificationViewModel notificationViewModel)
+        public bool AddUpdateMeetingNotification(NotificationViewModel notificationViewModel, List<long> employeeIds)
         {
-            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.MobileNo))
+            if (notificationViewModel.NotificationResponse.NotificationId > 0)
             {
-                string smsText = "Notification:\n" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
-                                 notificationViewModel.NotificationResponse.TitleA;
-                Utility.SendNotificationSms(smsText, notificationViewModel.NotificationResponse.MobileNo);
+                notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
+                //Update notification
+                notificationViewModel.NotificationResponse.NotificationId = UpdateNotification(notificationViewModel.NotificationResponse);
+                //Delete Notification recipient
+                if (notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId))
+                    notificationRepository.SaveChanges();
             }
+            else
+            {
+                notificationViewModel.NotificationResponse.RecCreatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecCreatedDate = DateTime.Now;
+                notificationViewModel.NotificationResponse.RecLastUpdatedBy = notificationViewModel.UserId;
+                notificationViewModel.NotificationResponse.RecLastUpdatedDate = DateTime.Now;
+                //Save Notification
+                notificationViewModel.NotificationResponse.NotificationId = AddNotification(notificationViewModel.NotificationResponse);
+            }
+            NotificationRecipient newNotificationRecipient = new NotificationRecipient();
+            foreach (var employeeId in employeeIds)
+            {
+                newNotificationRecipient.UserId = aspNetUserService.GetUserIdByEmployeeId(employeeId);
+                newNotificationRecipient.EmployeeId = employeeId;
+                newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
+                AddNotificationRecipient(newNotificationRecipient);
+            }
+            return true;
         }
 
-        private static void SentNotificationEmail(NotificationViewModel notificationViewModel)
-        {
-            if (!string.IsNullOrEmpty(notificationViewModel.NotificationResponse.Email))
-            {
-                string emailBody = "Notification:<br/>" + notificationViewModel.NotificationResponse.TitleE + "<br/>" +
-                                   notificationViewModel.NotificationResponse.TitleA;
-                Utility.SendEmail(notificationViewModel.NotificationResponse.Email,
-                    ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
-            }
-        }
 
-        public bool AddNotification(NotificationResponse notification)
+        public long AddNotification(NotificationResponse notification)
         {
-            notificationRepository.Add(notification.CreateFromClientToServer());
+            var _notification = notification.CreateFromClientToServer();
+            notificationRepository.Add(_notification);
             notificationRepository.SaveChanges();
-            return true;
+            return _notification.NotificationId;
+        }
+        public long AddNotificationRecipient(NotificationRecipient recipient)
+        {
+            notificationRecipientRepository.Add(recipient);
+            notificationRecipientRepository.SaveChanges();
+            return recipient.Id;
         }
 
-        public bool UpdateNotification(NotificationResponse notification)
+        public long UpdateNotificationRecipient(NotificationRecipient recipient)
+        {
+            notificationRecipientRepository.Update(recipient);
+            notificationRecipientRepository.SaveChanges();
+            return recipient.Id;
+        }
+
+        public void SendEmailNotifications()
+        {
+            var notifications = notificationRepository.SendEmailNotifications();
+            if (notifications.Any())
+            {
+                NotificationResponse notificationResponse = new NotificationResponse();
+                long permisssionMenuId = menuRepository.GetMenuIdByPermissionKey("SystemGenerated");
+                var employees = employeeRepository.GetAdminEmployees(permisssionMenuId);
+                foreach (var notification in notifications)
+                {
+                    if (!notification.IsEmailSent)
+                    {
+                        if (notification.SystemGenerated)
+                        {
+                            //Send the notification to its all recipients
+                            if (employees != null)
+                            {
+                                var employeesList = employees as IList<Employee> ?? employees.ToList();
+                                foreach (var employee in employeesList)
+                                {
+                                    notificationResponse.Email = employee.Email;
+                                    notificationResponse.MobileNo = employee.EmployeeMobileNum;
+
+                                    notificationResponse.TitleE = notification.TitleE;
+                                    notificationResponse.TitleA = notification.TitleA;
+
+                                    SendNotificationSms(notificationResponse);
+                                    SentNotificationEmail(notificationResponse);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //Send the notification to its all recipients
+                            foreach (var recipient in notification.NotificationRecipients)
+                            {
+                                notificationResponse.Email = recipient.AspNetUser.Email;
+                                if (recipient.AspNetUser.Customer != null)
+                                {
+                                    notificationResponse.MobileNo = recipient.AspNetUser.Customer.CustomerMobile;
+                                }
+                                if (recipient.AspNetUser.Employee != null)
+                                {
+                                    notificationResponse.MobileNo = recipient.AspNetUser.Employee.EmployeeMobileNum;
+                                }
+                                notificationResponse.TitleE = notification.TitleE;
+                                notificationResponse.TitleA = notification.TitleA;
+
+                                SendNotificationSms(notificationResponse);
+                                SentNotificationEmail(notificationResponse);
+                            }
+                        }
+                    }
+                    //Update notification
+                    notification.IsSMSsent = true;
+                    notification.IsEmailSent = true;
+                    notificationRepository.Update(notification);
+                }
+                notificationRepository.SaveChanges();
+            }
+        }
+
+        public long UpdateNotification(NotificationResponse notification)
         {
             notificationRepository.Update(notification.CreateFromClientToServer());
             notificationRepository.SaveChanges();
-            return true;
+            return notification.NotificationId;
         }
 
         public int LoadUnreadNotificationsCount(NotificationRequestParams requestParams)
@@ -141,11 +270,17 @@ namespace EPMS.Implementation.Services
         public NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset)
         {
             NotificationListView notificationListView=new NotificationListView();
+            //if (searchRequset.NotificationRequestParams.SystemGenerated)
+            //{
+            //    NotificationRecipient recipient=new NotificationRecipient();
+            //    recipient.UserId = searchRequset.NotificationRequestParams.UserId;
+            //    recipient.NotificationId
+            //    notificationRecipientRepository.Add();
+            //}
             var notifications = notificationRepository.GetAllNotifications(searchRequset);
             if (notifications.Notifications.Any())
             {
                 notificationListView.aaData = notifications.Notifications.Select(x => x.CreateFromServerToClientList());
-
             }
             else
                 notificationListView.aaData = Enumerable.Empty<NotificationListResponse>();
@@ -171,6 +306,27 @@ namespace EPMS.Implementation.Services
             notificationListView.iTotalRecords = notifications.TotalFiltered;
             notificationListView.sEcho = searchRequset.sEcho;
             return notificationListView;
+        }
+
+        private static void SendNotificationSms(NotificationResponse notificationResponse)
+        {
+            if (!string.IsNullOrEmpty(notificationResponse.MobileNo))
+            {
+                string smsText = "Notification:\n" + notificationResponse.TitleE + "<br/>" +
+                                 notificationResponse.TitleA;
+                Utility.SendNotificationSms(smsText, notificationResponse.MobileNo);
+            }
+        }
+
+        private static void SentNotificationEmail(NotificationResponse notificationResponse)
+        {
+            if (!string.IsNullOrEmpty(notificationResponse.Email))
+            {
+                string emailBody = "Notification:<br/>" + notificationResponse.TitleE + "<br/>" +
+                                   notificationResponse.TitleA;
+                Utility.SendEmail(notificationResponse.Email,
+                    ConfigurationManager.AppSettings["SubjectNotification"], emailBody);
+            }
         }
     }
 }

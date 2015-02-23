@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace EPMS.Implementation.Services
 {
     public class ProjectTaskService : IProjectTaskService
     {
+        private readonly INotificationRepository notificationRepository;
         private readonly IProjectTaskRepository Repository;
         private readonly ITaskEmployeeService TaskEmployeeService;
         private readonly INotificationService notificationService;
@@ -21,11 +23,13 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="notificationRepository"></param>
         /// <param name="repository"></param>
         /// <param name="taskEmployeeService"></param>
         /// <param name="notificationService"></param>
-        public ProjectTaskService(IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService,INotificationService notificationService)
+        public ProjectTaskService(INotificationRepository notificationRepository,IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService,INotificationService notificationService)
         {
+            this.notificationRepository = notificationRepository;
             Repository = repository;
             TaskEmployeeService = taskEmployeeService;
             this.notificationService = notificationService;
@@ -95,9 +99,10 @@ namespace EPMS.Implementation.Services
                         TaskEmployee emp = new TaskEmployee { EmployeeId = employeeId, TaskId = task.TaskId };
                         task.TaskEmployees.Add(emp);
                     }
+
+                    SendNotification(task, assignedEmployee);
                 }
                 Repository.SaveChanges();
-                //SendNotification(task);
                 return true;
             }
             catch (Exception)
@@ -215,7 +220,7 @@ namespace EPMS.Implementation.Services
                 Repository.Update(tasks);
                 Repository.SaveChanges();
 
-                //SendNotification(tasks);
+                SendNotification(task, clientEmployeeList);
 
                 return true;
             }
@@ -256,17 +261,22 @@ namespace EPMS.Implementation.Services
             Repository.SaveChanges();
         }
 
-        public void SendNotification(ProjectTask task)
+        public void SendNotification(ProjectTask task, List<long> employeeIds)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
 
             #region Send notification to admin
             if (Utility.IsDate(task.EndDate))
             {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,3, task.TaskId);
+
                 notificationViewModel.NotificationResponse.TitleE = "Task delivery date in near.";
                 notificationViewModel.NotificationResponse.TitleA = "Task delivery date in near.";
 
-                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
+                notificationViewModel.NotificationResponse.SubCategoryId = 3; //Task delivery date
+                notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task delivery date
                 notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(task.EndDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
@@ -274,6 +284,23 @@ namespace EPMS.Implementation.Services
 
                 notificationService.AddUpdateNotification(notificationViewModel);
             }
+            #endregion
+            #region Send notification to assigned employees
+            notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,10, task.TaskId);
+
+            notificationViewModel.NotificationResponse.TitleE = "You have been assigned a task.";
+            notificationViewModel.NotificationResponse.TitleA = "You have been assigned a task.";
+
+            notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
+            notificationViewModel.NotificationResponse.SubCategoryId = 10; //Task delivery date
+            notificationViewModel.NotificationResponse.ItemId = task.TaskId; 
+            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            notificationViewModel.NotificationResponse.SystemGenerated = false;
+
+            notificationService.AddUpdateMeetingNotification(notificationViewModel, employeeIds);
             #endregion
         }
     }

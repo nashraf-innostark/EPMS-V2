@@ -69,8 +69,10 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.TitleA = "An applicant applied for a job.";
 
             notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+            notificationViewModel.NotificationResponse.SubCategoryId = 1;
+            notificationViewModel.NotificationResponse.ItemId = jobApplicant.ApplicantId;
             notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.AddDays(-1).ToShortDateString();
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
 

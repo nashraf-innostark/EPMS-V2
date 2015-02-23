@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -26,5 +27,21 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        public string GetUserIdByEmployeeId(long employeeId)
+        {
+            var user = DbSet.FirstOrDefault(x => x.EmployeeId == employeeId);
+            if (user != null)
+                return user.Id;
+            return "";
+        }
+
+        public string GetUserIdByCustomerId(long customerId)
+        {
+            var user = DbSet.FirstOrDefault(x => x.CustomerId == customerId);
+            if (user != null)
+                return user.Id;
+            return "";
+        }
     }
 }

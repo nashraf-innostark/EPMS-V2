@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels.EmployeeResponseModel;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
@@ -16,13 +17,19 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 TitleA = notification.TitleA,
                 TitleE = notification.TitleE,
                 CategoryId = notification.CategoryId,
+                SubCategoryId = Convert.ToInt64(notification.SubCategoryId),
+                ItemId = Convert.ToInt64(notification.ItemId),
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeId = notification.EmployeeId,
-                MobileNo = notification.MobileNo,
-                Email = notification.Email,
-                ReadStatus = notification.ReadStatus,
+                UserId = notification.NotificationRecipients.FirstOrDefault().UserId,
+                MobileNo = notification.NotificationRecipients.FirstOrDefault().MobileNo,
+                Email = notification.NotificationRecipients.FirstOrDefault().Email,
+                ReadStatus = notification.NotificationRecipients.FirstOrDefault().IsRead,
+                EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId),
+
+                IsEmailSent = notification.IsEmailSent,
+                IsSMSsent = notification.IsSMSsent,
 
                 RecCreatedBy = notification.RecCreatedBy,
                 RecCreatedDate = notification.RecCreatedDate,
@@ -45,15 +52,15 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 TitleA = notification.TitleA,
                 TitleE = notification.TitleE,
                 CategoryId = notification.CategoryId,
+                SubCategoryId = notification.SubCategoryId,
+                ItemId = Convert.ToInt64(notification.ItemId),
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
                 AlertAppearDate = alertAppearDate,
-                EmployeeId = notification.EmployeeId,
-                MobileNo = notification.MobileNo,
-                Email = notification.Email,
-                ReadStatus = notification.ReadStatus,
                 SystemGenerated = notification.SystemGenerated,
+                IsEmailSent = notification.IsEmailSent,
+                IsSMSsent = notification.IsSMSsent,
 
                 RecCreatedBy = notification.RecCreatedBy,
                 RecCreatedDate = notification.RecCreatedDate,
@@ -65,6 +72,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
         {
             return new EmployeeDDL
             {
+                UserId = source.AspNetUsers.FirstOrDefault()!=null?source.AspNetUsers.FirstOrDefault().Id:"",
                 EmployeeId = source.EmployeeId,
                 EmployeeNameE = source.EmployeeNameE,
                 EmployeeNameA = source.EmployeeNameA,
@@ -78,16 +86,20 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             notificationListResponse.NotificationId = notification.NotificationId;
             notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;      
             notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
-            if (notification.EmployeeId != null)
+            if (notification.NotificationRecipients.Count > 0)
             {
-                notificationListResponse.EmployeeId = Convert.ToInt64(notification.EmployeeId);
-                notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.Employee.EmployeeNameE : notification.Employee.EmployeeNameA;
+                if (notification.NotificationRecipients.FirstOrDefault().EmployeeId > 0)
+                {
+                    notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
+                    notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA : notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA;
+                }
+
+                notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().MobileNo;
+                notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().Email;
+                notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault().IsRead ? Resources.Notification.Yes : Resources.Notification.No;
+           
             }
             
-            notificationListResponse.MobileNo = notification.MobileNo;
-            notificationListResponse.Email = notification.Email;
-            notificationListResponse.Notified = notification.ReadStatus ? Resources.Notification.Yes : Resources.Notification.No;
-           
             switch (notification.CategoryId)
             {
                 case 1: notificationListResponse.CategoryName = Resources.Notification.Company; break;
@@ -105,6 +117,20 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             }
 
             return notificationListResponse;
+        }
+        public static NotificationRecipient CreateRecipientFromClientToServer(this NotificationResponse source)
+        {
+            NotificationRecipient recipient=new NotificationRecipient();
+            recipient.NotificationId = source.NotificationId;
+            recipient.UserId = source.UserId;
+            if (string.IsNullOrEmpty(source.UserId))
+            {
+                recipient.MobileNo = source.MobileNo;
+                recipient.Email = source.Email;
+            }
+            recipient.IsRead = source.ReadStatus;
+            recipient.EmployeeId = source.EmployeeId;
+            return recipient;
         }
     }
 }

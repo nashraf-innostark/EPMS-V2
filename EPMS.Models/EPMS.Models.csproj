@@ -135,6 +135,7 @@
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
     <Compile Include="DomainModels\Notification.cs" />
+    <Compile Include="DomainModels\NotificationRecipient.cs" />
     <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\PreRequisitTask.cs" />
     <Compile Include="DomainModels\Project.cs" />
@@ -217,11 +218,10 @@
     <Compile Include="ResponseModels\MeetingResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListView.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationRecipientResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationRequestResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />
-    <Compile Include="ResponseModels\NotificationResponseModel\UserNotification.cs" />
-    <Compile Include="ResponseModels\NotificationResponseModel\UserNotificationType.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />

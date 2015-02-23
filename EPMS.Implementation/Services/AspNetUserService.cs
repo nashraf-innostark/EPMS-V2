@@ -34,5 +34,15 @@ namespace EPMS.Implementation.Services
             repository.SaveChanges();
             return true;
         }
+
+        public string GetUserIdByEmployeeId(long employeeId)
+        {
+            return repository.GetUserIdByEmployeeId(employeeId);
+        }
+
+        public string GetUserIdByCustomerId(long customerId)
+        {
+            return repository.GetUserIdByCustomerId(customerId);
+        }
     }
 }

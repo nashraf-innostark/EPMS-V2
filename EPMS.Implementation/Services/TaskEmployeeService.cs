@@ -84,7 +84,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.AddDays(-1).ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
+            //notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
 
             notificationService.AddUpdateNotification(notificationViewModel);
 

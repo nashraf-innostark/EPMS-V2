@@ -48,7 +48,7 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 
-@using (Html.BeginForm("Create", "Notification", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Notification", FormMethod.Post, new { @id="notif",@class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(x => x.NotificationResponse.NotificationId)
     @Html.HiddenFor(x => x.NotificationResponse.RecCreatedBy)
@@ -197,7 +197,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="BusyIndicator();">@submitBtn</button>
+                <button type="submit" class="btn">@submitBtn</button>
             </div>
         </div>
     </div>
@@ -225,6 +225,9 @@
             css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
         });
     }
+    $("#notif").bind("ajax:complete", function (event) {
+        BusyIndicator();
+    });
     // set Employee's Email & Mobile number
     function SetEmployeeContacts() {
         var empId = $("#emp").val();
@@ -245,8 +248,8 @@
     };
     function NotificationContact(employOrNot) {
         if (employOrNot == "Not Employee") {
-            $("#mobile").removeAttr('readonly').val("");
-            $("#mailAlert").removeAttr('readonly').val("");
+            $("#mobile").removeAttr('readonly');
+            $("#mailAlert").removeAttr('readonly');
 
         }
         else {

@@ -103,6 +103,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public DbSet<UserPrefrence> UserPrefrence { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<NotificationRecipient> NotificationRecipient { get; set; }
         public DbSet<DashboardWidgetPreference> Preferences { get; set; }
         public DbSet<QuickLaunchItem> QuickLaunchItems { get; set; }
         public DbSet<LicenseControlPanel> LicenseControlPanels { get; set; }

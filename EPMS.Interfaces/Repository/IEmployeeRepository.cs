@@ -17,6 +17,6 @@ namespace EPMS.Interfaces.Repository
 
         Employee FindForPayroll(long id, DateTime currTime);
         IEnumerable<string> FindEmployeeEmailById(List<long> employeeId);
-        
+        IEnumerable<Employee> GetAdminEmployees(long menuId);
     }
 }

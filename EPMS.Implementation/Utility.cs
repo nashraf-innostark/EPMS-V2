@@ -59,15 +59,19 @@ namespace EPMS.Implementation
             }
             return false;
         }
-
         public static bool IsDate(Object obj)
         {
-            string strDate = obj.ToString();
+            
             try
             {
-                DateTime dt = DateTime.Parse(strDate);
-                if (dt != DateTime.MinValue && dt != DateTime.MaxValue)
-                    return true;
+                if (obj != null)
+                {
+                    string strDate = obj.ToString();
+                    DateTime dt = DateTime.Parse(strDate);
+                    if (dt != DateTime.MinValue && dt != DateTime.MaxValue)
+                        return true;
+                    return false;
+                }
                 return false;
             }
             catch

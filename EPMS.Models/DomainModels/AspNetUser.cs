@@ -32,5 +32,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<UserPrefrence> UserPrefrences { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
     }
 }

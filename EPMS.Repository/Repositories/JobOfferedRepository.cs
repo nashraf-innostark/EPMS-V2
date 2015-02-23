@@ -37,7 +37,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<JobOffered> GetRecentJobOffereds()
         {
-            return DbSet.OrderByDescending(x=>x.RecCreatedDt);
+            return DbSet.OrderByDescending(x=>x.RecCreatedDt).Take(5);
         }
     }
 }

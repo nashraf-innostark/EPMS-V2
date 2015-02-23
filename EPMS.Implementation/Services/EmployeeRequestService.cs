@@ -50,6 +50,10 @@ namespace EPMS.Implementation.Services
             {
                 repositoryRequestDetail.Add(requestDetail);
                 repositoryRequestDetail.SaveChanges();
+                if (requestDetail.IsApproved)
+                {
+                    SendNotification(requestDetail);
+                }
                 return requestDetail.RequestId;
             }
             catch (Exception exception)
@@ -134,11 +138,6 @@ namespace EPMS.Implementation.Services
             {
                 repositoryRequestDetail.Update(requestDetail);
                 repositoryRequestDetail.SaveChanges();
-
-                if (requestDetail.IsApproved)
-                {
-                    //SendNotification(requestDetail);
-                }
                 return true;
             }
             catch (Exception exception)
@@ -153,17 +152,22 @@ namespace EPMS.Implementation.Services
             NotificationViewModel notificationViewModel = new NotificationViewModel();
 
             #region Request Approved
-            notificationViewModel.NotificationResponse.TitleE = requestDetail.EmployeeRequest.RequestTopic;
-            notificationViewModel.NotificationResponse.TitleA = requestDetail.EmployeeRequest.RequestTopic;
+            requestDetail.EmployeeRequest = repository.Find(requestDetail.RequestId);
+
+            string status = requestDetail.IsApproved ? " Approved" : " Rejected";
+            notificationViewModel.NotificationResponse.TitleE = requestDetail.EmployeeRequest.RequestTopic + status;
+            notificationViewModel.NotificationResponse.TitleA = requestDetail.EmployeeRequest.RequestTopic + status;
 
             notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+            notificationViewModel.NotificationResponse.SubCategoryId = 1;
+
             notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
             notificationViewModel.NotificationResponse.AlertDate =
-                Convert.ToDateTime(DateTime.Now.AddDays(-1)).ToShortDateString();
+                Convert.ToDateTime(DateTime.Now).ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            notificationViewModel.NotificationResponse.SystemGenerated = true;
-            notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.EmployeeId;
-
+            notificationViewModel.NotificationResponse.SystemGenerated = false;//False, because it is not for admins, it has its specific recipient
+            
+            notificationViewModel.NotificationResponse.UserId = requestDetail.EmployeeRequest.Employee.AspNetUsers.FirstOrDefault().Id;
             notificationService.AddUpdateNotification(notificationViewModel);
 
             #endregion

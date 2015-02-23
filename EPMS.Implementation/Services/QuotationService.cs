@@ -12,16 +12,22 @@ namespace EPMS.Implementation.Services
 {
     public class QuotationService : IQuotationService
     {
+        private readonly INotificationRepository notificationRepository;
+        private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IQuotationRepository Repository;
         private readonly INotificationService notificationService;
 
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="aspNetUserRepository"></param>
         /// <param name="repository"></param>
         /// <param name="notificationService"></param>
-        public QuotationService(IQuotationRepository repository,INotificationService notificationService)
+        /// <param name="notificationRepository"></param>
+        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService)
         {
+            this.notificationRepository = notificationRepository;
+            this.aspNetUserRepository = aspNetUserRepository;
             Repository = repository;
             this.notificationService = notificationService;
         }
@@ -40,7 +46,7 @@ namespace EPMS.Implementation.Services
         {
             Repository.Add(quotation);
             Repository.SaveChanges();
-            //SendNotification(quotation);
+            SendNotification(quotation);
             return quotation.QuotationId;
         }
 
@@ -50,7 +56,7 @@ namespace EPMS.Implementation.Services
             {
                 Repository.Update(quotation);
                 Repository.SaveChanges();
-                //SendNotification(quotation);
+                SendNotification(quotation);
                 return true;
             }
             catch (Exception)
@@ -81,15 +87,153 @@ namespace EPMS.Implementation.Services
             #region Send notification to admin
             if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
             {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,4, quotation.QuotationId);
+
                 notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
                 notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
 
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Other
-                notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
+                notificationViewModel.NotificationResponse.SubCategoryId = 4;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FirstInsDueAtCompletion).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
 
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            if (Utility.IsDate(quotation.SecondInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,5, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 5;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.SecondInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            if (Utility.IsDate(quotation.ThirdInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,6, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 6;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.ThirdInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            if (Utility.IsDate(quotation.FourthInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,7, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 7;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FourthInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            #endregion
+
+            #region Send notification to Customer
+            if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5,11, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 11;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FirstInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
+                notificationViewModel.NotificationResponse.UserId =
+                    aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 12, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 12;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FirstInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
+                notificationViewModel.NotificationResponse.UserId =
+                    aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 13, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 13;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FirstInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
+                notificationViewModel.NotificationResponse.UserId =
+                    aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                notificationService.AddUpdateNotification(notificationViewModel);
+            }
+            if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
+            {
+                notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 14, quotation.QuotationId);
+
+                notificationViewModel.NotificationResponse.TitleE = "Project delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleA = "Project delivery date in near.";
+
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 14;
+                notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FirstInsDueAtCompletion).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
+                notificationViewModel.NotificationResponse.UserId =
+                    aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
                 notificationService.AddUpdateNotification(notificationViewModel);
             }
             #endregion

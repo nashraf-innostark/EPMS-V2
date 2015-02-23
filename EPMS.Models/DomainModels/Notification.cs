@@ -9,26 +9,22 @@ namespace EPMS.Models.DomainModels
         public string TitleE { get; set; }
         public string TitleA { get; set; }
         public int CategoryId { get; set; }
+        public long? SubCategoryId { get; set; }
+        public long? ItemId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
         public DateTime AlertDate { get; set; }
-        public long? EmployeeId { get; set; }
-        public string MobileNo { get; set; }
-        public string Email { get; set; }
-        public bool ReadStatus { get; set; }
-
-        public string UserId { get; set; }
         public bool SystemGenerated { get; set; }
-        public DateTime? AlertAppearDate { get; set; }
-        public long? ItemId { get; set; }
-
+        public DateTime AlertAppearDate { get; set; }
+        public bool IsEmailSent { get; set; }
+        public bool IsSMSsent { get; set; }
 
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDate { get; set; }
 
-        public virtual Employee Employee { get; set; }
         public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
+        public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
     }
 }
