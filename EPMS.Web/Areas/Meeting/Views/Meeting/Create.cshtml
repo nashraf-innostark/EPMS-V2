@@ -29,17 +29,13 @@
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
 </header>
-
-@using (Html.BeginForm("Create", "Meeting", FormMethod.Post, new { @id = "meetingForm", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "Meeting", FormMethod.Post, new { @id = "meetingForm", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Meeting.MeetingId)
         @Html.HiddenFor(model => model.Meeting.DocsNames, new { @id = "DocsNames" })
         @Html.HiddenFor(m => m.Meeting.RecCreatedBy)
         @Html.HiddenFor(m => m.Meeting.RecCreatedDt)
-        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.TopicName</label>
@@ -288,7 +284,6 @@
 
         }
         <!--Drag And Drop Upload end-->
-
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
@@ -297,17 +292,18 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" id="createMeet">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+                <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
             </div>
-
         </div>
-
     </div>
 }
 
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
+        $('#submit').click(function () {
+            $("#meetingForm").submit();
+        });
         CKEDITOR.replace('Agenda');
         CKEDITOR.replace('AgendaAr');
         CKEDITOR.replace('Discussion');
@@ -421,9 +417,9 @@
             $("#checked").addClass('disableList');
         }
 
-        $("#meetingForm").validate({
-            //ignore: ".ignore"
-        }).settings.ignore = ".ignore, .file";
+        //$("#meetingForm").validate({
+        //    //ignore: ".ignore"
+        //}).settings.ignore = ".ignore, .file";
 
     });
 

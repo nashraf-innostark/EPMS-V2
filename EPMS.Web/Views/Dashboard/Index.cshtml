@@ -1,4 +1,5 @@
-﻿@using iTextSharp.text.pdf.qrcode
+﻿@using System.Configuration
+@using iTextSharp.text.pdf.qrcode
 @model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
 
 @{
@@ -40,7 +41,7 @@
                 {
                     <li class="liItem" id="Menu_@item.MenuId">
                         <span id="userMenuId" style="display: none">@item.MenuId</span>
-                        <a href="/@item.Url" data-toggle="modal">
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/@item.Url" data-toggle="modal">
                             <img class="" src="~/Images/photon/icons/@item.ImagePath" alt=" predefined">
                         </a>
                         <p>@item.Title</p>

@@ -6,40 +6,43 @@
 @{
     Layout = null;
     string[] module = (string[])Session["UserModules"];
-    for (int i = 0; i < module.Count(); i++)
+    if (module != null)
     {
-        switch (module[i])
+        for (int i = 0; i < module.Count(); i++)
         {
-            case "Dashboard":
-                module[i] = "Dashboard";
-                break;
-            case "HRS":
-                module[i] = "Human Resources System";
-                break;
-            case "PMS":
-                module[i] = "Project Management System";
-                break;
-            case "NS":
-                module[i] = "Notification System";
-                break;
-            case "CL":
-                module[i] = "Contacts List";
-                break;
-            case "CP":
-                module[i] = "Company Profile";
-                break;
-            case "CS":
-                module[i] = "Customer Service";
-                break;
-            case "Mt":
-                module[i] = "Meetings";
-                break;
-            case "HI":
-                module[i] = "Help";
-                break;
-            default:
-                break;
-        }
+            switch (module[i])
+            {
+                case "Dashboard":
+                    module[i] = "Dashboard";
+                    break;
+                case "HRS":
+                    module[i] = "Human Resources System";
+                    break;
+                case "PMS":
+                    module[i] = "Project Management System";
+                    break;
+                case "NS":
+                    module[i] = "Notification System";
+                    break;
+                case "CL":
+                    module[i] = "Contacts List";
+                    break;
+                case "CP":
+                    module[i] = "Company Profile";
+                    break;
+                case "CS":
+                    module[i] = "Customer Service";
+                    break;
+                case "Mt":
+                    module[i] = "Meetings";
+                    break;
+                case "HI":
+                    module[i] = "Help";
+                    break;
+                default:
+                    break;
+            }
+        }   
     }
 }
 

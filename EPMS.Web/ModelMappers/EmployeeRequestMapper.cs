@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Models;
 using RequestDetail = EPMS.Models.DomainModels.RequestDetail;
@@ -60,11 +62,11 @@ namespace EPMS.Web.ModelMappers
                     RequestDesc = source.RequestDesc,
                     RequestReply = source.RequestReply,
                     LoanAmount = source.LoanAmount,
-                    LoanDate = source.LoanDate,
+                    LoanDate = Convert.ToDateTime(source.LoanDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
                     InstallmentAmount = source.InstallmentAmount,
                     NumberOfMonths = source.NumberOfMonths,
-                    FirstInstallmentDate = source.FirstInstallmentDate,
-                    LastInstallmentDate = source.LastInstallmentDate,
+                    FirstInstallmentDate = Convert.ToDateTime(source.FirstInstallmentDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                    LastInstallmentDate = Convert.ToDateTime(source.LastInstallmentDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
                     IsApproved = source.IsApproved,
                     IsReplied = source.IsReplied,
                     RowVersion = source.RowVersion,
@@ -101,11 +103,11 @@ namespace EPMS.Web.ModelMappers
                     RequestDesc = source.RequestDesc,
                     RequestReply = source.RequestReply,
                     LoanAmount = source.LoanAmount,
-                    LoanDate = source.LoanDate,
+                    LoanDate = DateTime.ParseExact(source.LoanDate, "dd/MM/yyyy", new CultureInfo("en")),
                     InstallmentAmount = source.InstallmentAmount,
                     NumberOfMonths = source.NumberOfMonths,
-                    FirstInstallmentDate = source.FirstInstallmentDate,
-                    LastInstallmentDate = source.LastInstallmentDate,
+                    FirstInstallmentDate = DateTime.ParseExact(source.FirstInstallmentDate, "dd/MM/yyyy", new CultureInfo("en")),
+                    LastInstallmentDate = DateTime.ParseExact(source.LastInstallmentDate, "dd/MM/yyyy", new CultureInfo("en")),
                     IsApproved = source.IsApproved,
                     IsReplied = source.IsReplied,
                     RowVersion = source.RowVersion,

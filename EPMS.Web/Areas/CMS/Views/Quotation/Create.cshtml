@@ -460,10 +460,6 @@
     $(document).ready(function () {
         CKEDITOR.replace('ExtraInformationEn');
         CKEDITOR.replace('ExtraInformationAr');
-        $('.select2me').select2({
-            placeholder: "Select",
-            allowClear: true
-        });
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
             $("#Discount").val(0);

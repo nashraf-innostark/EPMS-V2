@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -105,20 +106,45 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     viewModel.Allowances = response.Allowance.CreateFromServerToClient();
                 }
-                
+
                 // get employee requests
                 if (response.Requests != null)
                 {
-                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll());
+                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll()).Select(x => x.RequestDetails).ToList();
                     // get Employee request details
-                    foreach (var reqDetail in requests)
+                    //foreach (var reqDetail in requests)
+                    //{
+                    //    var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
+                    //    if (firstOrDefault != null)
+                    //        viewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
+                    //    var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
+                    //    if (lastOrDefault != null)
+                    //        viewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
+                    //}
+                    if (requests.Any())
                     {
-                        var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
-                        if (firstOrDefault != null)
-                            viewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
-                        var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
-                        if (lastOrDefault != null)
-                            viewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
+                        var deductions = requests[0].Select(x => x.InstallmentAmount).ToList();
+                        switch (deductions.Count)
+                        {
+                            case 2:
+                                if (deductions[0] != null)
+                                {
+                                    viewModel.Deduction1 = deductions[0] ?? 0;
+                                }
+                                if (deductions[1] != null)
+                                {
+                                    viewModel.Deduction2 = deductions[1] ?? 0;
+                                }
+                                break;
+                            case 1:
+                                if (deductions[0] != null)
+                                {
+                                    viewModel.Deduction1 = deductions[0] ?? 0;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 double basicSalary = 0;
@@ -144,7 +170,9 @@ namespace EPMS.Web.Areas.HR.Controllers
             long id = viewModel.Id;
             if (id > 0)
             {
-                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, Convert.ToDateTime(viewModel.Date));
+                //DateTime.ParseExact(source.FirstInstallmentDate, "dd/MM/yyyy", new CultureInfo("en"))
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id,
+                    DateTime.ParseExact(viewModel.Date, "dd/MM/yyyy", new CultureInfo("en")));
                 if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();

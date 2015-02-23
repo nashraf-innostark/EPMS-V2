@@ -17,14 +17,14 @@ namespace EPMS.Web.Models
         public double? LoanAmount { get; set; }
         [Required]
         [Display(Name = "Loan Date (Gregorian)")]
-        public DateTime? LoanDate { get; set; }
+        public string LoanDate { get; set; }
         [Required]
         [Display(Name = "Installment Amount")]
         public double? InstallmentAmount { get; set; }
         [Display(Name = "First Installment Date")]
-        public DateTime? FirstInstallmentDate { get; set; }
+        public string FirstInstallmentDate { get; set; }
         [Display(Name = "Last Installment Date")]
-        public DateTime? LastInstallmentDate { get; set; }
+        public string LastInstallmentDate { get; set; }
         [Required]
         [Display(Name = "Number of Months")]
         public int? NumberOfMonths { get; set; }
