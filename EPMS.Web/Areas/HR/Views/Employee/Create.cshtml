@@ -423,7 +423,7 @@
                     </div>
                 </div>
             }
-            if (module.Contains("Human Resources System"))
+            if (module.Contains("Human Resources System") || module.Contains("HRS"))
             {
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
@@ -466,15 +466,16 @@
                 </div>
             }
 
-            <!--Sortable Responsive Table end-->
-            <div class="alert alert-info alert-block">
-                <i class="icon-alert icon-alert-info"></i>
-                <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
-            </div>
 
-            if (module.Contains("Project Management System"))
+
+            if (module.Contains("Project Management System") || module.Contains("PMS"))
             {
-            <!--Sortable Responsive Table begin-->
+                <!--Sortable Responsive Table end-->
+                <div class="alert alert-info alert-block">
+                    <i class="icon-alert icon-alert-info"></i>
+                    <strong>@EPMS.Web.Resources.HR.Tasks.AssigTasks</strong>
+                </div>
+                <!--Sortable Responsive Table begin-->
                 <div class="row-fluid">
                     <div class="span12">
                         <table class="table table-striped table-responsive" id="tableProjects">

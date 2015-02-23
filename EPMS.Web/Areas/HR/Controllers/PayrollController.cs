@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using EPMS.Web.ModelMappers;
 using EPMS.Models.ResponseModels;
+using Org.BouncyCastle.Ocsp;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -123,26 +124,30 @@ namespace EPMS.Web.Areas.HR.Controllers
                     //}
                     if (requests.Any())
                     {
-                        var deductions = requests[0].Select(x => x.InstallmentAmount).ToList();
-                        switch (deductions.Count)
+                        switch (requests.Count)
                         {
                             case 2:
-                                if (deductions[0] != null)
+                                var deduction1 = requests[0].Select(x => x.InstallmentAmount).ToList();
+                                if (deduction1[0] != null)
                                 {
-                                    viewModel.Deduction1 = deductions[0] ?? 0;
+                                    viewModel.Deduction1 = deduction1[0] ?? 0;
                                 }
-                                if (deductions[1] != null)
+                                var deduction2 = requests[1].Select(x => x.InstallmentAmount).ToList();
+                                if (deduction2[0] != null)
                                 {
-                                    viewModel.Deduction2 = deductions[1] ?? 0;
+                                    viewModel.Deduction2 = deduction2[0] ?? 0;
                                 }
                                 break;
                             case 1:
-                                if (deductions[0] != null)
+                                var deduction = requests[0].Select(x => x.InstallmentAmount).ToList();
+                                if (deduction[0] != null)
                                 {
-                                    viewModel.Deduction1 = deductions[0] ?? 0;
+                                    viewModel.Deduction1 = deduction[0] ?? 0;
                                 }
                                 break;
-                            default:
+                            case 0:
+                                viewModel.Deduction1 = 0;
+                                viewModel.Deduction2 = 0;
                                 break;
                         }
                     }
