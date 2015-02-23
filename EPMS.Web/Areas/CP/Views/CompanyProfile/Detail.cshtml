@@ -394,7 +394,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                <input id="pnumber" type="text" name="inputField" disabled />
+                                @Html.TextBoxFor(m => m.LicenseInformation.ProductNo, new { id = "SaudilizationCertificate", @readonly = true })
                             </div>
                         </div>
                     </div>
@@ -404,7 +404,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                <input id="unumber" type="text" name="inputField" disabled />
+                                @Html.TextBoxFor(m => m.LicenseInformation.NoOfUsers, new { id = "SaudilizationCertificate", @readonly = true })
                             </div>
                         </div>
                     </div>
@@ -414,7 +414,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                <input id="lnumber" type="text" name="inputField" disabled />
+                                @Html.TextBoxFor(m => m.LicenseInformation.LicenseNo, new { id = "SaudilizationCertificate", @readonly = true })
                             </div>
                         </div>
                     </div>
@@ -425,7 +425,8 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                <input id="snumberl" type="text" name="inputField" disabled />
+                                @Html.TextBoxFor(model => model.LicenseInformation.StartDate, new { @id="LicenseStartDate", @class = "span4", @readonly = true})
+                                @Html.TextBox("Start Date", null, new { @id = "LicenseStartDateAr", @class = "span4", @readonly = true })
                             </div>
                         </div>
                     </div>
@@ -436,7 +437,8 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                <input id="enumberl" type="text" name="inputField" disabled />
+                                @Html.TextBoxFor(model => model.LicenseInformation.ExpiryDate, new { @id = "LicenseEndDate", @class = "span4", @readonly = true })
+                                @Html.TextBox("Start Date", null, new { @id = "LicenseEndDateAr", @class = "span4", @readonly = true })
                             </div>
                         </div>
 
@@ -447,7 +449,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                <input id="help" type="text" name="inputField" disabled />
+                                @Html.TextBoxFor(m => m.LicenseInformation.HelpUrl, new { id = "SaudilizationCertificate", @readonly = true })
                             </div>
                         </div>
 
@@ -1143,7 +1145,13 @@
         if ($("#SaudilizationCertificateExpiryDate").val() != null && $("#SaudilizationCertificateExpiryDate").val() != "") {
             $("#SaudilizationCertificateExpiryDateAr").val(ConvertDates($("#SaudilizationCertificateExpiryDate").val(), "gregorian", "islamic"));
         }
-
+        if ($("#LicenseStartDate").val() != null && $("#LicenseStartDate").val() != "") {
+            $("#LicenseStartDateAr").val(ConvertDates($("#LicenseStartDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#LicenseEndDate").val() != null && $("#LicenseEndDate").val() != "") {
+            $("#LicenseEndDateAr").val(ConvertDates($("#LicenseEndDate").val(), "gregorian", "islamic"));
+        }
+        
         var companyId = $('#CompanyProfile_CompanyId').val();
         if (companyId == 0) {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
