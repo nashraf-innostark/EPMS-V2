@@ -123,6 +123,7 @@ namespace EPMS.Web.Controllers
         #endregion
 
         #region Send Email/SMS Notifications
+        [AllowAnonymous]
         public void SendEmails()
         {
             notificationService.SendEmailNotifications();
