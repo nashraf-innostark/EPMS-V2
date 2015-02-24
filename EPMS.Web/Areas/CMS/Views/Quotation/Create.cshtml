@@ -752,7 +752,7 @@
         $('#Discount').on("blur", function () {
             var b;
             b = parseInt($('#Discount').val());
-            if (b > 100) {
+            if (b > 100 || isNaN(b)) {
                 discount();
                 $(this).val(0);
                 return;
@@ -761,7 +761,7 @@
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
-                    text: 'The total % of discount should not exceed 100'
+                    text: 'The total % of discount should not exceed 100 and must be number'
                 });
                 $(this).val(0);
             }
@@ -769,7 +769,7 @@
         $('.installer').on("blur", function () {
             b = 0;
             b = parseInt($('#Installment1').val());
-            if (b > 100) {
+            if (b > 100 || isNaN(b)) {
                 noteIt();
                 $(this).val(0);
                 return;
@@ -802,7 +802,7 @@
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
-                    text: 'The total % of all the due to project should not exceed 100'
+                    text: 'The total % of all the due to project should not exceed 100 and must be number'
                 });
                 $(this).val(0);
             }
@@ -841,7 +841,7 @@
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
-                    text: 'The total % of all the installments should not exceed 100'
+                    text: 'The total % of all the installments should not exceed 100 and must be number'
                 });
 
                 $(this).val(0);
