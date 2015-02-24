@@ -776,21 +776,21 @@
             }
             else {
                 b = b + parseInt($('#Installment2').val());
-                if (b > 100) {
+                if (b > 100 || isNaN(b)) {
                     noteIt();
                     $(this).val(0);
                     return;
                 }
                 else {
                     b = b + parseInt($('#Installment3').val());
-                    if (b > 100) {
+                    if (b > 100 || isNaN(b)) {
                         noteIt();
                         $(this).val(0);
                         return;
                     }
                     else {
                         b = b + parseInt($('#Installment4').val());
-                        if (b > 100) {
+                        if (b > 100 || isNaN(b)) {
                             noteIt();
                             $(this).val(0);
                             return;
@@ -810,25 +810,25 @@
         $('.dap').on("blur", function () {
             var bb;
             bb = parseInt($('#DueAt1').val());
-            if (bb > 100) {
+            if (bb > 100 || isNaN(bb)) {
                 noteItb();
                 $(this).val(0);
                 return;
             } else {
                 bb = bb + parseInt($('#DueAt2').val());
-                if (bb > 100) {
+                if (bb > 100 || isNaN(bb)) {
                     noteItb();
                     $(this).val(0);
                     return;
                 } else {
                     bb = bb + parseInt($('#DueAt3').val());
-                    if (bb > 100) {
+                    if (bb > 100 || isNaN(bb)) {
                         noteItb();
                         $(this).val(0);
                         return;
                     } else {
                         bb = bb + parseInt($('#DueAt4').val());
-                        if (bb > 100) {
+                        if (bb > 100 || isNaN(bb)) {
                             noteItb();
                             $(this).val(0);
                             return;
