@@ -49,11 +49,11 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me customerDDL", @id = "Client" })
                     }
                     @if (direction == "rtl")
                     {
-                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
+                        @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me customerDDL", @id = "Client" })
                     }
                     <label id="customerValidation"></label>
                 </div>
@@ -67,11 +67,11 @@
                 <div class="controls">
                     @if (Model.CustomerId == 0)
                     {
-                        @Html.DropDownListFor(m => m.OrderId, Enumerable.Empty<SelectListItem>(), "--Select--", new { @id = "OrderId", @class = "select2me" })
+                        @Html.DropDownListFor(m => m.OrderId, Enumerable.Empty<SelectListItem>(), "--Select--", new { @id = "OrderId", @class = "select2me OrderDDL" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId", @class = "select2me" })
+                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId", @class = "select2me OrderDDL" })
                     }
                     <label id="orderValidation"></label>
                 </div>
@@ -141,7 +141,7 @@
                             for (int i = 0; i < Model.QuotationItemDetails.Count(); i++)
                             {
                                 <tr>
-                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId, new { @class="itemDetailId" } )
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId, new { @class = "itemDetailId" })
                                     <td>
                                         @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize" })
                                     </td>
@@ -205,7 +205,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = ""})
+                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = "" })
                 </div>
             </div>
         </div>
@@ -396,10 +396,12 @@
         var counter = 0;
         var customerId = $("#Client").val();
         var orderId = $("#OrderId").val();
+        var error = "";
         if (customerId == null || customerId == "" || customerId == undefined) {
             $("#customerValidation").text("Please Select Customer");
             $("#customerValidation").addClass("Error");
             counter++;
+            error = "customer";
         } else {
             $("#customerValidation").text("");
             $("#customerValidation").removeClass("Error");
@@ -408,6 +410,7 @@
             $("#orderValidation").text("Please Select Order");
             $("#orderValidation").addClass("Error");
             counter++;
+            error = "Order";
         } else {
             $("#orderValidation").text("");
             $("#orderValidation").removeClass("Error");
@@ -417,7 +420,18 @@
             if ($(".Error").length > 0) {
                 var divId = $(".Error")[0].id;
                 if ($("#" + divId).length > 0)
-                    $("#" + divId).focus();
+                    if (error = "customer") {
+                        $('html,body').animate({
+                            scrollTop: $(".customerDDL").offset().top
+                        },
+        'slow');
+                    }
+                    else if (error = "Order") {
+                        $('html,body').animate({
+                            scrollTop: $(".OrderDDL").offset().top
+                        },
+        'slow');
+                    }
                 event.preventDefault();
                 return false;
             }
@@ -515,7 +529,7 @@
                         y++;
                     });
                     t4 = t3 * t2;
-                    
+
                     var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails">' + t1 + '</textarea> </td> ' +
                 '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="' + t2 + '" name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity"> </td> ' +
                 '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="' + t3 + '" name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice"> </td>' +
@@ -629,7 +643,7 @@
                 elementToDelete = $(this).parent().parent();
                 var quotationId = parseInt('@Model.QuotationId');
                 if (quotationId > 0) {
-                    
+
                     url = siteUrl + "/CMS/Quotation/Delete";
                     //var isErrorInDeleting = true;
                     $.ajax({
@@ -639,14 +653,14 @@
                         data: {
                             itemDetailId: id
                         },
-                        success: function(data) {
+                        success: function (data) {
                             if (data.Status == "Success") {
                                 itemsDetailCount = itemsDetailCount - 1;
                                 var count = $('.qouteAdd tr').length;
                                 if (count > 1) {
                                     elementToDelete.remove();
                                     var x = 0;
-                                    $('.qouteAdd tr .n3').each(function() {
+                                    $('.qouteAdd tr .n3').each(function () {
                                         x = x + parseInt($(this).val());
                                     });
                                     $('#subtotal').val(x);
@@ -661,7 +675,7 @@
                                 return;
                             }
                         },
-                        error: function(e) {
+                        error: function (e) {
                             $.unblockUI();
                             alert('Error: You are not authorized');
                             return;
