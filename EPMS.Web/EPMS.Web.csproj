@@ -368,6 +368,7 @@
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
+    <Compile Include="Models\CompanyLicenseInformation.cs" />
     <Compile Include="Models\CompanyProfile.cs" />
     <Compile Include="Models\CompanySocialDetail.cs" />
     <Compile Include="Models\Complaint.cs" />

@@ -11,11 +11,13 @@ namespace EPMS.Web.ViewModels.CompanyProfile
             CompanyDocuments = new CompanyDocumentDetail();
             CompanyBank = new CompanyBankDetail();
             CompanySocial = new CompanySocialDetail();
+            LicenseInformation = new CompanyLicenseInformation();
         }
         public Models.CompanyProfile CompanyProfile { get; set; }
         public CompanyDocumentDetail CompanyDocuments { get; set; }
         public CompanyBankDetail CompanyBank { get; set; }
         public CompanySocialDetail CompanySocial { get; set; }
+        public CompanyLicenseInformation LicenseInformation { get; set; }
         public int TabId { get; set; }
         public string BankName { get; set; }
         public string BankNameAr { get; set; }

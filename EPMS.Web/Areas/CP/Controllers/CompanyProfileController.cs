@@ -83,6 +83,17 @@ namespace EPMS.Web.Areas.CP.Controllers
             contactList.AddRange(customerList);
             contactList.AddRange(applicantList);
             companyProfileViewModel.List = contactList;
+            // Get license Information
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            var licenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = licenseKey.Split('|');
+            companyProfileViewModel.LicenseInformation.ProductNo = splitLicenseKey[5];
+            companyProfileViewModel.LicenseInformation.NoOfUsers = splitLicenseKey[2];
+            companyProfileViewModel.LicenseInformation.LicenseNo = splitLicenseKey[6];
+            companyProfileViewModel.LicenseInformation.StartDate = splitLicenseKey[7];
+            companyProfileViewModel.LicenseInformation.ExpiryDate = splitLicenseKey[3];
+            companyProfileViewModel.LicenseInformation.HelpUrl = "";
+            //prod no = 5, lic no = 6, start date = 7
             return View(companyProfileViewModel);
         }
 
