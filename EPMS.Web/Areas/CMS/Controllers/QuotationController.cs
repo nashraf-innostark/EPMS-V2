@@ -191,14 +191,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 //Save Item Details
                 foreach (var itemDetail in viewModel.QuotationItemDetails)
                 {
-                    if (!string.IsNullOrEmpty(itemDetail.ItemDetails) && itemDetail.ItemQuantity != 0 &&
-                        itemDetail.UnitPrice != 0)
+                    bool isItemEDetailEmpty = !string.IsNullOrEmpty(itemDetail.ItemDetails) || itemDetail.ItemQuantity == 0 || itemDetail.UnitPrice == 0;
+                    if (!isItemEDetailEmpty)
                     {
                         itemDetail.QuotationId = quotaionId;
                         itemDetail.RecCreatedBy = User.Identity.GetUserId();
                         itemDetail.RecCreatedDt = DateTime.Now;
                         var itemDetailToAdd = itemDetail.CreateFromClientToServer();
                         addStatus = QuotationItemService.AddQuotationItem(itemDetailToAdd);
+                    }
+                    if (viewModel.QuotationItemDetails.Count > 0 && isItemEDetailEmpty)
+                    {
+                        addStatus = true;
                     }
                 }
             }
