@@ -720,9 +720,9 @@ function LoadEmployeeRequests(control) {
                 if (data.length > 0) {
                     $.each(data, function (itemIndex, item) {
                         if (item.IsReplied) {
-                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="'+item.EmployeeNameE+'">'+item.EmployeeNameEShort+' </span><img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
+                            $('#employeeRequests').append('<li><a href="' + siteUrl + '/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="' + siteUrl + '/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
                         } else {
-                            $('#employeeRequests').append('<li><a href="/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            $('#employeeRequests').append('<li><a href="' + siteUrl + '/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                         }
                         
                     });
@@ -760,21 +760,21 @@ function LoadComplaints(control) {
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (item.IsReplied) {
-                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="'+item.Topic+'">'+item.TopicShort+'</span></a><div><span title="'+item.ClientName+'">'+item.ClientNameShort+'</span> <img src="/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
+                        $('#complaints').append('<li><a href="' + siteUrl + '/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
                     } else {
-                        $('#complaints').append('<li><a href="/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
+                        $('#complaints').append('<li><a href="' + siteUrl + '/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
                     }
                 });
                 if ($("#userRole").val() == "Customer")
                 {
-                    $('#complaints').append('<li><a href="/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
+                    $('#complaints').append('<li><a href="' + siteUrl + '/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
                 }
             }
             else {
                 $(".tempLoader").click();
                 $('#complaints').append('<li>No record found</li>');
                 if ($("#userRole").val() == "Customer") {
-                    $('#complaints').append('<li><a href="/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
+                    $('#complaints').append('<li><a href="' + siteUrl + '/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
                 }
             }
         },
@@ -810,13 +810,13 @@ function LoadOrders(control) {
                 $.each(data, function (itemIndex, item) {
                      switch (item.OrderStatus)
                     {
-                         case 2: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                         case 2: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                             break;
-                         case 1: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
+                         case 1: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
                             break;
-                         case 3: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
+                         case 3: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
                             break;
-                         case 4: $('#customerOrders').append('<li><a href="/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
+                         case 4: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
                             break;
                     }
                 });
@@ -846,7 +846,7 @@ function LoadRecruitments(control) {
             $('#recruitments').empty();
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
-                    $('#recruitments').append('<li><a href="/HR/JobOffered/Create/' + item.JobOfferedId + '"><span>' + item.TitleE + '</span></a><div>' + item.NoOfApplicants + ' </div></li>');
+                    $('#recruitments').append('<li><a href="' + siteUrl + '/HR/JobOffered/Create/' + item.JobOfferedId + '"><span>' + item.TitleE + '</span></a><div>' + item.NoOfApplicants + ' </div></li>');
                 });
             }
             else {
@@ -881,7 +881,7 @@ function LoadRecentEmployees(control) {
             $('#recentEmployees').empty();
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
-                    $('#recentEmployees').append('<li><div class="avatar-image"><img src="' + item.EmployeeImagePath + '" alt="profile image" /></div><a href="/HR/Employee/Create/' + item.EmployeeId + '"><span title="'+item.EmployeeNameE+'">'+item.EmployeeNameEShort+'</span></a><div>' + item.EmployeeJobId + ' </div></li>');
+                    $('#recentEmployees').append('<li><div class="avatar-image"><img src="' + item.EmployeeImagePath + '" alt="profile image" /></div><a href="' + siteUrl + '/HR/Employee/Create/' + item.EmployeeId + '"><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + '</span></a><div>' + item.EmployeeJobId + ' </div></li>');
                 });
             }
             else {
@@ -968,17 +968,17 @@ function LoadMeetings(control) {
             $('#meetings').empty();
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
-                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create/' + item.MeetingId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div>'+item.MeetingDate+'</div></li>');
+                    $('#meetings').append('<li><a href="' + siteUrl + '/Meeting/Meeting/Create/' + item.MeetingId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div>' + item.MeetingDate + '</div></li>');
                 });
                 if ($("#userRole").val() == "Admin") {
-                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">' + $("#makeMeeting").val() + '</a></li>');
+                    $('#meetings').append('<li><a href="' + siteUrl + '/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">' + $("#makeMeeting").val() + '</a></li>');
                 }
             }
             else {
                 $(".tempLoader").click();
                 $('#meetings').append('<li>No record found</li>');
                 if ($("#userRole").val() == "Admin") {
-                    $('#meetings').append('<li><a href="/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">' + $("#makeMeeting").val() + '</a></li>');
+                    $('#meetings').append('<li><a href="' + siteUrl + '/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">' + $("#makeMeeting").val() + '</a></li>');
                 }
             }
         },
