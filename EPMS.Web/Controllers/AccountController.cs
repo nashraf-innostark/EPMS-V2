@@ -294,7 +294,7 @@ namespace IdentitySample.Controllers
             else
             {
                 ViewBag.UserLimitReach = "Yes";
-                ViewBag.MessageVM = "User Limit has reached. Please renew your License to create more users.";
+                TempData["message"] = new MessageViewModel { Message = "User Limit has reached. Please renew your License to create more users", IsError = true };
                 Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
                 Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
                 return View(Result);
