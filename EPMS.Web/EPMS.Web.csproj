@@ -294,6 +294,8 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
+    <Compile Include="Areas\Help\Controllers\HelpController.cs" />
+    <Compile Include="Areas\Help\HelpAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\ContactListController.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -638,6 +640,7 @@
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\Help\HelpViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
       <SubType>Code</SubType>
@@ -687,6 +690,7 @@
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Content\CSS\photon.css" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
@@ -694,6 +698,8 @@
     <Content Include="Areas\LCP\Views\web.config" />
     <Content Include="Areas\LCP\Views\License\Index.cshtml" />
     <Content Include="Areas\LCP\Views\License\Create.cshtml" />
+    <Content Include="Areas\Help\Views\web.config" />
+    <Content Include="Areas\Help\Views\Help\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -827,7 +833,6 @@
     <Content Include="Content\CSS\PagedList.css" />
     <Content Include="Content\CSS\photon-pt2.css" />
     <Content Include="Content\CSS\photon-responsive.css" />
-    <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\responsive-tables.css" />
     <Content Include="Content\CSS\responsive.css" />
     <Content Include="Content\CSS\spinner.gif" />
@@ -3095,6 +3100,8 @@
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\CP\Models\" />
     <Folder Include="Areas\CP\Views\Shared\" />
+    <Folder Include="Areas\Help\Models\" />
+    <Folder Include="Areas\Help\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\LCP\Models\" />
