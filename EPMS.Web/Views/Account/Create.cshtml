@@ -1,4 +1,5 @@
-﻿@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
+﻿@using System.Web.UI.WebControls
+@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
     ViewBag.Title = "Register User";
     string btnText = "Save";
@@ -127,11 +128,22 @@
                 </div>
             </div>
         }
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
+        @if (ViewBag.UserLimitReach == "Yes")
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick="return validateUserPassword(event);" disabled>@btnText</button>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
+                </div>
+            </div>
+        }
     </div>
 }
 <!-- Matter ends -->
