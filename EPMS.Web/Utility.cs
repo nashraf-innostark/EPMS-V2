@@ -3,6 +3,8 @@ using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Web.Script.Serialization;
+using EPMS.Implementation;
 
 namespace EPMS.Web
 {
@@ -43,13 +45,32 @@ namespace EPMS.Web
         {
             string username = ConfigurationManager.AppSettings["MobileUsername"];
             string password = ConfigurationManager.AppSettings["MobilePassword"];
-            string senderId = ConfigurationManager.AppSettings["SenderID"];
+            string smsApiUrl = ConfigurationManager.AppSettings["SmsApiUrl"];
+            string tagName = ConfigurationManager.AppSettings["TagName"];
 
-            WebRequest smsRequest =
-                WebRequest.Create("http://www.jawalbsms.ws/api.php/sendsms?user=" + username + "&pass=" +
-                                  password +
-                                  "&to=" + mobileNo + "&message=" + smsText +
-                                  "&sender=" + senderId);
+            WebRequest smsRequest = WebRequest.Create(smsApiUrl);
+            smsRequest.ContentType = "application/json";
+            smsRequest.Method = "POST";
+
+            SMS sms = new SMS();
+            sms.Username = username;
+            sms.Password = password;
+            sms.Tagname = tagName;
+            sms.RecepientNumber = mobileNo;
+            sms.VariableList = "";
+            sms.ReplacementList = "";
+            sms.Message = smsText;
+            sms.SendDateTime = "0";
+            sms.EnableDR = false;
+
+            using (var streamWriter = new StreamWriter(smsRequest.GetRequestStream()))
+            {
+                var json = new JavaScriptSerializer().Serialize(sms);
+                streamWriter.Write(json);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
             WebResponse smsRequestResponse = smsRequest.GetResponse();
             Stream smsDataStream = smsRequestResponse.GetResponseStream();
             StreamReader smsReader = new StreamReader(smsDataStream);
