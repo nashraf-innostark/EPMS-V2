@@ -11,6 +11,7 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
@@ -20,6 +21,7 @@ using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Org.BouncyCastle.Ocsp;
 using Allowance = EPMS.Web.Models.Allowance;
 using Employee = EPMS.Web.Models.Employee;
 using EmployeeRequest = EPMS.Web.Models.Request;
@@ -200,25 +202,29 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 // get Employee requests
                 var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
-                var requests = empRequests.Select(x => x.CreateFromServerToClientEmpDetail());
-                // get Employee request details
-                foreach (var reqDetail in requests)
+                var requests = empRequests.Select(x => x.CreateFromServerToClientEmpDetail()).ToList();
+                if (requests.Count() == 2)
                 {
-                    var requestDetails = reqDetail.RequestDetails.ToList();
-                    if (requestDetails.Count == 2)
+                    var first = requests[0].RequestDetails.ToList();
+                    if (first.Any())
                     {
-                        var first = requestDetails[0];
-                        if (first != null)
-                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(first.InstallmentAmount ?? 0);
-                        var last = requestDetails[1];
-                        if (last != null)
-                            viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(last.InstallmentAmount ?? 0);
+                        var val1 = first[0].InstallmentAmount;
+                        viewModel.EmployeeViewModel.Deduction1 = Convert.ToInt32(val1);
                     }
-                    else if (requestDetails.Count == 1)
+                    var last = requests[1].RequestDetails.ToList();
+                    if (last.Any())
                     {
-                        var first = requestDetails[0];
-                        if (first != null)
-                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(first.InstallmentAmount ?? 0);
+                        var val2 = last[0].InstallmentAmount;
+                        viewModel.EmployeeViewModel.Deduction2 = Convert.ToInt32(val2);
+                    }
+                }
+                else if (requests.Count() == 1)
+                {
+                    var first = requests[0].RequestDetails.ToList();
+                    if (first.Any())
+                    {
+                        var val1 = first[0].InstallmentAmount;
+                        viewModel.EmployeeViewModel.Deduction1 = Convert.ToInt32(val1);
                     }
                 }
                 var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);

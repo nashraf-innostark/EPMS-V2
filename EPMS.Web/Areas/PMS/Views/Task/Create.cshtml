@@ -76,7 +76,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId", @class = "select2me" })
+                    @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.Projects, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId", @class = "select2me projectDDL" })
                     <label id="projectValidation"></label>
                 </div>
             </div>
@@ -392,10 +392,14 @@
             //implementing focus back to error
             if ($(".Error").length > 0) {
                 var divId = $(".Error")[0].id;
-                if ($("#" + divId).length > 0)
-                    $("#" + divId).focus();
-                event.preventDefault();
-                return false;
+                if ($("#" + divId).length > 0) {
+                    $('html,body').animate({
+                        scrollTop: $(".projectDDL").offset().top
+                    },
+        'slow');
+                    event.preventDefault();
+                    return false;
+                }
             }
         }
         return true;
