@@ -511,7 +511,6 @@ namespace IdentitySample.Controllers
         public ActionResult Signup()
         {
             SignupViewModel signupViewModel = new SignupViewModel();
-            TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
             return View(signupViewModel);
         }
 

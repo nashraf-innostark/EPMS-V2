@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
+using EPMS.Implementation.Services;
+using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.Repository.Repositories;
 
 namespace EPMS.Web.ModelMappers.PMS
 {
     public static class ProjectMapper
     {
+        private static IProjectTaskService projectTaskService;
         public static Project CreateFromClientToServer(this Models.Project source)
         {
             return new Project
@@ -61,6 +66,10 @@ namespace EPMS.Web.ModelMappers.PMS
             {
                 project.CustomerNameE = source.Customer.CustomerNameE;
                 project.CustomerNameA = source.Customer.CustomerNameA;
+            }
+            foreach (var projectTask in source.ProjectTasks)
+            {
+                project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
             }
             return project;
         }
