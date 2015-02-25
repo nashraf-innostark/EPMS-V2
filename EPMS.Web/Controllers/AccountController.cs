@@ -511,6 +511,7 @@ namespace IdentitySample.Controllers
         public ActionResult Signup()
         {
             SignupViewModel signupViewModel = new SignupViewModel();
+            TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
             return View(signupViewModel);
         }
 
@@ -527,6 +528,7 @@ namespace IdentitySample.Controllers
             {
                 // it means username is already taken
                 TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                ModelState.AddModelError("", "UserName already exist");
                 return View(signupViewModel);
             }
             //call customer add service, get cusID, 
