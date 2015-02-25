@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
+    <Compile Include="Common\EmployeeForDropDownList.cs" />
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
     <Compile Include="Common\JobApplicantByColumn.cs" />
     <Compile Include="Common\JobTitleByColumn.cs" />

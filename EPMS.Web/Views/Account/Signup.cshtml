@@ -3,8 +3,10 @@
 @{
     ViewBag.Title = "Signup";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    
 }
-
+@Html.Partial("_Alert")
 <div class="container-login">
     <div class="form-centering-wrapper">
         <div class="form-window-login">

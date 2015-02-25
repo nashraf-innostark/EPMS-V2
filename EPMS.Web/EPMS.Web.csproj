@@ -381,6 +381,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\jsTree3Node.cs" />
     <Compile Include="Models\LicenseControlPanel.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\MeetingAttendee.cs" />
@@ -691,6 +692,13 @@
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Content\CSS\photon.css" />
+    <Content Include="Scripts\jsTree3\jstree.js" />
+    <Content Include="Scripts\jsTree3\jstree.min.js" />
+    <Content Include="Scripts\jsTree3\themes\default\32px.png" />
+    <Content Include="Scripts\jsTree3\themes\default\40px.png" />
+    <Content Include="Scripts\jsTree3\themes\default\style.css" />
+    <Content Include="Scripts\jsTree3\themes\default\style.min.css" />
+    <Content Include="Scripts\jsTree3\themes\default\throbber.gif" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
@@ -700,6 +708,9 @@
     <Content Include="Areas\LCP\Views\License\Create.cshtml" />
     <Content Include="Areas\Help\Views\web.config" />
     <Content Include="Areas\Help\Views\Help\Index.cshtml" />
+    <Content Include="Views\Shared\_jsTreeDemo.cshtml" />
+    <Content Include="Views\jsTree3\Demo.cshtml" />
+    <Content Include="Views\jsTree3\AJAXDemo.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

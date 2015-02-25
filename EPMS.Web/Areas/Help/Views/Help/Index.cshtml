@@ -34,28 +34,28 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="inputFieldma">Title English</label>
+                <label class="control-label" for="Title">Title English</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="inputFieldma" type="text" name="inputField" class="required">
+                    <input id="Title" type="text" name="inputField" class="required">
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="inputFieldla">Title Arabic</label>
+                <label class="control-label" for="TitleAr">Title Arabic</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="inputFieldla" type="text" name="inputField" class="required">
+                    <input id="TitleAr" type="text" name="inputField" class="required">
                 </div>
             </div>
         </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">Menu Type </label>
+                <label class="control-label" for="">Menu Type </label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -83,11 +83,11 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid contentHelp helpContentHide">
             <div class="span3">
-                <label class="control-label" for="ExtraInformation">Content Arabic</label>
+                <label class="control-label" for="ExtraInformationAr">Content Arabic</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="ExtraInformation" type="text" name="CLK Editor" placeholder="CLK Editor">
+                    <input id="ExtraInformationAr" type="text" name="CLK Editor" placeholder="CLK Editor">
                 </div>
             </div>
         </div>
@@ -126,10 +126,12 @@
     </div>
 </div>
 
-
+<script src="~/RichTextEditor/ckeditor.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        CKEDITOR.replace('ExtraInformation');
+        CKEDITOR.replace('ExtraInformationAr');
         $(".menuTypeSelect").change(function () {
 
             if ($(this).val() == "Parent" || $(this).val() == "Main Parent") {
