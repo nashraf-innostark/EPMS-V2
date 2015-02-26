@@ -37,6 +37,7 @@
 @using (Html.BeginForm("Create", "Task", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.ProjectTask.TaskId)
+    <input type="hidden" id="prevTasksWeight"/>
     if (Model.OldRequisitTasks != null)
     {
         for (int i = 0; i < Model.OldRequisitTasks.Count(); i++)
@@ -290,6 +291,27 @@
             $(".readonly").attr("readonly", "true");
         }
         $('#TotalWeight').mask("99%");
+        $('#TotalWeight').on("blur", function () {
+            var prevVal = parseInt($("#prevTasksWeight").val());
+            var temp = $(this).val();
+            var tempVal = temp.split('%');
+            var currVal = parseInt(tempVal[0]);
+            if (currVal > 0) {
+                if ((prevVal + currVal) > 100 || isNaN(currVal)) {
+                    notify();
+                    return;
+                }
+            }
+            function notify() {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'This task weight and previous tasks weight of this project should not exceed 100 or must be number.'
+                });
+                $('#TotalWeight').val(0);
+                return;
+            }
+        });
         var idOfTask = parseInt('@Model.ProjectTask.TaskId');
         if ('@Model.ProjectTask.RequisitTasks.Count' > 0) {
 
@@ -420,12 +442,13 @@
         return true;
     }
     function populateTaskDDL(data) {
-        //$('.pickList_sourceList li').remove();
-        //$('.pickList_targetList li').remove();
+        var projectPrevTaskWeight = 0;
 
         $("#dualMulti").empty();
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
+                var temp = data[i].TotalWeight.split('%');
+                projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(temp[0]);
                 $("#dualMulti").append(
                     $('<option></option>').val(data[i].TaskId).html(data[i].TaskNameE)
                 );
@@ -436,6 +459,7 @@
                 //});
             }
         }
+        $("#prevTasksWeight").val(parseInt(projectPrevTaskWeight));
         $("#dualMulti").pickList("destroy");
         $("#dualMulti").pickList({
             sourceListLabel: "Tasks",

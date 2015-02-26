@@ -69,7 +69,14 @@ namespace EPMS.Web.ModelMappers.PMS
             }
             foreach (var projectTask in source.ProjectTasks)
             {
-                project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
+                double taskWeight = 0;
+                if (projectTask.TotalWeight != "")
+                {
+                    var taskTotalWeight = projectTask.TotalWeight.Split('%');
+                    taskWeight = Convert.ToInt32(taskTotalWeight[0]);
+                    taskWeight = Convert.ToInt32(projectTask.TaskProgress * taskWeight);
+                }
+                project.ProgressTotal += Convert.ToDouble(taskWeight/100);
             }
             return project;
         }
