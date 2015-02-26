@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Project.ProjectViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Project.ProjectViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
@@ -217,7 +218,7 @@
                             {
                                 <tr>
                                     <td>@item.TaskId</td>
-                                    <td><a href="/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
+                                    <td><a href="@(ConfigurationManager.AppSettings["SiteURL"])/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
                                     <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
                                     <td>@item.PreReqTasks</td>
                                     <td>@item.EmployeesAssigned</td>
