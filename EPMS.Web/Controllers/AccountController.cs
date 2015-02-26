@@ -527,6 +527,7 @@ namespace IdentitySample.Controllers
             {
                 // it means username is already taken
                 TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                ModelState.AddModelError("", "UserName already exist");
                 return View(signupViewModel);
             }
             //call customer add service, get cusID, 

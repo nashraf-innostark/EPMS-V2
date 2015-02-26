@@ -340,6 +340,15 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Task Progress.
+        /// </summary>
+        public static string TaskProgeress {
+            get {
+                return ResourceManager.GetString("TaskProgeress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tasks.
         /// </summary>
         public static string Tasks {
