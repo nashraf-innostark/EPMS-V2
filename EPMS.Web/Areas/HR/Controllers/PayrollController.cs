@@ -112,37 +112,36 @@ namespace EPMS.Web.Areas.HR.Controllers
                 if (response.Requests != null)
                 {
                     var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll()).Select(x => x.RequestDetails).ToList();
-                    // get Employee request details
-                    //foreach (var reqDetail in requests)
-                    //{
-                    //    var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
-                    //    if (firstOrDefault != null)
-                    //        viewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
-                    //    var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
-                    //    if (lastOrDefault != null)
-                    //        viewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
-                    //}
                     if (requests.Any())
                     {
                         switch (requests.Count)
                         {
                             case 2:
                                 var deduction1 = requests[0].Select(x => x.InstallmentAmount).ToList();
-                                if (deduction1[0] != null)
+                                if (deduction1.Any())
                                 {
-                                    viewModel.Deduction1 = deduction1[0] ?? 0;
+                                    if (deduction1[0] != null)
+                                    {
+                                        viewModel.Deduction1 = deduction1[0] ?? 0;
+                                    }
                                 }
                                 var deduction2 = requests[1].Select(x => x.InstallmentAmount).ToList();
-                                if (deduction2[0] != null)
+                                if (deduction2.Any())
                                 {
-                                    viewModel.Deduction2 = deduction2[0] ?? 0;
+                                    if (deduction2[0] != null)
+                                    {
+                                        viewModel.Deduction2 = deduction2[0] ?? 0;
+                                    }
                                 }
                                 break;
                             case 1:
                                 var deduction = requests[0].Select(x => x.InstallmentAmount).ToList();
-                                if (deduction[0] != null)
+                                if (deduction.Any())
                                 {
-                                    viewModel.Deduction1 = deduction[0] ?? 0;
+                                    if (deduction[0] != null)
+                                    {
+                                        viewModel.Deduction1 = deduction[0] ?? 0;
+                                    }
                                 }
                                 break;
                             case 0:

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using EPMS.Models.DomainModels;
+using EPMS.Web.Models;
 
 namespace EPMS.Models.IdentityModels.ViewModels
 {
@@ -72,6 +73,7 @@ namespace EPMS.Models.IdentityModels.ViewModels
         public long SelectedEmployee { get; set; }
         public Employee Employee { get; set; }
         public List<Employee> Employees { get; set; }
+        public List<EmployeeForDropDownList> EmployeesDDL { get; set; }
         [Required(ErrorMessage = "Username field is required")]
         public string UserName { get; set; }
         [Required]

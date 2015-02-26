@@ -9004,3 +9004,11 @@ form span.error.exceeded {
 .opc1{
  opacity:1 !important;
 }
+
+.helpContent {
+ left:400px;
+}
+
+.helpContentHide{
+display:none;
+}

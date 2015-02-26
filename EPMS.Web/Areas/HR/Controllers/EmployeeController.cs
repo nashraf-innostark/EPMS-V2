@@ -11,6 +11,7 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
@@ -20,6 +21,7 @@ using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Org.BouncyCastle.Ocsp;
 using Allowance = EPMS.Web.Models.Allowance;
 using Employee = EPMS.Web.Models.Employee;
 using EmployeeRequest = EPMS.Web.Models.Request;
@@ -200,25 +202,29 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 // get Employee requests
                 var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
-                var requests = empRequests.Select(x => x.CreateFromServerToClientEmpDetail());
-                // get Employee request details
-                foreach (var reqDetail in requests)
+                var requests = empRequests.Select(x => x.CreateFromServerToClientEmpDetail()).ToList();
+                if (requests.Count() == 2)
                 {
-                    var requestDetails = reqDetail.RequestDetails.ToList();
-                    if (requestDetails.Count == 2 )
+                    var first = requests[0].RequestDetails.ToList();
+                    if (first.Any())
                     {
-                        var first = requestDetails[0];
-                        if (first != null)
-                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(first.InstallmentAmount ?? 0);
-                        var last = requestDetails[1];
-                        if (last != null)
-                            viewModel.EmployeeViewModel.Deduction2 = Math.Ceiling(last.InstallmentAmount ?? 0);
+                        var val1 = first[0].InstallmentAmount;
+                        viewModel.EmployeeViewModel.Deduction1 = Convert.ToInt32(val1);
                     }
-                    else if (requestDetails.Count == 1)
+                    var last = requests[1].RequestDetails.ToList();
+                    if (last.Any())
                     {
-                        var first = requestDetails[0];
-                        if (first != null)
-                            viewModel.EmployeeViewModel.Deduction1 = Math.Ceiling(first.InstallmentAmount ?? 0);
+                        var val2 = last[0].InstallmentAmount;
+                        viewModel.EmployeeViewModel.Deduction2 = Convert.ToInt32(val2);
+                    }
+                }
+                else if (requests.Count() == 1)
+                {
+                    var first = requests[0].RequestDetails.ToList();
+                    if (first.Any())
+                    {
+                        var val1 = first[0].InstallmentAmount;
+                        viewModel.EmployeeViewModel.Deduction1 = Convert.ToInt32(val1);
                     }
                 }
                 var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
@@ -250,91 +256,82 @@ namespace EPMS.Web.Areas.HR.Controllers
         [ValidateInput(false)]
         public ActionResult Create(EmployeeDetailViewModel viewModel)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
             var direction = Resources.Shared.Common.TextDirection;
             try
             {
-                if (userRole != null && userRole.Name == "Admin" && ModelState.IsValid)
+                #region Update
+
+                viewModel.Role = Convert.ToString(Session["RoleName"]);
+                if (viewModel.EmployeeViewModel.Employee.EmployeeId > 0)
                 {
-                    #region Update
-
-                    viewModel.Role = userRole.Name;
-                    if (viewModel.EmployeeViewModel.Employee.EmployeeId > 0)
-                    {
-                        // Set Employee Values
-                        viewModel.EmployeeViewModel.Employee.RecLastUpdatedDt = DateTime.Now;
-                        viewModel.EmployeeViewModel.Employee.RecLastUpdatedBy = User.Identity.GetUserId();
-                        // Update Employee
-                        var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
-                        // check if allowance has been updated
-                        var isUpdated = CheckIfAllowanceUpdated(viewModel.EmployeeViewModel.Allowance, viewModel.EmployeeViewModel.OldAllowance);
-                        if (isUpdated)
-                        {
-                            // Add new Allowance
-                            viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
-                            viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
-                            viewModel.EmployeeViewModel.Allowance.RecCreatedBy = User.Identity.GetUserId();
-                            viewModel.EmployeeViewModel.Allowance.RecCreatedDt = DateTime.Now;
-                            // save Allowance
-                            var allowanceToAdd = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
-                            AllowanceService.AddAllowance(allowanceToAdd);
-                        }
-                        if (EmployeeService.UpdateEmployee(employeeToUpdate))
-                        {
-                            TempData["message"] = new MessageViewModel
-                            {
-                                Message = Resources.HR.Employee.UpdateMessage,
-                                IsUpdated = true
-                            };
-                            return RedirectToAction("Index");
-                        }
-                        viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
-                        viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                        viewModel.Role = userRole.Name;
-                        viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
-                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
-                        return View(viewModel);
-                    }
-
-                    #endregion
-
-                    #region Add
-
                     // Set Employee Values
-                    viewModel.EmployeeViewModel.Employee.EmployeeIqamaIssueDt = DateTime.Now.ToShortDateString();
-                    viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
-                    viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
-                    // Add Employee
-                    var employeeToSave = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
-                    long employeeId = EmployeeService.AddEmployee(employeeToSave);
-
-                    // Set Values for Allownace
-                    viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
-                    viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
-                    viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.GetUserId();
-                    viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
-                    // Add Allowance
-                    var allowanceToSave = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
-                    if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
+                    viewModel.EmployeeViewModel.Employee.RecLastUpdatedDt = DateTime.Now;
+                    viewModel.EmployeeViewModel.Employee.RecLastUpdatedBy = User.Identity.GetUserId();
+                    // Update Employee
+                    var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
+                    // check if allowance has been updated
+                    var isUpdated = CheckIfAllowanceUpdated(viewModel.EmployeeViewModel.Allowance, viewModel.EmployeeViewModel.OldAllowance);
+                    if (isUpdated)
+                    {
+                        // Add new Allowance
+                        viewModel.EmployeeViewModel.Allowance.EmployeeId = viewModel.EmployeeViewModel.Employee.EmployeeId;
+                        viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
+                        viewModel.EmployeeViewModel.Allowance.RecCreatedBy = User.Identity.GetUserId();
+                        viewModel.EmployeeViewModel.Allowance.RecCreatedDt = DateTime.Now;
+                        // save Allowance
+                        var allowanceToAdd = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
+                        AllowanceService.AddAllowance(allowanceToAdd);
+                    }
+                    if (EmployeeService.UpdateEmployee(employeeToUpdate))
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = Resources.HR.Employee.AddMessage,
-                            IsSaved = true
+                            Message = Resources.HR.Employee.UpdateMessage,
+                            IsUpdated = true
                         };
-                        viewModel.EmployeeViewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
                         return RedirectToAction("Index");
                     }
+                    viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
+                    viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                    viewModel.Role = Convert.ToString(Session["RoleName"]);
+                    viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
+                    viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
+                    viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
+                    TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
+                    return View(viewModel);
+                }
 
-                    #endregion
-                }
-                else if (userRole != null && (userRole.Name == "Employee" || userRole.Name == "PM"))
+                #endregion
+
+                #region Add
+
+                // Set Employee Values
+                viewModel.EmployeeViewModel.Employee.EmployeeIqamaIssueDt = DateTime.Now.ToShortDateString();
+                viewModel.EmployeeViewModel.Employee.RecCreatedDt = DateTime.Now;
+                viewModel.EmployeeViewModel.Employee.RecCreatedBy = User.Identity.GetUserId();
+                // Add Employee
+                var employeeToSave = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
+                long employeeId = EmployeeService.AddEmployee(employeeToSave);
+
+                // Set Values for Allownace
+                viewModel.EmployeeViewModel.Allowance.EmployeeId = employeeId;
+                viewModel.EmployeeViewModel.Allowance.AllowanceDate = DateTime.Now;
+                viewModel.EmployeeViewModel.Allowance.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.EmployeeViewModel.Allowance.RecLastUpdatedDt = DateTime.Now;
+                // Add Allowance
+                var allowanceToSave = viewModel.EmployeeViewModel.Allowance.CreateFromClientToServer();
+                if (AllowanceService.AddAllowance(allowanceToSave) && employeeId > 0)
                 {
-                    viewModel.Role = userRole.Name;
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.HR.Employee.AddMessage,
+                        IsSaved = true
+                    };
+                    viewModel.EmployeeViewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
+                    return RedirectToAction("Index");
                 }
+
+                #endregion
             }
             catch (Exception)
             {
@@ -342,7 +339,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-            if (userRole != null) viewModel.Role = userRole.Name;
+            viewModel.Role = Convert.ToString(Session["RoleName"]);
             viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
             viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
             viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
