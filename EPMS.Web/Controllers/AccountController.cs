@@ -546,7 +546,7 @@ namespace IdentitySample.Controllers
 
             var user = new AspNetUser { UserName = signupViewModel.UserName, Email = signupViewModel.Email };
             user.CustomerId = addedCustomer.CustomerId;
-            user.EmailConfirmed = true;
+                //user.EmailConfirmed = true;
             if (!String.IsNullOrEmpty(signupViewModel.Password))
             {
                 var result = await UserManager.CreateAsync(user, signupViewModel.Password);
@@ -555,6 +555,15 @@ namespace IdentitySample.Controllers
                     //Setting role
                     var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                     UserManager.AddToRole(user.Id, "Customer");
+
+                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                            protocol: Request.Url.Scheme);
+                        await
+                            UserManager.SendEmailAsync(signupViewModel.Email, "Confirm your account",
+                                "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
+                                "\">link</a><br>Your Password is:" + signupViewModel.Password);
+                        ViewBag.Link = callbackUrl;
 
                     TempData["message"] = new MessageViewModel { Message = "User Created", IsSaved = true };
                     return RedirectToAction("Index", "Dashboard");
