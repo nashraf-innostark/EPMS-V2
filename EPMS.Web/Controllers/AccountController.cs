@@ -565,7 +565,7 @@ namespace IdentitySample.Controllers
                         ViewBag.Link = callbackUrl;
 
                     TempData["message"] = new MessageViewModel { Message = "User Created", IsSaved = true };
-                    return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Login", "Account");
                 }
             }
             return View(signupViewModel);

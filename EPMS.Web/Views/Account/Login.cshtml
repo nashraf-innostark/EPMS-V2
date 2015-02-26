@@ -37,7 +37,7 @@
                         </div>
                         <button type="submit" class="btn btn-large btn-success btn-login">Login</button>
                     }
-                    <a href="/Account/ForgotPassword" class="forgot-pass">Forgot Your Password?</a>
+                    <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Account/ForgotPassword" class="forgot-pass">Forgot Your Password?</a>
                     @*@Html.ActionLink("Forgot Your Password?", "ForgotPassword")*@
                 </div>
             </div>
