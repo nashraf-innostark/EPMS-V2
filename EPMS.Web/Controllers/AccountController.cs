@@ -530,6 +530,14 @@ namespace IdentitySample.Controllers
                 ModelState.AddModelError("", "UserName already exist");
                 return View(signupViewModel);
             }
+            var emails = AspNetUserService.GetAllUsers().Select(x => x.Email);
+            if (emails.Contains(signupViewModel.Email))
+            {
+                // it means username is already taken
+                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                ModelState.AddModelError("", "Email already registered");
+                return View(signupViewModel);
+            }
             //call customer add service, get cusID, 
 
             #region Add Customer
