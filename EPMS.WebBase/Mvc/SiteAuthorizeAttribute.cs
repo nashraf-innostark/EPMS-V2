@@ -68,7 +68,7 @@ namespace EPMS.WebBase.Mvc
                     if (userPermissionsSet.Contains(permissionKey))
                         permissionToSpecificController = true;
                 }
-            //}
+            }
             // check allowed modules
             bool permissionToModule = true;
             if (IsModule)
