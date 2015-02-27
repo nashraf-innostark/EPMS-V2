@@ -31,29 +31,32 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-
-<form class="form-horizontal">
-    @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" });
+<div class="form-horizontal">
     <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <table id="employeeTable" class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>@EPMS.Web.Resources.HR.Employee.Image</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.NameIndex</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.EmpJobTitle</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.Department</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+        <form class="form-horizontal">
+            @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table id="employeeTable" class="table table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.Image</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.NameIndex</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.EmpJobTitle</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.Department</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
