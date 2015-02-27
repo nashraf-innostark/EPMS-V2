@@ -88,7 +88,8 @@ namespace EPMS.Implementation.Services
                 UpdateExistingMeeting(meetingToBeSaved.Meeting);
                 UpdateMeetingAttendees(meetingToBeSaved);
             }
-            SendNotification(meetingToBeSaved.Meeting,meetingToBeSaved.EmployeeIds);
+            if (meetingToBeSaved.EmployeeIds!=null)
+                SendNotification(meetingToBeSaved.Meeting,meetingToBeSaved.EmployeeIds);
             SaveMeetingDocuments(meetingToBeSaved);
             return new SaveMeetingResponse
             {

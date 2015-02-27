@@ -113,7 +113,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
-        [SiteAuthorize(PermissionKey = "CreateTask")]
+        [SiteAuthorize(PermissionKey = "CreateTask,TaskDetails")]
         public ActionResult Create(long? id)
         {
             TaskCreateViewModel viewModel = new TaskCreateViewModel();

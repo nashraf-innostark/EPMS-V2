@@ -299,7 +299,7 @@ namespace EPMS.Web.Controllers
                     {
                         List<QuickLaunchMenuItems> menuItems =
                             menuRightsService.FindMenuItemsByRoleId(roles[0].Id)
-                                .Where(menuR => menuR.Menu.IsRootItem == false)
+                                .Where(menuR => menuR.Menu.IsRootItem == false && menuR.Menu.IsMenuItem == true)
                                 .ToList()
                                 .Select(menuR => menuR.CreateFrom())
                                 .ToList();

@@ -25,7 +25,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    @if (ViewBag.UserRole == "Customer")
+    @if (ViewBag.CanCreate)
     {
         <h3> <small><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/CMS/Complaint/Create">@EPMS.Web.Resources.CMS.Complaint.CreateNewComplaint</a></small></h3>
     }
@@ -34,40 +34,40 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-
-<div class="container-fluid">
-    <form class="form-horizontal">
-        <div class="row-fluid">
-            <div class="span12">
-                <table id="ComplaintsList" class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>@EPMS.Web.Resources.CMS.Complaint.ApplicantName</th>
-                            <th>@EPMS.Web.Resources.CMS.Complaint.Topic</th>
-                            <th>@EPMS.Web.Resources.CMS.Complaint.Date</th>
-                            <th>@EPMS.Web.Resources.CMS.Complaint.Replied</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Complaints.ToList())
-                        {
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <form class="form-horizontal">
+            <div class="row-fluid">
+                <div class="span12">
+                    <table id="ComplaintsList" class="table table-striped table-responsive">
+                        <thead>
                             <tr>
-                                <td>@item.ComplaintId</td>
-                                @*<td>@Html.ActionLink(@item.ClientName, "Details","Customer", new { id = item.CustomerId })</td>*@
-                                <td><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
-                                <td>@Html.ActionLink(@item.Topic, "Create",new{id=item.ComplaintId})</td>
-                                <td>@item.ComplaintDateString</td>
-                                <td>@item.IsRepliedString</td>
+                                <th></th>
+                                <th>@EPMS.Web.Resources.CMS.Complaint.ApplicantName</th>
+                                <th>@EPMS.Web.Resources.CMS.Complaint.Topic</th>
+                                <th>@EPMS.Web.Resources.CMS.Complaint.Date</th>
+                                <th>@EPMS.Web.Resources.CMS.Complaint.Replied</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Complaints.ToList())
+                        {
+                                <tr>
+                                    <td>@item.ComplaintId</td>
+                                    @*<td>@Html.ActionLink(@item.ClientName, "Details","Customer", new { id = item.CustomerId })</td>*@
+                                    <td><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/CMS/Customer/Details/@item.CustomerId">@item.ClientName</a></td>
+                                    <td>@Html.ActionLink(@item.Topic, "Create",new{id=item.ComplaintId})</td>
+                                    <td>@item.ComplaintDateString</td>
+                                    <td>@item.IsRepliedString</td>
+                                </tr>
                         }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('#ComplaintsList').dataTable({

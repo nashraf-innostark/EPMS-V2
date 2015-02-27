@@ -192,3 +192,6 @@ box-sizing: border-box;
 .disableList {
     pointer-events: none;
 }
+.enableList {
+    pointer-events: all;
+}
