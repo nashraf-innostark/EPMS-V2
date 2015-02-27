@@ -50,7 +50,8 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
             };
-            ViewBag.ApplyMessage = TempData["Message"];
+            ViewBag.ApplyMessage = TempData["Messages"];
+            ViewBag.MessageVM = null;
             return View(viewModel);
         }
         [AllowAnonymous]
@@ -84,7 +85,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     if (jobApplicantService.AddJobApplicant(modelToSave))
                     {
                         //TempData["message"] = new MessageViewModel { Message = Resources.HR.JobApplicant.SaveJobApplicant, IsSaved = true };
-                        TempData["Message"] = Resources.HR.JobApplicant.SaveJobApplicant;
+                        TempData["Messages"] = Resources.HR.JobApplicant.SaveJobApplicant;
                         jobApplicantViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
                         return RedirectToAction("Jobs");
                     }
