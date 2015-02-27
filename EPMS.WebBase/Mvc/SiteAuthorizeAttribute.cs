@@ -60,7 +60,7 @@ namespace EPMS.WebBase.Mvc
             //{
             if (userPermissionSet != null)
             {
-                string[] userPermissionsSet = (string[])userPermissionSet;
+                string[] userPermissionsSet = (string[]) userPermissionSet;
                 //permissionToSpecificController = (userPermissionsSet.Contains(PermissionKey));
                 PermissionKeys = PermissionKey.Split(',');
                 foreach (var permissionKey in PermissionKeys)
