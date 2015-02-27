@@ -50,13 +50,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
                             .OrderByDescending(x => x.ComplaintDate)
                             .Select(x => x.CreateFromServerToClient())
             };
-            ViewBag.UserRole = currentUser.AspNetRoles.FirstOrDefault().Name;
+            object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
+            string[] userPermissionsSet = (string[])userPermissionSet;
+            if (userPermissionsSet.Contains("ComplaintCreate"))
+                ViewBag.CanCreate = true;
+            else
+                ViewBag.CanCreate = false;
             return View(viewModel);
         }
         #endregion
         
         #region Create
-        [SiteAuthorize(PermissionKey = "ComplaintCreate")]
+        [SiteAuthorize(PermissionKey = "ComplaintCreate,ComplaintDetails")]
         public ActionResult Create(long? id)
         {
             ComplaintViewModel requestViewModel = new ComplaintViewModel();
@@ -80,7 +85,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                             ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
                     }
                 }
-                else if (ViewBag.UserRole != "Admin")
+                else if (Session["RoleName"].ToString()=="Customer")
                 {
 
                     requestViewModel.Complaint.ComplaintDateString = DateTime.Now.ToShortDateString();

@@ -25,7 +25,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    @if (ViewBag.UserRole == "Customer")
+    @if (ViewBag.CanCreate)
     {
         <h3> <small><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/CMS/Complaint/Create">@EPMS.Web.Resources.CMS.Complaint.CreateNewComplaint</a></small></h3>
     }

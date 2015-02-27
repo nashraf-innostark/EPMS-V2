@@ -61,36 +61,40 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ClientName</label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client", @disabled = true }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client", @disabled = true }))
+
+        @if (ViewBag.HasModule)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.ClientName</label>
                 </div>
-            </div>
-
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.OrderNo</label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @if (Model.Project.CustomerId > 0)
-                    {
-                        @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderNo", @disabled = true })
-                    }
-                    else
-                    {
-                        @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @id = "OrderNo", @disabled = true })
-                    }
+                <div class="span2">
+                    <div class="controls">
+                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client", @disabled = true }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client", @disabled = true }))
+                    </div>
                 </div>
+
             </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.OrderNo</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @if (Model.Project.CustomerId > 0)
+                        {
+                            @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderNo", @disabled = true })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @id = "OrderNo", @disabled = true })
+                        }
+                    </div>
+                </div>
 
-        </div>
-
+            </div>
+        }
+        
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectSerialNo</label>

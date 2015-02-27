@@ -106,6 +106,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         #endregion
 
         #region Create/Update
+        [SiteAuthorize(PermissionKey = "MeetingCreate,MeetingDetails")]
         public ActionResult Create(long? id)
         {
             MeetingViewModel meetingViewModel = new MeetingViewModel();

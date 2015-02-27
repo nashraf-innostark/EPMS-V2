@@ -128,7 +128,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">Employee ID</param>
         /// <returns></returns>
-        [SiteAuthorize(PermissionKey = "EmployeeCreate")]
+        [SiteAuthorize(PermissionKey = "EmployeeCreate,EmployeeDetails")]
         public ActionResult Create(long? id)
         {
             var direction = Resources.Shared.Common.TextDirection;

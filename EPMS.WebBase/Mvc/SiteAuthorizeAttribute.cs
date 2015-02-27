@@ -55,19 +55,21 @@ namespace EPMS.WebBase.Mvc
             }
 
             object userPermissionSet = HttpContext.Current.Session["UserPermissionSet"];
-            string[] userPermissionsSet = new string[] { };
-            var permissionToSpecificController = true;
-            if (PermissionKey != "HR" || PermissionKey != "Mt")
+            var permissionToSpecificController = false;
+            if (userPermissionSet != null)
             {
-                if (userPermissionSet != null)
+                string[] userPermissionsSet = (string[])userPermissionSet;
+                //permissionToSpecificController = (userPermissionsSet.Contains(PermissionKey));
+                PermissionKeys = PermissionKey.Split(',');
+                foreach (var permissionKey in PermissionKeys)
                 {
-                    userPermissionsSet = (string[])userPermissionSet;
-                    permissionToSpecificController = (userPermissionsSet.Contains(PermissionKey));
+                    if (userPermissionsSet.Contains(permissionKey))
+                        permissionToSpecificController = true;
                 }
             }
             // check allowed modules
             bool permissionToModule = true;
-            if (IsModule && PermissionKey != "CL" && PermissionKey != "CP" && PermissionKey != "HI")
+            if (IsModule)
             {
                 if (!Modules.Contains(PermissionKey))
                 {
@@ -129,6 +131,7 @@ namespace EPMS.WebBase.Mvc
         #endregion
 
         public string PermissionKey { get; set; }
+        public string[] PermissionKeys { get; set; }
         public bool IsModule { get; set; }
         public string LicenseKey { get; set; }
         public string Domain { get; set; }

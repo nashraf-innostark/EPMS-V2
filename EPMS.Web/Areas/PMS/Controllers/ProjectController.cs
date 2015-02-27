@@ -120,8 +120,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
                                                       projectViewModel.Project.TotalTasksCost;
                 }
             }
-            projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
-            projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
+            //If company has not CUSTOMER MODULE then, dont load Customers and Orders. and hide the html fields
+            CheckHasCustomerModule(projectViewModel, customers, orders);
             //else
             //{
             //    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
@@ -129,6 +129,26 @@ namespace EPMS.Web.Areas.PMS.Controllers
             //ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
             return View(projectViewModel);
         }
+
+        private void CheckHasCustomerModule(ProjectViewModel projectViewModel, IEnumerable<Customer> customers, IEnumerable<Order> orders)
+        {
+            // check license
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            string LicenseKey = WebBase.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = LicenseKey.Split('|');
+            string[] Modules = splitLicenseKey[4].Split(';');
+            if (Modules.Contains("CS"))
+            {
+                projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
+                projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
+                ViewBag.HasModule = true;
+            }
+            else
+            {
+                ViewBag.HasModule = false;
+            }
+        }
+
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(ProjectViewModel projectViewModel)
@@ -277,8 +297,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     {
                         projectViewModel.ProjectDocsNames = projectDocsNames;
                     }
-                    projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
-                    projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
+                    //If company has not CUSTOMER MODULE then, dont load Customers and Orders. and hide the html fields
+                    CheckHasCustomerModule(projectViewModel, customers, orders);
                     return View(projectViewModel);
                 }
             }
