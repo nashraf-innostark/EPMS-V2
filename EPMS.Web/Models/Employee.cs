@@ -39,7 +39,6 @@ namespace EPMS.Web.Models
         public string EmployeeIqamaExpiryDt { get; set; }
         public string EmployeeIqamaExpiryDtAr { get; set; }
         [Required(ErrorMessage = "Passport ID is required.")]
-        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeePassportNum { get; set; }
         [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public string EmployeePassportExpiryDt { get; set; }
@@ -56,6 +55,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Email address is required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
+        public bool? IsActivated { get; set; }
 
         public IEnumerable<Allowance> Allowances { get; set; }
         public JobTitle JobTitle { get; set; }

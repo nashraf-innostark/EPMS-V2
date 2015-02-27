@@ -43,15 +43,17 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         #region Public
 
+        [AllowAnonymous]
         public ActionResult Jobs()
         {
             JobApplicantViewModel viewModel=new JobApplicantViewModel
             {
                 JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
             };
+            ViewBag.ApplyMessage = TempData["Message"];
             return View(viewModel);
         }
-        
+        [AllowAnonymous]
         public ActionResult Apply(long? id)
         {
             JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
@@ -81,7 +83,8 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobApplicantService.AddJobApplicant(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobApplicant.SaveJobApplicant, IsSaved = true };
+                        //TempData["message"] = new MessageViewModel { Message = Resources.HR.JobApplicant.SaveJobApplicant, IsSaved = true };
+                        TempData["Message"] = Resources.HR.JobApplicant.SaveJobApplicant;
                         jobApplicantViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
                         return RedirectToAction("Jobs");
                     }

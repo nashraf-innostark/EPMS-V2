@@ -17,9 +17,9 @@
                 
                 <h2 class="login-title">Welcome to Desert Starts</h2>
                 <div class="login-member">
-                        Not a Member?&nbsp;<a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Account/Signup">Sign Up &#187;</a>
-                    </div>
-                    <div class="login-or">Or</div>
+                    Not a Member?&nbsp;<a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Account/Signup">Sign Up &#187;</a>
+                </div>
+                <div class="login-or">Or</div>
                 <div class="login-input-area">
                     <span class="help-block">Login With Your Desert Stars Account</span>
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -44,3 +44,18 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var welcome = '@ViewBag.SuccessMessage';
+        if (welcome != "") {
+            setTimeout(function () {
+                $.pnotify({
+                    title: 'Success',
+                    type: 'info',
+                    text: welcome
+                });
+            }, 5000);
+        }
+    });
+</script>

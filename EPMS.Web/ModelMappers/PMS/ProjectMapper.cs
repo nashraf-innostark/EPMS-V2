@@ -80,5 +80,15 @@ namespace EPMS.Web.ModelMappers.PMS
             }
             return project;
         }
+        public static Models.ProjectsForDDL CreateFromServerToClientForDdl(this Project source)
+        {
+            Models.ProjectsForDDL project = new Models.ProjectsForDDL();
+            project.ProjectId = source.ProjectId;
+            project.NameE = source.NameE;
+            project.NameA = source.NameA;
+            project.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            project.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            return project;
+        }
     }
 }

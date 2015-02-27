@@ -18,10 +18,6 @@
     </div>
 </div>
 
-<!--Notifications begin-->
-@Html.Partial("_Alert")
-<!--Notifications end-->
-
 @foreach (var item in Model.JobOfferedList)
 {
     if (item.IsOpen)
@@ -111,6 +107,16 @@
 <script>
 
     $(document).ready(function () {
+        var message = '@ViewBag.ApplyMessage';
+        if (message != "") {
+            setTimeout(function () {
+                $.pnotify({
+                    title: 'Success',
+                    type: 'info',
+                    text: message
+                });
+            }, 3000);
+        }
         $('#JobsOfferedList').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [

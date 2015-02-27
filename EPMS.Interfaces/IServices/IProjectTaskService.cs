@@ -17,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         void DeleteProjectTask(long taskId);
         TaskResponse GetAllTasks(TaskSearchRequest searchRequest);
         TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId);
+        TaskResponse GetProjectTasksForCustomer(TaskSearchRequest searchRequest, long customerId);
     }
 }

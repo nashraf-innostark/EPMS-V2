@@ -160,6 +160,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee has been Deactivated successfully.
+        /// </summary>
+        public static string DeactivateMessage {
+            get {
+                return ResourceManager.GetString("DeactivateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deactivate Employee.
         /// </summary>
         public static string DeactiveEmp {

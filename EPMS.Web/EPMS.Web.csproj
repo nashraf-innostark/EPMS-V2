@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -388,6 +388,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\PreRequisitTask.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectsForDDL.cs" />
     <Compile Include="Models\ProjectTask.cs" />
     <Compile Include="Models\QuickLaunchMenuItems.cs" />
     <Compile Include="Models\QuickLaunchItems.cs" />
@@ -691,7 +692,6 @@
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Content\CSS\photon.css" />
-    
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
@@ -1800,7 +1800,6 @@
     <Content Include="Images\photon\plugins\elrte\ui\ui-icons_888888_256x240.png" />
     <Content Include="Images\photon\plugins\elrte\ui\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Images\photon\plugins\elrte\yandex-maps.png" />
-    
     <Content Include="Images\photon\preloader\130.gif" />
     <Content Include="Images\photon\preloader\2.gif" />
     <Content Include="Images\photon\preloader\20.gif" />
@@ -1911,7 +1910,6 @@
     <Content Include="Images\plugins\elrte\ui\ui-icons_888888_256x240.png" />
     <Content Include="Images\plugins\elrte\ui\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Images\plugins\elrte\yandex-maps.png" />
-    
     <Content Include="Images\preloader\130.gif" />
     <Content Include="Images\preloader\2.gif" />
     <Content Include="Images\preloader\20.gif" />

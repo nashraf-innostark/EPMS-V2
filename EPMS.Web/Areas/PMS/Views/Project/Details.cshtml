@@ -5,6 +5,7 @@
     ViewBag.Title = Model.Project.NameE +" "+ EPMS.Web.Resources.PMS.Project.Details;
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] module = (string[])Session["UserModules"];
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -268,96 +269,97 @@
 
 
 
-
-            <div class="alert alert-info alert-block">
-                <i class="icon-alert icon-alert-info"></i>
-                <strong>@EPMS.Web.Resources.PMS.Project.InstallmentPlan</strong>
-            </div>
-
-
-        <!--Sortable Responsive Table begin-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <table id="InstallmentTable" class="table table-striped table-responsive">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>
-                                    @if (Model.Installment != null)
-                                    {
-                                        <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a>
-                                    }
-                                    else
-                                    {
-                                        @EPMS.Web.Resources.PMS.Project.Installment
-                                    }
-
-                                </th>
-                                <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.CreateShowReceipt</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.Installment != null)
-                            {
-                                <tr>
-                                    <td>@Model.Installment.QuotationId</td>
-                                    <td>@Model.Installment.FirstInstallement</td>
-                                    <td>
-                                        <div class="progress progress-info">
-                                            <div class="bar" style="width: @Model.Installment.FirstInsDueAtCompletion%">@Model.Installment.FirstInsDueAtCompletion%</div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>@Model.Installment.QuotationId</td>
-                                    <td>@Model.Installment.SecondInstallment</td>
-                                    <td>
-                                        <div class="progress progress-info">
-                                            <div class="bar" style="width: @Model.Installment.SecondInsDueAtCompletion%">@Model.Installment.SecondInsDueAtCompletion%</div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>@Model.Installment.QuotationId</td>
-                                    <td>@Model.Installment.ThirdInstallment</td>
-                                    <td>
-                                        <div class="progress progress-info">
-                                            <div class="bar" style="width: @Model.Installment.ThirdInsDueAtCompletion%">@Model.Installment.ThirdInsDueAtCompletion%</div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>@Model.Installment.QuotationId</td>
-                                    <td>@Model.Installment.FourthInstallment</td>
-                                    <td>
-                                        <div class="progress progress-info">
-                                            <div class="bar" style="width: @Model.Installment.FourthInsDueAtCompletion%">@Model.Installment.FourthInsDueAtCompletion%</div>
-                                        </div>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            }
-
-                        </tbody>
-                    </table>
+            if (module.Contains("Customer Service") || module.Contains("CS"))
+            {
+                <div class="alert alert-info alert-block">
+                    <i class="icon-alert icon-alert-info"></i>
+                    <strong>@EPMS.Web.Resources.PMS.Project.InstallmentPlan</strong>
                 </div>
-            </div>
-        <!--Sortable Responsive Table end-->
 
+
+                <!--Sortable Responsive Table begin-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table id="InstallmentTable" class="table table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        @if (Model.Installment != null)
+                                        {
+                                            <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a>
+                                        }
+                                        else
+                                        {
+                                            @EPMS.Web.Resources.PMS.Project.Installment
+                                        }
+
+                                    </th>
+                                    <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
+                                    <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
+                                    <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
+                                    <th>@EPMS.Web.Resources.PMS.Project.CreateShowReceipt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Installment != null)
+                                {
+                                    <tr>
+                                        <td>@Model.Installment.QuotationId</td>
+                                        <td>@Model.Installment.FirstInstallement</td>
+                                        <td>
+                                            <div class="progress progress-info">
+                                                <div class="bar" style="width: @Model.Installment.FirstInsDueAtCompletion%">@Model.Installment.FirstInsDueAtCompletion%</div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.Installment.QuotationId</td>
+                                        <td>@Model.Installment.SecondInstallment</td>
+                                        <td>
+                                            <div class="progress progress-info">
+                                                <div class="bar" style="width: @Model.Installment.SecondInsDueAtCompletion%">@Model.Installment.SecondInsDueAtCompletion%</div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.Installment.QuotationId</td>
+                                        <td>@Model.Installment.ThirdInstallment</td>
+                                        <td>
+                                            <div class="progress progress-info">
+                                                <div class="bar" style="width: @Model.Installment.ThirdInsDueAtCompletion%">@Model.Installment.ThirdInsDueAtCompletion%</div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Model.Installment.QuotationId</td>
+                                        <td>@Model.Installment.FourthInstallment</td>
+                                        <td>
+                                            <div class="progress progress-info">
+                                                <div class="bar" style="width: @Model.Installment.FourthInsDueAtCompletion%">@Model.Installment.FourthInsDueAtCompletion%</div>
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--Sortable Responsive Table end-->
+            }
         }
 
 

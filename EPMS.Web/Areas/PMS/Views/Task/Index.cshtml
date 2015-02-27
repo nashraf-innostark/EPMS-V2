@@ -24,8 +24,11 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.PMS.Task.Tasks</small></h2>
-    <h3><small><a href="~/PMS/Task/Create">@EPMS.Web.Resources.PMS.Task.AddNewTask</a></small></h3>
-    <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.Web.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
+    @if (Session["RoleName"].ToString() != "Customer")
+    {
+        <h3><small><a href="~/PMS/Task/Create">@EPMS.Web.Resources.PMS.Task.AddNewTask</a></small></h3>
+        <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.Web.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
+    }
 </header>
 
 <!--Notifications begin-->

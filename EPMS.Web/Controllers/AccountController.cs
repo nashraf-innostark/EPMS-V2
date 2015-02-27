@@ -4,6 +4,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using EPMS.Web.Models;
 using IdentitySample.Models;
+using iTextSharp.text.pdf.qrcode;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -82,7 +83,6 @@ namespace IdentitySample.Controllers
             this.customerService = customerService;
             this.userPrefrencesService = userPrefrencesService;
             this.PreferencesService = preferencesService;
-
         }
 
         #endregion
@@ -175,6 +175,11 @@ namespace IdentitySample.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
+                var successNote = ViewData["Note"];
+                if (successNote != "")
+                {
+                    ViewBag.SuccessMessage = successNote;
+                }
                 ViewBag.MessageVM = TempData["message"] as MessageViewModel;
                 return View();
             }
@@ -213,8 +218,12 @@ namespace IdentitySample.Controllers
                         SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                             shouldLockout: false);
 
-
-
+                var isEmployeeActivated = AspNetUserService.FindById(user.Id).Employee.IsActivated;
+                if (isEmployeeActivated == false)
+                {
+                    ModelState.AddModelError("", "This User has been deactivated. Please contact your Administrator.");
+                    return View(model);
+                }
 
 
                 switch (result)
@@ -288,7 +297,7 @@ namespace IdentitySample.Controllers
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
             Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
-            Result.EmployeesDDL = employeeService.GetAll().Select(x=>x.CreateFromServerToClientForDropDownList()).ToList();
+            Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
             return View(Result);
             //}
             //else
@@ -548,13 +557,27 @@ namespace IdentitySample.Controllers
             customer.CustomerAddress = signupViewModel.Address;
             customer.CustomerMobile = signupViewModel.MobileNumber;
             EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
+            ViewData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
+
+            string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
+            for (int i = 0; i < 3; i++)
+            {
+                EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                {
+                    UserId = customer.CustomerId.ToString(),
+                    WidgetId = customerWidgets[i],
+                    SortNumber = i + 1
+                };
+                var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                PreferencesService.AddPreferences(preferenceToAdd);
+            }
 
             //custID=ser.add(customer);
             #endregion
 
             var user = new AspNetUser { UserName = signupViewModel.UserName, Email = signupViewModel.Email };
             user.CustomerId = addedCustomer.CustomerId;
-                //user.EmailConfirmed = true;
+            //user.EmailConfirmed = true;
             if (!String.IsNullOrEmpty(signupViewModel.Password))
             {
                 var result = await UserManager.CreateAsync(user, signupViewModel.Password);
@@ -564,14 +587,14 @@ namespace IdentitySample.Controllers
                     var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                     UserManager.AddToRole(user.Id, "Customer");
 
-                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
-                            protocol: Request.Url.Scheme);
-                        await
-                            UserManager.SendEmailAsync(signupViewModel.Email, "Confirm your account",
-                                "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
-                                "\">link</a><br>Your Password is:" + signupViewModel.Password);
-                        ViewBag.Link = callbackUrl;
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                        protocol: Request.Url.Scheme);
+                    await
+                        UserManager.SendEmailAsync(signupViewModel.Email, "Confirm your account",
+                            "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
+                            "\">link</a><br>Your Password is:" + signupViewModel.Password);
+                    ViewBag.Link = callbackUrl;
 
                     TempData["message"] = new MessageViewModel { Message = "User Created", IsSaved = true };
                     return RedirectToAction("Login", "Account");

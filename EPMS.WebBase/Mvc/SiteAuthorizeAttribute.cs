@@ -57,17 +57,17 @@ namespace EPMS.WebBase.Mvc
             object userPermissionSet = HttpContext.Current.Session["UserPermissionSet"];
             string[] userPermissionsSet = new string[] { };
             var permissionToSpecificController = true;
-            if (PermissionKey != "HR" || PermissionKey != "Mt")
-            {
+            //if (PermissionKey != "HRS" || PermissionKey != "Mt")
+            //{
                 if (userPermissionSet != null)
                 {
                     userPermissionsSet = (string[])userPermissionSet;
                     permissionToSpecificController = (userPermissionsSet.Contains(PermissionKey));
                 }
-            }
+            //}
             // check allowed modules
             bool permissionToModule = true;
-            if (IsModule && PermissionKey != "CL" && PermissionKey != "CP" && PermissionKey != "HI")
+            if (IsModule)
             {
                 if (!Modules.Contains(PermissionKey))
                 {

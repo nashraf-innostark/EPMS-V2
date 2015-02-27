@@ -291,7 +291,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @class = "datepickerPassport cursorHand span4", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')" })
                     @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, "", new { @class = "required" })
                 </div>
@@ -516,10 +516,10 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="" name="Save">@Model.EmployeeViewModel.BtnText</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button type="button" class="btn">@EPMS.Web.Resources.HR.Employee.DeactiveEmp</button>
+                    <button type="submit" class="btn" name="Deactivate">@EPMS.Web.Resources.HR.Employee.DeactiveEmp</button>
                 </div>
             </div>
         }
@@ -563,9 +563,19 @@
             }
         });
 
+        var myDate = new Date();
+        var currentDate = myDate.getDate() + '/' + (myDate.getMonth() + 1) + '/' + myDate.getFullYear();
+        $(".datepickerPassport").mask('99/99/9999');
+        $(".datepickerPassport").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/mm/yy",
+            minDate: "dateToday",
+        });
         // upload Image
         var errors = "";
-        var url = "/HR/Employee/UploadEmployeePhoto";
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/HR/Employee/UploadEmployeePhoto";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', //all types
             maxsize: 1,

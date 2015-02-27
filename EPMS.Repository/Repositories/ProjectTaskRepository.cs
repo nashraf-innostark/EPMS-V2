@@ -116,5 +116,25 @@ namespace EPMS.Repository.Repositories
                                            .Where(query).OrderByDescending(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
+        public TaskResponse GetProjectTasksForCustomer(TaskSearchRequest searchRequest, long customerId)
+        {
+            int fromRow = searchRequest.iDisplayStart;
+            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+
+            Expression<Func<ProjectTask, bool>> query =
+                s => (s.CustomerId == customerId && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
+                    (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
+                    (s.Project.NameA.Contains(searchRequest.SearchString)))));
+            //|| (s.StartDate == startDate) ||
+            //(s.EndDate == endDate) || (s.TotalCost.Equals(totalCost)) || (s.TaskProgress.Equals(taskProgress))));
+
+            IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
+                DbSet
+                .Where(query).OrderBy(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList()
+                                           :
+                                           DbSet
+                                           .Where(query).OrderByDescending(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList();
+            return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+        }
     }
 }

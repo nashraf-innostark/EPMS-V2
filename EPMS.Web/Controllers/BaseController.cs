@@ -28,6 +28,8 @@ namespace EPMS.Web.Controllers
         private IMenuRightsService menuRightService;
         private IUserPrefrencesService userPrefrencesService;
         private INotificationService notificationService;
+        private ICustomerService customerService;
+        private IEmployeeService employeeService;
         private void SetCultureInfo()
         {
             CultureInfo info;
@@ -106,6 +108,19 @@ namespace EPMS.Web.Controllers
             Session["RoleName"] = role;
             Session["EmployeeID"] = result.EmployeeId;
             Session["CustomerID"] = result.CustomerId;
+
+            customerService = UnityWebActivator.Container.Resolve<ICustomerService>();
+            employeeService = UnityWebActivator.Container.Resolve<IEmployeeService>();
+            var fullName = "";
+            if (role == "Customer")
+            {
+                fullName = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameE;
+            }
+            else
+            {
+                fullName = employeeService.FindEmployeeById(Convert.ToInt64(result.EmployeeId)).EmployeeNameE;
+            }
+            Session["UserFullName"] = fullName;
 
             menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
 

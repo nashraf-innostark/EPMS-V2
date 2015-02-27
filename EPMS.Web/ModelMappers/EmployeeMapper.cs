@@ -39,6 +39,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
                 EmployeeJobId = source.EmployeeJobId,
+                IsActivated = source.IsActivated,
             };
             return caseType;
         }
@@ -68,6 +69,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
+                IsActivated = source.IsActivated,
                 EmployeeJobId = source.EmployeeJobId,
                 //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
@@ -99,6 +101,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
+                IsActivated = source.IsActivated,
                 EmployeeJobId = source.EmployeeJobId,
                 //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
@@ -165,6 +168,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Email = source.Email,
+                IsActivated = source.IsActivated,
                 EmployeeJobId = source.EmployeeJobId,
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
                 //EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),

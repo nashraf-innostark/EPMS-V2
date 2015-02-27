@@ -160,10 +160,21 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchMenuItems();
             dashboardViewModel.LaunchItems = LoadQuickLaunchUserItems();
 
-            var userId = User.Identity.GetUserId();
+
+            string userId = "";
+            if (Session["RoleName"].ToString() == "Customer")
+            {
+                userId = Session["CustomerID"].ToString();
+            }
+            else
+            {
+                userId = User.Identity.GetUserId();
+            }
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
 
             #endregion
+
+            
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
             //dashboardViewModel.UserMac = GetMacAddress();

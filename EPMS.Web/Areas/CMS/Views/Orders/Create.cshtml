@@ -97,6 +97,8 @@
 
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace('OrderDescription');
-    CKEDITOR.replace('OrderNotes');
+    $(document).ready(function() {
+        CKEDITOR.replace('OrderDescription');
+        CKEDITOR.replace('OrderNotes');
+    });
 </script>

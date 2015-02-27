@@ -96,11 +96,11 @@
         $().ready(function() {
 
             var errors = "";
-
+            var url = $('#siteURL').val() + "/Account/UploadUserPhoto";
             $('#upload').mfupload({
                 type: 'jpg,png,tif,jpeg', // type: '', for all types
                 maxsize: 1, //file size in MBs
-                post_upload: "UploadUserPhoto",
+                post_upload: url,
                 folder: "./",
                 ini_text: "Drag your file here or click (max: 1MB)",
                 over_text: "Drop Here",

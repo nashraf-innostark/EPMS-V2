@@ -185,6 +185,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Get Order Number
         string GetOrderNumber()
         {
+            string year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture);
+            string month = DateTime.Now.Month.ToString(CultureInfo.InvariantCulture);
+            string day = DateTime.Now.Day.ToString(CultureInfo.InvariantCulture);
             var result = OrdersService.GetAll();
             var order = result.LastOrDefault();
             if (order != null)
@@ -196,22 +199,25 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 switch (len)
                 {
                     case 1:
-                        zeros = "000";
+                        zeros = "0000";
                         break;
                     case 2:
-                        zeros = "00";
+                        zeros = "000";
                         break;
                     case 3:
-                        zeros = "0";
+                        zeros = "00";
                         break;
                     case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
                         zeros = "";
                         break;
                 }
-                string orderId = zeros + id.ToString(CultureInfo.InvariantCulture);
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
                 return orderId;
             }
-            return "0001";
+            return year + month + day + "00001";
         }
         #endregion
 

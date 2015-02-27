@@ -13,5 +13,6 @@ namespace EPMS.Interfaces.Repository
         ProjectTask FindTaskWithPreRequisites(long id);
         IEnumerable<ProjectTask> GetProjectTasksByEmployeeId(long employeeId, long projectId);
         TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId);
+        TaskResponse GetProjectTasksForCustomer(TaskSearchRequest searchRequest, long customerId);
     }
 }
