@@ -431,10 +431,7 @@
 
 <script>
     $().ready(function () {
-        var description;
         if ('@direction' == "ltr") {
-        var siteUrl = $('#siteURL').val();
-        var url = siteUrl + "/HR/JobApplicant/UploadCv";
             $("#jobTitleDescE").val($("#JobOfferedDescp").text());
         }
         if ('@direction' == "rtl") {
@@ -444,6 +441,8 @@
 
 
         var errors = "";
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/HR/JobApplicant/UploadCv";
         $('#upload').mfupload({
                type: 'pdf,doc,docx,txt', // type: '', for all types
                 maxsize: 1, //file size in MBs
