@@ -29,7 +29,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Date of Birth is required.")]
         public string EmployeeDOB { get; set; }
         public string EmpDateOfBirthArabic { get; set; }
-        public short? EmployeeNationality { get; set; }
+        public string EmployeeNationality { get; set; }
         [Required(ErrorMessage = "Iqama Number Or National ID Number is required.")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeIqama { get; set; }

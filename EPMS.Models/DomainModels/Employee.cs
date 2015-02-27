@@ -15,7 +15,7 @@ namespace EPMS.Models.DomainModels
         public string EmployeeLandlineNum { get; set; }
         public byte? MaritalStatus { get; set; }
         public DateTime EmployeeDOB { get; set; }
-        public short? EmployeeNationality { get; set; }
+        public string EmployeeNationality { get; set; }
         public string EmployeeIqama { get; set; }
         public DateTime? EmployeeIqamaIssueDt { get; set; }
         public DateTime EmployeeIqamaExpiryDt { get; set; }
