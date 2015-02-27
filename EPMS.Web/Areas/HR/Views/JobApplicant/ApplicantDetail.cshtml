@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
 
 @{
     //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
@@ -159,7 +160,7 @@
         
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <a href="~/HR/JobApplicant/Download?fileName=@Model.JobApplicant.ApplicantCvPath" class="btn">Download CV</a>
+                    <a href="@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobApplicant/Download?fileName=@Model.JobApplicant.ApplicantCvPath" class="btn">Download CV</a>
                 </div>
             </div>
    
@@ -170,7 +171,7 @@
             </div>
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="savebtn" class="btn" type="reset" onclick="location.href = '/HR/JobApplicant/JobApplicantList'">Back</button>
+                    <button id="savebtn" class="btn" type="reset" onclick="location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobApplicant/JobApplicantList'">Back</button>
                 </div>
             </div>
         </div>

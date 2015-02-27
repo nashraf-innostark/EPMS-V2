@@ -98,7 +98,7 @@ namespace EPMS.Implementation.Services
             repository.Add(employee);
             repository.SaveChanges();
 
-            SendNotification(employee);
+            //SendNotification(employee);
             return employee.EmployeeId;
         }
         /// <summary>

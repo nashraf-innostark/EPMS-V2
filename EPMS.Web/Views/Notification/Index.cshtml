@@ -1,4 +1,5 @@
-﻿@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationListView
+﻿@using System.Configuration
+@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationListView
 @{
     ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NotificationList;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,7 +22,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    @*<h3> <small><a href="~/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>*@
+    <h3> <small><a href="@(ConfigurationManager.AppSettings["SiteUrl"])/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")

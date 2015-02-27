@@ -1,4 +1,5 @@
-﻿@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
+﻿@using System.Web.UI.WebControls
+@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
     ViewBag.Title = "Register User";
     string btnText = "Save";
@@ -60,12 +61,12 @@
         @Html.HiddenFor(m => m.oldRole)
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="UserName">Username</label>
+                <label class="control-label" for="selectedEmployee">Employee</label>
             </div>
-            <div class="span9">
+            <div class="span2">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble })
-                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
+                    @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.EmployeesDDL, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = "selectedEmployee" })
+                    <label id="emloyeeValidate"></label>
                 </div>
             </div>
         </div>
@@ -75,8 +76,19 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "useremail", placeholder = "Enter Email" })
+                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "useremail", @readonly = "readonly" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="UserName">Username</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -90,17 +102,6 @@
                     <div class="controls">
                         @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { @class = "select2me", id = "roleId" })
                         <label id="roleValidation"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="selectedEmployee">Employee</label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = "selectedEmployee" })
-                        <label id="emloyeeValidate"></label>
                     </div>
                 </div>
             </div>
@@ -127,11 +128,22 @@
                 </div>
             </div>
         }
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
+        @if (ViewBag.UserLimitReach == "Yes")
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick="return validateUserPassword(event);" disabled>@btnText</button>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick="return validateUserPassword(event);">@btnText</button>
+                </div>
+            </div>
+        }
     </div>
 }
 <!-- Matter ends -->
@@ -140,7 +152,16 @@
     $(function () {
 
         $("[readonly='false']").removeAttr("readonly");
-
+        $("#selectedEmployee").on("change", function() {
+            var empList = '@Html.Raw(Json.Encode(Model.EmployeesDDL))';
+            var parsed = JSON.parse(empList);
+            var empId = parseInt($(this).val());
+            $.each(parsed, function (key, value) {
+                if (value.EmployeeId == empId) {
+                    $("#useremail").val(value.Email);
+                }
+            });
+        });
     });
     function validateUserPassword(event) {
         var userPassword = $("#password").val();

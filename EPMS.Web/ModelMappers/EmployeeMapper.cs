@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.Models;
+using Employee = EPMS.Models.DomainModels.Employee;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -170,6 +171,17 @@ namespace EPMS.Web.ModelMappers
                 Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
             };
 
+        }
+
+        public static Models.EmployeeForDropDownList CreateFromServerToClientForDropDownList(this Employee source)
+        {
+            return new EmployeeForDropDownList
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE,
+                EmployeeNameA = source.EmployeeNameA,
+                Email = source.Email,
+            };
         }
 
         public static Models.ContactList CreateForContactList(this Employee source)

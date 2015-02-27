@@ -74,7 +74,7 @@ namespace IdentitySample.Controllers
 
         #region Constructor
 
-        public AccountController(IDashboardWidgetPreferencesService preferencesService, IUserPrefrencesService userPrefrencesService,IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
+        public AccountController(IDashboardWidgetPreferencesService preferencesService, IUserPrefrencesService userPrefrencesService, IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
@@ -125,7 +125,7 @@ namespace IdentitySample.Controllers
                 }
                 //return RedirectToAction("Index", new { Message = IdentitySample.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess });
                 //return RedirectToAction("Index", "Dashboard");
-                ViewBag.MessageVM = new MessageViewModel {Message = "Password has been updated.", IsUpdated = true};
+                ViewBag.MessageVM = new MessageViewModel { Message = "Password has been updated.", IsUpdated = true };
 
                 return View();
             }
@@ -258,38 +258,48 @@ namespace IdentitySample.Controllers
         public ActionResult Create(string userName)
         {
             RegisterViewModel Result = new RegisterViewModel();
-            // Check allowed no of users
-            // check license
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            var splitLicenseKey = LicenseKey.Split('|');
-            var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
-            // get count od users
-            var countOfUsers = UserManager.Users.Count();
-            if (countOfUsers < NoOfUsers)
+            //// Check allowed no of users
+            //// check license
+            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            //var splitLicenseKey = LicenseKey.Split('|');
+            //var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
+            //// get count od users
+            //var countOfUsers = UserManager.Users.Count();
+            //if (countOfUsers < NoOfUsers)
+            //{
+            if (!string.IsNullOrEmpty(userName))
             {
-                if (!string.IsNullOrEmpty(userName))
+                AspNetUser userToEdit = UserManager.FindByName(userName);
+                Result = new RegisterViewModel
                 {
-                    AspNetUser userToEdit = UserManager.FindByName(userName);
-                    Result = new RegisterViewModel
-                    {
-                        UserId = userToEdit.Id,
-                        SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                        SelectedEmployee = userToEdit.EmployeeId ?? 0,
-                        UserName = userToEdit.UserName,
-                        Email = userToEdit.Email,
-                        //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
-                    };
-                    //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
-                    Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-                    return View(Result);
-                }
+                    UserId = userToEdit.Id,
+                    SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
+                    SelectedEmployee = userToEdit.EmployeeId ?? 0,
+                    UserName = userToEdit.UserName,
+                    Email = userToEdit.Email,
+                    //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
+                };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
-                Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                Result.Roles =
+                    RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+                Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
+                return View(Result);
             }
+            //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
+            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+            Result.EmployeesDDL = employeeService.GetAll().Select(x=>x.CreateFromServerToClientForDropDownList()).ToList();
             return View(Result);
+            //}
+            //else
+            //{
+            //    ViewBag.UserLimitReach = "Yes";
+            //    TempData["message"] = new MessageViewModel { Message = "User Limit has reached. Please renew your License to create more users", IsError = true };
+            //    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+            //    Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+            //    return View(Result);
+            //}
+            //return null;
         }
 
 
@@ -503,7 +513,7 @@ namespace IdentitySample.Controllers
             SignupViewModel signupViewModel = new SignupViewModel();
             return View(signupViewModel);
         }
-        
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -511,44 +521,62 @@ namespace IdentitySample.Controllers
         public async Task<ActionResult> Signup(SignupViewModel signupViewModel)
         {
             // Add new User
-                // Check if User already exists
-                var usernames = AspNetUserService.GetAllUsers().Select(x => x.UserName);
-                if (usernames.Contains(signupViewModel.UserName))
+            // Check if User already exists
+            var usernames = AspNetUserService.GetAllUsers().Select(x => x.UserName);
+            if (usernames.Contains(signupViewModel.UserName))
+            {
+                // it means username is already taken
+                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                ModelState.AddModelError("", "UserName already exist");
+                return View(signupViewModel);
+            }
+            var emails = AspNetUserService.GetAllUsers().Select(x => x.Email);
+            if (emails.Contains(signupViewModel.Email))
+            {
+                // it means username is already taken
+                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                ModelState.AddModelError("", "Email already registered");
+                return View(signupViewModel);
+            }
+            //call customer add service, get cusID, 
+
+            #region Add Customer
+
+            EPMS.Models.DomainModels.Customer customer = new EPMS.Models.DomainModels.Customer();
+            customer.CustomerNameE = signupViewModel.CustomerNameE;
+            customer.CustomerNameA = signupViewModel.CustomerNameA;
+            customer.CustomerAddress = signupViewModel.Address;
+            customer.CustomerMobile = signupViewModel.MobileNumber;
+            EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
+
+            //custID=ser.add(customer);
+            #endregion
+
+            var user = new AspNetUser { UserName = signupViewModel.UserName, Email = signupViewModel.Email };
+            user.CustomerId = addedCustomer.CustomerId;
+                //user.EmailConfirmed = true;
+            if (!String.IsNullOrEmpty(signupViewModel.Password))
+            {
+                var result = await UserManager.CreateAsync(user, signupViewModel.Password);
+                if (result.Succeeded)
                 {
-                    // it means username is already taken
-                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
-                    return View(signupViewModel);
+                    //Setting role
+                    var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+                    UserManager.AddToRole(user.Id, "Customer");
+
+                        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
+                            protocol: Request.Url.Scheme);
+                        await
+                            UserManager.SendEmailAsync(signupViewModel.Email, "Confirm your account",
+                                "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
+                                "\">link</a><br>Your Password is:" + signupViewModel.Password);
+                        ViewBag.Link = callbackUrl;
+
+                    TempData["message"] = new MessageViewModel { Message = "User Created", IsSaved = true };
+                    return RedirectToAction("Login", "Account");
                 }
-                //call customer add service, get cusID, 
-                
-                #region Add Customer
-
-                EPMS.Models.DomainModels.Customer customer = new EPMS.Models.DomainModels.Customer();
-                customer.CustomerNameE = signupViewModel.CustomerNameE;
-                customer.CustomerNameA = signupViewModel.CustomerNameA;
-                customer.CustomerAddress = signupViewModel.Address;
-                customer.CustomerMobile = signupViewModel.MobileNumber;
-                EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
-                
-                    //custID=ser.add(customer);
-                #endregion
-
-                var user = new AspNetUser { UserName = signupViewModel.UserName, Email = signupViewModel.Email };
-                user.CustomerId = addedCustomer.CustomerId;
-                user.EmailConfirmed = true;
-                if (!String.IsNullOrEmpty(signupViewModel.Password))
-                {
-                    var result = await UserManager.CreateAsync(user, signupViewModel.Password);
-                    if (result.Succeeded)
-                    {
-                        //Setting role
-                        var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-                        UserManager.AddToRole(user.Id, "Customer");
-
-                        TempData["message"] = new MessageViewModel { Message = "User Created", IsSaved = true };
-                        return RedirectToAction("Index","Dashboard");
-                    }
-                }
+            }
             return View(signupViewModel);
         }
         #endregion

@@ -42,7 +42,7 @@
                     <li class="liItem" id="Menu_@item.MenuId">
                         <span id="userMenuId" style="display: none">@item.MenuId</span>
                         <a href="@(ConfigurationManager.AppSettings["SiteURL"])/@item.Url" data-toggle="modal">
-                            <img class="" src="~/Images/photon/icons/@item.ImagePath" alt=" predefined">
+                            <img class="" src="@(ConfigurationManager.AppSettings["SiteURL"])/Images/photon/icons/@item.ImagePath" alt=" predefined">
                         </a>
                         <p>@item.Title</p>
                     </li>

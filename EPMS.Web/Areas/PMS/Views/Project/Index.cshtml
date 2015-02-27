@@ -33,53 +33,53 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-
-<div class="container-fluid">
-    <form class="form-horizontal">
-        <div class="row-fluid">
-            <div class="span12">
-                <table id="ProjectsTable" class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>@EPMS.Web.Resources.PMS.Project.ProjectName</th>
-                            <th>@EPMS.Web.Resources.PMS.Project.ClientName</th>
-                            <th>@EPMS.Web.Resources.PMS.Project.StartDate</th>
-                            <th>@EPMS.Web.Resources.PMS.Project.DeliveryDate</th>
-                            <th>@EPMS.Web.Resources.PMS.Project.Price</th>
-                            <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Projects.ToList())
-                        {
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <form class="form-horizontal">
+            <div class="row-fluid">
+                <div class="span12">
+                    <table id="ProjectsTable" class="table table-striped table-responsive">
+                        <thead>
                             <tr>
-                                <td>@item.ProjectId</td>
-                                <td class="center">
-                                    <a href="~/PMS/Project/Details/@item.ProjectId">@(direction == "ltr" ? @item.NameE : @item.NameA)</a>
-                                </td>
-                                <td class="center">
-                                    <a href="~/CMS/Customer/Details/@item.CustomerId">
-                                              @(direction == "ltr" ? @item.CustomerNameE : @item.CustomerNameA)
-                                          </a>
-                                </td>
-                                <th>@item.StartDate</th>
-                                <th>@item.EndDate</th>
-                                <th>@item.Price</th>
-                                <th>
-                                    <div class="progress progress-info">
-                                        <div class="bar" style="width: @item.ProgressTotal%">@item.ProgressTotal%</div>
-                                    </div>
-                                </th>
+                                <th></th>
+                                <th>@EPMS.Web.Resources.PMS.Project.ProjectName</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.ClientName</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.StartDate</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.DeliveryDate</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Price</th>
+                                <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Projects.ToList())
+                        {
+                                <tr>
+                                    <td>@item.ProjectId</td>
+                                    <td class="center">
+                                        <a href="~/PMS/Project/Details/@item.ProjectId">@(direction == "ltr" ? @item.NameE : @item.NameA)</a>
+                                    </td>
+                                    <td class="center">
+                                        <a href="~/CMS/Customer/Details/@item.CustomerId">
+                                            @(direction == "ltr" ? @item.CustomerNameE : @item.CustomerNameA)
+                                        </a>
+                                    </td>
+                                    <th>@item.StartDate</th>
+                                    <th>@item.EndDate</th>
+                                    <th>@item.Price</th>
+                                    <th>
+                                        <div class="progress progress-info">
+                                            <div class="bar" style="width: @item.ProgressTotal%">@item.ProgressTotal%</div>
+                                        </div>
+                                    </th>
+                                </tr>
                         }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-
 <script>
     $(document).ready(function () {
         $('#ProjectsTable').dataTable({
