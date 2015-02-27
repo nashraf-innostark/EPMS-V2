@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Meeting.MeetingViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Meeting.MeetingViewModel
 
 @{
     ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.Create;
@@ -290,9 +291,21 @@
             </div>
 
         </div>
-        <div class="control-group row-fluid">
+        @*<div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+            </div>
+        </div>*@
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
+                    <button id="savebtn" type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Meeting/Meeting/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                </div>
             </div>
         </div>
     </div>
@@ -312,6 +325,21 @@
         CKEDITOR.replace('DecisionsAr');
 
         var meetingId = $("#Meeting_MeetingId").val();
+
+        if (meetingId == 0) {
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+        }
+
+        $("#edit").click(function (event) {
+            $("#checked").addClass('enableList');
+            event.preventDefault();
+        });
 
         if ($("#metingDate").val() != null && $("#metingDate").val() != "") {
             $("#metingDateAr").val(ConvertDates($("#metingDate").val(), "gregorian", "islamic"));

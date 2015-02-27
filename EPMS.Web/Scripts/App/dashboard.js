@@ -149,7 +149,7 @@
         $(".predefined-icons ul li").each(function () {
 
             var ttis = $(this);
-            
+            var siteURL = $('#siteURL').val();
             if (ttis.hasClass("selectedPredefinedIcon")) {
                 var title = ttis.find("img").attr("title");
                 var img = ttis.find("img").attr('src');
@@ -173,7 +173,7 @@
 
                 //hml+="<li><img src="+img+" alt='Quick Launch Icon' data-original-title title><p>"+title+"</p></li>"
                 if (ok == "ok") {
-                    hml += "<li><a href=" + href + "><img src=" + img + " alt='Quick Launch Icon' data-original-title title><p>" + title + "</p></a></li>"
+                    hml += "<li><a href=" /+siteURL +"/"+ href + "><img src=" + img + " alt='Quick Launch Icon' data-original-title title><p>" + title + "</p></a></li>"
                 }
 
             }
