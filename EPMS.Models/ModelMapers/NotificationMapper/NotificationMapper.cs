@@ -125,6 +125,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             recipient.UserId = source.UserId;
             if (string.IsNullOrEmpty(source.UserId))
             {
+                recipient.UserId = null;
                 recipient.MobileNo = source.MobileNo;
                 recipient.Email = source.Email;
             }

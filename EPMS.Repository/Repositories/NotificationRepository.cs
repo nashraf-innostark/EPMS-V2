@@ -73,7 +73,7 @@ namespace EPMS.Repository.Repositories
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
                           )
                           &&
-                          ((s.SystemGenerated) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) &&
+                          ((s.SystemGenerated) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId) &&
                            (s.AlertAppearDate <= today))
                             );
             }
@@ -166,7 +166,7 @@ namespace EPMS.Repository.Repositories
             }
             else
             {
-                query = s => ((s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId)
+                query = s => (((s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == requestParams.EmployeeId))
                            &&
                            ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );
