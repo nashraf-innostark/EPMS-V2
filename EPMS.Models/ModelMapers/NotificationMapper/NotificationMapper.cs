@@ -91,11 +91,16 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 if (notification.NotificationRecipients.FirstOrDefault().EmployeeId > 0)
                 {
                     notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
-                    notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA : notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA;
+                    notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMobileNum;
+                    notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.Email;
+                    notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameE: notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA;
                 }
-
-                notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().MobileNo;
-                notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().Email;
+                else if (notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer!=null)
+                {
+                    notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer.CustomerMobile;
+                    notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Email;
+                }
+                
                 notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault().IsRead ? Resources.Notification.Yes : Resources.Notification.No;
            
             }
