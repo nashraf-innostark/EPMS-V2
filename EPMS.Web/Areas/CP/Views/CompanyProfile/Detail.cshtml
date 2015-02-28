@@ -214,6 +214,7 @@
                                 <div class="controls span4">
                                     @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDate", onchange = "GregorianToHijri(this, CommercialRegisterExpiryDateAr)", @readonly = "readonly" })
                                 </div>
+                                <label id="CommercialRegisterDateValidation"></label>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -255,6 +256,7 @@
                                     <div class="controls span4">
                                         @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDate", onchange = "GregorianToHijri(this, InsuranceCertificateExpiryDateAr)", @readonly = "readonly" })
                                     </div>
+                                    <label id="InsuranceCertificateDateValidation"></label>
                                 </div>
                             </div>
                         </div>
@@ -296,6 +298,7 @@
                                 <div class="controls span4">
                                     @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDate", onchange = "GregorianToHijri(this, ChamberCertificateExpiryDateAr)", @readonly = "readonly" })
                                 </div>
+                                <label id="ChamberCertificateDateValidation"></label>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -336,6 +339,7 @@
                                 <div class="controls span4">
                                     @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateExpiryDateAr)", @readonly = "readonly" })
                                 </div>
+                                <label id="IncomeAndZakaCertificateDateValidation"></label>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -376,11 +380,12 @@
                                 <div class="controls span4">
                                     @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDate", onchange = "GregorianToHijri(this, SaudilizationCertificateExpiryDateAr)", @readonly = "readonly" })
                                 </div>
+                                <label id="SaudilizationCertificateDateValidation"></label>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(2)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(2,event)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
                             </div>
                         </div>
                     }
@@ -1201,9 +1206,10 @@
         });
     });
 
-    function SetTabId(id) {
+    function SetTabId(id, event) {
         $('.TabId').val(id);
         $('.CompanyId').val('@ViewBag.CompanyId');
+        checkDates(event);
     };
     $(function () {
         $('a[rel*=leanModal]').leanModal({ top: 80, closeButton: ".btnSelect,.modal_close" });
@@ -1219,5 +1225,59 @@
     }
     function hide() {
         $("#popup").hide();
+    }
+
+    function checkDates(event) {
+        var comRegIssDt = $("#CommercialRegisterIssueDate").val().split('/');
+        var comRegExpDt = $("#CommercialRegisterExpiryDate").val().split('/');
+        var insCertIssDt = $("#InsuranceCertificateIssueDate").val().split('/');
+        var insCertExpDt = $("#InsuranceCertificateExpiryDate").val().split('/');
+        var chmCertIssDt = $("#ChamberCertificateIssueDate").val().split('/');
+        var chmCertExpDt = $("#ChamberCertificateExpiryDate").val().split('/');
+        var incCertIssDt = $("#IncomeAndZakaCertificateIssueDate").val().split('/');
+        var incCertExpDt = $("#SaudilizationCertificateIssueDate").val().split('/');
+        var saCerIssDt = $("#SaudilizationCertificateIssueDate").val().split('/');
+        var saCerExpDt = $("#SaudilizationCertificateExpiryDate").val().split('/');
+        if (comRegIssDt > comRegExpDt) {
+            $("#CommercialRegisterDateValidation").text("Expiry Date cannot be less than Issue Date");
+            $("#CommercialRegisterDateValidation").addClass("required");
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $("#CommercialRegisterIssueDate").offset().top
+            });
+        }
+        if (insCertIssDt > insCertExpDt) {
+            $("#InsuranceCertificateDateValidation").text("Expiry Date cannot be less than Issue Date");
+            $("#InsuranceCertificateDateValidation").addClass("required");
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $("#InsuranceCertificateIssueDate").offset().top
+            });
+        }
+        if (chmCertIssDt > chmCertExpDt) {
+            $("#ChamberCertificateDateValidation").text("Expiry Date cannot be less than Issue Date");
+            $("#ChamberCertificateDateValidation").addClass("required");
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $("#ChamberCertificateIssueDate").offset().top
+            });
+        }
+        if (incCertIssDt > incCertExpDt) {
+            $("#IncomeAndZakaCertificateDateValidation").text("Expiry Date cannot be less than Issue Date");
+            $("#IncomeAndZakaCertificateDateValidation").addClass("required");
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $("#IncomeAndZakaCertificateIssueDate").offset().top
+            });
+        }
+        if (saCerIssDt > saCerExpDt) {
+            $("#SaudilizationCertificateDateValidation").text("Expiry Date cannot be less than Issue Date");
+            $("#SaudilizationCertificateDateValidation").addClass("required");
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $("#SaudilizationCertificateIssueDate").offset().top
+            });
+        }
+
     }
 </script>
