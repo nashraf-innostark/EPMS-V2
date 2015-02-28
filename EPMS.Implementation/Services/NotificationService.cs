@@ -164,9 +164,12 @@ namespace EPMS.Implementation.Services
             foreach (var employeeId in employeeIds)
             {
                 newNotificationRecipient.UserId = aspNetUserService.GetUserIdByEmployeeId(employeeId);
-                newNotificationRecipient.EmployeeId = employeeId;
-                newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
-                AddNotificationRecipient(newNotificationRecipient);
+                if(!string.IsNullOrEmpty(newNotificationRecipient.UserId))
+                {
+                    newNotificationRecipient.EmployeeId = employeeId;
+                    newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
+                    AddNotificationRecipient(newNotificationRecipient);
+                }
             }
             return true;
         }
@@ -229,15 +232,31 @@ namespace EPMS.Implementation.Services
                             //Send the notification to its all recipients
                             foreach (var recipient in notification.NotificationRecipients)
                             {
-                                notificationResponse.Email = recipient.AspNetUser.Email;
-                                if (recipient.AspNetUser.Customer != null)
+                                if (string.IsNullOrEmpty(recipient.UserId))
                                 {
-                                    notificationResponse.MobileNo = recipient.AspNetUser.Customer.CustomerMobile;
+                                    notificationResponse.Email = recipient.AspNetUser.Email;
+                                    if (recipient.AspNetUser.Customer != null)
+                                    {
+                                        notificationResponse.MobileNo = recipient.AspNetUser.Customer.CustomerMobile;
+                                    }
+                                    if (recipient.AspNetUser.Employee != null)
+                                    {
+                                        notificationResponse.MobileNo = recipient.AspNetUser.Employee.EmployeeMobileNum;
+                                    }
                                 }
-                                if (recipient.AspNetUser.Employee != null)
+                                else
                                 {
-                                    notificationResponse.MobileNo = recipient.AspNetUser.Employee.EmployeeMobileNum;
+                                    notificationResponse.Email = recipient.AspNetUser.Email;
+                                    if (recipient.AspNetUser.Customer != null)
+                                    {
+                                        notificationResponse.MobileNo = recipient.AspNetUser.Customer.CustomerMobile;
+                                    }
+                                    if (recipient.AspNetUser.Employee != null)
+                                    {
+                                        notificationResponse.MobileNo = recipient.AspNetUser.Employee.EmployeeMobileNum;
+                                    }
                                 }
+                                
                                 notificationResponse.TitleE = notification.TitleE;
                                 notificationResponse.TitleA = notification.TitleA;
 
