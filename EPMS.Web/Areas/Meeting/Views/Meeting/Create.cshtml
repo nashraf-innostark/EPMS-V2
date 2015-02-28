@@ -163,10 +163,10 @@
             </div>
             <div class="span9">
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hejri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate", @id = "metingDate", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
                 </div>
             </div>
         </div>
