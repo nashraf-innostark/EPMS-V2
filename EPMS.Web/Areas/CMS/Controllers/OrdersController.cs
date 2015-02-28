@@ -99,7 +99,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
             var role = result.AspNetRoles.FirstOrDefault();
             if (role != null) viewModel.RoleName = role.Name;
-            ViewBag.backUrl = Request.UrlReferrer;
+            if (Request.UrlReferrer != null)
+            {
+                ViewBag.backUrl = Request.UrlReferrer;
+            }
+            else
+            {
+                ViewBag.backUrl = "";
+            }
             if (id != null)
             {
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
@@ -192,7 +199,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var order = result.LastOrDefault();
             if (order != null)
             {
-                string oId = order.OrderNo;
+                string oId = order.OrderNo.Substring(order.OrderNo.Length - 5, 5);
                 int id = Convert.ToInt32(oId) + 1;
                 int len = id.ToString(CultureInfo.InvariantCulture).Length;
                 string zeros = "";
