@@ -227,14 +227,18 @@ namespace IdentitySample.Controllers
                         {
                             SetUserPermissions(user.Email);
                             SetCultureInfo(user.Id);
-                            var isEmployeeActivated = AspNetUserService.FindById(user.Id).Employee.IsActivated;
-                            if (isEmployeeActivated == false)
+                            var userToCheck = AspNetUserService.FindById(user.Id);
+                            if (userToCheck.Employee != null)
                             {
-                                ModelState.AddModelError("", "Your account has been deactivated. Please contact your Administrator.");
-                                AuthenticationManager.SignOut();
-                                Session.Abandon();
-                                return View(model);
+                                if (userToCheck.Employee.IsActivated==false)
+                                {
+                                    ModelState.AddModelError("", "Your account has been deactivated. Please contact your Administrator.");
+                                    AuthenticationManager.SignOut();
+                                    Session.Abandon();
+                                    return View(model);
+                                }
                             }
+                            
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Index", "Dashboard");
                             return RedirectToLocal(returnUrl);
@@ -294,12 +298,12 @@ namespace IdentitySample.Controllers
                 };
                 //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
                 Result.Roles =
-                    RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+                    RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
                 Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
                 return View(Result);
             }
             //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
             Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
             return View(Result);
             //}
