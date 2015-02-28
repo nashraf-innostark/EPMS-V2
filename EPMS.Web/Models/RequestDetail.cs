@@ -32,6 +32,7 @@ namespace EPMS.Web.Models
         public bool IsReplied { get; set; }
         [Display(Name = "Approved")]
         public bool IsApproved { get; set; }
+        public bool IsMonetaryLocalFlag { get; set; }
         public int RowVersion { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }

@@ -145,6 +145,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     requestViewModel.RequestReply.RecCreatedDt = DateTime.Now;
                     requestViewModel.RequestReply.RecLastUpdatedBy = User.Identity.GetUserId();
                     requestViewModel.RequestReply.RecLastUpdatedDt = DateTime.Now;
+                    requestViewModel.RequestReply.IsMonetaryLocalFlag = requestViewModel.Request.IsMonetary;
                     employeeRequestService.AddRequestDetail(requestViewModel.RequestReply.CreateFromClientToServer());
 
                     TempData["message"] = new MessageViewModel
@@ -173,6 +174,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         requestViewModel.RequestDetail.RecCreatedDt = DateTime.Now;
                         requestViewModel.RequestDetail.RecLastUpdatedBy = User.Identity.GetUserId();
                         requestViewModel.RequestDetail.RecLastUpdatedDt = DateTime.Now;
+                        requestViewModel.RequestDetail.IsMonetaryLocalFlag = requestViewModel.Request.IsMonetary;
                         employeeRequestService.AddRequestDetail(requestViewModel.RequestDetail.CreateFromClientToServer());
                         TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestCreated, IsSaved = true };
                     }
