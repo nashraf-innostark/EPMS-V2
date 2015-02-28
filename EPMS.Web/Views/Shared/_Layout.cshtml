@@ -128,7 +128,7 @@
             </li>
             <li class="user-sub-menu-container">
                 <a href="javascript:;">
-                    @if (Session["Culture"].ToString() == "en")
+                    @if (Session["Culture"] == null || Session["Culture"].ToString() == "en")
                     {
                         <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.EN</i>
                     }
