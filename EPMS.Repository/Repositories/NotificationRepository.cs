@@ -87,7 +87,7 @@ namespace EPMS.Repository.Repositories
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) &&
-                    ((s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) &&
+                    (((s.NotificationRecipients.Any(r=>r.UserId == searchRequset.NotificationRequestParams.UserId))||(s.NotificationRecipients.Any(r=>r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) &&
                            (s.AlertAppearDate <= today))
                     );
             }
@@ -159,16 +159,16 @@ namespace EPMS.Repository.Repositories
 
             if (requestParams.SystemGenerated)
             {
-                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || (s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId))
+                query = s => ((s.SystemGenerated == requestParams.SystemGenerated || (s.NotificationRecipients.Any(r => r.UserId == requestParams.UserId)))
                            &&
                            ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count==0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );
             }
             else
             {
-                query = s => (((s.NotificationRecipients.FirstOrDefault().UserId == requestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == requestParams.EmployeeId))
+                query = s => (((s.NotificationRecipients.Any(r=>r.UserId == requestParams.UserId)) || (s.NotificationRecipients.Any(r=>r.EmployeeId == requestParams.EmployeeId)))
                            &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
+                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.FirstOrDefault().IsRead == false))
                            );
             }
             return DbSet.Count(query);
