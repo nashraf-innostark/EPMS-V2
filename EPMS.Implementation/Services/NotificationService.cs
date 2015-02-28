@@ -131,11 +131,6 @@ namespace EPMS.Implementation.Services
             //Save Notification recipient
             if(!(string.IsNullOrEmpty(notificationViewModel.NotificationResponse.UserId) && notificationViewModel.NotificationResponse.EmployeeId==0))
                 AddNotificationRecipient(notificationViewModel.NotificationResponse.CreateRecipientFromClientToServer());
-            //// if notification alertdate is today, send email and sms
-            ////Send Email
-            //SentNotificationEmail(notificationViewModel);
-            ////Send SMS
-            //SendNotificationSMS(notificationViewModel);
             return true;
         }
 
@@ -164,12 +159,11 @@ namespace EPMS.Implementation.Services
             foreach (var employeeId in employeeIds)
             {
                 newNotificationRecipient.UserId = aspNetUserService.GetUserIdByEmployeeId(employeeId);
-                if(!string.IsNullOrEmpty(newNotificationRecipient.UserId))
-                {
-                    newNotificationRecipient.EmployeeId = employeeId;
-                    newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
-                    AddNotificationRecipient(newNotificationRecipient);
-                }
+                if (string.IsNullOrEmpty(newNotificationRecipient.UserId))
+                    newNotificationRecipient.UserId = null;
+                newNotificationRecipient.EmployeeId = employeeId;
+                newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
+                AddNotificationRecipient(newNotificationRecipient);
             }
             return true;
         }
@@ -234,14 +228,17 @@ namespace EPMS.Implementation.Services
                             {
                                 if (string.IsNullOrEmpty(recipient.UserId))
                                 {
-                                    notificationResponse.Email = recipient.AspNetUser.Email;
+                                    if (recipient.EmployeeId != null)
+                                    {
+                                        var employee = employeeRepository.Find(Convert.ToInt64(recipient.EmployeeId));
+                                        notificationResponse.Email = employee.Email;
+                                        notificationResponse.MobileNo = employee.EmployeeMobileNum;
+                                    }
+                                    
                                     if (recipient.AspNetUser.Customer != null)
                                     {
+                                        notificationResponse.Email = recipient.AspNetUser.Email;
                                         notificationResponse.MobileNo = recipient.AspNetUser.Customer.CustomerMobile;
-                                    }
-                                    if (recipient.AspNetUser.Employee != null)
-                                    {
-                                        notificationResponse.MobileNo = recipient.AspNetUser.Employee.EmployeeMobileNum;
                                     }
                                 }
                                 else
