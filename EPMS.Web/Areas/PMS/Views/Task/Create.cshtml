@@ -319,8 +319,24 @@
         if ('@userRole' == "Customer") {
             $(".readonly").attr("readonly", "true");
         }
-        $('#TotalWeight').mask("99%");
 
+        $('#TaskProgress').on("blur", function () {
+            var currVal = $(this).val();
+            if (currVal > 100 || isNaN(currVal)) {
+                notify();
+                return;
+            }
+            function notify() {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'This task progress should not exceed 100 and must be number.'
+                });
+                $('#TaskProgress').val("");
+                return;
+            }
+        });
+        $('#TotalWeight').mask("99%");
         $('#TotalWeight').on("blur", function () {
             var prevVal = parseInt($("#prevTasksWeight").val());
             var temp = $(this).val();

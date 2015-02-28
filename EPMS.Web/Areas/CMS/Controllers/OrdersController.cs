@@ -222,7 +222,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         break;
                 }
                 string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
-                return orderId;
+                return orderId.Substring(order.OrderNo.Length - 10, 10);
             }
             return year + month + day + "00001";
         }
