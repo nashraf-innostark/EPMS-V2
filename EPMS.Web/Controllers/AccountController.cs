@@ -175,7 +175,7 @@ namespace IdentitySample.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
-                var successNote = ViewData["Note"];
+                var successNote = TempData["Note"];
                 if (successNote != "")
                 {
                     ViewBag.SuccessMessage = successNote;
@@ -557,7 +557,7 @@ namespace IdentitySample.Controllers
             customer.CustomerAddress = signupViewModel.Address;
             customer.CustomerMobile = signupViewModel.MobileNumber;
             EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
-            ViewData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
+            TempData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
 
             string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
             for (int i = 0; i < 3; i++)
