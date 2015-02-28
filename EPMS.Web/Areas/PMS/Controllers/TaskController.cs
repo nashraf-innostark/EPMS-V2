@@ -52,6 +52,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         public ActionResult Index(TaskSearchRequest searchRequest)
         {
             TaskListViewModel viewModel = new TaskListViewModel();
+            searchRequest.SearchString = Request["search"];
             if (Session["RoleName"].ToString() == "Customer")
             {
                 var customerId = (long)Session["CustomerID"];
