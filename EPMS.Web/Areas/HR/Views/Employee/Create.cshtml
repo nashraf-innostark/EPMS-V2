@@ -198,8 +198,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "datepickerGregorian cursorHand span4", @id = "EmployeeDOB", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EmpDateOfBirthArabic')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "EmpDateOfBirthArabic", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EmployeeDOB')" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "datepickerDOB cursorHand span4", @id = "EmployeeDOB", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EmpDateOfBirthArabic')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerDOBAr cursorHand span4", @id = "EmpDateOfBirthArabic", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EmployeeDOB')" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, "", new { @class = "required" })
                 </div>
                 @*<div class="controls span4">
@@ -536,7 +536,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @class = "datepickerPassport cursorHand span4", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArPassport cursorHand span4", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, "", new { @class = "required" })
                 </div>
                 @*<div class="controls span4">
@@ -815,6 +815,31 @@
             changeYear: true,
             dateFormat: "dd/mm/yy",
             minDate: "dateToday",
+            yearRange: "1950:2050"
+        });
+        var calendar = $.calendars.instance('islamic');
+        $('.datepickerArPassport').calendarsPicker({
+            calendar: calendar,
+            minDate: "dateToday",
+            onSelect: function () {
+                $(this).change();
+            }
+        });
+        $(".datepickerDOB").mask('99/99/9999');
+        $(".datepickerDOB").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/mm/yy",
+            maxDate: "dateToday",
+            yearRange: "1950:2050"
+        });
+        var calendar = $.calendars.instance('islamic');
+        $('.datepickerDOBAr').calendarsPicker({
+            calendar: calendar,
+            maxDate: "dateToday",
+            onSelect: function () {
+                $(this).change();
+            }
         });
         // upload Image
         var errors = "";

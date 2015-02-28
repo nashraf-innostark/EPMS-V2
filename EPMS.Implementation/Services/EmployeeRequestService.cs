@@ -50,7 +50,7 @@ namespace EPMS.Implementation.Services
             {
                 repositoryRequestDetail.Add(requestDetail);
                 repositoryRequestDetail.SaveChanges();
-                if (requestDetail.IsApproved)
+                if (requestDetail.IsReplied)
                 {
                     SendNotification(requestDetail);
                 }
@@ -168,6 +168,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.SystemGenerated = false;//False, because it is not for admins, it has its specific recipient
             
             notificationViewModel.NotificationResponse.UserId = requestDetail.EmployeeRequest.Employee.AspNetUsers.FirstOrDefault().Id;
+            notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.Employee.EmployeeId;
             notificationService.AddUpdateNotification(notificationViewModel);
 
             #endregion
