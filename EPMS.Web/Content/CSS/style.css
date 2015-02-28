@@ -6,6 +6,12 @@
   *zoom: 1;
 }
 
+.required {
+    color: #e02222;
+    font-size: 12px;
+    padding-left: 2px;
+}
+
 .clearfix:before,
 .clearfix:after {
   display: table;
