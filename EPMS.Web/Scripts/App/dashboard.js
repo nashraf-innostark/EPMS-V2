@@ -664,6 +664,7 @@ function Loader(control) {
 
 $("#projectStatusDDL").on("change", function () {
     var projectStatus = $(this).val();
+    var siteUrl = $('#siteURL').val();
     var url = siteUrl + "/Dashboard/LoadProjectsDDL";
     $("#projectLoader").show();
     $.ajax({

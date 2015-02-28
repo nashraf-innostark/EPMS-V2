@@ -98,7 +98,7 @@ namespace EPMS.Implementation.Services
             repository.Add(employee);
             repository.SaveChanges();
 
-            //SendNotification(employee);
+            SendNotification(employee);
             return employee.EmployeeId;
         }
         /// <summary>
@@ -126,7 +126,7 @@ namespace EPMS.Implementation.Services
                 repository.Update(employee);
                 repository.SaveChanges();
 
-                //SendNotification(employee);
+                SendNotification(employee);
                 return true;
             }
             catch (Exception e)
