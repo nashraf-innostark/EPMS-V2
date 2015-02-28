@@ -126,7 +126,7 @@ namespace EPMS.Implementation.Services
                 repository.Update(employee);
                 repository.SaveChanges();
 
-                SendNotification(employee);
+                //SendNotification(employee);
                 return true;
             }
             catch (Exception e)
