@@ -31,12 +31,15 @@ namespace EPMS.Repository.Repositories
         public bool DeleteRecipient(long notificationId)
         {
             var itemsToDelete = DbSet.Where(x => x.NotificationId == notificationId);
-            foreach (var recipient in itemsToDelete)
-            {
-                DbSet.Remove(recipient);
-            }
+            
             if (itemsToDelete.Any())
+            {
+                foreach (var recipient in itemsToDelete)
+                {
+                    DbSet.Remove(recipient);
+                }
                 return true;
+            }
             return false;
         }
     }

@@ -218,12 +218,7 @@ namespace IdentitySample.Controllers
                         SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                             shouldLockout: false);
 
-                var isEmployeeActivated = AspNetUserService.FindById(user.Id).Employee.IsActivated;
-                if (isEmployeeActivated == false)
-                {
-                    ModelState.AddModelError("", "This User has been deactivated. Please contact your Administrator.");
-                    return View(model);
-                }
+                
 
 
                 switch (result)
@@ -232,6 +227,14 @@ namespace IdentitySample.Controllers
                         {
                             SetUserPermissions(user.Email);
                             SetCultureInfo(user.Id);
+                            var isEmployeeActivated = AspNetUserService.FindById(user.Id).Employee.IsActivated;
+                            if (isEmployeeActivated == false)
+                            {
+                                ModelState.AddModelError("", "Your account has been deactivated. Please contact your Administrator.");
+                                AuthenticationManager.SignOut();
+                                Session.Abandon();
+                                return View(model);
+                            }
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Index", "Dashboard");
                             return RedirectToLocal(returnUrl);
