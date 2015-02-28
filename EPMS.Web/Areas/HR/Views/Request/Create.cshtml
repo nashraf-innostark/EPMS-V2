@@ -50,7 +50,7 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Request.EmployeeNameE, new {@readonly = "readonly"})
+                        @Html.TextBoxFor(model => model.Request.EmployeeNameE, new { @readonly = "readonly" })
                     </div>
                 }
                 else
@@ -93,7 +93,7 @@
             </div>
 
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestDate</label>
@@ -101,7 +101,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Request.RequestDateString, new { @class = "dateFormatter", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Request.RequestDateString)
+                    @Html.ValidationMessageFor(model => model.Request.RequestDateString, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Request.RequestTopic, new { @class = "toBeReadOnly" })
-                    @Html.ValidationMessageFor(model => model.Request.RequestTopic)
+                    @Html.ValidationMessageFor(model => model.Request.RequestTopic, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(model => model.RequestDetail.RequestDesc, new { @class = "RequestDescDisable", @id = "RequestDescCK" })
-                    @Html.ValidationMessageFor(model => model.RequestDetail.RequestDesc)
+                    @Html.ValidationMessageFor(model => model.RequestDetail.RequestDesc, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
-                    @Html.CheckBoxFor(model => model.Request.IsMonetary, new { @id = "IsMonetary"})
+                    @Html.CheckBoxFor(model => model.Request.IsMonetary, new { @id = "IsMonetary" })
                 </div>
             </div>
         </div>
@@ -150,7 +150,7 @@
                 <div class="span2">
                     <div class="controls">
                         @Html.TextBoxFor(model => model.RequestDetail.LoanAmount, new { @class = "toBeReadOnly", @id = "LoanAmount" })
-                        @Html.ValidationMessageFor(model => model.RequestDetail.LoanAmount)
+                        @Html.ValidationMessageFor(model => model.RequestDetail.LoanAmount, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBox("Loan Date", null, new { @class = "datepickerArabic cursorHand toBeReadOnly", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
+                        @Html.TextBox("Loan Date", null, new { @class = "datepickerArLoan cursorHand toBeReadOnly", @id = "LoanDateAr", onchange = "HijriToGregorian(this,'#LoanDateEn')", @readonly = true })
                     </div>
                 </div>
             </div>
@@ -171,8 +171,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.RequestDetail.LoanDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.RequestDetail.LoanDate)
+                        @Html.TextBoxFor(model => model.RequestDetail.LoanDate, new { @class = "datepickerLoan cursorHand toBeReadOnly", @id = "LoanDateEn", onchange = "GregorianToHijri(this,'#LoanDateAr')", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.LoanDate, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
@@ -184,7 +184,7 @@
                 <div class="span2">
                     <div class="controls">
                         @Html.TextBoxFor(model => model.RequestDetail.InstallmentAmount, new { @class = "toBeReadOnly", @id = "InstallmentAmount" })
-                        @Html.ValidationMessageFor(model => model.RequestDetail.InstallmentAmount)
+                        @Html.ValidationMessageFor(model => model.RequestDetail.InstallmentAmount, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
@@ -196,7 +196,7 @@
                 <div class="span2">
                     <div class="controls">
                         @Html.TextBoxFor(model => model.RequestDetail.NumberOfMonths, new { @id = "NumberOfMonths", @class = "toBeReadOnly" })
-                        @Html.ValidationMessageFor(model => model.RequestDetail.NumberOfMonths)
+                        @Html.ValidationMessageFor(model => model.RequestDetail.NumberOfMonths, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
@@ -207,10 +207,11 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.RequestDetail.FirstInstallmentDate, new { @class = "datepickerGregorian cursorHand toBeReadOnly", @readonly = "readonly", @id = "FirstInstallmentDate" })
-                        @Html.ValidationMessageFor(model => model.RequestDetail.FirstInstallmentDate)
+                        @Html.TextBoxFor(model => model.RequestDetail.FirstInstallmentDate, new { @class = "datepickerLoan cursorHand toBeReadOnly", @readonly = "readonly", @id = "FirstInstallmentDate" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.FirstInstallmentDate, "", new { @class = "required" })
                     </div>
                 </div>
+                <div><label id="FirstInstlDateValidation" style="margin-top: 20px"></label></div>
             </div>
 
             <div class="control-group row-fluid">
@@ -219,15 +220,16 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.RequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeReadOnly datepickerGregorian", @readonly = "readonly", @id = "LastInstallmentDate" })
-                        @Html.ValidationMessageFor(model => model.RequestDetail.LastInstallmentDate)
+                        @Html.TextBoxFor(model => model.RequestDetail.LastInstallmentDate, new { @class = "cursorHand toBeReadOnly datepickerLoan", @disabled = true, @id = "LastInstallmentDate" })
+                        @Html.ValidationMessageFor(model => model.RequestDetail.LastInstallmentDate, "", new { @class = "required" })
                     </div>
                 </div>
+                <div><label id="SecondInstlDateValidation" style="margin-top: 20px"></label></div>
             </div>
         </div>
         <div class="control-group row-fluid requestBtn">
             <div class="span3 span-inset">
-                <button type="submit" class="btn toBeDisabled">Create Request</button>
+                <button type="submit" class="btn toBeDisabled" onclick="validateDates(event)">Create Request</button>
             </div>
             <div class="span3 span-inset">
                 <a href="~/HR/Request/Delete/@Model.Request.RequestId" class="btn" id="requestDeleteBtn" style="display: none">Delete Request</a>
@@ -235,7 +237,7 @@
         </div>
         <!--End    --    Input Field of RequestDetail-->
     </div>
-    
+
         <!--Input Field of Request Reply begin-->
     <div id="requestReplyControls" class="requestReply" style="display: none">
         <header>
@@ -361,13 +363,67 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
+    function validateDates(event) {
+        var tempLoan = $("#LoanDateEn").val().split('/');
+        var loanDate = new Date(tempLoan[2], (parseInt(tempLoan[1]) - 1), tempLoan[0]);
+        var tempFirstInstl = $("#FirstInstallmentDate").val().split('/');
+        var firstInstl = new Date(tempFirstInstl[2], tempFirstInstl[1], tempFirstInstl[0]);
+        var tempSecondInstl = $("#LastInstallmentDate").val().split('/');
+        var secondInstl = new Date(tempSecondInstl[2], tempSecondInstl[1], tempSecondInstl[0]);
+        var loanMonths = $("#NumberOfMonths").val();
+        var expectedLastInstl = new Date(tempSecondInstl[2], (parseInt(tempSecondInstl[1]) + loanMonths), tempSecondInstl[0]);
+        if (firstInstl < loanDate) {
+            $("#FirstInstlDateValidation").text("Please select loan date starting from today or onward");
+            $("#FirstInstlDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        } else {
+            $("#FirstInstlDateValidation").text("");
+            $("#FirstInstlDateValidation").removeClass("required");
+        }
+        if (secondInstl < firstInstl) {
+            $("#SecondInstlDateValidation").text("Please select loan date starting from today or onward");
+            $("#SecondInstlDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        } else {
+            $("#SecondInstlDateValidation").text("");
+            $("#SecondInstlDateValidation").removeClass("required");
+        }
+        //if (secondInstl < expectedLastInstl) {
+        //    $("#SecondInstlDateValidation").text("Please select last installment date according to loan months");
+        //    $("#SecondInstlDateValidation").addClass("required");
+        //    event.preventDefault();
+        //    return false;
+        //} else {
+        //    $("#SecondInstlDateValidation").text("");
+        //    $("#SecondInstlDateValidation").removeClass("required");
+        //} 
+        return true;
+    }
     $(document).ready(function () {
         CKEDITOR.replace('RequestDescCK');
         CKEDITOR.replace('RequestReplyCK');
         DivHideShow('IsMonetary', 'monetaryRequestControls');
         DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
+        $(".datepickerLoan").mask('99/99/9999');
+        $(".datepickerLoan").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/mm/yy",
+            yearRange: "1950:2050",
+            minDate: "dateToday",
+        });
+        var calendar = $.calendars.instance('islamic');
+        $('.datepickerArLoan').calendarsPicker({
+            calendar: calendar,
+            minDate: "dateToday",
+            onSelect: function () {
+                $(this).change();
+            }
+        });
         //If request has been approved by admin, disable all fields, and just show records
-        if ('@Model.RequestReply.IsReplied'=='True') {
+        if ('@Model.RequestReply.IsReplied' == 'True') {
             $('.toBeReadOnly:input').attr('readonly', true);
             $('.toBeDisabled:input').attr('disabled', true);
             $("#requestReplyControls").show();
@@ -376,7 +432,7 @@
             $('.RequestDescDisable').attr('disabled', true);
         }
 
-        //If user is Admin, Disable Request and enable Reply Fields
+            //If user is Admin, Disable Request and enable Reply Fields
         else if ($("#UserRole").val() == "Admin") {
             $('.request .toBeReadOnly:input').attr('readonly', true);
             $('.request .toBeDisabled:input').attr('disabled', true);
@@ -505,7 +561,9 @@
                 $('#InstallmentAmountREPLY').val('');
                 $('#NumberOfMonthsREPLY').val('');
                 $('#FirstInstallmentDateREPLY').val('');
-                $('#LastInstallmentDateREPLY').val('');}
+                $('#LastInstallmentDateREPLY').val('');
+            }
         }
     }
+
 </script>

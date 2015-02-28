@@ -566,18 +566,7 @@ namespace IdentitySample.Controllers
             EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
             TempData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
 
-            string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
-            for (int i = 0; i < 3; i++)
-            {
-                EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
-                {
-                    UserId = customer.CustomerId.ToString(),
-                    WidgetId = customerWidgets[i],
-                    SortNumber = i + 1
-                };
-                var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
-                PreferencesService.AddPreferences(preferenceToAdd);
-            }
+            
 
             //custID=ser.add(customer);
             #endregion
@@ -594,7 +583,21 @@ namespace IdentitySample.Controllers
                     var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
                     UserManager.AddToRole(user.Id, "Customer");
 
+                    // Save widgets preferennces
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
+                    for (int i = 0; i < 3; i++)
+                    {
+                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        {
+                            UserId = user.Id,
+                            WidgetId = customerWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
                         protocol: Request.Url.Scheme);
                     await

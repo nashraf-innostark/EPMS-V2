@@ -52,6 +52,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         public ActionResult Index(TaskSearchRequest searchRequest)
         {
             TaskListViewModel viewModel = new TaskListViewModel();
+            searchRequest.SearchString = Request["search"];
             if (Session["RoleName"].ToString() == "Customer")
             {
                 var customerId = (long)Session["CustomerID"];
@@ -131,6 +132,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             viewModel.ProjectTask = TaskService.FindProjectTaskById((long)id).CreateFromServerToClient();
             viewModel.OldRequisitTasks = viewModel.ProjectTask.RequisitTasks.Select(x => x.TaskId).ToList();
+            viewModel.PreRequisitTasks = viewModel.ProjectTask.RequisitTasks.ToList();
             viewModel.OldAssignedEmployees = viewModel.ProjectTask.TaskEmployees.Select(x => x.EmployeeId).ToList();
             if (viewModel.ProjectTask.CustomerId != null)
             {
@@ -254,8 +256,17 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [HttpGet]
         public JsonResult GetCustomerProjects(long customerId)
         {
-            var projects = ProjectService.FindProjectByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
-            return Json(projects, JsonRequestBehavior.AllowGet);
+            if (customerId == 0)
+            {
+                var projects = ProjectService.GetAllProjects().Select(x => x.CreateFromServerToClient());
+                return Json(projects, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var projects = ProjectService.FindProjectByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
+                return Json(projects, JsonRequestBehavior.AllowGet);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public JsonResult GetProjectTasks(long projectId)

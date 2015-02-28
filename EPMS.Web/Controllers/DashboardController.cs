@@ -161,15 +161,7 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.LaunchItems = LoadQuickLaunchUserItems();
 
 
-            string userId = "";
-            if (Session["RoleName"].ToString() == "Customer")
-            {
-                userId = Session["CustomerID"].ToString();
-            }
-            else
-            {
-                userId = User.Identity.GetUserId();
-            }
+            string userId = User.Identity.GetUserId();
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
 
             #endregion
