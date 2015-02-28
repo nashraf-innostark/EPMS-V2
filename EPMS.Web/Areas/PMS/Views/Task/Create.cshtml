@@ -300,6 +300,17 @@
                 $("#projectEndDate").val(value.EndDate);
             }
         });
+        if (parseInt('@Model.ProjectTask.TaskId') > 0) {
+            // Set pre-requisite tasks end date
+            var preReqList = '@Html.Raw(Json.Encode(Model.PreRequisitTasks))';
+            var parseTasks = JSON.parse(preReqList);
+
+            $.each(parseTasks, function (key, value) {
+                var textBox = "<input type='hidden' id='" + value.TaskId + "' value='" + value.EndDate + "'/>";
+                $(textBox).appendTo('.preReqTasks');
+            });
+        }
+
         var requisiteTasks;
         CKEDITOR.replace('DescriptionE');
         CKEDITOR.replace('DescriptionA');
@@ -377,28 +388,29 @@
         var siteUrl = $('#siteURL').val();
         $("#Client").on("change", function () {
             var customerId = parseInt($(this).val());
-            var url = siteUrl + "/PMS/Task/GetCustomerProjects";
-            if (customerId > 0) {
-                $.blockUI({
-                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
-                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
-                });
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: "json",
-                    data: {
-                        customerId: customerId
-                    },
-                    success: function (data) {
-                        populateProjectDDL(data);
-                    },
-                    error: function (e) {
-                        $.unblockUI();
-                        alert('Error=' + e.toString());
-                    }
-                });
+            if (isNaN(customerId)) {
+                customerId = 0;
             }
+            var url = siteUrl + "/PMS/Task/GetCustomerProjects";
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    customerId: customerId
+                },
+                success: function (data) {
+                    populateProjectDDL(data);
+                },
+                error: function (e) {
+                    $.unblockUI();
+                    alert('Error=' + e.toString());
+                }
+            });
         });
         $("#ProjectId").on("change", function () {
             var projectId = parseInt($(this).val());
@@ -534,22 +546,23 @@
             });
         }
         for (var k = 0; k < selectedTasksIds.length; k++) {
-            var tempDate = $("#"+selectedTasksIds[k]).val().split("/");
+            var tempDate = $("#" + selectedTasksIds[k]).val().split("/");
             var preReqTaskEndDate = new Date(tempDate[2], tempDate[1], tempDate[0]);
             if (taskStartDate < preReqTaskEndDate) {
                 $("#TaskStartDate").val("");
                 $("#TaskStartDateAr").val("");
+                $("#projectStartDateValidation").text("Please select Task start date according to Pre-Requiaite task end date.(" + $("#" + selectedTasksIds[k]).val() + ")");
+                $("#projectStartDateValidation").addClass("required");
+                event.preventDefault();
                 return false;
             }
-        }
-        if (taskStartDate > projEndDate) {
-            $("#TaskStartDate").val("");
-            $("#TaskStartDateAr").val("");
-            return false;
         }
         if (taskStartDate > taskEndDate) {
             $("#TaskEndDate").val("");
             $("#TaskEndDateAr").val("");
+            $("#projectEndDateValidation").text("Please select Task delivery date after Task start date.");
+            $("#projectEndDateValidation").addClass("required");
+            event.preventDefault();
             return false;
         }
         @*var reqTasksList = '@Html.Raw(Json.Encode(requisiteTasks))';

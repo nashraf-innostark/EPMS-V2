@@ -98,7 +98,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "")
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "")
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { id = "BasicSalary", @class = "tbdisable", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary, "")
+                    @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary, "", new { @class = "required" })
                 </div>
             </div>
         </div>

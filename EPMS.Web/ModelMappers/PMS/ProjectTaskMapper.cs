@@ -91,6 +91,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
+            projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             return projectTask;
         }
         public static Models.ProjectTask CreateFromServerToClientForEmployee(this ProjectTask source)

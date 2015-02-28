@@ -17,6 +17,7 @@ namespace EPMS.Web.ViewModels.Tasks
         public ProjectTask ProjectTask { get; set; }
         public List<long> RequisitTasks { get; set; }
         public List<long> OldRequisitTasks { get; set; }
+        public List<ProjectTask> PreRequisitTasks { get; set; }
         public List<long> AssignedEmployees { get; set; }
         public List<long> OldAssignedEmployees { get; set; }
         public IEnumerable<Models.Project> Projects { get; set; }
