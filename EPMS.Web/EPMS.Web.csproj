@@ -693,6 +693,9 @@
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Content\CSS\help-photon.css" />
     <Content Include="Content\CSS\photon.css" />
+    <Content Include="Content\CSS\plugins\jstree\default\style.css" />
+    <Content Include="Content\plugins\jstree\default\style.css" />
+    <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />

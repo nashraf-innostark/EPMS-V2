@@ -34,7 +34,7 @@ namespace EPMS.Web.Models
         public string NotesE { get; set; }
         public string NotesA { get; set; }
         [Required(ErrorMessage = "Task Progress is required.")]
-        public int TaskProgress { get; set; }
+        public string TaskProgress { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }

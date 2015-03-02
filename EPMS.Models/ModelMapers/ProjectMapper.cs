@@ -15,7 +15,7 @@ namespace EPMS.Models.ModelMapers
             project.NameE = source.NameE;
             project.NameEShort = source.NameE.Length > 15 ? source.NameE.Substring(0, 15) + "..." : source.NameE;
             project.ProgressTotal = source.ProjectTasks.Any()
-                ? source.ProjectTasks.Sum(projectTask => (projectTask.TaskProgress??0))
+                ? source.ProjectTasks.Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress.Split('%').FirstOrDefault()))
                 : 0;
             return project;
         }

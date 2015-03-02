@@ -22,7 +22,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgress = source.TaskProgress ?? 0;
+            projectTask.TaskProgress = source.TaskProgress;
             projectTask.NotesE = source.NotesE;
             projectTask.NotesA = source.NotesA;
             projectTask.RecCreatedBy = source.RecCreatedBy;
