@@ -182,7 +182,12 @@ namespace EPMS.Implementation.Services
             notificationRecipientRepository.SaveChanges();
             return recipient.Id;
         }
-
+        public long UpdateNotification(NotificationResponse notification)
+        {
+            notificationRepository.Update(notification.CreateFromClientToServer());
+            notificationRepository.SaveChanges();
+            return notification.NotificationId;
+        }
         public long UpdateNotificationRecipient(NotificationRecipient recipient)
         {
             notificationRecipientRepository.Update(recipient);
@@ -270,13 +275,7 @@ namespace EPMS.Implementation.Services
                 notificationRepository.SaveChanges();
             }
         }
-
-        public long UpdateNotification(NotificationResponse notification)
-        {
-            notificationRepository.Update(notification.CreateFromClientToServer());
-            notificationRepository.SaveChanges();
-            return notification.NotificationId;
-        }
+        
 
         public int LoadUnreadNotificationsCount(NotificationRequestParams requestParams)
         {
@@ -286,13 +285,6 @@ namespace EPMS.Implementation.Services
         public NotificationListView LoadAllNotifications(NotificationListViewRequest searchRequset)
         {
             NotificationListView notificationListView=new NotificationListView();
-            //if (searchRequset.NotificationRequestParams.SystemGenerated)
-            //{
-            //    NotificationRecipient recipient=new NotificationRecipient();
-            //    recipient.UserId = searchRequset.NotificationRequestParams.UserId;
-            //    recipient.NotificationId
-            //    notificationRecipientRepository.Add();
-            //}
             var notifications = notificationRepository.GetAllNotifications(searchRequset);
             if (notifications.Notifications.Any())
             {
