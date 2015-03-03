@@ -7,6 +7,6 @@
         public string TaskNameA { get; set; }
         public string TaskNameEShort { get; set; }
         public string TaskNameAShort { get; set; }
-        public int? TaskProgress { get; set; }
+        public string TaskProgress { get; set; }
     }
 }

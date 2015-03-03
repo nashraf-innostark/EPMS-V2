@@ -7,21 +7,15 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Org.BouncyCastle.Ocsp;
 using Allowance = EPMS.Web.Models.Allowance;
 using Employee = EPMS.Web.Models.Employee;
 using EmployeeRequest = EPMS.Web.Models.Request;
@@ -352,6 +346,20 @@ namespace EPMS.Web.Areas.HR.Controllers
                         TempData["message"] = new MessageViewModel
                         {
                             Message = Resources.HR.Employee.DeactivateMessage,
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+                if (Request.Form["Activate"] != null)
+                {
+                    viewModel.EmployeeViewModel.Employee.IsActivated = true;
+                    var employeeToUpdate = viewModel.EmployeeViewModel.Employee.CreateFromClientToServer();
+                    if (EmployeeService.UpdateEmployee(employeeToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.HR.Employee.ActivateMessage,
                             IsUpdated = true
                         };
                         return RedirectToAction("Index");

@@ -32,10 +32,10 @@
 <!-- dashboard-quick-launch box -->
 <div class="container-fluid dashboard dashboard-quick-launch">
     @*<div>
-        @Html.TextBoxFor(model => model.UserMac)
-    </div>*@
+            @Html.TextBoxFor(model => model.UserMac)
+        </div>*@
     <div class="row-fluid">
-        <div id =""class="span12">
+        <div id="" class="span12">
             <ul id="quickLaunchItems" class="ui-sortable">
                 @foreach (var item in Model.LaunchItems)
                 {
@@ -417,7 +417,7 @@
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front profile">
                                         <div class="widget-head ">
-                                            <a href="~/HR/Employee/Index" class="lightPurpule">@EPMS.Web.Resources.Dashboard.Dashboard.MyProfile</a>
+                                            <a href="~/HR/Employee/Create/@Session["EmployeeID"]" class="lightPurpule">@EPMS.Web.Resources.Dashboard.Dashboard.MyProfile</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadMyProfile(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <i class="icon-photon folder_stroke opc1"></i>
@@ -530,253 +530,253 @@
                         }
                         break;
                     case "EmployeesWidget":
-                    if (ViewBag.UserRole == "Admin")
-                    {
+                        if (ViewBag.UserRole == "Admin")
+                        {
             <!-- Latest Recent Employees Widget begins -->
-                        <div class="widget-holder" id="EmployeesWidget">
-                            <div class="widget-flipper">
-                                <!-- Front -->
-                                <div class="widget-area widget-latest-users widget-front">
-                                    <div class="widget-head ">
-                                        <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Employees</a>
-                                        <div>
-                                            <a href="javascript:;" class="refresher" onclick=" LoadRecentEmployees(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                            <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                            <i class="icon-photon hash opc1"></i>
+                            <div class="widget-holder" id="EmployeesWidget">
+                                <div class="widget-flipper">
+                                    <!-- Front -->
+                                    <div class="widget-area widget-latest-users widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Employees</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick=" LoadRecentEmployees(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                <i class="icon-photon hash opc1"></i>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <ul id="recentEmployees">
-                                        @if (Model.EmployeesRecent.Any())
-                                        {
-                                            foreach (var item in Model.EmployeesRecent.ToList())
+                                        <ul id="recentEmployees">
+                                            @if (Model.EmployeesRecent.Any())
                                             {
-                                                <li>
-                                                    <div class="avatar-image">
-                                                        <img src="@item.EmployeeImagePath" alt="profile image" />
+                                                foreach (var item in Model.EmployeesRecent.ToList())
+                                                {
+                                                    <li>
+                                                        <div class="avatar-image">
+                                                            <img src="@item.EmployeeImagePath" alt="profile image" />
+                                                        </div>
+                                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                        <div>
+                                                            @item.EmployeeJobId
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                    <!-- Back -->
+                                    <div class="widget-area widget-latest-users widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRecentEmployees(this); "><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
                                                     </div>
-                                                    <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
-                                                    <div>
-                                                        @item.EmployeeJobId
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+                            </div>
+            <!-- Latest Recent Employees Widget ends -->
+                        }
+                        break;
+                    case "ProjectWidget":
+                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        {
+                            <!-- Project Widget -->
+                            <div class="widget-holder" id="ProjectWidget">
+                                <div class="widget-flipper">
+                                    <div class="widget-area task-completion widget-front">
+                                        <div class="widget-head ">
+                                            @if (Model.Project != null)
+                                            {
+                                                <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                            }
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
+                                                <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
+                                            </div>
+                                        </div>
+                                        <ul id="progressId">
+                                            @if (Model.Project != null)
+                                            {
+                                                <li class="dashProject dashTask">
+                                                    <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
+
+                                                </li>
+                                                if (Model.Project.ProjectTasks != null)
+                                                {
+                                                    foreach (var task in Model.Project.ProjectTasks.ToList())
+                                                    {
+                                                        <li class="dashTask">
+                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                        </li>
+                                                    }
+                                                }
+
+                                                <li class="dashBack">
+                                                    <a><i class='icon-photon arrow_left'></i></a>
+                                                </li>
+                                                <li class="dashNext">
+                                                    <a><i class='icon-photon arrow_right'></i></a>
+                                                </li>
+                                                <li class="processed-pct">
+                                                    <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                    <div class="progress progress-info">
+                                                        <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
                                                     </div>
                                                 </li>
                                             }
-                                        }
-                                        else
-                                        {
-                                            <li>No record found</li>
-                                        }
-
-                                    </ul>
-                                </div>
-                                <!-- Back -->
-                                <div class="widget-area widget-latest-users widget-back">
-                                    <div class="widget-savehead">
-                                        <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRecentEmployees(this); "><i class='icon-photon cog'></i>Done</a>
+                                            else
+                                            {
+                                                <li class="processed-pct">
+                                                    <span>No record found</span>
+                                                </li>
+                                            }
+                                        </ul>
                                     </div>
-                                    <form>
-                                        <div class="container-fluid widget-settings">
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
+                                    <div class="widget-area task-completion widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadProjects(this)"><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <div class="controls">
-                                                        @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            <select id="projectStatusDDL">
+                                                                <option value="3">Canceled</option>
+                                                                <option selected="" value="1">Current</option>
+                                                                <option value="4">Finished</option>
+                                                                <option value="2">On Hold</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tempLoader" style="display: none;"></div>
-                        </div>
-            <!-- Latest Recent Employees Widget ends -->
-                    }
-                    break;
-                    case "ProjectWidget":
-                    if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
-                    {
-                            <!-- Project Widget -->
-                        <div class="widget-holder" id="ProjectWidget">
-                            <div class="widget-flipper">
-                                <div class="widget-area task-completion widget-front">
-                                    <div class="widget-head ">
-                                        @if (Model.Project != null)
-                                        {
-                                            <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
-                                        }
-                                        else
-                                        {
-                                            <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
-                                        }
-                                        <div>
-                                            <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                            <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                            <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
-                                        </div>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <ul id="progressId">
-                                        @if (Model.Project != null)
-                                        {
-                                            <li class="dashProject dashTask">
-                                                <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
-
-                                            </li>
-                                            if (Model.Project.ProjectTasks != null)
+                                </div>
+                                <div class="tempLoader" style="display:none;" id="projectLoader"></div>
+                            </div>
+                        }
+                        break;
+                    case "MyTasksWidget":
+                        if (ViewBag.UserRole != "Customer")
+                        {
+            <!-- My Tasks Widget -->
+                            <div class="widget-holder" id="MyTasksWidget">
+                                <div class="widget-flipper">
+                                    <div class="widget-area task-completion widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
+                                                <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
+                                            </div>
+                                        </div>
+                                        <ul id="progressId2">
+                                            @if (Model.ProjectTasks != null)
                                             {
-                                                foreach (var task in Model.Project.ProjectTasks.ToList())
+                                                foreach (var task in Model.ProjectTasks.ToList())
                                                 {
                                                     <li class="dashTask">
                                                         <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
                                                     </li>
                                                 }
-                                            }
+                                                <li class="dashBack">
+                                                    <a><i class='icon-photon arrow_left'></i></a>
 
-                                            <li class="dashBack">
-                                                <a><i class='icon-photon arrow_left'></i></a>
-                                            </li>
-                                            <li class="dashNext">
-                                                <a><i class='icon-photon arrow_right'></i></a>
-                                            </li>
-                                            <li class="processed-pct">
-                                                <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
-                                                <div class="progress progress-info">
-                                                    <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
-                                                </div>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li class="processed-pct">
-                                                <span>No record found</span>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                                <div class="widget-area task-completion widget-back">
-                                    <div class="widget-savehead">
-                                        <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadProjects(this)"><i class='icon-photon cog'></i>Done</a>
-                                    </div>
-                                    <form>
-                                        <div class="container-fluid widget-settings">
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
-                                                </div>
-                                            </div>
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <div class="controls">
-                                                        <select id="projectStatusDDL">
-                                                            <option value="3">Canceled</option>
-                                                            <option selected="" value="1">Current</option>
-                                                            <option value="4">Finished</option>
-                                                            <option value="2">On Hold</option>
-                                                        </select>
+                                                </li>
+                                                <li class="dashNext">
+                                                    <a><i class='icon-photon arrow_right'></i></a>
+
+                                                </li>
+                                                <li class="processed-pct2">
+                                                    <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                                    <div class="progress progress-info">
+                                                        <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="container-fluid widget-settings">
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
-                                                </div>
-                                            </div>
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <div class="controls">
-                                                        @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tempLoader" style="display:none;" id="projectLoader"></div>
-                        </div>
-                    }
-                    break;
-                    case "MyTasksWidget":
-                    if (ViewBag.UserRole != "Customer")
-                    {
-            <!-- My Tasks Widget -->
-                        <div class="widget-holder" id="MyTasksWidget">
-                            <div class="widget-flipper">
-                                <div class="widget-area task-completion widget-front">
-                                    <div class="widget-head ">
-                                        <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
-                                        <div>
-                                            <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                            <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                            <img src="~/Images/photon/w_task@2x.png" alt="arrows" />
-                                        </div>
-                                    </div>
-                                    <ul id="progressId2">
-                                        @if (Model.ProjectTasks != null)
-                                        {
-                                            foreach (var task in Model.ProjectTasks.ToList())
-                                            {
-                                                <li class="dashTask">
-                                                    <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
                                                 </li>
                                             }
-                                            <li class="dashBack">
-                                                <a><i class='icon-photon arrow_left'></i></a>
-
-                                            </li>
-                                            <li class="dashNext">
-                                                <a><i class='icon-photon arrow_right'></i></a>
-
-                                            </li>
-                                            <li class="processed-pct2">
-                                                <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
-                                                <div class="progress progress-info">
-                                                    <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
-                                                </div>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li class="processed-pct">
-                                                <span>No record found</span>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                                <div class="widget-area task-completion widget-back">
-                                    <div class="widget-savehead">
-                                        <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadMyTasks(this)"><i class='icon-photon cog'></i>Done</a>
+                                            else
+                                            {
+                                                <li class="processed-pct">
+                                                    <span>No record found</span>
+                                                </li>
+                                            }
+                                        </ul>
                                     </div>
-                                    <form>
-                                        <div class="container-fluid widget-settings">
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                    <div class="widget-area task-completion widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="LoadMyTasks(this)"><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="control-group row-fluid">
-                                                <div class="span12">
-                                                    <div class="controls">
-                                                        @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
+                                <div class="tempLoader" style="display: none;"></div>
                             </div>
-                            <div class="tempLoader" style="display: none;"></div>
-                        </div>
             <!-- Task Completion Widget ends -->
-                    }
-                    break;
+                        }
+                        break;
                     default:
-                    break;
+                        break;
                 }
             }
 
@@ -1031,26 +1031,26 @@
     <div class="modal-body predefined-icons">
         <ul>
             @*<li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/applicants.png" alt="Predefined" title="Applicants" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/profile.png" alt="Predefined" title="My Profile" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/ql2@2x.png" alt="Predefined" title="Projects" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/applicants.png" alt="Predefined" title="Applicants" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/profile.png" alt="Predefined" title="My Profile" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/ql2@2x.png" alt="Predefined" title="Projects" data-hrf="form-elements-input-fields.html"></li>
 
-            <li><img src="~/Images/photon/icons/tasks.png" alt="Predefined" title="Tasks" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/tasks.png" alt="Predefined" title="Tasks" data-hrf="form-elements-input-fields.html"></li>
 
-            <li><img src="~/Images/photon/icons/receipt.png" alt="Predefined" title="Receipt" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/invoices.png" alt="Predefined" title="Invoices" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/quotation.png" alt="Predefined" title="Quotations" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/ql1@2x.png" alt="Predefined" title="Order" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/complaints.png" alt="Predefined" title="Complaints" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/notification.png" alt="Predefined" title="Notifications" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/ql10@2x.png" alt="Predefined" title="Meetings" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
-            <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>*@
+                <li><img src="~/Images/photon/icons/receipt.png" alt="Predefined" title="Receipt" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/invoices.png" alt="Predefined" title="Invoices" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/quotation.png" alt="Predefined" title="Quotations" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/ql1@2x.png" alt="Predefined" title="Order" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/complaints.png" alt="Predefined" title="Complaints" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/notification.png" alt="Predefined" title="Notifications" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/ql10@2x.png" alt="Predefined" title="Meetings" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
+                <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>*@
             @foreach (var item in Model.QuickLaunchItems)
             {
                 @*<li>@item.Name</li>*@
@@ -1060,7 +1060,7 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@ >Add Item</a>
+        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>Add Item</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
     </div>
 </div>
@@ -1078,7 +1078,7 @@
             },
             error: function (e) {
                 alert('Error=' + e.toString());
-                
+
             }
         });
     }

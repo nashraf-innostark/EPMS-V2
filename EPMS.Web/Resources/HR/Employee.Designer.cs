@@ -61,6 +61,24 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee has been Activated successfully.
+        /// </summary>
+        public static string ActivateMessage {
+            get {
+                return ResourceManager.GetString("ActivateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activate Employee.
+        /// </summary>
+        public static string ActiveEmp {
+            get {
+                return ResourceManager.GetString("ActiveEmp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Employee.
         /// </summary>
         public static string AddEmployee {

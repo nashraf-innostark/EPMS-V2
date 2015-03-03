@@ -48,7 +48,7 @@ namespace EPMS.Models.ModelMapers
                 TaskNameEShort = source.TaskNameE.Length > 15 ? source.TaskNameE.Substring(0, 15) + "..." : source.TaskNameE,
                 TaskNameA = source.TaskNameA,
                 TaskNameAShort = source.TaskNameA.Length > 15 ? source.TaskNameA.Substring(0, 15) + "..." : source.TaskNameA,
-                TaskProgress = source.TaskProgress??0
+                TaskProgress = source.TaskProgress
             };
         }
     }

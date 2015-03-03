@@ -18,7 +18,7 @@ namespace EPMS.Models.DomainModels
         public string TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
-        public int? TaskProgress { get; set; }
+        public string TaskProgress { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }

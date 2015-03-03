@@ -236,7 +236,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TotalWeight">@EPMS.Web.Resources.PMS.Task.TaskProgeress</label>
+                <label class="control-label" for="TaskProgress">@EPMS.Web.Resources.PMS.Task.TaskProgeress</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -320,22 +320,23 @@
             $(".readonly").attr("readonly", "true");
         }
 
-        $('#TaskProgress').on("blur", function () {
-            var currVal = $(this).val();
-            if (currVal > 100 || isNaN(currVal)) {
-                notify();
-                return;
-            }
-            function notify() {
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'This task progress should not exceed 100 and must be number.'
-                });
-                $('#TaskProgress').val("");
-                return;
-            }
-        });
+        //$('#TaskProgress').on("blur", function () {
+        //    var currVal = $(this).val();
+        //    if (currVal > 100 || isNaN(currVal)) {
+        //        notify();
+        //        return;
+        //    }
+        //    function notify() {
+        //        $.pnotify({
+        //            title: 'Sorry',
+        //            type: 'info',
+        //            text: 'This task progress should not exceed 100 and must be number.'
+        //        });
+        //        $('#TaskProgress').val("");
+        //        return;
+        //    }
+        //});
+        $('#TaskProgress').mask("99%");
         $('#TotalWeight').mask("99%");
         $('#TotalWeight').on("blur", function () {
             var prevVal = parseInt($("#prevTasksWeight").val());
