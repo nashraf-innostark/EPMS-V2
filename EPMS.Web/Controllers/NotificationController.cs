@@ -95,8 +95,8 @@ namespace EPMS.Web.Controllers
         {
             try
             {
-                notificationViewModel.UserId = Session["UserID"].ToString();
-                if(notificationService.AddUpdateNotification(notificationViewModel))
+                notificationViewModel.NotificationResponse.RecCreatedBy = Session["UserID"].ToString();
+                if (notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse))
                 {
                     TempData["message"] = new MessageViewModel
                     {

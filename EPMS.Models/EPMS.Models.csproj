@@ -222,6 +222,7 @@
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationRecipientResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationRequestResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationResponse.cs" />
+    <Compile Include="ResponseModels\NotificationResponseModel\NotificationTags.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationViewModel.cs" />
     <Compile Include="ResponseModels\OrdersLVResponse.cs" />
     <Compile Include="ResponseModels\OrdersResponse.cs" />

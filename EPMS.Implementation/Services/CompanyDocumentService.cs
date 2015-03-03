@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -50,25 +51,24 @@ namespace EPMS.Implementation.Services
         public void SendNotification(CompanyDocumentDetail document)
         {
                 NotificationViewModel notificationViewModel = new NotificationViewModel();
-
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+                notificationViewModel.NotificationResponse.ForAdmin = true;
+                notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
+                
                 #region CommercialRegisterExpiryDate
                 if (Utility.IsDate(document.CommercialRegisterExpiryDate))
                 {
                     notificationViewModel.NotificationResponse.NotificationId =
                         notificationRepository.GetNotificationsIdByCategories(1, 0, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
-                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
-
+                    notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["CommercialRegisterExpiryDateE"];
+                    notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["CommercialRegisterExpiryDateA"];
+                    notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["CommercialRegisterExpiryDateAlertBefore"]); //Days
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 0;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.CommercialRegisterExpiryDate).ToShortDateString();
-                    notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
-                    notificationViewModel.NotificationResponse.SystemGenerated = true;
-
-                    notificationService.AddUpdateNotification(notificationViewModel);
+                    notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
 
@@ -78,18 +78,16 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.NotificationId =
                         notificationRepository.GetNotificationsIdByCategories(1, 1, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
-                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
-
+                    notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["InsuranceCertificateExpiryDateE"];
+                    notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["InsuranceCertificateExpiryDateA"];
+                    notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["InsuranceCertificateExpiryDateAlertBefore"]); //Days
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 1;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.InsuranceCertificateExpiryDate).ToShortDateString();
-                    notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
-                    notificationViewModel.NotificationResponse.SystemGenerated = true;
-
-                    notificationService.AddUpdateNotification(notificationViewModel);
+                    
+                    
+                    notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
 
@@ -99,18 +97,14 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.NotificationId =
                            notificationRepository.GetNotificationsIdByCategories(1, 2, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
-                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
-
+                    notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["ChamberCertificateExpiryDateE"];
+                    notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["ChamberCertificateExpiryDateA"];
+                    notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ChamberCertificateExpiryDateAlertBefore"]); //Days
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 2;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.ChamberCertificateExpiryDate).ToShortDateString();
-                    notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
-                    notificationViewModel.NotificationResponse.SystemGenerated = true;
-
-                    notificationService.AddUpdateNotification(notificationViewModel);
+                    notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
 
@@ -120,18 +114,16 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.NotificationId =
                            notificationRepository.GetNotificationsIdByCategories(1, 3, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
-                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
-
+                    notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["IncomeAndZakaCertificateExpiryDateE"];
+                    notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["IncomeAndZakaCertificateExpiryDateA"];
+                    notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["IncomeAndZakaCertificateExpiryDateAlertBefore"]); //Days
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 3;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
+                    
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.IncomeAndZakaCertificateExpiryDate).ToShortDateString();
-                    notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
-                    notificationViewModel.NotificationResponse.SystemGenerated = true;
 
-                    notificationService.AddUpdateNotification(notificationViewModel);
+                    notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
 
@@ -141,18 +133,15 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.NotificationId =
                            notificationRepository.GetNotificationsIdByCategories(1, 4, document.CompanyId);
 
-                    notificationViewModel.NotificationResponse.TitleE = document.CommercialRegister;
-                    notificationViewModel.NotificationResponse.TitleA = document.CommercialRegister;
-
+                    notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["SaudilizationCertificateExpiryDateE"];
+                    notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["SaudilizationCertificateExpiryDateA"];
+                    notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["SaudilizationCertificateExpiryDateAlertBefore"]); //Days
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 4;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertBefore = 1;//Month
                     notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.SaudilizationCertificateExpiryDate).ToShortDateString();
-                    notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
-                    notificationViewModel.NotificationResponse.SystemGenerated = true;
-
-                    notificationService.AddUpdateNotification(notificationViewModel);
+                    
+                    notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -297,17 +298,18 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.NotificationId =
                         notificationRepository.GetNotificationsIdByCategories(4,0, meeting.MeetingId);
 
-            notificationViewModel.NotificationResponse.TitleE = "Meeting invitation.";
-            notificationViewModel.NotificationResponse.TitleA = "Meeting invitation.";
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["MeetingE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["MeetingA"];
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["MeetingAlertBefore"]); //Days
 
             notificationViewModel.NotificationResponse.CategoryId = 4; //Meetings
             notificationViewModel.NotificationResponse.SubCategoryId = 0;
             notificationViewModel.NotificationResponse.ItemId = meeting.MeetingId;
-
-            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
+            
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            notificationViewModel.NotificationResponse.SystemGenerated = false;
+            notificationViewModel.NotificationResponse.ForAdmin = false;
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
 
             notificationService.AddUpdateMeetingNotification(notificationViewModel,employeeIds);
 

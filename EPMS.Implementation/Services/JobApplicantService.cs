@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -65,18 +66,20 @@ namespace EPMS.Implementation.Services
 
             #region Send notification to admin
 
-            notificationViewModel.NotificationResponse.TitleE = "An applicant applied for a job.";
-            notificationViewModel.NotificationResponse.TitleA = "An applicant applied for a job.";
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["JobApplicationE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["JobApplicationA"];
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["JobApplicationAlertBefore"]); //Days
 
             notificationViewModel.NotificationResponse.CategoryId = 5; //Other
             notificationViewModel.NotificationResponse.SubCategoryId = 1;
             notificationViewModel.NotificationResponse.ItemId = jobApplicant.ApplicantId;
-            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
+
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = true;
 
-            notificationService.AddUpdateNotification(notificationViewModel);
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 
             #endregion
         }

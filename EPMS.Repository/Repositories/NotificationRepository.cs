@@ -159,7 +159,7 @@ namespace EPMS.Repository.Repositories
 
             if (requestParams.SystemGenerated)
             {
-                query = s => (((s.SystemGenerated == true) || (s.NotificationRecipients.Any(r => r.UserId == requestParams.UserId)))
+                query = s => (((s.ForAdmin == true) || (s.NotificationRecipients.Any(r => r.UserId == requestParams.UserId)))
                            &&
                            ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count==0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
                            );

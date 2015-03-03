@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -154,22 +155,21 @@ namespace EPMS.Implementation.Services
             #region Request Approved
             requestDetail.EmployeeRequest = repository.Find(requestDetail.RequestId);
 
-            string status = requestDetail.IsApproved ? " Approved" : " Rejected";
-            notificationViewModel.NotificationResponse.TitleE = requestDetail.EmployeeRequest.RequestTopic + status;
-            notificationViewModel.NotificationResponse.TitleA = requestDetail.EmployeeRequest.RequestTopic + status;
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["EmployeeRequestE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["EmployeeRequestA"];
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["EmployeeRequestAlertBefore"]); //Days
 
             notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-            notificationViewModel.NotificationResponse.SubCategoryId = 1;
-
-            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
-            notificationViewModel.NotificationResponse.AlertDate =
-                Convert.ToDateTime(DateTime.Now).ToShortDateString();
+            notificationViewModel.NotificationResponse.SubCategoryId = 0;
+            notificationViewModel.NotificationResponse.ItemId = requestDetail.RequestDetailId;
+            notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            notificationViewModel.NotificationResponse.SystemGenerated = false;//False, because it is not for admins, it has its specific recipient
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = false;
             
             notificationViewModel.NotificationResponse.UserId = requestDetail.EmployeeRequest.Employee.AspNetUsers.FirstOrDefault().Id;
             notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.Employee.EmployeeId;
-            notificationService.AddUpdateNotification(notificationViewModel);
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 
             #endregion
         }

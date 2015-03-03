@@ -475,6 +475,7 @@
           <Property Name="AlertDateType" Type="int" Nullable="false" />
           <Property Name="AlertDate" Type="datetime" Nullable="false" />
           <Property Name="SystemGenerated" Type="bit" Nullable="false" />
+          <Property Name="ForAdmin" Type="bit" />
           <Property Name="AlertAppearDate" Type="datetime" Nullable="false" />
           <Property Name="IsEmailSent" Type="bit" Nullable="false" />
           <Property Name="IsSMSsent" Type="bit" Nullable="false" />
@@ -2508,11 +2509,6 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
           </AssociationSet>
-          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
-          <AssociationSet Name="FK_NotificationRecipient_Notification" Association="EPMSModel.FK_NotificationRecipient_Notification">
-            <End Role="Notification" EntitySet="Notifications" />
-            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
-          </AssociationSet>
           <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
           <AssociationSet Name="FK_Allowance_Employee" Association="EPMSModel.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
@@ -2558,6 +2554,11 @@
           <AssociationSet Name="FK_ProjectTask_Project" Association="EPMSModel.FK_ProjectTask_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <EntitySet Name="Notifications" EntityType="EPMSModel.Notification" />
+          <AssociationSet Name="FK_NotificationRecipient_Notification" Association="EPMSModel.FK_NotificationRecipient_Notification">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="LicenseControlPanel">
@@ -2624,41 +2625,6 @@
             </Principal>
             <Dependent Role="NotificationRecipient">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Notification">
-          <Key>
-            <PropertyRef Name="NotificationId" />
-          </Key>
-          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TitleE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TitleA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="SubCategoryId" Type="Int64" />
-          <Property Name="ItemId" Type="Int64" />
-          <Property Name="AlertBefore" Type="Int32" Nullable="false" />
-          <Property Name="AlertDateType" Type="Int32" Nullable="false" />
-          <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SystemGenerated" Type="Boolean" Nullable="false" />
-          <Property Name="AlertAppearDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsEmailSent" Type="Boolean" Nullable="false" />
-          <Property Name="IsSMSsent" Type="Boolean" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="NotificationRecipients" Relationship="EPMSModel.FK_NotificationRecipient_Notification" FromRole="Notification" ToRole="NotificationRecipient" />
-        </EntityType>
-        <Association Name="FK_NotificationRecipient_Notification">
-          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="1" />
-          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Notification">
-              <PropertyRef Name="NotificationId" />
-            </Principal>
-            <Dependent Role="NotificationRecipient">
-              <PropertyRef Name="NotificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2857,6 +2823,42 @@
             </Principal>
             <Dependent Role="ProjectTask">
               <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TitleE" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TitleA" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryId" Type="Int64" />
+          <Property Name="ItemId" Type="Int64" />
+          <Property Name="AlertBefore" Type="Int32" Nullable="false" />
+          <Property Name="AlertDateType" Type="Int32" Nullable="false" />
+          <Property Name="AlertDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SystemGenerated" Type="Boolean" Nullable="false" />
+          <Property Name="ForAdmin" Type="Boolean" />
+          <Property Name="AlertAppearDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsEmailSent" Type="Boolean" Nullable="false" />
+          <Property Name="IsSMSsent" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="NotificationRecipients" Relationship="EPMSModel.FK_NotificationRecipient_Notification" FromRole="Notification" ToRole="NotificationRecipient" />
+        </EntityType>
+        <Association Name="FK_NotificationRecipient_Notification">
+          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="1" />
+          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="NotificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3487,29 +3489,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Notifications">
-            <EntityTypeMapping TypeName="EPMSModel.Notification">
-              <MappingFragment StoreEntitySet="Notification">
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="IsSMSsent" ColumnName="IsSMSsent" />
-                <ScalarProperty Name="IsEmailSent" ColumnName="IsEmailSent" />
-                <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
-                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
-                <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
-                <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
-                <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
-                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="EPMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -3564,6 +3543,30 @@
                 <ScalarProperty Name="NameA" ColumnName="NameA" />
                 <ScalarProperty Name="NameE" ColumnName="NameE" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="EPMSModel.Notification">
+              <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="IsSMSsent" ColumnName="IsSMSsent" />
+                <ScalarProperty Name="IsEmailSent" ColumnName="IsEmailSent" />
+                <ScalarProperty Name="AlertAppearDate" ColumnName="AlertAppearDate" />
+                <ScalarProperty Name="ForAdmin" ColumnName="ForAdmin" />
+                <ScalarProperty Name="SystemGenerated" ColumnName="SystemGenerated" />
+                <ScalarProperty Name="AlertDate" ColumnName="AlertDate" />
+                <ScalarProperty Name="AlertDateType" ColumnName="AlertDateType" />
+                <ScalarProperty Name="AlertBefore" ColumnName="AlertBefore" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="SubCategoryId" ColumnName="SubCategoryId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="TitleA" ColumnName="TitleA" />
+                <ScalarProperty Name="TitleE" ColumnName="TitleE" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3655,8 +3658,6 @@
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" />
         <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="12.75" PointY="35.5" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" />
-        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="7.375" PointY="1" />
-        <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.625" PointY="26.875" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
@@ -3670,6 +3671,8 @@
         <AssociationConnector Association="EPMSModel.FK_Project_Orders" />
         <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
+        <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="0.75" PointY="9" />
+        <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
         </Diagram>
     </Diagrams>
   </Designer>

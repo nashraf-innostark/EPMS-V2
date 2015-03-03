@@ -13,7 +13,7 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         [StringLength(160, ErrorMessage = "Title cannot exceed 160 characters.")]
         public string TitleA { get; set; }
         public int CategoryId { get; set; }
-        public long? SubCategoryId { get; set; }
+        public long SubCategoryId { get; set; }
         public long? ItemId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
@@ -39,6 +39,10 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDate { get; set; }
         public bool SystemGenerated { get; set; }
+        public bool? ForAdmin { get; set; }
         public long EmployeeId { get; set; }
+        public string SmsText { get; set; }
+        public string EmailText { get; set; }
+        public bool TextForAdmin { get; set; }
     }
 }
