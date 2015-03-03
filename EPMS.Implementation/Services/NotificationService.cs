@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -13,14 +14,16 @@ namespace EPMS.Implementation.Services
 {
     public class NotificationService:INotificationService
     {
+        private readonly IEmployeeRequestRepository requestRepository;
         private readonly IMenuRepository menuRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly INotificationRecipientRepository notificationRecipientRepository;
         private readonly INotificationRepository notificationRepository;
         private readonly IEmployeeRepository employeeRepository;
 
-        public NotificationService(IMenuRepository menuRepository, IAspNetUserRepository aspNetUserRepository, INotificationRecipientRepository notificationRecipientRepository, INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
+        public NotificationService(IEmployeeRequestRepository requestRepository,IMenuRepository menuRepository, IAspNetUserRepository aspNetUserRepository, INotificationRecipientRepository notificationRecipientRepository, INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
         {
+            this.requestRepository = requestRepository;
             this.menuRepository = menuRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.notificationRecipientRepository = notificationRecipientRepository;
@@ -274,13 +277,12 @@ namespace EPMS.Implementation.Services
                 var adminEmployees = employeeRepository.GetAdminEmployees(permisssionMenuId);
                 foreach (var notification in notifications)
                 {
+                    notificationResponse = notification.CreateFromServerToClient();
+                    notificationResponse.NotificationCode = notificationResponse.CategoryId + notificationResponse.SubCategoryId.ToString();
                     if (!notification.IsEmailSent)
                     {
                         List<string> emailRecipients = new List<string>();
                         List<string> smsRecipients = new List<string>();
-
-                        notificationResponse.TitleE = notification.TitleE;
-                        notificationResponse.TitleA = notification.TitleA;
 
                         if (notification.ForAdmin != null && notification.ForAdmin == true)
                         {
@@ -371,12 +373,11 @@ namespace EPMS.Implementation.Services
         }
         public void GenerateNotificationDescription(NotificationResponse notificationResponse)
         {
-            string notificationCode = notificationResponse.CategoryId +
-                                      notificationResponse.SubCategoryId.ToString();
+            
             string smsText = string.Empty;
             string emailText = string.Empty;
 
-            switch (notificationCode)
+            switch (notificationResponse.NotificationCode)
             {
                 case "10":
                     //CommercialRegisterExpiryDate
@@ -395,12 +396,24 @@ namespace EPMS.Implementation.Services
                     break;
                 case "30":
                     //Employee Request
+                    smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "31":
                     //Iqama
+                    smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeIqamaExpirySMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeIqamaExpiryEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "32":
                     //Passport
+                    smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeePassportExpirySMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeePassportExpiryEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "40":
                     //Meeting
@@ -436,6 +449,32 @@ namespace EPMS.Implementation.Services
                     //FourthInsDueAtCompletion
                     break;
             }
+        }
+
+        private string ReplaceTags(string fileText, NotificationResponse notificationResponse)
+        {
+            //fileText=fileText.Replace("", "");
+            if (notificationResponse.EmployeeId > 0)
+            {
+                var employee = employeeRepository.Find(Convert.ToInt64(notificationResponse.EmployeeId));
+                if (employee != null)
+                {
+                    fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin?employee.EmployeeNameE:"Your");
+                    fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employee.EmployeeNameA : "Your");
+                    fileText = fileText.Replace("[IqamaExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
+                    fileText = fileText.Replace("[PassportExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
+                }
+            }
+            if (notificationResponse.NotificationCode == "30")
+            {
+                var request = requestRepository.Find(notificationResponse.ItemId);
+               
+                fileText = fileText.Replace("[RequestStatusEng]", request.RequestDetails.FirstOrDefault(x => x.IsReplied).IsApproved ? "accepted" : "declined");
+                fileText = fileText.Replace("[RequestStatusAr]", request.RequestDetails.FirstOrDefault(x => x.IsReplied).IsApproved ? "قبلت" : "ورفض");
+
+                fileText = fileText.Replace("[RequestTopic]", request.RequestTopic);
+            }
+            return fileText;
         }
     }
 }

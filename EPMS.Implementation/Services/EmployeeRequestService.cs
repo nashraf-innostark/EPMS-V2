@@ -161,7 +161,7 @@ namespace EPMS.Implementation.Services
 
             notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
             notificationViewModel.NotificationResponse.SubCategoryId = 0;
-            notificationViewModel.NotificationResponse.ItemId = requestDetail.RequestDetailId;
+            notificationViewModel.NotificationResponse.ItemId = requestDetail.RequestId;
             notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;

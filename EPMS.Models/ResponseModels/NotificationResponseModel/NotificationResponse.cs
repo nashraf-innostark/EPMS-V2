@@ -14,7 +14,7 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public string TitleA { get; set; }
         public int CategoryId { get; set; }
         public long SubCategoryId { get; set; }
-        public long? ItemId { get; set; }
+        public long ItemId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
@@ -44,5 +44,6 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public string SmsText { get; set; }
         public string EmailText { get; set; }
         public bool TextForAdmin { get; set; }
+        public string NotificationCode { get; set; }
     }
 }
