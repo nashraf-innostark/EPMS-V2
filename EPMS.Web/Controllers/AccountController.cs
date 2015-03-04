@@ -462,9 +462,10 @@ namespace IdentitySample.Controllers
                     {
                         //Setting role
                         var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-                        var roleName = "All"; // it means by default all widgets will be assigned to the user//roleManager.FindById(model.SelectedRole).Name;
+                        var roleName = roleManager.FindById(model.SelectedRole).Name;
                         UserManager.AddToRole(user.Id, roleName);
                         // Add User Preferences for Dashboards Widgets
+                        roleName = "All";
                         UserWidgets(user, roleName);
                         TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.AddUser, IsSaved = true };
                         return RedirectToAction("Users");
