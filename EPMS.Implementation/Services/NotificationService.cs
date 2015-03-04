@@ -381,18 +381,38 @@ namespace EPMS.Implementation.Services
             {
                 case "10":
                     //CommercialRegisterExpiryDate
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "11":
                     //InsuranceCertificateExpiryDate
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "12":
                     //ChamberCertificateExpiryDate
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "13":
                     //IncomeAndZakaCertificateExpiryDate
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "14":
                     //SaudilizationCertificateExpiryDate
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "30":
                     //Employee Request
@@ -417,36 +437,80 @@ namespace EPMS.Implementation.Services
                     break;
                 case "40":
                     //Meeting
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "51":
                     //JobApplication Admin
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "52":
                     //ProjectFinished Customer
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "53":
                     //TaskDelivery Admin
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "58":
                     //ProjectStarted Customer
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "59":
                     //ProjectDelivery Admin
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "510":
                     //TaskAssigned
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "511":
                     //FirstInsDueAtCompletion
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "512":
                     //SecondInsDueAtCompletion
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "513":
                     //ThirdInsDueAtCompletion
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
                 case "514":
                     //FourthInsDueAtCompletion
+                     smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\EmployeeRequestEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
             }
         }
@@ -465,7 +529,7 @@ namespace EPMS.Implementation.Services
                     fileText = fileText.Replace("[PassportExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
                 }
             }
-            if (notificationResponse.NotificationCode == "30")
+            if (notificationResponse.NotificationCode == "30")//Employee Request
             {
                 var request = requestRepository.Find(notificationResponse.ItemId);
                
