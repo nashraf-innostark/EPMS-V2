@@ -462,55 +462,10 @@ namespace IdentitySample.Controllers
                     {
                         //Setting role
                         var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-                        var roleName = roleManager.FindById(model.SelectedRole).Name;
+                        var roleName = "All"; // it means by default all widgets will be assigned to the user//roleManager.FindById(model.SelectedRole).Name;
                         UserManager.AddToRole(user.Id, roleName);
                         // Add User Preferences for Dashboards Widgets
-                        var userId = user.Id;
-                        string[] adminWidgets = { "MeetingWidget", "OrderWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget", "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget" };
-                        string[] employeeWidgets = { "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget" };
-                        string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
-                        switch (roleName)
-                        {
-                            case "Admin":
-                                for (int i = 0; i < 10; i++)
-                                {
-                                    EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
-                                    {
-                                        UserId = userId,
-                                        WidgetId = adminWidgets[i],
-                                        SortNumber = i + 1
-                                    };
-                                    var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
-                                    PreferencesService.AddPreferences(preferenceToAdd);
-                                }
-                                break;
-                            case "Employee":
-                                for (int i = 0; i < 5; i++)
-                                {
-                                    EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
-                                    {
-                                        UserId = userId,
-                                        WidgetId = employeeWidgets[i],
-                                        SortNumber = i + 1
-                                    };
-                                    var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
-                                    PreferencesService.AddPreferences(preferenceToAdd);
-                                }
-                                break;
-                            case "Customer":
-                                for (int i = 0; i < 3; i++)
-                                {
-                                    EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
-                                    {
-                                        UserId = userId,
-                                        WidgetId = customerWidgets[i],
-                                        SortNumber = i + 1
-                                    };
-                                    var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
-                                    PreferencesService.AddPreferences(preferenceToAdd);
-                                }
-                                break;
-                        }
+                        UserWidgets(user, roleName);
                         TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.AddUser, IsSaved = true };
                         return RedirectToAction("Users");
                     }
@@ -521,6 +476,84 @@ namespace IdentitySample.Controllers
             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
             TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);
+        }
+
+        private void UserWidgets(AspNetUser user, string roleName)
+        {
+            var userId = user.Id;
+            string[] adminWidgets =
+            {
+                "MeetingWidget", "OrderWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget",
+                "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget"
+            };
+            string[] employeeWidgets =
+            {
+                "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget",
+                "MyTasksWidget"
+            };
+            string[] customerWidgets = {"ComplaintsWidget", "OrderWidget", "ProjectWidget"};
+
+            string[] allWidgets =
+            {
+                "RecruitmentWidget", "EmployeeRequestsWidget","OrderWidget","ComplaintsWidget", "EmployeesWidget", 
+                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget"
+            };
+
+            switch (roleName)
+            {
+                case "Admin":
+                    for (int i = 0; i < 10; i++)
+                    {
+                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = adminWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+                case "Employee":
+                    for (int i = 0; i < 5; i++)
+                    {
+                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = employeeWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+                case "Customer":
+                    for (int i = 0; i < 3; i++)
+                    {
+                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = customerWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+                case "All":
+                    for (int i = 0; i < allWidgets.Length; i++)
+                    {
+                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = allWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+            }
         }
 
         [AllowAnonymous]
