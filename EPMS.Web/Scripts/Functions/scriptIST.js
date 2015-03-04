@@ -89,10 +89,12 @@ function errorSaveAppointment(e, status) {
 }
 
 function validateEmail(email) {
+    debugger
     var oEmail = $(email);
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(oEmail.val())) {
         oEmail.val("");
+        oEmail.attr("placeholder","Enter valid email.");
         return false;
     } else {
         return true;
@@ -183,11 +185,57 @@ function isNumberKey(evt) {
 
 function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
     var calender = $.calendars.instance(fromCalender);
-    var dateToBeChanged = calender.parseDate("mm/dd/yyyy", dateTobeChanged);
+    var dateToBeChanged = calender.parseDate("dd/mm/yyyy", dateTobeChanged);
     calender = $.calendars.instance(toCalender);
     var changedDate = calender.fromJD(dateToBeChanged.toJD());
-    return calender.formatDate("mm/dd/yyyy", changedDate);
+    return calender.formatDate("dd/mm/yyyy", changedDate);
 }
+function HijriToGregorian(arabicCalendar, englishCalendar) {
+    if ($(arabicCalendar).val() == "") {
+        $(englishCalendar).val("");
+    }
+    else {
+        var splittedDate = $(arabicCalendar).val().split('/');
+        $(arabicCalendar).val(splittedDate[2] + '/' + splittedDate[1] + '/' + splittedDate[0]);
+        var dateToBeChanged = $(arabicCalendar).val();
+        var newDate = ConvertDates(dateToBeChanged, 'islamic', 'gregorian');
+        $(englishCalendar).val(newDate);
+    }
+}
+function GregorianToHijri(englishCalendar,arabicCalendar) {
+    if ($(englishCalendar).val() == "") {
+        $(arabicCalendar).val("");
+    }
+    else {
+        var dateToBeChanged = $(englishCalendar).val();
+        var newDate = ConvertDates(dateToBeChanged, 'gregorian', 'islamic');
+        $(arabicCalendar).val(newDate);
+    }
+}
+$(document).ready(function () {
+    $('.select2me').select2({
+        placeholder: "Select"
+    });
+    //$(".datepickerArabic").mask('99/99/9999');
+    //$.datepicker.setDefaults($.datepicker.regional['en-US']);
+    $(".dateFormatter").mask('99/99/9999');
+    $(".datepickerGregorian").mask('99/99/9999');
+    $(".datepickerGregorian").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd/mm/yy",
+        yearRange: "1950:2050"
+    });
+    // Arabic Date Picker
+    var calendar = $.calendars.instance('islamic');
+    $('.datepickerArabic').calendarsPicker({
+        calendar: calendar,
+        onSelect: function () {
+            $(this).change();
+        }
+    });
+});
+
 
 
 

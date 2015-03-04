@@ -1,61 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.JobTitle;
-using EPMS.Web.Areas.HR.Models;
+using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
+    [Authorize]
+    [SiteAuthorize(PermissionKey = "HRS", IsModule = true)]
     public class JobTitleController : BaseController
     {
+        #region Private
+
         private readonly IJobTitleService jobTitleService;
-        private readonly IDepartmentService DepartmentService;
+        private readonly IDepartmentService departmentService;
+        private readonly IEmployeeService employeeService;
+
+        #endregion
+        
+        #region Constructor
 
         /// <summary>
         /// Constructor 
         /// </summary>
         /// <param name="departmentService"></param>
         /// <param name="jobTitleService"></param>
-        #region Constructor
-
-        public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService)
+        public JobTitleController(IDepartmentService departmentService, IJobTitleService jobTitleService, IEmployeeService employeeService)
         {
-            this.DepartmentService = departmentService;
+            this.departmentService = departmentService;
             this.jobTitleService = jobTitleService;
+            this.employeeService = employeeService;
         }
 
         #endregion
 
-
+        #region Public
 
         // GET: JobTitles ListView Action Method
-        public ActionResult JobTitleLV()
+        [SiteAuthorize(PermissionKey = "JobTitleIndex")]
+        public ActionResult Index()
         {
-            JobTitleSearchRequest jobTitleSearchRequest = Session["PageMetaData"] as JobTitleSearchRequest;
-
-            Session["PageMetaData"] = null;
-
-            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
-
-            IEnumerable<JobTitle> jobList = jobTitleService.LoadAll().Select(x => x.CreateFrom());
-
-            return View(new JobTitleViewModel
+            return View(new JobTitleListViewModel
             {
-                DepartmentList = DepartmentService.LoadAll().Select(x => x.CreateFrom()),
-                JobTitleList = jobList,
-                SearchRequest = jobTitleSearchRequest ?? new JobTitleSearchRequest()
+                JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom())
             });
-        }
-
-        public ActionResult ComboBox()
-        {
-            return View();
         }
 
         /// <summary>
@@ -63,26 +56,67 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        public ActionResult AddEdit(int? id)
+        [SiteAuthorize(PermissionKey = "JobTitleCreate")]
+        public ActionResult Create(long? id)
         {
             JobTitleViewModel viewModel = new JobTitleViewModel();
-            //if (id != null)
-            //{
-            //    viewModel.Employee = oEmployeeService.FindEmployeeById(id).CreateFrom();
-            //}
+            if (id != null)
+            {
+                viewModel.JobTitle = jobTitleService.FindJobTitleById((long)id).CreateFrom();
+            }
+            viewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
             return View(viewModel);
         }
-        public int AddData(JobTitleViewModel viewModel)
+
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult Create(JobTitleViewModel jobTitleViewModel)
         {
-            viewModel.JobTitle.RecCreatedDt = DateTime.Now;
-            viewModel.JobTitle.RecCreatedBy = User.Identity.Name;
-            var jobToSave = viewModel.JobTitle.CreateFrom();
-            if (jobTitleService.AddJob(jobToSave))
+            try
             {
-                TempData["message"] = new MessageViewModel { Message = "Employee has been Added", IsSaved = true };
-                return 1;
+                #region Update
+
+                if (jobTitleViewModel.JobTitle.JobTitleId > 0)
+                {
+                    jobTitleViewModel.JobTitle.RecLastUpdatedBy = User.Identity.GetUserId();
+                    jobTitleViewModel.JobTitle.RecLastUpdatedDt = DateTime.Now;
+                    var jobTitleToUpdate = jobTitleViewModel.JobTitle.CreateFrom();
+                    if (jobTitleService.UpdateJob(jobTitleToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobTitle.UpdateJobTitle, IsUpdated = true };
+                        return RedirectToAction("Index");
+                    }
+                }
+                #endregion
+
+                #region Add
+
+                else
+                {
+                    jobTitleViewModel.JobTitle.RecCreatedBy = User.Identity.GetUserId();
+                    jobTitleViewModel.JobTitle.RecCreatedDt = DateTime.Now;
+                    var modelToSave = jobTitleViewModel.JobTitle.CreateFrom();
+
+                    if (jobTitleService.AddJob(modelToSave))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobTitle.SaveJobTitle, IsSaved = true };
+                        jobTitleViewModel.JobTitle.JobTitleId = modelToSave.JobTitleId;
+                        return RedirectToAction("Index");
+                    }
+                }
+
+                #endregion
+
             }
-            return 0;
+            catch (Exception e)
+            {
+                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                return RedirectToAction("Create", e);
+            }
+            
+            return View(jobTitleViewModel);
         }
+
+        #endregion
     }
 }

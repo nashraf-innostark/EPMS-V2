@@ -13,16 +13,41 @@ namespace EPMS.Implementation
         public static void RegisterType(IUnityContainer unityContainer)
         {
             UnityConfig.UnityContainer = unityContainer;
-            EPMS.Repository.TypeRegistrations.RegisterType(unityContainer);
+            Repository.TypeRegistrations.RegisterType(unityContainer);
             unityContainer.RegisterType<IMenuRightsService, MenuRightsService>();
             unityContainer.RegisterType<ILogger, LoggerService>();
             unityContainer.RegisterType<IMenuRightsService, MenuRightsService>();
             unityContainer.RegisterType<IEmployeeService, EmployeeService>();
             unityContainer.RegisterType<IJobTitleService, JobTitleService>();
             unityContainer.RegisterType<IDepartmentService, DepartmentService>();
-
-
+            unityContainer.RegisterType<IEmployeeRequestService, EmployeeRequestService>();
+            unityContainer.RegisterType<IAllowanceService, AllowanceService>();
+            unityContainer.RegisterType<IAspNetUserService, AspNetUserService>();
+            unityContainer.RegisterType<IJobOfferedService, JobOfferedService>();
             unityContainer.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+            unityContainer.RegisterType<IJobApplicantService, JobApplicantService>();
+            unityContainer.RegisterType<IComplaintService, ComplaintService>();
+            unityContainer.RegisterType<ICustomerService, CustomerService>();
+            unityContainer.RegisterType<IOrdersService, OrdersService>();
+            unityContainer.RegisterType<IQuotationService, QuotationService>();
+            unityContainer.RegisterType<IQuotationItemService, QuotationItemService>();
+            unityContainer.RegisterType<ICompanyProfileService, CompanyProfileService>();
+            unityContainer.RegisterType<IPayrollService, PayrollService>();
+            unityContainer.RegisterType<ICompanyDocumentService, CompanyDocumentService>();
+            unityContainer.RegisterType<ICompanyBankService, CompanyBankService>();
+            unityContainer.RegisterType<ICompanySocialService, CompanySocialService>();
+            unityContainer.RegisterType<IProjectService, ProjectService>();
+            unityContainer.RegisterType<IProjectDocumentService, ProjectDocumentService>();
+            unityContainer.RegisterType<IProjectTaskService, ProjectTaskService>();
+            unityContainer.RegisterType<IMeetingService, MeetingService>();
+            unityContainer.RegisterType<IMeetingAttendeeService, MeetingAttendeeService>();
+            unityContainer.RegisterType<IMeetingDocumentService, MeetingDocumentService>();
+            unityContainer.RegisterType<ITaskEmployeeService, TaskEmployeeService>();
+            unityContainer.RegisterType<IUserPrefrencesService, UserPrefrencesService>();
+            unityContainer.RegisterType<INotificationService, NotificationService>();
+            unityContainer.RegisterType<IDashboardWidgetPreferencesService, DashboardWidgetPreferencesService>();
+            unityContainer.RegisterType<IQuickLaunchItemService, QuickLaunchItemService>();
+            unityContainer.RegisterType<ILicenseControlPanelService, LicenseControlPanelService>();
         }
     }
 }

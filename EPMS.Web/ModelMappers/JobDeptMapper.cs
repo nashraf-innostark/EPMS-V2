@@ -9,14 +9,17 @@ namespace EPMS.Web.ModelMappers
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static Models.JobTitleAndDepartment CreateFromJob(this DomainModels.JobTitle source)
+        public static Models.JobTitleAndDepartment CreateFromServerToClient(this DomainModels.JobTitle source)
         {
             return new Models.JobTitleAndDepartment
             {
-                //JobId = source.JobId,
-                //JobTitle = source.JobTitleNameE,
-                //DeptId = source.Department.DepartmentId ?? 0,
-                //DeptName = source.Department.DepartmentNameE
+                JobId = source.JobTitleId,
+                JobTitleE = source.JobTitleNameE,
+                JobTitleA = source.JobTitleNameA,
+                DeptId = source.Department.DepartmentId,
+                DeptNameE = source.Department.DepartmentNameE,
+                DeptNameA = source.Department.DepartmentNameA,
+                BasicSalary = source.BasicSalary ?? 0,
             };
         }
     }

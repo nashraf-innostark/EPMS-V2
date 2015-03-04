@@ -1,0 +1,243 @@
+﻿@using System.Web.UI.WebControls
+@model EPMS.Web.ViewModels.JobOffered.JobOfferedViewModel
+
+@{
+    //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
+    ViewBag.Title = "Add New Job";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/JobOffered/Index">
+                @EPMS.Web.Resources.HR.JobOffered.Label
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "JobOffered", FormMethod.Post, new { @id = "JobOfferedForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.JobOffered.JobOfferedId)
+        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedBy)
+        @Html.HiddenFor(m => m.JobTitle.RecLastUpdatedDt)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="departmentId">@EPMS.Web.Resources.HR.JobOffered.JobTitle</label>
+            </div>
+            <div class="span2">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.JobOffered.JobTitleId, new SelectList(Model.JobTitleList, "JobTitleId", "JobTitleNameE"), EPMS.Web.Resources.HR.JobOffered.SelectJobTitle, new { @class = "select2me", id = "jobTitle" })
+                        @Html.ValidationMessageFor(m => m.JobOffered.JobTitleId, "", new { @class = "required" })
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.JobOffered.JobTitleId, new SelectList(Model.JobTitleList, "JobTitleId", "JobTitleNameA"), EPMS.Web.Resources.HR.JobOffered.SelectJobTitle, new { @class = "select2me", id = "jobTitle" })
+                        @Html.ValidationMessageFor(m => m.JobOffered.JobTitleId, "", new { @class = "required" })
+                    </div>
+                }
+            </div>
+            <div class="span4">
+                <label id="jobtitlevalidate" style="margin-top: 20px"></label>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.JobDescription</label>
+            </div>
+            <div class="span9">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor((model => model.JobOffered.JobTitleDescE), new { @disabled = true, @id = "jobTitleDesc" })
+                        
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.JobOffered.JobTitleDescA, new { @disabled = true, @id = "jobTitleDesc" })
+                    </div>
+                }
+                
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.Department</label>
+            </div>
+            <div class="span9">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new {@disabled = true, @id = "departmentName"})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new {@disabled = true, @id = "departmentName"})
+                    </div>
+                }
+                
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.NoOfPosts</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.NoOfPosts, new { @id = "NoOfVacancies" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.ShowBasicSalary</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="Show" data-off-label="Hide" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                    @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "ShowBasicSalary" })
+                </div>
+            </div>
+        </div>
+        <div id="basicSal" class="control-group row-fluid" style="display: none">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.BasicSalaray</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.JobOffered.BasicSalary, new { @disabled = true, @id = "basicSalary" })
+                </div>
+
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.HR.JobOffered.IsOpen</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="Open" data-off-label="Close" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                    @Html.CheckBoxFor(model => model.JobOffered.IsOpen, new { @id = "IsOpen" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    @*<button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>*@
+                    <button id="savebtn" class="btn" type="submit" onclick="validateForm(event)">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
+<script>
+
+    $(document).ready(function () {
+        DivHideShow('ShowBasicSalary', 'basicSal');
+
+        var siteUrl = $('#siteURL').val();
+        $("#jobTitle").on("change", function() {
+            var depId = $(this).val();
+            if (depId > 0) {
+                $('#SearchRequest_JobId').empty();
+                var url = siteUrl + "/HR/JobOffered/GetJobTitles";
+                $.blockUI({
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        deptId: depId
+                    },
+                    success: function(data) {
+                        $("#jobTitleDesc").val(data.JobTitleDescE);
+                        $("#basicSalary").val(data.BasicSalary);
+                        $('#departmentName').val(data.DepartmentNameE);
+                        $.unblockUI();
+                    },
+                    error: function(e) {
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
+                $('#mainbar').unblock();
+                $('#SearchRequest_JobId').empty();
+            }
+
+        });
+    });
+
+//GENERAL FUNCTIONS
+    function DivHideShow(chk, div) {
+        var divToBeAffected = '#' + div;
+        if ($('#' + chk).is(":checked")) {
+            $(divToBeAffected).show();
+        } else {
+            $(divToBeAffected).hide();
+        }
+    };
+
+    $('#ShowBasicSalary').change(function() {
+        DivHideShow('ShowBasicSalary', 'basicSal');
+    });
+
+    function validateForm(event) {
+        var counter = 0;
+        if ($("#jobTitle").val() == null || $("#jobTitle").val() == "") {
+            $("#jobtitlevalidate").text("Please select Job Title");
+            counter++;
+            $("#jobtitlevalidate").addClass("Error");
+
+        } else {
+            $("#jobtitlevalidate").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return true;
+    };
+
+</script>

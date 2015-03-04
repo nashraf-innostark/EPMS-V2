@@ -1,0 +1,91 @@
+﻿@model EPMS.Web.ViewModels.Customer.CustomerViewModel
+@{
+    ViewBag.Title = EPMS.Web.Resources.CMS.Customer.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="/Home/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                @EPMS.Web.Resources.CMS.Customer.IndexLabel
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!--Header begin-->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.CMS.Customer.IndexLabel</small></h2>
+</header>
+<!--Header end-->
+<form class="form-horizontal">
+    <div id="English" class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <table id="CustomerList" class="table table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            @if(direction == "ltr"){
+                            <th>@EPMS.Web.Resources.CMS.Customer.NameEn</th>
+                            }
+                            else{
+                            <th>@EPMS.Web.Resources.CMS.Customer.NameAr</th>
+                            }
+                            <th>@EPMS.Web.Resources.CMS.Customer.NoOfOrders</th>
+                            <th>@EPMS.Web.Resources.CMS.Customer.LatestComplaint</th>
+                            <th>@EPMS.Web.Resources.CMS.Customer.LatestOrder</th>
+                            <th>@EPMS.Web.Resources.CMS.Customer.CustomerAddress</th>
+                            <th>@EPMS.Web.Resources.CMS.Customer.CustomerMobile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CustomerList.ToList())
+                        {
+                            <tr>
+                                <td>@item.CustomerId</td>
+                                <td>@Html.ActionLink(@item.CustomerNameE, "Details", new { id = item.CustomerId }) </td>
+                                <td>@item.OrdersCount</td>
+                                <td>@item.LatestComplaint</td>
+                                <td>@item.LatestOrder</td>
+                                <td>@item.CustomerAddress</td>
+                                <td>@item.CustomerMobile</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $('#CustomerList').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                { "bVisible": false },
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null
+            ],
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+    });
+</script>
+

@@ -1,0 +1,289 @@
+﻿@model EPMS.Web.ViewModels.Help.HelpViewModel
+
+@{
+    ViewBag.Title = "Admin Help";
+    Layout = "~/Views/Shared/_HelpLayout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>Help</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+
+<form class="form-horizontal">
+
+    <div class="container-fluid">
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Title">Title English</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="Title" type="text" name="inputField" class="required">
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TitleAr">Title Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="TitleAr" type="text" name="inputField" class="required">
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="">Menu Type </label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    <select class="menuTypeSelect">
+                        <option>Main Parent</option>
+                        <option>Parent</option>
+                        <option>Content</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+        <!--Input Field begin-->
+        <div class="control-group row-fluid contentHelp helpContentHide">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">Content English</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformation" type="text" name="CLK Editor" placeholder="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid contentHelp helpContentHide">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformationAr">Content Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformationAr" type="text" name="CLK Editor" placeholder="CLK Editor">
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+
+
+
+    </div>
+
+</form>
+<div class="panel">
+    <div class="panel-content filler">
+
+        <div class="panel-header">
+            <h1><small>Help</small></h1>
+            <button type="submit" class="btn btn-mini"><i class="icon-photon move_alt2"></i> Add New</button>
+        </div>
+        <div class="panel-search container-fluid">
+            <form class="form-horizontal" action="javascript:;">
+                <input id="panelSearch" placeholder="Search" type="text" name="panelSearch">
+                <button class="btn btn-search"></button>
+            </form>
+        </div>
+        <div class="sidebarMenuHolder">
+            <div class="JStree">
+                <div class="Jstree_shadow_top"></div>
+                <div id="jstree"></div>
+                <div class="Jstree_shadow_bottom"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-slider">
+        <div class="panel-slider-center">
+            <div class="panel-slider-arrow"></div>
+        </div>
+    </div>
+</div>
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CKEDITOR.replace('ExtraInformation');
+        CKEDITOR.replace('ExtraInformationAr');
+        $(".menuTypeSelect").change(function () {
+
+            if ($(this).val() == "Parent" || $(this).val() == "Main Parent") {
+                $(".contentHelp").addClass("helpContentHide");
+
+            }
+            else {
+                $(".contentHelp").removeClass("helpContentHide");
+            }
+        });
+        var searchTags = [
+                            "Get Started",
+                            "Form Elements",
+                            "Graphs and Statistics",
+                            "Typography",
+                            "Grid",
+                            "Tables",
+                            "Maps",
+                            "Sidebar Widgets",
+                            "Error Pages",
+                            "Help",
+                            "Input Fields",
+                            "Masked Input Fields",
+                            "Autotabs",
+                            "Text Areas",
+                            "Select Menus",
+                            "Other Form Elements",
+                            "Form Validation",
+                            "UI Elements",
+                            "Graphs",
+                            "Statistical Elements",
+                            "400 Bad Request",
+                            "401 Unauthorized",
+                            "403 Forbidden",
+                            "404 Page Not Found",
+                            "500 Internal Server Error",
+                            "503 Service Unavailable"
+        ];
+        $("#panelSearch").autocomplete({
+            source: searchTags
+        });
+        $("#jstree").jstree({
+            "json_data": {
+                "data": [
+                    {
+                        "data": {
+                            "title": "Get started",
+                            "attr": { "href": "#" }
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "title": "Sign up",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Loggin in",
+                                    "attr": { "href": "#" }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "title": "Manage Your Account",
+                            "attr": { "href": "#" }
+                        },
+                        "attr": { "id": "node1" },
+                        "children": [
+                            {
+                                "data": {
+                                    "title": "Account Settings",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Warnings and Blocks",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Reseting Your Password",
+                                    "attr": { "href": "#" }
+                                },
+                                "attr": { "id": "node2" },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "title": "How Do I Reset My Password?",
+                                            "attr": { "href": "#" }
+                                        },
+                                        "attr": { "id": "node3" },
+                                    },
+                                    {
+                                        "data": {
+                                            "title": "I Forgot My Password",
+                                            "attr": { "href": "#" }
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "title": "Can You Send Me a Copy of Password Without Reseting It?",
+                                            "attr": { "href": "#" }
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "title": "How Can I Recover My Secret Question?",
+                                            "attr": { "href": "#" }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "title": "Deactivating, Deleting, Saving",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Downloading Your Info",
+                                    "attr": { "href": "#" }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "title": "Security",
+                            "attr": { "href": "#" }
+                        }
+                    },
+                    {
+                        "data": {
+                            "title": "Privacy",
+                            "attr": { "href": "#" }
+                        }
+                    }
+                ]
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["node3"]
+            },
+            "core": {
+                "initially_open": ["node1", "node2"]
+            }
+        });
+    });
+</script>

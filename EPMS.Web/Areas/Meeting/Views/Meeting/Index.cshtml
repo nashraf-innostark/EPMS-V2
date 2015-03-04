@@ -1,0 +1,145 @@
+﻿@model EPMS.Web.ViewModels.Meeting.MeetingListViewModel
+
+@{
+    ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.MeetingList;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<!-- Navigation Bar Start-->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                @EPMS.Web.Resources.Meeting.Meeting.MeetingList
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Navigation Bar End-->
+
+<!-- Page Heading Start-->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+    <h3> <small><a href="~/Meeting/Meeting/Create">@EPMS.Web.Resources.Meeting.Meeting.Create</a></small></h3>
+</header>
+<!-- Page Heading End-->
+
+<form class="form-horizontal">
+    @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" });
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <table id="meetingsTable" class="table table-striped table-responsive">
+                    <thead class="cf sorthead">
+                        <tr>
+                            <th></th>
+                            @if (direction == "ltr")
+                            {
+                                <th>@EPMS.Web.Resources.Meeting.Meeting.TopicName</th>
+                            }
+                            else
+                            {
+                                <th>@EPMS.Web.Resources.Meeting.Meeting.TopicNameAr</th>
+                            }
+                            <th>@EPMS.Web.Resources.Meeting.Meeting.RelatedProj</th>
+                            <th>@EPMS.Web.Resources.Meeting.Meeting.MeetingDate</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function() {
+        var siteUrl = $('#siteURL').val();
+        var oTable = $('#meetingsTable').dataTable({
+            "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": true,
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "No Data",
+                    "mRender": function(data, type, full) {
+                        return full["MeetingId"];
+                    },
+                    "bVisible": false,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function(data, type, full) {
+                        var name = full["TopicName"];
+                        var id = full["MeetingId"];
+                        var element = '<a href="Create/' + id + '">' + name + '</a>';
+                        return element;
+                    },
+                    "bSortable": false
+                },
+                //{
+                //    "aTargets": [2],
+                //    "sDefaultContent": "No Data",
+                //    "mRender": function(data, type, full) {
+                //        var name = full["TopicNameAr"];
+                //        var id = full["MeetingId"];
+                //        var element = '<a href="Create/' + id + '">' + name + '</a>';
+                //        return element;
+                //    },
+                //    "bSortable": false
+                //},
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "No Data",
+                    "mRender": function(data, type, full) {
+                        return full["RelatedProject"];
+                    },
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function(data, type, full) {
+                        return full["DateString"];
+                    },
+                }
+            ],
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
+            "sAjaxSource": siteUrl + "/Meeting/Index",
+            //"aaSorting": [[2, 'asc'], [3, 'asc'], [4, 'asc'], [5, 'asc']],
+            "sServerMethod": "POST",
+            "oLanguage": {
+                //"sProcessing": "Fetching record(s)",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            }
+        });
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+    });
+</script>

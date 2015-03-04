@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using EPMS.Interfaces.Repository;
-using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
-using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 using Microsoft.Practices.Unity;
 using EPMS.Repository.BaseRepository;
 
 namespace EPMS.Repository.Repositories
 {
-    public class DepartmentRepository : BaseRepository<Department>, IDepartmentRepository
+    public sealed class DepartmentRepository : BaseRepository<Department>, IDepartmentRepository
     {
         #region Constructor
         /// <summary>
@@ -34,63 +28,25 @@ namespace EPMS.Repository.Repositories
 
         #endregion
 
-        #region Private
-
-        /// <summary>
-        /// Order by Column Names Dictionary statements
-        /// </summary>
-        private readonly Dictionary<DepartmentByColumn, Func<Department, object>> departmentClause =
-
-            new Dictionary<DepartmentByColumn, Func<Department, object>>
-                    {
-                        { DepartmentByColumn.DepartmentId, c => c.DepartmentId},
-                        { DepartmentByColumn.DepartmentName,  c => c.DepartmentName},
-                        { DepartmentByColumn.DepartmentDesc, c => c.DepartmentDesc}
-                    };
-        #endregion
-
-        /// <summary>
-        /// Get all Department with filters if any
-        /// </summary>
-        /// <param name="departmentSearchRequest"></param>
-        /// <returns>Department Repsonse</returns>
-        public DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest)
+        public IQueryable<Department> GetEmployeesByDepartment(int id)
         {
-            int fromRow = (departmentSearchRequest.PageNo - 1) * departmentSearchRequest.PageSize;
-            int toRow = departmentSearchRequest.PageSize;
-
-            Expression<Func<Department, bool>> query =
-                s => (((departmentSearchRequest.DepartmentId == 0) || s.DepartmentId == departmentSearchRequest.DepartmentId
-                    || s.DepartmentId == departmentSearchRequest.DepartmentId) &&
-                    (string.IsNullOrEmpty(departmentSearchRequest.DepartmentName)
-                    || (s.DepartmentName.Contains(departmentSearchRequest.DepartmentName))));
-
-            IEnumerable<Department> departments = departmentSearchRequest.IsAsc ?
-                DbSet
-                .Where(query).OrderBy(departmentClause[departmentSearchRequest.DepapartmentByColumn]).Skip(fromRow).Take(toRow).ToList()
-                                           :
-                                           DbSet
-                                           .Where(query).OrderByDescending(departmentClause[departmentSearchRequest.DepapartmentByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new DepartmentResponse { Departments  = departments, TotalCount = DbSet.Count(query) };
+            return
+                DbSet.Where(x => x.DepartmentId == id);
         }
 
-        /// <summary>
-        /// Get department by Department ID
-        /// </summary>
-        /// <param name="id">Department ID</param>
-        /// <returns></returns>
-        public Department FindDepartmentById(int? id)
+        public bool DepartmentExists(Department department)
         {
-            return DbSet.FirstOrDefault(departmentId => departmentId.DepartmentId == id);
-        }
-
-        /// <summary>
-        /// Load all Departmrnts
-        /// </summary>
-        /// <returns>List of all Deparments</returns>
-        public IEnumerable<Department> LoadAll()
-        {
-            return DbSet.ToList();
+            if (department.DepartmentId > 0) //Alread saved in system
+            {
+                return DbSet.Any(
+                    dept =>
+                        department.DepartmentId != dept.DepartmentId &&
+                        (dept.DepartmentNameE == department.DepartmentNameE || dept.DepartmentNameA == department.DepartmentNameA));
+            }
+            // New Department
+            return DbSet.Any(
+                    dept =>
+                        (dept.DepartmentNameE == department.DepartmentNameE || dept.DepartmentNameA == department.DepartmentNameA));
         }
     }
 }

@@ -2,13 +2,10 @@
 using System.IO;
 using EPMS.WebBase;
 using EPMS.WebBase.UnityConfiguration;
-using IdentitySample.Models;
-using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Mvc;
 using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
@@ -16,11 +13,10 @@ using System.Web.Http;
 using UnityDependencyResolver = EPMS.WebBase.UnityConfiguration.UnityDependencyResolver;
 using System;
 using System.Web;
+using System.Globalization;
 
 namespace IdentitySample
 {
-    // Note: For instructions on enabling IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=301868
     public class MvcApplication : System.Web.HttpApplication
     {
         #region Private
@@ -75,10 +71,8 @@ namespace IdentitySample
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Set MVC resolver
-            //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             // Set Web Api resolver
-            //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
         private void Session_Start(object sender, EventArgs e)

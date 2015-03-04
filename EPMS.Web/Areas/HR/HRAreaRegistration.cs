@@ -17,7 +17,7 @@ namespace EPMS.Web.Areas.HR
             context.MapRoute(
                 "HR_default",
                 "HR/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { id = UrlParameter.Optional}
             );
         }
     }

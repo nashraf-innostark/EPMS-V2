@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace EPMS.Web.Models
 {
     public class Department
     {
-        public long? DepartmentId { get; set; }
+        public long DepartmentId { get; set; }
         [Required(ErrorMessage = "Department Name is required.")]
+        [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
         public string DepartmentNameE { get; set; }
+        [Required(ErrorMessage = "Department Name is required.")]
+        [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
         public string DepartmentNameA { get; set; }
-        [Required(ErrorMessage = "Department Description is required.")]
+        [StringLength(1000, ErrorMessage = "Cannot exceed 1000 characters.")]
         public string DepartmentDesc { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public string RecCreatedBy { get; set; }
+        public DateTime? RecCreatedDt { get; set; }
+        public string RecLastUpdatedBy { get; set; }
+        public DateTime? RecLastUpdatedDt { get; set; }
 
-        public virtual ICollection<JobTitle> JobTitles { get; set; }
+        //public virtual ICollection<JobTitle> JobTitles { get; set; }
     }
 }

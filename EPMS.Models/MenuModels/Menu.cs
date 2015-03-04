@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Security.AccessControl;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.MenuModels
 {
@@ -32,6 +32,7 @@ namespace EPMS.Models.MenuModels
         /// Menu Image Path
         /// </summary>
         public string MenuImagePath { get; set; }
+        public string MenuItemClass { get; set; }
         /// <summary>
         /// Menu Function
         /// </summary>
@@ -49,11 +50,12 @@ namespace EPMS.Models.MenuModels
         /// </summary>
         public bool IsMenuItem { get; set; }
 
-        public int? ParentItem_MenuId { get; set; }
+        public int? ParentItem_Menu { get; set; }
         /// <summary>
         /// Menu Parent Item
         /// </summary>
         public virtual Menu ParentItem { get; set; }
         public virtual ICollection<MenuRight> MenuRights { get; set; }
+        public virtual ICollection<QuickLaunchItem> QuickLaunchItems { get; set; }
     }
 }

@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="AddNewProject" xml:space="preserve">
+    <value>Add New Project</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>Client Name</value>
+  </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create Project</value>
+  </data>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>Delivery Date</value>
+  </data>
+  <data name="DescriptionA" xml:space="preserve">
+    <value>Description arabic</value>
+  </data>
+  <data name="DescriptionE" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="FileSize" xml:space="preserve">
+    <value>file size shouldn't exceed 1MB</value>
+  </data>
+  <data name="FinishedProjects" xml:space="preserve">
+    <value>Finished Projects</value>
+  </data>
+  <data name="FinishedProjectsList" xml:space="preserve">
+    <value>Finished Projects List</value>
+  </data>
+  <data name="ListPageHeading" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="ListPageTitle" xml:space="preserve">
+    <value>Project Management</value>
+  </data>
+  <data name="NewProject" xml:space="preserve">
+    <value>New Project</value>
+  </data>
+  <data name="NotesA" xml:space="preserve">
+    <value>Notes arabic</value>
+  </data>
+  <data name="NotesCustomerA" xml:space="preserve">
+    <value>Notes For Customer arabic</value>
+  </data>
+  <data name="NotesCustomerE" xml:space="preserve">
+    <value>Notes For Customer</value>
+  </data>
+  <data name="NotesE" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="OrderNo" xml:space="preserve">
+    <value>Order Name - Number</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="ProjectNameAr" xml:space="preserve">
+    <value>Project Name arabic</value>
+  </data>
+  <data name="ProjectNameARequiredMsg" xml:space="preserve">
+    <value>Project name in arabic is required</value>
+  </data>
+  <data name="ProjectNameERequiredMsg" xml:space="preserve">
+    <value>Project name in english is required</value>
+  </data>
+  <data name="ProjectSerialNo" xml:space="preserve">
+    <value>Project Serial Number</value>
+  </data>
+  <data name="ProjectsList" xml:space="preserve">
+    <value>Projects List</value>
+  </data>
+  <data name="SelectClientName" xml:space="preserve">
+    <value>- Select Client -</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="TaskDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="CreateShowReceipt" xml:space="preserve">
+    <value>Create/Show Receipt</value>
+  </data>
+  <data name="DueAtProjectPorgress" xml:space="preserve">
+    <value>Due At Project Porgress</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="Installment" xml:space="preserve">
+    <value>Installment</value>
+  </data>
+  <data name="InstallmentPlan" xml:space="preserve">
+    <value>Installment Plan</value>
+  </data>
+  <data name="MethodOfPayment" xml:space="preserve">
+    <value>Method of Payment</value>
+  </data>
+  <data name="OtherCost" xml:space="preserve">
+    <value>Other Cost</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Profit</value>
+  </data>
+  <data name="TaskPreReq" xml:space="preserve">
+    <value>Pre-requist task</value>
+  </data>
+  <data name="TotalTasksCost" xml:space="preserve">
+    <value>Total Tasks Cost</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="ProjectCreatedMsg" xml:space="preserve">
+    <value>Project has been created!</value>
+  </data>
+  <data name="ProjectDetails" xml:space="preserve">
+    <value>Project Details</value>
+  </data>
+  <data name="ProjectUpdatedMsg" xml:space="preserve">
+    <value>Project has been updated!</value>
+  </data>
+  <data name="DeleteFile" xml:space="preserve">
+    <value>Delete File</value>
+  </data>
+  <data name="DocumentHoverText" xml:space="preserve">
+    <value>Drop Here</value>
+  </data>
+  <data name="DocumentUpload" xml:space="preserve">
+    <value>Drag your file(s) here or click (max: 1MB each)</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit  </value>
+  </data>
+  <data name="ProjectNameE" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="ProjectPrice" xml:space="preserve">
+    <value>Project Price</value>
+  </data>
+  <data name="ProjectStatus" xml:space="preserve">
+    <value>Project Status</value>
+  </data>
+  <data name="UpdateProject" xml:space="preserve">
+    <value>Update Project</value>
+  </data>
+  <data name="ProjectEndDateRequiredMsg" xml:space="preserve">
+    <value>Select project delivery date.</value>
+  </data>
+  <data name="ProjectStartDateRequiredMsg" xml:space="preserve">
+    <value>Select project start date.</value>
+  </data>
+</root>

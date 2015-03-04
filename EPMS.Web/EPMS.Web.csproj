@@ -65,7 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0-alpha1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -133,6 +135,7 @@
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>SolutionDLL\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.2\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
@@ -146,27 +149,51 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Activities" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Activities">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -191,22 +218,42 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Routing" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <Private>True</Private>
@@ -239,50 +286,126 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
+    <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
+    <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
+    <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
+    <Compile Include="Areas\CP\CPAreaRegistration.cs" />
+    <Compile Include="Areas\Help\Controllers\HelpController.cs" />
+    <Compile Include="Areas\Help\HelpAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Controllers\ContactListController.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\HR\Controllers\JobApplicantController.cs" />
+    <Compile Include="Areas\HR\Controllers\JobOfferedController.cs" />
     <Compile Include="Areas\HR\Controllers\JobTitleController.cs" />
+    <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
+    <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
-    <Compile Include="Areas\HR\Models\Allowance.cs" />
-    <Compile Include="Areas\HR\Models\Department.cs" />
-    <Compile Include="Areas\HR\Models\Employee.cs" />
-    <Compile Include="Areas\HR\Models\JobApplicant.cs" />
-    <Compile Include="Areas\HR\Models\JobOffered.cs" />
-    <Compile Include="Areas\HR\Models\JobTitle.cs" />
-    <Compile Include="Areas\HR\Models\Notification.cs" />
-    <Compile Include="Areas\Notification\NotificationAreaRegistration.cs" />
+    <Compile Include="Areas\LCP\Controllers\LicenseController.cs" />
+    <Compile Include="Areas\LCP\LCPAreaRegistration.cs" />
+    <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
+    <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
+    <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CultureController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFCheckBoxFieldType.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFFieldType.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFHelper.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFOtherFieldType.cs" />
-    <Compile Include="Files\PDF Helping Files\PDFTextFieldType.cs" />
+    <Compile Include="DashboardModels\Complaint.cs" />
+    <Compile Include="DashboardModels\Customer.cs" />
+    <Compile Include="DashboardModels\Department.cs" />
+    <Compile Include="DashboardModels\EmployeeRequest.cs" />
+    <Compile Include="DashboardModels\Meeting.cs" />
+    <Compile Include="DashboardModels\Order.cs" />
+    <Compile Include="DashboardModels\Payment.cs" />
+    <Compile Include="DashboardModels\Payroll.cs" />
+    <Compile Include="DashboardModels\Profile.cs" />
+    <Compile Include="DashboardModels\Project.cs" />
+    <Compile Include="DashboardModels\Recruitment.cs" />
+    <Compile Include="EncryptDecrypt\StringCipher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\CompanyProfileMapper.cs" />
+    <Compile Include="ModelMappers\ComplaintMapper.cs" />
+    <Compile Include="ModelMappers\CustomerMapper.cs" />
+    <Compile Include="ModelMappers\DashboardMappers.cs" />
+    <Compile Include="ModelMappers\DashboardWidgetPreferencesMapper.cs" />
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
+    <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
+    <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
+    <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
+    <Compile Include="ModelMappers\LicenseMapper.cs" />
+    <Compile Include="ModelMappers\MeetingAttendeeMapper.cs" />
+    <Compile Include="ModelMappers\MeetingMapper.cs" />
+    <Compile Include="ModelMappers\OrdersMapper.cs" />
+    <Compile Include="ModelMappers\PMS\PreRequisitTasksMapper.cs" />
+    <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
+    <Compile Include="ModelMappers\PMS\ProjectTaskMapper.cs" />
+    <Compile Include="ModelMappers\PMS\TaskEmployeeMapper.cs" />
+    <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
+    <Compile Include="ModelMappers\QuotationMapper.cs" />
+    <Compile Include="ModelMappers\RecruitmentMapper.cs" />
+    <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Allowance.cs" />
+    <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\CompanyBankDetail.cs" />
+    <Compile Include="Models\CompanyDocumentDetail.cs" />
+    <Compile Include="Models\CompanyLicenseInformation.cs" />
+    <Compile Include="Models\CompanyProfile.cs" />
+    <Compile Include="Models\CompanySocialDetail.cs" />
+    <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\ContactList.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DashboardWidgetPreferences.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
+    <Compile Include="Models\JobApplicant.cs" />
+    <Compile Include="Models\LicenseControlPanel.cs" />
+    <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\MeetingAttendee.cs" />
+    <Compile Include="Models\MeetingModel.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\PreRequisitTask.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectsForDDL.cs" />
+    <Compile Include="Models\ProjectTask.cs" />
+    <Compile Include="Models\QuickLaunchMenuItems.cs" />
+    <Compile Include="Models\QuickLaunchItems.cs" />
+    <Compile Include="Models\QuickLaunchUserItems.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\QuotationItemDetail.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\JobOffered.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitleAndDepartment.cs" />
     <Compile Include="Models\JobTitleDropDown.cs" />
+    <Compile Include="Models\JQueryDataTableParamModel.cs" />
+    <Compile Include="Models\Payroll.cs" />
+    <Compile Include="Models\RequestDetail.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SystemUser.cs" />
+    <Compile Include="Models\TaskEmployee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\ESDS.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -303,6 +426,196 @@
     <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
       <DependentUpon>PrisonerReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Complaint.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Complaint.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Complaint.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Customer.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Customer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Order.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Order.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Order.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Order.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CP\Profile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profile.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Quotation.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quotation.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CP\Profile.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Profile.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Dashboard\Dashboard.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dashboard.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\Quotation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Quotation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Account.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Account.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\ContactsList.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsList.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\ContactsList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContactsList.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Department.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Department.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Department.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Department.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Employee.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employee.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Employee.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Employee.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobApplicant.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobApplicant.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobApplicantAr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobApplicantAr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobOffered.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobOffered.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobOfferedAr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobOfferedAr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobTitle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobTitle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\JobTitle.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JobTitle.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Payroll.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Payroll.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Payroll.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Payroll.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Request.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Request.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Request.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Request.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Tasks.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tasks.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HR\Tasks.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tasks.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Meeting\Meeting.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Meeting.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Meeting\Meeting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Meeting.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Notification\Notification.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Notification\Notification.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PMS\Project.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Project.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PMS\Project.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Project.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PMS\Task.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Task.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\PMS\Task.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Task.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -313,26 +626,47 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Products\Product.ar.Designer.cs">
-      <DependentUpon>Product.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Products\Product.Designer.cs">
-      <DependentUpon>Product.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
-    <Compile Include="ViewModels\Department\DepartmentViewModel.cs" />
+    <Compile Include="ViewModels\CompanyProfile\CompanyProfileViewModel.cs" />
+    <Compile Include="ViewModels\Complaint\ComplaintViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Dashboard\DashboardViewModel.cs" />
+    <Compile Include="DashboardModels\Employee.cs" />
+    <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
+    <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\Help\HelpViewModel.cs" />
+    <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
+    <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
+    <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
+    <Compile Include="ViewModels\License\LicenseCreateViewModel.cs" />
+    <Compile Include="ViewModels\License\LicenseIndexViewModel.cs" />
+    <Compile Include="ViewModels\Meeting\MeetingListViewModel.cs" />
+    <Compile Include="ViewModels\Meeting\MeetingViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
+    <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
+    <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
+    <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
+    <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
+    <Compile Include="ViewModels\Request\RequestViewModel.cs" />
+    <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -340,8 +674,48 @@
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
     </Compile>
+    <Content Include="403.html" />
+    <Content Include="400.html" />
+    <Content Include="503.html" />
+    <Content Include="401.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
+    <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
+    <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
+    <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
+    <Content Include="Areas\Meeting\Views\web.config" />
+    <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
+    <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
+    <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Content\CSS\help-photon.css" />
+    <Content Include="Content\CSS\photon.css" />
+    <Content Include="Content\CSS\plugins\jstree\default\style.css" />
+    <Content Include="Content\plugins\jstree\default\style.css" />
+    <Content Include="NotificationsTextFiles\EmployeeIqamaExpiryEmail.txt" />
+    <Content Include="NotificationsTextFiles\EmployeeIqamaExpirySMS.txt" />
+    <Content Include="NotificationsTextFiles\EmployeePassportExpiryEmail.txt" />
+    <Content Include="NotificationsTextFiles\EmployeePassportExpirySMS.txt" />
+    <Content Include="NotificationsTextFiles\EmployeeRequestEmail.txt" />
+    <Content Include="NotificationsTextFiles\EmployeeRequestSMS.txt" />
+    <Content Include="Scripts\plugins\jquery.jstree.js" />
+    <Content Include="Views\Notification\Create.cshtml" />
+    <Content Include="Views\Notification\Details.cshtml" />
+    <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Notification\Sent.cshtml" />
+    <Content Include="Areas\LCP\Views\web.config" />
+    <Content Include="Areas\LCP\Views\License\Index.cshtml" />
+    <Content Include="Areas\LCP\Views\License\Create.cshtml" />
+    <Content Include="Areas\Help\Views\web.config" />
+    <Content Include="Areas\Help\Views\Help\Index.cshtml" />
+    <Content Include="Views\Shared\_HelpLayout.cshtml" />
+    <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Files\ApplicantCvs\dummy.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ClinicAdmin.css" />
@@ -455,6 +829,7 @@
     <Content Include="Content\CSS\Admin\style\uniform.default.html" />
     <Content Include="Content\CSS\Admin\style\validationEngine.jquery.css" />
     <Content Include="Content\CSS\Admin\style\widgets.css" />
+    <Content Include="Content\CSS\arabic.css" />
     <Content Include="Content\CSS\architecture.css" />
     <Content Include="Content\CSS\architecture_old.css" />
     <Content Include="Content\CSS\bootstrap-rtl.css" />
@@ -468,14 +843,22 @@
     <Content Include="Content\CSS\multiselect\ui.dropdownchecklist.standalone.css" />
     <Content Include="Content\CSS\multiselect\ui.dropdownchecklist.themeroller.css" />
     <Content Include="Content\CSS\PagedList.css" />
+    <Content Include="Content\CSS\photon-pt2.css" />
+    <Content Include="Content\CSS\photon-responsive.css" />
     <Content Include="Content\CSS\responsive-tables.css" />
     <Content Include="Content\CSS\responsive.css" />
     <Content Include="Content\CSS\spinner.gif" />
     <Content Include="Content\CSS\style.css" />
     <Content Include="Content\CSS\styleIST.css" />
+    <Content Include="Content\css_compiled\ie-only-min.css" />
+    <Content Include="Content\css_compiled\ie8-only-min.css" />
+    <Content Include="Content\css_compiled\photon-min-part2.css" />
+    <Content Include="Content\css_compiled\photon-min.css" />
+    <Content Include="Content\css_compiled\photon-responsive-min.css" />
     <Content Include="Content\datatable\demo_page.css" />
     <Content Include="Content\datatable\demo_table.css" />
     <Content Include="Content\datatable\demo_table_jui.css" />
+    <Content Include="Content\Images\LoginLogo.png" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\jquery.calendars.picker.css" />
     <Content Include="Content\CSS\zebra.css" />
@@ -609,6 +992,10 @@
     <Content Include="Content\jquery-ui-1.11.0.min.css" />
     <Content Include="Content\jquery.dataTables.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\plugins\jquery.pnotify.original.css" />
+    <Content Include="Content\plugins\jquery.ui.1.8.16.ie.css" />
+    <Content Include="Content\rtl\readme.txt" />
+    <Content Include="Content\rtl\screen.css" />
     <Content Include="Content\simplePagination.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -676,15 +1063,1273 @@
     <Content Include="Content\toastr.min.css" />
     <Content Include="EmailTexts\ContactUs.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\MeetingDocuments\dummy.txt" />
+    <Content Include="Files\ProjectDocuments\dummy.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\200x100.png" />
+    <Content Include="Images\add_new_ico%402x.png" />
+    <Content Include="Images\arrow_menu.png" />
+    <Content Include="Images\arrow_menu_exp.png" />
+    <Content Include="Images\arrow_vert_slider.png" />
+    <Content Include="Images\arrow_vert_slider_exp.png" />
+    <Content Include="Images\back_disabled.png" />
+    <Content Include="Images\back_enabled.png" />
+    <Content Include="Images\back_enabled_hover.png" />
+    <Content Include="Images\bg-input-focus.png" />
+    <Content Include="Images\bg-input.png" />
+    <Content Include="Images\body-login.jpg" />
+    <Content Include="Images\body_bck.jpg" />
+    <Content Include="Images\brd_separator%402x.png" />
+    <Content Include="Images\brd_separator.png" />
+    <Content Include="Images\calendar%402x.png" />
+    <Content Include="Images\CompanyLogo\dummy.txt" />
+    <Content Include="Images\container-login.jpg" />
+    <Content Include="Images\dashboard%402x.png" />
+    <Content Include="Images\data-supplemental-icons.png" />
+    <Content Include="Images\delete.gif" />
+    <Content Include="Images\digits.png" />
+    <Content Include="Images\down-arrow.png" />
+    <Content Include="Images\Employee\profile.jpg" />
+    <Content Include="Images\entypo.svg" />
+    <Content Include="Images\error-pages%402x.png" />
+    <Content Include="Images\favicon.ico" />
+    <Content Include="Images\fb-arrow.png" />
+    <Content Include="Images\fb-login.png" />
+    <Content Include="Images\filter-label-background.png" />
+    <Content Include="Images\filter-option-child.png" />
+    <Content Include="Images\flag-uk.png" />
+    <Content Include="Images\form-elements%402x.png" />
+    <Content Include="Images\form-window-login-logo.png" />
+    <Content Include="Images\form-window-login.jpg" />
+    <Content Include="Images\forward_disabled.png" />
+    <Content Include="Images\forward_enabled.png" />
+    <Content Include="Images\forward_enabled_hover.png" />
+    <Content Include="Images\Gallery\ajax_loader.gif" />
     <Content Include="Images\Gallery\download-brochure.png" />
-    <Content Include="Images\News\35.jpg" />
-    <Content Include="Images\News\Altaf-Hussain-Arabi-meme.jpg" />
+    <Content Include="Images\glyphicons-halflings-white.png" />
+    <Content Include="Images\glyphicons-halflings.png" />
+    <Content Include="Images\graphs-and-statistics%402x.png" />
+    <Content Include="Images\grid%402x.png" />
+    <Content Include="Images\help%402x.png" />
+    <Content Include="Images\home_page%402x.png" />
+    <Content Include="Images\home_page-2x.png" />
+    <Content Include="Images\home_page-light-2x.png" />
+    <Content Include="Images\home_page-light.png" />
+    <Content Include="Images\home_page.png" />
+    <Content Include="Images\iconic_stroke.svg" />
+    <Content Include="Images\icons\addressBook.png" />
+    <Content Include="Images\icons\applicants.png" />
+    <Content Include="Images\icons\calender.png" />
+    <Content Include="Images\icons\company.png" />
+    <Content Include="Images\icons\complaints.png" />
+    <Content Include="Images\icons\default\add-item.png" />
+    <Content Include="Images\icons\default\addressbook.png" />
+    <Content Include="Images\icons\default\agent.png" />
+    <Content Include="Images\icons\default\apple.png" />
+    <Content Include="Images\icons\default\arrow-round.png" />
+    <Content Include="Images\icons\default\badge.png" />
+    <Content Include="Images\icons\default\bar-chart-02.png" />
+    <Content Include="Images\icons\default\bar-chart.png" />
+    <Content Include="Images\icons\default\battery-full.png" />
+    <Content Include="Images\icons\default\bird.png" />
+    <Content Include="Images\icons\default\boat.png" />
+    <Content Include="Images\icons\default\bookmark.png" />
+    <Content Include="Images\icons\default\briefcase.png" />
+    <Content Include="Images\icons\default\calculator.png" />
+    <Content Include="Images\icons\default\calendar.png" />
+    <Content Include="Images\icons\default\cassette.png" />
+    <Content Include="Images\icons\default\chain.png" />
+    <Content Include="Images\icons\default\chat-.png" />
+    <Content Include="Images\icons\default\chat-02.png" />
+    <Content Include="Images\icons\default\cloud-filled.png" />
+    <Content Include="Images\icons\default\cloud-outline.png" />
+    <Content Include="Images\icons\default\computer.png" />
+    <Content Include="Images\icons\default\configuration.png" />
+    <Content Include="Images\icons\default\configuration02.png" />
+    <Content Include="Images\icons\default\connected.png" />
+    <Content Include="Images\icons\default\connections.png" />
+    <Content Include="Images\icons\default\container.png" />
+    <Content Include="Images\icons\default\copy-item.png" />
+    <Content Include="Images\icons\default\database.png" />
+    <Content Include="Images\icons\default\delete-item.png" />
+    <Content Include="Images\icons\default\delete_t.png" />
+    <Content Include="Images\icons\default\disc.png" />
+    <Content Include="Images\icons\default\dollar.png" />
+    <Content Include="Images\icons\default\download.png" />
+    <Content Include="Images\icons\default\edit.png" />
+    <Content Include="Images\icons\default\edit_t.png" />
+    <Content Include="Images\icons\default\email.png" />
+    <Content Include="Images\icons\default\fan.png" />
+    <Content Include="Images\icons\default\fancy-globe.png" />
+    <Content Include="Images\icons\default\female-user.png" />
+    <Content Include="Images\icons\default\fire.png" />
+    <Content Include="Images\icons\default\first-aid.png" />
+    <Content Include="Images\icons\default\flag.png" />
+    <Content Include="Images\icons\default\flower.png" />
+    <Content Include="Images\icons\default\full-screen.png" />
+    <Content Include="Images\icons\default\glasses.png" />
+    <Content Include="Images\icons\default\globe.png" />
+    <Content Include="Images\icons\default\happy-face.png" />
+    <Content Include="Images\icons\default\headphone.png" />
+    <Content Include="Images\icons\default\heart.png" />
+    <Content Include="Images\icons\default\home.png" />
+    <Content Include="Images\icons\default\ID.png" />
+    <Content Include="Images\icons\default\ipod.png" />
+    <Content Include="Images\icons\default\lab.png" />
+    <Content Include="Images\icons\default\lady.png" />
+    <Content Include="Images\icons\default\lamp.png" />
+    <Content Include="Images\icons\default\leaves.png" />
+    <Content Include="Images\icons\default\light.png" />
+    <Content Include="Images\icons\default\line-globe.png" />
+    <Content Include="Images\icons\default\lock.png" />
+    <Content Include="Images\icons\default\lookup.png" />
+    <Content Include="Images\icons\default\male-user.png" />
+    <Content Include="Images\icons\default\microphone.png" />
+    <Content Include="Images\icons\default\mobile.png" />
+    <Content Include="Images\icons\default\mobile2.png" />
+    <Content Include="Images\icons\default\mouse.png" />
+    <Content Include="Images\icons\default\multi-agents.png" />
+    <Content Include="Images\icons\default\music-node.png" />
+    <Content Include="Images\icons\default\network-pc.png" />
+    <Content Include="Images\icons\default\network.png" />
+    <Content Include="Images\icons\default\next-item.png" />
+    <Content Include="Images\icons\default\phone.png" />
+    <Content Include="Images\icons\default\pie-chart.png" />
+    <Content Include="Images\icons\default\pin.png" />
+    <Content Include="Images\icons\default\plane.png" />
+    <Content Include="Images\icons\default\print.png" />
+    <Content Include="Images\icons\default\processing-02.png" />
+    <Content Include="Images\icons\default\processing.png" />
+    <Content Include="Images\icons\default\push-pin.png" />
+    <Content Include="Images\icons\default\q3.png" />
+    <Content Include="Images\icons\default\ql1%402x.png" />
+    <Content Include="Images\icons\default\ql1.png" />
+    <Content Include="Images\icons\default\ql2%402x.png" />
+    <Content Include="Images\icons\default\ql2.png" />
+    <Content Include="Images\icons\default\ql3%402x.png" />
+    <Content Include="Images\icons\default\ql3.png" />
+    <Content Include="Images\icons\default\ql4%402x.png" />
+    <Content Include="Images\icons\default\ql4.png" />
+    <Content Include="Images\icons\default\ql5%402x.png" />
+    <Content Include="Images\icons\default\ql5.png" />
+    <Content Include="Images\icons\default\ql6%402x.png" />
+    <Content Include="Images\icons\default\ql6.png" />
+    <Content Include="Images\icons\default\qlplus%402x.png" />
+    <Content Include="Images\icons\default\qlplus.png" />
+    <Content Include="Images\icons\default\qlplus_hover.png" />
+    <Content Include="Images\icons\default\recycle-empty.png" />
+    <Content Include="Images\icons\default\recycle-full.png" />
+    <Content Include="Images\icons\default\reload.png" />
+    <Content Include="Images\icons\default\rss.png" />
+    <Content Include="Images\icons\default\satellite.png" />
+    <Content Include="Images\icons\default\save.png" />
+    <Content Include="Images\icons\default\scale.png" />
+    <Content Include="Images\icons\default\Scissors.png" />
+    <Content Include="Images\icons\default\screen.png" />
+    <Content Include="Images\icons\default\search.png" />
+    <Content Include="Images\icons\default\server.png" />
+    <Content Include="Images\icons\default\shield.png" />
+    <Content Include="Images\icons\default\shut-down.png" />
+    <Content Include="Images\icons\default\star.png" />
+    <Content Include="Images\icons\default\tag.png" />
+    <Content Include="Images\icons\default\tap.png" />
+    <Content Include="Images\icons\default\tree.png" />
+    <Content Include="Images\icons\default\umbrella.png" />
+    <Content Include="Images\icons\default\unlock.png" />
+    <Content Include="Images\icons\default\usb.png" />
+    <Content Include="Images\icons\default\van.png" />
+    <Content Include="Images\icons\default\wifi.png" />
+    <Content Include="Images\icons\default\world.png" />
+    <Content Include="Images\icons\dialog_warning %281%29.png" />
+    <Content Include="Images\icons\e1[1].png" />
+    <Content Include="Images\icons\Four Pages.PNG" />
+    <Content Include="Images\icons\help.png" />
+    <Content Include="Images\icons\hover\add-item.png" />
+    <Content Include="Images\icons\hover\addressbook.png" />
+    <Content Include="Images\icons\hover\agent.png" />
+    <Content Include="Images\icons\hover\apple.png" />
+    <Content Include="Images\icons\hover\arrow-round.png" />
+    <Content Include="Images\icons\hover\badge.png" />
+    <Content Include="Images\icons\hover\bar-chart-02.png" />
+    <Content Include="Images\icons\hover\bar-chart.png" />
+    <Content Include="Images\icons\hover\battery-full.png" />
+    <Content Include="Images\icons\hover\bird.png" />
+    <Content Include="Images\icons\hover\boat.png" />
+    <Content Include="Images\icons\hover\bookmark.png" />
+    <Content Include="Images\icons\hover\briefcase.png" />
+    <Content Include="Images\icons\hover\calculator.png" />
+    <Content Include="Images\icons\hover\calendar.png" />
+    <Content Include="Images\icons\hover\cassette.png" />
+    <Content Include="Images\icons\hover\chain.png" />
+    <Content Include="Images\icons\hover\chat-.png" />
+    <Content Include="Images\icons\hover\chat-02.png" />
+    <Content Include="Images\icons\hover\cloud-filled.png" />
+    <Content Include="Images\icons\hover\cloud-outline.png" />
+    <Content Include="Images\icons\hover\computer.png" />
+    <Content Include="Images\icons\hover\configuration.png" />
+    <Content Include="Images\icons\hover\configuration02.png" />
+    <Content Include="Images\icons\hover\connected.png" />
+    <Content Include="Images\icons\hover\connections.png" />
+    <Content Include="Images\icons\hover\container.png" />
+    <Content Include="Images\icons\hover\copy-item.png" />
+    <Content Include="Images\icons\hover\database.png" />
+    <Content Include="Images\icons\hover\delete-item.png" />
+    <Content Include="Images\icons\hover\disc.png" />
+    <Content Include="Images\icons\hover\dollar.png" />
+    <Content Include="Images\icons\hover\download.png" />
+    <Content Include="Images\icons\hover\edit.png" />
+    <Content Include="Images\icons\hover\email.png" />
+    <Content Include="Images\icons\hover\fan.png" />
+    <Content Include="Images\icons\hover\fancy-globe.png" />
+    <Content Include="Images\icons\hover\female-user.png" />
+    <Content Include="Images\icons\hover\fire.png" />
+    <Content Include="Images\icons\hover\first-aid.png" />
+    <Content Include="Images\icons\hover\flag.png" />
+    <Content Include="Images\icons\hover\flower.png" />
+    <Content Include="Images\icons\hover\full-screen.png" />
+    <Content Include="Images\icons\hover\glasses.png" />
+    <Content Include="Images\icons\hover\globe.png" />
+    <Content Include="Images\icons\hover\happy-face.png" />
+    <Content Include="Images\icons\hover\headphone.png" />
+    <Content Include="Images\icons\hover\heart.png" />
+    <Content Include="Images\icons\hover\home.png" />
+    <Content Include="Images\icons\hover\ID.png" />
+    <Content Include="Images\icons\hover\ipod.png" />
+    <Content Include="Images\icons\hover\lab.png" />
+    <Content Include="Images\icons\hover\lady.png" />
+    <Content Include="Images\icons\hover\lamp.png" />
+    <Content Include="Images\icons\hover\leaves.png" />
+    <Content Include="Images\icons\hover\light.png" />
+    <Content Include="Images\icons\hover\line-globe.png" />
+    <Content Include="Images\icons\hover\lock.png" />
+    <Content Include="Images\icons\hover\lookup.png" />
+    <Content Include="Images\icons\hover\male-user.png" />
+    <Content Include="Images\icons\hover\microphone.png" />
+    <Content Include="Images\icons\hover\mobile.png" />
+    <Content Include="Images\icons\hover\mobile2.png" />
+    <Content Include="Images\icons\hover\mouse.png" />
+    <Content Include="Images\icons\hover\multi-agents.png" />
+    <Content Include="Images\icons\hover\music-node.png" />
+    <Content Include="Images\icons\hover\network-pc.png" />
+    <Content Include="Images\icons\hover\network.png" />
+    <Content Include="Images\icons\hover\next-item.png" />
+    <Content Include="Images\icons\hover\phone.png" />
+    <Content Include="Images\icons\hover\pie-chart.png" />
+    <Content Include="Images\icons\hover\pin.png" />
+    <Content Include="Images\icons\hover\plane.png" />
+    <Content Include="Images\icons\hover\print.png" />
+    <Content Include="Images\icons\hover\processing-02.png" />
+    <Content Include="Images\icons\hover\processing.png" />
+    <Content Include="Images\icons\hover\push-pin.png" />
+    <Content Include="Images\icons\hover\recycle-empty.png" />
+    <Content Include="Images\icons\hover\recycle-full.png" />
+    <Content Include="Images\icons\hover\reload.png" />
+    <Content Include="Images\icons\hover\rss.png" />
+    <Content Include="Images\icons\hover\satellite.png" />
+    <Content Include="Images\icons\hover\save.png" />
+    <Content Include="Images\icons\hover\scale.png" />
+    <Content Include="Images\icons\hover\Scissors.png" />
+    <Content Include="Images\icons\hover\screen.png" />
+    <Content Include="Images\icons\hover\search.png" />
+    <Content Include="Images\icons\hover\server.png" />
+    <Content Include="Images\icons\hover\shield.png" />
+    <Content Include="Images\icons\hover\shut-down.png" />
+    <Content Include="Images\icons\hover\star.png" />
+    <Content Include="Images\icons\hover\tag.png" />
+    <Content Include="Images\icons\hover\tap.png" />
+    <Content Include="Images\icons\hover\tree.png" />
+    <Content Include="Images\icons\hover\umbrella.png" />
+    <Content Include="Images\icons\hover\unlock.png" />
+    <Content Include="Images\icons\hover\usb.png" />
+    <Content Include="Images\icons\hover\van.png" />
+    <Content Include="Images\icons\hover\wifi.png" />
+    <Content Include="Images\icons\hover\world.png" />
+    <Content Include="Images\icons\invoices.png" />
+    <Content Include="Images\icons\list-icon.png" />
+    <Content Include="Images\icons\management.png" />
+    <Content Include="Images\icons\notification.png" />
+    <Content Include="Images\icons\paste.png" />
+    <Content Include="Images\icons\payRoll.png" />
+    <Content Include="Images\icons\profile.png" />
+    <Content Include="Images\icons\ql1%402x.png" />
+    <Content Include="Images\icons\ql10%402x.png" />
+    <Content Include="Images\icons\ql2%402x.png" />
+    <Content Include="Images\icons\ql3%402x.png" />
+    <Content Include="Images\icons\ql4%402x.png" />
+    <Content Include="Images\icons\ql5%402x.png" />
+    <Content Include="Images\icons\ql6%402x.png" />
+    <Content Include="Images\icons\ql7%402x.png" />
+    <Content Include="Images\icons\ql8%402x.png" />
+    <Content Include="Images\icons\ql9%402x.png" />
+    <Content Include="Images\icons\qlplus%402x.png" />
+    <Content Include="Images\icons\qlplus-light-2x.png" />
+    <Content Include="Images\icons\qlplus-light.png" />
+    <Content Include="Images\icons\qlplus.png" />
+    <Content Include="Images\icons\quotation.png" />
+    <Content Include="Images\icons\receipt.png" />
+    <Content Include="Images\icons\recruit.png" />
+    <Content Include="Images\icons\request.png" />
+    <Content Include="Images\icons\speaker.png" />
+    <Content Include="Images\icons\tasks.png" />
+    <Content Include="Images\icons\Untitled.png" />
+    <Content Include="Images\icons\user.png" />
+    <Content Include="Images\icons\vcard.png" />
+    <Content Include="Images\image%402x.png" />
+    <Content Include="Images\inf-alert-ico%402x.png" />
+    <Content Include="Images\inf-alert-ico.png" />
+    <Content Include="Images\inf-error-ico%402x.png" />
+    <Content Include="Images\inf-error-ico.png" />
+    <Content Include="Images\inf-notif-ico%402x.png" />
+    <Content Include="Images\inf-notif-ico.png" />
+    <Content Include="Images\inf-succ-ico%402x.png" />
+    <Content Include="Images\inf-succ-ico.png" />
+    <Content Include="Images\jQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\jQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\jQueryUI\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\jQueryUI\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\jQueryUI\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\jQueryUI\ui-bg_glass_75_ffffff_1x400.png" />
+    <Content Include="Images\jQueryUI\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\jQueryUI\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="Images\jQueryUI\ui-icons_222222_256x240.png" />
+    <Content Include="Images\jQueryUI\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\jQueryUI\ui-icons_454545_256x240.png" />
+    <Content Include="Images\jQueryUI\ui-icons_888888_256x240.png" />
+    <Content Include="Images\jQueryUI\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\jQueryUI\ui-icons_f6cf3b_256x240.png" />
+    <Content Include="Images\k0955317.jpg" />
+    <Content Include="Images\login-logo%402x.png" />
+    <Content Include="Images\login_bck2.jpg" />
+    <Content Include="Images\logout%402x.png" />
+    <Content Include="Images\logo_watermark.png" />
+    <Content Include="Images\maps%402x.png" />
+    <Content Include="Images\marker.png" />
+    <Content Include="Images\mask.png" />
+    <Content Include="Images\mCSB_buttons.png" />
+    <Content Include="Images\menu_bck.png" />
+    <Content Include="Images\mobile_menus.png" />
+    <Content Include="Images\mobile_menu_bck.png" />
+    <Content Include="Images\notDone.png" />
+    <Content Include="Images\note%402x.png" />
+    <Content Include="Images\note.png" />
+    <Content Include="Images\panel_bck.jpg" />
+    <Content Include="Images\panel_logo%402x.png" />
+    <Content Include="Images\panel_logo-light-2x.png" />
+    <Content Include="Images\panel_logo-light.png" />
+    <Content Include="Images\panel_logo.png" />
+    <Content Include="Images\pending.png" />
+    <Content Include="Images\photon\200x100.png" />
+    <Content Include="Images\photon\add_new_ico%402x.png" />
+    <Content Include="Images\photon\arrow_menu.png" />
+    <Content Include="Images\photon\arrow_menu_exp.png" />
+    <Content Include="Images\photon\arrow_vert_slider.png" />
+    <Content Include="Images\photon\arrow_vert_slider_exp.png" />
+    <Content Include="Images\photon\back_disabled.png" />
+    <Content Include="Images\photon\back_enabled.png" />
+    <Content Include="Images\photon\back_enabled_hover.png" />
+    <Content Include="Images\photon\bg-input-focus.png" />
+    <Content Include="Images\photon\bg-input.png" />
+    <Content Include="Images\photon\body-login.jpg" />
+    <Content Include="Images\photon\body_bck.jpg" />
+    <Content Include="Images\photon\brd_separator%402x.png" />
+    <Content Include="Images\photon\brd_separator.png" />
+    <Content Include="Images\photon\calendar%402x.png" />
+    <Content Include="Images\photon\container-login.jpg" />
+    <Content Include="Images\photon\dashboard%402x.png" />
+    <Content Include="Images\photon\data-supplemental-icons.png" />
+    <Content Include="Images\photon\delete.gif" />
+    <Content Include="Images\photon\digits.png" />
+    <Content Include="Images\photon\down-arrow.png" />
+    <Content Include="Images\photon\entypo.svg" />
+    <Content Include="Images\photon\error-pages%402x.png" />
+    <Content Include="Images\photon\fb-arrow.png" />
+    <Content Include="Images\photon\fb-login.png" />
+    <Content Include="Images\photon\filter-label-background.png" />
+    <Content Include="Images\photon\filter-option-child.png" />
+    <Content Include="Images\photon\flag-uk.png" />
+    <Content Include="Images\photon\form-elements%402x.png" />
+    <Content Include="Images\photon\form-window-login-logo.png" />
+    <Content Include="Images\photon\form-window-login.jpg" />
+    <Content Include="Images\photon\forward_disabled.png" />
+    <Content Include="Images\photon\forward_enabled.png" />
+    <Content Include="Images\photon\forward_enabled_hover.png" />
+    <Content Include="Images\photon\glyphicons-halflings-white.png" />
+    <Content Include="Images\photon\glyphicons-halflings.png" />
+    <Content Include="Images\photon\graphs-and-statistics%402x.png" />
+    <Content Include="Images\photon\grid%402x.png" />
+    <Content Include="Images\photon\help%402x.png" />
+    <Content Include="Images\photon\home_page%402x.png" />
+    <Content Include="Images\photon\home_page-2x.png" />
+    <Content Include="Images\photon\home_page-light-2x.png" />
+    <Content Include="Images\photon\home_page-light.png" />
+    <Content Include="Images\photon\home_page.png" />
+    <Content Include="Images\photon\iconic_stroke.svg" />
+    <Content Include="Images\photon\icons\addressBook.png" />
+    <Content Include="Images\photon\icons\applicants.png" />
+    <Content Include="Images\photon\icons\calender.png" />
+    <Content Include="Images\photon\icons\company.png" />
+    <Content Include="Images\photon\icons\complaints.png" />
+    <Content Include="Images\photon\icons\default\add-item.png" />
+    <Content Include="Images\photon\icons\default\addressbook.png" />
+    <Content Include="Images\photon\icons\default\agent.png" />
+    <Content Include="Images\photon\icons\default\apple.png" />
+    <Content Include="Images\photon\icons\default\arrow-round.png" />
+    <Content Include="Images\photon\icons\default\badge.png" />
+    <Content Include="Images\photon\icons\default\bar-chart-02.png" />
+    <Content Include="Images\photon\icons\default\bar-chart.png" />
+    <Content Include="Images\photon\icons\default\battery-full.png" />
+    <Content Include="Images\photon\icons\default\bird.png" />
+    <Content Include="Images\photon\icons\default\boat.png" />
+    <Content Include="Images\photon\icons\default\bookmark.png" />
+    <Content Include="Images\photon\icons\default\briefcase.png" />
+    <Content Include="Images\photon\icons\default\calculator.png" />
+    <Content Include="Images\photon\icons\default\calendar.png" />
+    <Content Include="Images\photon\icons\default\cassette.png" />
+    <Content Include="Images\photon\icons\default\chain.png" />
+    <Content Include="Images\photon\icons\default\chat-.png" />
+    <Content Include="Images\photon\icons\default\chat-02.png" />
+    <Content Include="Images\photon\icons\default\cloud-filled.png" />
+    <Content Include="Images\photon\icons\default\cloud-outline.png" />
+    <Content Include="Images\photon\icons\default\computer.png" />
+    <Content Include="Images\photon\icons\default\configuration.png" />
+    <Content Include="Images\photon\icons\default\configuration02.png" />
+    <Content Include="Images\photon\icons\default\connected.png" />
+    <Content Include="Images\photon\icons\default\connections.png" />
+    <Content Include="Images\photon\icons\default\container.png" />
+    <Content Include="Images\photon\icons\default\copy-item.png" />
+    <Content Include="Images\photon\icons\default\database.png" />
+    <Content Include="Images\photon\icons\default\delete-item.png" />
+    <Content Include="Images\photon\icons\default\delete_t.png" />
+    <Content Include="Images\photon\icons\default\disc.png" />
+    <Content Include="Images\photon\icons\default\dollar.png" />
+    <Content Include="Images\photon\icons\default\download.png" />
+    <Content Include="Images\photon\icons\default\edit.png" />
+    <Content Include="Images\photon\icons\default\edit_t.png" />
+    <Content Include="Images\photon\icons\default\email.png" />
+    <Content Include="Images\photon\icons\default\fan.png" />
+    <Content Include="Images\photon\icons\default\fancy-globe.png" />
+    <Content Include="Images\photon\icons\default\female-user.png" />
+    <Content Include="Images\photon\icons\default\fire.png" />
+    <Content Include="Images\photon\icons\default\first-aid.png" />
+    <Content Include="Images\photon\icons\default\flag.png" />
+    <Content Include="Images\photon\icons\default\flower.png" />
+    <Content Include="Images\photon\icons\default\full-screen.png" />
+    <Content Include="Images\photon\icons\default\glasses.png" />
+    <Content Include="Images\photon\icons\default\globe.png" />
+    <Content Include="Images\photon\icons\default\happy-face.png" />
+    <Content Include="Images\photon\icons\default\headphone.png" />
+    <Content Include="Images\photon\icons\default\heart.png" />
+    <Content Include="Images\photon\icons\default\home.png" />
+    <Content Include="Images\photon\icons\default\ID.png" />
+    <Content Include="Images\photon\icons\default\ipod.png" />
+    <Content Include="Images\photon\icons\default\lab.png" />
+    <Content Include="Images\photon\icons\default\lady.png" />
+    <Content Include="Images\photon\icons\default\lamp.png" />
+    <Content Include="Images\photon\icons\default\leaves.png" />
+    <Content Include="Images\photon\icons\default\light.png" />
+    <Content Include="Images\photon\icons\default\line-globe.png" />
+    <Content Include="Images\photon\icons\default\lock.png" />
+    <Content Include="Images\photon\icons\default\lookup.png" />
+    <Content Include="Images\photon\icons\default\male-user.png" />
+    <Content Include="Images\photon\icons\default\microphone.png" />
+    <Content Include="Images\photon\icons\default\mobile.png" />
+    <Content Include="Images\photon\icons\default\mobile2.png" />
+    <Content Include="Images\photon\icons\default\mouse.png" />
+    <Content Include="Images\photon\icons\default\multi-agents.png" />
+    <Content Include="Images\photon\icons\default\music-node.png" />
+    <Content Include="Images\photon\icons\default\network-pc.png" />
+    <Content Include="Images\photon\icons\default\network.png" />
+    <Content Include="Images\photon\icons\default\next-item.png" />
+    <Content Include="Images\photon\icons\default\phone.png" />
+    <Content Include="Images\photon\icons\default\pie-chart.png" />
+    <Content Include="Images\photon\icons\default\pin.png" />
+    <Content Include="Images\photon\icons\default\plane.png" />
+    <Content Include="Images\photon\icons\default\print.png" />
+    <Content Include="Images\photon\icons\default\processing-02.png" />
+    <Content Include="Images\photon\icons\default\processing.png" />
+    <Content Include="Images\photon\icons\default\push-pin.png" />
+    <Content Include="Images\photon\icons\default\q3.png" />
+    <Content Include="Images\photon\icons\default\ql1%402x.png" />
+    <Content Include="Images\photon\icons\default\ql1.png" />
+    <Content Include="Images\photon\icons\default\ql2%402x.png" />
+    <Content Include="Images\photon\icons\default\ql2.png" />
+    <Content Include="Images\photon\icons\default\ql3%402x.png" />
+    <Content Include="Images\photon\icons\default\ql3.png" />
+    <Content Include="Images\photon\icons\default\ql4%402x.png" />
+    <Content Include="Images\photon\icons\default\ql4.png" />
+    <Content Include="Images\photon\icons\default\ql5%402x.png" />
+    <Content Include="Images\photon\icons\default\ql5.png" />
+    <Content Include="Images\photon\icons\default\ql6%402x.png" />
+    <Content Include="Images\photon\icons\default\ql6.png" />
+    <Content Include="Images\photon\icons\default\qlplus%402x.png" />
+    <Content Include="Images\photon\icons\default\qlplus.png" />
+    <Content Include="Images\photon\icons\default\qlplus_hover.png" />
+    <Content Include="Images\photon\icons\default\recycle-empty.png" />
+    <Content Include="Images\photon\icons\default\recycle-full.png" />
+    <Content Include="Images\photon\icons\default\reload.png" />
+    <Content Include="Images\photon\icons\default\rss.png" />
+    <Content Include="Images\photon\icons\default\satellite.png" />
+    <Content Include="Images\photon\icons\default\save.png" />
+    <Content Include="Images\photon\icons\default\scale.png" />
+    <Content Include="Images\photon\icons\default\Scissors.png" />
+    <Content Include="Images\photon\icons\default\screen.png" />
+    <Content Include="Images\photon\icons\default\search.png" />
+    <Content Include="Images\photon\icons\default\server.png" />
+    <Content Include="Images\photon\icons\default\shield.png" />
+    <Content Include="Images\photon\icons\default\shut-down.png" />
+    <Content Include="Images\photon\icons\default\star.png" />
+    <Content Include="Images\photon\icons\default\tag.png" />
+    <Content Include="Images\photon\icons\default\tap.png" />
+    <Content Include="Images\photon\icons\default\tree.png" />
+    <Content Include="Images\photon\icons\default\umbrella.png" />
+    <Content Include="Images\photon\icons\default\unlock.png" />
+    <Content Include="Images\photon\icons\default\usb.png" />
+    <Content Include="Images\photon\icons\default\van.png" />
+    <Content Include="Images\photon\icons\default\wifi.png" />
+    <Content Include="Images\photon\icons\default\world.png" />
+    <Content Include="Images\photon\icons\dialog_warning %281%29.png" />
+    <Content Include="Images\photon\icons\e1[1].png" />
+    <Content Include="Images\photon\icons\Four Pages.PNG" />
+    <Content Include="Images\photon\icons\help.png" />
+    <Content Include="Images\photon\icons\hover\add-item.png" />
+    <Content Include="Images\photon\icons\hover\addressbook.png" />
+    <Content Include="Images\photon\icons\hover\agent.png" />
+    <Content Include="Images\photon\icons\hover\apple.png" />
+    <Content Include="Images\photon\icons\hover\arrow-round.png" />
+    <Content Include="Images\photon\icons\hover\badge.png" />
+    <Content Include="Images\photon\icons\hover\bar-chart-02.png" />
+    <Content Include="Images\photon\icons\hover\bar-chart.png" />
+    <Content Include="Images\photon\icons\hover\battery-full.png" />
+    <Content Include="Images\photon\icons\hover\bird.png" />
+    <Content Include="Images\photon\icons\hover\boat.png" />
+    <Content Include="Images\photon\icons\hover\bookmark.png" />
+    <Content Include="Images\photon\icons\hover\briefcase.png" />
+    <Content Include="Images\photon\icons\hover\calculator.png" />
+    <Content Include="Images\photon\icons\hover\calendar.png" />
+    <Content Include="Images\photon\icons\hover\cassette.png" />
+    <Content Include="Images\photon\icons\hover\chain.png" />
+    <Content Include="Images\photon\icons\hover\chat-.png" />
+    <Content Include="Images\photon\icons\hover\chat-02.png" />
+    <Content Include="Images\photon\icons\hover\cloud-filled.png" />
+    <Content Include="Images\photon\icons\hover\cloud-outline.png" />
+    <Content Include="Images\photon\icons\hover\computer.png" />
+    <Content Include="Images\photon\icons\hover\configuration.png" />
+    <Content Include="Images\photon\icons\hover\configuration02.png" />
+    <Content Include="Images\photon\icons\hover\connected.png" />
+    <Content Include="Images\photon\icons\hover\connections.png" />
+    <Content Include="Images\photon\icons\hover\container.png" />
+    <Content Include="Images\photon\icons\hover\copy-item.png" />
+    <Content Include="Images\photon\icons\hover\database.png" />
+    <Content Include="Images\photon\icons\hover\delete-item.png" />
+    <Content Include="Images\photon\icons\hover\disc.png" />
+    <Content Include="Images\photon\icons\hover\dollar.png" />
+    <Content Include="Images\photon\icons\hover\download.png" />
+    <Content Include="Images\photon\icons\hover\edit.png" />
+    <Content Include="Images\photon\icons\hover\email.png" />
+    <Content Include="Images\photon\icons\hover\fan.png" />
+    <Content Include="Images\photon\icons\hover\fancy-globe.png" />
+    <Content Include="Images\photon\icons\hover\female-user.png" />
+    <Content Include="Images\photon\icons\hover\fire.png" />
+    <Content Include="Images\photon\icons\hover\first-aid.png" />
+    <Content Include="Images\photon\icons\hover\flag.png" />
+    <Content Include="Images\photon\icons\hover\flower.png" />
+    <Content Include="Images\photon\icons\hover\full-screen.png" />
+    <Content Include="Images\photon\icons\hover\glasses.png" />
+    <Content Include="Images\photon\icons\hover\globe.png" />
+    <Content Include="Images\photon\icons\hover\happy-face.png" />
+    <Content Include="Images\photon\icons\hover\headphone.png" />
+    <Content Include="Images\photon\icons\hover\heart.png" />
+    <Content Include="Images\photon\icons\hover\home.png" />
+    <Content Include="Images\photon\icons\hover\ID.png" />
+    <Content Include="Images\photon\icons\hover\ipod.png" />
+    <Content Include="Images\photon\icons\hover\lab.png" />
+    <Content Include="Images\photon\icons\hover\lady.png" />
+    <Content Include="Images\photon\icons\hover\lamp.png" />
+    <Content Include="Images\photon\icons\hover\leaves.png" />
+    <Content Include="Images\photon\icons\hover\light.png" />
+    <Content Include="Images\photon\icons\hover\line-globe.png" />
+    <Content Include="Images\photon\icons\hover\lock.png" />
+    <Content Include="Images\photon\icons\hover\lookup.png" />
+    <Content Include="Images\photon\icons\hover\male-user.png" />
+    <Content Include="Images\photon\icons\hover\microphone.png" />
+    <Content Include="Images\photon\icons\hover\mobile.png" />
+    <Content Include="Images\photon\icons\hover\mobile2.png" />
+    <Content Include="Images\photon\icons\hover\mouse.png" />
+    <Content Include="Images\photon\icons\hover\multi-agents.png" />
+    <Content Include="Images\photon\icons\hover\music-node.png" />
+    <Content Include="Images\photon\icons\hover\network-pc.png" />
+    <Content Include="Images\photon\icons\hover\network.png" />
+    <Content Include="Images\photon\icons\hover\next-item.png" />
+    <Content Include="Images\photon\icons\hover\phone.png" />
+    <Content Include="Images\photon\icons\hover\pie-chart.png" />
+    <Content Include="Images\photon\icons\hover\pin.png" />
+    <Content Include="Images\photon\icons\hover\plane.png" />
+    <Content Include="Images\photon\icons\hover\print.png" />
+    <Content Include="Images\photon\icons\hover\processing-02.png" />
+    <Content Include="Images\photon\icons\hover\processing.png" />
+    <Content Include="Images\photon\icons\hover\push-pin.png" />
+    <Content Include="Images\photon\icons\hover\recycle-empty.png" />
+    <Content Include="Images\photon\icons\hover\recycle-full.png" />
+    <Content Include="Images\photon\icons\hover\reload.png" />
+    <Content Include="Images\photon\icons\hover\rss.png" />
+    <Content Include="Images\photon\icons\hover\satellite.png" />
+    <Content Include="Images\photon\icons\hover\save.png" />
+    <Content Include="Images\photon\icons\hover\scale.png" />
+    <Content Include="Images\photon\icons\hover\Scissors.png" />
+    <Content Include="Images\photon\icons\hover\screen.png" />
+    <Content Include="Images\photon\icons\hover\search.png" />
+    <Content Include="Images\photon\icons\hover\server.png" />
+    <Content Include="Images\photon\icons\hover\shield.png" />
+    <Content Include="Images\photon\icons\hover\shut-down.png" />
+    <Content Include="Images\photon\icons\hover\star.png" />
+    <Content Include="Images\photon\icons\hover\tag.png" />
+    <Content Include="Images\photon\icons\hover\tap.png" />
+    <Content Include="Images\photon\icons\hover\tree.png" />
+    <Content Include="Images\photon\icons\hover\umbrella.png" />
+    <Content Include="Images\photon\icons\hover\unlock.png" />
+    <Content Include="Images\photon\icons\hover\usb.png" />
+    <Content Include="Images\photon\icons\hover\van.png" />
+    <Content Include="Images\photon\icons\hover\wifi.png" />
+    <Content Include="Images\photon\icons\hover\world.png" />
+    <Content Include="Images\photon\icons\invoices.png" />
+    <Content Include="Images\photon\icons\list-icon.png" />
+    <Content Include="Images\photon\icons\management.png" />
+    <Content Include="Images\photon\icons\notification.png" />
+    <Content Include="Images\photon\icons\paste.png" />
+    <Content Include="Images\photon\icons\payRoll.png" />
+    <Content Include="Images\photon\icons\profile.png" />
+    <Content Include="Images\photon\icons\ql1%402x.png" />
+    <Content Include="Images\photon\icons\ql10%402x.png" />
+    <Content Include="Images\photon\icons\ql2%402x.png" />
+    <Content Include="Images\photon\icons\ql3%402x.png" />
+    <Content Include="Images\photon\icons\ql4%402x.png" />
+    <Content Include="Images\photon\icons\ql5%402x.png" />
+    <Content Include="Images\photon\icons\ql6%402x.png" />
+    <Content Include="Images\photon\icons\ql7%402x.png" />
+    <Content Include="Images\photon\icons\ql8%402x.png" />
+    <Content Include="Images\photon\icons\ql9%402x.png" />
+    <Content Include="Images\photon\icons\qlplus%402x.png" />
+    <Content Include="Images\photon\icons\qlplus-light-2x.png" />
+    <Content Include="Images\photon\icons\qlplus-light.png" />
+    <Content Include="Images\photon\icons\qlplus.png" />
+    <Content Include="Images\photon\icons\quotation.png" />
+    <Content Include="Images\photon\icons\receipt.png" />
+    <Content Include="Images\photon\icons\recruit.png" />
+    <Content Include="Images\photon\icons\request.png" />
+    <Content Include="Images\photon\icons\speaker.png" />
+    <Content Include="Images\photon\icons\tasks.png" />
+    <Content Include="Images\photon\icons\Untitled.png" />
+    <Content Include="Images\photon\icons\user.png" />
+    <Content Include="Images\photon\icons\vcard.png" />
+    <Content Include="Images\photon\image%402x.png" />
+    <Content Include="Images\photon\inf-alert-ico%402x.png" />
+    <Content Include="Images\photon\inf-alert-ico.png" />
+    <Content Include="Images\photon\inf-error-ico%402x.png" />
+    <Content Include="Images\photon\inf-error-ico.png" />
+    <Content Include="Images\photon\inf-notif-ico%402x.png" />
+    <Content Include="Images\photon\inf-notif-ico.png" />
+    <Content Include="Images\photon\inf-succ-ico%402x.png" />
+    <Content Include="Images\photon\inf-succ-ico.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_glass_75_ffffff_1x400.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\photon\jQueryUI\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="Images\photon\jQueryUI\ui-icons_222222_256x240.png" />
+    <Content Include="Images\photon\jQueryUI\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\photon\jQueryUI\ui-icons_454545_256x240.png" />
+    <Content Include="Images\photon\jQueryUI\ui-icons_888888_256x240.png" />
+    <Content Include="Images\photon\jQueryUI\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\photon\jQueryUI\ui-icons_f6cf3b_256x240.png" />
+    <Content Include="Images\photon\k0955317.jpg" />
+    <Content Include="Images\photon\login-logo%402x.png" />
+    <Content Include="Images\photon\login_bck2.jpg" />
+    <Content Include="Images\photon\logout%402x.png" />
+    <Content Include="Images\photon\logo_watermark.png" />
+    <Content Include="Images\photon\maps%402x.png" />
+    <Content Include="Images\photon\marker.png" />
+    <Content Include="Images\photon\mask.png" />
+    <Content Include="Images\photon\mCSB_buttons.png" />
+    <Content Include="Images\photon\menu_bck.png" />
+    <Content Include="Images\photon\mobile_menus.png" />
+    <Content Include="Images\photon\mobile_menu_bck.png" />
+    <Content Include="Images\photon\notDone.png" />
+    <Content Include="Images\photon\note%402x.png" />
+    <Content Include="Images\photon\note.png" />
+    <Content Include="Images\photon\ongoing.png" />
+    <Content Include="Images\photon\panel_bck.jpg" />
+    <Content Include="Images\photon\panel_logo%402x.png" />
+    <Content Include="Images\photon\panel_logo-light-2x.png" />
+    <Content Include="Images\photon\panel_logo-light.png" />
+    <Content Include="Images\photon\panel_logo.png" />
+    <Content Include="Images\photon\pending.png" />
+    <Content Include="Images\photon\plugins\clock\clockface.png" />
+    <Content Include="Images\photon\plugins\clock\hourhand.png" />
+    <Content Include="Images\photon\plugins\clock\minhand.png" />
+    <Content Include="Images\photon\plugins\clock\sechand.png" />
+    <Content Include="Images\photon\plugins\elrte\elrte-toolbar.png" />
+    <Content Include="Images\photon\plugins\elrte\google-maps.png" />
+    <Content Include="Images\photon\plugins\elrte\iframe.png" />
+    <Content Include="Images\photon\plugins\elrte\loading.gif" />
+    <Content Include="Images\photon\plugins\elrte\media-director.png" />
+    <Content Include="Images\photon\plugins\elrte\media-flash.png" />
+    <Content Include="Images\photon\plugins\elrte\media-quicktime.png" />
+    <Content Include="Images\photon\plugins\elrte\media-realaudio.png" />
+    <Content Include="Images\photon\plugins\elrte\media-rutube.png" />
+    <Content Include="Images\photon\plugins\elrte\media-vimeo.png" />
+    <Content Include="Images\photon\plugins\elrte\media-winmedia.png" />
+    <Content Include="Images\photon\plugins\elrte\media-youtube.png" />
+    <Content Include="Images\photon\plugins\elrte\outline-div.png" />
+    <Content Include="Images\photon\plugins\elrte\outline-p.png" />
+    <Content Include="Images\photon\plugins\elrte\pagebreak.gif" />
+    <Content Include="Images\photon\plugins\elrte\pixel.gif" />
+    <Content Include="Images\photon\plugins\elrte\smileys\evilgrin.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\grin.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\happy.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\smile.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\surprised.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\tongue.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\unhappy.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\waii.png" />
+    <Content Include="Images\photon\plugins\elrte\smileys\wink.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-icons_222222_256x240.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-icons_454545_256x240.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-icons_888888_256x240.png" />
+    <Content Include="Images\photon\plugins\elrte\ui\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\photon\plugins\elrte\yandex-maps.png" />
+    <Content Include="Images\photon\preloader\130.gif" />
+    <Content Include="Images\photon\preloader\2.gif" />
+    <Content Include="Images\photon\preloader\20.gif" />
+    <Content Include="Images\photon\preloader\22.gif" />
+    <Content Include="Images\photon\preloader\239.gif" />
+    <Content Include="Images\photon\preloader\282.gif" />
+    <Content Include="Images\photon\preloader\284.gif" />
+    <Content Include="Images\photon\preloader\3.gif" />
+    <Content Include="Images\photon\preloader\301.gif" />
+    <Content Include="Images\photon\preloader\320.gif" />
+    <Content Include="Images\photon\preloader\325.gif" />
+    <Content Include="Images\photon\preloader\328.gif" />
+    <Content Include="Images\photon\preloader\332.gif" />
+    <Content Include="Images\photon\preloader\334.gif" />
+    <Content Include="Images\photon\preloader\335.gif" />
+    <Content Include="Images\photon\preloader\76.gif" />
+    <Content Include="Images\photon\preloader\82.gif" />
+    <Content Include="Images\photon\saudi_arabia_flag_small.PNG" />
+    <Content Include="Images\photon\search_icon_dark%402x.png" />
+    <Content Include="Images\photon\search_icon_dark.png" />
+    <Content Include="Images\photon\select2-spinner.gif" />
+    <Content Include="Images\photon\select2.png" />
+    <Content Include="Images\photon\select2x2.png" />
+    <Content Include="Images\photon\settings%402x.png" />
+    <Content Include="Images\photon\settings-light.png" />
+    <Content Include="Images\photon\settings.png" />
+    <Content Include="Images\photon\settingsTrans.png" />
+    <Content Include="Images\photon\shadow.png" />
+    <Content Include="Images\photon\shadow2.png" />
+    <Content Include="Images\photon\slider.jpg" />
+    <Content Include="Images\photon\slideroverlay.png" />
+    <Content Include="Images\photon\sliders%402x.png" />
+    <Content Include="Images\photon\sliders-light-2x.png" />
+    <Content Include="Images\photon\sliders-light.png" />
+    <Content Include="Images\photon\sliders.png" />
+    <Content Include="Images\photon\sort_asc.png" />
+    <Content Include="Images\photon\sort_asc_disabled.png" />
+    <Content Include="Images\photon\sort_both.png" />
+    <Content Include="Images\photon\sort_desc.png" />
+    <Content Include="Images\photon\sort_desc_disabled.png" />
+    <Content Include="Images\photon\spinnerDefault.png" />
+    <Content Include="Images\photon\sprite.png" />
+    <Content Include="Images\photon\sprites\icons.png" />
+    <Content Include="Images\photon\star.gif" />
+    <Content Include="Images\photon\stressed_linen_v2.png" />
+    <Content Include="Images\photon\sub_bck.png" />
+    <Content Include="Images\photon\tables%402x.png" />
+    <Content Include="Images\photon\tempimg.png" />
+    <Content Include="Images\photon\tempimgMob.png" />
+    <Content Include="Images\photon\typography%402x.png" />
+    <Content Include="Images\photon\user1.jpg" />
+    <Content Include="Images\photon\user2.jpg" />
+    <Content Include="Images\photon\user3.jpg" />
+    <Content Include="Images\photon\user4.jpg" />
+    <Content Include="Images\photon\user5.jpg" />
+    <Content Include="Images\photon\user_icon.png" />
+    <Content Include="Images\photon\user_icon_dark.png" />
+    <Content Include="Images\photon\wheel.png" />
+    <Content Include="Images\photon\widget_bck.png" />
+    <Content Include="Images\photon\workDone.png" />
+    <Content Include="Images\photon\w_arrows%402x.png" />
+    <Content Include="Images\photon\w_arrow_green%402x.png" />
+    <Content Include="Images\photon\w_arrow_red%402x.png" />
+    <Content Include="Images\photon\w_latest%402x.png" />
+    <Content Include="Images\photon\w_shadow.png" />
+    <Content Include="Images\photon\w_task%402x.png" />
+    <Content Include="Images\photon\w_twitter%402x.png" />
+    <Content Include="Images\plugins\clock\clockface.png" />
+    <Content Include="Images\plugins\clock\hourhand.png" />
+    <Content Include="Images\plugins\clock\minhand.png" />
+    <Content Include="Images\plugins\clock\sechand.png" />
+    <Content Include="Images\plugins\elrte\elrte-toolbar.png" />
+    <Content Include="Images\plugins\elrte\google-maps.png" />
+    <Content Include="Images\plugins\elrte\iframe.png" />
+    <Content Include="Images\plugins\elrte\loading.gif" />
+    <Content Include="Images\plugins\elrte\media-director.png" />
+    <Content Include="Images\plugins\elrte\media-flash.png" />
+    <Content Include="Images\plugins\elrte\media-quicktime.png" />
+    <Content Include="Images\plugins\elrte\media-realaudio.png" />
+    <Content Include="Images\plugins\elrte\media-rutube.png" />
+    <Content Include="Images\plugins\elrte\media-vimeo.png" />
+    <Content Include="Images\plugins\elrte\media-winmedia.png" />
+    <Content Include="Images\plugins\elrte\media-youtube.png" />
+    <Content Include="Images\plugins\elrte\outline-div.png" />
+    <Content Include="Images\plugins\elrte\outline-p.png" />
+    <Content Include="Images\plugins\elrte\pagebreak.gif" />
+    <Content Include="Images\plugins\elrte\pixel.gif" />
+    <Content Include="Images\plugins\elrte\smileys\evilgrin.png" />
+    <Content Include="Images\plugins\elrte\smileys\grin.png" />
+    <Content Include="Images\plugins\elrte\smileys\happy.png" />
+    <Content Include="Images\plugins\elrte\smileys\smile.png" />
+    <Content Include="Images\plugins\elrte\smileys\surprised.png" />
+    <Content Include="Images\plugins\elrte\smileys\tongue.png" />
+    <Content Include="Images\plugins\elrte\smileys\unhappy.png" />
+    <Content Include="Images\plugins\elrte\smileys\waii.png" />
+    <Content Include="Images\plugins\elrte\smileys\wink.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-icons_222222_256x240.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-icons_454545_256x240.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-icons_888888_256x240.png" />
+    <Content Include="Images\plugins\elrte\ui\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Images\plugins\elrte\yandex-maps.png" />
+    <Content Include="Images\preloader\130.gif" />
+    <Content Include="Images\preloader\2.gif" />
+    <Content Include="Images\preloader\20.gif" />
+    <Content Include="Images\preloader\22.gif" />
+    <Content Include="Images\preloader\239.gif" />
+    <Content Include="Images\preloader\282.gif" />
+    <Content Include="Images\preloader\284.gif" />
+    <Content Include="Images\preloader\3.gif" />
+    <Content Include="Images\preloader\301.gif" />
+    <Content Include="Images\preloader\320.gif" />
+    <Content Include="Images\preloader\325.gif" />
+    <Content Include="Images\preloader\328.gif" />
+    <Content Include="Images\preloader\332.gif" />
+    <Content Include="Images\preloader\334.gif" />
+    <Content Include="Images\preloader\335.gif" />
+    <Content Include="Images\preloader\76.gif" />
+    <Content Include="Images\preloader\82.gif" />
+    <Content Include="Images\Profile\dummy.txt" />
+    <Content Include="Images\saudi_arabia_flag_small.PNG" />
+    <Content Include="Images\search_icon_dark%402x.png" />
+    <Content Include="Images\search_icon_dark.png" />
+    <Content Include="Images\select2-spinner.gif" />
+    <Content Include="Images\select2.png" />
+    <Content Include="Images\select2x2.png" />
+    <Content Include="Images\settings%402x.png" />
+    <Content Include="Images\settings-light.png" />
+    <Content Include="Images\settings.png" />
+    <Content Include="Images\settingsTrans.png" />
+    <Content Include="Images\shadow.png" />
+    <Content Include="Images\shadow2.png" />
+    <Content Include="Images\slider.jpg" />
+    <Content Include="Images\slideroverlay.png" />
+    <Content Include="Images\sliders%402x.png" />
+    <Content Include="Images\sliders-light-2x.png" />
+    <Content Include="Images\sliders-light.png" />
+    <Content Include="Images\sliders.png" />
+    <Content Include="Images\sort_asc.png" />
+    <Content Include="Images\sort_asc_disabled.png" />
+    <Content Include="Images\sort_both.png" />
+    <Content Include="Images\sort_desc.png" />
+    <Content Include="Images\sort_desc_disabled.png" />
+    <Content Include="Images\spinnerDefault.png" />
+    <Content Include="Images\sprite.png" />
+    <Content Include="Images\sprites\icons.png" />
+    <Content Include="Images\star.gif" />
+    <Content Include="Images\stressed_linen_v2.png" />
+    <Content Include="Images\sub_bck.png" />
+    <Content Include="Images\tables%402x.png" />
+    <Content Include="Images\tempimg.png" />
+    <Content Include="Images\tempimgMob.png" />
+    <Content Include="Images\typography%402x.png" />
+    <Content Include="Images\user1.jpg" />
+    <Content Include="Images\user2.jpg" />
+    <Content Include="Images\user3.jpg" />
+    <Content Include="Images\user4.jpg" />
+    <Content Include="Images\user5.jpg" />
+    <Content Include="Images\user_icon.png" />
+    <Content Include="Images\user_icon_dark.png" />
+    <Content Include="Images\wheel.png" />
+    <Content Include="Images\widget_bck.png" />
+    <Content Include="Images\workDone.png" />
+    <Content Include="Images\w_arrows%402x.png" />
+    <Content Include="Images\w_arrow_green%402x.png" />
+    <Content Include="Images\w_arrow_red%402x.png" />
+    <Content Include="Images\w_latest%402x.png" />
+    <Content Include="Images\w_shadow.png" />
+    <Content Include="Images\w_task%402x.png" />
+    <Content Include="Images\w_twitter%402x.png" />
     <Content Include="Reports\PrisonerInfo.aspx" />
     <Content Include="Reports\PrisonerReport.aspx" />
-    <Content Include="Resources\Product.xml" />
+    <Content Include="RichTextEditor\adapters\jquery.js" />
+    <Content Include="RichTextEditor\build-config.js" />
+    <Content Include="RichTextEditor\ckeditor.js" />
+    <Content Include="RichTextEditor\config.js" />
+    <Content Include="RichTextEditor\contents.css" />
+    <Content Include="RichTextEditor\lang\af.js" />
+    <Content Include="RichTextEditor\lang\ar.js" />
+    <Content Include="RichTextEditor\lang\bg.js" />
+    <Content Include="RichTextEditor\lang\bn.js" />
+    <Content Include="RichTextEditor\lang\bs.js" />
+    <Content Include="RichTextEditor\lang\ca.js" />
+    <Content Include="RichTextEditor\lang\cs.js" />
+    <Content Include="RichTextEditor\lang\cy.js" />
+    <Content Include="RichTextEditor\lang\da.js" />
+    <Content Include="RichTextEditor\lang\de.js" />
+    <Content Include="RichTextEditor\lang\el.js" />
+    <Content Include="RichTextEditor\lang\en-au.js" />
+    <Content Include="RichTextEditor\lang\en-ca.js" />
+    <Content Include="RichTextEditor\lang\en-gb.js" />
+    <Content Include="RichTextEditor\lang\en.js" />
+    <Content Include="RichTextEditor\lang\eo.js" />
+    <Content Include="RichTextEditor\lang\es.js" />
+    <Content Include="RichTextEditor\lang\et.js" />
+    <Content Include="RichTextEditor\lang\eu.js" />
+    <Content Include="RichTextEditor\lang\fa.js" />
+    <Content Include="RichTextEditor\lang\fi.js" />
+    <Content Include="RichTextEditor\lang\fo.js" />
+    <Content Include="RichTextEditor\lang\fr-ca.js" />
+    <Content Include="RichTextEditor\lang\fr.js" />
+    <Content Include="RichTextEditor\lang\gl.js" />
+    <Content Include="RichTextEditor\lang\gu.js" />
+    <Content Include="RichTextEditor\lang\he.js" />
+    <Content Include="RichTextEditor\lang\hi.js" />
+    <Content Include="RichTextEditor\lang\hr.js" />
+    <Content Include="RichTextEditor\lang\hu.js" />
+    <Content Include="RichTextEditor\lang\id.js" />
+    <Content Include="RichTextEditor\lang\is.js" />
+    <Content Include="RichTextEditor\lang\it.js" />
+    <Content Include="RichTextEditor\lang\ja.js" />
+    <Content Include="RichTextEditor\lang\ka.js" />
+    <Content Include="RichTextEditor\lang\km.js" />
+    <Content Include="RichTextEditor\lang\ko.js" />
+    <Content Include="RichTextEditor\lang\ku.js" />
+    <Content Include="RichTextEditor\lang\lt.js" />
+    <Content Include="RichTextEditor\lang\lv.js" />
+    <Content Include="RichTextEditor\lang\mk.js" />
+    <Content Include="RichTextEditor\lang\mn.js" />
+    <Content Include="RichTextEditor\lang\ms.js" />
+    <Content Include="RichTextEditor\lang\nb.js" />
+    <Content Include="RichTextEditor\lang\nl.js" />
+    <Content Include="RichTextEditor\lang\no.js" />
+    <Content Include="RichTextEditor\lang\pl.js" />
+    <Content Include="RichTextEditor\lang\pt-br.js" />
+    <Content Include="RichTextEditor\lang\pt.js" />
+    <Content Include="RichTextEditor\lang\ro.js" />
+    <Content Include="RichTextEditor\lang\ru.js" />
+    <Content Include="RichTextEditor\lang\si.js" />
+    <Content Include="RichTextEditor\lang\sk.js" />
+    <Content Include="RichTextEditor\lang\sl.js" />
+    <Content Include="RichTextEditor\lang\sq.js" />
+    <Content Include="RichTextEditor\lang\sr-latn.js" />
+    <Content Include="RichTextEditor\lang\sr.js" />
+    <Content Include="RichTextEditor\lang\sv.js" />
+    <Content Include="RichTextEditor\lang\th.js" />
+    <Content Include="RichTextEditor\lang\tr.js" />
+    <Content Include="RichTextEditor\lang\tt.js" />
+    <Content Include="RichTextEditor\lang\ug.js" />
+    <Content Include="RichTextEditor\lang\uk.js" />
+    <Content Include="RichTextEditor\lang\vi.js" />
+    <Content Include="RichTextEditor\lang\zh-cn.js" />
+    <Content Include="RichTextEditor\lang\zh.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ar.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\bg.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ca.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\cs.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\cy.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\da.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\de.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\el.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\eo.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\es.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\et.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\fi.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\fr-ca.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\fr.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\gl.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\gu.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\he.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\hi.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\hr.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\hu.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\id.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\it.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ja.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\km.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ko.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ku.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\lt.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\lv.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\mk.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\mn.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\nb.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\nl.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\no.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\pl.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\pt-br.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\pt.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ro.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ru.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\si.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\sk.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\sl.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\sq.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\sr-latn.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\sr.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\sv.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\th.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\tr.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\tt.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\ug.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\uk.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\vi.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\zh-cn.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\zh.js" />
+    <Content Include="RichTextEditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="RichTextEditor\plugins\about\dialogs\about.js" />
+    <Content Include="RichTextEditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="RichTextEditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="RichTextEditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="RichTextEditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="RichTextEditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="RichTextEditor\plugins\div\dialogs\div.js" />
+    <Content Include="RichTextEditor\plugins\find\dialogs\find.js" />
+    <Content Include="RichTextEditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="RichTextEditor\plugins\flash\images\placeholder.png" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\button.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\form.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\select.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="RichTextEditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="RichTextEditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="RichTextEditor\plugins\icons.png" />
+    <Content Include="RichTextEditor\plugins\icons_hidpi.png" />
+    <Content Include="RichTextEditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="RichTextEditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="RichTextEditor\plugins\image\dialogs\image.js" />
+    <Content Include="RichTextEditor\plugins\image\images\noimage.png" />
+    <Content Include="RichTextEditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="RichTextEditor\plugins\link\dialogs\link.js" />
+    <Content Include="RichTextEditor\plugins\link\images\anchor.png" />
+    <Content Include="RichTextEditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="RichTextEditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="RichTextEditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="RichTextEditor\plugins\magicline\images\icon.png" />
+    <Content Include="RichTextEditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="RichTextEditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="RichTextEditor\plugins\preview\preview.html" />
+    <Content Include="RichTextEditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="RichTextEditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="RichTextEditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="RichTextEditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="RichTextEditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\envelope.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\heart.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\heart.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\kiss.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="RichTextEditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="RichTextEditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\ar.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\bg.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\ca.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\cs.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\cy.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\de.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\el.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\en-gb.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\eo.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\es.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\et.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\fi.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\fr-ca.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\fr.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\gl.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\he.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\hr.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\hu.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\id.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\it.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\ja.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\km.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\ku.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\lv.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\nb.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\nl.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\no.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\pl.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\pt-br.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\pt.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\ru.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\si.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\sk.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\sl.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\sq.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\sv.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\th.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\tr.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\tt.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\ug.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\uk.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\vi.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\zh-cn.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\zh.js" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="RichTextEditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="RichTextEditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="RichTextEditor\plugins\table\dialogs\table.js" />
+    <Content Include="RichTextEditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="RichTextEditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="RichTextEditor\plugins\templates\templates\default.js" />
+    <Content Include="RichTextEditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="RichTextEditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="RichTextEditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="RichTextEditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="RichTextEditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="RichTextEditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="RichTextEditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="RichTextEditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="RichTextEditor\samples\ajax.html" />
+    <Content Include="RichTextEditor\samples\api.html" />
+    <Content Include="RichTextEditor\samples\appendto.html" />
+    <Content Include="RichTextEditor\samples\assets\inlineall\logo.png" />
+    <Content Include="RichTextEditor\samples\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="RichTextEditor\samples\assets\sample.jpg" />
+    <Content Include="RichTextEditor\samples\assets\uilanguages\languages.js" />
+    <Content Include="RichTextEditor\samples\datafiltering.html" />
+    <Content Include="RichTextEditor\samples\divreplace.html" />
+    <Content Include="RichTextEditor\samples\index.html" />
+    <Content Include="RichTextEditor\samples\inlineall.html" />
+    <Content Include="RichTextEditor\samples\inlinebycode.html" />
+    <Content Include="RichTextEditor\samples\inlinetextarea.html" />
+    <Content Include="RichTextEditor\samples\jquery.html" />
+    <Content Include="RichTextEditor\samples\plugins\dialog\assets\my_dialog.js" />
+    <Content Include="RichTextEditor\samples\plugins\dialog\dialog.html" />
+    <Content Include="RichTextEditor\samples\plugins\enterkey\enterkey.html" />
+    <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.swf" />
+    <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\swfobject.js" />
+    <Content Include="RichTextEditor\samples\plugins\htmlwriter\outputforflash.html" />
+    <Content Include="RichTextEditor\samples\plugins\htmlwriter\outputhtml.html" />
+    <Content Include="RichTextEditor\samples\plugins\magicline\magicline.html" />
+    <Content Include="RichTextEditor\samples\plugins\toolbar\toolbar.html" />
+    <Content Include="RichTextEditor\samples\plugins\wysiwygarea\fullpage.html" />
+    <Content Include="RichTextEditor\samples\readonly.html" />
+    <Content Include="RichTextEditor\samples\replacebyclass.html" />
+    <Content Include="RichTextEditor\samples\replacebycode.html" />
+    <Content Include="RichTextEditor\samples\sample.css" />
+    <Content Include="RichTextEditor\samples\sample.js" />
+    <Content Include="RichTextEditor\samples\tabindex.html" />
+    <Content Include="RichTextEditor\samples\uicolor.html" />
+    <Content Include="RichTextEditor\samples\uilanguages.html" />
+    <Content Include="RichTextEditor\samples\xhtmlstyle.html" />
+    <Content Include="RichTextEditor\skins\moono\dialog.css" />
+    <Content Include="RichTextEditor\skins\moono\dialog_ie.css" />
+    <Content Include="RichTextEditor\skins\moono\dialog_ie7.css" />
+    <Content Include="RichTextEditor\skins\moono\dialog_ie8.css" />
+    <Content Include="RichTextEditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="RichTextEditor\skins\moono\editor.css" />
+    <Content Include="RichTextEditor\skins\moono\editor_gecko.css" />
+    <Content Include="RichTextEditor\skins\moono\editor_ie.css" />
+    <Content Include="RichTextEditor\skins\moono\editor_ie7.css" />
+    <Content Include="RichTextEditor\skins\moono\editor_ie8.css" />
+    <Content Include="RichTextEditor\skins\moono\editor_iequirks.css" />
+    <Content Include="RichTextEditor\skins\moono\icons.png" />
+    <Content Include="RichTextEditor\skins\moono\icons_hidpi.png" />
+    <Content Include="RichTextEditor\skins\moono\images\arrow.png" />
+    <Content Include="RichTextEditor\skins\moono\images\close.png" />
+    <Content Include="RichTextEditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="RichTextEditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="RichTextEditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="RichTextEditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="RichTextEditor\skins\moono\images\lock-open.png" />
+    <Content Include="RichTextEditor\skins\moono\images\lock.png" />
+    <Content Include="RichTextEditor\skins\moono\images\refresh.png" />
+    <Content Include="RichTextEditor\styles.js" />
     <Content Include="Scripts\affix.js" />
     <Content Include="Scripts\alert.js" />
     <Content Include="Areas\Common\Views\web.config" />
@@ -735,6 +2380,7 @@
     <Content Include="Scripts\App\Admin\js\themes\default.js" />
     <Content Include="Scripts\App\architecture.js" />
     <Content Include="Scripts\App\core.js" />
+    <Content Include="Scripts\App\dashboard.js" />
     <Content Include="Scripts\App\gmap3.min.js" />
     <Content Include="Scripts\App\jquery.bxslider.js" />
     <Content Include="Scripts\App\jquery.flexslider.js" />
@@ -819,8 +2465,172 @@
     </Content>
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\PMS\Views\web.config" />
-    <Content Include="Areas\Notification\Views\web.config" />
+    <Content Include="Images\photon\entypo.eot" />
+    <Content Include="Areas\HR\Views\Employee\Index.cshtml" />
+    <Content Include="Images\photon\entypo.ttf" />
+    <Content Include="Images\photon\entypo.woff" />
+    <Content Include="Images\photon\iconic_stroke.eot" />
+    <Content Include="Images\photon\iconic_stroke.ttf" />
+    <Content Include="Images\photon\icons\default\Thumbs.db" />
+    <Content Include="Images\photon\icons\hover\Thumbs.db" />
+    <Content Include="Images\photon\icons\Thumbs.db" />
+    <Content Include="Images\photon\jQueryUI\Thumbs.db" />
+    <Content Include="Images\photon\preloader\Thumbs.db" />
+    <Content Include="Images\photon\sprites\Thumbs.db" />
+    <Content Include="Images\photon\Thumbs.db" />
+    <Content Include="Content\ie-only.less" />
+    <Content Include="Content\ie8-only.less" />
+    <Content Include="Content\less_bootstrap\accordion.less" />
+    <Content Include="Content\less_bootstrap\alerts.less" />
+    <Content Include="Content\less_bootstrap\bootstrap.less" />
+    <Content Include="Content\less_bootstrap\breadcrumbs.less" />
+    <Content Include="Content\less_bootstrap\button-groups.less" />
+    <Content Include="Content\less_bootstrap\buttons.less" />
+    <Content Include="Content\less_bootstrap\carousel.less" />
+    <Content Include="Content\less_bootstrap\close.less" />
+    <Content Include="Content\less_bootstrap\code.less" />
+    <Content Include="Content\less_bootstrap\component-animations.less" />
+    <Content Include="Content\less_bootstrap\dropdowns.less" />
+    <Content Include="Content\less_bootstrap\forms.less" />
+    <Content Include="Content\less_bootstrap\grid.less" />
+    <Content Include="Content\less_bootstrap\hero-unit.less" />
+    <Content Include="Content\less_bootstrap\labels-badges.less" />
+    <Content Include="Content\less_bootstrap\layouts.less" />
+    <Content Include="Content\less_bootstrap\media.less" />
+    <Content Include="Content\less_bootstrap\mixins.less" />
+    <Content Include="Content\less_bootstrap\modals.less" />
+    <Content Include="Content\less_bootstrap\navbar.less" />
+    <Content Include="Content\less_bootstrap\navs.less" />
+    <Content Include="Content\less_bootstrap\pager.less" />
+    <Content Include="Content\less_bootstrap\pagination.less" />
+    <Content Include="Content\less_bootstrap\popovers.less" />
+    <Content Include="Content\less_bootstrap\progress-bars.less" />
+    <Content Include="Content\less_bootstrap\reset.less" />
+    <Content Include="Content\less_bootstrap\responsive-1200px-min.less" />
+    <Content Include="Content\less_bootstrap\responsive-767px-max.less" />
+    <Content Include="Content\less_bootstrap\responsive-768px-979px.less" />
+    <Content Include="Content\less_bootstrap\responsive-navbar.less" />
+    <Content Include="Content\less_bootstrap\responsive-utilities.less" />
+    <Content Include="Content\less_bootstrap\responsive.less" />
+    <Content Include="Content\less_bootstrap\scaffolding.less" />
+    <Content Include="Content\less_bootstrap\sprites.less" />
+    <Content Include="Content\less_bootstrap\tables.less" />
+    <Content Include="Content\less_bootstrap\thumbnails.less" />
+    <Content Include="Content\less_bootstrap\tooltip.less" />
+    <Content Include="Content\less_bootstrap\type.less" />
+    <Content Include="Content\less_bootstrap\utilities.less" />
+    <Content Include="Content\less_bootstrap\variables.less" />
+    <Content Include="Content\less_bootstrap\wells.less" />
+    <Content Include="Content\less_photon\accordion.less" />
+    <Content Include="Content\less_photon\alerts.less" />
+    <Content Include="Content\less_photon\button-groups.less" />
+    <Content Include="Content\less_photon\buttons.less" />
+    <Content Include="Content\less_photon\dashboard.less" />
+    <Content Include="Content\less_photon\errors.less" />
+    <Content Include="Content\less_photon\forms.less" />
+    <Content Include="Content\less_photon\labels-badges.less" />
+    <Content Include="Content\less_photon\layouts.less" />
+    <Content Include="Content\less_photon\lighter.less" />
+    <Content Include="Content\less_photon\login.less" />
+    <Content Include="Content\less_photon\main-content.less" />
+    <Content Include="Content\less_photon\main-menu.less" />
+    <Content Include="Content\less_photon\mixins.less" />
+    <Content Include="Content\less_photon\modals.less" />
+    <Content Include="Content\less_photon\navs.less" />
+    <Content Include="Content\less_photon\pagination.less" />
+    <Content Include="Content\less_photon\panel.less" />
+    <Content Include="Content\less_photon\progress-bars.less" />
+    <Content Include="Content\less_photon\reset.less" />
+    <Content Include="Content\less_photon\responsive-1200px-min.less" />
+    <Content Include="Content\less_photon\responsive-767px-max.less" />
+    <Content Include="Content\less_photon\responsive-768px-979px.less" />
+    <Content Include="Content\less_photon\responsive-mobile.less" />
+    <Content Include="Content\less_photon\scaffolding.less" />
+    <Content Include="Content\less_photon\statistical-elements.less" />
+    <Content Include="Content\less_photon\tables.less" />
+    <Content Include="Content\less_photon\tooltip.less" />
+    <Content Include="Content\less_photon\type.less" />
+    <Content Include="Content\less_photon\ui-elements.less" />
+    <Content Include="Content\less_photon\user-menu.less" />
+    <Content Include="Content\less_photon\wells.less" />
+    <Content Include="Content\less_photon\widgets.less" />
+    <Content Include="Content\photon-responsive.less" />
+    <Content Include="Content\photon.less" />
+    <Content Include="Content\plugins\bootstrap-fileupload.less" />
+    <Content Include="Content\plugins\bootstrapSwitch.less" />
+    <Content Include="Content\plugins\clock-analog.less" />
+    <Content Include="Content\plugins\demo_table.less" />
+    <Content Include="Content\plugins\elrte.full.less" />
+    <Content Include="Content\plugins\farbtastic.less" />
+    <Content Include="Content\plugins\jquery-picklist.less" />
+    <Content Include="Content\plugins\jquery-ui-1.8.16.custom.less" />
+    <Content Include="Content\plugins\jquery.mCustomScrollbar.less" />
+    <Content Include="Content\plugins\jquery.pnotify.default.less" />
+    <Content Include="Content\plugins\jquery.rating.less" />
+    <Content Include="Content\plugins\jquery.tagsinput.less" />
+    <Content Include="Content\plugins\jquery.timeentry.less" />
+    <Content Include="Content\plugins\mfupload.less" />
+    <Content Include="Content\plugins\prettify.less" />
+    <Content Include="Content\plugins\select2.less" />
+    <Content Include="Content\plugins\uniform.default.less" />
+    <Content Include="Content\plugins\xbreadcrumbs.less" />
+    <Content Include="Content\variables.less" />
+    <Content Include="Areas\HR\Views\Department\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Request\Create.cshtml" />
+    <Content Include="Areas\HR\Views\Department\Create.cshtml" />
+    <Content Include="Areas\HR\Views\JobTitle\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Request\Index.cshtml" />
+    <Content Include="Areas\HR\Views\JobTitle\Create.cshtml" />
+    <Content Include="Areas\HR\Views\Employee\Create.cshtml" />
+    <Content Include="Areas\HR\Views\JobOffered\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
+    <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
+    <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
+    <Content Include="Scripts\jquery-1.8.3.min.js" />
+    <Content Include="Scripts\jquery.leanModal.min.js" />
+    <Content Include="Scripts\jqueryui-1.10.0.min.js" />
+    <Content Include="Scripts\plugins\jquery-picklist.js" />
+    <Content Include="Scripts\plugins\jquery.blockUI.js" />
+    <Content Include="Areas\CMS\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\web.config" />
+    <Content Include="Areas\CMS\Views\Orders\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Complaint\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
+    <Content Include="Content\CSS\ie-only.less" />
+    <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
+    <Content Include="Areas\CMS\Views\Quotation\Index.cshtml" />
+    <Content Include="Content\CSS\ie8-only.less" />
+    <Content Include="Areas\CP\Views\web.config" />
+    <Content Include="Areas\CP\Views\CompanyProfile\Detail.cshtml" />
+    <Content Include="Areas\CMS\Views\Quotation\Create.cshtml" />
+    <Content Include="Content\CSS\photon-responsive.less" />
+    <Content Include="Content\CSS\photon.less" />
+    <Content Include="Content\CSS\variables.less" />
+    <Content Include="Images\entypo.eot" />
+    <Content Include="Images\entypo.ttf" />
+    <Content Include="Images\entypo.woff" />
+    <Content Include="Images\iconic_stroke.eot" />
+    <Content Include="Images\iconic_stroke.ttf" />
+    <Content Include="Images\icons\default\Thumbs.db" />
+    <Content Include="Images\icons\hover\Thumbs.db" />
+    <Content Include="Images\icons\Thumbs.db" />
+    <Content Include="Images\jQueryUI\Thumbs.db" />
+    <Content Include="Images\logo_watermark.psd" />
+    <Content Include="Images\preloader\Thumbs.db" />
+    <Content Include="Images\sprites\Thumbs.db" />
+    <Content Include="Images\user_icon.psd" />
+    <Content Include="Images\w_arrow_red%402x.psd" />
+    <Content Include="Images\photon\logo_watermark.psd" />
+    <Content Include="Images\photon\user_icon.psd" />
+    <Content Include="Images\photon\w_arrow_red%402x.psd" />
+    <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
+    <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <None Include="Reports\ESDS.xsd">
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
@@ -829,9 +2639,6 @@
     <Content Include="Reports\ESDS.xss">
       <DependentUpon>ESDS.xsd</DependentUpon>
     </Content>
-    <Content Include="Resources\OP.pdf" />
-    <Content Include="Resources\PMSLease.pdf" />
-    <Content Include="Resources\OP1.pdf" />
     <Content Include="Scripts\App\select2\bower.json" />
     <Content Include="Scripts\App\select2\component.json" />
     <Content Include="Scripts\App\select2\composer.json" />
@@ -841,10 +2648,163 @@
     <Content Include="Scripts\App\select2\release.sh" />
     <Content Include="Scripts\App\select2\select2.jquery.json" />
     <Content Include="Scripts\App\select2\select2_locale_en.js.template" />
+    <EmbeddedResource Include="Resources\CMS\Complaint.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Complaint.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Complaint.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Complaint.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Customer.ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Customer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Order.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Order.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Order.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Order.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CP\Profile.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Profile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Quotation.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Quotation.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CP\Profile.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Profile.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Quotation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
+    <EmbeddedResource Include="Resources\HR\Account.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Account.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\ContactsList.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactsList.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\ContactsList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContactsList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Department.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Department.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Employee.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Employee.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Employee.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Employee.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobApplicant.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobApplicant.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobApplicantAr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobApplicantAr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobOffered.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobOffered.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobOfferedAr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobOfferedAr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobTitle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobTitle.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\JobTitle.ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>JobTitle.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Content Include="RichTextEditor\CHANGES.md" />
+    <Content Include="RichTextEditor\LICENSE.md" />
+    <Content Include="RichTextEditor\plugins\scayt\LICENSE.md" />
+    <Content Include="RichTextEditor\plugins\scayt\README.md" />
+    <Content Include="RichTextEditor\plugins\Thumbs.db" />
+    <Content Include="RichTextEditor\plugins\wsc\LICENSE.md" />
+    <Content Include="RichTextEditor\plugins\wsc\README.md" />
+    <Content Include="RichTextEditor\README.md" />
+    <Content Include="RichTextEditor\samples\assets\posteddata.php" />
+    <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
+    <Content Include="RichTextEditor\samples\sample_posteddata.php" />
+    <Content Include="RichTextEditor\skins\moono\readme.md" />
+    <EmbeddedResource Include="Resources\HR\Department.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Department.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Payroll.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Payroll.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Payroll.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Payroll.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Request.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Tasks.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tasks.ar.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\bootstrap\application.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-affix.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-alert.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-button.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-carousel.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-collapse.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-dropdown.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-modal.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-popover.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-scrollspy.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-tab.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-tooltip.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-transition.js" />
+    <Content Include="Scripts\bootstrap\bootstrap-typeahead.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\button.js" />
     <Content Include="Scripts\carousel-rtl.js" />
     <Content Include="Scripts\collapse.js" />
+    <Content Include="Scripts\common.js" />
     <Content Include="Scripts\Common\confirmationDialog.js" />
     <Content Include="Scripts\datepicker-ar.js" />
     <Content Include="Scripts\Functions\scriptIST.js" />
@@ -860,7 +2820,6 @@
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.dataTables.editable.js" />
-    <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.jeditable.js" />
     <Content Include="Scripts\jquery.jqplugin.1.0.2.min.js" />
     <Content Include="Scripts\jquery.maskedinput-1.3.min.js" />
@@ -935,6 +2894,74 @@
     <Content Include="Scripts\moment-with-langs.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\plugins\additional-methods.min.js" />
+    <Content Include="Scripts\plugins\bootstrap-fileupload.min.js" />
+    <Content Include="Scripts\plugins\bootstrapSwitch.js" />
+    <Content Include="Scripts\plugins\charCount.js" />
+    <Content Include="Scripts\plugins\dataTables.bootstrap.js" />
+    <Content Include="Scripts\plugins\elrte.en.js" />
+    <Content Include="Scripts\plugins\elrte.min.js" />
+    <Content Include="Scripts\plugins\excanvas.js" />
+    <Content Include="Scripts\plugins\farbtastic.js" />
+    <Content Include="Scripts\plugins\fixFontIcons.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\plugins\flot\jquery.flot.stack.js" />
+    <Content Include="Scripts\plugins\html5shiv.js" />
+    <Content Include="Scripts\plugins\jquery-picklist.min.js" />
+    <Content Include="Scripts\plugins\jquery.autotab-1.1b.js" />
+    <Content Include="Scripts\plugins\jquery.clock.js" />
+    <Content Include="Scripts\plugins\jquery.cookie.js" />
+    <Content Include="Scripts\plugins\jquery.countdown.js" />
+    <Content Include="Scripts\plugins\jquery.dataTables.min.js" />
+    <Content Include="Scripts\plugins\jquery.flot.js" />
+    <Content Include="Scripts\plugins\jquery.flot.pie.js" />
+    <Content Include="Scripts\plugins\jquery.flot.resize.js" />
+    <Content Include="Scripts\plugins\jquery.flot.stack.js" />
+    <Content Include="Scripts\plugins\jquery.form.js" />
+    <Content Include="Scripts\plugins\jquery.jqtweet.js" />
+    <Content Include="Scripts\plugins\jquery.maskedinput-1.3.min.js" />
+    <Content Include="Scripts\plugins\jquery.mCustomScrollbar.js" />
+    <Content Include="Scripts\plugins\jquery.metadata.js" />
+    <Content Include="Scripts\plugins\jquery.mockjax.js" />
+    <Content Include="Scripts\plugins\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\plugins\jquery.nToWord.js" />
+    <Content Include="Scripts\plugins\jquery.pnotify.min.js" />
+    <Content Include="Scripts\plugins\jquery.qrcode.min.js" />
+    <Content Include="Scripts\plugins\jquery.rating.pack.js" />
+    <Content Include="Scripts\plugins\jquery.tagsinput.min.js" />
+    <Content Include="Scripts\plugins\jquery.textareaCounter.js" />
+    <Content Include="Scripts\plugins\jquery.timeentry.min.js" />
+    <Content Include="Scripts\plugins\jquery.uniform.min.js" />
+    <Content Include="Scripts\plugins\jquery.validate.min.js" />
+    <Content Include="Scripts\plugins\justgage.1.0.1.min.js" />
+    <Content Include="Scripts\plugins\less-1.3.1.min.js" />
+    <Content Include="Scripts\plugins\mfupload.js" />
+    <Content Include="Scripts\plugins\modernizr.custom.js" />
+    <Content Include="Scripts\plugins\prettify\lang-apollo.js" />
+    <Content Include="Scripts\plugins\prettify\lang-clj.js" />
+    <Content Include="Scripts\plugins\prettify\lang-css.js" />
+    <Content Include="Scripts\plugins\prettify\lang-go.js" />
+    <Content Include="Scripts\plugins\prettify\lang-hs.js" />
+    <Content Include="Scripts\plugins\prettify\lang-lisp.js" />
+    <Content Include="Scripts\plugins\prettify\lang-lua.js" />
+    <Content Include="Scripts\plugins\prettify\lang-ml.js" />
+    <Content Include="Scripts\plugins\prettify\lang-n.js" />
+    <Content Include="Scripts\plugins\prettify\lang-proto.js" />
+    <Content Include="Scripts\plugins\prettify\lang-scala.js" />
+    <Content Include="Scripts\plugins\prettify\lang-sql.js" />
+    <Content Include="Scripts\plugins\prettify\lang-tex.js" />
+    <Content Include="Scripts\plugins\prettify\lang-vb.js" />
+    <Content Include="Scripts\plugins\prettify\lang-vhdl.js" />
+    <Content Include="Scripts\plugins\prettify\lang-wiki.js" />
+    <Content Include="Scripts\plugins\prettify\lang-xq.js" />
+    <Content Include="Scripts\plugins\prettify\lang-yaml.js" />
+    <Content Include="Scripts\plugins\prettify\prettify.js" />
+    <Content Include="Scripts\plugins\raphael.2.1.0.min.js" />
+    <Content Include="Scripts\plugins\respond.min.js" />
+    <Content Include="Scripts\plugins\select2.js" />
+    <Content Include="Scripts\plugins\xbreadcrumbs.js" />
     <Content Include="Scripts\popover.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -967,7 +2994,7 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
@@ -1016,7 +3043,7 @@
     <Content Include="Views\Admin\GeneralAddEdit.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Admin\GeneralAddEditLV.cshtml" />
-    <Content Include="Views\Account\RegisterLV.cshtml" />
+    <Content Include="Views\Account\Users.cshtml" />
     <Content Include="Views\Admin\AppointmentLV.cshtml" />
     <Content Include="Views\Admin\GalleryLV.cshtml" />
     <Content Include="Views\Prisoner\AddEdit.cshtml" />
@@ -1040,27 +3067,35 @@
     <Content Include="Views\Employee\DDL.cshtml" />
     <Content Include="Views\JobTitle\ComboBox.cshtml" />
     <Content Include="Views\JobTitle\AddEdit.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_Alert.cshtml" />
+    <Content Include="Views\Shared\_DashboardLayout.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_ApplicantLayout.cshtml" />
+    <Content Include="Views\Account\Signup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
+    <Folder Include="Areas\CMS\Models\" />
+    <Folder Include="Areas\CMS\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
-    <Folder Include="Areas\HR\Views\Department\" />
-    <Folder Include="Areas\HR\Views\Employee\" />
-    <Folder Include="Areas\HR\Views\JobTitle\" />
+    <Folder Include="Areas\CP\Models\" />
+    <Folder Include="Areas\CP\Views\Shared\" />
+    <Folder Include="Areas\Help\Models\" />
+    <Folder Include="Areas\Help\Views\Shared\" />
+    <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
-    <Folder Include="Areas\Notification\Controllers\" />
-    <Folder Include="Areas\Notification\Models\" />
-    <Folder Include="Areas\Notification\Views\Shared\" />
-    <Folder Include="Areas\PMS\Controllers\" />
+    <Folder Include="Areas\LCP\Models\" />
+    <Folder Include="Areas\LCP\Views\Shared\" />
+    <Folder Include="Areas\Meeting\Models\" />
+    <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
-    <Folder Include="Files\PrisonerFiles\" />
-    <Folder Include="Images\HomeSlider\" />
-    <Folder Include="Images\Profile\" />
     <Folder Include="Migrations\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Culture\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1094,6 +3129,47 @@
   <ItemGroup>
     <EmbeddedResource Include="Reports\PrisonerInfo.rdlc" />
     <EmbeddedResource Include="Reports\PrisonerReport.rdlc" />
+    <EmbeddedResource Include="Resources\HR\Request.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Request.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HR\Tasks.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Meeting\Meeting.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Meeting.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Meeting\Meeting.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification\Notification.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notification\Notification.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notification.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Project.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Project.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Project.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Project.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Task.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PMS\Task.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Shared\Common.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.ar.Designer.cs</LastGenOutput>
@@ -1101,14 +3177,7 @@
     <EmbeddedResource Include="Resources\Shared\Common.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Products\Product.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Product.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Products\Product.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Product.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -1129,7 +3198,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>43063</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:44305/</IISUrl>
+          <IISUrl>http://localhost:43063/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

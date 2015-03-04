@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web;
 using EPMS.Models.DomainModels;
-using Microsoft.AspNet.Identity.EntityFramework;
+using EPMS.Web.Models;
 
 namespace EPMS.Models.IdentityModels.ViewModels
 {
@@ -43,15 +41,14 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
 
         [Required]
@@ -67,48 +64,67 @@ namespace EPMS.Models.IdentityModels.ViewModels
     {
 
         public string UserId { get; set; }
-
-        //[Required]
-        //[Display(Name = "First Name")]
-        //public string FirstName { get; set; }
-        //[Required]
-        //[Display(Name = "Last name")]
-        //public string LastName { get; set; }
-
+        [Required(ErrorMessage = "Must Select Role")]
         public string SelectedRole { get; set; }
+        public string oldRole { get; set; }
         public List<AspNetRole> Roles { get; set; }
-        public string SelectedEmployee { get; set; }
+        public AspNetUser Users { get; set; }
+        [Required(ErrorMessage = "Must Select Employee")]
+        public long SelectedEmployee { get; set; }
+        public Employee Employee { get; set; }
         public List<Employee> Employees { get; set; }
-
+        public List<EmployeeForDropDownList> EmployeesDDL { get; set; }
+        [Required(ErrorMessage = "Username field is required")]
         public string UserName { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
         
-        //[EmailAddress]
-        //[Display(Name = "Confirm Email")]
-        //[Compare("Email", ErrorMessage = "The Email and confirmation Email do not match.")]
-        //public string ConfirmEmail { get; set; }
-
-        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
+        
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 
+    public class SignupViewModel
+    {
+        public Customer Customer{ get; set; }
+        public long CustomerId { get; set; }
+        public long UserId   { get; set; }
+        [Required(ErrorMessage = "User Name is required.")]
+        public string UserName { get; set; }
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        [Required(ErrorMessage = "Password is required.")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Required(ErrorMessage = "Password is required.")]
+        public string ConfirmPassword { get; set; }
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
+        public string CustomerNameE { get; set; }
+        [Required(ErrorMessage = "Arabic Name is required.")]
+        public string CustomerNameA { get; set; }
+        public string Address { get; set; }
+        public string MobileNumber { get; set; }
+    }
+
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         public string Email { get; set; }
 
         [Required]
@@ -128,42 +144,25 @@ namespace EPMS.Models.IdentityModels.ViewModels
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "UserName")]
         public string Email { get; set; }
     }
     public class ProfileViewModel
     {
-        [Required]
-        [Display(Name = "First Name")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string FirstName { get; set; }
-        [Required]
-        [Display(Name = "Last name")]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string LastName { get; set; }
+        [Display(Name = "User name")]
+        [StringLength(100, ErrorMessage = "User Name is required")]
+        public string UserName { get; set; }
 
+        [Required]
+        [EmailAddress]
         [Display(Name = "Email")]
-
         public string Email { get; set; }
-        [Display(Name = "Phone Number")]
-        [StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string PhoneNumber { get; set; }
-        [Display(Name = "Address")]
-        [StringLength(200, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string Address { get; set; }
-       
-        [Display(Name = "Date of Birth")]
-        public DateTime ? DateOfBirth { get; set; }
 
-        [Display(Name = "Qualification")]
-        public string Qualification{ get; set; }
-
-        [Display(Name = "Image")]
+        [Display(Name = "Photo")]
         public string ImageName { get; set; }
         public string ImagePath { get; set; }
 
-        public HttpPostedFileBase UploadImage { get; set; }
-    
+        [StringLength(200, ErrorMessage = "Address length should not exceed 200 characters.")]
+        public string Address { get; set; }
     }
 }

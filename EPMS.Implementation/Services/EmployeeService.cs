@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
     public class EmployeeService : IEmployeeService
     {
+        private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly INotificationRepository notificationRepository;
+        private readonly INotificationService notificationService;
         private readonly IEmployeeRepository repository;
+        private readonly IAllowanceRepository allowanceRepository;
+        private readonly IEmployeeJobHistoryRepository employeeJobHistoryRepository;
+        private readonly IEmployeeRequestRepository requestRepository;
+
 
         #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="aspNetUserRepository"></param>
+        /// <param name="notificationRepository"></param>
+        /// <param name="notificationService"></param>
         /// <param name="xRepository"></param>
-        public EmployeeService(IEmployeeRepository xRepository)
+        public EmployeeService(IAspNetUserRepository aspNetUserRepository,INotificationRepository notificationRepository,INotificationService notificationService,IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository)
         {
+            this.aspNetUserRepository = aspNetUserRepository;
+            this.notificationRepository = notificationRepository;
+            this.notificationService = notificationService;
             repository = xRepository;
+            this.requestRepository = requestRepository;
+            this.allowanceRepository = allowanceRepository;
+            this.employeeJobHistoryRepository = employeeJobHistoryRepository;
         }
 
         #endregion
@@ -31,14 +50,58 @@ namespace EPMS.Implementation.Services
 
         public Employee FindEmployeeById(long? id)
         {
-            return repository.FindEmployeeById(id);
+            if (id != null)
+            {
+                return repository.Find((long) id);
+            }
+            return null;
+        }
+        public PayrollResponse FindEmployeeForPayroll(long? id, DateTime currTime)
+        {
+            PayrollResponse response = new PayrollResponse();
+            if (id != null)
+            {
+                response.IsError = true;
+                response.Employee = repository.Find((long)id);
+                var empJobTitleHistory = response.Employee.EmployeeJobHistories.FirstOrDefault(x => x.RecCreatedDate <= currTime);
+                var jobTitleHistory = response.Employee.JobTitle.JobTitleHistories.OrderByDescending(x=>x.RecCreatedDate).FirstOrDefault(x => empJobTitleHistory != null && ((x.JobTitleId == empJobTitleHistory.JobTitleId) && (x.RecCreatedDate <= currTime)));
+                if (jobTitleHistory != null)
+                {
+                    response.Employee.JobTitle.JobTitleNameE = jobTitleHistory.JobTitle.JobTitleNameE;
+                    response.Employee.JobTitle.BasicSalary = jobTitleHistory.BasicSalary;
+                    response.IsError = false;
+                }
+                response.Allowance = allowanceRepository.FindForAllownce((long) id, currTime);
+                response.Requests = requestRepository.GetAllMonetaryRequests(currTime, (long)id);
+                return response;
+            }
+            return null;
         }
 
-        public IEnumerable<Employee> LoadAllEmployees()
+        public IEnumerable<Employee> GetRecentEmployees(string requester)
+        {
+            return repository.GetRecentEmployees(requester);
+        }
+
+        public IEnumerable<Employee> GetAll()
         {
             return repository.GetAll();
-        } 
+        }
 
+        /// <summary>
+        /// Add Employee to DB
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns>EmployeeId</returns>
+        public long AddEmployee(Employee employee)
+        {
+            repository.Add(employee);
+            repository.SaveChanges();
+
+            notificationService.CreateNotification("iqama",employee.EmployeeId,employee.EmployeeIqamaExpiryDt);
+            notificationService.CreateNotification("passport", employee.EmployeeId, employee.EmployeePassportExpiryDt);
+            return employee.EmployeeId;
+        }
         /// <summary>
         /// Update Employee
         /// </summary>
@@ -48,8 +111,24 @@ namespace EPMS.Implementation.Services
         {
             try
             {
+                var tempEmployee = repository.Find(employee.EmployeeId);
+                if (employee.JobTitleId != tempEmployee.JobTitleId)
+                {
+                    var jobHistory = new EmployeeJobHistory
+                    {
+                        EmployeeId = employee.EmployeeId,
+                        JobTitleId = Convert.ToInt64(employee.JobTitleId),
+                        RecCreatedDate = DateTime.Now,
+                        RecCreatedBy = employee.RecLastUpdatedBy
+                    };
+                    employeeJobHistoryRepository.Add(jobHistory);
+                    employeeJobHistoryRepository.SaveChanges();
+                }
                 repository.Update(employee);
                 repository.SaveChanges();
+
+                notificationService.CreateNotification("iqama", employee.EmployeeId, employee.EmployeeIqamaExpiryDt);
+                notificationService.CreateNotification("passport", employee.EmployeeId, employee.EmployeePassportExpiryDt);
                 return true;
             }
             catch (Exception e)
@@ -64,27 +143,22 @@ namespace EPMS.Implementation.Services
         /// <param name="employee">Employee to be Deleted</param>
         public void DeleteEmployee(Employee employee)
         {
-            repository.Delete(employee);
-            repository.SaveChanges();
-        }
-
-        /// <summary>
-        /// Add Employee to DB
-        /// </summary>
-        /// <param name="employee"></param>
-        /// <returns>true if added/false if error</returns>
-        public bool AddEmployee(Employee employee)
-        {
             try
             {
-                repository.Add(employee);
+                repository.Delete(employee);
                 repository.SaveChanges();
-                return true;
             }
-            catch (Exception exception)
-            {
-                return false;
+            catch (Exception)
+            {   
+                throw;
             }
         }
+
+        public IEnumerable<string> FindEmployeeEmailByIds(List<long> employeeIds)
+        {
+            IEnumerable<string> empIds = repository.FindEmployeeEmailById(employeeIds);
+            return empIds;
+        }
+
     }
 }

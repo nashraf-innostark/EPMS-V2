@@ -1,0 +1,664 @@
+﻿@model EPMS.Web.ViewModels.Tasks.TaskCreateViewModel
+
+@{
+    string userRole = (string)Session["RoleName"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.PageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/PMS/Task/Index">
+                @EPMS.Web.Resources.PMS.Task.PageTitleIndex
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@Model.Header</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+@using (Html.BeginForm("Create", "Task", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.ProjectTask.TaskId)
+    <input type="hidden" id="prevTasksWeight" />
+    <input type="hidden" id="projectStartDate" />
+    <input type="hidden" id="projectEndDate" />
+    <input type="hidden" id="requisiteTasks" />
+    if (Model.OldRequisitTasks != null)
+    {
+        for (int i = 0; i < Model.OldRequisitTasks.Count(); i++)
+        {
+            @Html.HiddenFor(model => model.OldRequisitTasks[i])
+        }
+    }
+    if (Model.OldAssignedEmployees != null)
+    {
+        for (int i = 0; i < Model.OldAssignedEmployees.Count(); i++)
+        {
+            @Html.HiddenFor(model => model.OldAssignedEmployees[i])
+        }
+    }
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @if (direction == "ltr")
+                    {
+                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
+                    }
+                    @if (direction == "rtl")
+                    {
+                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
+                    }
+                    <label id="customerValidation"></label>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="">@EPMS.Web.Resources.PMS.Task.ProjectName</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.ProjectsForDdls, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId", @class = "select2me projectDDL" })
+                    <label id="projectValidation"></label>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TaskNameE">@EPMS.Web.Resources.PMS.Task.TaskName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameE, new { @id = "TaskNameE", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskNameE, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TaskNameA">@EPMS.Web.Resources.PMS.Task.TaskNameA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskNameA, new { @id = "TaskNameA", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskNameA, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DescriptionE">@EPMS.Web.Resources.PMS.Task.Description</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionE, new { @id = "DescriptionE", @class = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="DescriptionA">@EPMS.Web.Resources.PMS.Task.DescriptionA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.DescriptionA, new { @id = "DescriptionA", @class = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="dualMulti">@EPMS.Web.Resources.PMS.Task.Pre_ReqTask</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @if ((Model.ProjectAllTasks != null))
+                    {
+                        if (direction == "ltr")
+                        {
+                            @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameE"), new { @class = "", @id = "dualMulti", })
+                        }
+                        else
+                        {
+                            @Html.ListBoxFor(model => model.RequisitTasks, new MultiSelectList(Model.ProjectAllTasks, "TaskId", "TaskNameA"), new { @class = "", @id = "dualMulti", })
+                        }
+                    }
+                    else
+                    {
+                        @Html.ListBoxFor(model => model.RequisitTasks, new SelectList(new[] { "" }), new { @id = "dualMulti" })
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="Date_Picker" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TaskStartDate">
+                    @EPMS.Web.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
+                @*@Html.ValidationMessageFor(m => m.ProjectTask.StartDate, String.Empty, new { @class = "required" })*@
+                <label id="projectStartDateValidation"></label>
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
+            </div>
+        </div>
+        <div id="Date_Picker2" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TaskEndDate">
+                    @EPMS.Web.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly" })
+                @*@Html.ValidationMessageFor(m => m.ProjectTask.EndDate, String.Empty, new { @class = "required" })*@
+                <label id="projectEndDateValidation"></label>
+            </div>
+            <div class="controls span4">
+                @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskEndDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly" })
+            </div>
+        </div>
+        <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="dualMulti2">@EPMS.Web.Resources.PMS.Task.AssignEmployee</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @if ((Model.ProjectTask != null && Model.ProjectTask.TaskEmployees != null))
+                    {
+                        if (direction == "ltr")
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                        }
+                        else
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new { @class = "", @id = "dualMulti2", })
+                        }
+                    }
+                    else
+                    {
+                        if (direction == "ltr")
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                        }
+                        else
+                        {
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new { @class = "", @id = "dualMulti2", })
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TotalCost">@EPMS.Web.Resources.PMS.Task.TotalCost</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TotalCost, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TotalWeight">@EPMS.Web.Resources.PMS.Task.TaskWeight</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalWeight, new { @id = "TotalWeight", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TotalWeight, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TaskProgress">@EPMS.Web.Resources.PMS.Task.TaskProgeress</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskProgress, new { @id = "TaskProgress", @class = "readonly" })
+                    @Html.ValidationMessageFor(m => m.ProjectTask.TaskProgress, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NotesE">@EPMS.Web.Resources.PMS.Task.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesE, new { @id = "NotesE", @class = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NotesA">@EPMS.Web.Resources.PMS.Task.NotesA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.ProjectTask.NotesA, new { @id = "NotesA", @class = "readonly" })
+                </div>
+            </div>
+        </div>
+        @if (userRole == "Admin" || userRole == "PM")
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" name="Save" onclick="validateForm(event)">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
+                </div>
+            </div>
+            if (Model.ProjectTask.TaskId > 0)
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" name="Delete">@EPMS.Web.Resources.PMS.Task.BtnDelete</button>
+                    </div>
+                </div>
+            }
+        }
+        <div class="preReqTasks"></div>
+    </div>
+}
+
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        // Set project start and end date
+        var projId = parseInt($("#ProjectId").val());
+        var projList = '@Html.Raw(Json.Encode(Model.ProjectsForDdls))';
+        var parse = JSON.parse(projList);
+
+        $.each(parse, function (key, value) {
+            if (value.ProjectId == projId) {
+                $("#projectStartDate").val(value.StartDate);
+                $("#projectEndDate").val(value.EndDate);
+            }
+        });
+        if (parseInt('@Model.ProjectTask.TaskId') > 0) {
+            // Set pre-requisite tasks end date
+            var preReqList = '@Html.Raw(Json.Encode(Model.PreRequisitTasks))';
+            var parseTasks = JSON.parse(preReqList);
+
+            $.each(parseTasks, function (key, value) {
+                var textBox = "<input type='hidden' id='" + value.TaskId + "' value='" + value.EndDate + "'/>";
+                $(textBox).appendTo('.preReqTasks');
+            });
+        }
+
+        var requisiteTasks;
+        CKEDITOR.replace('DescriptionE');
+        CKEDITOR.replace('DescriptionA');
+        CKEDITOR.replace('NotesE');
+        CKEDITOR.replace('NotesA');
+        if ('@userRole' == "Customer") {
+            $(".readonly").attr("readonly", "true");
+        }
+
+        //$('#TaskProgress').on("blur", function () {
+        //    var currVal = $(this).val();
+        //    if (currVal > 100 || isNaN(currVal)) {
+        //        notify();
+        //        return;
+        //    }
+        //    function notify() {
+        //        $.pnotify({
+        //            title: 'Sorry',
+        //            type: 'info',
+        //            text: 'This task progress should not exceed 100 and must be number.'
+        //        });
+        //        $('#TaskProgress').val("");
+        //        return;
+        //    }
+        //});
+        $('#TaskProgress').mask("99%");
+        $('#TotalWeight').mask("99%");
+        $('#TotalWeight').on("blur", function () {
+            var prevVal = parseInt($("#prevTasksWeight").val());
+            var temp = $(this).val();
+            var tempVal = temp.split('%');
+            var currVal = parseInt(tempVal[0]);
+            if (currVal > 0) {
+                if ((prevVal + currVal) > 100 || isNaN(currVal)) {
+                    notify();
+                    return;
+                }
+            }
+            function notify() {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'This task weight and previous tasks weight of this project should not exceed 100 or must be number.'
+                });
+                $('#TotalWeight').val(0);
+                return;
+            }
+        });
+        var idOfTask = parseInt('@Model.ProjectTask.TaskId');
+        if ('@Model.ProjectTask.RequisitTasks.Count' > 0) {
+
+            var tasksList = '@Html.Raw(Json.Encode(Model.ProjectTask.RequisitTasks))';
+            var parsed = JSON.parse(tasksList);
+            $("#dualMulti option").each(function (key, value) {
+                var id = parseInt($(this).val());
+                var element = $(this);
+                $.each(parsed, function (key, value) {
+                    if (value.TaskId == id) {
+                        $(element).attr("selected", "selected");
+                    }
+                });
+            });
+        }
+        if ('@Model.ProjectTask.TaskEmployees.Count' > 0) {
+
+            var employeeList = '@Html.Raw(Json.Encode(Model.ProjectTask.TaskEmployees))';
+            parsed = JSON.parse(employeeList);
+            $("#dualMulti2 option").each(function (key, value) {
+                var id = parseInt($(this).val());
+                var element = $(this);
+                $.each(parsed, function (key, value) {
+                    if (value.EmployeeId == id) {
+                        $(element).attr("selected", "selected");
+                    }
+                });
+            });
+        }
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
+        $("#dualMulti2").pickList({
+            sourceListLabel: "Employees - Number Of Tasks They Are Working On",
+            targetListLabel: "Added",
+        });
+        if ($("#TotalCost").val() == 0) {
+            $("#TotalCost").val("");
+        }
+        if ($("#TaskProgress").val() == 0) {
+            $("#TaskProgress").val("");
+        }
+        var siteUrl = $('#siteURL').val();
+        $("#Client").on("change", function () {
+            var customerId = parseInt($(this).val());
+            if (isNaN(customerId)) {
+                customerId = 0;
+            }
+            var url = siteUrl + "/PMS/Task/GetCustomerProjects";
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    customerId: customerId
+                },
+                success: function (data) {
+                    populateProjectDDL(data);
+                },
+                error: function (e) {
+                    $.unblockUI();
+                    alert('Error=' + e.toString());
+                }
+            });
+        });
+        $("#ProjectId").on("change", function () {
+            var projectId = parseInt($(this).val());
+            var url = siteUrl + "/PMS/Task/GetProjectTasks";
+            if (projectId > 0) {
+                $.blockUI({
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        projectId: projectId
+                    },
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            var textBox = "<input type='hidden' id='" + data[i].TaskId + "' value='" + data[i].EndDate + "'/>";
+                            $(textBox).appendTo('.preReqTasks');
+                            //$('<input>').attr({
+                            //    type: 'text',
+                            //    id: data[i].TaskId,
+                            //    name: 'bar',
+                            //}).appendTo('AddEditTaskForm');
+                        }
+                        //for (var j = 0; j < data.length; j++) {
+                        //    $("#" + data[j].TaskId).val(data[j].EndDate);
+                        //}
+                        populateTaskDDL(data);
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error=' + e.toString());
+                    }
+                });
+            }
+        });
+        if ($("#TaskStartDate").val() != null && $("#TaskStartDate").val() != "") {
+            $("#TaskStartDateAr").val(ConvertDates($("#TaskStartDate").val(), "gregorian", "islamic"));
+        }
+        if ($("#TaskEndDate").val() != null && $("#TaskEndDate").val() != "") {
+            $("#TaskEndDateAr").val(ConvertDates($("#TaskEndDate").val(), "gregorian", "islamic"));
+        }
+    });
+
+    function validateForm(event) {
+        var counter = 0;
+        var projectId = $("#ProjectId").val();
+        if (projectId == null || projectId == "" || projectId == 0 || projectId == undefined) {
+            $("#projectValidation").text("Please Select Project");
+            $("#projectValidation").addClass("Error");
+            counter++;
+        } else {
+            $("#projectValidation").text("");
+            $("#projectValidation").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0) {
+                    $('html,body').animate({
+                        scrollTop: $(".projectDDL").offset().top
+                    },
+        'slow');
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+        /// section Starts ---Task dates compared to Project dates--- ///
+        // start date
+        if ($("#TaskStartDate").val() == "" || $("#TaskStartDate").val() == null) {
+            $("#projectStartDateValidation").text("Please select Task start date");
+            $("#projectStartDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        }
+        if ($("#TaskEndDate").val() == "" || $("#TaskEndDate").val() == null) {
+            $("#projectEndDateValidation").text("Please select Task delivery date");
+            $("#projectEndDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        }
+        // start date
+        var tempProj = $("#projectStartDate").val().split('/');
+        var projStartDate = new Date(tempProj[2], tempProj[1], tempProj[0]);
+        var tempTask = $("#TaskStartDate").val().split('/');
+        var taskStartDate = new Date(tempTask[2], tempTask[1], tempTask[0]);
+        // end date
+        tempProj = $("#projectEndDate").val().split('/');
+        var projEndDate = new Date(tempProj[2], tempProj[1], tempProj[0]);
+        tempTask = $("#TaskEndDate").val().split('/');
+        var taskEndDate = new Date(tempTask[2], tempTask[1], tempTask[0]);
+        if (taskStartDate < projStartDate || taskStartDate > projEndDate) {
+            $("#TaskStartDate").val("");
+            $("#TaskStartDateAr").val("");
+            $("#projectStartDateValidation").text("Please select Task start date according to Project start and delivery date.(" + $("#projectStartDate").val() + "|" + $("#projectEndDate").val() + ")");
+            $("#projectStartDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        } else {
+            $("#projectStartDateValidation").text("");
+            $("#projectStartDateValidation").removeClass("required");
+        }
+        if (taskEndDate > projEndDate || taskEndDate < projStartDate) {
+            $("#TaskEndDate").val("");
+            $("#TaskEndDateAr").val("");
+            $("#projectEndDateValidation").text("Please select Task delivery date according to Project start and delivery date.(" + $("#projectStartDate").val() + "|" + $("#projectEndDate").val() + ")");
+            $("#projectEndDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        }
+        else {
+            $("#projectEndDateValidation").text("");
+            $("#projectEndDateValidation").removeClass("required");
+        }
+        /// section Ends ---Task dates compared to Project dates--- ///
+
+        /// section Starts ---Task dates compared to Pre-req tasks--- ///
+        var list = $(".pickList_targetList li");
+        var tasks = new Array();
+        var selectedTasksIds = new Array();
+        for (var i = 0; i < list.length; i++) {
+            tasks.push(list[i].outerText);
+        }
+        for (var j = 0; j < tasks.length; j++) {
+            $("#dualMulti option").each(function () {
+                if ($(this).text() == tasks[j]) {
+                    selectedTasksIds.push(parseInt($(this).val()));
+                }
+            });
+        }
+        for (var k = 0; k < selectedTasksIds.length; k++) {
+            var tempDate = $("#" + selectedTasksIds[k]).val().split("/");
+            var preReqTaskEndDate = new Date(tempDate[2], tempDate[1], tempDate[0]);
+            if (taskStartDate < preReqTaskEndDate) {
+                $("#TaskStartDate").val("");
+                $("#TaskStartDateAr").val("");
+                $("#projectStartDateValidation").text("Please select Task start date according to Pre-Requiaite task end date.(" + $("#" + selectedTasksIds[k]).val() + ")");
+                $("#projectStartDateValidation").addClass("required");
+                event.preventDefault();
+                return false;
+            }
+        }
+        if (taskStartDate > taskEndDate) {
+            $("#TaskEndDate").val("");
+            $("#TaskEndDateAr").val("");
+            $("#projectEndDateValidation").text("Please select Task delivery date after Task start date.");
+            $("#projectEndDateValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        }
+        @*var reqTasksList = '@Html.Raw(Json.Encode(requisiteTasks))';
+        var parsed = JSON.parse(reqTasksList);
+        $.each(parsed, function (key, value) {
+            for (var k = 0; k < selectedTasksIds.length; k++) {
+                if (value.ProjectId == projId) {
+                    $("#projectStartDate").val(value.StartDate);
+                    $("#projectEndDate").val(value.EndDate);
+                }
+            }
+        });*@
+        /// section Ends ---Task dates compared to Pre-req tasks--- ///
+
+        return true;
+    }
+    function populateTaskDDL(data) {
+
+        var projectPrevTaskWeight = 0;
+        $("#dualMulti").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                var temp = data[i].TotalWeight.split('%');
+                projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(temp[0]);
+                $("#dualMulti").append(
+                    $('<option></option>').val(data[i].TaskId).html(data[i].TaskNameE)
+                );
+                //$("#dualMulti").pickList("insert", {
+                //    value: data[i].TaskId,
+                //    label: data[i].TaskNameE,
+                //    selected: true
+                //});
+            }
+        }
+        $("#prevTasksWeight").val(parseInt(projectPrevTaskWeight));
+        $("#dualMulti").pickList("destroy");
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
+        $.unblockUI();
+        // Set project start and end date
+        var projId = parseInt($("#ProjectId").val());
+        var projList = '@Html.Raw(Json.Encode(Model.ProjectsForDdls))';
+        var parsed = JSON.parse(projList);
+
+        $.each(parsed, function (key, value) {
+            if (value.ProjectId == projId) {
+                $("#projectStartDate").val(value.StartDate);
+                $("#projectEndDate").val(value.EndDate);
+            }
+        });
+    }
+    function populateProjectDDL(data) {
+        $("#ProjectId").empty();
+        $("#dualMulti").empty();
+        $("#dualMulti").pickList("destroy");
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
+        if (data.length > 0) {
+            $("#ProjectId").append(
+                $('<option></option>').val(0).html("--Select--")
+            );
+            for (var i = 0; i < data.length; i++) {
+                $("#ProjectId").append(
+                    $('<option></option>').val(data[i].ProjectId).html(data[i].NameE)
+                );
+            }
+        } else {
+            $("#ProjectId").append(
+                $('<option></option>').val(0).html("none")
+            );
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
+    }
+</script>

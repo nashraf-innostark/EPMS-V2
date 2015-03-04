@@ -1,0 +1,237 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
+
+@{
+    ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/Jobtitle/Index">
+                @EPMS.Web.Resources.HR.JobTitle.Label
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+@using (Html.BeginForm("Create", "JobTitle", FormMethod.Post, new { @id = "JobTitleForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.JobTitle.JobTitleId)
+        @Html.HiddenFor(m => m.JobTitle.RecCreatedBy)
+        @Html.HiddenFor(m => m.JobTitle.RecCreatedDt)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleName">@EPMS.Web.Resources.HR.JobTitle.NameOnCreateE</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameE, new { @dir = "ltr", id = "JobTitleNameE", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameE, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleName">@EPMS.Web.Resources.HR.JobTitle.NameOnCreateA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.JobTitleNameA, new { id = "JobTitleNameA", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleNameA, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="departmentId">@EPMS.Web.Resources.HR.JobTitle.DepartmentOnCreate</label>
+            </div>
+            <div class="span2">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
+                        @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new {@class = "required"})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
+                        @Html.ValidationMessageFor(m => m.JobTitle.DepartmentId, "", new { @class = "required" })
+                    </div>
+                }                
+            </div>
+            <div class="span2">
+                <label id="departmentvalidate" style="margin-top: 20px"></label>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateE</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="BasicSalary">@EPMS.Web.Resources.HR.JobTitle.BasicSalaryOnCreate</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.JobTitle.BasicSalary, new { id = "BasicSalary", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.JobTitle.BasicSalary, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit" onclick="validateForm(event)">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobTitle/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#JobTitleForm").validate({
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "req": {
+                    required: true
+                },
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "email": {
+                    email: true
+                },
+                "url": {
+                    url: true
+                },
+                "date": {
+                    date: true
+                }
+            }
+        });
+
+        var id = $('#JobTitle_JobTitleId').val();
+        $("[readonly='false']").removeAttr("readonly");
+        if (id == 0) {
+            CKEDITOR.replace('JobTitleDescE');
+            CKEDITOR.replace('JobTitleDescA');
+            $('#departmentId').select2('enable');
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $('#departmentId').select2('disable');
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+        }
+
+    });
+
+    $("#edit").click(function(event) {
+        CKEDITOR.replace('JobTitleDescE');
+        CKEDITOR.replace('JobTitleDescA');
+        $('#departmentId').select2('enable');
+        $('.' + 'tbdisable' + ':input').attr('disabled', false);
+        $("#savebtn").show();
+        $("#cancel").show();
+        $("#edit").hide();
+
+        event.preventDefault();
+    });
+
+    function validateForm(event) {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length) ; i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "") {
+                $(control).prop('placeholder', 'Required');
+                counter++;
+                $(control).addClass("Error");
+
+            } else {
+                $(control).removeClass("Error");
+            }
+
+        }
+        if ($("#departmentId").val() == null || $("#departmentId").val() == "") {
+            $("#departmentvalidate").text("Please select Department");
+            counter++;
+            $("#departmentvalidate").addClass("Error");
+
+        } else {
+            $("#departmentvalidate").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                event.preventDefault();
+                return false;
+            }
+        }
+        return false;
+    };
+</script>

@@ -1,28 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using DataAnnotationsExtensions;
 
 namespace EPMS.Web.Models
 {
     public class JobTitle
     {
-        public long JobId { get; set; }
+        public long JobTitleId { get; set; }
         [Required(ErrorMessage = "Job Title is required.")]
+        [StringLength(200, ErrorMessage = "Job Title Name cannot exceed 200 characters. ")]
         public string JobTitleNameE { get; set; }
+        [Required(ErrorMessage = "Job Title is required.")]
+        [StringLength(200, ErrorMessage = "Job Title Name cannot exceed 200 characters. ")]
         public string JobTitleNameA { get; set; }
-        [Required(ErrorMessage = "Job description is required.")]
-        public string JobDescriptionE { get; set; }
-        public string JobDescriptionA { get; set; }
-        [Integer(ErrorMessage = "Basic Salary needs to be number")]
-        public Nullable<decimal> BasicSalary { get; set; }
+        [StringLength(1000, ErrorMessage = "Description cannot exceed 200 characters. ")]
+        public string JobTitleDescE { get; set; }
+        [StringLength(1000, ErrorMessage = "Description cannot exceed 200 characters. ")]
+        public string JobTitleDescA { get; set; }
+        [Required(ErrorMessage = "Department is Required")]
         public long DepartmentId { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string UpdatedBy { get; set; }
-        public virtual Department Department { get; set; }
+        [Integer(ErrorMessage = "Basic Salary needs to be number")]
+        public double BasicSalary { get; set; }
+        public string RecCreatedBy { get; set; }
+        public DateTime? RecCreatedDt { get; set; }
+        public string RecLastUpdatedBy { get; set; }
+        public DateTime? RecLastUpdatedDt { get; set; }
+        public string DepartmentNameE { get; set; }
+        public string DepartmentNameA { get; set; }
+        public long EmployeesCount { get; set; }
+
+        //public Department Department { get; set; }
+        //public ICollection<Employee> Employees { get; set; }
+        //public ICollection<JobOffered> JobOffereds { get; set; }
     }
 }

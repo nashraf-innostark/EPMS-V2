@@ -1,37 +1,46 @@
 ﻿using EPMS.Models.DomainModels;
-using AreasModel = EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ModelMappers
 {
     public static class DepartmentMapper
     {
-        public static Department CreateFrom(this AreasModel.Department source)
+        public static Department CreateFrom(this Models.Department source)
         {
-            var caseType = new Department
+            var department = new Department
             {
-                //DepartmentId = source.DepartmentId ?? 0,
-                //DepartmentNameE = source.DepartmentNameE,
-                //DepartmentNameA = source.DepartmentNameA,
-                //DepartmentDesc = source.DepartmentDesc,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                DepartmentId = source.DepartmentId,
+                DepartmentNameE = source.DepartmentNameE,
+                DepartmentNameA = source.DepartmentNameA,
+                DepartmentDesc = source.DepartmentDesc,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
-            return caseType;
+            return department;
         }
-        public static AreasModel.Department CreateFrom(this Department source)
+        public static Models.Department CreateFrom(this Department source)
         {
-            return new AreasModel.Department
+            return new Models.Department
             {
-                //DepartmentId = source.DepartmentId,
-                //DepartmentNameE = source.DepartmentNameE,
-                //DepartmentNameA = source.DepartmentNameA,
-                //DepartmentDesc = source.DepartmentDesc,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                DepartmentId = source.DepartmentId,
+                DepartmentNameE = source.DepartmentNameE,
+                DepartmentNameA = source.DepartmentNameA,
+                DepartmentDesc = source.DepartmentDesc,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
+
+        }
+        public static DashboardModels.Department CreateForDashboard(this Department source)
+        {
+            return new DashboardModels.Department
+            {
+                DepartmentId = source.DepartmentId,
+                DepartmentNameE = source.DepartmentNameE,
+                DepartmentNameA = source.DepartmentNameA
             };
 
         }

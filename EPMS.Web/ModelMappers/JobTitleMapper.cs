@@ -1,54 +1,58 @@
 ﻿using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
-using AreasModel=EPMS.Web.Areas.HR.Models;
 
 namespace EPMS.Web.ModelMappers
 {
     public static class JobTitleMapper
     {
-        public static ApiModels.JobTitleDropDown CreateFromDropDown(this DomainModels.JobTitle source)
+        public static ApiModels.JobTitleDropDown CreateForDropDown(this DomainModels.JobTitle source)
         {
             return new ApiModels.JobTitleDropDown
              {
-                 //JobId = source.JobId,
-                 //JobTitleNameE = source.JobTitleNameE,
+                 JobTitleId = source.JobTitleId,
+                 JobTitleName = source.JobTitleNameE,
+                 BasicSalary = source.BasicSalary ?? 0,
              };
         }
 
-        public static AreasModel.JobTitle CreateFrom(this DomainModels.JobTitle source)
+        public static Models.JobTitle CreateFrom(this DomainModels.JobTitle source)
         {
-            return new AreasModel.JobTitle
+            return new Models.JobTitle
             {
-                //JobId = source.JobId,
-                //JobTitleNameE = source.JobTitleNameE,
-                //JobTitleNameA = source.JobTitleNameA,
-                //JobDescriptionE = source.JobDescriptionE,
-                //JobDescriptionA = source.JobDescriptionA,
-                //DepartmentId = source.DepartmentId,
-                //BasicSalary = source.BasicSalary,
-                //Department = source.Department.CreateFrom(),
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                JobTitleId = source.JobTitleId,
+                JobTitleNameE = source.JobTitleNameE,
+                JobTitleNameA = source.JobTitleNameA,
+                JobTitleDescE = source.JobTitleDescE,
+                JobTitleDescA = source.JobTitleDescA,
+                DepartmentId = source.DepartmentId,
+                BasicSalary = source.BasicSalary ?? 0,
+                DepartmentNameE = source.Department.DepartmentNameE,
+                DepartmentNameA = source.Department.DepartmentNameA,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                EmployeesCount = source.Employees.Count
+
             };
 
         }
-        public static DomainModels.JobTitle CreateFrom(this AreasModel.JobTitle source)
+        public static DomainModels.JobTitle CreateFrom(this Models.JobTitle source)
         {
             return new DomainModels.JobTitle
             {
-                //JobId = source.JobId,
-                //JobTitleNameE = source.JobTitleNameE,
-                //JobTitleNameA = source.JobTitleNameA,
-                //JobDescriptionE = source.JobDescriptionE,
-                //JobDescriptionA = source.JobDescriptionA,
-                //DepartmentId = source.DepartmentId,
-                //BasicSalary = source.BasicSalary,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                JobTitleId = source.JobTitleId,
+                JobTitleNameE = source.JobTitleNameE,
+                JobTitleNameA = source.JobTitleNameA,
+                JobTitleDescE = source.JobTitleDescE,
+                JobTitleDescA = source.JobTitleDescA,
+                DepartmentId = source.DepartmentId,
+                BasicSalary = source.BasicSalary,
+                //Department = source.Department.CreateFrom(),
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
             };
 
         }

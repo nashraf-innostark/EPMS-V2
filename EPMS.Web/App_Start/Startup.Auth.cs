@@ -1,5 +1,4 @@
 ﻿using EPMS.Implementation.Identity;
-using EPMS.Models.IdentityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -7,10 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using IdentitySample.Models;
 using Owin;
 using System;
-using EPMS.Models.IdentityModels;
 using EPMS.Models.DomainModels;
-using System.Threading.Tasks;
-using System.Configuration;
 
 namespace IdentitySample
 {
@@ -83,9 +79,9 @@ namespace IdentitySample
             //    app.UseFacebookAuthentication(facebookOptions);
             //}
 
-            app.UseFacebookAuthentication(
-               appId: "1552359324981356",
-               appSecret: "ce143d41c0a89b958db415cb2024aed0");
+            //app.UseFacebookAuthentication(
+            //   appId: "1552359324981356",
+            //   appSecret: "ce143d41c0a89b958db415cb2024aed0");
 
 
             // Uncomment the following lines to enable logging in with third party login providers
@@ -99,9 +95,9 @@ namespace IdentitySample
 
             
 
-            app.UseGoogleAuthentication(
-                clientId: "886230598195-diekcpe5epjegult3th3np5escccm2kn.apps.googleusercontent.com",
-                clientSecret: "hSaKj5SvTGCvYRUCF5Qtw088");
+            //app.UseGoogleAuthentication(
+            //    clientId: "886230598195-diekcpe5epjegult3th3np5escccm2kn.apps.googleusercontent.com",
+            //    clientSecret: "hSaKj5SvTGCvYRUCF5Qtw088");
         }
     }
 }

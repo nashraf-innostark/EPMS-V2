@@ -12,10 +12,12 @@ using System.Collections.Generic;
 using EPMS.Models.MenuModels;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.ViewModels.RightsManagement;
+using EPMS.Web.ViewModels.Common;
+using EPMS.WebBase.Mvc;
 
 namespace IdentitySample.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class RolesAdminController : Controller
     {
         private IMenuRightsService menuRightsService;
@@ -66,7 +68,9 @@ namespace IdentitySample.Controllers
         // GET: /Roles/
         public ActionResult Index()
         {
-            return View(RoleManager.Roles);
+            RoleViewModel roleViewModel = new RoleViewModel();
+            roleViewModel.Roles = RoleManager.Roles.ToList();
+            return View(roleViewModel);
         }
 
         //
@@ -110,11 +114,26 @@ namespace IdentitySample.Controllers
             if (ModelState.IsValid)
             {
                 var role = new AspNetRole();
-                var roleresult = await RoleManager.CreateAsync(role);
-                if (!roleresult.Succeeded)
+                role.Name = roleViewModel.Name;
+                int rolesCount = RoleManager.Roles.Count() + 1;
+                role.Id = rolesCount.ToString();
+                if (!RoleManager.RoleExists(role.Name))
                 {
-                    ModelState.AddModelError("", roleresult.Errors.First());
-                    return View();
+                    var roleresult = await RoleManager.CreateAsync(role);
+                    if (!roleresult.Succeeded)
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Error in creating role",
+                            IsError = true
+                        };
+                        return View();
+                    }
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = "Role has been created successfully",
+                        IsSaved = true
+                    };
                 }
                 return RedirectToAction("Index");
             }
@@ -206,10 +225,9 @@ namespace IdentitySample.Controllers
             }
             return View();
         }
-
+        [SiteAuthorize(PermissionKey = "RightsManagement")]
         public ActionResult RightsManagement()
         {
-
             UserMenuResponse userMenuRights = menuRightsService.GetRoleMenuRights(string.Empty);
             RightsManagementViewModel viewModel = new RightsManagementViewModel();
 
@@ -225,6 +243,7 @@ namespace IdentitySample.Controllers
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
 
@@ -247,8 +266,12 @@ namespace IdentitySample.Controllers
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
             viewModel.SelectedRoleId = roleValue;
-            return View("RightsManagement", viewModel);
-
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "Record has been updated.",
+                IsUpdated = true
+           };
+            return RedirectToAction("RightsManagement");
         }
         [HttpPost]
         public ActionResult RightsManagement(FormCollection collection)

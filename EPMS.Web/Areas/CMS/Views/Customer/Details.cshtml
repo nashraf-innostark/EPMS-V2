@@ -1,0 +1,142 @@
+﻿@model EPMS.Web.ViewModels.Customer.CustomerViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string ReturnUrl = ViewBag.ReturnUrl.ToString();
+    if (string.IsNullOrEmpty(ReturnUrl))
+    {
+        ReturnUrl = "/CMS/Customer/Index";
+    }
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/CMS/Customer/Index">
+                Customer List
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- Page heading begin-->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title </small></h2>
+</header>
+<!-- Page heading end-->
+
+<!-- Form starts.  -->
+@using (Html.BeginForm("Details", "Customer", FormMethod.Post, new {@id = "customerForm", @class = "form-horizontal", role = "form"}))
+{
+    <div class="container-fluid">
+        @Html.HiddenFor(model => model.Customer.CustomerId, new { @class = "CustomerId" })
+        @Html.HiddenFor(model => model.User.Id)
+        <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
+        @Html.TextBoxFor(model => model.User.Id, new { style = "display: none;"})
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Customer.CustomerName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Customer.CustomerNameE, new { id = "CustomerName", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(model => model.Customer.CustomerNameE, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Customer.CustomerName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Customer.CustomerNameA, new { id = "CustomerNameA", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(model => model.Customer.CustomerNameE, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Customer.Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.User.Email, new { id = "CustomerEmail", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Customer.CustomerAddress</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Customer.CustomerAddress, new { id = "CustomerAddress", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(model => model.Customer.CustomerAddress, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.CMS.Customer.CustomerMobile</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Customer.CustomerMobile, new { id = "CustomerMobile", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(model => model.Customer.CustomerMobile, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">Edit</button>
+                    <button id="savebtn" class="btn" type="submit">Save</button>
+                    <a id="cancel" class="btn" href = "@ReturnUrl">Back</a>
+                </div>
+                @*<div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href='/CMS/Customer/Index'" type="reset">Back</button>
+                </div>*@
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+
+        if ($("#UserRole").val() == "Customer") {
+            $("#savebtn").hide();
+            $("#edit").show();
+            $("#cancel").hide();
+        } else {
+            $("#savebtn").hide();
+            $("#edit").hide();
+            $("#cancel").show();
+        }
+    });
+
+    $("#edit").click(function (event) {
+        $('.' + 'tbdisable' + ':input').attr('disabled', false);
+        $("#savebtn").show();
+        $("#edit").hide();
+        $("#cancel").hide();
+        event.preventDefault();
+    });
+</script>
+
+

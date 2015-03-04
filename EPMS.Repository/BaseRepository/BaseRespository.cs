@@ -6,7 +6,6 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.BaseRepository
@@ -87,6 +86,20 @@ namespace EPMS.Repository.BaseRepository
             return DbSet.Find(id);
         }
         /// <summary>
+        /// Find Entity by Id
+        /// </summary>
+        public TDomainClass Find(string id)
+        {
+            return DbSet.Find(id);
+        }
+        /// <summary>
+        /// Find Entity by Id
+        /// </summary>
+        public TDomainClass Find(long id)
+        {
+            return DbSet.Find(id);
+        }
+        /// <summary>
         /// Get All Entites 
         /// </summary>
         /// <returns></returns>
@@ -126,7 +139,7 @@ namespace EPMS.Repository.BaseRepository
 
         public IEnumerable<AspNetRole> Roles()
         {
-             return db.UserRoles.Where(r => !r.Name.Equals("Admin"));
+            return db.UserRoles.Where(r => !r.Name.Equals("SuperAdmin"));
             //return null;
         }
 

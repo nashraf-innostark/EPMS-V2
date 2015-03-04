@@ -17,7 +17,11 @@ namespace EPMS.Web.Areas.PMS
             context.MapRoute(
                 "PMS_default",
                 "PMS/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new
+                {
+                    //action = "Index", 
+                    id = UrlParameter.Optional
+                }
             );
         }
     }

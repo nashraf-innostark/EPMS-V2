@@ -127,12 +127,43 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AllowanceRepository.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
+    <Compile Include="Repositories\AspNetUserRepository.cs" />
+    <Compile Include="Repositories\CompanyBankRepository.cs" />
+    <Compile Include="Repositories\CompanyDocumentRepository.cs" />
+    <Compile Include="Repositories\CompanyProfileRepository.cs" />
+    <Compile Include="Repositories\CompanySocialRepository.cs" />
+    <Compile Include="Repositories\ComplaintRepository.cs" />
+    <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\DashboardWidgetPreferencesRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\EmployeeJobHistoryRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
+    <Compile Include="Repositories\EmployeeRequestDetailRepository.cs" />
+    <Compile Include="Repositories\EmployeeRequestRepository.cs" />
+    <Compile Include="Repositories\JobApplicantRepository.cs" />
+    <Compile Include="Repositories\JobOfferedRepository.cs" />
+    <Compile Include="Repositories\JobTitleHistoryRepository.cs" />
     <Compile Include="Repositories\JobTitleRepository.cs" />
+    <Compile Include="Repositories\LicenseControlPanelRepository.cs" />
+    <Compile Include="Repositories\MeetingAttendeeRepository.cs" />
+    <Compile Include="Repositories\MeetingDocumentRepository.cs" />
+    <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
+    <Compile Include="Repositories\NotificationRecipientRepository.cs" />
+    <Compile Include="Repositories\NotificationRepository.cs" />
+    <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Repositories\PreRequisitTaskRepository.cs" />
+    <Compile Include="Repositories\ProjectDocumentRepository.cs" />
+    <Compile Include="Repositories\ProjectRepository.cs" />
+    <Compile Include="Repositories\ProjectTaskRepository.cs" />
+    <Compile Include="Repositories\QuickLaunchItemRepository.cs" />
+    <Compile Include="Repositories\QuotationItemRepository.cs" />
+    <Compile Include="Repositories\QuotationRepository.cs" />
+    <Compile Include="Repositories\TaskEmployeeRepository.cs" />
+    <Compile Include="Repositories\UserPrefrencesRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />
     <Compile Include="TypeRegistrations.cs" />
@@ -145,9 +176,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="BaseRepository\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </None>
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="fonts\glyphicons-halflings-regular.eot" />

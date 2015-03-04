@@ -1,5 +1,35 @@
 ﻿@{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
 }
 
+    <!-- Navigation Bar -->
+    <div class="breadcrumb-container">
+         <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard(Employee)En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="DepartmentsList(Admin)En.html">
+                Home
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">
+                @ViewBag.Title
+            </a>
+        </li>
 
+    </ul>
+    </div>
+    <!-- Page heading -->
+    <header>
+        <i class="icon-big-notepad"></i>
+        <h2><small>@ViewBag.Title</small></h2>
+    </header>
+    <!--Notifications begin-->
+    @Html.Partial("_Alert")
+
+    <!-- Form starts from here.  -->

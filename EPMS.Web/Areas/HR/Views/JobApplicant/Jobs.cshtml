@@ -1,0 +1,139 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.JobApplicant.JobApplicantViewModel
+
+@{
+    ViewBag.Title = EPMS.Web.Resources.HR.JobOffered.IndexLabel;
+    Layout = "~/Views/Shared/_ApplicantLayout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="container-fluid dashboard dashboard-title">
+    <div class="row-fluid">
+        <div class="span12">
+            <h1>
+                Jobs offered
+            </h1>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model.JobOfferedList)
+{
+    if (item.IsOpen)
+    {
+        <div class="widget-holder applyJobWidget">
+            <div class="widget-flipper">
+                <div class="widget-area widget-general-stats widget-front">
+                    <div class="widget-head ">
+                        @if (direction == "ltr")
+                        {
+                            <a href="#" class="lightOrange">@item.JobTitleNameE</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="lightOrange">@item.JobTitleNameA</a>
+                        }
+                        <div>
+
+
+                            <i class="icon-photon pen_alt2 opc1"></i>
+                        </div>
+                    </div>
+                    <ul class="jobsOffred">
+                        <li>
+                            <span>Department</span>
+                            <div>
+                                @if (direction == "ltr")
+                                {
+                                    @item.DepartmentNameE
+                                }
+                                else
+                                {
+                                    @item.DepartmentNameA
+                                }
+                            </div>
+                        </li>
+                        @if (item.NoOfPosts != null)
+                        {
+                            <li>
+                                <span>Available Vacancies</span>
+                                <div>
+                                    @item.NoOfPosts
+                                </div>
+                            </li>
+                        }
+                        @if (item.ShowBasicSalary)
+                        {
+                            <li>
+                                <span>Basic Salary</span>
+                                <div>
+                                    @item.BasicSalary
+                                </div>
+                            </li>
+                        }
+
+
+                        <li>
+                            <span>Job Description</span>
+                            <div class="jobDesc">
+                                @if (direction == "ltr")
+                                {
+                                    @Html.Raw(item.JobTitleDescE)
+                                }
+                                else
+                                {
+                                    @Html.Raw(item.JobTitleDescA)
+                                }
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="control-group row-fluid" style="clear:both;">
+                        <div class="span3 span-inset">
+                            <button type="button" class="btn" onclick="location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobApplicant/Apply/@item.JobOfferedId'">Apply</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="tempLoader" style="display:none;"></div>
+        </div>
+    }
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        var message = '@ViewBag.ApplyMessage';
+        if (message != "") {
+            setTimeout(function () {
+                $.pnotify({
+                    title: 'Success',
+                    type: 'info',
+                    text: message
+                });
+            }, 3000);
+        }
+        $('#JobsOfferedList').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                { "bVisible": false }, // cloumn to hide
+                null, // not hide
+                null,
+                null,
+                null
+            ],
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+        $(".widget-general-stats select").select2();
+    });
+</script>
+
+

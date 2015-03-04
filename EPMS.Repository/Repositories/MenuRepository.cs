@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.MenuModels;
-using Microsoft.Practices.Unity;
 using EPMS.Repository.BaseRepository;
+using Microsoft.Practices.Unity;
 
-namespace EPMS.Web.Views.RolesAdmin
+namespace EPMS.Repository.Repositories
 {
     public class MenuRepository : BaseRepository<Menu>, IMenuRepository
     {
@@ -29,5 +26,16 @@ namespace EPMS.Web.Views.RolesAdmin
             get { return db.Menus; }
         }
         #endregion
+
+        public long GetMenuIdByPermissionKey(string permissionKey)
+        {
+            var menu = DbSet.SingleOrDefault(x => x.PermissionKey == permissionKey);
+            if (menu != null)
+            {
+                var id = menu.MenuId;
+                return id;
+            }
+            return 0;
+        }
     }
 }

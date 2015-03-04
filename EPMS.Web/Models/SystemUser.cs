@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace EPMS.Web.Models
 {
@@ -11,6 +8,7 @@ namespace EPMS.Web.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Telephone { get; set; }
+        public string UserName { get; set; }
         public string Address { get; set; }
         public string ImageName { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -19,5 +17,7 @@ namespace EPMS.Web.Models
         public bool EmailConfirmed { get; set; }
         public string RoleId { get; set; }
         public string Role { get; set; }
+        public string Username { get; set; }
+        public string EmpEmail { get; set; }
     }
 }

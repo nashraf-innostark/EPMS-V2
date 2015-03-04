@@ -1,0 +1,267 @@
+﻿@model EPMS.Web.ViewModels.Request.RequestListViewModel
+@{
+    ViewBag.Title = EPMS.Web.Resources.HR.Request.Label;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<!-- Navigation Bar -->
+<div class="breadcrumb-container" dir="ltr">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@ViewBag.Title</a>
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+    @if (ViewBag.UserRole != "Admin")
+    {
+        <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+    }
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+
+
+<form class="form-horizontal">
+    @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" });
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <table id="dataTable" class="table table-responsive">
+                    <thead class="cf sorthead">
+                        @if (ViewBag.UserRole == "Admin")
+                        {
+                            <tr>
+                                <th>ID</th>
+                                <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
+                                <th>@EPMS.Web.Resources.HR.Request.EmployeeName</th>
+                                <th>@EPMS.Web.Resources.HR.Request.EmployeeJobId</th>
+                                <th>@EPMS.Web.Resources.HR.Request.DepartmentName</th>
+                                <th>@EPMS.Web.Resources.HR.Request.RequestDate</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Status</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Replied</th>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <th></th>
+                                <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
+                                <th>@EPMS.Web.Resources.HR.Request.Status</th>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var siteUrl = $('#siteURL').val();
+        if ('@ViewBag.UserRole' == "Admin") {
+            var oTable = $('#dataTable').dataTable({
+                "bProcessing": true,
+                "bServerSide": true,
+                "sPaginationType": "bootstrap",
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["RequestId"];
+                        },
+                        "bVisible": false,
+                        "bSortable": false
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var val = full["RequestTopic"];
+                            var id = full["RequestId"];
+                            var element = '<a href="Create/' + id + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["EmployeeNameE"];
+                        }
+                    },
+                    {
+                        "aTargets": [3],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["EmployeeJobId"];
+                        }
+                    },
+                    {
+                        "aTargets": [4],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["DepartmentNameE"];
+                        }
+                    },
+                    {
+                        "aTargets": [6],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["RequestDateString"];
+                        }
+                    },
+                    {
+                        "aTargets": [7],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var requestDetail = full["RequestDetail"];
+                            var status = "";
+                            if (requestDetail.IsReplied) {
+                                status = requestDetail.IsApproved ? "Accepted" : "Declined";
+                            } else {
+                                status = "Pending";
+                            }
+                            return status;
+                        },
+                        "bSortable": false
+                    },
+                    {
+                        "aTargets": [8],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var requestDetail = full["RequestDetail"];
+                            return requestDetail.IsReplied ? "Yes" : "No";
+                        },
+                        "bSortable": false
+                    }
+                ],
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "sAjaxSource": siteUrl + "/HR/Request/Index",
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    "sLoadingRecords": "Please wait - loading records...",
+                    "sZeroRecords": "No records to display.",
+                    "sProcessing": "Processing...",
+                    "sInfoEmpty": "No entries to display."
+                },
+            });
+        } else {
+            var oTable = $('#dataTable').dataTable({
+                "bProcessing": true,
+                "bServerSide": true,
+                "sPaginationType": "bootstrap",
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["RequestId"];
+                        },
+                        "bVisible": false,
+                        "bSortable": false
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var val = full["RequestTopic"];
+                            var Id = full["RequestId"];
+                            var element = '<a href="Create/' + Id + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var requestDetail = full["RequestDetail"];
+                            var status = "";
+                            if (requestDetail.IsReplied) {
+                                status = requestDetail.IsApproved ? "Accepted" : "Declined";
+                            } else {
+                                status = "Pending";
+                            }
+                            return status;
+                        },
+                        "bSortable": false
+                    }
+                ],
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "sAjaxSource": siteUrl + "/HR/Request/Index",
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    "sLoadingRecords": "Please wait - loading records...",
+                    "sZeroRecords": "No records to display.",
+                    "sProcessing": "Processing...",
+                    "sInfoEmpty": "No entries to display."
+                },
+            });
+        }
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+        $(".dataTables_filter input").unbind()
+            .bind("input", function(e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    //oTable.fnClearTable();
+                    //$('#employeeTable').empty();
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+    });
+
+    function validateForm() {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length); i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "") {
+                $(control).prop('placeholder', 'Required');
+                counter++;
+                $(control).addClass("Error");
+
+            } else {
+                $(control).removeClass("Error");
+            }
+
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0)
+                    $("#" + divId).focus();
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+
+
+
+
+

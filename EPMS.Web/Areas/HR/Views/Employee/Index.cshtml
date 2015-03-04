@@ -1,0 +1,170 @@
+﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
+
+@{
+    ViewBag.Title = EPMS.Web.Resources.HR.Employee.PTList;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            @EPMS.Web.Resources.HR.Employee.Employeelist
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.HR.Employee.Employees</small></h2>
+    @if (Convert.ToString(Session["RoleName"]) == "Admin")
+    {
+        <h3><small><a href="~/HR/Employee/Create">@EPMS.Web.Resources.HR.Employee.AddNew</a></small></h3>
+    }
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <form class="form-horizontal">
+            @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table id="employeeTable" class="table table-striped table-responsive" style="width: 100% !important;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.Image</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.NameIndex</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.EmpJobTitle</th>
+                                    <th>@EPMS.Web.Resources.HR.Employee.Department</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var siteUrl = $('#siteURL').val();
+        var dir = '@direction';
+        var oTable = $('#employeeTable').dataTable({
+            "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": true,
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["EmployeeId"];
+                    },
+                    "bVisible": false,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["EmployeeImagePath"];
+                    },
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var element;
+                        var val;
+                        var empId;
+                        if (dir == "ltr") {
+                            val = full["EmployeeNameE"];
+                            empId = full["EmployeeId"];
+                            element = '<a href="Create/' + empId + '">' + val + '</a>';
+                        } else {
+                            val = full["EmployeeNameA"];
+                            empId = full["EmployeeId"];
+                            element = '<a href="Create/' + empId + '">' + val + '</a>';
+                        }
+                        return element;
+                    }
+                },
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["EmployeeJobId"];
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var jobTItle = full["JobTitle"];
+                        if (dir == "ltr") {
+                            return jobTItle.JobTitleNameE;
+                        } else {
+                            return jobTItle.JobTitleNameA;
+                        }
+                    }
+                },
+                {
+                    "aTargets": [5],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var jobTitle = full["JobTitle"];
+                        if (dir == "ltr") {
+                            return jobTitle.DepartmentNameE;
+                        } else {
+                            return jobTitle.DepartmentNameE;
+                        }
+                    }
+                }
+            ],
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
+            "sAjaxSource": siteUrl + "/Employee/Index",
+            "sServerMethod": "POST",
+            "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            },
+        });
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+
+        //$(".dataTables_processing").hide();
+        //$(".dataTables_length label").text("");
+
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+    });
+</script>

@@ -113,6 +113,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -120,17 +121,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Identity\ApplicationUserManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Identity\IdentityOperation.cs" />
+    <Compile Include="Services\AllowanceService.cs" />
+    <Compile Include="Services\AspNetUserService.cs" />
+    <Compile Include="Services\CompanyBankService.cs" />
+    <Compile Include="Services\CompanyDocumentService.cs" />
+    <Compile Include="Services\CompanyProfileService.cs" />
+    <Compile Include="Services\CompanySocialService.cs" />
+    <Compile Include="Services\ComplaintService.cs" />
+    <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\DashboardWidgetPreferencesService.cs" />
     <Compile Include="Services\DepartmentService.cs" />
+    <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\JobApplicantService.cs" />
+    <Compile Include="Services\JobOfferedService.cs" />
     <Compile Include="Services\JobTitleService.cs" />
+    <Compile Include="Services\LicenseControlPanelService.cs" />
     <Compile Include="Services\LoggerService.cs" />
+    <Compile Include="Services\MeetingAttendeeService.cs" />
+    <Compile Include="Services\MeetingDocumentService.cs" />
+    <Compile Include="Services\MeetingService.cs" />
     <Compile Include="Services\MenuRightsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\PayrollService.cs" />
+    <Compile Include="Services\PreRequisitTaskService.cs" />
+    <Compile Include="Services\ProjectDocumentService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Services\ProjectTaskService.cs" />
+    <Compile Include="Services\QuickLaunchItemService.cs" />
+    <Compile Include="Services\QuotationItemService.cs" />
+    <Compile Include="Services\QuotationService.cs" />
+    <Compile Include="Services\TaskEmployeeService.cs" />
+    <Compile Include="Services\UserPrefrencesService.cs" />
     <Compile Include="TypeRegistrations.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

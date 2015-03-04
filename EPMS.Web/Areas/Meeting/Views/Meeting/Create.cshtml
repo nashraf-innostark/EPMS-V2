@@ -1,0 +1,476 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Meeting.MeetingViewModel
+
+@{
+    ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.Create;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Meeting/Meeting/Index">
+                @EPMS.Web.Resources.Meeting.Meeting.MeetingList
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+@using (Html.BeginForm("Create", "Meeting", FormMethod.Post, new { @id = "meetingForm", @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        @Html.HiddenFor(m => m.Meeting.MeetingId)
+        @Html.HiddenFor(model => model.Meeting.DocsNames, new { @id = "DocsNames" })
+        @Html.HiddenFor(m => m.Meeting.RecCreatedBy)
+        @Html.HiddenFor(m => m.Meeting.RecCreatedDt)
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.TopicName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.TopicName, new { id = "TopicName", @class = "disableOnDate" })
+                    @Html.ValidationMessageFor(m => m.Meeting.TopicName, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.TopicNameAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.TopicNameAr, new { id = "TopicNameAr", @class = "disableOnDate" })
+                    @Html.ValidationMessageFor(m => m.Meeting.TopicNameAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.RelatedProj</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.RelatedProject, new { id = "RelatedProject", @class = "disableOnDate" })
+                    @Html.ValidationMessageFor(m => m.Meeting.RelatedProject, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Attendees</label>
+            </div>
+            <div class="span9" id="checked">
+                <div class="controls">
+                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox" })
+                </div>
+            </div>
+        </div>
+        <div class="divToHide" style="display: none">
+            @if (Model.Meeting.MeetingId > 0)
+            {
+                if (Model.Meeting.MeetingAttendees != null)
+                {
+                    <div id="Dual_Multi_Select_with_Filter_Search2" class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Absences</label>
+                        </div>
+                        <div class="span9">
+
+                            <div class="controls">
+                                @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.ListBoxFor(model => model.Meeting.AbsentEmployeeIds, new MultiSelectList(new[] { "" }), new { @id = "dualMultiAttendee" })
+                    </div>
+                }
+            }
+        </div>
+        <!--Attendees Other than Employees-->
+        <div class="control-group row-fluid">
+            <div class="span12">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AttendeesNotEmployees</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { id = "attendee1", @class = "disableOnDate", @placeholder = "Attendee 1" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName1, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { id = "email1", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail1, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { id = "attendee2", @class = "disableOnDate", @placeholder = "Attendee 2" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName2, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { id = "email2", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail2, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { id = "attendee3", @class = "disableOnDate", @placeholder = "Attendee 3" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName3, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { id = "email3", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail3, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Input Fields-->
+        <div id="Date_Picker" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.Web.Resources.Meeting.Meeting.MeetingDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hejri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })
+                </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Agenda</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Meeting.Agenda, new { id = "Agenda", @class = "tbdisable" })
+                    @Html.ValidationMessageFor(m => m.Meeting.Agenda, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AgendaAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Meeting.AgendaAr, new { id = "AgendaAr", @class = "tbdisable" })
+                    @Html.ValidationMessageFor(m => m.Meeting.AgendaAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Discussion</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Meeting.Discussion, new { id = "Discussion", @class = "tbdisable" })
+                    @Html.ValidationMessageFor(m => m.Meeting.Discussion, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DiscussionAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Meeting.DiscussionAr, new { id = "DiscussionAr", @class = "tbdisable" })
+                    @Html.ValidationMessageFor(m => m.Meeting.DiscussionAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Decisions</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Meeting.Decisions, new { id = "Decisions", @class = "tbdisable" })
+                    @Html.ValidationMessageFor(m => m.Meeting.Decisions, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DecisionsAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Meeting.DecisionsAr, new { id = "DecisionsAr", @class = "tbdisable" })
+                    @Html.ValidationMessageFor(m => m.Meeting.DecisionsAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <!--Drag And Drop Upload begin-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.Web.Resources.Meeting.Meeting.AttachFiles<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="@EPMS.Web.Resources.Meeting.Meeting.AttachBoxText"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+
+        </div>
+
+        @if (Model.MeetingDocuments != null)
+        {
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Download</label>
+            </div>
+            <div class="control-group row-fluid">
+                @foreach (var doc in Model.MeetingDocuments)
+                {
+                    <div class="controls">
+                        <div class="span-inset">
+                            <a href="~/Meeting/Meeting/Download?fileName=@doc.FileName" class="btn">Download @doc.FileName</a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Delete</label>
+            </div>
+            <div class="control-group row-fluid">
+                @foreach (var doc in Model.MeetingDocuments)
+                {
+                    <div class="controls">
+                        <div class="span-inset">
+                            <button type="button" class="btn" onclick="deleteDoc(this,@doc.DocumentId)">@EPMS.Web.Resources.PMS.Project.DeleteFile @doc.FileName</button>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        }
+        <!--Drag And Drop Upload end-->
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
+            </div>
+
+        </div>
+        @*<div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+            </div>
+        </div>*@
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
+                    <button id="savebtn" type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Meeting/Meeting/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#submit').click(function () {
+            $("#meetingForm").submit();
+        });
+        CKEDITOR.replace('Agenda');
+        CKEDITOR.replace('AgendaAr');
+        CKEDITOR.replace('Discussion');
+        CKEDITOR.replace('DiscussionAr');
+        CKEDITOR.replace('Decisions');
+        CKEDITOR.replace('DecisionsAr');
+
+        var meetingId = $("#Meeting_MeetingId").val();
+
+        if (meetingId == 0) {
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+        }
+
+        $("#edit").click(function (event) {
+            $("#checked").addClass('enableList');
+            event.preventDefault();
+        });
+
+        if ($("#metingDate").val() != null && $("#metingDate").val() != "") {
+            $("#metingDateAr").val(ConvertDates($("#metingDate").val(), "gregorian", "islamic"));
+        }
+
+        if (moment('@Model.Meeting.Date').isBefore(Date.now(), 'day') && meetingId > 0) {
+            $('.divToHide').show();
+        }
+
+        if (meetingId == 0) {
+            //Dual for Employees
+            $("#dualMultiEmployee").pickList({
+                sourceListLabel: "@EPMS.Web.Resources.Meeting.Meeting.Employees",
+                targetListLabel: "@EPMS.Web.Resources.Meeting.Meeting.AttendingEmployees",
+            });
+        }
+        var parsed;
+        if (meetingId > 0) {
+            var attendeeList = '@Html.Raw(Json.Encode(Model.Meeting.MeetingAttendees))';
+            parsed = JSON.parse(attendeeList); //Set Attribute of Selected Items to 'Selected' to Populate Target List
+            $("#dualMultiEmployee option").each(function () {
+                var id = parseInt($(this).val());
+                var element = $(this);
+                $.each(parsed, function (key, value) {
+                    if (value.EmployeeId == id) {
+                        $(element).attr("selected", "selected");
+                    }
+                });
+            });
+            //Dual for Employees
+            $("#dualMultiEmployee").pickList({
+                sourceListLabel: "@EPMS.Web.Resources.Meeting.Meeting.Employees",
+                targetListLabel: "@EPMS.Web.Resources.Meeting.Meeting.AttendingEmployees",
+            });
+        }
+
+        var absenteeList = '@Html.Raw(Json.Encode(Model.Meeting.AbsenteesList))';
+        parsed = JSON.parse(absenteeList); //Set Attribute of Selected Items to 'Selected' to Populate Target List
+        $("#dualMultiAttendee option").each(function () {
+            var id = parseInt($(this).val());
+            var element = $(this);
+            $.each(parsed, function (key, value) {
+                if (value.EmployeeId == id) {
+                    $(element).attr("selected", "selected");
+                }
+            });
+        });
+
+        //Dual for Attendees
+        $("#dualMultiAttendee").pickList({
+            sourceListLabel: "Emloyees",
+            targetListLabel: "Attending Employees",
+        });
+
+        var errors = "";
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Meeting/Meeting/UploadDocuments";
+        $('#upload').mfupload({
+
+            type: '',   //all types
+            maxsize: 1,
+            post_upload: url,
+            folder: "./",
+            ini_text: "@EPMS.Web.Resources.PMS.Project.DocumentUpload",
+            over_text: "@EPMS.Web.Resources.PMS.Project.DocumentHoverText",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                addDocName(result.filename);
+            },
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+
+        function addDocName(filename) {
+            var lis = $("#DocsNames").val();
+            lis += filename + "~";
+            $("#DocsNames").val(lis);
+        }
+
+        //Disable Employee Select Box after Meeting Date
+        if (moment('@Model.Meeting.Date').isBefore(Date.now(), 'day')) {
+            $('.' + 'disableOnDate' + ':input').attr('ReadOnly', true);
+            $("#checked").addClass('disableList');
+        }
+
+        //$("#meetingForm").validate({
+        //    //ignore: ".ignore"
+        //}).settings.ignore = ".ignore, .file";
+
+    });
+
+    //Delete Meeting Documents
+    function deleteDoc(button, fileId) {
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Meeting/Meeting/DeleteDocument";
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: "json",
+            data: {
+                fileId: fileId
+            },
+            success: function (data) {
+                if (data) {
+                    button.remove();
+                }
+                $.unblockUI();
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+            }
+        });
+    }
+</script>

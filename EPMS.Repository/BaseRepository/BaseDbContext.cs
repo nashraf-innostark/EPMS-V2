@@ -76,5 +76,36 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<JobTitle> JobTitleses { get; set; }
+        public DbSet<Allowance> Allowances { get; set; }
+        public DbSet<EmployeeRequest> EmployeeRequests { get; set; }
+        public DbSet<RequestDetail> RequestDetails { get; set; }
+        public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<JobTitleHistory> JobTitleHistory { get; set; }
+        public DbSet<EmployeeJobHistory> EmployeeJobHistory { get; set; }
+        public DbSet<JobOffered> JobsOffered { get; set; }
+        public DbSet<JobApplicant> JobApplicants { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Complaint> Complaint { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<ProjectDocument> ProjectDocuments { get; set; }
+        public DbSet<Quotation> Quotations { get; set; }
+        public DbSet<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public DbSet<CompanyProfile> Profile { get; set; }
+        public DbSet<CompanyBankDetail> Bank { get; set; }
+        public DbSet<CompanySocialDetail> Social { get; set; }
+        public DbSet<CompanyDocumentDetail> Document { get; set; }
+        public DbSet<ProjectTask> ProjectTasks { get; set; }
+        public DbSet<TaskEmployee> TaskEmployees { get; set; }
+        public DbSet<PreRequisitTask> PreRequisitTasks { get; set; }
+        public DbSet<MeetingDocument> MeetingDocuments { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        public DbSet<UserPrefrence> UserPrefrence { get; set; }
+        public DbSet<Notification> Notification { get; set; }
+        public DbSet<NotificationRecipient> NotificationRecipient { get; set; }
+        public DbSet<DashboardWidgetPreference> Preferences { get; set; }
+        public DbSet<QuickLaunchItem> QuickLaunchItems { get; set; }
+        public DbSet<LicenseControlPanel> LicenseControlPanels { get; set; }
     }
 }

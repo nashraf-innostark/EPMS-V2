@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
@@ -43,11 +44,10 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<EmployeeByColumn, Func<Employee, object>>
                     {
-                        { EmployeeByColumn.EmployeeId, c => c.EmployeeId},
-                        { EmployeeByColumn.EmployeeFirstName,  c => c.EmployeeFirstName},
-                        { EmployeeByColumn.EmployeeMiddleName, c => c.EmployeeMiddleName},
-                        { EmployeeByColumn.EmployeeLastName, c => c.EmployeeLastName},
-                        { EmployeeByColumn.EmployeeJobId, c => c.EmployeeJobId}
+                        { EmployeeByColumn.EmployeeNameE,  c => c.EmployeeNameE},
+                        { EmployeeByColumn.EmployeeJobId, c => c.JobTitleId},
+                        { EmployeeByColumn.EmployeeJobTitle, c => c.JobTitle.JobTitleNameE},
+                        { EmployeeByColumn.EmployeeDepartment, c => c.JobTitle.Department.DepartmentNameE}
                     };
         #endregion
 
@@ -58,33 +58,65 @@ namespace EPMS.Repository.Repositories
         /// <returns>EmployeeRespone</returns>
         public EmployeeResponse GetAllEmployees(EmployeeSearchRequset employeeSearchRequset)
         {
-            int fromRow = (employeeSearchRequset.PageNo - 1) * employeeSearchRequset.PageSize;
-            int toRow = employeeSearchRequset.PageSize;
-
+            int fromRow = employeeSearchRequset.iDisplayStart;
+            int toRow = employeeSearchRequset.iDisplayStart + employeeSearchRequset.iDisplayLength;
+            //int toRow = employeeSearchRequset.PageSize;
+            if (employeeSearchRequset.iSortCol_0 == 1)
+            {
+                employeeSearchRequset.iSortCol_0 = 2;
+            }
             Expression<Func<Employee, bool>> query =
-                s => (((employeeSearchRequset.EmployeeId == 0) || s.EmployeeId == employeeSearchRequset.EmployeeId
-                    || s.EmployeeId.Equals(employeeSearchRequset.EmployeeId)) &&
-                    ((string.IsNullOrEmpty(employeeSearchRequset.EmployeeFirstName) || (s.EmployeeFirstName.Contains(employeeSearchRequset.EmployeeFirstName)))
-                    || (s.EmployeeMiddleName.Contains(employeeSearchRequset.EmployeeMiddleName)) || (s.EmployeeLastName.Contains(employeeSearchRequset.EmployeeLastName))) &&
-                    ((employeeSearchRequset.EmployeeJobId == "") || (s.EmployeeJobId == employeeSearchRequset.EmployeeJobId)));
+                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.EmployeeNameA.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchString)) || (s.EmployeeJobId == employeeSearchRequset.SearchString) ||
+                    (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchString)));
 
-            IEnumerable<Employee> employees = employeeSearchRequset.IsAsc ?
+            IEnumerable<Employee> employees = employeeSearchRequset.sSortDir_0=="asc" ?
                 DbSet
                 .Where(query).OrderBy(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new EmployeeResponse { Employeess = employees, TotalCount = DbSet.Count(query) };
+            return new EmployeeResponse { Employeess = employees, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
 
         /// <summary>
-        /// Find Employee By Employee ID
+        /// Get all employees in a depertment
         /// </summary>
-        /// <param name="id">EMployee ID</param>
-        /// <returns></returns>
-        public Employee FindEmployeeById(long? id)
+        public IEnumerable<Employee> GetEmployeesByDepartmentId(long departmentId)
         {
-            return DbSet.FirstOrDefault(employeeId => employeeId.EmployeeId == id);
+            return DbSet.Where(employee => employee.JobTitle.DepartmentId == departmentId);
+        }
+
+        public IEnumerable<Employee> GetRecentEmployees(string requester)
+        {
+            if (requester == "Admin")
+            {
+                return DbSet.OrderByDescending(x => x.RecCreatedDt).Take(5);
+            }
+            long departmentId = Convert.ToInt64(requester);
+            return DbSet.Where(x => x.JobTitle.DepartmentId == departmentId).OrderByDescending(x => x.RecCreatedDt).Take(5);
+        }
+
+        public Employee FindForPayroll(long employeeId, DateTime currTime)
+        {
+            return DbSet.FirstOrDefault(employee => employee.EmployeeId == employeeId && employee.Allowances.Count(y=>y.AllowanceDate <= currTime)>0);
+        }
+
+        public IEnumerable<string> FindEmployeeEmailById(List<long> employeeId)
+        {
+            var list = new List<long>();
+            if (employeeId !=null)
+            {
+                list.AddRange(employeeId);
+            }
+            IEnumerable<string> empIds = DbSet.Where(x => list.Contains(x.EmployeeId)).Select(x => x.Email).ToList();
+            return empIds;
+        }
+
+        public IEnumerable<Employee> GetAdminEmployees(long menuId)
+        {
+            return DbSet.Where(x => x.AspNetUsers.Any(y => y.AspNetRoles.Any(z => z.MenuRights.Any(a => a.Menu_MenuId == menuId))));
         }
     }
 }

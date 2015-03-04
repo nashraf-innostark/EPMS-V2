@@ -1,0 +1,249 @@
+﻿@model EPMS.Web.ViewModels.Payroll.PayrollViewModel
+
+@{
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = direction == "ltr" ? Model.Employee.EmployeeNameE + " " + EPMS.Web.Resources.HR.Payroll.Payrolls : Model.Employee.EmployeeNameA + " " + EPMS.Web.Resources.HR.Payroll.Payrolls;
+    var empName = direction == "ltr" ? Model.Employee.EmployeeNameE : Model.Employee.EmployeeNameA;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="dashboard-En.html">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/HR/Payroll/Index">
+                @EPMS.Web.Resources.HR.Payroll.PayrollList
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<style type="text/css">
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.HR.Payroll.Payrolls</small></h2>
+    <h3><small>@empName</small></h3>
+</header>
+<!-- Page heading ends -->
+@using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "PayrollForm", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+
+        @Html.HiddenFor(model => model.Id)
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Date">@EPMS.Web.Resources.HR.Payroll.Date</label>
+            </div>
+            <div class="span3">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Date, new { @id = "Date", @class = "datepickerPayroll" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="EmployeeName">@EPMS.Web.Resources.HR.Payroll.EmpId</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @(direction == "ltr" ? Html.TextBoxFor(model => model.Employee.EmployeeNameE, new { @id = "EmployeeName", @disabled = "disabled" }) : Html.TextBoxFor(model => model.Employee.EmployeeNameA, new { @id = "EmployeeName", @disabled = "disabled" }))
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="JobTitle">@EPMS.Web.Resources.HR.Employee.JobTitle</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @(direction == "ltr" ? Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameE, new { @id = "JobTitle", @disabled = "disabled" }) : Html.TextBoxFor(model => model.Employee.JobTitle.JobTitleNameA, new { @id = "JobTitle", @disabled = "disabled" }))
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="BasicSalary">@EPMS.Web.Resources.HR.Employee.BasicSal</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Employee.JobTitle.BasicSalary, new { @id = "BasicSalary", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allowance1">@EPMS.Web.Resources.HR.Employee.Allow1</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Allowances.Allowance1, new { @id = "Allowance1", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allowance2">@EPMS.Web.Resources.HR.Employee.Allow2</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Allowances.Allowance2, new { @id = "Allowance2", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allowance3">@EPMS.Web.Resources.HR.Employee.Allow3</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Allowances.Allowance3, new { @id = "Allowance3", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allowance4">@EPMS.Web.Resources.HR.Employee.Allow4</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Allowances.Allowance4, new { @id = "Allowance4", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Allowance5">@EPMS.Web.Resources.HR.Employee.Allow5</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Allowances.Allowance5, new { @id = "Allowance5", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Deduction1, new { @id = "Deduction1", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Deduction2, new { @id = "Deduction2", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Total">@EPMS.Web.Resources.HR.Payroll.Total</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Total, new { @id = "Total", @disabled = "disabled", @class = "empty" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" class="btn" onclick="printDiv('PayrollForm')">@EPMS.Web.Resources.HR.Payroll.Print</button>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.datepickerPayroll').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'mm/yy',
+            showButtonPanel: true,
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                var newDate = new Date(year, month, 1);
+                $(this).datepicker('setDate', newDate);
+                $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>', css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" } });
+                getPayrollDetails(newDate);
+            },
+            //onSelect: function (date) {
+            //    $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>', css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" } });
+            //    getPayrollDetails(date);
+            //},
+        });
+        //$(".datepicker").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    dateFormat: "mm yy",
+        //    showButtonPanel: true,
+        //    onSelect: function (date) {
+        //        $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>' ,css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%"} });
+        //        getPayrollDetails(date);
+        //    },
+        //});
+    });
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
+    function getPayrollDetails(date) {
+        $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: '@Url.Action("Detail", "Payroll")',
+            data: $('#PayrollForm').serialize(),
+            success: function (data) {
+                // Set values
+                setControlsValues(data);
+            },
+            error: callError
+        });
+    }
+    function setControlsValues(data) {
+        var direc = '@direction';
+        if (direc == "ltr") {
+            $("#EmployeeName").val(data["Employee"].EmployeeNameE);
+            $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameE);
+        } else {
+            $("#EmployeeName").val(data["Employee"].EmployeeNameA);
+            $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameA);
+        }
+        $("#BasicSalary").val(data["Employee"].JobTitle.BasicSalary);
+        $("#Allowance1").val(data["Allowances"].Allowance1);
+        $("#Allowance2").val(data["Allowances"].Allowance2);
+        $("#Allowance3").val(data["Allowances"].Allowance3);
+        $("#Allowance4").val(data["Allowances"].Allowance4);
+        $("#Allowance5").val(data["Allowances"].Allowance5);
+        $("#Deduction1").val(data["Deduction1"]);
+        $("#Deduction1").val(data["Deduction1"]);
+        $("#Total").val(data["Total"]);
+        $.unblockUI();
+    }
+    function callError(e, a) {
+        alert("No Data Available");
+        $('.empty').val(0);
+        $.unblockUI();
+    }
+</script>

@@ -1,117 +1,215 @@
-﻿using System.Configuration;
-using EPMS.Models.DomainModels;
-using AreasModel = EPMS.Web.Areas.HR.Models;
+﻿using System;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using EPMS.Implementation.Services;
+using EPMS.Interfaces.IServices;
+using EPMS.Web.ModelMappers;
+using EPMS.Web.Models;
+using Employee = EPMS.Models.DomainModels.Employee;
 
 namespace EPMS.Web.ModelMappers
 {
     public static class EmployeeMapper
     {
-        public static Employee CreateFrom(this AreasModel.Employee source)
+        public static Employee CreateFromClientToServer(this Models.Employee source)
         {
             var caseType = new Employee
             {
-                //EmployeeId = source.EmployeeId ?? 0,
-                //EmpFirstNameA = source.EmpFirstNameA,
-                //EmpFirstNameE = source.EmpFirstNameE,
-                //EmpMiddleNameA = source.EmpMiddleNameA,
-                //EmpMiddleNameE = source.EmpMiddleNameE,
-                //EmpLastNameA = source.EmpLastNameA,
-                //EmpLastNameE = source.EmpLastNameE,
-                //EmpImage = source.EmpImage,
-                //EmpIqama = source.EmpIqama,
-                //IqamaIssueDate = source.IqamaIssueDate,
-                //IqamaExpiryDate = source.IqamaExpiryDate,
-                //EmpDateOfBirth = Convert.ToDateTime(source.EmpDateOfBirth),
-                //EmpDateOfBirthArabic = source.EmpDateOfBirthArabic.HasValue ? source.EmpDateOfBirthArabic.Value.Date.ToString(CultureInfo.InvariantCulture) : string.Empty,
-                //EmpLandlineNumber = source.EmpLandlineNumber,
-                //EmpMaritalStatus = source.EmpMaritalStatus,
-                //EmpMobileNumber = source.EmpMobileNumber,
-                //Nationality = source.Nationality,
-                //JobId = source.JobId,
-                //PassportId = source.PassportId,
-                //PassportExpiryDate = source.PassportExpiryDate,
-                //ExtraInfo = source.ExtraInfo,
-                //CreatedBy = source.CreatedBy,
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy,
-                //UpdatedDate = source.UpdatedDate
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA?? "",
+                EmployeeImagePath = source.EmployeeImagePath,
+                EmployeeIqama = source.EmployeeIqama ?? string.Empty,
+                EmployeeIqamaExpiryDt = DateTime.ParseExact(source.EmployeeIqamaExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDOB = DateTime.ParseExact(source.EmployeeDOB, "dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
+                MaritalStatus = source.MaritalStatus,
+                EmployeeMobileNum = source.EmployeeMobileNum ?? "",
+                JobTitleId = source.JobTitleId,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeePassportNum = source.EmployeePassportNum ?? "",
+                EmployeePassportExpiryDt = DateTime.ParseExact(source.EmployeePassportExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDetailsE = source.EmployeeDetailsE,
+                EmployeeDetailsA = source.EmployeeDetailsA,
+                RecCreatedBy = source.RecCreatedBy ?? "",
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Email = source.Email,
+                EmployeeJobId = source.EmployeeJobId,
+                IsActivated = source.IsActivated,
             };
             return caseType;
         }
-        public static AreasModel.Employee CreateFrom(this Employee source)
+        public static Models.Employee CreateFromServerToClient(this Employee source)
         {
-            return new AreasModel.Employee
+            return new Models.Employee
             {
-                //EmployeeId = source.EmployeeId,
-                //EmpFirstNameA = source.EmpFirstNameA ?? "",
-                //EmpFirstNameE = source.EmpFirstNameE ?? "",
-                //EmpMiddleNameA = source.EmpMiddleNameA ?? "",
-                //EmpMiddleNameE = source.EmpMiddleNameE ?? "",
-                //EmpLastNameA = source.EmpLastNameA ?? "",
-                //EmpLastNameE = source.EmpLastNameE ?? "",
-                //EmpImage = source.EmpImage ?? "",
-                //EmpIqama = source.EmpIqama ?? 0,
-                //IqamaIssueDate = source.IqamaIssueDate ?? DateTime.Now,
-                //IqamaExpiryDate = source.IqamaExpiryDate ?? DateTime.Now,
-                //EmpDateOfBirth = source.EmpDateOfBirth.ToShortDateString(),
-                //EmpDateOfBirthArabic = Convert.ToDateTime(source.EmpDateOfBirth),
-                ////EmpDateOfBirthArabic = !string.IsNullOrEmpty(source.EmpDateOfBirthArabic) ? (DateTime.Parse(source.EmpDateOfBirthArabic)).Date : (DateTime?)null,
-                //EmpLandlineNumber = source.EmpLandlineNumber ?? "",
-                //EmpMaritalStatus = source.EmpMaritalStatus ?? "",
-                //EmpMobileNumber = source.EmpMobileNumber ?? "",
-                //JobId = source.JobId,
-                //Nationality = source.Nationality,
-                //PassportId = source.PassportId ?? 0,
-                //PassportExpiryDate = source.PassportExpiryDate ?? DateTime.Now,
-                //ExtraInfo = source.ExtraInfo,
-                //JobTitle = source.JobTitle.JobTitleNameE ?? "",
-                //Department = source.JobTitle.Department.DepartmentNameE ?? "",
-                //CreatedBy = source.CreatedBy ?? "",
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy ?? "",
-                //UpdatedDate = source.UpdatedDate,
-                //EmpFullName = source.EmpFirstNameE + " " + source.EmpMiddleNameE + " " + source.EmpLastNameE
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeImagePath = source.EmployeeImagePath,
+                EmployeeIqama = source.EmployeeIqama,
+                EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDOB = Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
+                MaritalStatus = source.MaritalStatus,
+                EmployeeMobileNum = source.EmployeeMobileNum ?? "",
+                JobTitleId = source.JobTitleId,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeePassportNum = source.EmployeePassportNum ?? "",
+                EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDetailsE = source.EmployeeDetailsE,
+                EmployeeDetailsA = source.EmployeeDetailsA,
+                RecCreatedBy = source.RecCreatedBy ?? "",
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Email = source.Email,
+                IsActivated = source.IsActivated,
+                EmployeeJobId = source.EmployeeJobId,
+                //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
+                JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
             };
 
         }
-        public static AreasModel.Employee CreateFromWithImage(this Employee source, string UserName)
+        public static Models.Employee CreateFromServerToClientForTask(this Employee source)
         {
-            return new AreasModel.Employee
+            Models.Employee employee= new Models.Employee
             {
-                //EmployeeId = source.EmployeeId,
-                //EmpFirstNameA = source.EmpFirstNameA ?? "",
-                //EmpFirstNameE = source.EmpFirstNameE ?? "",
-                //EmpMiddleNameA = source.EmpMiddleNameA ?? "",
-                //EmpMiddleNameE = source.EmpMiddleNameE ?? "",
-                //EmpLastNameA = source.EmpLastNameA ?? "",
-                //EmpLastNameE = source.EmpLastNameE ?? "",
-                //EmpImage = source.EmpImage == null ? "" : ImageUrl(UserName, source.EmpImage),
-                //EmpIqama = source.EmpIqama ?? 0,
-                //IqamaIssueDate = source.IqamaIssueDate ?? DateTime.Now,
-                //IqamaExpiryDate = source.IqamaExpiryDate ?? DateTime.Now,
-                //EmpDateOfBirth = source.EmpDateOfBirth.ToShortDateString(),
-                //EmpLandlineNumber = source.EmpLandlineNumber ?? "",
-                //EmpMaritalStatus = source.EmpMaritalStatus ?? "",
-                //EmpMobileNumber = source.EmpMobileNumber ?? "",
-                //JobId = source.JobId,
-                //Nationality = source.Nationality,
-                //PassportId = source.PassportId ?? 0,
-                //PassportExpiryDate = source.PassportExpiryDate ?? DateTime.Now,
-                //ExtraInfo = source.ExtraInfo,
-                //JobTitle = source.JobTitle.JobTitleNameE ?? "",
-                //Department = source.JobTitle.Department.DepartmentNameE ?? "",
-                //CreatedBy = source.CreatedBy ?? "",
-                //CreatedDate = source.CreatedDate,
-                //UpdatedBy = source.UpdatedBy ?? "",
-                //UpdatedDate = source.UpdatedDate,
-                //EmpFullName = source.EmpFirstNameE + " " + source.EmpMiddleNameE + " " + source.EmpLastNameE
+                EmployeeId = source.EmployeeId,
+                EmployeeImagePath = source.EmployeeImagePath,
+                EmployeeIqama = source.EmployeeIqama,
+                EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDOB = Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
+                MaritalStatus = source.MaritalStatus,
+                EmployeeMobileNum = source.EmployeeMobileNum ?? "",
+                JobTitleId = source.JobTitleId,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeePassportNum = source.EmployeePassportNum ?? "",
+                EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDetailsE = source.EmployeeDetailsE,
+                EmployeeDetailsA = source.EmployeeDetailsA,
+                RecCreatedBy = source.RecCreatedBy ?? "",
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Email = source.Email,
+                IsActivated = source.IsActivated,
+                EmployeeJobId = source.EmployeeJobId,
+                //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
+                JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
+            };
+            var noOfTasks = source.TaskEmployees.Count(x => x.EmployeeId == employee.EmployeeId);
+            employee.EmployeeNameE = source.EmployeeNameE + " - " + noOfTasks;
+            employee.EmployeeNameA = source.EmployeeNameA + " - " + noOfTasks;
+            return employee;
+        }
+        public static DashboardModels.Employee CreateForDashboard(this Employee source)
+        {
+            return new DashboardModels.Employee
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeNameEShort = source.EmployeeNameE.Length > 10 ? source.EmployeeNameE.Substring(0, 10) + "..." : source.EmployeeNameE,
+                EmployeeNameAShort = source.EmployeeNameA.Length > 15 ? source.EmployeeNameA.Substring(0, 15) + "..." : source.EmployeeNameA,
+                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
             };
 
         }
-        private static string ImageUrl(string userName, string imageName)
+        public static DashboardModels.Profile CreateForDashboardProfile(this Employee source)
         {
-            string path = (ConfigurationManager.AppSettings["SiteURL"] + ConfigurationManager.AppSettings["EmployeeImage"] + userName + "/" + imageName).Replace("~", "");
+            return new DashboardModels.Profile
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeNameEShort = source.EmployeeNameE.Length > 14 ? source.EmployeeNameE.Substring(0, 14) + "..." : source.EmployeeNameE,
+                EmployeeNameAShort = source.EmployeeNameA.Length > 18 ? source.EmployeeNameA.Substring(0, 18) + "..." : source.EmployeeNameA,
+                EmployeeJobId = source.EmployeeJobId,
+                EmployeeJobTitleE = source.JobTitle.JobTitleNameE,
+                EmployeeJobTitleA = source.JobTitle.JobTitleNameA,
+                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt.ToString()).ToShortDateString(),
+                EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
+            };
+        }
+        public static Models.Employee CreateFromServerToClientWithImage(this Employee source)
+        {
+            return new Models.Employee
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE ?? "",
+                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeImagePath = ImageUrl(source.EmployeeImagePath),
+                EmployeeIqama = source.EmployeeIqama,
+                EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDOB = Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
+                MaritalStatus = source.MaritalStatus,
+                EmployeeMobileNum = source.EmployeeMobileNum ?? "",
+                JobTitleId = source.JobTitleId,
+                EmployeeNationality = source.EmployeeNationality,
+                EmployeePassportNum = source.EmployeePassportNum ?? "",
+                EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeDetailsE = source.EmployeeDetailsE,
+                EmployeeDetailsA = source.EmployeeDetailsA,
+                RecCreatedBy = source.RecCreatedBy ?? "",
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                Email = source.Email,
+                IsActivated = source.IsActivated,
+                EmployeeJobId = source.EmployeeJobId,
+                JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
+                //EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
+            };
 
+        }
+
+        public static Models.EmployeeForDropDownList CreateFromServerToClientForDropDownList(this Employee source)
+        {
+            return new EmployeeForDropDownList
+            {
+                EmployeeId = source.EmployeeId,
+                EmployeeNameE = source.EmployeeNameE,
+                EmployeeNameA = source.EmployeeNameA,
+                Email = source.Email,
+            };
+        }
+
+        public static Models.ContactList CreateForContactList(this Employee source)
+        {
+            return new Models.ContactList
+            {
+                Link = "/HR/Employee/Create/"+ source.EmployeeId,
+                NameE = source.EmployeeNameE ?? "",
+                NameA = source.EmployeeNameA ?? "",
+                Type = "Employee",
+                MobileNumber = source.EmployeeMobileNum ?? "",
+                Email = source.Email,
+            };
+
+        }
+
+        private static string ImageUrl(string imageName)
+        {
+            if (string.IsNullOrEmpty(imageName))
+            {
+                imageName = "profile.jpg";
+            }
+            string path = (ConfigurationManager.AppSettings["EmployeeImage"] + imageName);
+            
             return "<img  data-mfp-src=" + path + " src=" + path + " class='mfp-image image-link cursorHand' height=70 width=100 />";
         }
     }
