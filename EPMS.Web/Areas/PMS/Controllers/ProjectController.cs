@@ -104,7 +104,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
                         foreach (var projectTask in projectViewModel.ProjectTasks)
                         {
                             projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
-                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(projectTask.TaskProgress);
+                            var tempTaskProgress = projectTask.TaskProgress.Split('%');
+                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(tempTaskProgress[0]);
                         }
                     }
                     //Load project documents

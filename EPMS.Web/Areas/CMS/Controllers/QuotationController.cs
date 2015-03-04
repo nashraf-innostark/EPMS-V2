@@ -84,11 +84,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var createdByName = "";
             if (users.Employee != null && direction == "ltr")
             {
-                createdByName = users.Employee.EmployeeNameE;
+                createdByName = users.Employee.EmployeeFirstNameE + " " + users.Employee.EmployeeMiddleNameE + " " + users.Employee.EmployeeLastNameE;
             }
             if (users.Employee != null && direction == "rtl")
             {
-                createdByName = users.Employee.EmployeeNameA;
+                createdByName = users.Employee.EmployeeFirstNameA + " " + users.Employee.EmployeeMiddleNameA + " " + users.Employee.EmployeeLastNameA;
             }
             if (id == null)
             {

@@ -172,8 +172,15 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
                 }
                 // Set Employee Name for Header
-
-                viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeNameE : viewModel.EmployeeViewModel.Employee.EmployeeNameA;
+                viewModel.EmployeeViewModel.Employee.EmployeeFullNameE =
+                    viewModel.EmployeeViewModel.Employee.EmployeeFirstNameE + " " +
+                    viewModel.EmployeeViewModel.Employee.EmployeeMiddleNameE + " " +
+                    viewModel.EmployeeViewModel.Employee.EmployeeLastNameE;
+                viewModel.EmployeeViewModel.Employee.EmployeeFullNameA =
+                    viewModel.EmployeeViewModel.Employee.EmployeeFirstNameA + " " +
+                    viewModel.EmployeeViewModel.Employee.EmployeeMiddleNameA + " " +
+                    viewModel.EmployeeViewModel.Employee.EmployeeLastNameA;
+                viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeFullNameE : viewModel.EmployeeViewModel.Employee.EmployeeFullNameA;
                 if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
                 {
                     viewModel.EmployeeViewModel.ImagePath = ConfigurationManager.AppSettings["EmployeeImage"] +

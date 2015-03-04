@@ -189,11 +189,11 @@
   <data name="MobNumber" xml:space="preserve">
     <value>رقم الجوال</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>اسم الموظف بالانجليزي</value>
+  <data name="FirstName" xml:space="preserve">
+    <value>اسم الاول بالانجليزي</value>
   </data>
-  <data name="NameA" xml:space="preserve">
-    <value>اسم الموظف بالعربي</value>
+  <data name="FirstNameA" xml:space="preserve">
+    <value>اسم الاول بالعربي</value>
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>الجنسية</value>
@@ -251,5 +251,17 @@
   </data>
   <data name="ActivateMessage" xml:space="preserve">
     <value>تم تفعيل موظف بنجاح.</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>اسم العائلي بالانجليزي</value>
+  </data>
+  <data name="LastNameA" xml:space="preserve">
+    <value>اسم العائلي بالعربي</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>اسم الاب بالنجليزي</value>
+  </data>
+  <data name="MiddleNameA" xml:space="preserve">
+    <value>اسم الاب بالعربي</value>
   </data>
 </root>

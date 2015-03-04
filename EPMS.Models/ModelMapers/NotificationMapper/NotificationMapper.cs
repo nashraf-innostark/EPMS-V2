@@ -39,13 +39,6 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
         }
         public static Notification CreateFromClientToServer(this NotificationResponse notification)
         {
-            DateTime alertAppearDate = new DateTime(); 
-            switch (notification.AlertBefore)
-            {
-                case 1: alertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddMonths(-1); break;
-                case 2: alertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-7); break;
-                case 3: alertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-1); break;
-            }
             return new Notification
             {
                 NotificationId = notification.NotificationId,
@@ -57,7 +50,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
-                AlertAppearDate = alertAppearDate,
+                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddMonths(notification.AlertBefore),
                 SystemGenerated = notification.SystemGenerated,
                 ForAdmin = notification.ForAdmin,
                 IsEmailSent = notification.IsEmailSent,
@@ -75,8 +68,8 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             {
                 UserId = source.AspNetUsers.FirstOrDefault()!=null?source.AspNetUsers.FirstOrDefault().Id:"",
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE,
-                EmployeeNameA = source.EmployeeNameA,
+                EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
                 Email = source.Email,
                 MobileNo = source.EmployeeMobileNum
             };
@@ -94,7 +87,19 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                     notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
                     notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMobileNum;
                     notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.Email;
-                    notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameE: notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeNameA;
+                    var employeeFullNameE =
+                        notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE +
+                        " " +
+                        notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE +
+                        " " +
+                        notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE;
+                    var employeeFullNameA =
+                        notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA +
+                        " " +
+                        notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA +
+                        " " +
+                        notification.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA;
+                    notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? employeeFullNameE : employeeFullNameA;
                 }
                 else if (notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer!=null)
                 {

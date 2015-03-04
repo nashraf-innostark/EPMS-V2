@@ -18,7 +18,6 @@
         <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="0.75" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreference" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="23.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="22.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeJobHistory" Width="1.5" PointX="7.5" PointY="27" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="38" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.JobApplicant" Width="1.5" PointX="7.5" PointY="31.625" IsExpanded="true" />
@@ -43,12 +42,10 @@
         <EntityTypeShape EntityType="EPMSModel.RequestDetail" Width="1.5" PointX="9.75" PointY="37.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.TaskEmployee" Width="1.5" PointX="10.5" PointY="29.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.UserPrefrence" Width="1.5" PointX="12.75" PointY="31.125" IsExpanded="true" />
-        <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_UserPrefrences_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_CompanyBankDetails_CompanyProfile" ManuallyRouted="false" />
@@ -62,11 +59,6 @@
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_Quotation_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_JobTitle_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
@@ -85,6 +77,14 @@
         <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="22.875" />
+        <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

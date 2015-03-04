@@ -115,15 +115,20 @@ namespace EPMS.Web.Controllers
             customerService = UnityWebActivator.Container.Resolve<ICustomerService>();
             employeeService = UnityWebActivator.Container.Resolve<IEmployeeService>();
             var fullName = "";
+            var fullNameA = "";
             if (role == "Customer")
             {
                 fullName = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameE;
+                fullNameA = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameA;
             }
             else
             {
-                fullName = employeeService.FindEmployeeById(Convert.ToInt64(result.EmployeeId)).EmployeeNameE;
+                var employee = employeeService.FindEmployeeById(Convert.ToInt64(result.EmployeeId));
+                fullName = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
+                fullNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
             }
             Session["UserFullName"] = fullName;
+            Session["UserFullNameA"] = fullNameA;
 
             menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
 

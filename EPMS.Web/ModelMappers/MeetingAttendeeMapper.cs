@@ -10,8 +10,8 @@ namespace EPMS.Web.ModelMappers
             {
                 MeetingId = source.MeetingId,
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.Employee.EmployeeNameE,
-                EmployeeNameA = source.Employee.EmployeeNameA,
+                EmployeeNameE = source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE,
+                EmployeeNameA = source.Employee.EmployeeFirstNameA + " " + source.Employee.EmployeeMiddleNameA + " " + source.Employee.EmployeeLastNameA,
                 Status = source.Status,
             };
         }

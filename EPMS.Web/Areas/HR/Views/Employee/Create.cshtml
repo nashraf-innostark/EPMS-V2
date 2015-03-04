@@ -72,24 +72,70 @@
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="EmployeeNameE">@EPMS.Web.Resources.HR.Employee.Name</label>
+                <label class="control-label" for="EmployeeFirstNameE">@EPMS.Web.Resources.HR.Employee.FirstName</label>
             </div>
             <div class="span9">
 
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameE, new { @id = "EmployeeNameE", @class = "toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameE, String.Empty, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeFirstNameE, new { @id = "EmployeeFirstNameE", @class = "toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeFirstNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="EmployeeNameA">@EPMS.Web.Resources.HR.Employee.NameA</label>
+                <label class="control-label" for="EmployeeMiddleNameE">@EPMS.Web.Resources.HR.Employee.MiddleName</label>
+            </div>
+            <div class="span9">
+
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameE, new { @id = "EmployeeMiddleNameE", @class = "toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMiddleNameE, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="EmployeeLastNameE">@EPMS.Web.Resources.HR.Employee.LastName</label>
+            </div>
+            <div class="span9">
+
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLastNameE, new { @id = "EmployeeLastNameE", @class = "toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLastNameE, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="EmployeeFirstNameA">@EPMS.Web.Resources.HR.Employee.FirstNameA</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeNameA, new { @id = "EmployeeNameA", @class = "toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeNameA, String.Empty, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeFirstNameA, new { @id = "EmployeeFirstNameA", @class = "toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeFirstNameA, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="EmployeeMiddleNameA">@EPMS.Web.Resources.HR.Employee.MiddleNameA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameA, new { @id = "EmployeeMiddleNameA", @class = "toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMiddleNameA, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="EmployeeLastNameA">@EPMS.Web.Resources.HR.Employee.LastNameA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLastNameA, new { @id = "EmployeeLastNameA", @class = "toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLastNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>

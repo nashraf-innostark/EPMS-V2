@@ -191,22 +191,22 @@
                     {
                         if (direction == "ltr")
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeFullNameE"), new { @class = "", @id = "dualMulti2", })
                         }
                         else
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new { @class = "", @id = "dualMulti2", })
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeFullNameA"), new { @class = "", @id = "dualMulti2", })
                         }
                     }
                     else
                     {
                         if (direction == "ltr")
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameE"), new { @class = "", @id = "dualMulti2", })
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeFullNameE"), new { @class = "", @id = "dualMulti2", })
                         }
                         else
                         {
-                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeNameA"), new { @class = "", @id = "dualMulti2", })
+                            @Html.ListBoxFor(model => model.AssignedEmployees, new MultiSelectList(Model.AllEmployees, "EmployeeId", "EmployeeFullNameA"), new { @class = "", @id = "dualMulti2", })
                         }
                     }
                 </div>

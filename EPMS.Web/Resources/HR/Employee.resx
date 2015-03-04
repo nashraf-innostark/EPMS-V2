@@ -189,11 +189,11 @@
   <data name="MobNumber" xml:space="preserve">
     <value>Mobile Number</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Employee Name</value>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
   </data>
-  <data name="NameA" xml:space="preserve">
-    <value>Employee Name arabic</value>
+  <data name="FirstNameA" xml:space="preserve">
+    <value>First Name arabic</value>
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>Nationality</value>
@@ -251,5 +251,17 @@
   </data>
   <data name="ActivateMessage" xml:space="preserve">
     <value>Employee has been Activated successfully</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LastNameA" xml:space="preserve">
+    <value>Last Name arabic</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Middle Name</value>
+  </data>
+  <data name="MiddleNameA" xml:space="preserve">
+    <value>Middle Name arabic</value>
   </data>
 </root>

@@ -113,8 +113,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     requestViewModel.Request.RequestDateString = DateTime.Now.ToShortDateString();
                     requestViewModel.Request.EmployeeId = Convert.ToInt64(currentUser.EmployeeId);
-                    requestViewModel.Request.EmployeeNameA = currentUser.Employee.EmployeeNameA;
-                    requestViewModel.Request.EmployeeNameE = currentUser.Employee.EmployeeNameE;
+                    requestViewModel.Request.EmployeeNameA = currentUser.Employee.EmployeeFirstNameA + " " + currentUser.Employee.EmployeeMiddleNameA + " " + currentUser.Employee.EmployeeLastNameA;
+                    requestViewModel.Request.EmployeeNameE = currentUser.Employee.EmployeeFirstNameE + " " + currentUser.Employee.EmployeeMiddleNameE + " " + currentUser.Employee.EmployeeLastNameE;
                     requestViewModel.Request.DepartmentNameA = currentUser.Employee.JobTitle.Department.DepartmentNameA;
                     requestViewModel.Request.DepartmentNameE = currentUser.Employee.JobTitle.Department.DepartmentNameE;
                 }

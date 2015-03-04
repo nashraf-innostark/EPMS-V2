@@ -42,7 +42,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<EmployeeRequestByColumn, Func<EmployeeRequest, object>>
                     {
                         { EmployeeRequestByColumn.RequestTopic, c => c.RequestTopic},
-                        { EmployeeRequestByColumn.EmployeeName,  c => c.Employee.EmployeeNameE},
+                        { EmployeeRequestByColumn.EmployeeName,  c => c.Employee.EmployeeFirstNameE },
                         { EmployeeRequestByColumn.JobId, c => c.Employee.EmployeeJobId},
                         { EmployeeRequestByColumn.Department, c => c.Employee.JobTitle.Department.DepartmentNameE},
                         { EmployeeRequestByColumn.Date,  c => c.RequestDate}
@@ -97,7 +97,8 @@ namespace EPMS.Repository.Repositories
             {
                 query =
                 s => ((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.RequestTopic.Contains(searchRequset.SearchString)) ||
-                    (s.Employee.EmployeeNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeNameA.Contains(searchRequset.SearchString)) ||
+                    (s.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString)) ||
+                    (s.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
                     (s.Employee.EmployeeJobId.Contains(searchRequset.SearchString)) ||
                     (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchString)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchString))
                     );

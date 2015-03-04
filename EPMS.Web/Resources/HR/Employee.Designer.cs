@@ -286,6 +286,24 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        public static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name arabic.
+        /// </summary>
+        public static string FirstNameA {
+            get {
+                return ResourceManager.GetString("FirstNameA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image.
         /// </summary>
         public static string Image {
@@ -331,6 +349,24 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        public static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name arabic.
+        /// </summary>
+        public static string LastNameA {
+            get {
+                return ResourceManager.GetString("LastNameA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Marital Status.
         /// </summary>
         public static string MaritalStat {
@@ -340,29 +376,29 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Middle Name.
+        /// </summary>
+        public static string MiddleName {
+            get {
+                return ResourceManager.GetString("MiddleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Middle Name arabic.
+        /// </summary>
+        public static string MiddleNameA {
+            get {
+                return ResourceManager.GetString("MiddleNameA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mobile Number.
         /// </summary>
         public static string MobNumber {
             get {
                 return ResourceManager.GetString("MobNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Employee Name.
-        /// </summary>
-        public static string Name {
-            get {
-                return ResourceManager.GetString("Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Employee Name arabic.
-        /// </summary>
-        public static string NameA {
-            get {
-                return ResourceManager.GetString("NameA", resourceCulture);
             }
         }
         

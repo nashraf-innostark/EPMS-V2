@@ -34,9 +34,9 @@ namespace EPMS.Web.ModelMappers
             {
                 RequestId = source.RequestId,
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.Employee.EmployeeNameE,
+                EmployeeNameE = source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE,
                 RequestTopic = source.RequestTopic,
-                EmployeeNameEShort = source.Employee.EmployeeNameE.Length > 7 ? source.Employee.EmployeeNameE.Substring(0, 7) + "..." : source.Employee.EmployeeNameE,
+                EmployeeNameEShort = (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE).Length > 7 ? (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE).Substring(0, 7) + "..." : (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE),
                 RequestTopicShort = source.RequestTopic.Length > 9 ? source.RequestTopic.Substring(0, 9) + "..." : source.RequestTopic,
                 RequestDateString = source.RequestDate.ToShortDateString(),
                 IsReplied = source.RequestDetails.OrderByDescending(x => x.RowVersion).FirstOrDefault().IsReplied
