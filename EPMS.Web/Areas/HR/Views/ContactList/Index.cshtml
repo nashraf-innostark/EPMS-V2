@@ -1,4 +1,5 @@
-﻿@model List<EPMS.Web.Models.ContactList>
+﻿@using System.Configuration
+@model List<EPMS.Web.Models.ContactList>
 
 @{
     ViewBag.Title = @EPMS.Web.Resources.HR.ContactsList.ContactList;
@@ -49,11 +50,11 @@
                                 <td>
                                     @if (direction == "ltr")
                                     {
-                                        <a href="@item.Link">@item.NameE</a>
+                                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/@item.Link">@item.NameE</a>
                                     }
                                     else
                                     {
-                                        <a href="@item.Link">@item.NameA</a>
+                                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/@item.Link">@item.NameA</a>
                                     }
                             </td>
                             <td class="gradeX">@item.Type</td>
@@ -73,8 +74,8 @@
         $('#ContactList').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                null, // cloumn to be hide
-                null, // not hide
+                null, 
+                null,
                 null,
                 null,
                 null

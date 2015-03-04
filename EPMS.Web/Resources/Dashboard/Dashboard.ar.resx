@@ -117,85 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddMeeting" xml:space="preserve">
+    <value>Add meeting</value>
+  </data>
   <data name="Any" xml:space="preserve">
     <value>Any</value>
   </data>
   <data name="Complaints" xml:space="preserve">
-    <value>Complaints</value>
+    <value>شكاوي</value>
   </data>
   <data name="EmployeeRequests" xml:space="preserve">
-    <value>Employee Requests</value>
+    <value>طلبات الموظفين</value>
   </data>
   <data name="Employees" xml:space="preserve">
-    <value>Employees</value>
+    <value>الموظفين</value>
   </data>
   <data name="FilterByClient" xml:space="preserve">
-    <value>Filter by Clients</value>
+    <value>ترتيب حسب العميل</value>
   </data>
   <data name="FilterByDepartment" xml:space="preserve">
-    <value>Filter by Department</value>
+    <value>ترتيب حسب الادارة</value>
   </data>
   <data name="FilterByEmployee" xml:space="preserve">
-    <value>Filter by Employee</value>
+    <value>ترتيب حسب الموظف</value>
   </data>
   <data name="FilterbyMonth" xml:space="preserve">
-    <value>Filter by Month</value>
+    <value>ترتيب حسب الشهر</value>
+  </data>
+  <data name="FilterByProjectProgress" xml:space="preserve">
+    <value>ترتيب حسب حالة المشروع</value>
+  </data>
+  <data name="FilterByProjects" xml:space="preserve">
+    <value>ترتيب حسب المشروع</value>
   </data>
   <data name="FilterByStatus" xml:space="preserve">
-    <value>Filter by Status</value>
-  </data>
-  <data name="MyProfile" xml:space="preserve">
-    <value>My Profile</value>
-  </data>
-  <data name="Payroll" xml:space="preserve">
-    <value>Payroll</value>
-  </data>
-  <data name="Recruitment" xml:space="preserve">
-    <value>Recruitment</value>
+    <value>ترتيب حسب حالة الطلب</value>
   </data>
   <data name="MakeComplaint" xml:space="preserve">
     <value>Make new complaint</value>
   </data>
-  <data name="AddMeeting" xml:space="preserve">
-    <value>Add meeting</value>
-  </data>
-  <data name="FilterByProjectProgress" xml:space="preserve">
-    <value>Filter by Project Progress</value>
-  </data>
-  <data name="FilterByProjects" xml:space="preserve">
-    <value>Filter by Projects</value>
-  </data>
   <data name="Meeting" xml:space="preserve">
-    <value>Meeting</value>
+    <value>اجتماعات</value>
   </data>
-  <data name="Project" xml:space="preserve">
-    <value>Project</value>
+  <data name="MyProfile" xml:space="preserve">
+    <value>السيرة الذاتية</value>
   </data>
   <data name="MyTasks" xml:space="preserve">
-    <value>My Tasks</value>
+    <value>مهامي</value>
+  </data>
+  <data name="Payroll" xml:space="preserve">
+    <value>الرواتب</value>
+  </data>
+  <data name="Project" xml:space="preserve">
+    <value>مشاريع</value>
+  </data>
+  <data name="Recruitment" xml:space="preserve">
+    <value>طلبات الوظائف</value>
   </data>
   <data name="Allowances" xml:space="preserve">
-    <value>Allowances</value>
+    <value>مجموع البدلات</value>
   </data>
   <data name="BasicSalary" xml:space="preserve">
-    <value>Basic Salary</value>
+    <value>الراتب الأساسي</value>
   </data>
   <data name="CurrentMonth" xml:space="preserve">
-    <value>Current</value>
+    <value>الشهر1</value>
   </data>
   <data name="DashboardTitle" xml:space="preserve">
-    <value>Dashboard</value>
+    <value>لوحة التحكم</value>
   </data>
   <data name="Deductions" xml:space="preserve">
-    <value>Deductions</value>
+    <value>مجموع الخصومات</value>
   </data>
   <data name="Orders" xml:space="preserve">
-    <value>Orders</value>
+    <value>طلبات</value>
   </data>
   <data name="PreviousMonth" xml:space="preserve">
-    <value>Previous</value>
+    <value>الشهر2</value>
   </data>
   <data name="Total" xml:space="preserve">
-    <value>Total</value>
+    <value>المجموع</value>
   </data>
 </root>

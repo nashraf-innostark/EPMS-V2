@@ -287,7 +287,7 @@
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
+                <button id="sendButton" type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
             </div>
 
         </div>
@@ -313,6 +313,13 @@
 
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
+    var modelDate = '@Model.Meeting.Date';
+    var modelDateSplit = modelDate.split('/');
+    var meetingDate = new Date(modelDateSplit[2], modelDateSplit[1], modelDateSplit[0]);
+    var currentDate = '@DateTime.Now.ToString("dd/MM/yyyy")';
+    var todaySplit = currentDate.split('/');
+    var today = new Date(todaySplit[2], todaySplit[1], todaySplit[0]);
+
     $(document).ready(function () {
         $('#submit').click(function () {
             $("#meetingForm").submit();
@@ -324,31 +331,53 @@
         CKEDITOR.replace('Decisions');
         CKEDITOR.replace('DecisionsAr');
 
+        setTimeout(function() {
+            CKEDITOR.instances.Agenda.setReadOnly(true);
+            CKEDITOR.instances.AgendaAr.setReadOnly(true);
+            CKEDITOR.instances.Discussion.setReadOnly(true);
+            CKEDITOR.instances.DiscussionAr.setReadOnly(true);
+            CKEDITOR.instances.Decisions.setReadOnly(true);
+            CKEDITOR.instances.DecisionsAr.setReadOnly(true);
+        }, 1000);
+
         var meetingId = $("#Meeting_MeetingId").val();
 
         if (meetingId == 0) {
             $("#savebtn").show();
+            $("#sendButton").show();
             $("#cancel").show();
             $("#edit").hide();
         } else {
             $("#savebtn").hide();
+            $("#sendButton").hide();
             $("#cancel").hide();
             $("#edit").show();
         }
 
         $("#edit").click(function (event) {
-            $("#checked").addClass('enableList');
+            debugger;
+            CKEDITOR.instances.Agenda.setReadOnly(false);
+            CKEDITOR.instances.AgendaAr.setReadOnly(false);
+            CKEDITOR.instances.Discussion.setReadOnly(false);
+            CKEDITOR.instances.DiscussionAr.setReadOnly(false);
+            CKEDITOR.instances.Decisions.setReadOnly(false);
+            CKEDITOR.instances.DecisionsAr.setReadOnly(false);
+            if (meetingDate > today) {
+                $("#checked").addClass('enableList');
+            }
+            $("#savebtn").show();
+            $("#sendButton").show();
+            $("#cancel").show();
+            $("#edit").hide();
             event.preventDefault();
         });
 
         if ($("#metingDate").val() != null && $("#metingDate").val() != "") {
             $("#metingDateAr").val(ConvertDates($("#metingDate").val(), "gregorian", "islamic"));
         }
-
-        if (moment('@Model.Meeting.Date').isBefore(Date.now(), 'day') && meetingId > 0) {
+        if (meetingDate < today) {
             $('.divToHide').show();
         }
-
         if (meetingId == 0) {
             //Dual for Employees
             $("#dualMultiEmployee").pickList({
@@ -439,8 +468,9 @@
             $("#DocsNames").val(lis);
         }
 
+
         //Disable Employee Select Box after Meeting Date
-        if (moment('@Model.Meeting.Date').isBefore(Date.now(), 'day')) {
+        if(meetingDate < today){
             $('.' + 'disableOnDate' + ':input').attr('ReadOnly', true);
             $("#checked").addClass('disableList');
         }

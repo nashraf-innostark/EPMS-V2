@@ -4,6 +4,7 @@
 @using EPMS.Models.MenuModels
 @model EPMS.Web.ViewModels.Common.MenuViewModel
 @{
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     Layout = null;
     string[] module = (string[])Session["UserModules"];
     if (module != null)
@@ -42,24 +43,31 @@
                 default:
                     break;
             }
-        }   
+        }
     }
 }
 
-    @{
-        if (Model.MenuRights != null)
+@{
+    if (Model.MenuRights != null)
+    {
+        // loop through menu headers one by one and populate childs
+        foreach (MenuRight header in Model.MenuHeaders.OrderBy(c => c.Menu.SortOrder).ToList())
         {
-            // loop through menu headers one by one and populate childs
-            foreach (MenuRight header in Model.MenuHeaders.OrderBy(c => c.Menu.SortOrder).ToList())
+            // get child items with respect to menu header
+            IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId).OrderBy(c => c.Menu.SortOrder).ToList();
+            if (module.Contains(header.Menu.MenuTitle) || (header.Menu.MenuTitle == "User Management" || header.Menu.MenuTitle == "Contacts List" || header.Menu.MenuTitle == "Company Profile" || header.Menu.MenuTitle == "Help"))
             {
-                // get child items with respect to menu header
-                IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId).OrderBy(c => c.Menu.SortOrder).ToList();
-                if (module.Contains(header.Menu.MenuTitle) || (header.Menu.MenuTitle == "User Management" || header.Menu.MenuTitle == "Contacts List" || header.Menu.MenuTitle == "Company Profile" || header.Menu.MenuTitle == "Help"))
-                {
-                    <li class="@header.Menu.MenuItemClass">
+                <li class="@header.Menu.MenuItemClass">
                     <a href="@(String.IsNullOrEmpty(header.Menu.MenuTargetController) ? "#" : (ConfigurationManager.AppSettings["SiteURL"].ToString()) + "/" + header.Menu.MenuTargetController + "/" + header.Menu.MenuFunction)" class="sub-nav-container">
                         <i class="icon-photon @header.Menu.MenuImagePath"></i>
-                        <span class="nav-selection">@header.Menu.MenuTitle</span>
+                        @if (direction == "ltr")
+                        {
+                            <span class="nav-selection">@header.Menu.MenuTitle</span>
+                        }
+                        else
+                        {
+                            <span class="nav-selection">@header.Menu.MenuTitleA</span>
+                        }
                         @if (menuRightchildList.Any())
                         {
                             <i class="icon-menu-arrow"></i>
@@ -68,19 +76,29 @@
                     <div class="sub-nav">
                         <ul class="nav">
                             @{
-                                foreach (MenuRight menuRight in menuRightchildList)
-                                {
-                                    // display childs
-                                    <li>
-                                        @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new {@class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : ""})
-                                    </li>
-                                }
+                foreach (MenuRight menuRight in menuRightchildList)
+                {
+                    // display childs
+                    if (direction == "ltr")
+                    {
+                        <li>
+                            @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new {@class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : ""})
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                        @Html.ActionLink(menuRight.Menu.MenuTitleA, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                    </li>
+                    }
+                    
+                }
                             }
                         </ul>
                     </div>
                 </li>
             }
         }
-        }
     }
+}
 
