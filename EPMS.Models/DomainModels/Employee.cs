@@ -40,6 +40,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<EmployeeJobHistory> EmployeeJobHistories { get; set; }
         public virtual ICollection<EmployeeRequest> EmployeeRequests { get; set; }
         public virtual ICollection<TaskEmployee> TaskEmployees { get; set; }
+        public virtual NotificationRecipient NotificationRecipient { get; set; }
         public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
     }
 }
