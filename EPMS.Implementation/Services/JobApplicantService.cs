@@ -70,8 +70,8 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["JobApplicationA"];
             notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["JobApplicationAlertBefore"]); //Days
 
-            notificationViewModel.NotificationResponse.CategoryId = 5; //Other
-            notificationViewModel.NotificationResponse.SubCategoryId = 1;
+            notificationViewModel.NotificationResponse.CategoryId = 6; //Other
+            notificationViewModel.NotificationResponse.SubCategoryId = jobApplicant.JobOfferedId;
             notificationViewModel.NotificationResponse.ItemId = jobApplicant.ApplicantId;
 
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
