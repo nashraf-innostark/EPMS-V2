@@ -79,7 +79,9 @@ namespace EPMS.Web.Controllers
         {
             base.Initialize(requestContext);
             companyProfileService = UnityWebActivator.Container.Resolve<ICompanyProfileService>();
-            Session["CompWebsiteUrl"] = companyProfileService.GetDetail().CompanyWebsite;
+            var companyWebsite = companyProfileService.GetDetail();
+            if (companyWebsite != null)
+            Session["CompWebsiteUrl"] = companyWebsite.CompanyWebsite;
             if (Session["FullName"] == null || Session["FullName"].ToString() == string.Empty)
                 SetUserDetail();
             //Set culture info
