@@ -30,6 +30,7 @@ namespace EPMS.Web.Controllers
         private INotificationService notificationService;
         private ICustomerService customerService;
         private IEmployeeService employeeService;
+        private ICompanyProfileService companyProfileService;
         private void SetCultureInfo()
         {
             CultureInfo info;
@@ -77,6 +78,8 @@ namespace EPMS.Web.Controllers
         protected override async void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
+            companyProfileService = UnityWebActivator.Container.Resolve<ICompanyProfileService>();
+            Session["CompWebsiteUrl"] = companyProfileService.GetDetail().CompanyWebsite;
             if (Session["FullName"] == null || Session["FullName"].ToString() == string.Empty)
                 SetUserDetail();
             //Set culture info

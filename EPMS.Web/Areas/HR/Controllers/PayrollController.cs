@@ -164,7 +164,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                  viewModel.Allowances.Allowance5 ?? 0;
                 }
                 viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
-                viewModel.Date = DateTime.Now.ToShortDateString();
+                viewModel.Date = DateTime.Now.ToString("MM/yyyy"); ;
             }
             return View(viewModel);
         }
@@ -174,9 +174,10 @@ namespace EPMS.Web.Areas.HR.Controllers
             long id = viewModel.Id;
             if (id > 0)
             {
+                //viewModel.Date = new DateTime(Convert.ToInt32(viewModel.Date), Convert.ToInt32(viewModel.Date), 1);
+                var date = DateTime.ParseExact(viewModel.Date, "MM/yyyy", new CultureInfo("en"));
                 //DateTime.ParseExact(source.FirstInstallmentDate, "dd/MM/yyyy", new CultureInfo("en"))
-                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id,
-                    DateTime.ParseExact(viewModel.Date, "dd/MM/yyyy", new CultureInfo("en")));
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id,date);
                 if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();

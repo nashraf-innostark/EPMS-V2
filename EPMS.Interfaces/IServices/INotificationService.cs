@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
@@ -11,7 +12,7 @@ namespace EPMS.Interfaces.IServices
         NotificationResponse FindNotification(long notificationId);
         NotificationViewModel LoadNotificationAndBaseData(long? notificationId);
         NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId);
-        bool AddUpdateNotification(NotificationViewModel notificationViewModel);
+        bool AddUpdateNotification(NotificationResponse notificationResponse);
         bool AddUpdateMeetingNotification(NotificationViewModel notificationViewModel, List<long> employeeIds);
         long AddNotification(NotificationResponse notification);
         long UpdateNotification(NotificationResponse notification);
@@ -21,5 +22,7 @@ namespace EPMS.Interfaces.IServices
         long AddNotificationRecipient(NotificationRecipient notification);
         long UpdateNotificationRecipient(NotificationRecipient notification);
         void SendEmailNotifications();
+        void CreateNotification(string notificationFor, long itemId, DateTime? alertDate);
+        void GenerateNotificationDescription(NotificationResponse notificationResponse);
     }
 }

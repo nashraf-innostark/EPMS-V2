@@ -59,13 +59,14 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
                 AlertAppearDate = alertAppearDate,
                 SystemGenerated = notification.SystemGenerated,
+                ForAdmin = notification.ForAdmin,
                 IsEmailSent = notification.IsEmailSent,
                 IsSMSsent = notification.IsSMSsent,
 
                 RecCreatedBy = notification.RecCreatedBy,
-                RecCreatedDate = notification.RecCreatedDate,
-                RecLastUpdatedBy = notification.RecLastUpdatedBy,
-                RecLastUpdatedDate = notification.RecLastUpdatedDate
+                RecCreatedDate = DateTime.Now,
+                RecLastUpdatedBy = notification.RecCreatedBy,
+                RecLastUpdatedDate = DateTime.Now
             };
         }
         public static EmployeeDDL CreateForEmployeeDDL(this Employee source)

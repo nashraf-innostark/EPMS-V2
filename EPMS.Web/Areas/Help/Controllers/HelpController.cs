@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace EPMS.Web.Areas.Help.Controllers
 {
+    [Authorize]
     public class HelpController : Controller
     {
         // GET: Help/Help

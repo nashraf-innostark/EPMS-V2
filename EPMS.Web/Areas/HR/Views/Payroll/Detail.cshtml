@@ -25,6 +25,11 @@
         </li>
     </ul>
 </div>
+<style type="text/css">
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
@@ -35,7 +40,7 @@
 @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "PayrollForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        
+
         @Html.HiddenFor(model => model.Id)
         <div class="control-group row-fluid">
             <div class="span3">
@@ -43,7 +48,7 @@
             </div>
             <div class="span3">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Date, new { @id = "Date", @class = "datepicker" })
+                    @Html.TextBoxFor(model => model.Date, new { @id = "Date", @class = "datepickerPayroll" })
                 </div>
             </div>
         </div>
@@ -153,7 +158,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Total, new { @id = "Total", @disabled = "disabled", @class="empty" })
+                    @Html.TextBoxFor(model => model.Total, new { @id = "Total", @disabled = "disabled", @class = "empty" })
                 </div>
             </div>
         </div>
@@ -166,18 +171,35 @@
 }
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
-    $(document).ready(function() {
-        //$(".datepicker").mask('99/99/9999');
-        $(".datepicker").datepicker({
+    $(document).ready(function () {
+        $('.datepickerPayroll').datepicker({
             changeMonth: true,
             changeYear: true,
-            dateFormat: "mm/yy",
+            dateFormat: 'mm/yy',
             showButtonPanel: true,
-            onSelect: function (date) {
-                $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>' ,css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%"} });
-                getPayrollDetails(date);
+            onClose: function (dateText, inst) {
+                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                var newDate = new Date(year, month, 1);
+                $(this).datepicker('setDate', newDate);
+                $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>', css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" } });
+                getPayrollDetails(newDate);
             },
+            //onSelect: function (date) {
+            //    $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>', css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" } });
+            //    getPayrollDetails(date);
+            //},
         });
+        //$(".datepicker").datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    dateFormat: "mm yy",
+        //    showButtonPanel: true,
+        //    onSelect: function (date) {
+        //        $.blockUI({ message: '<img src="/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>' ,css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%"} });
+        //        getPayrollDetails(date);
+        //    },
+        //});
     });
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;

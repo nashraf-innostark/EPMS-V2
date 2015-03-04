@@ -4,10 +4,14 @@
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    string backUrl = ViewBag.backUrl.ToString();
+    string backUrl = "";
+    if (ViewBag.backUrl.ToString() != "")
+    {
+        backUrl = ViewBag.backUrl.ToString();
+    }
     if (String.IsNullOrEmpty(backUrl))
     {
-        backUrl = "http://localhost:44305/CMS/Orders/Index";
+        backUrl = "~/CMS/Orders/Index";
     }
 }
 

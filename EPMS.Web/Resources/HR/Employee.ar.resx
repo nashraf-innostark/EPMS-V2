@@ -246,4 +246,10 @@
   <data name="DeactivateMessage" xml:space="preserve">
     <value>تم إلغاء تنشيط الموظف بنجاح</value>
   </data>
+  <data name="ActiveEmp" xml:space="preserve">
+    <value>تفعيل موظف</value>
+  </data>
+  <data name="ActivateMessage" xml:space="preserve">
+    <value>تم تفعيل موظف بنجاح.</value>
+  </data>
 </root>

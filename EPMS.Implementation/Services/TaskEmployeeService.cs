@@ -70,25 +70,5 @@ namespace EPMS.Implementation.Services
             taskEmployeeRepository.Delete(employee);
             taskEmployeeRepository.SaveChanges();
         }
-
-        public void SendNotification(TaskEmployee employee)
-        {
-            NotificationViewModel notificationViewModel = new NotificationViewModel();
-
-            #region Send notification to admin
-
-            notificationViewModel.NotificationResponse.TitleE = "You have been assigned a task.";
-            notificationViewModel.NotificationResponse.TitleA = "You have been assigned a task.";
-
-            notificationViewModel.NotificationResponse.CategoryId = 5; //Other
-            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 Day
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.AddDays(-1).ToShortDateString();
-            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            //notificationViewModel.NotificationResponse.EmployeeId = employee.EmployeeId;
-
-            notificationService.AddUpdateNotification(notificationViewModel);
-
-            #endregion
-        }
     }
 }

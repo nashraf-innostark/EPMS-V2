@@ -691,7 +691,17 @@
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Content\CSS\help-photon.css" />
     <Content Include="Content\CSS\photon.css" />
+    <Content Include="Content\CSS\plugins\jstree\default\style.css" />
+    <Content Include="Content\plugins\jstree\default\style.css" />
+    <Content Include="NotificationsTextFiles\EmployeeIqamaExpiryEmail.txt" />
+    <Content Include="NotificationsTextFiles\EmployeeIqamaExpirySMS.txt" />
+    <Content Include="NotificationsTextFiles\EmployeePassportExpiryEmail.txt" />
+    <Content Include="NotificationsTextFiles\EmployeePassportExpirySMS.txt" />
+    <Content Include="NotificationsTextFiles\EmployeeRequestEmail.txt" />
+    <Content Include="NotificationsTextFiles\EmployeeRequestSMS.txt" />
+    <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
@@ -701,6 +711,7 @@
     <Content Include="Areas\LCP\Views\License\Create.cshtml" />
     <Content Include="Areas\Help\Views\web.config" />
     <Content Include="Areas\Help\Views\Help\Index.cshtml" />
+    <Content Include="Views\Shared\_HelpLayout.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

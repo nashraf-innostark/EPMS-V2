@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -276,34 +277,36 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.NotificationId =
                         notificationRepository.GetNotificationsIdByCategories(5,3, task.TaskId);
 
-                notificationViewModel.NotificationResponse.TitleE = "Task delivery date in near.";
-                notificationViewModel.NotificationResponse.TitleA = "Task delivery date in near.";
+                notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["TaskDeliveryE"];
+                notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["TaskDeliveryA"];
+                notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["TaskDeliveryAlertBefore"]); //Days
+                notificationViewModel.NotificationResponse.SystemGenerated = true;
+                notificationViewModel.NotificationResponse.ForAdmin = true;
 
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
                 notificationViewModel.NotificationResponse.SubCategoryId = 3; //Task delivery date
-                notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task delivery date
-                notificationViewModel.NotificationResponse.AlertBefore = 2; //1 Week
+                notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(task.EndDate).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-                notificationViewModel.NotificationResponse.SystemGenerated = true;
 
-                notificationService.AddUpdateNotification(notificationViewModel);
+                notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
             }
             #endregion
             #region Send notification to assigned employees
             notificationViewModel.NotificationResponse.NotificationId =
                         notificationRepository.GetNotificationsIdByCategories(5,10, task.TaskId);
 
-            notificationViewModel.NotificationResponse.TitleE = "You have been assigned a task.";
-            notificationViewModel.NotificationResponse.TitleA = "You have been assigned a task.";
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["TaskAssignedE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["TaskAssignedA"];
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["TaskAssignedAlertBefore"]); //Days
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = false;
 
             notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
             notificationViewModel.NotificationResponse.SubCategoryId = 10; //Task delivery date
             notificationViewModel.NotificationResponse.ItemId = task.TaskId; 
-            notificationViewModel.NotificationResponse.AlertBefore = 3; //1 day
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            notificationViewModel.NotificationResponse.SystemGenerated = false;
 
             notificationService.AddUpdateMeetingNotification(notificationViewModel, employeeIds);
             #endregion

@@ -38,7 +38,7 @@ function readyFunction(){
     
     
     // JSTREE DUMMY THEME (REQUIRED TO AVOID CHANGING THE PLUGIN TO IGNORE THE ORIGINAL CSS SINCE LESS IS USED)
-    $.jstree._themes = "css/plugins/jstree/";
+    $.jstree._themes = "/content/css/plugins/jstree/";
     
     
     // CUSTOM SCROLLBAR FOR SIDE PANEL
