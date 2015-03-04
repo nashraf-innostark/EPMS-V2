@@ -11,6 +11,7 @@
         public long? EmployeeId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Employee Employee { get; set; }
         public virtual Notification Notification { get; set; }
     }
 }
