@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using EPMS.Implementation.Services;
-using EPMS.Interfaces.IServices;
-using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
 using Employee = EPMS.Models.DomainModels.Employee;
 
@@ -18,8 +14,12 @@ namespace EPMS.Web.ModelMappers
             var caseType = new Employee
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE ?? "",
-                EmployeeNameA = source.EmployeeNameA?? "",
+                EmployeeFirstNameE = source.EmployeeFirstNameE,
+                EmployeeFirstNameA = source.EmployeeFirstNameA,
+                EmployeeMiddleNameE = source.EmployeeMiddleNameE,
+                EmployeeMiddleNameA = source.EmployeeMiddleNameA,
+                EmployeeLastNameE = source.EmployeeLastNameE,
+                EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama ?? string.Empty,
                 EmployeeIqamaExpiryDt = DateTime.ParseExact(source.EmployeeIqamaExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
@@ -48,8 +48,12 @@ namespace EPMS.Web.ModelMappers
             return new Models.Employee
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE ?? "",
-                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeFirstNameE = source.EmployeeFirstNameE,
+                EmployeeFirstNameA = source.EmployeeFirstNameA,
+                EmployeeMiddleNameE = source.EmployeeMiddleNameE,
+                EmployeeMiddleNameA = source.EmployeeMiddleNameA,
+                EmployeeLastNameE = source.EmployeeLastNameE,
+                EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama,
                 EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
@@ -72,14 +76,16 @@ namespace EPMS.Web.ModelMappers
                 IsActivated = source.IsActivated,
                 EmployeeJobId = source.EmployeeJobId,
                 //EmployeeRequests = source.EmployeeRequests.Select(x=>x.CreateFromServerToClient()),
-                Allowances = source.Allowances.Select(x=>x.CreateFromServerToClient()),
+                Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
+                EmployeeFullNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                EmployeeFullNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
             };
 
         }
         public static Models.Employee CreateFromServerToClientForTask(this Employee source)
         {
-            Models.Employee employee= new Models.Employee
+            Models.Employee employee = new Models.Employee
             {
                 EmployeeId = source.EmployeeId,
                 EmployeeImagePath = source.EmployeeImagePath,
@@ -108,8 +114,8 @@ namespace EPMS.Web.ModelMappers
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
             };
             var noOfTasks = source.TaskEmployees.Count(x => x.EmployeeId == employee.EmployeeId);
-            employee.EmployeeNameE = source.EmployeeNameE + " - " + noOfTasks;
-            employee.EmployeeNameA = source.EmployeeNameA + " - " + noOfTasks;
+            employee.EmployeeFullNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE + " - " + noOfTasks;
+            employee.EmployeeFullNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA + " - " + noOfTasks;
             return employee;
         }
         public static DashboardModels.Employee CreateForDashboard(this Employee source)
@@ -118,10 +124,10 @@ namespace EPMS.Web.ModelMappers
             {
                 EmployeeId = source.EmployeeId,
                 EmployeeJobId = source.EmployeeJobId,
-                EmployeeNameE = source.EmployeeNameE ?? "",
-                EmployeeNameA = source.EmployeeNameA ?? "",
-                EmployeeNameEShort = source.EmployeeNameE.Length > 10 ? source.EmployeeNameE.Substring(0, 10) + "..." : source.EmployeeNameE,
-                EmployeeNameAShort = source.EmployeeNameA.Length > 15 ? source.EmployeeNameA.Substring(0, 15) + "..." : source.EmployeeNameA,
+                EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
+                EmployeeNameEShort = (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE).Length > 14 ? (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE).Substring(0, 14) + "..." : (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE),
+                EmployeeNameAShort = (source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA).Length > 18 ? (source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA).Substring(0, 18) + "..." : (source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA),
                 EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
             };
 
@@ -131,10 +137,10 @@ namespace EPMS.Web.ModelMappers
             return new DashboardModels.Profile
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE ?? "",
-                EmployeeNameA = source.EmployeeNameA ?? "",
-                EmployeeNameEShort = source.EmployeeNameE.Length > 14 ? source.EmployeeNameE.Substring(0, 14) + "..." : source.EmployeeNameE,
-                EmployeeNameAShort = source.EmployeeNameA.Length > 18 ? source.EmployeeNameA.Substring(0, 18) + "..." : source.EmployeeNameA,
+                EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
+                EmployeeNameEShort = (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE).Length > 14 ? (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE).Substring(0, 14) + "..." : (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE),
+                EmployeeNameAShort = (source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA).Length > 18 ? (source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA).Substring(0, 18) + "..." : (source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA),
                 EmployeeJobId = source.EmployeeJobId,
                 EmployeeJobTitleE = source.JobTitle.JobTitleNameE,
                 EmployeeJobTitleA = source.JobTitle.JobTitleNameA,
@@ -147,8 +153,12 @@ namespace EPMS.Web.ModelMappers
             return new Models.Employee
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE ?? "",
-                EmployeeNameA = source.EmployeeNameA ?? "",
+                EmployeeFirstNameE = source.EmployeeFirstNameE,
+                EmployeeFirstNameA = source.EmployeeFirstNameA,
+                EmployeeMiddleNameE = source.EmployeeMiddleNameE,
+                EmployeeMiddleNameA = source.EmployeeMiddleNameA,
+                EmployeeLastNameE = source.EmployeeLastNameE,
+                EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = ImageUrl(source.EmployeeImagePath),
                 EmployeeIqama = source.EmployeeIqama,
                 EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
@@ -173,6 +183,8 @@ namespace EPMS.Web.ModelMappers
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
                 //EmployeeRequests = source.EmployeeRequests.Select(x => x.CreateFromServerToClient()),
                 Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
+                EmployeeFullNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                EmployeeFullNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
             };
 
         }
@@ -182,8 +194,8 @@ namespace EPMS.Web.ModelMappers
             return new EmployeeForDropDownList
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE,
-                EmployeeNameA = source.EmployeeNameA,
+                EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
                 Email = source.Email,
             };
         }
@@ -192,9 +204,9 @@ namespace EPMS.Web.ModelMappers
         {
             return new Models.ContactList
             {
-                Link = "/HR/Employee/Create/"+ source.EmployeeId,
-                NameE = source.EmployeeNameE ?? "",
-                NameA = source.EmployeeNameA ?? "",
+                Link = "/HR/Employee/Create/" + source.EmployeeId,
+                NameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                NameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
                 Type = "Employee",
                 MobileNumber = source.EmployeeMobileNum ?? "",
                 Email = source.Email,
@@ -209,7 +221,7 @@ namespace EPMS.Web.ModelMappers
                 imageName = "profile.jpg";
             }
             string path = (ConfigurationManager.AppSettings["EmployeeImage"] + imageName);
-            
+
             return "<img  data-mfp-src=" + path + " src=" + path + " class='mfp-image image-link cursorHand' height=70 width=100 />";
         }
     }

@@ -51,7 +51,9 @@ namespace EPMS.Web.ModelMappers.PMS
             {
                 foreach (var employee in source.TaskEmployees)
                 {
-                    projectTask.EmployeesAssigned = employee.Employee.EmployeeNameE + " - " + projectTask.EmployeesAssigned;
+                    var empFullName = employee.Employee.EmployeeFirstNameE + " " + employee.Employee.EmployeeMiddleNameE +
+                                      " " + employee.Employee.EmployeeLastNameE;
+                    projectTask.EmployeesAssigned = empFullName + " - " + projectTask.EmployeesAssigned;
                 }
                 projectTask.EmployeesAssigned = projectTask.EmployeesAssigned.Substring(0, projectTask.EmployeesAssigned.Length - 3);
             }

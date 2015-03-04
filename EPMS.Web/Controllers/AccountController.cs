@@ -342,7 +342,7 @@ namespace IdentitySample.Controllers
                     {
                         EmailConfirmed = item.EmailConfirmed,
                         Email = item.Email,
-                        FirstName = item.Employee.EmployeeNameE,
+                        FirstName = item.Employee.EmployeeFirstNameE + " " + item.Employee.EmployeeMiddleNameE + " " + item.Employee.EmployeeLastNameE,
                         KeyId = item.Id,
                         Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name,
                         Username = item.UserName

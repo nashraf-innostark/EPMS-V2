@@ -8,14 +8,30 @@ namespace EPMS.Web.Models
     public class Employee
     {
         public long EmployeeId { get; set; }
-        [Required(ErrorMessage = "Employee Name (English) is required.")]
-        [Display(Name = "Employee Name")]
+        [Required(ErrorMessage = "Employee First Name (English) is required.")]
+        [Display(Name = "Employee First Name")]
         [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
-        public string EmployeeNameE { get; set; }
-        [Required(ErrorMessage = "Employee Name (Arabic) is required.")]
-        [Display(Name = "Employee Name")]
+        public string EmployeeFirstNameE { get; set; }
+        [Required(ErrorMessage = "Employee First Name (Arabic) is required.")]
+        [Display(Name = "Employee First Name")]
         [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
-        public string EmployeeNameA { get; set; }
+        public string EmployeeFirstNameA { get; set; }
+        [Required(ErrorMessage = "Employee Middle Name (English) is required.")]
+        [Display(Name = "Employee Middle Name")]
+        [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
+        public string EmployeeMiddleNameE { get; set; }
+        [Required(ErrorMessage = "Employee Middle Name (Arabic) is required.")]
+        [Display(Name = "Employee Middle Name")]
+        [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
+        public string EmployeeMiddleNameA { get; set; }
+        [Required(ErrorMessage = "Employee Last Name (English) is required.")]
+        [Display(Name = "Employee Last Name")]
+        [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
+        public string EmployeeLastNameE { get; set; }
+        [Required(ErrorMessage = "Employee Last Name (Arabic) is required.")]
+        [Display(Name = "Employee Last Name")]
+        [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
+        public string EmployeeLastNameA { get; set; }
         public string EmployeeImagePath { get; set; }
         public long? JobTitleId { get; set; }
         public string EmployeeJobId { get; set; }
@@ -47,7 +63,8 @@ namespace EPMS.Web.Models
         public string EmployeeDetailsE { get; set; }
         [StringLength(1000, ErrorMessage = "Cannot exceed 1000 characters.")]
         public string EmployeeDetailsA { get; set; }
-        public string EmployeeFullName { get; set; }
+        public string EmployeeFullNameE { get; set; }
+        public string EmployeeFullNameA { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }

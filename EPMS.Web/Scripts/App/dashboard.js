@@ -268,13 +268,6 @@
             text: 'Reorder Widgets or Quicklaunch bar items by dragging & dropping them.'
         });
     }, 7000);
-    setTimeout(function () {
-        $.pnotify({
-            title: 'Welcome',
-            type: 'info',
-            text: $("#SessionUserName").val()
-        });
-    }, 2000);
     var firstHover = true;
     
     if (widgetsLoaded['task-completion']) return;

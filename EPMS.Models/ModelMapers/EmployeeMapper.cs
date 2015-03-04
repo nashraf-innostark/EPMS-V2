@@ -8,8 +8,12 @@ namespace EPMS.Models.ModelMapers
         public static void UpdateTo(this Employee source, Employee target)
         {
             target.EmployeeId = source.EmployeeId;
-            target.EmployeeNameE = source.EmployeeNameE;
-            target.EmployeeNameA = source.EmployeeNameA;
+            target.EmployeeFirstNameE = source.EmployeeFirstNameE;
+            target.EmployeeFirstNameA = source.EmployeeFirstNameA;
+            target.EmployeeMiddleNameE = source.EmployeeMiddleNameE;
+            target.EmployeeMiddleNameA = source.EmployeeMiddleNameA;
+            target.EmployeeLastNameE = source.EmployeeLastNameE;
+            target.EmployeeLastNameA = source.EmployeeLastNameA;
             target.EmployeeImagePath = source.EmployeeImagePath;
             target.JobTitleId = source.JobTitleId;
             target.EmployeeJobId = source.EmployeeJobId;
@@ -36,8 +40,12 @@ namespace EPMS.Models.ModelMapers
             return new Employee
             {
                 EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeNameE,
-                EmployeeNameA = source.EmployeeNameA,
+                EmployeeFirstNameE = source.EmployeeFirstNameE,
+                EmployeeFirstNameA = source.EmployeeFirstNameA,
+                EmployeeMiddleNameE = source.EmployeeMiddleNameE,
+                EmployeeMiddleNameA = source.EmployeeMiddleNameA,
+                EmployeeLastNameE = source.EmployeeLastNameE,
+                EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 JobTitleId = source.JobTitleId,
                 EmployeeJobId = source.EmployeeJobId,

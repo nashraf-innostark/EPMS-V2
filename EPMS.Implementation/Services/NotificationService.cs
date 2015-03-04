@@ -533,10 +533,14 @@ namespace EPMS.Implementation.Services
             if (notificationResponse.EmployeeId > 0)
             {
                 var employee = employeeRepository.Find(Convert.ToInt64(notificationResponse.EmployeeId));
+                var employeeFullNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                       employee.EmployeeLastNameE;
+                var employeeFullNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                       employee.EmployeeLastNameA;
                 if (employee != null)
                 {
-                    fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin?employee.EmployeeNameE:"Your");
-                    fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employee.EmployeeNameA : "Your");
+                    fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin ? employeeFullNameE : "Your");
+                    fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
                     fileText = fileText.Replace("[IqamaExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
                     fileText = fileText.Replace("[PassportExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
                 }

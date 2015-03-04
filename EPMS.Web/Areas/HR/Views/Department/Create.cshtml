@@ -119,11 +119,11 @@
                                         <tr>
                                             @if (direction == "ltr")
                                             {
-                                                <td>@item.EmployeeNameE</td>
+                                                <td>@(item.EmployeeFirstNameE + " " + item.EmployeeMiddleNameE + " " + item.EmployeeLastNameE)</td>
                                             }
                                             else
                                             {
-                                                <td>@item.EmployeeNameA</td>
+                                                <td>@(item.EmployeeFirstNameA + " " + item.EmployeeMiddleNameA + " " + item.EmployeeLastNameA)</td>
                                             }
                                         </tr>
                                     }

@@ -6,8 +6,12 @@ namespace EPMS.Models.DomainModels
     public class Employee
     {
         public long EmployeeId { get; set; }
-        public string EmployeeNameE { get; set; }
-        public string EmployeeNameA { get; set; }
+        public string EmployeeFirstNameE { get; set; }
+        public string EmployeeFirstNameA { get; set; }
+        public string EmployeeMiddleNameE { get; set; }
+        public string EmployeeMiddleNameA { get; set; }
+        public string EmployeeLastNameE { get; set; }
+        public string EmployeeLastNameA { get; set; }
         public string EmployeeImagePath { get; set; }
         public long? JobTitleId { get; set; }
         public string EmployeeJobId { get; set; }

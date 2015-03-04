@@ -2,8 +2,8 @@
 
 @{
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = direction == "ltr" ? Model.Employee.EmployeeNameE + " " + EPMS.Web.Resources.HR.Payroll.Payrolls : Model.Employee.EmployeeNameA + " " + EPMS.Web.Resources.HR.Payroll.Payrolls;
-    var empName = direction == "ltr" ? Model.Employee.EmployeeNameE : Model.Employee.EmployeeNameA;
+    ViewBag.Title = direction == "ltr" ? Model.Employee.EmployeeFullNameE + " " + EPMS.Web.Resources.HR.Payroll.Payrolls : Model.Employee.EmployeeFullNameA + " " + EPMS.Web.Resources.HR.Payroll.Payrolls;
+    var empName = direction == "ltr" ? Model.Employee.EmployeeFullNameE : Model.Employee.EmployeeFullNameA;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -58,7 +58,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @(direction == "ltr" ? Html.TextBoxFor(model => model.Employee.EmployeeNameE, new { @id = "EmployeeName", @disabled = "disabled" }) : Html.TextBoxFor(model => model.Employee.EmployeeNameA, new { @id = "EmployeeName", @disabled = "disabled" }))
+                    @(direction == "ltr" ? Html.TextBoxFor(model => model.Employee.EmployeeFullNameE, new { @id = "EmployeeName", @disabled = "disabled" }) : Html.TextBoxFor(model => model.Employee.EmployeeFullNameA, new { @id = "EmployeeName", @disabled = "disabled" }))
                 </div>
             </div>
         </div>
@@ -224,10 +224,10 @@
     function setControlsValues(data) {
         var direc = '@direction';
         if (direc == "ltr") {
-            $("#EmployeeName").val(data["Employee"].EmployeeNameE);
+            $("#EmployeeName").val(data["Employee"].EmployeeFullNameE);
             $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameE);
         } else {
-            $("#EmployeeName").val(data["Employee"].EmployeeNameA);
+            $("#EmployeeName").val(data["Employee"].EmployeeFullNameA);
             $("#JobTitle").val(data["Employee"].JobTitle.JobTitleNameA);
         }
         $("#BasicSalary").val(data["Employee"].JobTitle.BasicSalary);

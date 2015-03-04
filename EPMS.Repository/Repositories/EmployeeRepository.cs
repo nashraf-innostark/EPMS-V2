@@ -44,7 +44,7 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<EmployeeByColumn, Func<Employee, object>>
                     {
-                        { EmployeeByColumn.EmployeeNameE,  c => c.EmployeeNameE},
+                        { EmployeeByColumn.EmployeeNameE,  c => c.EmployeeFirstNameE},
                         { EmployeeByColumn.EmployeeJobId, c => c.JobTitleId},
                         { EmployeeByColumn.EmployeeJobTitle, c => c.JobTitle.JobTitleNameE},
                         { EmployeeByColumn.EmployeeDepartment, c => c.JobTitle.Department.DepartmentNameE}
@@ -66,8 +66,10 @@ namespace EPMS.Repository.Repositories
                 employeeSearchRequset.iSortCol_0 = 2;
             }
             Expression<Func<Employee, bool>> query =
-                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || (s.EmployeeNameE.Contains(employeeSearchRequset.SearchString)) ||
-                    (s.EmployeeNameA.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
+                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || (s.EmployeeFirstNameE.Contains(employeeSearchRequset.SearchString) || 
+                    s.EmployeeMiddleNameE.Contains(employeeSearchRequset.SearchString) || s.EmployeeLastNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.EmployeeFirstNameE.Contains(employeeSearchRequset.SearchString) || s.EmployeeMiddleNameE.Contains(employeeSearchRequset.SearchString) ||
+                    s.EmployeeLastNameE.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
                     (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchString)) || (s.EmployeeJobId == employeeSearchRequset.SearchString) ||
                     (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchString)));
 

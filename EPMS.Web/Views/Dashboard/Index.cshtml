@@ -972,6 +972,25 @@
     </div>
 </div>
 <script type="text/javascript">
+    $(document).ready(function() {
+        if ('@direction' == "ltr") {
+            setTimeout(function () {
+                $.pnotify({
+                    title: 'Welcome',
+                    type: 'info',
+                    text: $("#SessionUserName").val()
+                });
+            }, 2000);
+        } else if ('@direction' == "rtl") {
+            setTimeout(function () {
+                $.pnotify({
+                    title: 'Welcome',
+                    type: 'info',
+                    text: $("#SessionUserNameA").val()
+                });
+            }, 2000);
+        }
+    });
     function loadItems() {
         var siteURL = $('#siteURL').val();
         var url = siteURL + "/Dashboard/GetQuickLaunchUserItem";

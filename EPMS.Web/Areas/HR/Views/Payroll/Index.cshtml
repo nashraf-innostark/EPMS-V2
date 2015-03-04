@@ -36,7 +36,7 @@
                         <tr>
                             <th></th>
                             <th>@EPMS.Web.Resources.HR.Employee.Image</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.Name</th>
+                            <th>@EPMS.Web.Resources.HR.Employee.NameIndex</th>
                             <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
                             <th>@EPMS.Web.Resources.HR.Employee.JobTitle</th>
                             <th>@EPMS.Web.Resources.HR.Employee.Department</th>
@@ -80,9 +80,9 @@
                     "mRender": function (data, type, full) {
                         var val;
                         if (direc == "ltr") {
-                            val = full["EmployeeNameE"];
+                            val = full["EmployeeFullNameE"];
                         } else {
-                            val = full["EmployeeNameA"];
+                            val = full["EmployeeFullNameA"];
                         }
                         var empId = full["EmployeeId"];
                         var element = '<a href="Detail/' + empId + '">' + val + '</a>';
