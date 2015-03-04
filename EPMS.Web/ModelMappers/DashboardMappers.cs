@@ -35,8 +35,10 @@ namespace EPMS.Web.ModelMappers
                 RequestId = source.RequestId,
                 EmployeeId = source.EmployeeId,
                 EmployeeNameE = source.Employee.EmployeeNameE,
+                EmployeeNameA = source.Employee.EmployeeNameA,
                 RequestTopic = source.RequestTopic,
                 EmployeeNameEShort = source.Employee.EmployeeNameE.Length > 7 ? source.Employee.EmployeeNameE.Substring(0, 7) + "..." : source.Employee.EmployeeNameE,
+                EmployeeNameAShort = source.Employee.EmployeeNameA.Length > 7 ? source.Employee.EmployeeNameA.Substring(0, 7) + "..." : source.Employee.EmployeeNameA,
                 RequestTopicShort = source.RequestTopic.Length > 9 ? source.RequestTopic.Substring(0, 9) + "..." : source.RequestTopic,
                 RequestDateString = source.RequestDate.ToShortDateString(),
                 IsReplied = source.RequestDetails.OrderByDescending(x => x.RowVersion).FirstOrDefault().IsReplied
@@ -50,6 +52,7 @@ namespace EPMS.Web.ModelMappers
                 ClientName = source.Customer.CustomerNameE,
                 Topic = source.Topic,
                 ClientNameShort = source.Customer.CustomerNameE.Length > 7 ? source.Customer.CustomerNameE.Substring(0, 7) + "..." : source.Customer.CustomerNameE,
+                ClientNameAShort = source.Customer.CustomerNameA.Length > 7 ? source.Customer.CustomerNameA.Substring(0, 7) + "..." : source.Customer.CustomerNameA,
                 TopicShort = source.Topic.Length > 9 ? source.Topic.Substring(0, 9) + "..." : source.Topic,
                 IsReplied = source.IsReplied
             };

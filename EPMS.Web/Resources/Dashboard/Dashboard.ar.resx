@@ -124,54 +124,78 @@
     <value>Any</value>
   </data>
   <data name="Complaints" xml:space="preserve">
-    <value>Complaints</value>
+    <value>شكاوي</value>
   </data>
   <data name="EmployeeRequests" xml:space="preserve">
-    <value>Employee Requests</value>
+    <value>طلبات الموظفين</value>
   </data>
   <data name="Employees" xml:space="preserve">
-    <value>Employees</value>
+    <value>الموظفين</value>
   </data>
   <data name="FilterByClient" xml:space="preserve">
-    <value>Filter by Clients</value>
+    <value>ترتيب حسب العميل</value>
   </data>
   <data name="FilterByDepartment" xml:space="preserve">
-    <value>Filter by Department</value>
+    <value>ترتيب حسب الادارة</value>
   </data>
   <data name="FilterByEmployee" xml:space="preserve">
-    <value>Filter by Employee</value>
+    <value>ترتيب حسب الموظف</value>
   </data>
   <data name="FilterbyMonth" xml:space="preserve">
-    <value>Filter by Month</value>
+    <value>ترتيب حسب الشهر</value>
   </data>
   <data name="FilterByProjectProgress" xml:space="preserve">
-    <value>Filter by Project Progress</value>
+    <value>ترتيب حسب حالة المشروع</value>
   </data>
   <data name="FilterByProjects" xml:space="preserve">
-    <value>Filter by Projects</value>
+    <value>ترتيب حسب المشروع</value>
   </data>
   <data name="FilterByStatus" xml:space="preserve">
-    <value>Filter by Status</value>
+    <value>ترتيب حسب حالة الطلب</value>
   </data>
   <data name="MakeComplaint" xml:space="preserve">
     <value>Make new complaint</value>
   </data>
   <data name="Meeting" xml:space="preserve">
-    <value>Meeting</value>
+    <value>اجتماعات</value>
   </data>
   <data name="MyProfile" xml:space="preserve">
-    <value>My Profile</value>
+    <value>السيرة الذاتية</value>
   </data>
   <data name="MyTasks" xml:space="preserve">
-    <value>My Tasks</value>
+    <value>مهامي</value>
   </data>
   <data name="Payroll" xml:space="preserve">
-    <value>Payroll</value>
+    <value>الرواتب</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>Project</value>
+    <value>مشاريع</value>
   </data>
   <data name="Recruitment" xml:space="preserve">
-    <value>Recruitment</value>
+    <value>طلبات الوظائف</value>
+  </data>
+  <data name="Allowances" xml:space="preserve">
+    <value>مجموع البدلات</value>
+  </data>
+  <data name="BasicSalary" xml:space="preserve">
+    <value>الراتب الأساسي</value>
+  </data>
+  <data name="CurrentMonth" xml:space="preserve">
+    <value>الشهر1</value>
+  </data>
+  <data name="DashboardTitle" xml:space="preserve">
+    <value>لوحة التحكم</value>
+  </data>
+  <data name="Deductions" xml:space="preserve">
+    <value>مجموع الخصومات</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>طلبات</value>
+  </data>
+  <data name="PreviousMonth" xml:space="preserve">
+    <value>الشهر2</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>المجموع</value>
   </data>
 </root>

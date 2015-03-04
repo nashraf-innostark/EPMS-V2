@@ -117,85 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Any" xml:space="preserve">
-    <value>Any</value>
+  <data name="AddButton" xml:space="preserve">
+    <value>اضافة الروابط المختارة</value>
   </data>
-  <data name="Complaints" xml:space="preserve">
-    <value>Complaints</value>
+  <data name="CancelButton" xml:space="preserve">
+    <value>الغاء</value>
   </data>
-  <data name="EmployeeRequests" xml:space="preserve">
-    <value>Employee Requests</value>
+  <data name="CreateText" xml:space="preserve">
+    <value>اضافة رابط مختصر</value>
   </data>
-  <data name="Employees" xml:space="preserve">
-    <value>Employees</value>
-  </data>
-  <data name="FilterByClient" xml:space="preserve">
-    <value>Filter by Clients</value>
-  </data>
-  <data name="FilterByDepartment" xml:space="preserve">
-    <value>Filter by Department</value>
-  </data>
-  <data name="FilterByEmployee" xml:space="preserve">
-    <value>Filter by Employee</value>
-  </data>
-  <data name="FilterbyMonth" xml:space="preserve">
-    <value>Filter by Month</value>
-  </data>
-  <data name="FilterByStatus" xml:space="preserve">
-    <value>Filter by Status</value>
-  </data>
-  <data name="MyProfile" xml:space="preserve">
-    <value>My Profile</value>
-  </data>
-  <data name="Payroll" xml:space="preserve">
-    <value>Payroll</value>
-  </data>
-  <data name="Recruitment" xml:space="preserve">
-    <value>Recruitment</value>
-  </data>
-  <data name="MakeComplaint" xml:space="preserve">
-    <value>Make new complaint</value>
-  </data>
-  <data name="AddMeeting" xml:space="preserve">
-    <value>Add meeting</value>
-  </data>
-  <data name="FilterByProjectProgress" xml:space="preserve">
-    <value>Filter by Project Progress</value>
-  </data>
-  <data name="FilterByProjects" xml:space="preserve">
-    <value>Filter by Projects</value>
-  </data>
-  <data name="Meeting" xml:space="preserve">
-    <value>Meeting</value>
-  </data>
-  <data name="Project" xml:space="preserve">
-    <value>Project</value>
-  </data>
-  <data name="MyTasks" xml:space="preserve">
-    <value>My Tasks</value>
-  </data>
-  <data name="Allowances" xml:space="preserve">
-    <value>Allowances</value>
-  </data>
-  <data name="BasicSalary" xml:space="preserve">
-    <value>Basic Salary</value>
-  </data>
-  <data name="CurrentMonth" xml:space="preserve">
-    <value>Current</value>
-  </data>
-  <data name="DashboardTitle" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
-  <data name="Deductions" xml:space="preserve">
-    <value>Deductions</value>
-  </data>
-  <data name="Orders" xml:space="preserve">
-    <value>Orders</value>
-  </data>
-  <data name="PreviousMonth" xml:space="preserve">
-    <value>Previous</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>Total</value>
+  <data name="SelectText" xml:space="preserve">
+    <value>اختر الروابط المراد اضافتها على لوحة التحكم</value>
   </data>
 </root>

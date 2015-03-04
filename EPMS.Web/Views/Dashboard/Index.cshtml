@@ -5,7 +5,7 @@
 @{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
     string[] userPermissionsSet = (string[])userPermissionSet;
     if (userPermissionsSet.Contains("ComplaintCreate"))
@@ -18,7 +18,7 @@
     <div class="row-fluid">
         <div class="span12">
             <h1>
-                Dashboard
+                @EPMS.Web.Resources.Dashboard.Dashboard.DashboardTitle
             </h1>
             <div class="btn-group">
                 <button type="button" class="btn btn-gear dropdown-toggle" data-toggle="dropdown"></button>
@@ -100,7 +100,14 @@
                                                     <li>
                                                         <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
                                                         <div>
-                                                            <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span>
+                                                            }
                                                             @if (item.IsReplied)
                                                             {
                                                                 <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
@@ -125,21 +132,40 @@
                                             <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon cog'></i>Done</a>
                                         </div>
                                         <form>
-                                            <div class="container-fluid widget-settings">
-                                                <div class="control-group row-fluid">
-                                                    <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                            @if (direction == "ltr")
+                                            {
+                                                <div class="container-fluid widget-settings">
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="control-group row-fluid">
-                                                    <div class="span12">
-                                                        <div class="controls">
-                                                            @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <div class="controls">
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="container-fluid widget-settings">
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <div class="controls">
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </form>
                                     </div>
                                 </div>
@@ -156,7 +182,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/CMS/Orders/Index" class="darkGreen"> Orders</a>
+                                            <a href="~/CMS/Orders/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Orders</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -276,7 +302,14 @@
                                                     <li>
                                                         <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
                                                         <div>
-                                                            <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span title="@item.ClientName">@item.ClientNameAShort</span>
+                                                            }
                                                             @if (item.IsReplied)
                                                             {
                                                                 <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
@@ -351,7 +384,14 @@
                                                 foreach (var item in Model.Recruitments.ToList())
                                                 {
                                                     <li>
-                                                        <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleE</span></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleA</span></a>
+                                                        }
                                                         <div>
                                                             @item.NoOfApplicants
                                                         </div>
@@ -391,7 +431,14 @@
                                                 foreach (var item in Model.Meetings.ToList())
                                                 {
                                                     <li>
-                                                        <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.TopicA">@item.TopicAShort</span></a>
+                                                        }
                                                         <div>
                                                             @item.MeetingDate
                                                         </div>
@@ -435,8 +482,14 @@
                                                 <div class="avatar-image">
                                                     <img src="@Model.Profile.EmployeeImagePath" alt="profile">
                                                 </div>
-                                                <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
-
+                                                @if (direction == "ltr")
+                                                {
+                                                    <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
+                                                }
+                                                else
+                                                {
+                                                    <div title="@Model.Profile.EmployeeNameA">@Model.Profile.EmployeeNameAShort</div>
+                                                }
                                             </li>
                                             <li>
                                                 <span>Job ID</span>
@@ -446,9 +499,18 @@
                                             </li>
                                             <li>
                                                 <span>Job Title</span>
-                                                <div>
-                                                    @Model.Profile.EmployeeJobTitleE
-                                                </div>
+                                                @if (direction == "ltr")
+                                                {
+                                                    <div>
+                                                        @Model.Profile.EmployeeJobTitleE
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        @Model.Profile.EmployeeJobTitleA
+                                                    </div>
+                                                }
                                             </li>
                                             <li>
                                                 <span>ID Expiry Date</span>
@@ -481,25 +543,25 @@
                                         </div>
                                         <ul id="mypayroll">
                                             <li id="basicSal">
-                                                <span>Basic Salary</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.BasicSalary</span>
                                                 <div>
                                                     @Model.Payroll.BasicSalary
                                                 </div>
                                             </li>
                                             <li id="totalAllownces">
-                                                <span>Allowances</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Allowances</span>
                                                 <div>
                                                     @Model.Payroll.Allowances
                                                 </div>
                                             </li>
                                             <li id="totalDeductions">
-                                                <span>Deductions</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Deductions</span>
                                                 <div>
                                                     @Model.Payroll.Deductions
                                                 </div>
                                             </li>
                                             <li id="totalSal">
-                                                <span>Total</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Total</span>
                                                 <div>
                                                     @Model.Payroll.Total
                                                 </div>
@@ -521,8 +583,8 @@
                                                     <div class="span12">
                                                         <div class="controls">
                                                             <select id="selectedmonth">
-                                                                <option selected="" value="1">Current</option>
-                                                                <option value="2">Previous</option>
+                                                                <option selected="" value="1">@EPMS.Web.Resources.Dashboard.Dashboard.CurrentMonth</option>
+                                                                <option value="2">@EPMS.Web.Resources.Dashboard.Dashboard.PreviousMonth</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -561,7 +623,14 @@
                                                         <div class="avatar-image">
                                                             <img src="@item.EmployeeImagePath" alt="profile image" />
                                                         </div>
-                                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span></a>
+                                                        }
                                                         <div>
                                                             @item.EmployeeJobId
                                                         </div>
@@ -629,15 +698,28 @@
                                             @if (Model.Project != null)
                                             {
                                                 <li class="dashProject dashTask">
-                                                    <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
-
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</a>
+                                                    }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)
                                                 {
                                                     foreach (var task in Model.Project.ProjectTasks.ToList())
                                                     {
                                                         <li class="dashTask">
-                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@task.TaskNameAShort</a>
+                                                            }
                                                         </li>
                                                     }
                                                 }
@@ -649,7 +731,14 @@
                                                     <a><i class='icon-photon arrow_right'></i></a>
                                                 </li>
                                                 <li class="processed-pct">
-                                                    <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</span>
+                                                    }
                                                     <div class="progress progress-info">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
                                                     </div>
@@ -696,7 +785,14 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "projectIdFilter"})
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -729,7 +825,14 @@
                                                 foreach (var task in Model.ProjectTasks.ToList())
                                                 {
                                                     <li class="dashTask">
-                                                        <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameA">@task.TaskNameAShort</a>
+                                                        }
                                                     </li>
                                                 }
                                                 <li class="dashBack">
@@ -741,7 +844,14 @@
 
                                                 </li>
                                                 <li class="processed-pct2">
-                                                    <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameA">@Model.ProjectTasks.FirstOrDefault().TaskNameAShort</span>
+                                                    }
                                                     <div class="progress progress-info">
                                                         <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
                                                     </div>
@@ -769,7 +879,14 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "projectIdTaskFilter"})
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -834,11 +951,11 @@
 <div id="modal-add-quick-launch-custom" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Create Quick Launch Item</h3>
+        <h3>@EPMS.Web.Resources.Dashboard.QuickLaunch.CreateText</h3>
     </div>
     <div class="modal-body">
 
-        <p class="alternative">Select the links you would like on your dashboard</p>
+        <p class="alternative">@EPMS.Web.Resources.Dashboard.QuickLaunch.SelectText</p>
     </div>
     <div class="modal-body predefined-icons">
         <ul>
@@ -850,8 +967,8 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>Add Item</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>@EPMS.Web.Resources.Dashboard.QuickLaunch.AddButton</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.Dashboard.QuickLaunch.CancelButton</a>
     </div>
 </div>
 <script type="text/javascript">
