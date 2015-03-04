@@ -820,7 +820,7 @@
                                             </div>
                                         </div>
                                         <ul id="progressId2">
-                                            @if (Model.ProjectTasks.Any())
+                                            @if (Model.ProjectTasks != null)
                                             {
                                                 foreach (var task in Model.ProjectTasks.ToList())
                                                 {
