@@ -6,13 +6,19 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
+    string[] userPermissionsSet = (string[])userPermissionSet;
+    if (userPermissionsSet.Contains("ComplaintCreate"))
+    {
+
+    }
 }
 
 <div class="container-fluid dashboard dashboard-title">
     <div class="row-fluid">
         <div class="span12">
             <h1>
-                Dashboard
+                @EPMS.Web.Resources.Dashboard.Dashboard.DashboardTitle
             </h1>
             <div class="btn-group">
                 <button type="button" class="btn btn-gear dropdown-toggle" data-toggle="dropdown"></button>
@@ -68,9 +74,9 @@
                 switch (sortOrder.WidgetId)
                 {
                     case "EmployeeRequestsWidget":
-                        if (ViewBag.UserRole != "Customer")
+                        if (userPermissionsSet.Contains("EmployeeRequestsWidget"))
                         {
-                <!-- Employee Requests Widget -->
+                        <!-- Employee Requests Widget -->
                             <div class="widget-holder" id="EmployeeRequestsWidget">
                                 <div class="widget-flipper">
                                     <!-- Front -->
@@ -94,7 +100,14 @@
                                                     <li>
                                                         <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
                                                         <div>
-                                                            <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span>
+                                                            }
                                                             @if (item.IsReplied)
                                                             {
                                                                 <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
@@ -119,21 +132,40 @@
                                             <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon cog'></i>Done</a>
                                         </div>
                                         <form>
-                                            <div class="container-fluid widget-settings">
-                                                <div class="control-group row-fluid">
-                                                    <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                            @if (direction == "ltr")
+                                            {
+                                                <div class="container-fluid widget-settings">
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="control-group row-fluid">
-                                                    <div class="span12">
-                                                        <div class="controls">
-                                                            @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <div class="controls">
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="container-fluid widget-settings">
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="control-group row-fluid">
+                                                        <div class="span12">
+                                                            <div class="controls">
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </form>
                                     </div>
                                 </div>
@@ -142,7 +174,7 @@
                         }
                         break;
                     case "OrderWidget":
-                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        if (userPermissionsSet.Contains("OrdersWidget"))
                         {
                         <!-- Orders Widget -->
                             <div class="widget-holder" id="OrderWidget">
@@ -150,7 +182,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/CMS/Orders/Index" class="darkGreen"> Orders</a>
+                                            <a href="~/CMS/Orders/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Orders</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -243,7 +275,7 @@
                         }
                         break;
                     case "ComplaintsWidget":
-                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        if (userPermissionsSet.Contains("ComplaintsWidget"))
                         {
                         <!-- Complaints Widget -->
                             <div class="widget-holder" id="ComplaintsWidget">
@@ -270,7 +302,14 @@
                                                     <li>
                                                         <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
                                                         <div>
-                                                            <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span title="@item.ClientName">@item.ClientNameAShort</span>
+                                                            }
                                                             @if (item.IsReplied)
                                                             {
                                                                 <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
@@ -326,7 +365,7 @@
                         }
                         break;
                     case "RecruitmentWidget":
-                        if (ViewBag.UserRole == "Admin")
+                        if (userPermissionsSet.Contains("RecruitmentWidget"))
                         {
                         <!-- Recruitment Widget -->
                             <div class="widget-holder" id="RecruitmentWidget">
@@ -345,7 +384,14 @@
                                                 foreach (var item in Model.Recruitments.ToList())
                                                 {
                                                     <li>
-                                                        <a href="~/HR/JobOffered/Create/@item.JobOfferedId">  <span>@item.TitleE</span></a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleE</span></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleA</span></a>
+                                                        }
                                                         <div>
                                                             @item.NoOfApplicants
                                                         </div>
@@ -366,7 +412,7 @@
                         }
                         break;
                     case "MeetingWidget":
-                        if (ViewBag.UserRole != "Customer")
+                        if (userPermissionsSet.Contains("MeetingWidget"))
                         {
                         <!-- Meeting Widget -->
                             <div class="widget-holder" id="MeetingWidget">
@@ -385,7 +431,14 @@
                                                 foreach (var item in Model.Meetings.ToList())
                                                 {
                                                     <li>
-                                                        <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.TopicA">@item.TopicAShort</span></a>
+                                                        }
                                                         <div>
                                                             @item.MeetingDate
                                                         </div>
@@ -411,7 +464,7 @@
                         }
                         break;
                     case "MyProfileWidget":
-                        if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
+                        if (userPermissionsSet.Contains("MyProfileWidget") && Model.Profile!=null)
                         {
                             <!-- My Profile Widget -->
                             <div class="widget-holder" id="MyProfileWidget">
@@ -429,8 +482,14 @@
                                                 <div class="avatar-image">
                                                     <img src="@Model.Profile.EmployeeImagePath" alt="profile">
                                                 </div>
-                                                <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
-
+                                                @if (direction == "ltr")
+                                                {
+                                                    <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
+                                                }
+                                                else
+                                                {
+                                                    <div title="@Model.Profile.EmployeeNameA">@Model.Profile.EmployeeNameAShort</div>
+                                                }
                                             </li>
                                             <li>
                                                 <span>Job ID</span>
@@ -440,9 +499,18 @@
                                             </li>
                                             <li>
                                                 <span>Job Title</span>
-                                                <div>
-                                                    @Model.Profile.EmployeeJobTitleE
-                                                </div>
+                                                @if (direction == "ltr")
+                                                {
+                                                    <div>
+                                                        @Model.Profile.EmployeeJobTitleE
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        @Model.Profile.EmployeeJobTitleA
+                                                    </div>
+                                                }
                                             </li>
                                             <li>
                                                 <span>ID Expiry Date</span>
@@ -459,9 +527,9 @@
                         }
                         break;
                     case "PayrollWidget":
-                        if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
+                        if (userPermissionsSet.Contains("PayrollWidget") && Model.Payroll!=null)
                         {
-            <!-- Payroll Widget -->
+                            <!-- Payroll Widget -->
                             <div class="widget-holder" id="PayrollWidget">
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front">
@@ -475,25 +543,25 @@
                                         </div>
                                         <ul id="mypayroll">
                                             <li id="basicSal">
-                                                <span>Basic Salary</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.BasicSalary</span>
                                                 <div>
                                                     @Model.Payroll.BasicSalary
                                                 </div>
                                             </li>
                                             <li id="totalAllownces">
-                                                <span>Allowances</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Allowances</span>
                                                 <div>
                                                     @Model.Payroll.Allowances
                                                 </div>
                                             </li>
                                             <li id="totalDeductions">
-                                                <span>Deductions</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Deductions</span>
                                                 <div>
                                                     @Model.Payroll.Deductions
                                                 </div>
                                             </li>
                                             <li id="totalSal">
-                                                <span>Total</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Total</span>
                                                 <div>
                                                     @Model.Payroll.Total
                                                 </div>
@@ -515,8 +583,8 @@
                                                     <div class="span12">
                                                         <div class="controls">
                                                             <select id="selectedmonth">
-                                                                <option selected="" value="1">Current</option>
-                                                                <option value="2">Previous</option>
+                                                                <option selected="" value="1">@EPMS.Web.Resources.Dashboard.Dashboard.CurrentMonth</option>
+                                                                <option value="2">@EPMS.Web.Resources.Dashboard.Dashboard.PreviousMonth</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -531,9 +599,9 @@
                         }
                         break;
                     case "EmployeesWidget":
-                        if (ViewBag.UserRole == "Admin")
+                        if (userPermissionsSet.Contains("RecentEmployeesWidget"))
                         {
-            <!-- Latest Recent Employees Widget begins -->
+                            <!-- Latest Recent Employees Widget begins -->
                             <div class="widget-holder" id="EmployeesWidget">
                                 <div class="widget-flipper">
                                     <!-- Front -->
@@ -555,7 +623,14 @@
                                                         <div class="avatar-image">
                                                             <img src="@item.EmployeeImagePath" alt="profile image" />
                                                         </div>
-                                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span></a>
+                                                        }
                                                         <div>
                                                             @item.EmployeeJobId
                                                         </div>
@@ -594,11 +669,11 @@
                                 </div>
                                 <div class="tempLoader" style="display: none;"></div>
                             </div>
-            <!-- Latest Recent Employees Widget ends -->
+                            <!-- Latest Recent Employees Widget ends -->
                         }
                         break;
                     case "ProjectWidget":
-                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        if (userPermissionsSet.Contains("ProjectWidget"))
                         {
                             <!-- Project Widget -->
                             <div class="widget-holder" id="ProjectWidget">
@@ -623,15 +698,28 @@
                                             @if (Model.Project != null)
                                             {
                                                 <li class="dashProject dashTask">
-                                                    <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
-
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</a>
+                                                    }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)
                                                 {
                                                     foreach (var task in Model.Project.ProjectTasks.ToList())
                                                     {
                                                         <li class="dashTask">
-                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@task.TaskNameAShort</a>
+                                                            }
                                                         </li>
                                                     }
                                                 }
@@ -643,7 +731,14 @@
                                                     <a><i class='icon-photon arrow_right'></i></a>
                                                 </li>
                                                 <li class="processed-pct">
-                                                    <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</span>
+                                                    }
                                                     <div class="progress progress-info">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
                                                     </div>
@@ -690,7 +785,14 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "projectIdFilter"})
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -703,9 +805,9 @@
                         }
                         break;
                     case "MyTasksWidget":
-                        if (ViewBag.UserRole != "Customer")
+                        if (userPermissionsSet.Contains("MyTasksWidget"))
                         {
-            <!-- My Tasks Widget -->
+                            <!-- My Tasks Widget -->
                             <div class="widget-holder" id="MyTasksWidget">
                                 <div class="widget-flipper">
                                     <div class="widget-area task-completion widget-front">
@@ -718,12 +820,19 @@
                                             </div>
                                         </div>
                                         <ul id="progressId2">
-                                            @if (Model.ProjectTasks != null)
+                                            @if (Model.ProjectTasks.Any())
                                             {
                                                 foreach (var task in Model.ProjectTasks.ToList())
                                                 {
                                                     <li class="dashTask">
-                                                        <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a data-task="@task.TaskProgress" title="@task.TaskNameA">@task.TaskNameAShort</a>
+                                                        }
                                                     </li>
                                                 }
                                                 <li class="dashBack">
@@ -735,7 +844,14 @@
 
                                                 </li>
                                                 <li class="processed-pct2">
-                                                    <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameE">@Model.ProjectTasks.FirstOrDefault().TaskNameEShort</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameA">@Model.ProjectTasks.FirstOrDefault().TaskNameAShort</span>
+                                                    }
                                                     <div class="progress progress-info">
                                                         <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
                                                     </div>
@@ -763,7 +879,14 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "projectIdTaskFilter"})
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -773,205 +896,10 @@
                                 </div>
                                 <div class="tempLoader" style="display: none;"></div>
                             </div>
-            <!-- Task Completion Widget ends -->
+                            <!-- Task Completion Widget ends -->
                         }
                         break;
-                    default:
-                        break;
                 }
-            }
-
-
-
-
-            @if (ViewBag.UserRole == "Admin")
-            {
-                @*<!-- Payment Widget -->
-                    <div class="widget-holder">
-                        <div class="widget-flipper">
-                            <div class="widget-area widget-general-stats widget-front">
-                                <div class="widget-head ">
-                                    <a href="" class="darkGreen">  Payment </a>
-                                    <div>
-                                        <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                        <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                        <i class="icon-photon document_stroke opc1"></i>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li>
-                                        <a href="">  <span>1st Installment</span></a>
-                                        <div>
-                                            5000
-                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>2nd Installment</span></a>
-                                        <div>
-                                            10000
-                                            <img src="~/images/photon/workDone.png" alt="Paid" title="Paid" class="status">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">    <span>3rd Installment </span></a>
-                                        <div>
-                                            4000
-                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>4th Installment </span></a>
-                                        <div>
-                                            6000
-                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <span>Project Name:</span> <div>50%</div>
-
-                                    </li>
-
-
-                                </ul>
-                            </div>
-                            <div class="widget-area widget-general-stats widget-back">
-                                <div class="widget-savehead">
-                                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
-                                </div>
-                                <form>
-                                    <div class="container-fluid widget-settings">
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <label class="control-label">Filter by Clients:</label>
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="controls">
-                                                    <select>
-                                                        <option selected="" value="Any">Any</option>
-                                                        <option value="1">Ali</option>
-                                                        <option value="2">Said</option>
-                                                        <option value="3">Mohammed</option>
-                                                        <option value="4">Mazin</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="container-fluid widget-settings">
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <label class="control-label">Filter by Project:</label>
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="controls">
-                                                    <select>
-                                                        <option selected="" value="Any">Any</option>
-                                                        <option value="1">Project 1</option>
-                                                        <option value="2">Project 2</option>
-                                                        <option value="3">Project 3</option>
-                                                        <option value="4">Project 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tempLoader" style="display:none;"></div>
-                    </div>
-
-                    <!-- Alerts Widget -->
-                    <div class="widget-holder">
-                        <div class="widget-flipper">
-                            <div class="widget-area widget-general-stats widget-front">
-                                <div class="widget-head">
-                                    <a href="" class="lightRed">   Alerts</a>
-                                    <div>
-                                        <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                        <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                        <i class="icon-photon bolt opc1"></i>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li>
-                                        <a href="">  <span>Ali Nasir</span></a>
-                                        <div>
-                                            22/2/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>Mahmood Ameen</span></a>
-                                        <div>
-                                            12/5/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href=""> <span>Chamber of Commerce</span></a>
-                                        <div>
-                                            1/2/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>Rent</span></a>
-                                        <div>
-                                            9/12/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href=""> <span>Telephone Bill</span></a>
-                                        <div>
-                                            4/8/2014
-
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="widget-area widget-general-stats widget-back">
-                                <div class="widget-savehead">
-                                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
-                                </div>
-                                <form>
-                                    <div class="container-fluid widget-settings">
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <label class="control-label">Filter by Alert Type:</label>
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="controls">
-                                                    <select>
-                                                        <option selected="" value="Any">Any</option>
-                                                        <option value="1">Employees</option>
-                                                        <option value="2">Documents</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tempLoader" style="display:none;"></div>
-                    </div>*@
-
-
             }
         </div>
     </div>
@@ -1023,46 +951,24 @@
 <div id="modal-add-quick-launch-custom" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Create Quick Launch Item</h3>
+        <h3>@EPMS.Web.Resources.Dashboard.QuickLaunch.CreateText</h3>
     </div>
     <div class="modal-body">
 
-        <p class="alternative">Select the links you would like on your dashboard</p>
+        <p class="alternative">@EPMS.Web.Resources.Dashboard.QuickLaunch.SelectText</p>
     </div>
     <div class="modal-body predefined-icons">
         <ul>
-            @*<li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/applicants.png" alt="Predefined" title="Applicants" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/profile.png" alt="Predefined" title="My Profile" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/ql2@2x.png" alt="Predefined" title="Projects" data-hrf="form-elements-input-fields.html"></li>
-
-                <li><img src="~/Images/photon/icons/tasks.png" alt="Predefined" title="Tasks" data-hrf="form-elements-input-fields.html"></li>
-
-                <li><img src="~/Images/photon/icons/receipt.png" alt="Predefined" title="Receipt" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/invoices.png" alt="Predefined" title="Invoices" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/quotation.png" alt="Predefined" title="Quotations" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/ql1@2x.png" alt="Predefined" title="Order" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/complaints.png" alt="Predefined" title="Complaints" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/notification.png" alt="Predefined" title="Notifications" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/ql10@2x.png" alt="Predefined" title="Meetings" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>*@
             @foreach (var item in Model.QuickLaunchItems)
             {
                 @*<li>@item.Name</li>*@
                 <li title="@item.Name" id="@item.MenuID"><img src="~/Images/photon/icons/@item.ImageIconPath" alt=" predefined"></li>
             }
-
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>Add Item</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>@EPMS.Web.Resources.Dashboard.QuickLaunch.AddButton</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.Dashboard.QuickLaunch.CancelButton</a>
     </div>
 </div>
 <script type="text/javascript">

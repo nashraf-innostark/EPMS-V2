@@ -481,6 +481,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Quotation.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Dashboard\QuickLaunch.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuickLaunch.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Dashboard\QuickLaunch.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QuickLaunch.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -681,6 +691,7 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
@@ -689,18 +700,50 @@
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
-    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Content\CSS\arabic1.css" />
     <Content Include="Content\CSS\help-photon.css" />
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\plugins\jstree\default\style.css" />
     <Content Include="Content\plugins\jstree\default\style.css" />
+    <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
+    <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />
+    <Content Include="NotificationsTextFiles\CommercialRegisterExpiryDateEmail.txt" />
+    <Content Include="NotificationsTextFiles\CommercialRegisterExpiryDateSMS.txt" />
     <Content Include="NotificationsTextFiles\EmployeeIqamaExpiryEmail.txt" />
     <Content Include="NotificationsTextFiles\EmployeeIqamaExpirySMS.txt" />
     <Content Include="NotificationsTextFiles\EmployeePassportExpiryEmail.txt" />
     <Content Include="NotificationsTextFiles\EmployeePassportExpirySMS.txt" />
     <Content Include="NotificationsTextFiles\EmployeeRequestEmail.txt" />
     <Content Include="NotificationsTextFiles\EmployeeRequestSMS.txt" />
+    <Content Include="NotificationsTextFiles\FirstInsDueEmail.txt" />
+    <Content Include="NotificationsTextFiles\FirstInsDueSMS.txt" />
+    <Content Include="NotificationsTextFiles\FourthInsDueEmail.txt" />
+    <Content Include="NotificationsTextFiles\FourthInsDueSMS.txt" />
+    <Content Include="NotificationsTextFiles\IncomeAndZakaCertificateExpiryDateEmail.txt" />
+    <Content Include="NotificationsTextFiles\IncomeAndZakaCertificateExpiryDateSMS.txt" />
+    <Content Include="NotificationsTextFiles\InsuranceCertificateExpiryDateEmail.txt" />
+    <Content Include="NotificationsTextFiles\InsuranceCertificateExpiryDateSMS.txt" />
+    <Content Include="NotificationsTextFiles\JobApplicationEmail.txt" />
+    <Content Include="NotificationsTextFiles\JobApplicationSMS.txt" />
+    <Content Include="NotificationsTextFiles\MeetingEmail.txt" />
+    <Content Include="NotificationsTextFiles\MeetingSMS.txt" />
+    <Content Include="NotificationsTextFiles\ProjectDeliveryNearEmail.txt" />
+    <Content Include="NotificationsTextFiles\ProjectDeliveryNearSMS.txt" />
+    <Content Include="NotificationsTextFiles\ProjectFinishedEmail.txt" />
+    <Content Include="NotificationsTextFiles\ProjectFinishedSMS.txt" />
+    <Content Include="NotificationsTextFiles\ProjectStartedEmail.txt" />
+    <Content Include="NotificationsTextFiles\ProjectStartedSMS.txt" />
+    <Content Include="NotificationsTextFiles\SaudilizationCertificateExpiryDateEmail.txt" />
+    <Content Include="NotificationsTextFiles\SaudilizationCertificateExpiryDateSMS.txt" />
+    <Content Include="NotificationsTextFiles\SecondInsDueEmail.txt" />
+    <Content Include="NotificationsTextFiles\SecondInsDueSMS.txt" />
+    <Content Include="NotificationsTextFiles\TaskAssignedEmail.txt" />
+    <Content Include="NotificationsTextFiles\TaskAssignedSMS.txt" />
+    <Content Include="NotificationsTextFiles\TaskDeliveryNearEmail.txt" />
+    <Content Include="NotificationsTextFiles\TaskDeliveryNearSMS.txt" />
+    <Content Include="NotificationsTextFiles\ThirdInsDueEmail.txt" />
+    <Content Include="NotificationsTextFiles\ThirdInsDueSMS.txt" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
@@ -2691,10 +2734,19 @@
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\Dashboard.ar.resx" />
     <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\QuickLaunch.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QuickLaunch.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\QuickLaunch.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QuickLaunch.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
