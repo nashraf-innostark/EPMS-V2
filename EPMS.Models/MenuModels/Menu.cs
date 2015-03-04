@@ -20,6 +20,7 @@ namespace EPMS.Models.MenuModels
         /// Menu Title
         /// </summary>
         public string MenuTitle { get; set; }
+        public string MenuTitleA { get; set; }
         /// <summary>
         /// Sort Order
         /// </summary>

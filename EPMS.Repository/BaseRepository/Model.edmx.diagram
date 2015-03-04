@@ -29,7 +29,6 @@
         <EntityTypeShape EntityType="EPMSModel.Meeting" Width="1.5" PointX="8.25" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.MeetingAttendee" Width="1.5" PointX="10.5" PointY="19.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.MeetingDocument" Width="1.5" PointX="10.5" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Menu" Width="2.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.MenuRight" Width="1.5" PointX="10.5" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Notification" Width="1.5" PointX="13.5" PointY="16.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="24.5" IsExpanded="true" />
@@ -74,9 +73,6 @@
         <AssociationConnector Association="EPMSModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Meeting" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_MeetingDocuments_Meeting" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_QuickLaunchItems_Menu" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_Project_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_ProjectDocuments_Project" ManuallyRouted="false" />
@@ -85,6 +81,10 @@
         <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPMSModel.Menu" Width="1.5" PointX="0.75" PointY="4.5" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
+        <AssociationConnector Association="EPMSModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
+        <AssociationConnector Association="EPMSModel.FK_QuickLaunchItems_Menu" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
