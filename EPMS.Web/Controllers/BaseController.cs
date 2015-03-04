@@ -118,6 +118,7 @@ namespace EPMS.Web.Controllers
             }
             else
             {
+                if (result.EmployeeId != null)
                 fullName = employeeService.FindEmployeeById(Convert.ToInt64(result.EmployeeId)).EmployeeNameE;
             }
             Session["UserFullName"] = fullName;

@@ -681,6 +681,7 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
@@ -689,7 +690,6 @@
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
-    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Views\Notification\Create.cshtml" />
@@ -2680,6 +2680,7 @@
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Dashboard\Dashboard.ar.resx" />
     <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Dashboard.Designer.cs</LastGenOutput>

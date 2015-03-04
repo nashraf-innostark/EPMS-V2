@@ -135,8 +135,12 @@ namespace EPMS.Web.Controllers
                 #endregion
 
                 #region My Tasks
-                dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
-                dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
+
+                if (Session["EmployeeID"] != null)
+                {
+                    dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
+                    dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
+                }
                 #endregion
             }
             if ((string)Session["RoleName"] == "Customer" || (string)Session["RoleName"] == "Admin")
