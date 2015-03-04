@@ -464,7 +464,7 @@
                         }
                         break;
                     case "MyProfileWidget":
-                        if (userPermissionsSet.Contains("MyProfileWidget"))
+                        if (userPermissionsSet.Contains("MyProfileWidget") && Model.Profile!=null)
                         {
                             <!-- My Profile Widget -->
                             <div class="widget-holder" id="MyProfileWidget">
@@ -527,7 +527,7 @@
                         }
                         break;
                     case "PayrollWidget":
-                        if (userPermissionsSet.Contains("PayrollWidget"))
+                        if (userPermissionsSet.Contains("PayrollWidget") && Model.Payroll!=null)
                         {
                             <!-- Payroll Widget -->
                             <div class="widget-holder" id="PayrollWidget">
@@ -820,7 +820,7 @@
                                             </div>
                                         </div>
                                         <ul id="progressId2">
-                                            @if (Model.ProjectTasks != null)
+                                            @if (Model.ProjectTasks.Any())
                                             {
                                                 foreach (var task in Model.ProjectTasks.ToList())
                                                 {

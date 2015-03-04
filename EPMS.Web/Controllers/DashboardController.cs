@@ -139,14 +139,16 @@ namespace EPMS.Web.Controllers
             #region Profile Widget
             if (userPermissionsSet.Contains("MyProfileWidget"))
             {
-                dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
+                if (Session["EmployeeID"]!=null)
+                    dashboardViewModel.Profile = GetMyProfile();
             }
             #endregion
 
             #region Payroll Widget
             if (userPermissionsSet.Contains("PayrollWidget"))
             {
-                dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), DateTime.Now);
+                if (Session["EmployeeID"] != null)
+                    dashboardViewModel.Payroll = GetPayroll(DateTime.Now);
             }
                     
             #endregion
@@ -161,8 +163,8 @@ namespace EPMS.Web.Controllers
             #region My Tasks
             if (userPermissionsSet.Contains("MyTasksWidget"))
             {
-                dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
-                dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
+                dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL();
+                dashboardViewModel.ProjectTasks = GetMyTasks(0);//0 means all projects tasks
             }
             #endregion
 
@@ -264,18 +266,30 @@ namespace EPMS.Web.Controllers
         {
             return projectService.LoadProjectForDashboard(requester, projectId);
         }
-        private IEnumerable<ProjectTaskResponse> GetMyTasks(long employeeId, long projectId)
+        private IEnumerable<ProjectTaskResponse> GetMyTasks(long projectId)
         {
-            return projectTaskService.LoadProjectTasksByEmployeeId(employeeId, projectId);
+            if (Session["EmployeeID"] != null)
+                return projectTaskService.LoadProjectTasksByEmployeeId(
+                    Convert.ToInt64(Session["EmployeeID"].ToString()), projectId);
+            return Enumerable.Empty<ProjectTaskResponse>();
         }
+
         private IEnumerable<DashboardModels.Project> GetProjectsDDL(string requester, int status)
         {
             return projectService.LoadAllProjects(requester, status).Select(x => x.CreateForDashboardDDL());
         }
-        private IEnumerable<DashboardModels.Project> GetTaskProjectsDDL(long employeeId)
+        private IEnumerable<DashboardModels.Project> GetTaskProjectsDDL()
         {
-            return projectService.LoadAllProjectsByEmployeeId(employeeId).Select(x => x.CreateForDashboardDDL());
+            IEnumerable<DashboardModels.Project> list = Enumerable.Empty<DashboardModels.Project>();
+            if (Session["EmployeeID"] != null)
+            {
+                var projectsDdl =
+                    projectService.LoadAllProjectsByEmployeeId(Convert.ToInt64(Session["EmployeeID"].ToString()));
+                return projectsDdl.Any() ? projectsDdl.Select(x => x.CreateForDashboardDDL()) : list;
+            }
+            return list;
         }
+
         /// <summary>
         /// Load recent jobs offered
         /// </summary>
@@ -298,14 +312,16 @@ namespace EPMS.Web.Controllers
         /// </summary>
         /// <param name="employeeId"></param>
         /// <returns></returns>
-        private Profile GetMyProfile(long employeeId)
+        private Profile GetMyProfile()
         {
-            return employeeService.FindEmployeeById(employeeId).CreateForDashboardProfile();
+            return Session["EmployeeID"]!=null ? employeeService.FindEmployeeById(Convert.ToInt64(Session["EmployeeID"].ToString())).CreateForDashboardProfile() : null;
         }
-        private Payroll GetPayroll(long employeeId, DateTime date)
+
+        private Payroll GetPayroll(DateTime date)
         {
-            return payrollService.LoadPayroll(employeeId, date).CreatePayrollForDashboard();
+            return Session["EmployeeID"] != null ? payrollService.LoadPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), date).CreatePayrollForDashboard() : null;
         }
+
         /// <summary>
         /// Loads All Quick Launch Items
         /// </summary>
@@ -478,7 +494,7 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadMyProfile()
         {
-            var myProfile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
+            var  myProfile = GetMyProfile();
             return Json(myProfile, JsonRequestBehavior.AllowGet);
         }
 
@@ -500,7 +516,7 @@ namespace EPMS.Web.Controllers
         public JsonResult LoadPayroll(int month)
         {
             DateTime filterDateTime = month == 1 ? DateTime.Now : DateTime.Now.AddMonths(-1);
-            var payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), filterDateTime);
+            var payroll = GetPayroll(filterDateTime);
             return Json(payroll, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
@@ -532,7 +548,7 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadMyTasks(long projectId)
         {
-            var projects = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), projectId);
+            var projects = GetMyTasks(projectId);
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
 
