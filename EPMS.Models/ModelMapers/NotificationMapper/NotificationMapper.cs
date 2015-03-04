@@ -50,7 +50,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
-                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddMonths(notification.AlertBefore),
+                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(notification.AlertBefore),
                 SystemGenerated = notification.SystemGenerated,
                 ForAdmin = notification.ForAdmin,
                 IsEmailSent = notification.IsEmailSent,
