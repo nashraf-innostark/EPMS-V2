@@ -270,7 +270,7 @@ namespace EPMS.Web.Controllers
         {
             if (Session["EmployeeID"] != null)
                 return projectTaskService.LoadProjectTasksByEmployeeId(
-                    Convert.ToInt64(Session["EmployeeID"].ToString()), projectId);
+                    Convert.ToInt64(Session["EmployeeID"].ToString()), projectId) ?? Enumerable.Empty<ProjectTaskResponse>();
             return Enumerable.Empty<ProjectTaskResponse>();
         }
 
