@@ -144,10 +144,12 @@
                 <label class="control-label" for="JobTitle">@EPMS.Web.Resources.HR.Employee.JobTitle</label>
             </div>
             <div class="span2">
-                <div class="controls">
+                <div class="controls jobTitleDDL">
                     @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitleId, String.Empty, new { @class = "required" })
                 </div>
+            </div>
+            <div class="span3" style="margin-left: 40px; margin-top: 20px;">
+                <label id="jobTitleValidation"></label>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -826,7 +828,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="" name="Save">@Model.EmployeeViewModel.BtnText</button>
+                    <button type="submit" class="btn" onclick="validateFormA(event)" name="Save">@Model.EmployeeViewModel.BtnText</button>
                 </div>
             </div>
         }
@@ -834,6 +836,33 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
+    function validateFormA(event) {
+        var counter = 0;
+        var jobTitle = $("#JobTitle").val();
+        if (jobTitle == null || jobTitle == "" || jobTitle == 0 || jobTitle == undefined) {
+            $("#jobTitleValidation").text("Please Select Job Title");
+            $("#jobTitleValidation").addClass("Error");
+            counter++;
+        } else {
+            $("#jobTitleValidation").text("");
+            $("#jobTitleValidation").removeClass("Error");
+        }
+        if (counter > 0) {
+            //implementing focus back to error
+            if ($(".Error").length > 0) {
+                var divId = $(".Error")[0].id;
+                if ($("#" + divId).length > 0) {
+                    $('html,body').animate({
+                        scrollTop: $(".jobTitleDDL").offset().top
+                    },
+        'slow');
+                    event.preventDefault();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     $(document).ready(function () {
         // CK Editor
         CKEDITOR.replace('ExtraInformationE');
