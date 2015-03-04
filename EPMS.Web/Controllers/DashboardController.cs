@@ -96,74 +96,105 @@ namespace EPMS.Web.Controllers
         public ActionResult Index()
         {
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
+            object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
+            string[] userPermissionsSet = (string[])userPermissionSet;
+           
             if (Session["RoleName"] == null)
             {
                 return RedirectToAction("Login", "Account");
             }
             ViewBag.UserRole = Session["RoleName"];
+            var requester = string.Empty;
             if ((string)Session["RoleName"] != "Customer")
+                requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
+            else
+                requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+                
+            #region Employee Requests Widget
+
+            if (userPermissionsSet.Contains("EmployeeRequestsWidget"))
             {
-                var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
-                #region Employee Requests Widget
                 dashboardViewModel.Employees = GetAllEmployees();
                 dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
-                #endregion
+            }
+                
+            #endregion
 
-                #region Recruitment Widget
+            #region Recruitment Widget
+            if (userPermissionsSet.Contains("RecruitmentWidget"))
+            {
                 dashboardViewModel.Recruitments = GetRecruitments();
-                #endregion
+            }
+            #endregion
 
-                #region Recent Employees Widget
+            #region Recent Employees Widget
+            if (userPermissionsSet.Contains("RecentEmployeesWidget"))
+            {
                 dashboardViewModel.Departments = GetAllDepartments();
                 dashboardViewModel.EmployeesRecent = GetRecentEmployees(requester);
-                #endregion
+            }
+                
+            #endregion
 
-                #region Profile Widget
-                if (requester != "Admin")
-                    dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
-                #endregion
+            #region Profile Widget
+            if (userPermissionsSet.Contains("MyProfileWidget"))
+            {
+                dashboardViewModel.Profile = GetMyProfile(Convert.ToInt64(Session["EmployeeID"].ToString()));
+            }
+            #endregion
 
-                #region Payroll Widget
-                if (requester != "Admin")
-                    dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), DateTime.Now);
-                #endregion
+            #region Payroll Widget
+            if (userPermissionsSet.Contains("PayrollWidget"))
+            {
+                dashboardViewModel.Payroll = GetPayroll(Convert.ToInt64(Session["EmployeeID"].ToString()), DateTime.Now);
+            }
+                    
+            #endregion
 
-                #region Meeting Widget
-
+            #region Meeting Widget
+            if (userPermissionsSet.Contains("MeetingWidget"))
+            {
                 dashboardViewModel.Meetings = GetMeetings(requester);
+            }
+            #endregion
 
-                #endregion
-
-                #region My Tasks
+            #region My Tasks
+            if (userPermissionsSet.Contains("MyTasksWidget"))
+            {
                 dashboardViewModel.TaskProjectsDDL = GetTaskProjectsDDL(Convert.ToInt64(Session["EmployeeID"].ToString()));
                 dashboardViewModel.ProjectTasks = GetMyTasks(Convert.ToInt64(Session["EmployeeID"].ToString()), 0);//0 means all projects tasks
-                #endregion
             }
-            if ((string)Session["RoleName"] == "Customer" || (string)Session["RoleName"] == "Admin")
+            #endregion
+
+            #region Complaints Widget
+            if (userPermissionsSet.Contains("ComplaintsWidget"))
             {
-                var requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
-                #region Complaints Widget
                 dashboardViewModel.Complaints = GetComplaints(requester);
                 dashboardViewModel.Customers = GetAllCustomers();
-                #endregion
+            }
+            #endregion
 
-                #region Orders Widget
+            #region Orders Widget
+            if (userPermissionsSet.Contains("OrdersWidget"))
+            {
                 dashboardViewModel.Orders = GetOrders(requester, 0);//0 means all
-                #endregion
+            }
+            #endregion
 
-                #region Projects & tasks Widget
+            #region Project Widget
+            if (userPermissionsSet.Contains("ProjectWidget"))
+            {
                 dashboardViewModel.Project = GetProjects(requester, 0);//0 means all projects, 1 means Current project
                 dashboardViewModel.ProjectsDDL = GetProjectsDDL(requester, 1);
-                #endregion
             }
+            #endregion
+
             #region Widget Preferences
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchMenuItems();
             dashboardViewModel.LaunchItems = LoadQuickLaunchUserItems();
 
-
             string userId = User.Identity.GetUserId();
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
-
             #endregion
 
             

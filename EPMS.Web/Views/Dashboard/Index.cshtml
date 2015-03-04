@@ -5,6 +5,13 @@
 @{
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+
+    object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
+    string[] userPermissionsSet = (string[])userPermissionSet;
+    if (userPermissionsSet.Contains("ComplaintCreate"))
+    {
+
+    }
 }
 
 <div class="container-fluid dashboard dashboard-title">
@@ -67,9 +74,9 @@
                 switch (sortOrder.WidgetId)
                 {
                     case "EmployeeRequestsWidget":
-                        if (ViewBag.UserRole != "Customer")
+                        if (userPermissionsSet.Contains("EmployeeRequestsWidget"))
                         {
-                <!-- Employee Requests Widget -->
+                        <!-- Employee Requests Widget -->
                             <div class="widget-holder" id="EmployeeRequestsWidget">
                                 <div class="widget-flipper">
                                     <!-- Front -->
@@ -141,7 +148,7 @@
                         }
                         break;
                     case "OrderWidget":
-                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        if (userPermissionsSet.Contains("OrdersWidget"))
                         {
                         <!-- Orders Widget -->
                             <div class="widget-holder" id="OrderWidget">
@@ -242,7 +249,7 @@
                         }
                         break;
                     case "ComplaintsWidget":
-                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        if (userPermissionsSet.Contains("ComplaintsWidget"))
                         {
                         <!-- Complaints Widget -->
                             <div class="widget-holder" id="ComplaintsWidget">
@@ -325,7 +332,7 @@
                         }
                         break;
                     case "RecruitmentWidget":
-                        if (ViewBag.UserRole == "Admin")
+                        if (userPermissionsSet.Contains("RecruitmentWidget"))
                         {
                         <!-- Recruitment Widget -->
                             <div class="widget-holder" id="RecruitmentWidget">
@@ -365,7 +372,7 @@
                         }
                         break;
                     case "MeetingWidget":
-                        if (ViewBag.UserRole != "Customer")
+                        if (userPermissionsSet.Contains("MeetingWidget"))
                         {
                         <!-- Meeting Widget -->
                             <div class="widget-holder" id="MeetingWidget">
@@ -410,7 +417,7 @@
                         }
                         break;
                     case "MyProfileWidget":
-                        if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
+                        if (userPermissionsSet.Contains("MyProfileWidget"))
                         {
                             <!-- My Profile Widget -->
                             <div class="widget-holder" id="MyProfileWidget">
@@ -458,9 +465,9 @@
                         }
                         break;
                     case "PayrollWidget":
-                        if ((ViewBag.UserRole != "Admin") && (ViewBag.UserRole != "Customer"))
+                        if (userPermissionsSet.Contains("PayrollWidget"))
                         {
-            <!-- Payroll Widget -->
+                            <!-- Payroll Widget -->
                             <div class="widget-holder" id="PayrollWidget">
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front">
@@ -530,9 +537,9 @@
                         }
                         break;
                     case "EmployeesWidget":
-                        if (ViewBag.UserRole == "Admin")
+                        if (userPermissionsSet.Contains("RecentEmployeesWidget"))
                         {
-            <!-- Latest Recent Employees Widget begins -->
+                            <!-- Latest Recent Employees Widget begins -->
                             <div class="widget-holder" id="EmployeesWidget">
                                 <div class="widget-flipper">
                                     <!-- Front -->
@@ -593,11 +600,11 @@
                                 </div>
                                 <div class="tempLoader" style="display: none;"></div>
                             </div>
-            <!-- Latest Recent Employees Widget ends -->
+                            <!-- Latest Recent Employees Widget ends -->
                         }
                         break;
                     case "ProjectWidget":
-                        if (ViewBag.UserRole == "Admin" || ViewBag.UserRole == "Customer")
+                        if (userPermissionsSet.Contains("ProjectWidget"))
                         {
                             <!-- Project Widget -->
                             <div class="widget-holder" id="ProjectWidget">
@@ -702,9 +709,9 @@
                         }
                         break;
                     case "MyTasksWidget":
-                        if (ViewBag.UserRole != "Customer")
+                        if (userPermissionsSet.Contains("MyTasksWidget"))
                         {
-            <!-- My Tasks Widget -->
+                            <!-- My Tasks Widget -->
                             <div class="widget-holder" id="MyTasksWidget">
                                 <div class="widget-flipper">
                                     <div class="widget-area task-completion widget-front">
@@ -772,205 +779,10 @@
                                 </div>
                                 <div class="tempLoader" style="display: none;"></div>
                             </div>
-            <!-- Task Completion Widget ends -->
+                            <!-- Task Completion Widget ends -->
                         }
                         break;
-                    default:
-                        break;
                 }
-            }
-
-
-
-
-            @if (ViewBag.UserRole == "Admin")
-            {
-                @*<!-- Payment Widget -->
-                    <div class="widget-holder">
-                        <div class="widget-flipper">
-                            <div class="widget-area widget-general-stats widget-front">
-                                <div class="widget-head ">
-                                    <a href="" class="darkGreen">  Payment </a>
-                                    <div>
-                                        <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                        <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                        <i class="icon-photon document_stroke opc1"></i>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li>
-                                        <a href="">  <span>1st Installment</span></a>
-                                        <div>
-                                            5000
-                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                        </div>
-
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>2nd Installment</span></a>
-                                        <div>
-                                            10000
-                                            <img src="~/images/photon/workDone.png" alt="Paid" title="Paid" class="status">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">    <span>3rd Installment </span></a>
-                                        <div>
-                                            4000
-                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>4th Installment </span></a>
-                                        <div>
-                                            6000
-                                            <img src="~/images/photon/notDone.png" alt="Not Paid" title="Not Paid" class="status">
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <span>Project Name:</span> <div>50%</div>
-
-                                    </li>
-
-
-                                </ul>
-                            </div>
-                            <div class="widget-area widget-general-stats widget-back">
-                                <div class="widget-savehead">
-                                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
-                                </div>
-                                <form>
-                                    <div class="container-fluid widget-settings">
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <label class="control-label">Filter by Clients:</label>
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="controls">
-                                                    <select>
-                                                        <option selected="" value="Any">Any</option>
-                                                        <option value="1">Ali</option>
-                                                        <option value="2">Said</option>
-                                                        <option value="3">Mohammed</option>
-                                                        <option value="4">Mazin</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="container-fluid widget-settings">
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <label class="control-label">Filter by Project:</label>
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="controls">
-                                                    <select>
-                                                        <option selected="" value="Any">Any</option>
-                                                        <option value="1">Project 1</option>
-                                                        <option value="2">Project 2</option>
-                                                        <option value="3">Project 3</option>
-                                                        <option value="4">Project 4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tempLoader" style="display:none;"></div>
-                    </div>
-
-                    <!-- Alerts Widget -->
-                    <div class="widget-holder">
-                        <div class="widget-flipper">
-                            <div class="widget-area widget-general-stats widget-front">
-                                <div class="widget-head">
-                                    <a href="" class="lightRed">   Alerts</a>
-                                    <div>
-                                        <a href="javascript:;" class="refresher"><i class='icon-photon reload_alt' title="Refresh"></i></a>
-                                        <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
-                                        <i class="icon-photon bolt opc1"></i>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li>
-                                        <a href="">  <span>Ali Nasir</span></a>
-                                        <div>
-                                            22/2/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>Mahmood Ameen</span></a>
-                                        <div>
-                                            12/5/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href=""> <span>Chamber of Commerce</span></a>
-                                        <div>
-                                            1/2/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="">  <span>Rent</span></a>
-                                        <div>
-                                            9/12/2014
-
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href=""> <span>Telephone Bill</span></a>
-                                        <div>
-                                            4/8/2014
-
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="widget-area widget-general-stats widget-back">
-                                <div class="widget-savehead">
-                                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick="flipit(this)"><i class='icon-photon cog'></i>Done</a>
-                                </div>
-                                <form>
-                                    <div class="container-fluid widget-settings">
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <label class="control-label">Filter by Alert Type:</label>
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="controls">
-                                                    <select>
-                                                        <option selected="" value="Any">Any</option>
-                                                        <option value="1">Employees</option>
-                                                        <option value="2">Documents</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="tempLoader" style="display:none;"></div>
-                    </div>*@
-
-
             }
         </div>
     </div>
@@ -1030,33 +842,11 @@
     </div>
     <div class="modal-body predefined-icons">
         <ul>
-            @*<li><img src="~/Images/photon/icons/user.png" alt="Predefined" title="Employees" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/request.png" alt="Predefined" title="Requests" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/payRoll.png" alt="Predefined" title="Payroll" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/recruit.png" alt="Predefined" title="Recruitment" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/applicants.png" alt="Predefined" title="Applicants" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/profile.png" alt="Predefined" title="My Profile" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/ql2@2x.png" alt="Predefined" title="Projects" data-hrf="form-elements-input-fields.html"></li>
-
-                <li><img src="~/Images/photon/icons/tasks.png" alt="Predefined" title="Tasks" data-hrf="form-elements-input-fields.html"></li>
-
-                <li><img src="~/Images/photon/icons/receipt.png" alt="Predefined" title="Receipt" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/invoices.png" alt="Predefined" title="Invoices" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/quotation.png" alt="Predefined" title="Quotations" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/ql1@2x.png" alt="Predefined" title="Order" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/complaints.png" alt="Predefined" title="Complaints" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/notification.png" alt="Predefined" title="Notifications" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/ql10@2x.png" alt="Predefined" title="Meetings" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/company.png" alt="Predefined" title="Company" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/addressBook.png" alt="Predefined" title="Clients List" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/management.png" alt="Predefined" title="Management" data-hrf="form-elements-input-fields.html"></li>
-                <li><img src="~/Images/photon/icons/help.png" alt="Predefined" title="Help" data-hrf="form-elements-input-fields.html"></li>*@
             @foreach (var item in Model.QuickLaunchItems)
             {
                 @*<li>@item.Name</li>*@
                 <li title="@item.Name" id="@item.MenuID"><img src="~/Images/photon/icons/@item.ImageIconPath" alt=" predefined"></li>
             }
-
         </ul>
     </div>
     <div class="modal-footer">
