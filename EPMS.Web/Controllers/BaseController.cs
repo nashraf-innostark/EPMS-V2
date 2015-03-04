@@ -126,8 +126,10 @@ namespace EPMS.Web.Controllers
             else
             {
                 if (result.EmployeeId != null)
-                fullName = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
-                fullNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
+                {
+                    fullName = result.Employee.EmployeeFirstNameE + " " + result.Employee.EmployeeMiddleNameE + " " + result.Employee.EmployeeLastNameE;
+                    fullNameA = result.Employee.EmployeeFirstNameA + " " + result.Employee.EmployeeMiddleNameA + " " + result.Employee.EmployeeLastNameA;
+                }
             }
             Session["UserFullName"] = fullName;
             Session["UserFullNameA"] = fullNameA;

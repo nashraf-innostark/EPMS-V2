@@ -35,10 +35,10 @@ namespace EPMS.Web.ModelMappers
                 RequestId = source.RequestId,
                 EmployeeId = source.EmployeeId,
                 EmployeeNameE = source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE,
-                EmployeeNameA = source.Employee.EmployeeNameA,
+                EmployeeNameA = source.Employee.EmployeeFirstNameA + " " + source.Employee.EmployeeMiddleNameA + " " + source.Employee.EmployeeLastNameA,
                 RequestTopic = source.RequestTopic,
                 EmployeeNameEShort = (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE).Length > 7 ? (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE).Substring(0, 7) + "..." : (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE + " " + source.Employee.EmployeeLastNameE),
-                EmployeeNameAShort = source.Employee.EmployeeNameA.Length > 7 ? source.Employee.EmployeeNameA.Substring(0, 7) + "..." : source.Employee.EmployeeNameA,
+                EmployeeNameAShort = (source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameA + " " + source.Employee.EmployeeLastNameA).Length > 7 ? (source.Employee.EmployeeFirstNameA + " " + source.Employee.EmployeeMiddleNameA + " " + source.Employee.EmployeeLastNameA).Substring(0, 7) + "..." : (source.Employee.EmployeeFirstNameA + " " + source.Employee.EmployeeMiddleNameA + " " + source.Employee.EmployeeLastNameA),
                 RequestTopicShort = source.RequestTopic.Length > 9 ? source.RequestTopic.Substring(0, 9) + "..." : source.RequestTopic,
                 RequestDateString = source.RequestDate.ToShortDateString(),
                 IsReplied = source.RequestDetails.OrderByDescending(x => x.RowVersion).FirstOrDefault().IsReplied
