@@ -39,15 +39,6 @@ namespace EPMS.Implementation.Services
             this.employeeRepository = employeeRepository;
         }
 
-        public IEnumerable<NotificationResponse> GetAll()
-        {
-            return notificationRepository.GetAll().Select(x => x.CreateFromServerToClient());
-        }
-
-        public NotificationResponse FindNotification(long notificationId)
-        {
-            return notificationRepository.Find(notificationId).CreateFromServerToClient();
-        }
 
         public NotificationViewModel LoadNotificationAndBaseData(long? notificationId)
         {
@@ -66,7 +57,7 @@ namespace EPMS.Implementation.Services
             return notificationViewModel;
         }
 
-        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId)
+        public NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId, string userId, long employeeId)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
             IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
@@ -81,32 +72,34 @@ namespace EPMS.Implementation.Services
                 if (notification != null)
                 {
                     //Mark the notification as READ
-                    if (notification.SystemGenerated)
-                    {
+                    var recipient = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId);
+
                         //Save, who viewed SystemGenerated notification
-                        if (notification.NotificationRecipients.All(x => x.UserId != userId))
+
+                    if (notification.NotificationRecipients.Any(x => x.UserId == userId || x.EmployeeId == employeeId))
                         {
-                            NotificationRecipient recipient = new NotificationRecipient();
-                            recipient.UserId = userId;
-                            recipient.NotificationId = notification.NotificationId;
-                            recipient.IsRead = true;
-                            notificationRecipientRepository.Add(recipient);
-                            notificationRecipientRepository.SaveChanges();
+                            if (recipient != null && !recipient.IsRead)
+                            {
+                                recipient.IsRead = true;
+                                notificationRecipientRepository.Update(recipient);
+                                notificationRecipientRepository.SaveChanges();
+                            }
                         }
                         else
                         {
-                            notification.NotificationRecipients.FirstOrDefault().IsRead = true;
-                            notificationRecipientRepository.Update(notification.NotificationRecipients.FirstOrDefault());
+                            NotificationRecipient newRecipient = new NotificationRecipient
+                            {
+                                UserId = userId,
+                                NotificationId = notification.NotificationId,
+                                IsRead = true
+                            };
+                            if (notification.NotificationRecipients.FirstOrDefault() != null)
+                                newRecipient.EmployeeId = notification.NotificationRecipients.FirstOrDefault().EmployeeId;
+
+                            notificationRecipientRepository.Add(newRecipient);
                             notificationRecipientRepository.SaveChanges();
                         }
-                    }
-                    //Mark as READ, who viewed Manual notification
-                    else if (!notification.NotificationRecipients.FirstOrDefault().IsRead)
-                    {
-                        notification.NotificationRecipients.FirstOrDefault().IsRead = true;
-                        notificationRecipientRepository.Update(notification.NotificationRecipients.FirstOrDefault());
-                        notificationRecipientRepository.SaveChanges();
-                    }
+
                     notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
                 }
             }

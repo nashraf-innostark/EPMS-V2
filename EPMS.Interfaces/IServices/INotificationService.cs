@@ -8,10 +8,8 @@ namespace EPMS.Interfaces.IServices
 {
     public interface INotificationService
     {
-        IEnumerable<NotificationResponse> GetAll();
-        NotificationResponse FindNotification(long notificationId);
         NotificationViewModel LoadNotificationAndBaseData(long? notificationId);
-        NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId,string userId);
+        NotificationViewModel LoadNotificationDetailsAndBaseData(long? notificationId, string userId, long employeeId);
         bool AddUpdateNotification(NotificationResponse notificationResponse);
         bool AddUpdateMeetingNotification(NotificationViewModel notificationViewModel, List<long> employeeIds);
         long AddNotification(NotificationResponse notification);
