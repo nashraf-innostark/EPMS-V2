@@ -111,10 +111,10 @@ namespace EPMS.Repository.Repositories
             {
                 notifications = searchRequset.sSortDir_0 == "asc" ?
                 DbSet
-                .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList()
+                .Where(query).OrderBy(x => x.NotificationRecipients.All(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList()
                 :
                 DbSet
-                .Where(query).OrderByDescending(x => x.NotificationRecipients.Any(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList();
+                .Where(query).OrderByDescending(x => x.NotificationRecipients.All(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList();
             }
             else
             {
@@ -173,27 +173,13 @@ namespace EPMS.Repository.Repositories
 
             if (requestParams.SystemGenerated)
             {
-                if (requestParams.EmployeeId>0)
-                {
-                    query = s => (((s.ForAdmin == true) || (s.NotificationRecipients.Any(r => r.UserId == requestParams.UserId)) || (s.NotificationRecipients.Any(r => r.EmployeeId == requestParams.EmployeeId)))
-                           &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
-                           );
-                }
-                else
-                {
-                    query = s => (((s.ForAdmin == true) || (s.NotificationRecipients.Any(r => r.UserId == requestParams.UserId)))
-                           &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId).IsRead == false)))
-                           );
-                }
+                query = s => (((s.ForAdmin == true) && ((s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false) || (s.NotificationRecipients.Count(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId) == 0))) || (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false)
+                          && (s.AlertAppearDate <= today));
             }
             else
             {
-                query = s => (((s.NotificationRecipients.Any(r=>r.UserId == requestParams.UserId)) || (s.NotificationRecipients.Any(r=>r.EmployeeId == requestParams.EmployeeId)))
-                           &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.FirstOrDefault().IsRead == false))
-                           );
+                query = s => (((s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false))
+                          && (s.AlertAppearDate <= today));
             }
             return DbSet.Count(query);
         }
