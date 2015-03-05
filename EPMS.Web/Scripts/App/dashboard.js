@@ -1063,7 +1063,7 @@ function LoadMyTasks(control) {
             success: function (data) {
                 $(".tempLoader").click();
                 $('#progressId2').empty();
-                if (data!=null) {
+                if (data != null && data.length>0) {
                     $.each(data, function (itemIndex, item) {
                         $('#progressId2').append(
                             '<li class="dashTask">' +
