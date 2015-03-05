@@ -50,7 +50,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
-                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(notification.AlertBefore),
+                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-notification.AlertBefore),
                 SystemGenerated = notification.SystemGenerated,
                 ForAdmin = notification.ForAdmin,
                 IsEmailSent = notification.IsEmailSent,
@@ -80,12 +80,12 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             notificationListResponse.NotificationId = notification.NotificationId;
             notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;      
             notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
-            if (notification.NotificationRecipients.Count == 1)
+            if (notification.NotificationRecipients.Any())
             {
                 if (notification.NotificationRecipients.FirstOrDefault().EmployeeId > 0)
                 {
                     var employee = notification.NotificationRecipients.FirstOrDefault().Employee;
-                    notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
+                    notificationListResponse.EmployeeId = employee.EmployeeId;
                     notificationListResponse.MobileNo = employee.EmployeeMobileNum;
                     notificationListResponse.Email = employee.Email;
                     var employeeFullNameE =
@@ -123,9 +123,10 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             }
             switch (notification.AlertBefore)
             {
-                case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
-                case 2: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
-                case 3: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                case 30: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
+                case 7: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
+                case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                default: notificationListResponse.AlertTime = Resources.Notification.Before + " " + notification.AlertBefore + " " + Resources.Notification.Days; break;
             }
 
             return notificationListResponse;

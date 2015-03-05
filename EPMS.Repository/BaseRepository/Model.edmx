@@ -1021,14 +1021,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NotificationRecipient_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
             </Principal>
             <Dependent Role="NotificationRecipient">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2729,7 +2729,7 @@
             <End Role="Notification" EntitySet="Notifications" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -2768,7 +2768,7 @@
           <NavigationProperty Name="EmployeeJobHistories" Relationship="EPMSModel.FK_EmployeeJobHistory_Employee" FromRole="Employee" ToRole="EmployeeJobHistory" />
           <NavigationProperty Name="EmployeeRequests" Relationship="EPMSModel.FK_EmployeeRequests_Employee" FromRole="Employee" ToRole="EmployeeRequest" />
           <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
-          <NavigationProperty Name="NotificationRecipient" Relationship="EPMSModel.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
+          <NavigationProperty Name="NotificationRecipients" Relationship="EPMSModel.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
           <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
         </EntityType>
         <EntityType Name="NotificationRecipient">
@@ -2871,14 +2871,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NotificationRecipient_Employee">
-          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="0..1" />
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
             </Principal>
             <Dependent Role="NotificationRecipient">
-              <PropertyRef Name="Id" />
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2906,7 +2906,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -3711,8 +3711,8 @@
         <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.625" PointY="22.875" />
-        <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="16.125" PointY="22.25" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="22.875" />
+        <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="22.25" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" />
@@ -3723,7 +3723,7 @@
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
-      </Diagram>
+        </Diagram>
     </Diagrams>
   </Designer>
 </edmx:Edmx>
