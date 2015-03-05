@@ -76,7 +76,7 @@
             </div>
             <div class="span9" id="checked">
                 <div class="controls">
-                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox" })
+                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeFullNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox" })
                 </div>
             </div>
         </div>
