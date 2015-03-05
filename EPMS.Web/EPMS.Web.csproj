@@ -294,8 +294,6 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
-    <Compile Include="Areas\Help\Controllers\HelpController.cs" />
-    <Compile Include="Areas\Help\HelpAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\ContactListController.cs" />
     <Compile Include="Areas\HR\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeController.cs" />
@@ -305,8 +303,6 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
-    <Compile Include="Areas\LCP\Controllers\LicenseController.cs" />
-    <Compile Include="Areas\LCP\LCPAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
     <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
@@ -749,11 +745,6 @@
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\Sent.cshtml" />
-    <Content Include="Areas\LCP\Views\web.config" />
-    <Content Include="Areas\LCP\Views\License\Index.cshtml" />
-    <Content Include="Areas\LCP\Views\License\Create.cshtml" />
-    <Content Include="Areas\Help\Views\web.config" />
-    <Content Include="Areas\Help\Views\Help\Index.cshtml" />
     <Content Include="Views\Shared\_HelpLayout.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
@@ -3135,12 +3126,8 @@
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\CP\Models\" />
     <Folder Include="Areas\CP\Views\Shared\" />
-    <Folder Include="Areas\Help\Models\" />
-    <Folder Include="Areas\Help\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
-    <Folder Include="Areas\LCP\Models\" />
-    <Folder Include="Areas\LCP\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
