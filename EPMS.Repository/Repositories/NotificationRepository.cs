@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using EPMS.Interfaces.Repository;
@@ -77,7 +78,7 @@ namespace EPMS.Repository.Repositories
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
                           )
                           &&
-                          ((s.SystemGenerated) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId) &&
+                          (((s.ForAdmin==true) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
                            (s.AlertAppearDate <= today))
                             );
             }
@@ -167,6 +168,7 @@ namespace EPMS.Repository.Repositories
         public int GetUnreadNotificationsCount(NotificationRequestParams requestParams)
         {
             var today = DateTime.Now;
+         
             Expression<Func<Notification, bool>> query;
 
             if (requestParams.SystemGenerated)
@@ -182,7 +184,7 @@ namespace EPMS.Repository.Repositories
                 {
                     query = s => (((s.ForAdmin == true) || (s.NotificationRecipients.Any(r => r.UserId == requestParams.UserId)))
                            &&
-                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault().IsRead == false)))
+                           ((s.AlertAppearDate <= today) && (s.NotificationRecipients.Count == 0 || (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId).IsRead == false)))
                            );
                 }
             }

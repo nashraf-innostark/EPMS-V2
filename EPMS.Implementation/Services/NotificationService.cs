@@ -123,7 +123,7 @@ namespace EPMS.Implementation.Services
             if (notificationResponse.NotificationId > 0)
             {
                 //Update notification
-                //notificationResponse.NotificationId = UpdateNotification(notificationResponse);
+                notificationResponse.NotificationId = UpdateNotification(notificationResponse);
                 //Delete Notification recipient
                 if(notificationRecipientRepository.DeleteRecipient(notificationResponse.NotificationId))
                     notificationRepository.SaveChanges();
@@ -131,11 +131,11 @@ namespace EPMS.Implementation.Services
             else
             {
                 //Save Notification
-                //notificationResponse.NotificationId=AddNotification(notificationResponse);
+                notificationResponse.NotificationId=AddNotification(notificationResponse);
             }
             //Save Notification recipient
-            //if(!(string.IsNullOrEmpty(notificationResponse.UserId) && notificationResponse.EmployeeId==0))
-                //AddNotificationRecipient(notificationResponse.CreateRecipientFromClientToServer());
+            if(!(string.IsNullOrEmpty(notificationResponse.UserId) && notificationResponse.EmployeeId==0))
+                AddNotificationRecipient(notificationResponse.CreateRecipientFromClientToServer());
             return true;
         }
 

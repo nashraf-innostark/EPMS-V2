@@ -61,6 +61,15 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Before.
+        /// </summary>
+        public static string Before {
+            get {
+                return ResourceManager.GetString("Before", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Before one day.
         /// </summary>
         public static string BeforeOneDay {
@@ -93,6 +102,15 @@ namespace EPMS.Models.Resources {
         public static string Company {
             get {
                 return ResourceManager.GetString("Company", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Days.
+        /// </summary>
+        public static string Days {
+            get {
+                return ResourceManager.GetString("Days", resourceCulture);
             }
         }
         
