@@ -1,4 +1,7 @@
 ﻿@using System.Configuration
+@{
+    var url = Session["compwebsiteurl"].ToString();
+}
 <!DOCTYPE html>
 @*<html dir="@EPMS.Web.Resources.Shared.Common.TextDirection">*@
 <html>
@@ -151,15 +154,14 @@
                 </ul>
             </li>
             @*@if (Session["RoleName"].ToString() == "Admin")
-            {*@
-                <li>
-                    <a href="~/CP/CompanyProfile/Detail">
-                        <i class="icon-photon target"></i>
-
-                    </a>
-                </li>
+                {*@
+            <li>
+                <a href="http://@url" target="_blank">
+                    <i class="icon-photon target"></i>
+                </a>
+            </li>
             @*}*@
-            
+
             <li>
                 <a href="~/Notification/Index">
                     <i class="icon-photon comment_alt2_stroke"></i>
