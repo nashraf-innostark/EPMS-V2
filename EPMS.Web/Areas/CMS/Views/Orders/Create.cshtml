@@ -58,15 +58,15 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid descriptionArea">
             <div class="span3">
                 <label class="control-label" for="description">@EPMS.Web.Resources.CMS.Order.Description</label>
             </div>
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(model => model.Orders.OrderDescription, new { @id = "OrderDescription", @class = "" })
-                    @Html.ValidationMessageFor(m => m.Orders.OrderDescription, String.Empty, new { @class = "required" })
                 </div>
+                <label id="descriptionValidation" style="margin-top: 5px; margin-bottom: 5px"></label>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -76,7 +76,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(model => model.Orders.OrderNotes, new { @id = "OrderNotes", @class = "" })
-                    @Html.ValidationMessageFor(m => m.Orders.OrderNotes, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -84,7 +83,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">@Model.BtnText</button>
+                    <button type="submit" class="btn" onclick="validateForm(event)">@Model.BtnText</button>
                 </div>
             </div>
         }
@@ -105,4 +104,25 @@
         CKEDITOR.replace('OrderDescription');
         CKEDITOR.replace('OrderNotes');
     });
+    function validateForm(event) {
+        var counter = 0;
+        var orderDescription = CKEDITOR.instances['OrderDescription'].getData();
+        var orderNotes = CKEDITOR.instances['OrderNotes'].getData();
+        if (orderDescription == "" || orderDescription == null) {
+            $("#descriptionValidation").text("Please enter Order description.");
+            $("#descriptionValidation").addClass("required");
+            counter ++;
+        } else {
+            $("#descriptionValidation").text("");
+            $("#descriptionValidation").removeClass("required");
+        }
+        if (counter > 0) {
+            $('html,body').animate({
+                scrollTop: $(".descriptionArea").offset().top
+            }, 'slow');
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    }
 </script>
