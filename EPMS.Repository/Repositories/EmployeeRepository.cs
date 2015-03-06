@@ -115,10 +115,5 @@ namespace EPMS.Repository.Repositories
             IEnumerable<string> empIds = DbSet.Where(x => list.Contains(x.EmployeeId)).Select(x => x.Email).ToList();
             return empIds;
         }
-
-        public IEnumerable<Employee> GetAdminEmployees(long menuId)
-        {
-            return DbSet.Where(x => x.AspNetUsers.Any(y => y.AspNetRoles.Any(z => z.MenuRights.Any(a => a.Menu_MenuId == menuId))));
-        }
     }
 }
