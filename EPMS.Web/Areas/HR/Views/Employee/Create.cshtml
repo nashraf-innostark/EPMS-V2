@@ -199,14 +199,17 @@
         <!--Drag And Drop Upload end-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MobileNumber">@EPMS.Web.Resources.HR.Employee.MobNumber</label>
+                <label class="control-label" for="MobileNumber">@EPMS.Web.Resources.HR.Employee.MobNumber<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="Only numbers allowed"><i class="icon-photon info-circle"></i></a></label>
             </div>
-            <div class="span9">
+            <div class="span9 mobileNo">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
+            @*<div class="span9">
+                    <label id="mobileNoValidation"></label>
+                </div>*@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
@@ -1031,6 +1034,18 @@
             $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
             $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
         }
+        var specialKeys = new Array();
+        specialKeys.push(8);
+        $("#MobileNumber").keyup(function (e) {
+            var keyCode = e.which ? e.which : e.keyCode;
+            if ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105) || specialKeys.indexOf(keyCode) != -1) {
+            } else {
+                $("#MobileNumber").val("");
+                $("#MobileNumber").focus();
+                return false;
+            }
+            return true;
+        });
     });
     function ConvertDates(dateTobeChanged, fromCalender, toCalender) {
         var calender = $.calendars.instance(fromCalender);
@@ -1038,32 +1053,5 @@
         calender = $.calendars.instance(toCalender);
         var changedDate = calender.fromJD(dateToBeChanged.toJD());
         return calender.formatDate("dd/mm/yyyy", changedDate);
-    }
-    function validateForm(event) {
-        var listSimple = $('.toBeRequired');
-        var counter = 0;
-        for (var i = 0; i < (listSimple.length) ; i++) {
-            var control = listSimple[i];
-            var fieldvalue = $(control).val();
-            if (fieldvalue == null || fieldvalue == "") {
-                $(control).prop('placeholder', 'Required');
-                counter++;
-                $(control).addClass("Error");
-
-            } else {
-                $(control).removeClass("Error");
-            }
-        }
-        if (counter > 0) {
-            //implementing focus back to error
-            if ($(".Error").length > 0) {
-                var divId = $(".Error")[0].id;
-                if ($("#" + divId).length > 0)
-                    $("#" + divId).focus();
-                event.preventDefault();
-                return false;
-            }
-        }
-        return true;
     }
 </script>

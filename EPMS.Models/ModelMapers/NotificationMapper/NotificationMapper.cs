@@ -11,6 +11,38 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
     {
         public static NotificationResponse CreateFromServerToClient(this Notification notification)
         {
+            NotificationResponse response=new NotificationResponse
+            {
+                NotificationId = notification.NotificationId,
+                TitleA = notification.TitleA,
+                TitleE = notification.TitleE,
+                CategoryId = notification.CategoryId,
+                SubCategoryId = Convert.ToInt64(notification.SubCategoryId),
+                ItemId = Convert.ToInt64(notification.ItemId),
+                AlertBefore = notification.AlertBefore,
+                AlertDateType = notification.AlertDateType,
+                AlertDate = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
+               
+                IsEmailSent = notification.IsEmailSent,
+                IsSMSsent = notification.IsSMSsent,
+
+                RecCreatedBy = notification.RecCreatedBy,
+                RecCreatedDate = notification.RecCreatedDate,
+                RecLastUpdatedBy = notification.RecLastUpdatedBy,
+                RecLastUpdatedDate = notification.RecLastUpdatedDate
+            };
+            if (notification.NotificationRecipients.FirstOrDefault() != null)
+            {
+                response.UserId = notification.NotificationRecipients.FirstOrDefault().UserId;
+                response.MobileNo = notification.NotificationRecipients.FirstOrDefault().MobileNo;
+                response.Email = notification.NotificationRecipients.FirstOrDefault().Email;
+                response.ReadStatus = notification.NotificationRecipients.FirstOrDefault().IsRead;
+                response.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
+            }
+            return response;
+        }
+        public static NotificationResponse CreateDetailsFromServerToClient(this Notification notification, NotificationRecipient notificationRecipient)
+        {
             return new NotificationResponse
             {
                 NotificationId = notification.NotificationId,
@@ -25,7 +57,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 UserId = notification.NotificationRecipients.FirstOrDefault().UserId,
                 MobileNo = notification.NotificationRecipients.FirstOrDefault().MobileNo,
                 Email = notification.NotificationRecipients.FirstOrDefault().Email,
-                ReadStatus = notification.NotificationRecipients.FirstOrDefault().IsRead,
+                ReadStatus = notificationRecipient.IsRead,
                 EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId),
 
                 IsEmailSent = notification.IsEmailSent,
@@ -50,7 +82,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertBefore = notification.AlertBefore,
                 AlertDateType = notification.AlertDateType,
                 AlertDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")),
-                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(notification.AlertBefore),
+                AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-notification.AlertBefore),
                 SystemGenerated = notification.SystemGenerated,
                 ForAdmin = notification.ForAdmin,
                 IsEmailSent = notification.IsEmailSent,
@@ -80,12 +112,12 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             notificationListResponse.NotificationId = notification.NotificationId;
             notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;      
             notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
-            if (notification.NotificationRecipients.Count == 1)
+            if (notification.NotificationRecipients.Any())
             {
                 if (notification.NotificationRecipients.FirstOrDefault().EmployeeId > 0)
                 {
                     var employee = notification.NotificationRecipients.FirstOrDefault().Employee;
-                    notificationListResponse.EmployeeId = Convert.ToInt64(notification.NotificationRecipients.FirstOrDefault().EmployeeId);
+                    notificationListResponse.EmployeeId = employee.EmployeeId;
                     notificationListResponse.MobileNo = employee.EmployeeMobileNum;
                     notificationListResponse.Email = employee.Email;
                     var employeeFullNameE =
@@ -93,13 +125,13 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                         " " +
                         employee.EmployeeMiddleNameE +
                         " " +
-                        employee.EmployeeFirstNameE;
+                        employee.EmployeeLastNameE;
                     var employeeFullNameA =
                         employee.EmployeeFirstNameA +
                         " " +
                         employee.EmployeeMiddleNameA +
                         " " +
-                        employee.EmployeeFirstNameA;
+                        employee.EmployeeLastNameA;
                     notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? employeeFullNameE : employeeFullNameA;
                 }
                 else if (notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer!=null)
@@ -123,9 +155,68 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
             }
             switch (notification.AlertBefore)
             {
-                case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
-                case 2: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
-                case 3: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                case 30: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
+                case 7: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
+                case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                default: notificationListResponse.AlertTime = Resources.Notification.Before + " " + notification.AlertBefore + " " + Resources.Notification.Days; break;
+            }
+
+            return notificationListResponse;
+        }
+        public static NotificationListResponse CreateFromServerToClientListWithRecipient(this Notification notification, string userId, long employeeId)
+        {
+            NotificationListResponse notificationListResponse = new NotificationListResponse();
+            notificationListResponse.NotificationId = notification.NotificationId;
+            notificationListResponse.NotificationName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? notification.TitleE : notification.TitleA;
+            notificationListResponse.AlertEndTime = notification.AlertDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
+            if (notification.NotificationRecipients.Any())
+            {
+                if (notification.NotificationRecipients.FirstOrDefault().EmployeeId > 0)
+                {
+                    var employee = notification.NotificationRecipients.FirstOrDefault().Employee;
+                    notificationListResponse.EmployeeId = employee.EmployeeId;
+                    notificationListResponse.MobileNo = employee.EmployeeMobileNum;
+                    notificationListResponse.Email = employee.Email;
+                    var employeeFullNameE =
+                        employee.EmployeeFirstNameE +
+                        " " +
+                        employee.EmployeeMiddleNameE +
+                        " " +
+                        employee.EmployeeLastNameE;
+                    var employeeFullNameA =
+                        employee.EmployeeFirstNameA +
+                        " " +
+                        employee.EmployeeMiddleNameA +
+                        " " +
+                        employee.EmployeeLastNameA;
+                    notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? employeeFullNameE : employeeFullNameA;
+                }
+                else if (notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer != null)
+                {
+                    notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer.CustomerMobile;
+                    notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Email;
+                }
+                if (notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId)!=null)
+                    notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault(x=>x.UserId==userId||x.EmployeeId==employeeId).IsRead ? Resources.Notification.Yes : Resources.Notification.No;
+                else
+                    notificationListResponse.Notified = Resources.Notification.No;
+            }
+
+            switch (notification.CategoryId)
+            {
+                case 1: notificationListResponse.CategoryName = Resources.Notification.Company; break;
+                case 2: notificationListResponse.CategoryName = Resources.Notification.Documents; break;
+                case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
+                case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
+                case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
+                default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
+            }
+            switch (notification.AlertBefore)
+            {
+                case 30: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
+                case 7: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
+                case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                default: notificationListResponse.AlertTime = Resources.Notification.Before + " " + notification.AlertBefore + " " + Resources.Notification.Days; break;
             }
 
             return notificationListResponse;

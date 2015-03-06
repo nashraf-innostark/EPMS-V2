@@ -115,7 +115,8 @@ namespace EPMS.Web.Controllers
         [SiteAuthorize(PermissionKey = "NotificationDetails")]
         public ActionResult Details(long? id)
         {
-            NotificationViewModel notificationViewModel = notificationService.LoadNotificationDetailsAndBaseData(id,User.Identity.GetUserId());
+            long employId = Session["EmployeeID"] != null ? Convert.ToInt64(Session["EmployeeID"].ToString()) : 0;
+            NotificationViewModel notificationViewModel = notificationService.LoadNotificationDetailsAndBaseData(id, User.Identity.GetUserId(), employId);
             if(notificationViewModel.NotificationResponse.NotificationId>0)
                 return View(notificationViewModel);
             return RedirectToAction("Index");

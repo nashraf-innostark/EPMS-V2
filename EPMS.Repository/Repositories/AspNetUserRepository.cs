@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -42,6 +43,11 @@ namespace EPMS.Repository.Repositories
             if (user != null)
                 return user.Id;
             return "";
+        }
+
+        public IEnumerable<AspNetUser> GetAdminUsers(long menuId)
+        {
+            return DbSet.Where(y => y.AspNetRoles.Any(z => z.MenuRights.Any(a => a.Menu_MenuId == menuId)));
         }
     }
 }
