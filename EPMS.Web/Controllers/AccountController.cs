@@ -447,9 +447,17 @@ namespace IdentitySample.Controllers
                 var empId = AspNetUserService.GetAllUsers().Select(x => x.EmployeeId);
                 if (empId.Contains(model.SelectedEmployee))
                 {
-                    model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                    model.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
                     model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
                     TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                    return View(model);
+                }
+                var userName = AspNetUserService.GetAllUsers().Select(x => x.UserName);
+                if (userName.Contains(model.UserName))
+                {
+                    model.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
+                    model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
+                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.UsernameError, IsError = true };
                     return View(model);
                 }
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
@@ -473,7 +481,7 @@ namespace IdentitySample.Controllers
                 }
             }
             // If we got this far, something failed, redisplay form
-            model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+            model.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
             TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);

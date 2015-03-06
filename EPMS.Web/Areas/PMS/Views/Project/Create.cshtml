@@ -89,7 +89,6 @@
                 <div class="span2">
                     <div class="controls">
                         @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                        @Html.ValidationMessageFor(m => m.Project.CustomerId, "", new { @class = "required" })
                     </div>
                 </div>
 
@@ -108,7 +107,6 @@
                         {
                             @Html.DropDownListFor(m => m.Project.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                         }
-                        @Html.ValidationMessageFor(m => m.Project.OrderId, "", new { @class = "required" })
                     </div>
                 </div>
 

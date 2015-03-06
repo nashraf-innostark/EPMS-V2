@@ -66,7 +66,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.Meeting.RelatedProject, new { id = "RelatedProject", @class = "disableOnDate" })
-                    @Html.ValidationMessageFor(m => m.Meeting.RelatedProject, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -113,42 +112,36 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { id = "attendee1", @class = "disableOnDate", @placeholder = "Attendee 1" })
-                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName1, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
                         @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { id = "email1", @class = "disableOnDate", @placeholder = "Email" })
-                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail1, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { id = "attendee2", @class = "disableOnDate", @placeholder = "Attendee 2" })
-                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName2, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
                         @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { id = "email2", @class = "disableOnDate", @placeholder = "Email" })
-                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail2, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { id = "attendee3", @class = "disableOnDate", @placeholder = "Attendee 3" })
-                    @Html.ValidationMessageFor(m => m.Meeting.AttendeeName3, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
                         @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { id = "email3", @class = "disableOnDate", @placeholder = "Email" })
-                        @Html.ValidationMessageFor(m => m.Meeting.AttendeeEmail3, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
@@ -178,7 +171,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Meeting.Agenda, new { id = "Agenda", @class = "tbdisable" })
-                    @Html.ValidationMessageFor(m => m.Meeting.Agenda, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -189,7 +181,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Meeting.AgendaAr, new { id = "AgendaAr", @class = "tbdisable" })
-                    @Html.ValidationMessageFor(m => m.Meeting.AgendaAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -200,7 +191,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Meeting.Discussion, new { id = "Discussion", @class = "tbdisable" })
-                    @Html.ValidationMessageFor(m => m.Meeting.Discussion, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -211,7 +201,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Meeting.DiscussionAr, new { id = "DiscussionAr", @class = "tbdisable" })
-                    @Html.ValidationMessageFor(m => m.Meeting.DiscussionAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -222,7 +211,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Meeting.Decisions, new { id = "Decisions", @class = "tbdisable" })
-                    @Html.ValidationMessageFor(m => m.Meeting.Decisions, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -233,7 +221,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Meeting.DecisionsAr, new { id = "DecisionsAr", @class = "tbdisable" })
-                    @Html.ValidationMessageFor(m => m.Meeting.DecisionsAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>

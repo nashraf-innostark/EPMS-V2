@@ -104,5 +104,14 @@ namespace EPMS.Web.Resources.HR {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username has already being taken. Please try another..
+        /// </summary>
+        internal static string UsernameError {
+            get {
+                return ResourceManager.GetString("UsernameError", resourceCulture);
+            }
+        }
     }
 }
