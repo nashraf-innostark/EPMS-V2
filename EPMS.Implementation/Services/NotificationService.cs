@@ -553,13 +553,10 @@ namespace EPMS.Implementation.Services
                                        employee.EmployeeLastNameE;
                 var employeeFullNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
                                        employee.EmployeeLastNameA;
-                if (employee != null)
-                {
-                    fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin ? employeeFullNameE : "Your");
-                    fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
-                    fileText = fileText.Replace("[IqamaExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
-                    fileText = fileText.Replace("[PassportExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
-                }
+                fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin ? employeeFullNameE+"'s" : "Your");
+                fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
+                fileText = fileText.Replace("[AlertDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
+                fileText = fileText.Replace("[AlertDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
             }
             if (notificationResponse.NotificationCode == "30")//Employee Request
             {
