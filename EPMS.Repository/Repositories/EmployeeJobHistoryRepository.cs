@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using Microsoft.Practices.Unity;
@@ -23,6 +25,11 @@ namespace EPMS.Repository.Repositories
         protected override IDbSet<EmployeeJobHistory> DbSet
         {
             get { return db.EmployeeJobHistory; }
+        }
+
+        public IEnumerable<EmployeeJobHistory> GetJobHistoryByEmployeeId(long empId)
+        {
+            return DbSet.Where(x => x.EmployeeId == empId);
         }
 
         #endregion

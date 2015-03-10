@@ -9,9 +9,11 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.PMS;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
@@ -161,8 +163,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                     }
                 };
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                // Get Employee
-                viewModel.EmployeeViewModel.Employee = EmployeeService.FindEmployeeById(id).CreateFromServerToClient();
+                // Get Employee Along Job History
+                EmployeeResponse employeeResponse = EmployeeService.GetEmployeeAlongJobHistory(id);
+                viewModel.EmployeeViewModel.Employee = employeeResponse.Employee.CreateFromServerToClient();
                 // Get Allowances
                 var allowance =
                     AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId, DateTime.Now);
@@ -171,6 +174,38 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.EmployeeViewModel.Allowance = allowance.CreateFromServerToClient();
                     viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
                 }
+                viewModel.EmployeeViewModel.JobHistories = employeeResponse.JobHistories.Select(x=>x.CreateFromServerToClientForJobHistory()).ToList();
+                //if (employeeResponse.JobHistory.EmployeeJobHistory.Any())
+                //{
+                //    for (int i=0; i< employeeResponse.JobHistory.EmployeeJobHistory.Count; i++)
+                //    {
+                //        EmployeeJobHistory jobs = new EmployeeJobHistory();
+                //        jobs.JobTitle = employeeResponse.JobHistory.EmployeeJobHistory[i].JobTitle.JobTitleNameE;
+                //        if (i == 0)
+                //        {
+                //            jobs.From = Convert.ToDateTime(employeeResponse.Employee.RecCreatedDt)
+                //                .ToString("dd/MM/yyyy", new CultureInfo("en"));
+                //        }
+                //        else
+                //        {
+                //            jobs.From = Convert.ToDateTime(employeeResponse.JobHistory.EmployeeJobHistory[i -1 ].RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+                //        }
+                //        if (i == employeeResponse.JobHistory.EmployeeJobHistory.Count)
+                //        {
+                //            jobs.To = DateTime.Now.ToShortDateString();
+                //        }
+                //        else
+                //        {
+                //            jobs.To = employeeResponse.JobHistory.EmployeeJobHistory[i].RecCreatedDate.ToShortDateString();
+                //        }
+                //        jobs.BasicSalary = employeeResponse.JobHistory.EmployeeJobHistory[i].JobTitle.BasicSalary ?? 0;
+                //        viewModel.EmployeeViewModel.JobHistories.Add(jobs);
+                //    }
+                //}
+
+
+
+
                 // Set Employee Name for Header
                 viewModel.EmployeeViewModel.Employee.EmployeeFullNameE =
                     viewModel.EmployeeViewModel.Employee.EmployeeFirstNameE + " " +
@@ -243,6 +278,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     viewModel.TaskEmployees = employeeTasks;
                 }
+
                 return View(viewModel);
             }
             return null;

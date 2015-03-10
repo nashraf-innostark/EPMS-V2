@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using EPMS.Models.DomainModels;
 using EPMS.Web.Models;
 using Employee = EPMS.Models.DomainModels.Employee;
 
@@ -80,6 +81,7 @@ namespace EPMS.Web.ModelMappers
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new Models.JobTitle()),
                 EmployeeFullNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
                 EmployeeFullNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
+                PrevJobTitleId = (source.JobTitle != null) ? source.JobTitle.JobTitleId : 0,
             };
 
         }
@@ -223,6 +225,19 @@ namespace EPMS.Web.ModelMappers
             string path = (ConfigurationManager.AppSettings["EmployeeImage"] + imageName);
 
             return "<img  data-mfp-src=" + path + " src=" + path + " class='mfp-image image-link cursorHand' height=70 width=100 />";
+        }
+
+        public static Models.EmployeeJobHistory CreateFromServerToClientForJobHistory(this JobHistory source)
+        {
+            return new Models.EmployeeJobHistory
+            {
+                JobTitle = source.JobTitle,
+                BasicSalary = source.BasicSalary,
+                SalaryWithAllowances = source.SalaryWithAllowances,
+                From = source.From,
+                To = source.To,
+                TotalSalaryReceived = source.TotalSalaryReceived
+            };
         }
     }
 }

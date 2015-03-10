@@ -8,9 +8,14 @@ namespace EPMS.Models.ResponseModels
         public EmployeeResponse()
         {
             Employeess = new List<Employee>();
+            JobHistories = new List<JobHistory>();
         }
 
         public IEnumerable<Employee> Employeess { get; set; }
+        public Employee Employee { get; set; }
+        public IList<JobHistory> JobHistories { get; set; }
+
+        //public EmployeeJobHistoryResponse JobHistory { get; set; }
 
         /// <summary>
         /// Total Count

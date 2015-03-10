@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using EPMS.Repository.BaseRepository;
@@ -31,14 +32,22 @@ namespace EPMS.Repository.Repositories
 
         #region Public
 
-        public Allowance FindForAllownce(long employeeId, DateTime currTime)
+        public Allowance FindAllownce(long employeeId, DateTime currTime)
         {
             var allowance = DbSet.OrderByDescending(a => a.AllowanceDate).FirstOrDefault(allow => (allow.Employee.EmployeeId == employeeId) && (allow.AllowanceDate <= currTime));
             return allowance;
         }
+        public IEnumerable<Allowance> FindAllownceFromTo(long employeeId, DateTime from, DateTime to)
+        {
+            var allowance = DbSet.Where(x => x.EmployeeId == employeeId && x.AllowanceDate >= from && x.AllowanceDate <= to);
+            return allowance;
+        }
+
+        public Allowance FindLastAllownce(long employeeId)
+        {
+            return DbSet.Where(x=>x.EmployeeId == employeeId).OrderByDescending(x => x.AllowanceDate).FirstOrDefault();
+        }
 
         #endregion
-
-
     }
 }

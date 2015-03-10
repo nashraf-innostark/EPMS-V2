@@ -72,6 +72,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Email address is required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
+        public long PrevJobTitleId { get; set; }
         public bool? IsActivated { get; set; }
 
         public IEnumerable<Allowance> Allowances { get; set; }
