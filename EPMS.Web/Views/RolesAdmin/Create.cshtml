@@ -44,19 +44,37 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Name, String.Empty, new { @class = "required" })
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", id="roleName" })
+                    <label id="roleValidation"></label>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">Create</button>
+                <button type="submit" class="btn" onclick="validateRole(event)">Create</button>
             </div>
         </div>
     </div>
 }
 
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
+<script type="text/javascript">
+    function validateRole(event) {
+        var roleName = $("#roleName").val().toLowerCase();
+        if (roleName == "" || roleName == null) {
+            $("#roleValidation").text("Please enter role name.");
+            $("#roleValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        }
+        if (roleName == "customer") {
+            $("#roleValidation").text("Please enter role other than Customer.");
+            $("#roleValidation").addClass("required");
+            event.preventDefault();
+            return false;
+        } else {
+            $("#roleValidation").text("");
+            $("#roleValidation").removeClass("required");
+            return true;
+        }
+    }
+</script>

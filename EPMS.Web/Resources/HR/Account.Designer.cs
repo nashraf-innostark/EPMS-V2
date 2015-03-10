@@ -104,5 +104,23 @@ namespace EPMS.Web.Resources.HR {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Limit has been reached. Please renew your License to create new user..
+        /// </summary>
+        internal static string UserLimitMessage {
+            get {
+                return ResourceManager.GetString("UserLimitMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username has already being taken. Please try another..
+        /// </summary>
+        internal static string UsernameError {
+            get {
+                return ResourceManager.GetString("UsernameError", resourceCulture);
+            }
+        }
     }
 }

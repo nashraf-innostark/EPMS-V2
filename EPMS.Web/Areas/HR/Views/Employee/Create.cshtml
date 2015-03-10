@@ -207,9 +207,6 @@
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
-            @*<div class="span9">
-                    <label id="mobileNoValidation"></label>
-                </div>*@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
@@ -857,8 +854,7 @@
                 if ($("#" + divId).length > 0) {
                     $('html,body').animate({
                         scrollTop: $(".jobTitleDDL").offset().top
-                    },
-        'slow');
+                    }, 'slow');
                     event.preventDefault();
                     return false;
                 }

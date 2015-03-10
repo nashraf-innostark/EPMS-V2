@@ -132,4 +132,10 @@
   <data name="UpdateUser" xml:space="preserve">
     <value>User has been Updated</value>
   </data>
+  <data name="UserLimitMessage" xml:space="preserve">
+    <value>User Limit has been reached. Please renew your License to create new user.</value>
+  </data>
+  <data name="UsernameError" xml:space="preserve">
+    <value>Username has already being taken. Please try another.</value>
+  </data>
 </root>

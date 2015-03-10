@@ -21,6 +21,7 @@ namespace EPMS.Web.Models
         [Required]
         [Display(Name = "Installment Amount")]
         public double? InstallmentAmount { get; set; }
+        [Required]
         [Display(Name = "First Installment Date")]
         public string FirstInstallmentDate { get; set; }
         [Display(Name = "Last Installment Date")]

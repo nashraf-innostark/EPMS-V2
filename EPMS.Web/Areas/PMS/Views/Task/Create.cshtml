@@ -5,6 +5,7 @@
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] module = (string[])Session["UserModules"];
 }
 
 <!-- Navigation Bar -->
@@ -56,24 +57,27 @@
         }
     }
     <div class="container-fluid">
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @if (direction == "ltr")
-                    {
-                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
-                    }
-                    @if (direction == "rtl")
-                    {
-                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
-                    }
-                    <label id="customerValidation"></label>
+        @if (module.Contains("Customer Service") || module.Contains("CS"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @if (direction == "ltr")
+                        {
+                            @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
+                        }
+                        @if (direction == "rtl")
+                        {
+                            @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
+                        }
+                        <label id="customerValidation"></label>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="">@EPMS.Web.Resources.PMS.Task.ProjectName</label>
@@ -151,7 +155,7 @@
                 </div>
             </div>
         </div>
-        <div id="Date_Picker" class="control-group row-fluid">
+        <div id="Date_Picker" class="control-group row-fluid startDate">
             <div class="span3">
                 <label class="control-label" for="TaskStartDate">
                     @EPMS.Web.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
@@ -159,14 +163,13 @@
             </div>
             <div class="controls span4">
                 @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
-                @*@Html.ValidationMessageFor(m => m.ProjectTask.StartDate, String.Empty, new { @class = "required" })*@
                 <label id="projectStartDateValidation"></label>
             </div>
             <div class="controls span4">
                 @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
             </div>
         </div>
-        <div id="Date_Picker2" class="control-group row-fluid">
+        <div id="Date_Picker2" class="control-group row-fluid endDate">
             <div class="span3">
                 <label class="control-label" for="TaskEndDate">
                     @EPMS.Web.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
@@ -174,7 +177,6 @@
             </div>
             <div class="controls span4">
                 @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly" })
-                @*@Html.ValidationMessageFor(m => m.ProjectTask.EndDate, String.Empty, new { @class = "required" })*@
                 <label id="projectEndDateValidation"></label>
             </div>
             <div class="controls span4">
@@ -504,14 +506,26 @@
         if ($("#TaskStartDate").val() == "" || $("#TaskStartDate").val() == null) {
             $("#projectStartDateValidation").text("Please select Task start date");
             $("#projectStartDateValidation").addClass("required");
+            $('html,body').animate({
+                scrollTop: $(".startDate").offset().top
+            }, 'slow');
             event.preventDefault();
             return false;
+        } else {
+            $("#projectStartDateValidation").text("");
+            $("#projectStartDateValidation").removeClass("required");
         }
         if ($("#TaskEndDate").val() == "" || $("#TaskEndDate").val() == null) {
             $("#projectEndDateValidation").text("Please select Task delivery date");
             $("#projectEndDateValidation").addClass("required");
+            $('html,body').animate({
+                scrollTop: $(".endDate").offset().top
+            }, 'slow');
             event.preventDefault();
             return false;
+        } else {
+            $("#projectEndDateValidation").text("");
+            $("#projectEndDateValidation").removeClass("required");
         }
         // start date
         var tempProj = $("#projectStartDate").val().split('/');
@@ -528,6 +542,9 @@
             $("#TaskStartDateAr").val("");
             $("#projectStartDateValidation").text("Please select Task start date according to Project start and delivery date.(" + $("#projectStartDate").val() + "|" + $("#projectEndDate").val() + ")");
             $("#projectStartDateValidation").addClass("required");
+            $('html,body').animate({
+                scrollTop: $(".startDate").offset().top
+            }, 'slow');
             event.preventDefault();
             return false;
         } else {
@@ -539,6 +556,9 @@
             $("#TaskEndDateAr").val("");
             $("#projectEndDateValidation").text("Please select Task delivery date according to Project start and delivery date.(" + $("#projectStartDate").val() + "|" + $("#projectEndDate").val() + ")");
             $("#projectEndDateValidation").addClass("required");
+            $('html,body').animate({
+                scrollTop: $(".startDate").offset().top
+            }, 'slow');
             event.preventDefault();
             return false;
         }
@@ -570,8 +590,15 @@
                 $("#TaskStartDateAr").val("");
                 $("#projectStartDateValidation").text("Please select Task start date according to Pre-Requiaite task end date.(" + $("#" + selectedTasksIds[k]).val() + ")");
                 $("#projectStartDateValidation").addClass("required");
+                $('html,body').animate({
+                    scrollTop: $(".startDate").offset().top
+                }, 'slow');
                 event.preventDefault();
                 return false;
+            }
+            else {
+                $("#projectStartDateValidation").text("");
+                $("#projectStartDateValidation").removeClass("required");
             }
         }
         if (taskStartDate > taskEndDate) {
@@ -579,8 +606,14 @@
             $("#TaskEndDateAr").val("");
             $("#projectEndDateValidation").text("Please select Task delivery date after Task start date.");
             $("#projectEndDateValidation").addClass("required");
+            $('html,body').animate({
+                scrollTop: $(".startDate").offset().top
+            }, 'slow');
             event.preventDefault();
             return false;
+        } else {
+            $("#projectEndDateValidation").text("");
+            $("#projectEndDateValidation").removeClass("required");
         }
         @*var reqTasksList = '@Html.Raw(Json.Encode(requisiteTasks))';
         var parsed = JSON.parse(reqTasksList);

@@ -101,7 +101,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Request.RequestDateString, new { @class = "dateFormatter", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Request.RequestDateString, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -125,7 +124,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextAreaFor(model => model.RequestDetail.RequestDesc, new { @class = "RequestDescDisable", @id = "RequestDescCK" })
-                    @Html.ValidationMessageFor(model => model.RequestDetail.RequestDesc, "", new { @class = "required" })
                 </div>
             </div>
         </div>
