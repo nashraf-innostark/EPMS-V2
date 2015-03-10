@@ -132,6 +132,9 @@
   <data name="UpdateUser" xml:space="preserve">
     <value>تم تحديث المستخدم</value>
   </data>
+  <data name="UserLimitMessage" xml:space="preserve">
+    <value>وقد تم التوصل إلى حد المستخدم. يرجى تجديد الترخيص الخاص بك لإنشاء مستخدم جديد.</value>
+  </data>
   <data name="UsernameError" xml:space="preserve">
     <value>وقد سبق أن اتخذت اسم المستخدم. يرجى المحاولة مرة أخرى.</value>
   </data>

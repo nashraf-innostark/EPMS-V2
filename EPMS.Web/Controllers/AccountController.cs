@@ -218,7 +218,7 @@ namespace IdentitySample.Controllers
                         SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                             shouldLockout: false);
 
-                
+
 
 
                 switch (result)
@@ -230,7 +230,7 @@ namespace IdentitySample.Controllers
                             var userToCheck = AspNetUserService.FindById(user.Id);
                             if (userToCheck.Employee != null)
                             {
-                                if (userToCheck.Employee.IsActivated==false)
+                                if (userToCheck.Employee.IsActivated == false)
                                 {
                                     ModelState.AddModelError("", "Your account has been deactivated. Please contact your Administrator.");
                                     AuthenticationManager.SignOut();
@@ -238,7 +238,7 @@ namespace IdentitySample.Controllers
                                     return View(model);
                                 }
                             }
-                            
+
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Index", "Dashboard");
                             return RedirectToLocal(returnUrl);
@@ -274,48 +274,45 @@ namespace IdentitySample.Controllers
         public ActionResult Create(string userName)
         {
             RegisterViewModel Result = new RegisterViewModel();
-            //// Check allowed no of users
-            //// check license
-            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            //var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            //var splitLicenseKey = LicenseKey.Split('|');
-            //var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
-            //// get count od users
-            //var countOfUsers = UserManager.Users.Count();
-            //if (countOfUsers < NoOfUsers)
-            //{
-            if (!string.IsNullOrEmpty(userName))
+            // Check allowed no of users
+            // check license
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = LicenseKey.Split('|');
+            var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
+            // get count of users
+            var countOfUsers = UserManager.Users.Count();
+            if (countOfUsers < NoOfUsers)
             {
-                AspNetUser userToEdit = UserManager.FindByName(userName);
-                Result = new RegisterViewModel
+                if (!string.IsNullOrEmpty(userName))
                 {
-                    UserId = userToEdit.Id,
-                    SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
-                    SelectedEmployee = userToEdit.EmployeeId ?? 0,
-                    UserName = userToEdit.UserName,
-                    Email = userToEdit.Email,
-                    //oldRole = userToEdit.AspNetRoles.ToList()[0].Id
-                };
-                //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-                Result.Roles =
-                    RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
+                    AspNetUser userToEdit = UserManager.FindByName(userName);
+                    Result = new RegisterViewModel
+                    {
+                        UserId = userToEdit.Id,
+                        SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
+                        SelectedEmployee = userToEdit.EmployeeId ?? 0,
+                        UserName = userToEdit.UserName,
+                        Email = userToEdit.Email,
+                    };
+                    Result.Roles =
+                        RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
+                    Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
+                    return View(Result);
+                }
+                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
                 Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
                 return View(Result);
             }
-            //oResult.Roles = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>()).Roles.ToList();
-            Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
-            Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
-            return View(Result);
-            //}
-            //else
-            //{
-            //    ViewBag.UserLimitReach = "Yes";
-            //    TempData["message"] = new MessageViewModel { Message = "User Limit has reached. Please renew your License to create more users", IsError = true };
-            //    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
-            //    Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-            //    return View(Result);
-            //}
-            //return null;
+            else
+            {
+                ViewBag.UserLimitReach = "Yes";
+                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.UserLimitMessage, IsError = true };
+                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+                Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+                return View(Result);
+            }
+            return null;
         }
 
 
@@ -500,7 +497,7 @@ namespace IdentitySample.Controllers
                 "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget",
                 "MyTasksWidget"
             };
-            string[] customerWidgets = {"ComplaintsWidget", "OrderWidget", "ProjectWidget"};
+            string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
 
             string[] allWidgets =
             {
@@ -608,7 +605,7 @@ namespace IdentitySample.Controllers
             EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
             TempData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
 
-            
+
 
             //custID=ser.add(customer);
             #endregion

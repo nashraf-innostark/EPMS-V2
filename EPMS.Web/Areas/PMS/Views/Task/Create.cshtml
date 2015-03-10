@@ -5,6 +5,7 @@
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] module = (string[])Session["UserModules"];
 }
 
 <!-- Navigation Bar -->
@@ -56,24 +57,27 @@
         }
     }
     <div class="container-fluid">
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @if (direction == "ltr")
-                    {
-                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
-                    }
-                    @if (direction == "rtl")
-                    {
-                        @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
-                    }
-                    <label id="customerValidation"></label>
+        @if (module.Contains("Customer Service") || module.Contains("CS"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @if (direction == "ltr")
+                        {
+                            @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Client" })
+                        }
+                        @if (direction == "rtl")
+                        {
+                            @Html.DropDownListFor(model => model.ProjectTask.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Client" })
+                        }
+                        <label id="customerValidation"></label>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="">@EPMS.Web.Resources.PMS.Task.ProjectName</label>
