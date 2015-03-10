@@ -128,6 +128,7 @@
     <Compile Include="DomainModels\EmployeeJobHistory.cs" />
     <Compile Include="DomainModels\EmployeeRequest.cs" />
     <Compile Include="DomainModels\JobApplicant.cs" />
+    <Compile Include="DomainModels\JobHistory.cs" />
     <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
     <Compile Include="DomainModels\JobTitleHistory.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="ResponseModels\AvailableOrdersDDL.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
+    <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />

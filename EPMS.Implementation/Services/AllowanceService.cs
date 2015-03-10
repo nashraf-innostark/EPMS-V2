@@ -28,7 +28,7 @@ namespace EPMS.Implementation.Services
         }
         public Allowance FindByEmpIdDate(long empId, DateTime currTime)
         {
-            return repository.FindForAllownce(empId,currTime);
+            return repository.FindAllownce(empId,currTime);
         }
 
         public IEnumerable<Allowance> GetAll()

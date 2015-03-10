@@ -12,8 +12,10 @@ namespace EPMS.Web.ViewModels.Employee
             Allowance = new Allowance();
             OldAllowance = new Allowance();
             SearchRequest = new EmployeeSearchRequset();
+            JobHistories = new List<EmployeeJobHistory>();
         }
         public Models.Employee Employee { get; set; }
+        public IList<EmployeeJobHistory> JobHistories { get; set; }
         public IEnumerable<Models.Employee> EmployeeList { get; set; }
         public Models.Allowance Allowance { get; set; }
         public Models.Allowance OldAllowance { get; set; }
