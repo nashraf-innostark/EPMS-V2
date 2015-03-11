@@ -191,9 +191,10 @@
                 menuIds: widgets
             },
             success: function (data) {
+                // Add new items in Quick Launch (append html)
                 for (var item in data)
                 {
-                    var liHtml = "<li id='" + data[item].MenuId + "'><a href=/" + data[item].Url + "><img src=/Images/photon/icons/" + data[item].ImagePath + " alt='Quick Launch Icon' data-original-title title><p>" + data[item].Title + "</p></a></li>";
+                    var liHtml = "<li class='liItem' id=Menu_" + data[item].MenuId + "><span id='userMenuId' style='display: none'>"+ data[item].MenuId + "'</span><a href=" +siteURL + "/"+ data[item].Url + " data-toggle='modal'><img src="+siteURL+"/Images/photon/icons/" + data[item].ImagePath + " alt='predefined'></a><p>" + data[item].Title + "</p></li>";
                     $(liHtml).insertBefore('#addItemButton');
                 }
                 var vals = $(".predefined-icons li");

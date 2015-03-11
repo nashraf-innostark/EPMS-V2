@@ -87,7 +87,8 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble })
-                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })
+                    <label id="usernameValidation"></label>
+                    @*@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })*@
                 </div>
             </div>
         </div>
@@ -122,7 +123,8 @@
                 <div class="span9">
                     <div class="controls">
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password", id = "confirmPassword" })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })
+                        <label id="confirmPasswordValidate"></label>
+                        @*@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })*@
                     </div>
                 </div>
             </div>
@@ -151,7 +153,7 @@
     $(function () {
 
         $("[readonly='false']").removeAttr("readonly");
-        $("#selectedEmployee").on("change", function() {
+        $("#selectedEmployee").on("change", function () {
             var empList = '@Html.Raw(Json.Encode(Model.EmployeesDDL))';
             var parsed = JSON.parse(empList);
             var empId = parseInt($(this).val());
@@ -164,22 +166,37 @@
     });
     function validateUserPassword(event) {
         var userPassword = $("#password").val();
+        var confirmpassword = $("#confirmPassword").val();
+        var username = $("#UserName").val();
         var selectedRole = $("#roleId").val();
         var selectedEmployee = $("#selectedEmployee").val();
-        var model = @(Model.UserId == null ? "true" : "false");
+        var model = '@(Model.UserId == null ? "true" : "false")';
         var counter = 0;
         if ((userPassword == null || userPassword == "") && model) {
             $("#passwordAuthentication").text("Password Field is required");
             $("#passwordAuthentication").addClass("Error");
+            $("#password").css("background-color", "pink");
             counter++;
         } else if (userPassword.length < 6 && model) {
             $("#passwordAuthentication").text("Minimum Password length is 6 characters");
             $("#passwordAuthentication").addClass("Error");
+            $("#password").css("background-color", "pink");
             counter++;
         }
         else {
             $("#passwordAuthentication").text("");
             $("#passwordAuthentication").removeClass("Error");
+            $("#password").css("background-color", "white");
+            if ((confirmpassword == null || confirmpassword == "" || confirmpassword == undefined)) {
+                $("#confirmPasswordValidate").text("Password and Confirmation Password do not match.");
+                $("#confirmPasswordValidate").addClass("Error");
+                $("#confirmPassword").css("background-color", "pink");
+                counter++;
+            } else {
+                $("#confirmPasswordValidate").text("");
+                $("#confirmPasswordValidate").removeClass("Error");
+                $("#confirmPassword").css("background-color", "white");
+            }
         }
         if ((selectedEmployee == null || selectedEmployee == "" || selectedEmployee == undefined) && model) {
             $("#emloyeeValidate").text("Please Select Employee");
@@ -196,6 +213,16 @@
         } else {
             $("#roleValidation").text("");
             $("#roleValidation").removeClass("Error");
+        }
+        if (username == null || username == "" || username == undefined) {
+            $("#usernameValidation").text("Username is required");
+            $("#usernameValidation").addClass("Error");
+            $("#UserName").css("background-color", "pink");
+            counter++;
+        } else {
+            $("#usernameValidation").text("");
+            $("#usernameValidation").removeClass("Error");
+            $("#UserName").css("background-color", "white");
         }
         if (counter > 0) {
             //implementing focus back to error
