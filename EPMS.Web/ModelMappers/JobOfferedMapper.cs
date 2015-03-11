@@ -7,26 +7,32 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.JobOffered CreateFrom(this DomainModels.JobOffered source)
         {
-            return new Models.JobOffered
-            {
-                JobOfferedId = source.JobOfferedId,
-                JobTitleId = source.JobTitleId,
-                ShowBasicSalary = source.ShowBasicSalary,
-                IsOpenStatus = source.IsOpen?"Open":"Close",
-                IsOpen = source.IsOpen,
-                NoOfPosts = source.NoOfPosts,
-                DepartmentNameE = source.JobTitle.Department.DepartmentNameE,
-                DepartmentNameA = source.JobTitle.Department.DepartmentNameA,
-                JobTitleDescE = source.JobTitle.JobTitleDescE,
-                JobTitleDescA = source.JobTitle.JobTitleDescA,
-                BasicSalary = source.JobTitle.BasicSalary,
-                JobTitleNameE = source.JobTitle.JobTitleNameE,
-                JobTitleNameA = source.JobTitle.JobTitleNameA,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
-            };
+
+            Models.JobOffered retVal = new ApiModels.JobOffered();
+            retVal.JobOfferedId = source.JobOfferedId;
+            retVal.JobTitleId = source.JobTitleId;
+            retVal.ShowBasicSalary = source.ShowBasicSalary;
+            retVal.IsOpenStatus = source.IsOpen ? "Open" : "Close";
+            retVal.IsOpen = source.IsOpen;
+            retVal.NoOfPosts = source.NoOfPosts;
+            retVal.DepartmentNameE = source.JobTitle.Department.DepartmentNameE;
+            retVal.DepartmentNameA = source.JobTitle.Department.DepartmentNameA;
+            var decspE = source.JobTitle.JobTitleDescE.Replace("\n", "");
+            decspE = decspE.Replace("\r", "");
+            retVal.JobTitleDescE = decspE;
+            var decspA = source.JobTitle.JobTitleDescA.Replace("\n", "");
+            decspA = decspA.Replace("\r", "");
+            retVal.JobTitleDescA = decspA;
+            retVal.JobTitleDescE = decspE;
+            retVal.JobTitleDescA = decspA;
+            retVal.BasicSalary = source.JobTitle.BasicSalary;
+            retVal.JobTitleNameE = source.JobTitle.JobTitleNameE;
+            retVal.JobTitleNameA = source.JobTitle.JobTitleNameA;
+            retVal.RecCreatedBy = source.RecCreatedBy;
+            retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            retVal.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            return retVal;
         }
 
         public static DomainModels.JobOffered CreateFrom(this Models.JobOffered source)

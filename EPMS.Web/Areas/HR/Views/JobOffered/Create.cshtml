@@ -168,17 +168,17 @@
         var regex;
         var result;
         var descp;
-        if ('@direction' == "ltr" && data.JobTitleDescE != null) {
+        if ('@direction' == "ltr" && '@Model.JobOffered' != null) {
             descp = '@Html.Raw(Model.JobOffered.JobTitleDescE)';
-            //regex = /(<([^>]+)>)/ig;
-            //result = descp.replace(regex, "");
-            $("#jobTitleDesc").val(descp);
+            regex = /(<([^>]+)>)/ig;
+            result = descp.replace(regex, "");
+            $("#jobTitleDesc").val(result);
         }
-        else if ('@direction' == "rtl" && data.JobTitleDescA != null) {
+        else if ('@direction' == "rtl" && '@Model.JobOffered' != null) {
             descp = '@Html.Raw(Model.JobOffered.JobTitleDescA)';
-            //regex = /(<([^>]+)>)/ig;
-            //result = descp.replace(regex, "");
-            $("#jobTitleDesc").val(descp);
+            regex = /(<([^>]+)>)/ig;
+            result = descp.replace(regex, "");
+            $("#jobTitleDesc").val(result);
         } else {
             $("#jobTitleDesc").val("");
         }

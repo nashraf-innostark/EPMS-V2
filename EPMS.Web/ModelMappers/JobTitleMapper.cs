@@ -40,22 +40,23 @@ namespace EPMS.Web.ModelMappers
         }
         public static DomainModels.JobTitle CreateFrom(this Models.JobTitle source)
         {
-            return new DomainModels.JobTitle
-            {
-                JobTitleId = source.JobTitleId,
-                JobTitleNameE = source.JobTitleNameE,
-                JobTitleNameA = source.JobTitleNameA,
-                JobTitleDescE = source.JobTitleDescE,
-                JobTitleDescA = source.JobTitleDescA,
-                DepartmentId = source.DepartmentId,
-                BasicSalary = source.BasicSalary,
-                //Department = source.Department.CreateFrom(),
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
-            };
-
+            DomainModels.JobTitle retVal = new DomainModels.JobTitle();
+            retVal.JobTitleId = source.JobTitleId;
+            retVal.JobTitleNameE = source.JobTitleNameE;
+            retVal.JobTitleNameA = source.JobTitleNameA;
+            var descpE = source.JobTitleDescE.Replace("\r", "");
+            descpE = descpE.Replace("\n", "");
+            var descpA = source.JobTitleDescE.Replace("\r", "");
+            descpA = descpA.Replace("\n", "");
+            retVal.JobTitleDescE = descpE;
+            retVal.JobTitleDescA = descpA;
+            retVal.DepartmentId = source.DepartmentId;
+            retVal.BasicSalary = source.BasicSalary;
+            retVal.RecCreatedBy = source.RecCreatedBy;
+            retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            retVal.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            return retVal;
         }
     }
 }
