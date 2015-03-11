@@ -269,13 +269,6 @@
         clearTimeout(hoverTimeout);
         $('.dashboard-quick-launch li').find('img').tooltip('hide');
     });
-    setTimeout(function () {
-        $.pnotify({
-            title: 'Drag & Drop',
-            type: 'info',
-            text: 'Reorder Widgets or Quicklaunch bar items by dragging & dropping them.'
-        });
-    }, 7000);
     var firstHover = true;
     
     if (widgetsLoaded['task-completion']) return;

@@ -14,12 +14,13 @@ namespace EPMS.Web.ModelMappers
         /// </summary>
         public static QuickLaunchMenuItems CreateFrom(this MenuRight source)
         {
+            var direction = Resources.Shared.Common.TextDirection;
             return new QuickLaunchMenuItems
             {
                 MenuID = source.Menu.MenuId,
                 ImageIconPath = source.Menu.MenuImagePath,
                 UrlPath = source.Menu.MenuTargetController + "/" + source.Menu.MenuFunction,
-                Name = source.Menu.MenuTitle
+                Name = direction == "ltr" ? source.Menu.MenuTitle : source.Menu.MenuTitleA,
             };
         }
         public static QuickLaunchItem CreateFromClientToServer(this QuickLaunchItem source)
@@ -39,7 +40,8 @@ namespace EPMS.Web.ModelMappers
             retVal.UserId = source.UserId;
             retVal.Url = source.Menu.MenuTargetController + "/" + source.Menu.MenuFunction;
             retVal.ImagePath = source.Menu.MenuImagePath;
-            retVal.Title = source.Menu.MenuTitle;
+            var direction = Resources.Shared.Common.TextDirection;
+            retVal.Title = direction == "ltr" ? source.Menu.MenuTitle : source.Menu.MenuTitleA;
             return retVal;
         }
     }

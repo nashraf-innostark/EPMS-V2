@@ -594,7 +594,15 @@
                     }
                 });
             } else {
-
+                $("#OrderNo").empty();
+                $("#OrderNo").append(
+                    $('<option></option>').val("").html("none")
+                );
+                $(".select2me").select2("destroy");
+                $('.select2me').select2({
+                    placeholder: "Select",
+                });
+                SetNames("");
             }
 
         });

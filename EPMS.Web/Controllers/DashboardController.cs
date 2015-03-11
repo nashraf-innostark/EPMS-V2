@@ -98,7 +98,7 @@ namespace EPMS.Web.Controllers
             DashboardViewModel dashboardViewModel = new DashboardViewModel();
             object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
             string[] userPermissionsSet = (string[])userPermissionSet;
-           
+
             if (Session["RoleName"] == null)
             {
                 return RedirectToAction("Login", "Account");
@@ -109,7 +109,7 @@ namespace EPMS.Web.Controllers
                 requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
             else
                 requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
-                
+
             #region Employee Requests Widget
 
             if (userPermissionsSet.Contains("EmployeeRequestsWidget"))
@@ -117,7 +117,7 @@ namespace EPMS.Web.Controllers
                 dashboardViewModel.Employees = GetAllEmployees();
                 dashboardViewModel.EmployeeRequests = GetEmployeeRequests(requester);
             }
-                
+
             #endregion
 
             #region Recruitment Widget
@@ -133,13 +133,13 @@ namespace EPMS.Web.Controllers
                 dashboardViewModel.Departments = GetAllDepartments();
                 dashboardViewModel.EmployeesRecent = GetRecentEmployees(requester);
             }
-                
+
             #endregion
 
             #region Profile Widget
             if (userPermissionsSet.Contains("MyProfileWidget"))
             {
-                if (Session["EmployeeID"]!=null)
+                if (Session["EmployeeID"] != null)
                     dashboardViewModel.Profile = GetMyProfile();
             }
             #endregion
@@ -150,7 +150,7 @@ namespace EPMS.Web.Controllers
                 if (Session["EmployeeID"] != null)
                     dashboardViewModel.Payroll = GetPayroll(DateTime.Now);
             }
-                    
+
             #endregion
 
             #region Meeting Widget
@@ -199,9 +199,12 @@ namespace EPMS.Web.Controllers
             dashboardViewModel.WidgetPreferenceses = PreferencesService.LoadAllPreferencesByUserId(userId).Select(x => x.CreateFromClientToServerWidgetPreferences());
             #endregion
 
-            
+
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
+            var direction = Resources.Shared.Common.TextDirection;
+            ViewBag.ReorderTitle = direction == "ltr" ? "Drag & Drop" : "سحب و افلات";
+            ViewBag.ReorderBody = direction == "ltr" ? "Reorder Widgets or Quicklaunch bar items by dragging & dropping them." : ".إعادة ترتيب القطع أو عناصر شريط عن طريق سحب و إفلاتها";
             //dashboardViewModel.UserMac = GetMacAddress();
             return View(dashboardViewModel);
         }
@@ -314,7 +317,7 @@ namespace EPMS.Web.Controllers
         /// <returns></returns>
         private Profile GetMyProfile()
         {
-            return Session["EmployeeID"]!=null ? employeeService.FindEmployeeById(Convert.ToInt64(Session["EmployeeID"].ToString())).CreateForDashboardProfile() : null;
+            return Session["EmployeeID"] != null ? employeeService.FindEmployeeById(Convert.ToInt64(Session["EmployeeID"].ToString())).CreateForDashboardProfile() : null;
         }
 
         private Payroll GetPayroll(DateTime date)
@@ -494,7 +497,7 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadMyProfile()
         {
-            var  myProfile = GetMyProfile();
+            var myProfile = GetMyProfile();
             return Json(myProfile, JsonRequestBehavior.AllowGet);
         }
 

@@ -12,5 +12,6 @@ namespace EPMS.Web.Models
         public string ImagePath { get; set; }
         public string Url { get; set; }
         public string Title { get; set; }
+        public string TitleA { get; set; }
     }
 }

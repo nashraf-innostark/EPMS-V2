@@ -7,6 +7,6 @@
         public string NameA { get; set; }
         public string NameEShort { get; set; }
         public string NameAShort { get; set; }
-        public int ProgressTotal { get; set; }
+        public double ProgressTotal { get; set; }
     }
 }

@@ -740,7 +740,7 @@
                                                         <span title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</span>
                                                     }
                                                     <div class="progress progress-info">
-                                                        <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: 0;">@Model.Project.Project.ProgressTotal%</div>
+                                                        <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: @Model.Project.Project.ProgressTotal;">@Model.Project.Project.ProgressTotal%</div>
                                                     </div>
                                                 </li>
                                             }
@@ -853,7 +853,7 @@
                                                         <span title="@Model.ProjectTasks.FirstOrDefault().TaskNameA">@Model.ProjectTasks.FirstOrDefault().TaskNameAShort</span>
                                                     }
                                                     <div class="progress progress-info">
-                                                        <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress%</div>
+                                                        <div class="bar" data-target="@Model.ProjectTasks.FirstOrDefault().TaskProgress" style="width: @Model.ProjectTasks.FirstOrDefault().TaskProgress;">@Model.ProjectTasks.FirstOrDefault().TaskProgress</div>
                                                     </div>
                                                 </li>
                                             }
@@ -984,12 +984,19 @@
         } else if ('@direction' == "rtl") {
             setTimeout(function () {
                 $.pnotify({
-                    title: 'Welcome',
+                    title: 'مرحبا',
                     type: 'info',
                     text: $("#SessionUserNameA").val()
                 });
             }, 2000);
         }
+        setTimeout(function () {
+            $.pnotify({
+                title: '@ViewBag.ReorderTitle',
+                type: 'info',
+                text: '@ViewBag.ReorderBody'
+            });
+        }, 7000);
     });
     function loadItems() {
         var siteURL = $('#siteURL').val();

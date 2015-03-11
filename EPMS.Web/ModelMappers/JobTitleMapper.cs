@@ -17,7 +17,6 @@ namespace EPMS.Web.ModelMappers
 
         public static Models.JobTitle CreateFrom(this DomainModels.JobTitle source)
         {
-
             Models.JobTitle retVal = new ApiModels.JobTitle();
             retVal.JobTitleId = source.JobTitleId;
             retVal.JobTitleNameE = source.JobTitleNameE;
