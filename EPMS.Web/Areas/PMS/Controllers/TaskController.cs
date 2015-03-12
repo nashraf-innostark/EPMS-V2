@@ -39,7 +39,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             var test = Session["UserPermissionSet"];
             var roles = (string[])test;
-            if (roles.Contains("TaskIndex"))
+            if (roles.Contains("TaskIndex") && roles.Contains("CreateTask"))
             {
                 TaskListViewModel viewModel = new TaskListViewModel();
                 ViewBag.MessageVM = TempData["message"] as MessageViewModel;

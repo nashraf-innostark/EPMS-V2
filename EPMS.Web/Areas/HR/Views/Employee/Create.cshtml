@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] module = (string[])Session["UserModules"];
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -70,6 +71,7 @@
         @Html.HiddenFor(model => model.EmployeeViewModel.OldAllowance.Allowance5)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeJobId)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.PrevJobTitleId)
+        @Html.HiddenFor(model => model.EmployeeViewModel.Employee.IsActivated)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">
@@ -78,7 +80,7 @@
             <div class="span9">
 
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeFirstNameE, new { @id = "EmployeeFirstNameE", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeFirstNameE, new { @id = "EmployeeFirstNameE", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeFirstNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -90,7 +92,7 @@
             <div class="span9">
 
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameE, new { @id = "EmployeeMiddleNameE", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameE, new { @id = "EmployeeMiddleNameE", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMiddleNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -102,7 +104,7 @@
             <div class="span9">
 
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLastNameE, new { @id = "EmployeeLastNameE", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLastNameE, new { @id = "EmployeeLastNameE", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLastNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -113,7 +115,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeFirstNameA, new { @id = "EmployeeFirstNameA", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeFirstNameA, new { @id = "EmployeeFirstNameA", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeFirstNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -124,7 +126,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameA, new { @id = "EmployeeMiddleNameA", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameA, new { @id = "EmployeeMiddleNameA", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMiddleNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -135,7 +137,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLastNameA, new { @id = "EmployeeLastNameA", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLastNameA, new { @id = "EmployeeLastNameA", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLastNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -159,7 +161,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.DepartmentNameE, new { @id = "DepartmentName", @disabled = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.DepartmentNameE, new { @id = "DepartmentName", @readonly = true })
                 </div>
             </div>
         </div>
@@ -169,7 +171,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitleId, new { @disabled = true, @id = "JobID" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitleId, new { @readonly = true, @id = "JobID" })
                 </div>
             </div>
         </div>
@@ -179,7 +181,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeJobId, new { @id = "EmployeeJobId", @disabled = true })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeJobId, new { @id = "EmployeeJobId", @readonly = true })
                 </div>
             </div>
         </div>
@@ -204,7 +206,7 @@
             </div>
             <div class="span9 mobileNo">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMobileNum, new { @id = "MobileNumber", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMobileNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -215,7 +217,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLandlineNum, new { @id = "LandlineNumber", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLandlineNum, new { @id = "LandlineNumber", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLandlineNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -226,7 +228,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "Email", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.Email, new { @id = "Email", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.Email, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -528,7 +530,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqama, new { @id = "IqamaId", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqama, new { @id = "IqamaId", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqama, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -573,7 +575,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportNum, new { @id = "PassportID", @class = "toBeRequired" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportNum, new { @id = "PassportID", @class = "toBeRequired toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -597,23 +599,47 @@
                     </div>*@
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label cultureE" for="ExtraInformationE">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+        <div id="Descp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="descpEn">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descpEn" readonly="readonly" />
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @dir = "ltr", @id = "ExtraInformationE" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="descpAr">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descpAr" readonly="readonly" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label cultureE" for="ExtraInformationA">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="ExtraInformationE">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsE, new { @dir = "ltr", @id = "ExtraInformationE" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsA, new { @id = "ExtraInformationA" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="ExtraInformationA">@EPMS.Web.Resources.HR.Employee.ExtraInfo</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.EmployeeViewModel.Employee.EmployeeDetailsA, new { @id = "ExtraInformationA" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -623,7 +649,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.BasicSalary, new { @disabled = true, @id = "BasicSalary" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.BasicSalary, new { @readonly = true, @id = "BasicSalary", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitle.BasicSalary)
                 </div>
             </div>
@@ -634,7 +660,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance1, new { @id = "Allownce1" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance1, new { @id = "Allownce1", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance1)
                 </div>
             </div>
@@ -645,7 +671,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance2, new { @id = "Allownce2" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance2, new { @id = "Allownce2", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance2)
                 </div>
             </div>
@@ -656,7 +682,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance3, new { @id = "Allownce3" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance3, new { @id = "Allownce3", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance3)
                 </div>
             </div>
@@ -667,7 +693,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance4, new { @id = "Allownce4" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance4, new { @id = "Allownce4", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance4)
                 </div>
             </div>
@@ -678,12 +704,12 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance5, new { @id = "Allownce5" })
+                    @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance5, new { @id = "Allownce5", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance5)
                 </div>
             </div>
         </div>
-        @if (Model.EmployeeViewModel.Employee != null && Convert.ToString(Session["RoleName"]) == "Admin" && Model.EmployeeViewModel.Employee.EmployeeId > 0)
+        @if (Model.EmployeeViewModel.Employee != null && userPermissionsSet.Contains("EmployeeCreate") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3">
@@ -691,7 +717,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @disabled = true })
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction1, new { @id = "Deduction1", @readonly = true })
                     </div>
                 </div>
             </div>
@@ -701,7 +727,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @disabled = true })
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Deduction2, new { @id = "Deduction2", @readonly = true })
                     </div>
                 </div>
             </div>
@@ -805,7 +831,7 @@
                 </div>
             }
         }
-        @if (Convert.ToString(Session["RoleName"]) == "Admin")
+        @if (userPermissionsSet.Contains("EmployeeCreate") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
@@ -841,7 +867,7 @@
                 </div>
             </div>
         }
-        @if ((Convert.ToString(Session["RoleName"]) == "Admin") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
+        @if (userPermissionsSet.Contains("EmployeeCreate") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -861,7 +887,7 @@
                 }
             </div>
         }
-        else if (Convert.ToString(Session["RoleName"]) == "Admin")
+        else if (userPermissionsSet.Contains("EmployeeCreate"))
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -900,9 +926,36 @@
         return true;
     }
     $(document).ready(function () {
-        // CK Editor
-        CKEDITOR.replace('ExtraInformationE');
-        CKEDITOR.replace('ExtraInformationA');
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("EmployeeCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+            $('#JobTitle').select2('disable');
+            $('#Nationality').select2('disable');
+            $('#MaritalStatus').select2('disable');
+            var descpE = '@Html.Raw(Model.EmployeeViewModel.Employee.EmployeeDetailsE)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = descpE.replace(regex, "");
+            $("#descpEn").val(result);
+            var descpA = '@Html.Raw(Model.EmployeeViewModel.Employee.EmployeeDetailsA)';
+            regex = /(<([^>]+)>)/ig;
+            result = descpA.replace(regex, "");
+            $("#descpAr").val(result);
+            $("#Descp").show();
+            $("#CKEditorDescp").hide();
+        }
+        if (isDetail == false) {
+            // CK Editor
+            CKEDITOR.replace('ExtraInformationE');
+            CKEDITOR.replace('ExtraInformationA');
+            $("#Descp").hide();
+            $("#CKEditorDescp").show();
+        }
         $("#AddEditEmployeeForm").validate({
             errorElement: "span",
             errorClass: "error",

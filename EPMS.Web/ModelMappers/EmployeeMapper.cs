@@ -12,6 +12,18 @@ namespace EPMS.Web.ModelMappers
     {
         public static Employee CreateFromClientToServer(this Models.Employee source)
         {
+            string descpEn = "";
+            string descpAr = "";
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsE) )
+            {
+                descpEn = source.EmployeeDetailsE.Replace("\n", "");
+                descpEn = descpEn.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsA))
+            {
+                descpAr = source.EmployeeDetailsA.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
             var caseType = new Employee
             {
                 EmployeeId = source.EmployeeId,
@@ -32,8 +44,8 @@ namespace EPMS.Web.ModelMappers
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
                 EmployeePassportExpiryDt = DateTime.ParseExact(source.EmployeePassportExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDetailsE = source.EmployeeDetailsE,
-                EmployeeDetailsA = source.EmployeeDetailsA,
+                EmployeeDetailsE = descpEn,
+                EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy ?? "",
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
@@ -46,6 +58,18 @@ namespace EPMS.Web.ModelMappers
         }
         public static Models.Employee CreateFromServerToClient(this Employee source)
         {
+            string descpEn = "";
+            string descpAr = "";
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsE))
+            {
+                descpEn = source.EmployeeDetailsE.Replace("\n", "");
+                descpEn = descpEn.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsA))
+            {
+                descpAr = source.EmployeeDetailsA.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
             return new Models.Employee
             {
                 EmployeeId = source.EmployeeId,
@@ -67,8 +91,8 @@ namespace EPMS.Web.ModelMappers
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
                 EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDetailsE = source.EmployeeDetailsE,
-                EmployeeDetailsA = source.EmployeeDetailsA,
+                EmployeeDetailsE = descpEn,
+                EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy ?? "",
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
@@ -87,6 +111,18 @@ namespace EPMS.Web.ModelMappers
         }
         public static Models.Employee CreateFromServerToClientForTask(this Employee source)
         {
+            string descpEn = "";
+            string descpAr = "";
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsE))
+            {
+                descpEn = source.EmployeeDetailsE.Replace("\n", "");
+                descpEn = descpEn.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsA))
+            {
+                descpAr = source.EmployeeDetailsA.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
             Models.Employee employee = new Models.Employee
             {
                 EmployeeId = source.EmployeeId,
@@ -102,8 +138,8 @@ namespace EPMS.Web.ModelMappers
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
                 EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDetailsE = source.EmployeeDetailsE,
-                EmployeeDetailsA = source.EmployeeDetailsA,
+                EmployeeDetailsE = descpEn,
+                EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy ?? "",
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",
@@ -152,6 +188,18 @@ namespace EPMS.Web.ModelMappers
         }
         public static Models.Employee CreateFromServerToClientWithImage(this Employee source)
         {
+            string descpEn = "";
+            string descpAr = "";
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsE))
+            {
+                descpEn = source.EmployeeDetailsE.Replace("\n", "");
+                descpEn = descpEn.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsA))
+            {
+                descpAr = source.EmployeeDetailsA.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
             return new Models.Employee
             {
                 EmployeeId = source.EmployeeId,
@@ -173,8 +221,8 @@ namespace EPMS.Web.ModelMappers
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
                 EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDetailsE = source.EmployeeDetailsE,
-                EmployeeDetailsA = source.EmployeeDetailsA,
+                EmployeeDetailsE = descpEn,
+                EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy ?? "",
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy ?? "",

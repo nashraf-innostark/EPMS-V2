@@ -33,6 +33,28 @@
 <!-- Page heading ends -->
 <div class="form-horizontal">
     <div class="container-fluid">
+        @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="FilterEmployee">Filter</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    <select id="FilterEmployee" class="select2me">
+                        <option value="">All</option>
+                        <option value="true">Activated</option>
+                        <option value="false">Deactivated</option>
+                    </select>
+                </div>
+            </div>
+            <div class="span2" style="margin-left: 10%; margin-top: 1.3%">
+                <button class="btn" onclick="filterEmployees(this)">Filter</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-horizontal">
+    <div class="container-fluid">
         <form class="form-horizontal">
             @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
             <div class="container-fluid">
@@ -58,10 +80,11 @@
     </div>
 </div>
 <script type="text/javascript">
+    var oTable;
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
         var dir = '@direction';
-        var oTable = $('#employeeTable').dataTable({
+        oTable = $('#employeeTable').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
@@ -167,4 +190,9 @@
                 return;
             });
     });
+    function filterEmployees(val) {
+        var filterVal = $("#FilterEmployee").val();
+        $("#searchString").val(filterVal);
+        oTable.fnDraw();
+    }
 </script>

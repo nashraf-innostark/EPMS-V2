@@ -65,21 +65,38 @@ namespace EPMS.Repository.Repositories
             {
                 employeeSearchRequset.iSortCol_0 = 2;
             }
-            Expression<Func<Employee, bool>> query =
-                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || (s.EmployeeFirstNameE.Contains(employeeSearchRequset.SearchString) || 
+            if (employeeSearchRequset.SearchString == "true" || employeeSearchRequset.SearchString == "false")
+            {
+                bool activated = employeeSearchRequset.SearchString == "true";
+                Expression<Func<Employee, bool>> query =
+                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || ((s.EmployeeFirstNameE.Contains(employeeSearchRequset.SearchString) ||
                     s.EmployeeMiddleNameE.Contains(employeeSearchRequset.SearchString) || s.EmployeeLastNameE.Contains(employeeSearchRequset.SearchString)) ||
-                    (s.EmployeeFirstNameE.Contains(employeeSearchRequset.SearchString) || s.EmployeeMiddleNameE.Contains(employeeSearchRequset.SearchString) ||
-                    s.EmployeeLastNameE.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
-                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchString)) || (s.EmployeeJobId == employeeSearchRequset.SearchString) ||
-                    (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchString)));
-
-            IEnumerable<Employee> employees = employeeSearchRequset.sSortDir_0=="asc" ?
+                    (s.EmployeeFirstNameA.Contains(employeeSearchRequset.SearchString) || s.EmployeeMiddleNameA.Contains(employeeSearchRequset.SearchString) ||
+                    s.EmployeeLastNameA.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchString)) || (s.EmployeeJobId == employeeSearchRequset.SearchString) || (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchString)) || s.IsActivated == activated));
+                IEnumerable<Employee> employees = employeeSearchRequset.sSortDir_0 == "asc" ?
                 DbSet
                 .Where(query).OrderBy(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList()
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new EmployeeResponse { Employeess = employees, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+                return new EmployeeResponse { Employeess = employees, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+            }
+            Expression<Func<Employee, bool>> queery =
+                s => ((string.IsNullOrEmpty(employeeSearchRequset.SearchString)) || (s.EmployeeFirstNameE.Contains(employeeSearchRequset.SearchString) ||
+                    s.EmployeeMiddleNameE.Contains(employeeSearchRequset.SearchString) || s.EmployeeLastNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.EmployeeFirstNameA.Contains(employeeSearchRequset.SearchString) || s.EmployeeMiddleNameA.Contains(employeeSearchRequset.SearchString) ||
+                    s.EmployeeLastNameA.Contains(employeeSearchRequset.SearchString)) || (s.JobTitle.JobTitleNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.JobTitle.JobTitleNameA.Contains(employeeSearchRequset.SearchString)) || (s.EmployeeJobId == employeeSearchRequset.SearchString) || (s.JobTitle.Department.DepartmentNameE.Contains(employeeSearchRequset.SearchString)) ||
+                    (s.JobTitle.Department.DepartmentNameA.Contains(employeeSearchRequset.SearchString)));
+            IEnumerable<Employee> employes = employeeSearchRequset.sSortDir_0 == "asc" ?
+            DbSet
+            .Where(queery).OrderBy(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList()
+                                       :
+                                       DbSet
+                                       .Where(queery).OrderByDescending(employeeClause[employeeSearchRequset.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList();
+            return new EmployeeResponse { Employeess = employes, TotalDisplayRecords = DbSet.Count(queery), TotalRecords = DbSet.Count(queery) };
         }
 
         /// <summary>

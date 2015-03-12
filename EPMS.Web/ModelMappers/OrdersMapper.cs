@@ -9,12 +9,24 @@ namespace EPMS.Web.ModelMappers
     {
         public static Order CreateFromClientToServer(this Models.Order source)
         {
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.OrderDescription))
+            {
+                decspE = source.OrderDescription.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.OrderNotes))
+            {
+                decspA = source.OrderNotes.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
             var caseType = new Order
             {
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
-                OrderDescription = source.OrderDescription,
-                OrderNotes = source.OrderNotes,
+                OrderDescription = decspE,
+                OrderNotes = decspA,
                 OrderDate = source.OrderDate,
                 Attachment = source.Attachment,
                 CustomerId = source.CustomerId,
@@ -29,6 +41,18 @@ namespace EPMS.Web.ModelMappers
 
         public static Models.Order CreateFromServerToClientLv(this Order source)
         {
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.OrderDescription))
+            {
+                decspE = source.OrderDescription.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.OrderNotes))
+            {
+                decspA = source.OrderNotes.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
             Models.Order order;
             if (source.Customer.Quotations.Any(x => x.OrderId == source.OrderId))
             {
@@ -36,8 +60,8 @@ namespace EPMS.Web.ModelMappers
                 {
                     OrderId = source.OrderId,
                     OrderNo = source.OrderNo,
-                    OrderDescription = source.OrderDescription,
-                    OrderNotes = source.OrderNotes,
+                    OrderDescription = decspE,
+                    OrderNotes = decspA,
                     OrderDate = source.OrderDate,
                     Attachment = source.Attachment,
                     CustomerId = source.CustomerId,
@@ -58,8 +82,8 @@ namespace EPMS.Web.ModelMappers
                 {
                     OrderId = source.OrderId,
                     OrderNo = source.OrderNo,
-                    OrderDescription = source.OrderDescription,
-                    OrderNotes = source.OrderNotes,
+                    OrderDescription = decspE,
+                    OrderNotes = decspA,
                     OrderDate = source.OrderDate,
                     Attachment = source.Attachment,
                     CustomerId = source.CustomerId,
@@ -76,12 +100,24 @@ namespace EPMS.Web.ModelMappers
         }
         public static Models.Order CreateFromServerToClient(this Order source)
         {
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.OrderDescription))
+            {
+                decspE = source.OrderDescription.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.OrderNotes))
+            {
+                decspA = source.OrderNotes.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
             Models.Order order = new Models.Order
             {
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
-                OrderDescription = source.OrderDescription,
-                OrderNotes = source.OrderNotes,
+                OrderDescription = decspE,
+                OrderNotes = decspA,
                 OrderDate = source.OrderDate,
                 Attachment = source.Attachment,
                 CustomerId = source.CustomerId,

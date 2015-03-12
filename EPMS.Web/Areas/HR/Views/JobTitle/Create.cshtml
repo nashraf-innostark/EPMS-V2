@@ -88,25 +88,49 @@
                 <label id="departmentvalidate" style="margin-top: 20px; margin-left: 20px"></label>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateE</label>
+        <div id="Descp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateE</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descpEn" readonly="readonly" />
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateA</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descpAr" readonly="readonly" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateA</label>
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateE</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.JobTitle.JobTitleDescE, new { @dir = "ltr", id = "JobTitleDescE", @class = "tbdisable", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescE, "", new { @class = "required" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateA</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.JobTitle.JobTitleDescA, new { id = "JobTitleDescA", @class = "tbdisable", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.JobTitle.JobTitleDescA, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +162,6 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-
         $("#JobTitleForm").validate({
             errorElement: "span",
             errorClass: "error",
@@ -164,6 +187,21 @@
         });
 
         var id = $('#JobTitle_JobTitleId').val();
+        if (id == 0) {
+            $("#Descp").hide();
+            $("#CKEditorDescp").show();
+        } else {
+            var descpE = '@Html.Raw(Model.JobTitle.JobTitleDescE)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = descpE.replace(regex, "");
+            $("#descpEn").val(result);
+            var descpA = '@Html.Raw(Model.JobTitle.JobTitleDescE)';
+            regex = /(<([^>]+)>)/ig;
+            result = descpA.replace(regex, "");
+            $("#descpAr").val(result);
+            $("#Descp").show();
+            $("#CKEditorDescp").hide();
+        }
         $("[readonly='false']").removeAttr("readonly");
         if (id == 0) {
             CKEDITOR.replace('JobTitleDescE');
@@ -191,7 +229,8 @@
         $("#savebtn").show();
         $("#cancel").show();
         $("#edit").hide();
-
+        $("#Descp").hide();
+        $("#CKEditorDescp").show();
         event.preventDefault();
     });
 

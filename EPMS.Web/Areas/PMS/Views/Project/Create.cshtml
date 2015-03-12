@@ -20,6 +20,7 @@
         pageheading = EPMS.Web.Resources.PMS.Project.AddNewProject;
     }
     string[] module = (string[])Session["UserModules"];
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -101,7 +102,7 @@
                     <div class="controls">
                         @if (Model.Project.CustomerId > 0)
                         {
-                        @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
+                            @Html.DropDownListFor(m => m.Project.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
                         }
                         else
                         {
@@ -112,7 +113,7 @@
 
             </div>
         }
-        
+
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -124,10 +125,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.PMS.Project.DescriptionE</label>
@@ -495,9 +492,8 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-
         CKEDITOR.replace('DescriptionA');
         CKEDITOR.replace('DescriptionE');
         CKEDITOR.replace('NotesA');
@@ -514,7 +510,7 @@
                 null,
                 null
             ],
-            "fnInitComplete": function() {
+            "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
@@ -539,29 +535,29 @@
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
 
-            init: function() {
+            init: function () {
                 $("#uploaded").empty();
             },
 
-            start: function(result) {
+            start: function (result) {
                 $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
             },
 
-            loaded: function(result) {
+            loaded: function (result) {
                 $("#PRO" + result.fileno).remove();
                 $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
                 addDocName(result.filename);
             },
 
-            progress: function(result) {
+            progress: function (result) {
                 $("#PRO" + result.fileno).css("width", result.perc + "%");
             },
 
-            error: function(error) {
+            error: function (error) {
                 errors += error.filename + ": " + error.err_des + "\n";
             },
 
-            completed: function() {
+            completed: function () {
                 if (errors != "") {
                     alert(errors);
                     errors = "";
@@ -569,7 +565,7 @@
             }
         });
 
-        $("#Client").on("change", function() {
+        $("#Client").on("change", function () {
             var customerId = $(this).val();
             var url = siteUrl + "/PMS/Project/GetCustomerOrders";
             if (customerId > 0) {
@@ -586,10 +582,10 @@
                     data: {
                         customerId: customerId
                     },
-                    success: function(data) {
+                    success: function (data) {
                         populateDDL(data);
                     },
-                    error: function(e) {
+                    error: function (e) {
                         alert('Error=' + e.toString());
                     }
                 });
@@ -607,7 +603,7 @@
 
         });
         //set order's no as a project name
-        $("#OrderNo").on("change", function() {
+        $("#OrderNo").on("change", function () {
             var orderTitle = $("#OrderNo option:selected").text();
             SetNames(orderTitle);
         });

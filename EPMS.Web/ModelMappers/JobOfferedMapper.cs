@@ -1,4 +1,5 @@
-﻿using ApiModels = EPMS.Web.Models;
+﻿using System;
+using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -17,12 +18,18 @@ namespace EPMS.Web.ModelMappers
             retVal.NoOfPosts = source.NoOfPosts;
             retVal.DepartmentNameE = source.JobTitle.Department.DepartmentNameE;
             retVal.DepartmentNameA = source.JobTitle.Department.DepartmentNameA;
-            var decspE = source.JobTitle.JobTitleDescE.Replace("\n", "");
-            decspE = decspE.Replace("\r", "");
-            retVal.JobTitleDescE = decspE;
-            var decspA = source.JobTitle.JobTitleDescA.Replace("\n", "");
-            decspA = decspA.Replace("\r", "");
-            retVal.JobTitleDescA = decspA;
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.JobTitle.JobTitleDescE))
+            {
+                decspE = source.JobTitle.JobTitleDescE.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.JobTitle.JobTitleDescA))
+            {
+                decspA = source.JobTitle.JobTitleDescA.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
             retVal.JobTitleDescE = decspE;
             retVal.JobTitleDescA = decspA;
             retVal.BasicSalary = source.JobTitle.BasicSalary;

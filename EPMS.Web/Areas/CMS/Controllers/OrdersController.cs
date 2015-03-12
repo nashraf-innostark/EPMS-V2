@@ -91,7 +91,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
-        [SiteAuthorize(PermissionKey = "OrderCreate")]
+        [SiteAuthorize(PermissionKey = "OrderCreate,OrderDetails")]
         public ActionResult Create(long? id)
         {
             var direction = Resources.Shared.Common.TextDirection;
@@ -222,7 +222,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         break;
                 }
                 string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
-                return orderId.Substring(order.OrderNo.Length - 10, 10);
+                return orderId;
             }
             return year + month + day + "00001";
         }

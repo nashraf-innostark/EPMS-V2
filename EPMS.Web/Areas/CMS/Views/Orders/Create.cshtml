@@ -11,8 +11,9 @@
     }
     if (String.IsNullOrEmpty(backUrl))
     {
-        backUrl = "~/CMS/Orders/Index";
+        backUrl = "/CMS/Orders/Index";
     }
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <!-- Navigation Bar -->
@@ -47,6 +48,7 @@
     @Html.HiddenFor(model => model.Orders.OrderId)
     @Html.HiddenFor(model => model.Orders.CustomerId)
     @Html.HiddenFor(model => model.Orders.OrderStatus)
+    @Html.HiddenFor(model => model.Orders.OrderDate)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
@@ -58,28 +60,52 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid descriptionArea">
-            <div class="span3">
-                <label class="control-label" for="description">@EPMS.Web.Resources.CMS.Order.Description</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.Orders.OrderDescription, new { @id = "OrderDescription", @class = "" })
+        <div id="Descp">
+            <div class="control-group row-fluid descriptionArea">
+                <div class="span3">
+                    <label class="control-label" for="descp">@EPMS.Web.Resources.CMS.Order.Description</label>
                 </div>
-                <label id="descriptionValidation" style="margin-top: 5px; margin-bottom: 5px"></label>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.CMS.Order.Notes</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.Orders.OrderNotes, new { @id = "OrderNotes", @class = "" })
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descp" readonly="readonly" />
+                    </div>
                 </div>
             </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="notes">@EPMS.Web.Resources.CMS.Order.Notes</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notes" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
         </div>
-        @if (Model.RoleName == "Customer" || Model.Orders.OrderId == 0)
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid descriptionArea">
+                <div class="span3">
+                    <label class="control-label" for="OrderDescription">@EPMS.Web.Resources.CMS.Order.Description</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Orders.OrderDescription, new { @id = "OrderDescription", @class = "" })
+                    </div>
+                    <label id="descriptionValidation" style="margin-top: 5px; margin-bottom: 5px"></label>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="OrderNotes">@EPMS.Web.Resources.CMS.Order.Notes</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Orders.OrderNotes, new { @id = "OrderNotes", @class = "" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (userPermissionsSet.Contains("OrderCreate"))
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -87,7 +113,7 @@
                 </div>
             </div>
         }
-        @if (Model.RoleName == "Admin" && Model.Orders.OrderId > 0)
+        @if (userPermissionsSet.Contains("OrderDetails"))
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -100,9 +126,33 @@
 
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    $(document).ready(function() {
-        CKEDITOR.replace('OrderDescription');
-        CKEDITOR.replace('OrderNotes');
+    $(document).ready(function () {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("OrderCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            var descpE = '@Html.Raw(Model.Orders.OrderDescription)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = descpE.replace(regex, "");
+            $("#descp").val(result);
+            var descpA = '@Html.Raw(Model.Orders.OrderNotes)';
+            regex = /(<([^>]+)>)/ig;
+            result = descpA.replace(regex, "");
+            $("#notes").val(result);
+            $("#Descp").show();
+            $("#CKEditorDescp").hide();
+        }
+        if (isDetail == false) {
+            // CK Editor
+            CKEDITOR.replace('OrderDescription');
+            CKEDITOR.replace('OrderNotes');
+            $("#Descp").hide();
+            $("#CKEditorDescp").show();
+        }
     });
     function validateForm(event) {
         var counter = 0;

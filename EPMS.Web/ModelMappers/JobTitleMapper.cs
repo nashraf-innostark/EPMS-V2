@@ -1,4 +1,5 @@
-﻿using ApiModels = EPMS.Web.Models;
+﻿using System;
+using ApiModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -21,11 +22,19 @@ namespace EPMS.Web.ModelMappers
             retVal.JobTitleId = source.JobTitleId;
             retVal.JobTitleNameE = source.JobTitleNameE;
             retVal.JobTitleNameA = source.JobTitleNameA;
-            var decspE = source.JobTitleDescE.Replace("\n", "");
-            decspE = decspE.Replace("\r", "");
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.JobTitleDescE))
+            {
+                decspE = source.JobTitleDescE.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.JobTitleDescA))
+            {
+                decspA = source.JobTitleDescA.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
             retVal.JobTitleDescE = decspE;
-            var decspA = source.JobTitleDescA.Replace("\n", "");
-            decspA = decspA.Replace("\r", "");
             retVal.JobTitleDescA = decspA;
             retVal.DepartmentId = source.DepartmentId;
             retVal.BasicSalary = source.BasicSalary ?? 0;
@@ -44,12 +53,20 @@ namespace EPMS.Web.ModelMappers
             retVal.JobTitleId = source.JobTitleId;
             retVal.JobTitleNameE = source.JobTitleNameE;
             retVal.JobTitleNameA = source.JobTitleNameA;
-            var descpE = source.JobTitleDescE.Replace("\r", "");
-            descpE = descpE.Replace("\n", "");
-            var descpA = source.JobTitleDescE.Replace("\r", "");
-            descpA = descpA.Replace("\n", "");
-            retVal.JobTitleDescE = descpE;
-            retVal.JobTitleDescA = descpA;
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.JobTitleDescE))
+            {
+                decspE = source.JobTitleDescE.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.JobTitleDescA))
+            {
+                decspA = source.JobTitleDescA.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
+            retVal.JobTitleDescE = decspE;
+            retVal.JobTitleDescA = decspA;
             retVal.DepartmentId = source.DepartmentId;
             retVal.BasicSalary = source.BasicSalary;
             retVal.RecCreatedBy = source.RecCreatedBy;

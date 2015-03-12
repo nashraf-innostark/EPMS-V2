@@ -13,6 +13,42 @@ namespace EPMS.Web.ModelMappers.PMS
         private static IProjectTaskService projectTaskService;
         public static Project CreateFromClientToServer(this Models.Project source)
         {
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.DescriptionE))
+            {
+                decspE = source.DescriptionE.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.DescriptionA))
+            {
+                decspA = source.DescriptionA.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
+            string notesE = "";
+            string notesA = "";
+            if (!String.IsNullOrEmpty(source.NotesE))
+            {
+                notesE = source.NotesE.Replace("\n", "");
+                notesE = notesE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.NotesA))
+            {
+                notesA = source.NotesA.Replace("\n", "");
+                notesA = notesA.Replace("\r", "");
+            }
+            string notesForCusE = "";
+            string notesForCusA = "";
+            if (!String.IsNullOrEmpty(source.NotesForCustomerE))
+            {
+                notesForCusE = source.NotesForCustomerE.Replace("\n", "");
+                notesForCusE = notesForCusE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.NotesForCustomerA))
+            {
+                notesForCusA = source.NotesForCustomerA.Replace("\n", "");
+                notesForCusA = notesForCusA.Replace("\r", "");
+            }
             return new Project
             {
                 ProjectId = source.ProjectId,
@@ -21,17 +57,17 @@ namespace EPMS.Web.ModelMappers.PMS
                 CustomerId = source.CustomerId,
                 OrderId = source.OrderId,
                 SerialNo = source.SerialNo,
-                DescriptionE = source.DescriptionE,
-                DescriptionA = source.DescriptionA,
+                DescriptionE = decspE,
+                DescriptionA = decspA,
                 StartDate = DateTime.ParseExact(source.StartDate, "dd/MM/yyyy", new CultureInfo("en")),
                 EndDate = DateTime.ParseExact(source.EndDate, "dd/MM/yyyy", new CultureInfo("en")),
                 Price = source.Price,
                 OtherCost = source.OtherCost,
                 Status = source.Status,
-                NotesE = source.NotesE,
-                NotesA = source.NotesA,
-                NotesForCustomerE = source.NotesForCustomerE,
-                NotesForCustomerA = source.NotesForCustomerA,
+                NotesE = notesE,
+                NotesA = notesA,
+                NotesForCustomerE = notesForCusE,
+                NotesForCustomerA = notesForCusA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -47,17 +83,53 @@ namespace EPMS.Web.ModelMappers.PMS
             project.CustomerId = source.CustomerId;
             project.OrderId = source.OrderId;
             project.SerialNo = source.SerialNo;
-            project.DescriptionE = source.DescriptionE;
-            project.DescriptionA = source.DescriptionA;
+            string decspE = "";
+            string decspA = "";
+            if (!String.IsNullOrEmpty(source.DescriptionE))
+            {
+                decspE = source.DescriptionE.Replace("\n", "");
+                decspE = decspE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.DescriptionA))
+            {
+                decspA = source.DescriptionA.Replace("\n", "");
+                decspA = decspA.Replace("\r", "");
+            }
+            string notesE = "";
+            string notesA = "";
+            if (!String.IsNullOrEmpty(source.NotesE))
+            {
+                notesE = source.NotesE.Replace("\n", "");
+                notesE = notesE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.NotesA))
+            {
+                notesA = source.NotesA.Replace("\n", "");
+                notesA = notesA.Replace("\r", "");
+            }
+            string notesForCusE = "";
+            string notesForCusA = "";
+            if (!String.IsNullOrEmpty(source.NotesForCustomerE))
+            {
+                notesForCusE = source.NotesForCustomerE.Replace("\n", "");
+                notesForCusE = notesForCusE.Replace("\r", "");
+            }
+            if (!String.IsNullOrEmpty(source.NotesForCustomerA))
+            {
+                notesForCusA = source.NotesForCustomerA.Replace("\n", "");
+                notesForCusA = notesForCusA.Replace("\r", "");
+            }
+            project.DescriptionE = decspE;
+            project.DescriptionA = decspA;
             project.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             project.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             project.Price = Convert.ToInt64(source.Price);
             project.OtherCost = Convert.ToInt64(source.OtherCost);
             project.Status = source.Status;
-            project.NotesE = source.NotesE;
-            project.NotesA = source.NotesA;
-            project.NotesForCustomerE = source.NotesForCustomerE;
-            project.NotesForCustomerA = source.NotesForCustomerA;
+            project.NotesE = notesE;
+            project.NotesA = notesA;
+            project.NotesForCustomerE = notesForCusE;
+            project.NotesForCustomerA = notesForCusA;
             project.RecCreatedBy = source.RecCreatedBy;
             project.RecCreatedDate = source.RecCreatedDate;
             project.RecLastUpdatedBy = source.RecLastUpdatedBy;
