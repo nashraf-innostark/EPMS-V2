@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
-using EPMS.Implementation.Services;
-using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
-using EPMS.Repository.Repositories;
 
 namespace EPMS.Web.ModelMappers.PMS
 {
     public static class ProjectMapper
     {
-        private static IProjectTaskService projectTaskService;
         public static Project CreateFromClientToServer(this Models.Project source)
         {
             string decspE = "";
