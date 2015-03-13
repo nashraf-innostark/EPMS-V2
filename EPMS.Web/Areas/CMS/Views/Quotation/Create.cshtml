@@ -37,7 +37,7 @@
 @using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.HiddenFor(model => model.CreatedByEmployee)
+        @*@Html.HiddenFor(model => model.CreatedByEmployee)*@
         @Html.HiddenFor(model => model.QuotationId)
         @Html.HiddenFor(model => model.OldItemDetailsCount)
         @Html.HiddenFor(model => model.ClientName)
@@ -459,7 +459,7 @@
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
-                    text: 'Please Complete Item Detail.'
+                    text: 'Please Complete Previous Item Details.'
                 });
                 event.preventDefault();
                 return false;
@@ -802,7 +802,7 @@
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
-                    text: 'The total % of all the due to project should not exceed 100 and must be number'
+                    text: 'The total % of all due at project completion should not exceed 100 and must be number'
                 });
                 $(this).val(0);
             }
