@@ -114,7 +114,7 @@
                         new List<SelectListItem> {
                             new SelectListItem { Value = "0" , Text = "Single" },
                             new SelectListItem { Value = "1" , Text = "Married" },
-                        }, new { @id = "applicantMaritalStatus" })
+                        }, new { @id = "applicantMaritalStatus", @class = "select2me" })
                 </div>
             </div>
 
@@ -377,7 +377,7 @@
                     new SelectListItem { Value = "ZM", Text = "ZAMBIA"}, 
                     new SelectListItem { Value = "ZW", Text = "ZIMBABWE"}
                         },
-                        new { @id = "applicantNationality" })
+             new { @id = "applicantNationality", @class = "select2me" })
                 </div>
             </div>
 
@@ -421,7 +421,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button class="btn" type="submit" onclick="validateForm(event)">Apply</button>
+                    <button class="btn" type="submit" onclick="">Apply</button>
                 </div>
             </div>
         </div>

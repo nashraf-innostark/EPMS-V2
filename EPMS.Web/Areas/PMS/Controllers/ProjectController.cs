@@ -138,7 +138,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             string LicenseKey = WebBase.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
             var splitLicenseKey = LicenseKey.Split('|');
             string[] Modules = splitLicenseKey[4].Split(';');
-            if (Modules.Contains("CS"))
+            if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
             {
                 projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
                 projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());

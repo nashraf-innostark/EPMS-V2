@@ -35,14 +35,20 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
             projectTask.TaskProgress = source.TaskProgress;
-            var notesEn = source.NotesE.Replace("\n", "");
-            notesEn = notesEn.Replace("\r", "");
+            string notesEn = "";
+            if (!String.IsNullOrEmpty(source.NotesE))
+            {
+                notesEn = source.NotesE.Replace("\n", "");
+                notesEn = notesEn.Replace("\r", "");
+            }
             projectTask.NotesE = notesEn;
-            var notesAr = source.NotesA.Replace("\n", "");
-            notesAr = notesAr.Replace("\r", "");
+            string notesAr = "";
+            if (!String.IsNullOrEmpty(source.NotesA))
+            {
+                notesAr = source.NotesA.Replace("\n", "");
+                notesAr = notesAr.Replace("\r", "");
+            }
             projectTask.NotesA = notesAr;
-            projectTask.NotesE = source.NotesE;
-            projectTask.NotesA = source.NotesA;
             projectTask.RecCreatedBy = source.RecCreatedBy;
             projectTask.RecCreatedDt = source.RecCreatedDt;
             projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
@@ -86,22 +92,38 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
-            var descpEn = source.DescriptionE.Replace("\n","");
-            descpEn = descpEn.Replace("\r", "");
+            string descpEn = "";
+            if (!String.IsNullOrEmpty(source.DescriptionE))
+            {
+                descpEn = source.DescriptionE.Replace("\n", "");
+                descpEn = descpEn.Replace("\r", "");
+            }
             projectTask.DescriptionE = descpEn;
-            var descpAr = source.DescriptionA.Replace("\n", "");
-            descpAr = descpAr.Replace("\r", "");
+            string descpAr = "";
+            if (!String.IsNullOrEmpty(source.DescriptionA))
+            {
+                descpAr = source.DescriptionA.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
             projectTask.DescriptionA = descpAr;
             projectTask.StartDate = source.StartDate == null ? (DateTime?)null : DateTime.ParseExact(source.StartDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = source.EndDate == null ? (DateTime?)null : DateTime.ParseExact(source.EndDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
             projectTask.TaskProgress = source.TaskProgress;
-            var notesEn = source.NotesE.Replace("\n", "");
-            notesEn = notesEn.Replace("\r", "");
+            string notesEn = "";
+            if (!String.IsNullOrEmpty(source.NotesE))
+            {
+                notesEn = source.NotesE.Replace("\n", "");
+                notesEn = notesEn.Replace("\r", "");
+            }
             projectTask.NotesE = notesEn;
-            var notesAr = source.NotesA.Replace("\n", "");
-            notesAr = notesAr.Replace("\r", "");
+            string notesAr = "";
+            if (!String.IsNullOrEmpty(source.NotesA))
+            {
+                notesAr = source.NotesA.Replace("\n", "");
+                notesAr = notesAr.Replace("\r", "");
+            }
             projectTask.NotesA = notesAr;
             projectTask.RecCreatedBy = source.RecCreatedBy;
             projectTask.RecCreatedDt = source.RecCreatedDt;
