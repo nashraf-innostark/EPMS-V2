@@ -233,7 +233,10 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 recipient.Email = source.Email;
             }
             recipient.IsRead = source.ReadStatus;
-            recipient.EmployeeId = source.EmployeeId;
+            if (source.EmployeeId != 0)
+            {
+                recipient.EmployeeId = source.EmployeeId;
+            }
             return recipient;
         }
     }

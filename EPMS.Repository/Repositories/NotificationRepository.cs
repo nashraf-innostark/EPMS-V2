@@ -173,8 +173,13 @@ namespace EPMS.Repository.Repositories
 
             if (requestParams.SystemGenerated)
             {
-                query = s => (((s.ForAdmin == true) && ((s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false) || (s.NotificationRecipients.Count(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId) == 0))) || (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false)
-                          && (s.AlertAppearDate <= today));
+                query = s => (
+
+                    (((s.ForAdmin == true) && ((s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false) || (s.NotificationRecipients.Count(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId) == 0))) 
+                    || (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false))
+                    && (s.AlertAppearDate <= today)
+                    
+                    );
             }
             else
             {

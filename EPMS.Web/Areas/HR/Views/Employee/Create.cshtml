@@ -72,6 +72,8 @@
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeJobId)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.PrevJobTitleId)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.IsActivated)
+        @Html.HiddenFor(model => model.EmployeeViewModel.Employee.RecCreatedBy)
+        @Html.HiddenFor(model => model.EmployeeViewModel.Employee.RecCreatedDt)
         @Html.HiddenFor(model => model.EmployeeViewModel.Employee.EmployeeImagePath, new { @id = "EmployeeImage" })
         <div class="control-group row-fluid">
             <div class="span3">

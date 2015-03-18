@@ -73,9 +73,9 @@ namespace EPMS.Repository.Repositories
                             s.EmployeeId,
                             s.IsMonetary,
                             s.RequestTopic,
-                            RequestDetails = s.RequestDetails.Where(detail => detail.LastInstallmentDate != null && (detail.FirstInstallmentDate != null && 
-                                (detail.RowVersion == 1 && detail.FirstInstallmentDate.Value.Month == currentMonth.Month  && detail.FirstInstallmentDate.Value.Year == currentMonth.Year 
-                                && detail.LastInstallmentDate.Value.Month >= currentMonth.Month && detail.FirstInstallmentDate.Value.Year == currentMonth.Year))).ToList(),
+                            RequestDetails = s.RequestDetails.Where(detail => detail.LastInstallmentDate != null && detail.FirstInstallmentDate != null && 
+                                (detail.RowVersion == 1 && (detail.FirstInstallmentDate.Value.Month <= currentMonth.Month  && detail.FirstInstallmentDate.Value.Year <= currentMonth.Year 
+                                && detail.LastInstallmentDate.Value.Month >= currentMonth.Month && detail.LastInstallmentDate.Value.Year >= currentMonth.Year))).ToList(),
                         }).ToList().Select(s => new EmployeeRequest 
                         {
                             RequestId = s.RequestId,

@@ -34,7 +34,7 @@ namespace EPMS.Repository.Repositories
 
         public Allowance FindAllownce(long employeeId, DateTime currTime)
         {
-            var allowance = DbSet.OrderByDescending(a => a.AllowanceDate).FirstOrDefault(allow => (allow.Employee.EmployeeId == employeeId) && (allow.AllowanceDate <= currTime));
+            var allowance = DbSet.OrderByDescending(a => a.AllowanceDate).FirstOrDefault(allow => (allow.Employee.EmployeeId == employeeId) && (allow.AllowanceDate.Value.Month <= currTime.Month && allow.AllowanceDate.Value.Year <= currTime.Year));
             return allowance;
         }
         public IEnumerable<Allowance> FindAllownceFromTo(long employeeId, DateTime from, DateTime to)

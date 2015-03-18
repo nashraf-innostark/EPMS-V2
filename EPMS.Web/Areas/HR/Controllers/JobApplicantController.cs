@@ -58,15 +58,17 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult Apply(long? id)
         {
             JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
-            if (id != null)
+            if (id == null)
             {
-                jobApplicantViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
+                return RedirectToAction("Jobs");
             }
+            jobApplicantViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
             jobApplicantViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
             return View(jobApplicantViewModel);
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateInput(false)]
         public ActionResult Apply(JobApplicantViewModel jobApplicantViewModel)
         {
@@ -99,7 +101,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
                 return RedirectToAction("Apply", e);
             }
-
+            TempData["message"] = new MessageViewModel { Message = "Error", IsError = true };
             return View(jobApplicantViewModel);
         }
         public ActionResult UploadCv()

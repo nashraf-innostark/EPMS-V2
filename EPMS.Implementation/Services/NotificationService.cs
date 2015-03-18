@@ -14,6 +14,7 @@ namespace EPMS.Implementation.Services
 {
     public class NotificationService:INotificationService
     {
+        private readonly IMeetingRepository meetingRepository;
         private readonly IJobApplicantRepository jobApplicantRepository;
         private readonly IJobOfferedRepository jobOfferedRepository;
         private readonly IProjectTaskRepository projectTaskRepository;
@@ -25,8 +26,9 @@ namespace EPMS.Implementation.Services
         private readonly INotificationRepository notificationRepository;
         private readonly IEmployeeRepository employeeRepository;
 
-        public NotificationService(IJobApplicantRepository jobApplicantRepository,IJobOfferedRepository jobOfferedRepository,IProjectTaskRepository projectTaskRepository,IProjectRepository projectRepository,IEmployeeRequestRepository requestRepository,IMenuRepository menuRepository, IAspNetUserRepository aspNetUserRepository, INotificationRecipientRepository notificationRecipientRepository, INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
+        public NotificationService(IMeetingRepository meetingRepository,IJobApplicantRepository jobApplicantRepository,IJobOfferedRepository jobOfferedRepository,IProjectTaskRepository projectTaskRepository,IProjectRepository projectRepository,IEmployeeRequestRepository requestRepository,IMenuRepository menuRepository, IAspNetUserRepository aspNetUserRepository, INotificationRecipientRepository notificationRecipientRepository, INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
         {
+            this.meetingRepository = meetingRepository;
             this.jobApplicantRepository = jobApplicantRepository;
             this.jobOfferedRepository = jobOfferedRepository;
             this.projectTaskRepository = projectTaskRepository;
@@ -597,6 +599,14 @@ namespace EPMS.Implementation.Services
                 var jobTitle = jobApplicant.JobOffered.JobTitle;
                 fileText = fileText.Replace("[JobTitleEng]", jobTitle.JobTitleNameE);
                 fileText = fileText.Replace("[JobTitleAr]", jobTitle.JobTitleNameA);
+            }
+            else if (notificationResponse.NotificationCode == "40")
+            {
+                //Meeting 
+                var meeting = meetingRepository.Find(notificationResponse.ItemId);
+
+                fileText = fileText.Replace("[MeetingTopicEng]", meeting.TopicName);
+                fileText = fileText.Replace("[MeetingTopicAr]", meeting.TopicNameAr);
             }
             return fileText;
         }

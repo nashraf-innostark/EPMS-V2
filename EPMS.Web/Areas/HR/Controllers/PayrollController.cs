@@ -174,9 +174,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             long id = viewModel.Id;
             if (id > 0)
             {
-                //viewModel.Date = new DateTime(Convert.ToInt32(viewModel.Date), Convert.ToInt32(viewModel.Date), 1);
                 var date = DateTime.ParseExact(viewModel.Date, "MM/yyyy", new CultureInfo("en"));
-                //DateTime.ParseExact(source.FirstInstallmentDate, "dd/MM/yyyy", new CultureInfo("en"))
                 PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id,date);
                 if (response.Employee != null)
                 {
@@ -190,16 +188,44 @@ namespace EPMS.Web.Areas.HR.Controllers
                 // get employee requests
                 if (response.Requests != null)
                 {
-                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll());
-                    // get Employee request details
-                    foreach (var reqDetail in requests)
+                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll()).Select(x => x.RequestDetails).ToList();
+                    if (requests.Any())
                     {
-                        var firstOrDefault = reqDetail.RequestDetails.FirstOrDefault();
-                        if (firstOrDefault != null)
-                            viewModel.Deduction1 = Math.Ceiling(firstOrDefault.InstallmentAmount ?? 0);
-                        var lastOrDefault = reqDetail.RequestDetails.LastOrDefault();
-                        if (lastOrDefault != null)
-                            viewModel.Deduction2 = Math.Ceiling(lastOrDefault.InstallmentAmount ?? 0);
+                        switch (requests.Count)
+                        {
+                            case 2:
+                                var deduction1 = requests[0].Select(x => x.InstallmentAmount).ToList();
+                                if (deduction1.Any())
+                                {
+                                    if (deduction1[0] != null)
+                                    {
+                                        viewModel.Deduction1 = deduction1[0] ?? 0;
+                                    }
+                                }
+                                var deduction2 = requests[1].Select(x => x.InstallmentAmount).ToList();
+                                if (deduction2.Any())
+                                {
+                                    if (deduction2[0] != null)
+                                    {
+                                        viewModel.Deduction2 = deduction2[0] ?? 0;
+                                    }
+                                }
+                                break;
+                            case 1:
+                                var deduction = requests[0].Select(x => x.InstallmentAmount).ToList();
+                                if (deduction.Any())
+                                {
+                                    if (deduction[0] != null)
+                                    {
+                                        viewModel.Deduction1 = deduction[0] ?? 0;
+                                    }
+                                }
+                                break;
+                            case 0:
+                                viewModel.Deduction1 = 0;
+                                viewModel.Deduction2 = 0;
+                                break;
+                        }
                     }
                 }
                 double basicSalary = 0;

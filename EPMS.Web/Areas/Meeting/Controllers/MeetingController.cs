@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
                 emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail3;
             }
             string emailSubject = "Meeting Invitation";
-            string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName + "on" + meetingViewModel.Meeting.Date;
+            string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName + " on " + meetingViewModel.Meeting.Date;
             Utility.SendEmailAsync(emails, emailSubject, emailBody);
         }
         #endregion

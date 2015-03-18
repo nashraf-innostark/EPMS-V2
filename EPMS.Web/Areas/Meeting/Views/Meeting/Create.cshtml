@@ -91,7 +91,7 @@
                         <div class="span9">
 
                             <div class="controls">
-                                @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeFullNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
+                                @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
                             </div>
                         </div>
                     </div>

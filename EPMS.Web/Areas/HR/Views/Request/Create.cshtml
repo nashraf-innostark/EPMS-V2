@@ -467,18 +467,18 @@
         CopyRequestToReply();
     });
     $('#FirstInstallmentDate').change(function () {
-        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "DD/MM/YYYY").add($('#NumberOfMonths').val(), 'months').format('DD/MM/YYYY'));
+        $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "DD/MM/YYYY").add(($('#NumberOfMonths').val()-1), 'months').format('DD/MM/YYYY'));
     });
     $('#NumberOfMonths').change(function () {
         if ($('#FirstInstallmentDate').val() != "") {
-            $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "DD/MM/YYYY").add($('#NumberOfMonths').val(), 'months').format('DD/MM/YYYY'));
+            $('#LastInstallmentDate').val(moment($('#FirstInstallmentDate').val(), "DD/MM/YYYY").add(($('#NumberOfMonths').val()-1), 'months').format('DD/MM/YYYY'));
         }
     });
     //INSTALLMENT CALCULATIONS
     $('#InstallmentAmount').change(function () {
         var loanAmount = parseInt($('#LoanAmount').val());
         var installmentAmount = parseInt($('#InstallmentAmount').val());
-        if (installmentAmount < loanAmount) {
+        if (installmentAmount <= loanAmount) {
             $('#NumberOfMonths').val(Math.ceil(loanAmount / installmentAmount));
         } else {
             $('#InstallmentAmount').val('');
@@ -493,11 +493,11 @@
     //END INSTALLMENT CALCULATIONS
     // REPLY SCRIPTS
     $('#FirstInstallmentDateREPLY').change(function () {
-        $('#LastInstallmentDateREPLY').val(moment($('#FirstInstallmentDateREPLY').val(), "MM/DD/YYYY").add($('#NumberOfMonthsREPLY').val(), 'months').format('MM/DD/YYYY'));
+        $('#LastInstallmentDateREPLY').val(moment($('#FirstInstallmentDateREPLY').val(), "MM/DD/YYYY").add(($('#NumberOfMonthsREPLY').val()-1), 'months').format('MM/DD/YYYY'));
     });
     $('#NumberOfMonthsREPLY').change(function () {
         if ($('#FirstInstallmentDateREPLY').val() != "") {
-            $('#LastInstallmentDateREPLY').val(moment($('#FirstInstallmentDateREPLY').val(), "MM/DD/YYYY").add($('#NumberOfMonthsREPLY').val(), 'months').format('MM/DD/YYYY'));
+            $('#LastInstallmentDateREPLY').val(moment($('#FirstInstallmentDateREPLY').val(), "MM/DD/YYYY").add(($('#NumberOfMonthsREPLY').val()-1), 'months').format('MM/DD/YYYY'));
         }
     });
     //INSTALLMENT CALCULATIONS

@@ -179,6 +179,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 // Add/Update Task
                 if (viewModel.ProjectTask.TaskId > 0)
                 {
+                    // Update Case
                     viewModel.ProjectTask.RecLastUpdatedBy = User.Identity.GetUserId();
                     viewModel.ProjectTask.RecLastUpdatedDt = DateTime.Now;
                     var projectTaskToUpdate = viewModel.ProjectTask.CreateFromClientToServer();

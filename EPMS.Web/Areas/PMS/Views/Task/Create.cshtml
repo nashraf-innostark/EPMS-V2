@@ -39,6 +39,8 @@
 @using (Html.BeginForm("Create", "Task", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.ProjectTask.TaskId)
+    @Html.HiddenFor(model => model.ProjectTask.RecCreatedBy)
+    @Html.HiddenFor(model => model.ProjectTask.RecCreatedDt)
     <input type="hidden" id="prevTasksWeight" />
     <input type="hidden" id="projectStartDate" />
     <input type="hidden" id="projectEndDate" />
