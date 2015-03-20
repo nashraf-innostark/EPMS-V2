@@ -11,6 +11,9 @@ namespace EPMS.Models.ResponseModels
         }
 
         public IEnumerable<JobTitle> JobTitles { get; set; }
+        public JobTitle JobTitle { get; set; }
+        public IEnumerable<Department> Departments { get; set; }
+
 
         /// <summary>
         /// Total Count

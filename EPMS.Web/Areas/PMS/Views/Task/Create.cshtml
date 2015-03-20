@@ -728,11 +728,13 @@
         $("#dualMulti").empty();
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
-                var temp = data[i].TotalWeight.split('%');
-                projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(temp[0]);
-                $("#dualMulti").append(
-                    $('<option></option>').val(data[i].TaskId).html(data[i].TaskNameE)
-                );
+                if (data[i].TaskId != $("#ProjectTask_TaskId").val()) {
+                    var temp = data[i].TotalWeight.split('%');
+                    projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(temp[0]);
+                    $("#dualMulti").append(
+                        $('<option></option>').val(data[i].TaskId).html(data[i].TaskNameE)
+                    );
+                }
                 //$("#dualMulti").pickList("insert", {
                 //    value: data[i].TaskId,
                 //    label: data[i].TaskNameE,

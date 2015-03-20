@@ -18,5 +18,6 @@ namespace EPMS.Interfaces.IServices
         TaskResponse GetAllTasks(TaskSearchRequest searchRequest);
         TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId);
         TaskResponse GetProjectTasksForCustomer(TaskSearchRequest searchRequest, long customerId);
+        TaskResponse GetResponseForAddEdit(long id);
     }
 }

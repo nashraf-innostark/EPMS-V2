@@ -68,11 +68,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                 long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
                 return RedirectToAction("Create", new { id });
             }
-            EmployeeSearchRequset employeeSearchRequest = new EmployeeSearchRequset();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
-                SearchRequest = employeeSearchRequest,
-                //Role = userRole.Name,
+                SearchRequest = new EmployeeSearchRequset()
             };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(employeeViewModel);
@@ -88,7 +86,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             searchRequest.SearchString = Request["search"];
-            var employees = EmployeeService.GetAllEmployees(searchRequest);
+            EmployeeResponse employees = EmployeeService.GetAllEmployees(searchRequest);
             IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
@@ -98,7 +96,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                 iTotalDisplayRecords = Convert.ToInt32(employees.TotalDisplayRecords),
                 sEcho = searchRequest.sEcho
             };
-
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -134,11 +131,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 {
                     EmployeeViewModel =
                     {
-                        JobTitleList = JobTitleService.GetAll(),
-                        Allowance = new Allowance(),
-                        OldAllowance = new Allowance(),
-                        SearchRequest = new EmployeeSearchRequset(),
-                        Employee = new Employee()
+                        JobTitleList = JobTitleService.GetAll()
                     }
                 };
                 string employeeJobId = GetEmployeeJobId();
@@ -151,21 +144,11 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             if (id > 0)
             {
-                EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
-                {
-                    EmployeeViewModel =
-                    {
-                        JobTitleList = JobTitleService.GetAll(),
-                        Allowance = new Allowance(),
-                        OldAllowance = new Allowance(),
-                        SearchRequest = new EmployeeSearchRequset(),
-                        Employee = new Employee()
-                    }
-                };
-                viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
+                EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel();
                 // Get Employee Along Job History
                 EmployeeResponse employeeResponse = EmployeeService.GetEmployeeAlongJobHistory(id);
                 viewModel.EmployeeViewModel.Employee = employeeResponse.Employee.CreateFromServerToClient();
+                viewModel.EmployeeViewModel.JobTitleDeptList = employeeResponse.JobTitleList.Select(x => x.CreateFromServerToClient());
                 // Get Allowances
                 var allowance =
                     AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId, DateTime.Now);
@@ -175,46 +158,6 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
                 }
                 viewModel.EmployeeViewModel.JobHistories = employeeResponse.JobHistories.Select(x=>x.CreateFromServerToClientForJobHistory()).ToList();
-                //if (employeeResponse.JobHistory.EmployeeJobHistory.Any())
-                //{
-                //    for (int i=0; i< employeeResponse.JobHistory.EmployeeJobHistory.Count; i++)
-                //    {
-                //        EmployeeJobHistory jobs = new EmployeeJobHistory();
-                //        jobs.JobTitle = employeeResponse.JobHistory.EmployeeJobHistory[i].JobTitle.JobTitleNameE;
-                //        if (i == 0)
-                //        {
-                //            jobs.From = Convert.ToDateTime(employeeResponse.Employee.RecCreatedDt)
-                //                .ToString("dd/MM/yyyy", new CultureInfo("en"));
-                //        }
-                //        else
-                //        {
-                //            jobs.From = Convert.ToDateTime(employeeResponse.JobHistory.EmployeeJobHistory[i -1 ].RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
-                //        }
-                //        if (i == employeeResponse.JobHistory.EmployeeJobHistory.Count)
-                //        {
-                //            jobs.To = DateTime.Now.ToShortDateString();
-                //        }
-                //        else
-                //        {
-                //            jobs.To = employeeResponse.JobHistory.EmployeeJobHistory[i].RecCreatedDate.ToShortDateString();
-                //        }
-                //        jobs.BasicSalary = employeeResponse.JobHistory.EmployeeJobHistory[i].JobTitle.BasicSalary ?? 0;
-                //        viewModel.EmployeeViewModel.JobHistories.Add(jobs);
-                //    }
-                //}
-
-
-
-
-                // Set Employee Name for Header
-                viewModel.EmployeeViewModel.Employee.EmployeeFullNameE =
-                    viewModel.EmployeeViewModel.Employee.EmployeeFirstNameE + " " +
-                    viewModel.EmployeeViewModel.Employee.EmployeeMiddleNameE + " " +
-                    viewModel.EmployeeViewModel.Employee.EmployeeLastNameE;
-                viewModel.EmployeeViewModel.Employee.EmployeeFullNameA =
-                    viewModel.EmployeeViewModel.Employee.EmployeeFirstNameA + " " +
-                    viewModel.EmployeeViewModel.Employee.EmployeeMiddleNameA + " " +
-                    viewModel.EmployeeViewModel.Employee.EmployeeLastNameA;
                 viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeFullNameE : viewModel.EmployeeViewModel.Employee.EmployeeFullNameA;
                 if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
                 {
@@ -237,8 +180,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
                 }
                 // get Employee requests
-                var empRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)id);
-                var requests = empRequests.Select(x => x.CreateFromServerToClientEmpDetail()).ToList();
+                var requests = employeeResponse.EmployeeMonetaryRequests.Select(x => x.CreateFromServerToClientEmpDetail()).ToList();
                 if (requests.Count() == 2)
                 {
                     var first = requests[0].RequestDetails.ToList();
@@ -263,17 +205,14 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.Deduction1 = Convert.ToInt32(val1);
                     }
                 }
-                var employeeRequestResponse = EmployeeRequestService.LoadAllRequestsForEmployee(viewModel.EmployeeViewModel.Employee.EmployeeId);
-                var data = employeeRequestResponse.Select(x => x.CreateFromServerToClient());
+                var data = employeeResponse.EmployeeRequests.Select(x => x.CreateFromServerToClient());
                 var employeeRequests = data as IList<EmployeeRequest> ?? data.ToList();
                 if (employeeRequests.Any())
                 {
                     viewModel.RequestListViewModel.aaData = employeeRequests;
                 }
-                var employeeTaskResponse =
-                    TaskEmployeeService.GetTaskEmployeeByEmployeeId(viewModel.EmployeeViewModel.Employee.EmployeeId);
-                var taskData = employeeTaskResponse.Select(x => x.CreateFromServerToClient());
-                var employeeTasks = taskData as IList<Models.TaskEmployee> ?? taskData.ToList();
+                var taskData = employeeResponse.EmployeeTasks.Select(x => x.CreateFromServerToClient());
+                var employeeTasks = taskData as IList<TaskEmployee> ?? taskData.ToList();
                 if (employeeTasks.Any())
                 {
                     viewModel.TaskEmployees = employeeTasks;

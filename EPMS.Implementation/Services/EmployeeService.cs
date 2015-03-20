@@ -21,6 +21,9 @@ namespace EPMS.Implementation.Services
         private readonly IEmployeeJobHistoryRepository employeeJobHistoryRepository;
         private readonly IEmployeeRequestRepository requestRepository;
         private readonly IJobTitleHistoryRepository JobTitleHistoryRepository;
+        private readonly IJobTitleService JobTitleService;
+        private readonly IEmployeeRequestService EmployeeRequestService;
+        private readonly ITaskEmployeeService TaskEmployeeService;
 
 
         #region Constructor
@@ -32,7 +35,7 @@ namespace EPMS.Implementation.Services
         /// <param name="notificationRepository"></param>
         /// <param name="notificationService"></param>
         /// <param name="xRepository"></param>
-        public EmployeeService(IAspNetUserRepository aspNetUserRepository,INotificationRepository notificationRepository,INotificationService notificationService,IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository, IJobTitleHistoryRepository jobTitleHistoryRepository)
+        public EmployeeService(IAspNetUserRepository aspNetUserRepository,INotificationRepository notificationRepository,INotificationService notificationService,IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IJobTitleService jobTitleService, IEmployeeRequestService employeeRequestService, ITaskEmployeeService taskEmployeeService)
         {
             this.aspNetUserRepository = aspNetUserRepository;
             this.notificationRepository = notificationRepository;
@@ -42,6 +45,9 @@ namespace EPMS.Implementation.Services
             this.allowanceRepository = allowanceRepository;
             this.employeeJobHistoryRepository = employeeJobHistoryRepository;
             JobTitleHistoryRepository = jobTitleHistoryRepository;
+            JobTitleService = jobTitleService;
+            EmployeeRequestService = employeeRequestService;
+            TaskEmployeeService = taskEmployeeService;
         }
 
         #endregion
@@ -66,6 +72,10 @@ namespace EPMS.Implementation.Services
             if (employeeId != null)
             {
                 response.Employee = repository.Find((long)employeeId);
+                response.JobTitleList = JobTitleService.GetAll();
+                response.EmployeeMonetaryRequests = EmployeeRequestService.LoadAllMonetaryRequests(DateTime.Now, (long)employeeId);
+                response.EmployeeRequests = EmployeeRequestService.LoadAllRequestsForEmployee((long)employeeId);
+                response.EmployeeTasks = TaskEmployeeService.GetTaskEmployeeByEmployeeId((long)employeeId);
                 var jobHistory = employeeJobHistoryRepository.GetJobHistoryByEmployeeId((long)employeeId).ToList();
                 if (jobHistory.Any())
                 {

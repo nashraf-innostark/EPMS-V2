@@ -42,44 +42,26 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             OrdersListViewModel viewModel = new OrdersListViewModel();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var firstOrDefault = result.AspNetRoles.FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                viewModel.SearchRequest.Role = firstOrDefault.Name;
-                viewModel.SearchRequest.CustomerId = result.CustomerId ?? 0;
-            }
             return View(viewModel);
         }
         [HttpPost]
         public ActionResult Index(OrdersSearchRequest searchRequest)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var firstOrDefault = result.AspNetRoles.FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                searchRequest.Role = firstOrDefault.Name;
-                searchRequest.CustomerId = result.CustomerId ?? 0;
-            }
             searchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             searchRequest.SearchString = Request["search"];
             OrdersResponse ordersList = null;
             IEnumerable<Order> orders = null;
-            //Models.Customer customer = null;
-            if (searchRequest.Role != null)
+            if (Session["RoleName"].ToString() == "Admin")
             {
-                if (searchRequest.Role == "Admin")
-                {
-                    searchRequest.CustomerId = 0;
-                    ordersList = OrdersService.GetAllOrders(searchRequest);
-                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
-                }
-                if (searchRequest.Role == "Customer")
-                {
-                    searchRequest.CustomerId = searchRequest.CustomerId;
-                    ordersList = OrdersService.GetAllOrders(searchRequest);
-                    orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
-                }
+                searchRequest.CustomerId = 0;
+                ordersList = OrdersService.GetAllOrders(searchRequest);
+                orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
+            }
+            if (Session["RoleName"].ToString() == "Customer")
+            {
+                searchRequest.CustomerId = Convert.ToInt64(Session["CustomerID"]);
+                ordersList = OrdersService.GetAllOrders(searchRequest);
+                orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
             }
             if (ordersList == null) return View(new OrdersListViewModel());
             OrdersListViewModel viewModel = new OrdersListViewModel
@@ -96,9 +78,6 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             var direction = Resources.Shared.Common.TextDirection;
             OrdersCreateViewModel viewModel = new OrdersCreateViewModel();
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var role = result.AspNetRoles.FirstOrDefault();
-            if (role != null) viewModel.RoleName = role.Name;
             if (Request.UrlReferrer != null)
             {
                 ViewBag.backUrl = Request.UrlReferrer;
@@ -110,11 +89,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (id != null)
             {
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
-                if (viewModel.RoleName == "Customer")
+                if (Session["RoleName"].ToString() == "Customer")
                 {
                     viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
                 }
-                if (viewModel.RoleName == "Admin")
+                else if (Session["RoleName"].ToString() == "Admin")
                 {
                     viewModel.PageTitle = Resources.CMS.Order.OrderDetail;
                 }
@@ -131,9 +110,6 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Create(OrdersCreateViewModel viewModel)
         {
             var direction = Resources.Shared.Common.TextDirection;
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var role = result.AspNetRoles.FirstOrDefault();
-            if (role != null) viewModel.RoleName = role.Name;
             if (viewModel.Orders.OrderId > 0)
             {
                 // Update Case
@@ -155,9 +131,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 // Add Case
 
                 // Get Customer Id from AspNetUser
-                var customerId = result.CustomerId;
                 viewModel.Orders.OrderDate = DateTime.Now;
-                viewModel.Orders.CustomerId = customerId ?? 0;
+                viewModel.Orders.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 viewModel.Orders.OrderStatus = 2;
                 viewModel.Orders.RecCreatedBy = User.Identity.GetUserId();
                 viewModel.Orders.RecCreatedDt = DateTime.Now;
@@ -172,11 +147,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            if (viewModel.RoleName == "Admin")
+            if (Session["RoleName"].ToString() == "Admin")
             {
                 viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
             }
-            if (viewModel.RoleName == "Customer")
+            if (Session["RoleName"].ToString() == "Customer")
             {
                 viewModel.PageTitle = Resources.CMS.Order.PTCreateSave;
             }

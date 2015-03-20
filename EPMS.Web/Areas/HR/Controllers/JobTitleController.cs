@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
@@ -60,11 +61,12 @@ namespace EPMS.Web.Areas.HR.Controllers
         public ActionResult Create(long? id)
         {
             JobTitleViewModel viewModel = new JobTitleViewModel();
+            JobTitleResponse response = id != null ? jobTitleService.GetResponseWithJobTitle((long) id) : jobTitleService.GetResponseWithJobTitle(0);
             if (id != null)
             {
-                viewModel.JobTitle = jobTitleService.FindJobTitleById((long)id).CreateFrom();
+                viewModel.JobTitle = response.JobTitle.CreateFrom();
             }
-            viewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
+            viewModel.DepartmentList = response.Departments.Select(x => x.CreateFrom());
             return View(viewModel);
         }
 

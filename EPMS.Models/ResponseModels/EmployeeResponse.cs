@@ -14,7 +14,10 @@ namespace EPMS.Models.ResponseModels
         public IEnumerable<Employee> Employeess { get; set; }
         public Employee Employee { get; set; }
         public IList<JobHistory> JobHistories { get; set; }
-
+        public IEnumerable<JobTitle> JobTitleList { get; set; }
+        public IEnumerable<EmployeeRequest> EmployeeMonetaryRequests { get; set; }
+        public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
+        public IEnumerable<TaskEmployee> EmployeeTasks { get; set; }
         //public EmployeeJobHistoryResponse JobHistory { get; set; }
 
         /// <summary>

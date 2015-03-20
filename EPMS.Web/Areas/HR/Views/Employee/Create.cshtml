@@ -150,7 +150,7 @@
             </div>
             <div class="span2">
                 <div class="controls jobTitleDDL">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleList, "JobTitleId", "JobTitleNameE"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
+                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleDeptList, "JobId", "JobTitleE"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
                 </div>
             </div>
             <div class="span3" style="margin-left: 40px; margin-top: 20px;">

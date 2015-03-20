@@ -21,6 +21,9 @@ namespace EPMS.Implementation.Services
         private readonly IProjectTaskRepository Repository;
         private readonly ITaskEmployeeService TaskEmployeeService;
         private readonly INotificationService notificationService;
+        private readonly ICustomerService customerService;
+        private readonly IEmployeeService employeeService;
+        private readonly IProjectService projectService;
 
         /// <summary>
         /// Constructor
@@ -29,12 +32,15 @@ namespace EPMS.Implementation.Services
         /// <param name="repository"></param>
         /// <param name="taskEmployeeService"></param>
         /// <param name="notificationService"></param>
-        public ProjectTaskService(INotificationRepository notificationRepository,IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService,INotificationService notificationService)
+        public ProjectTaskService(INotificationRepository notificationRepository, IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService, INotificationService notificationService, ICustomerService customerService, IEmployeeService employeeService, IProjectService projectService)
         {
             this.notificationRepository = notificationRepository;
             Repository = repository;
             TaskEmployeeService = taskEmployeeService;
             this.notificationService = notificationService;
+            this.customerService = customerService;
+            this.employeeService = employeeService;
+            this.projectService = projectService;
         }
 
         public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
@@ -44,6 +50,23 @@ namespace EPMS.Implementation.Services
         public ProjectTask FindProjectTaskById(long id)
         {
             return Repository.FindTaskWithPreRequisites(id);
+        }
+        public TaskResponse GetResponseForAddEdit(long id)
+        {
+            TaskResponse response = new TaskResponse();
+            response.Customers = customerService.GetAll();
+            response.Employees = employeeService.GetAll();
+            response.Projects = projectService.GetAllProjects();
+            if (id > 0)
+            {
+                response.ProjectTask = Repository.FindTaskWithPreRequisites(id);
+                if (response.ProjectTask.CustomerId != null)
+                {
+                    response.Projects = projectService.FindProjectByCustomerId((long)response.ProjectTask.CustomerId);
+                }
+                response.ProjectTasks = Repository.FindProjectTaskByProjectId(response.ProjectTask.ProjectId, response.ProjectTask.TaskId);
+            }
+            return response;
         }
 
         public TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId)

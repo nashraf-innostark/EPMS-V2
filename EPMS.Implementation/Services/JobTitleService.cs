@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -12,16 +13,18 @@ namespace EPMS.Implementation.Services
         private readonly IJobTitleHistoryRepository jobTitleHistoryRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IJobOfferedRepository jobOfferedRepository;
+        private readonly IDepartmentService departmentService;
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public JobTitleService(IJobTitleRepository xRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IEmployeeRepository employeeRepository, IJobOfferedRepository jobOfferedRepository)
+        public JobTitleService(IJobTitleRepository xRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IEmployeeRepository employeeRepository, IJobOfferedRepository jobOfferedRepository, IDepartmentService departmentService)
         {
             repository = xRepository;
             this.jobTitleHistoryRepository = jobTitleHistoryRepository;
             this.employeeRepository = employeeRepository;
             this.jobOfferedRepository = jobOfferedRepository;
+            this.departmentService = departmentService;
         }
 
         #endregion
@@ -41,6 +44,17 @@ namespace EPMS.Implementation.Services
         {
             if (id != null) return repository.Find((int)id);
             return null;
+        }
+
+        public JobTitleResponse GetResponseWithJobTitle(long id)
+        {
+            JobTitleResponse response = new JobTitleResponse();
+            response.Departments = departmentService.GetAll();
+            if (id > 0)
+            {
+                response.JobTitle = FindJobTitleById(id);
+            }
+            return response;
         }
         public JobTitle GetJobTitlesByJobOfferedId (long id)
         {
