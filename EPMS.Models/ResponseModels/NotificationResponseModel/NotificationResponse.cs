@@ -22,11 +22,8 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         public string AlertDateHijri { get; set; }
         public string UserId { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]
         public string MobileNo { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
-        [StringLength(200, ErrorMessage = "Title cannot exceed 200 characters.")]
         [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         public string Email { get; set; }
         public bool ReadStatus { get; set; }

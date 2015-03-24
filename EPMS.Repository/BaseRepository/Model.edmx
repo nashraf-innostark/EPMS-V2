@@ -206,7 +206,7 @@
           <Property Name="ComplaintId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerId" Type="bigint" Nullable="false" />
           <Property Name="DepartmentId" Type="bigint" Nullable="false" />
-          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" />
           <Property Name="Topic" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Reply" Type="nvarchar(max)" />
@@ -772,18 +772,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Complaint_Orders">
-          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
-          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1017,18 +1005,6 @@
             </Principal>
             <Dependent Role="NotificationRecipient">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NotificationRecipient_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="NotificationRecipient">
-              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1297,10 +1273,6 @@
             <End Role="Department" EntitySet="Department" />
             <End Role="Complaint" EntitySet="Complaint" />
           </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Orders" Association="Self.FK_Complaint_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Complaint" EntitySet="Complaint" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -1375,10 +1347,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_NotificationRecipient_AspNetUsers" Association="Self.FK_NotificationRecipient_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NotificationRecipient_Employee" Association="Self.FK_NotificationRecipient_Employee">
-            <End Role="Employee" EntitySet="Employee" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
           </AssociationSet>
           <AssociationSet Name="FK_NotificationRecipient_Notification" Association="Self.FK_NotificationRecipient_Notification">
@@ -1654,28 +1622,6 @@
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CompanyProfile" Relationship="Self.FK_CompanySocialDetails_CompanyProfile" FromRole="CompanySocialDetails" ToRole="CompanyProfile" />
         </EntityType>
-        <EntityType Name="Complaint">
-          <Key>
-            <PropertyRef Name="ComplaintId" />
-          </Key>
-          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
-          <Property Name="OrderId" Type="Int64" Nullable="false" />
-          <Property Name="Topic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Complaint_Orders" FromRole="Complaint" ToRole="Orders" />
-        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -1690,11 +1636,11 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Orders" FromRole="Customer" ToRole="Orders" />
           <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
           <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
           <NavigationProperty Name="Quotations" Relationship="Self.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
         </EntityType>
         <EntityType Name="DashboardWidgetPreference">
           <Key>
@@ -1717,8 +1663,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
           <NavigationProperty Name="JobTitles" Relationship="Self.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSModel.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -1962,7 +1908,6 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="OrderStatus" Type="Int32" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Orders" FromRole="Orders" ToRole="Complaint" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Orders" FromRole="Orders" ToRole="Customer" />
           <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Orders" FromRole="Orders" ToRole="Project" />
         </EntityType>
@@ -2234,42 +2179,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Complaint_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Complaint_Orders">
-          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
-          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Orders_Orders">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
@@ -2528,7 +2437,6 @@
           <EntitySet Name="CompanyDocumentDetails" EntityType="Self.CompanyDocumentDetail" />
           <EntitySet Name="CompanyProfiles" EntityType="Self.CompanyProfile" />
           <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetail" />
-          <EntitySet Name="Complaints" EntityType="Self.Complaint" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="DashboardWidgetPreferences" EntityType="Self.DashboardWidgetPreference" />
           <EntitySet Name="Departments" EntityType="Self.Department" />
@@ -2586,18 +2494,6 @@
           <AssociationSet Name="FK_CompanySocialDetails_CompanyProfile" Association="Self.FK_CompanySocialDetails_CompanyProfile">
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanySocialDetails" EntitySet="CompanySocialDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Customer" Association="Self.FK_Complaint_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Department" Association="Self.FK_Complaint_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Orders" Association="Self.FK_Complaint_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
             <End Role="Customer" EntitySet="Customers" />
@@ -2728,6 +2624,15 @@
           <AssociationSet Name="FK_NotificationRecipient_Notification" Association="EPMSModel.FK_NotificationRecipient_Notification">
             <End Role="Notification" EntitySet="Notifications" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          </AssociationSet>
+          <EntitySet Name="Complaints" EntityType="EPMSModel.Complaint" />
+          <AssociationSet Name="FK_Complaint_Customer" Association="EPMSModel.FK_Complaint_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaint_Department" Association="EPMSModel.FK_Complaint_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Employee">
@@ -2903,6 +2808,51 @@
             </Principal>
             <Dependent Role="NotificationRecipient">
               <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="ComplaintId" />
+          </Key>
+          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Topic" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
+          <NavigationProperty Name="Department" Relationship="EPMSModel.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
+        </EntityType>
+        <Association Name="FK_Complaint_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Department">
+          <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="DepartmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3102,26 +3052,6 @@
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Complaints">
-            <EntityTypeMapping TypeName="EPMSModel.Complaint">
-              <MappingFragment StoreEntitySet="Complaint">
-                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="Topic" ColumnName="Topic" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Reply" ColumnName="Reply" />
-                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3619,6 +3549,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="EPMSModel.Complaint">
+              <MappingFragment StoreEntitySet="Complaint">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
+                <ScalarProperty Name="Reply" ColumnName="Reply" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3651,7 +3601,6 @@
         <EntityTypeShape EntityType="EPMSModel.CompanyDocumentDetail" Width="1.5" PointX="20" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.CompanyProfile" Width="1.5" PointX="17.75" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.CompanySocialDetail" Width="1.5" PointX="20" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="22.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Customer" Width="1.5" PointX="0.75" PointY="18.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.DashboardWidgetPreference" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.Department" Width="1.5" PointX="0.75" PointY="23.25" IsExpanded="true" />
@@ -3686,9 +3635,6 @@
         <AssociationConnector Association="EPMSModel.FK_CompanyBankDetails_CompanyProfile" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_CompanyDocuments_CompanyProfile" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_CompanySocialDetails_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_Orders_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_Project_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" ManuallyRouted="false" />
@@ -3723,6 +3669,9 @@
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
+        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="22.25" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
         </Diagram>
     </Diagrams>
   </Designer>

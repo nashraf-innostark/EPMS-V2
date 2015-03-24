@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.Create;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -280,22 +281,25 @@
 
         </div>
         @*<div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
-            </div>
-        </div>*@
-        
-        <div class="control-group row-fluid">
-            <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
-                    <button id="savebtn" type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+                    <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
                 </div>
-                <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Meeting/Meeting/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+            </div>*@
+
+        @if (userPermissionsSet.Contains("MeetingCreate"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <div class="span3 span-inset">
+                        <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
+                        <button id="savebtn" type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+                    </div>
+                    <div class="span3 span-inset">
+                        <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Meeting/Meeting/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 }
 
@@ -319,9 +323,9 @@
         CKEDITOR.replace('Decisions');
         CKEDITOR.replace('DecisionsAr');
 
-        setTimeout(function() {
-            CKEDITOR.instances.Agenda.setReadOnly(true);
-            CKEDITOR.instances.AgendaAr.setReadOnly(true);
+        setTimeout(function () {
+            //CKEDITOR.instances.Agenda.setReadOnly(true);
+            //CKEDITOR.instances.AgendaAr.setReadOnly(true);
             CKEDITOR.instances.Discussion.setReadOnly(true);
             CKEDITOR.instances.DiscussionAr.setReadOnly(true);
             CKEDITOR.instances.Decisions.setReadOnly(true);
@@ -457,7 +461,7 @@
 
 
         //Disable Employee Select Box after Meeting Date
-        if(meetingDate < today){
+        if (meetingDate < today) {
             $('.' + 'disableOnDate' + ':input').attr('ReadOnly', true);
             $("#checked").addClass('disableList');
         }

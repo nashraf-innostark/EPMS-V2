@@ -105,16 +105,16 @@ namespace EPMS.Repository.Repositories
             if (searchRequset.iSortCol_0 == 0)
             {
                 notifications = DbSet
-                .Where(query).OrderBy(x=>x.NotificationRecipients.Any(y=>y.IsRead)).Skip(fromRow).Take(toRow).ToList();
+                .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead == false)).Skip(fromRow).Take(toRow).ToList();
             }
             else if (searchRequset.iSortCol_0 == 8)
             {
                 notifications = searchRequset.sSortDir_0 == "asc" ?
                 DbSet
-                .Where(query).OrderBy(x => x.NotificationRecipients.All(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList()
+                .Where(query).OrderByDescending(x =>  x.NotificationRecipients.All(y=>y.IsRead ==false)).Skip(fromRow).Take(toRow).ToList()
                 :
                 DbSet
-                .Where(query).OrderByDescending(x => x.NotificationRecipients.All(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList();
+                .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead == false)).Skip(fromRow).Take(toRow).ToList();
             }
             else
             {

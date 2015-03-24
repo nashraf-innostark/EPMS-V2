@@ -44,6 +44,8 @@
     @Html.HiddenFor(model => model.Complaint.IsReplied)
     @Html.HiddenFor(model => model.Complaint.ComplaintDesc)
     @Html.HiddenFor(model => model.Complaint.ComplaintDate)
+    @Html.HiddenFor(model => model.DeptId)
+    @Html.HiddenFor(model => model.OdrId)
     @Html.AntiForgeryToken()
     <div class="container-fluid">
 
@@ -67,7 +69,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.Complaint.ComplaintDateString, new { @class = "dateFormatter", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(m => m.Complaint.ComplaintDateString, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -149,6 +150,8 @@
             if ('@Model.Complaint.ComplaintId' > 0) {
                 $('.toBeReadOnly:input').attr('readonly', true);
                 $('.toBeDisabled:input').attr('disabled', true);
+                $('#DepartmentId').select2('disable');
+                $('#OrderId').select2('disable');
             }
             if ('@Model.Complaint.IsReplied' == 'False') {
                 $("#replyDiv").hide();
@@ -158,9 +161,13 @@
             if ('@Model.Complaint.IsReplied' == 'True') {
                 $('.toBeReadOnly:input').attr('readonly', true);
                 $('.toBeDisabled:input').attr('disabled', true);
+                $('#DepartmentId').select2('disable');
+                $('#OrderId').select2('disable');
             } else {
                 $('.toBeReadOnly:input').attr('readonly', true);
                 $('#DescriptionCK').attr('disabled', true);
+                $('#DepartmentId').select2('disable');
+                $('#OrderId').select2('disable');
             }
         }
     });
@@ -174,14 +181,14 @@
             $("#departmentValidation").text("");
             $("#departmentValidation").removeClass("Error");
         }
-        if ($("#OrderId").val() == null || $("#OrderId").val() == "" || $("#OrderId").val() == undefined) {
-            $("#orderValidation").text("Please Select Order");
-            $("#orderValidation").addClass("Error");
-            counter++;
-        } else {
-            $("#orderValidation").text("");
-            $("#orderValidation").removeClass("Error");
-        }
+        //if ($("#OrderId").val() == null || $("#OrderId").val() == "" || $("#OrderId").val() == undefined) {
+        //    $("#orderValidation").text("Please Select Order");
+        //    $("#orderValidation").addClass("Error");
+        //    counter++;
+        //} else {
+        //    $("#orderValidation").text("");
+        //    $("#orderValidation").removeClass("Error");
+        //}
         if ($("#Complaint_Topic").val() == null || $("#Complaint_Topic").val() == "" || $("#Complaint_Topic").val() == undefined) {
             $("#topicValidation").text("Please Select Complaint Topic");
             $("#topicValidation").addClass("Error");

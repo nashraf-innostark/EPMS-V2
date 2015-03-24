@@ -173,7 +173,7 @@
                             </div>
                         }
                         break;
-                    case "OrderWidget":
+                    case "OrdersWidget":
                         if (userPermissionsSet.Contains("OrdersWidget"))
                         {
                         <!-- Orders Widget -->
@@ -700,11 +700,11 @@
                                                 <li class="dashProject dashTask">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">Project - @Model.Project.Project.NameEShort</a>
                                                     }
                                                     else
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">Project - @Model.Project.Project.NameAShort</a>
                                                     }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)

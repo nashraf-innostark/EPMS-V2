@@ -34,7 +34,7 @@ namespace EPMS.Web.ModelMappers
                 ComplaintId = source.ComplaintId,
                 CustomerId = source.CustomerId,
                 DepartmentId = source.DepartmentId,
-                OrderId = source.OrderId,
+                OrderId = source.OrderId ?? 0,
                 ClientName = source.Customer.CustomerNameE,
                 Topic = source.Topic,
                 Description = source.Description,

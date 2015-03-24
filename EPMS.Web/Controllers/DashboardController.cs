@@ -390,13 +390,30 @@ namespace EPMS.Web.Controllers
         [HttpPost]
         public JsonResult SaveWidgetPreferences(string[] preferences)
         {
-            var userId = User.Identity.GetUserId();
-            var result = PreferencesService.LoadPreferencesByUserId(userId);
-            if (result == null)
+            IList<string> userPreferences = preferences.ToList();
+            string[] allWidgets =
             {
+                "RecruitmentWidget", "EmployeeRequestsWidget","OrderWidget","ComplaintsWidget", "EmployeesWidget", 
+                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget"
+            };
+            foreach (var allWidget in allWidgets)
+            {
+                if (!userPreferences.Contains(allWidget))
+                {
+                    userPreferences.Add(allWidget);
+                }
+            }
+            var userId = User.Identity.GetUserId();
+            var result = PreferencesService.LoadAllPreferencesByUserId(userId).ToList();
+            foreach (var userpreference in result)
+            {
+                PreferencesService.Deletepreferences(userpreference);
+            }
+            //if (result.Any())
+            //{
                 // Add
                 int i = 1;
-                foreach (var pref in preferences)
+                foreach (var pref in userPreferences)
                 {
                     Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
                     var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
@@ -406,30 +423,30 @@ namespace EPMS.Web.Controllers
                     }
                 }
                 return Json("Success", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                var userpreferences = PreferencesService.LoadAllPreferencesByUserId(userId).ToList();
-                // Update
-                int i = 0;
-                foreach (var pref in preferences)
-                {
-                    Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference
-                    {
-                        WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
-                        UserId = userpreferences[i].UserId,
-                        WidgetId = pref,
-                        SortNumber = i + 1
-                    };
-                    var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
-                    if (PreferencesService.UpdatePreferences(preferenceToUpdate))
-                    {
-                        i++;
-                    }
-                }
-                return Json("Success", JsonRequestBehavior.AllowGet);
-            }
-            return Json("Failed", JsonRequestBehavior.AllowGet);
+            //}
+            //else
+            //{
+            //    var userpreferences = PreferencesService.LoadAllPreferencesByUserId(userId).ToList();
+            //    // Update
+            //    int i = 0;
+            //    foreach (var pref in preferences)
+            //    {
+            //        Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference
+            //        {
+            //            WidgetPerferencesId = userpreferences[i].WidgetPerferencesId,
+            //            UserId = userpreferences[i].UserId,
+            //            WidgetId = pref,
+            //            SortNumber = i + 1
+            //        };
+            //        var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
+            //        if (PreferencesService.UpdatePreferences(preferenceToUpdate))
+            //        {
+            //            i++;
+            //        }
+            //    }
+            //    return Json("Success", JsonRequestBehavior.AllowGet);
+            //}
+            //return Json("Failed", JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SaveQuickLaunchPrefrences(int[] preferences)

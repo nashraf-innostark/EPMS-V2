@@ -81,6 +81,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
                         requestViewModel.Orders = ordersService.GetOrdersByCustomerId(requestViewModel.Complaint.CustomerId).Where(x => x.OrderId.Equals(requestViewModel.Complaint.OrderId)).Select(x => x.CreateFromServerToClient());
                         requestViewModel.Departments = departmentService.GetAll().Where(x => x.DepartmentId == requestViewModel.Complaint.DepartmentId).Select(x => x.CreateFrom());
+                        requestViewModel.DeptId = requestViewModel.Complaint.DepartmentId;
+                        requestViewModel.OdrId = requestViewModel.Complaint.OrderId;
                         if (!requestViewModel.Complaint.IsReplied)
                             ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
                     }
@@ -113,6 +115,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     viewModel.Complaint.RecLastUpdatedDt = DateTime.Now;
                     viewModel.Complaint.Description = viewModel.Complaint.ComplaintDesc;
                     viewModel.Complaint.IsReplied = true;
+                    viewModel.Complaint.DepartmentId = viewModel.DeptId;
+                    viewModel.Complaint.OrderId = viewModel.OdrId;
                     //Update Complaint to Db
                     complaintService.UpdateComplaint(viewModel.Complaint.CreateFromClientToServer());
                     TempData["message"] = new MessageViewModel

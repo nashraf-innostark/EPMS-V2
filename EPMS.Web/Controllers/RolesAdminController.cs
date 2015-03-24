@@ -21,7 +21,7 @@ namespace IdentitySample.Controllers
     public class RolesAdminController : Controller
     {
         private IMenuRightsService menuRightsService;
-
+        private IDashboardWidgetPreferencesService PreferencesService;
         public RolesAdminController()
         {
         }
@@ -33,9 +33,10 @@ namespace IdentitySample.Controllers
         //    RoleManager = roleManager;
         //}
 
-        public RolesAdminController(IMenuRightsService menuRightsService)
+        public RolesAdminController(IMenuRightsService menuRightsService, IDashboardWidgetPreferencesService preferencesService)
         {
             this.menuRightsService = menuRightsService;
+            this.PreferencesService = preferencesService;
         }
 
         private ApplicationUserManager _userManager;
@@ -251,6 +252,30 @@ namespace IdentitySample.Controllers
         {
 
             UserMenuResponse userMenuRights = menuRightsService.SaveRoleMenuRight(roleValue, selectedList, RoleManager.FindById(roleValue));
+            //string[] roles = selectedList.Split(',');
+            //IList<string> userWidgets = new List<string>();
+            //string widget = "";
+            //for (int i = 0; i < 12; i++)
+            //{
+            //    if (i >= 0 && i < 9)
+            //    {
+            //        widget = "310" + ( i + 1 );
+            //        if (roles.Contains(widget))
+            //        {
+            //            // Entry in WidgetPreference Service
+            //            userWidgets.Add(widget);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        widget = "31" + (i + 1);
+            //        if (roles.Contains(widget))
+            //        {
+            //            // Entry in WidgetPreference Service
+            //            userWidgets.Add(widget);
+            //        }
+            //    }
+            //}
             RightsManagementViewModel viewModel = new RightsManagementViewModel();
 
             viewModel.Roles = userMenuRights.Roles.ToList();
@@ -266,6 +291,32 @@ namespace IdentitySample.Controllers
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
             viewModel.SelectedRoleId = roleValue;
+            // User Widgets Preferences
+            //IList<string> widgetName = new List<string>();
+            //foreach (var userWidget in userWidgets)
+            //{
+            //    int menuId = System.Convert.ToInt32(userWidget);
+            //    var menu = viewModel.Rights.FirstOrDefault(x => x.MenuId == menuId);
+            //    string widgetToAdd = menu.MenuTitle.Replace(" ", "");
+            //    widgetToAdd = widgetToAdd + "Widget";
+            //    widgetName.Add(widgetToAdd);
+            //}
+            //string userId = User.Identity.GetUserId();
+            //var userpreferences = PreferencesService.LoadAllPreferencesByUserId(userId).ToList();
+            //foreach (var userpreference in userpreferences)
+            //{
+            //    PreferencesService.Deletepreferences(userpreference);
+            //}
+            //int sortNo = 1;
+            //foreach (var pref in widgetName)
+            //{
+            //    DashboardWidgetPreference preference = new DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = sortNo };
+            //    //var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
+            //    if (PreferencesService.AddPreferences(preference))
+            //    {
+            //        sortNo++;
+            //    }
+            //}
             TempData["message"] = new MessageViewModel
             {
                 Message = "Record has been updated.",
