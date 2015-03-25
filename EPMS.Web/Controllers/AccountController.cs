@@ -489,7 +489,7 @@ namespace IdentitySample.Controllers
             var userId = user.Id;
             string[] adminWidgets =
             {
-                "MeetingWidget", "OrderWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget",
+                "MeetingWidget", "OrdersWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget",
                 "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget"
             };
             string[] employeeWidgets =
@@ -497,11 +497,11 @@ namespace IdentitySample.Controllers
                 "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget",
                 "MyTasksWidget"
             };
-            string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
+            string[] customerWidgets = { "ComplaintsWidget", "OrdersWidget", "ProjectWidget" };
 
             string[] allWidgets =
             {
-                "RecruitmentWidget", "EmployeeRequestsWidget","OrderWidget","ComplaintsWidget", "EmployeesWidget", 
+                "RecruitmentWidget", "EmployeeRequestsWidget","OrdersWidget","ComplaintsWidget", "EmployeesWidget", 
                 "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget"
             };
 

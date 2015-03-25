@@ -393,7 +393,7 @@ namespace EPMS.Web.Controllers
             IList<string> userPreferences = preferences.ToList();
             string[] allWidgets =
             {
-                "RecruitmentWidget", "EmployeeRequestsWidget","OrderWidget","ComplaintsWidget", "EmployeesWidget", 
+                "RecruitmentWidget", "EmployeeRequestsWidget","OrdersWidget","ComplaintsWidget", "EmployeesWidget", 
                 "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget"
             };
             foreach (var allWidget in allWidgets)

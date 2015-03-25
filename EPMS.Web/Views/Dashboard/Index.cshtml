@@ -143,7 +143,7 @@
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
                                                             <div class="controls">
-                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -160,7 +160,7 @@
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
                                                             <div class="controls">
-                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "employeeId"})
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -177,7 +177,7 @@
                         if (userPermissionsSet.Contains("OrdersWidget"))
                         {
                         <!-- Orders Widget -->
-                            <div class="widget-holder" id="OrderWidget">
+                            <div class="widget-holder" id="OrdersWidget">
                                 <div class="widget-flipper">
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
@@ -464,7 +464,7 @@
                         }
                         break;
                     case "MyProfileWidget":
-                        if (userPermissionsSet.Contains("MyProfileWidget") && Model.Profile!=null)
+                        if (userPermissionsSet.Contains("MyProfileWidget") && Model.Profile != null)
                         {
                             <!-- My Profile Widget -->
                             <div class="widget-holder" id="MyProfileWidget">
@@ -527,7 +527,7 @@
                         }
                         break;
                     case "PayrollWidget":
-                        if (userPermissionsSet.Contains("PayrollWidget") && Model.Payroll!=null)
+                        if (userPermissionsSet.Contains("PayrollWidget") && Model.Payroll != null)
                         {
                             <!-- Payroll Widget -->
                             <div class="widget-holder" id="PayrollWidget">
@@ -787,7 +787,7 @@
                                                         <div class="controls">
                                                             @if (direction == "ltr")
                                                             {
-                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "projectIdFilter"})
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
                                                             }
                                                             else
                                                             {
@@ -881,7 +881,7 @@
                                                         <div class="controls">
                                                             @if (direction == "ltr")
                                                             {
-                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new {@id = "projectIdTaskFilter"})
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
                                                             }
                                                             else
                                                             {
@@ -972,7 +972,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         if ('@direction' == "ltr") {
             setTimeout(function () {
                 $.pnotify({
