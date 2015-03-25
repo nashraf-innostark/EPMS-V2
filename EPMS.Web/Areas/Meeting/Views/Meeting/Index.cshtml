@@ -4,6 +4,7 @@
     ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.MeetingList;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <!-- Navigation Bar Start-->
@@ -27,7 +28,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Meeting/Meeting/Create">@EPMS.Web.Resources.Meeting.Meeting.Create</a></small></h3>
+    @if (userPermissionsSet.Contains("MeetingCreate"))
+    {
+        <h3> <small><a href="~/Meeting/Meeting/Create">@EPMS.Web.Resources.Meeting.Meeting.Create</a></small></h3>
+    }
 </header>
 <!-- Page Heading End-->
 

@@ -44,7 +44,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.TopicName, new { id = "TopicName", @class = "disableOnDate" })
+                    @Html.TextBoxFor(m => m.Meeting.TopicName, new { id = "TopicName", @class = "disableOnDate toBeDisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.TopicName, "", new { @class = "required" })
                 </div>
             </div>
@@ -55,7 +55,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.TopicNameAr, new { id = "TopicNameAr", @class = "disableOnDate" })
+                    @Html.TextBoxFor(m => m.Meeting.TopicNameAr, new { id = "TopicNameAr", @class = "disableOnDate toBeDisable" })
                     @Html.ValidationMessageFor(m => m.Meeting.TopicNameAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.RelatedProject, new { id = "RelatedProject", @class = "disableOnDate" })
+                    @Html.TextBoxFor(m => m.Meeting.RelatedProject, new { id = "RelatedProject", @class = "disableOnDate toBeDisable" })
                 </div>
             </div>
         </div>
@@ -112,37 +112,37 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { id = "attendee1", @class = "disableOnDate", @placeholder = "Attendee 1" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName1, new { id = "attendee1", @class = "disableOnDate toBeDisable", @placeholder = "Attendee 1" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { id = "email1", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail1, new { id = "email1", @class = "disableOnDate toBeDisable", @placeholder = "Email" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { id = "attendee2", @class = "disableOnDate", @placeholder = "Attendee 2" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName2, new { id = "attendee2", @class = "disableOnDate toBeDisable", @placeholder = "Attendee 2" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { id = "email2", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail2, new { id = "email2", @class = "disableOnDate toBeDisable", @placeholder = "Email" })
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { id = "attendee3", @class = "disableOnDate", @placeholder = "Attendee 3" })
+                    @Html.TextBoxFor(m => m.Meeting.AttendeeName3, new { id = "attendee3", @class = "disableOnDate toBeDisable", @placeholder = "Attendee 3" })
                 </div>
             </div>
             <div class="span9">
                 <div class="controls">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { id = "email3", @class = "disableOnDate", @placeholder = "Email" })
+                        @Html.TextBoxFor(m => m.Meeting.AttendeeEmail3, new { id = "email3", @class = "disableOnDate toBeDisable", @placeholder = "Email" })
                     </div>
                 </div>
             </div>
@@ -165,68 +165,130 @@
                 </div>
             </div>
         </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Agenda</label>
+        <div id="Detail">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Agenda</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="agendaEn" readonly="readonly" />
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.Agenda, new { id = "Agenda", @class = "tbdisable" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AgendaAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="agendaAr" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Discussion</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="discussionEn" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DiscussionAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="discussionAr" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Decisions</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="decisionEn" readonly="readonly" />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DecisionsAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="decisionAr" readonly="readonly" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AgendaAr</label>
+        <div id="CKEditor">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Agenda</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Meeting.Agenda, new { id = "Agenda", @class = "tbdisable" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.AgendaAr, new { id = "AgendaAr", @class = "tbdisable" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.AgendaAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Meeting.AgendaAr, new { id = "AgendaAr", @class = "tbdisable" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Discussion</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Meeting.Discussion, new { id = "Discussion", @class = "tbdisable" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DiscussionAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Meeting.DiscussionAr, new { id = "DiscussionAr", @class = "tbdisable" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Decisions</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Meeting.Decisions, new { id = "Decisions", @class = "tbdisable" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DecisionsAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Meeting.DecisionsAr, new { id = "DecisionsAr", @class = "tbdisable" })
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Discussion</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.Discussion, new { id = "Discussion", @class = "tbdisable" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DiscussionAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.DiscussionAr, new { id = "DiscussionAr", @class = "tbdisable" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Decisions</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.Decisions, new { id = "Decisions", @class = "tbdisable" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.DecisionsAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(m => m.Meeting.DecisionsAr, new { id = "DecisionsAr", @class = "tbdisable" })
-                </div>
-            </div>
-        </div>
-
         <!--Drag And Drop Upload begin-->
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
@@ -274,20 +336,19 @@
 
         }
         <!--Drag And Drop Upload end-->
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button id="sendButton" type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
-            </div>
-
-        </div>
-        @*<div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
-                </div>
-            </div>*@
-
         @if (userPermissionsSet.Contains("MeetingCreate"))
         {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button id="sendButton" type="submit" class="btn" name="SendInvitation">@EPMS.Web.Resources.Meeting.Meeting.SendButton</button>
+                </div>
+
+            </div>
+            @*<div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" name="Save">@EPMS.Web.Resources.Meeting.Meeting.SaveButton</button>
+                    </div>
+                </div>*@
             <div class="control-group row-fluid">
                 <div class="span3">
                     <div class="span3 span-inset">
@@ -316,12 +377,55 @@
         $('#submit').click(function () {
             $("#meetingForm").submit();
         });
-        CKEDITOR.replace('Agenda');
-        CKEDITOR.replace('AgendaAr');
-        CKEDITOR.replace('Discussion');
-        CKEDITOR.replace('DiscussionAr');
-        CKEDITOR.replace('Decisions');
-        CKEDITOR.replace('DecisionsAr');
+        debugger;
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("MeetingCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+            var agenda = '@Html.Raw(Model.Meeting.Agenda)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = agenda.replace(regex, "");
+            $("#agendaEn").val(result);
+            var agendaA = '@Html.Raw(Model.Meeting.AgendaAr)';
+            regex = /(<([^>]+)>)/ig;
+            result = agendaA.replace(regex, "");
+            $("#agendaAr").val(result);
+            var discussion = '@Html.Raw(Model.Meeting.Discussion)';
+            regex = /(<([^>]+)>)/ig;
+            result = discussion.replace(regex, "");
+            $("#discussionEn").val(result);
+            var discussionA = '@Html.Raw(Model.Meeting.DiscussionAr)';
+            regex = /(<([^>]+)>)/ig;
+            result = discussionA.replace(regex, "");
+            $("#discussionAr").val(result);
+            var decision = '@Html.Raw(Model.Meeting.Decisions)';
+            regex = /(<([^>]+)>)/ig;
+            result = decision.replace(regex, "");
+            $("#decisionEn").val(result);
+            var decisionA = '@Html.Raw(Model.Meeting.DecisionsAr)';
+            regex = /(<([^>]+)>)/ig;
+            result = decisionA.replace(regex, "");
+            $("#decisionAr").val(result);
+            $("#Detail").show();
+            $("#CKEditor").hide();
+        }
+        if (isDetail == false) {
+            // CK Editor
+            CKEDITOR.replace('Agenda');
+            CKEDITOR.replace('AgendaAr');
+            CKEDITOR.replace('Discussion');
+            CKEDITOR.replace('DiscussionAr');
+            CKEDITOR.replace('Decisions');
+            CKEDITOR.replace('DecisionsAr');
+            $("#Detail").hide();
+            $("#CKEditor").show();
+        }
+
 
         setTimeout(function () {
             //CKEDITOR.instances.Agenda.setReadOnly(true);
