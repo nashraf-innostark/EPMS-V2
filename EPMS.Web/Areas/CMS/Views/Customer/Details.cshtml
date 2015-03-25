@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string ReturnUrl = ViewBag.ReturnUrl.ToString();
+    string ReturnUrl = "";
+    if (ViewBag.ReturnUrl != null)
+    {
+        ReturnUrl = ViewBag.ReturnUrl.ToString();   
+    }
     if (string.IsNullOrEmpty(ReturnUrl))
     {
         ReturnUrl = "/CMS/Customer/Index";
