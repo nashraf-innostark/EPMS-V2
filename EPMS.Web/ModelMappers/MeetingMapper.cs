@@ -37,34 +37,52 @@ namespace EPMS.Web.ModelMappers
             if (source.Date != null)
                 meetingModel.Date = Convert.ToDateTime(source.Date).ToString("dd/MM/yyyy", culture);
             var agenda = source.Agenda;
-            agenda = agenda.Replace("\n", "");
-            agenda = agenda.Replace("\r", "");
-            agenda = agenda.Replace("\t", "");
+            if (!String.IsNullOrEmpty(source.Agenda))
+            {
+                agenda = agenda.Replace("\n", "");
+                agenda = agenda.Replace("\r", "");
+                agenda = agenda.Replace("\t", "");
+            }
             meetingModel.Agenda = agenda;
             var agendaA = source.AgendaAr;
-            agendaA = agendaA.Replace("\n", "");
-            agendaA = agendaA.Replace("\r", "");
-            agendaA = agendaA.Replace("\t", "");
+            if (!String.IsNullOrEmpty(source.AgendaAr))
+            {
+                agendaA = agendaA.Replace("\n", "");
+                agendaA = agendaA.Replace("\r", "");
+                agendaA = agendaA.Replace("\t", "");
+            }
             meetingModel.AgendaAr = agendaA;
             var discussion = source.Discussion;
-            discussion = discussion.Replace("\n", "");
-            discussion = discussion.Replace("\r", "");
-            discussion = discussion.Replace("\t", "");
+            if (!String.IsNullOrEmpty(source.Agenda))
+            {
+                discussion = discussion.Replace("\n", "");
+                discussion = discussion.Replace("\r", "");
+                discussion = discussion.Replace("\t", "");
+            }
             meetingModel.Discussion = discussion;
             var discussionA = source.DiscussionAr;
-            discussionA = discussionA.Replace("\n", "");
-            discussionA = discussionA.Replace("\r", "");
-            discussionA = discussionA.Replace("\t", "");
+            if (!String.IsNullOrEmpty(source.Agenda))
+            {
+                discussionA = discussionA.Replace("\n", "");
+                discussionA = discussionA.Replace("\r", "");
+                discussionA = discussionA.Replace("\t", "");
+            }
             meetingModel.DiscussionAr = discussionA;
             var decision = source.Decisions;
-            decision = decision.Replace("\n", "");
-            decision = decision.Replace("\r", "");
-            decision = decision.Replace("\t", "");
+            if (!String.IsNullOrEmpty(source.Agenda))
+            {
+                decision = decision.Replace("\n", "");
+                decision = decision.Replace("\r", "");
+                decision = decision.Replace("\t", "");
+            }
             meetingModel.Decisions = decision;
             var decisionA = source.DecisionsAr;
-            decisionA = decisionA.Replace("\n", "");
-            decisionA = decisionA.Replace("\r", "");
-            decisionA = decisionA.Replace("\t", "");
+            if (!String.IsNullOrEmpty(source.Agenda))
+            {
+                decisionA = decisionA.Replace("\n", "");
+                decisionA = decisionA.Replace("\r", "");
+                decisionA = decisionA.Replace("\t", "");
+            }
             meetingModel.DecisionsAr = decisionA;
             meetingModel.AttendeeName1 = source.AttendeeName1;
             meetingModel.AttendeeEmail1 = source.AttendeeEmail1;
