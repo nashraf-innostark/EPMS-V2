@@ -156,7 +156,7 @@
         $(".dataTables_filter input").unbind()
             .bind("input", function(e) {
                 // Bind our desired behavior
-                if (this.value.length >= 3 || e.keyCode == 13) {
+                if (this.value.length >= 2 || e.keyCode == 13) {
                     $("#searchString").val(this.value);
                     //oTable.fnClearTable();
                     //$('#employeeTable').empty();

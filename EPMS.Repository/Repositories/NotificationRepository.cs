@@ -107,14 +107,116 @@ namespace EPMS.Repository.Repositories
                 notifications = DbSet
                 .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead == false)).Skip(fromRow).Take(toRow).ToList();
             }
-            else if (searchRequset.iSortCol_0 == 8)
+            else if (searchRequset.iSortCol_0 == 8 || searchRequset.SearchString.ToLower() == "yes" || searchRequset.SearchString.ToLower() == "no")
             {
-                notifications = searchRequset.sSortDir_0 == "asc" ?
-                DbSet
-                .Where(query).OrderByDescending(x =>  x.NotificationRecipients.All(y=>y.IsRead ==false)).Skip(fromRow).Take(toRow).ToList()
-                :
-                DbSet
-                .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead == false)).Skip(fromRow).Take(toRow).ToList();
+                bool isNotified;
+                switch (searchRequset.SearchString.ToLower())
+                {
+                    case "yes":
+                        isNotified = true;
+                        query = s => ((string.IsNullOrEmpty(searchRequset.SearchString) || 
+                            s.NotificationRecipients.Any(r => r.IsRead == isNotified)) && s.ForAdmin == true);
+                        break;
+                    case "no":
+                        isNotified = false;
+                        query = s => ((string.IsNullOrEmpty(searchRequset.SearchString) || 
+                            s.NotificationRecipients.All(r => r.IsRead == isNotified)) && s.ForAdmin == true);
+                        break;
+                }
+                
+                notifications = searchRequset.sSortDir_0 == "asc"
+                    ? DbSet
+                        .Where(query).Select(a => new
+                        {
+                            a.NotificationId,
+                            a.TitleE,
+                            a.TitleA,
+                            a.SystemGenerated,
+                            a.SubCategoryId,
+                            a.AlertAppearDate,
+                            a.AlertBefore,
+                            a.ItemId,
+                            a.AlertDateType,
+                            a.IsEmailSent,
+                            a.IsSMSsent,
+                            a.AlertDate,
+                            a.CategoryId,
+                            a.ForAdmin,
+                            a.NotificationRecipients,
+                            a.RecCreatedBy,
+                            a.RecCreatedDate,
+                            a.RecLastUpdatedBy,
+                            a.RecLastUpdatedDate,
+                            isRead = a.NotificationRecipients.All(nr => nr.IsRead == false)
+                        }
+                        ).OrderByDescending(a => a.isRead).Skip(fromRow).Take(toRow).ToList().Select(n => new Notification
+                        {
+                            NotificationId = n.NotificationId,
+                            TitleE = n.TitleE,
+                            TitleA = n.TitleA,
+                            SystemGenerated = n.SystemGenerated,
+                            SubCategoryId = n.SubCategoryId,
+                            AlertAppearDate = n.AlertAppearDate,
+                            AlertBefore = n.AlertBefore,
+                            ItemId = n.ItemId,
+                            AlertDateType = n.AlertDateType,
+                            IsEmailSent = n.IsEmailSent,
+                            IsSMSsent = n.IsSMSsent,
+                            AlertDate = n.AlertDate,
+                            CategoryId = n.CategoryId,
+                            ForAdmin = n.ForAdmin,
+                            NotificationRecipients = n.NotificationRecipients,
+                            RecCreatedBy = n.RecCreatedBy,
+                            RecCreatedDate = n.RecCreatedDate,
+                            RecLastUpdatedBy = n.RecLastUpdatedBy,
+                            RecLastUpdatedDate = n.RecLastUpdatedDate,
+                        }).ToList()
+                    : DbSet
+                        .Where(query).Select(a => new
+                        {
+                            a.NotificationId,
+                            a.TitleE,
+                            a.TitleA,
+                            a.SystemGenerated,
+                            a.SubCategoryId,
+                            a.AlertAppearDate,
+                            a.AlertBefore,
+                            a.ItemId,
+                            a.AlertDateType,
+                            a.IsEmailSent,
+                            a.IsSMSsent,
+                            a.AlertDate,
+                            a.CategoryId,
+                            a.ForAdmin,
+                            a.NotificationRecipients,
+                            a.RecCreatedBy,
+                            a.RecCreatedDate,
+                            a.RecLastUpdatedBy,
+                            a.RecLastUpdatedDate,
+                            isRead = a.NotificationRecipients.All(nr => nr.IsRead == false)
+                        }
+                        ).OrderBy(n=>n.isRead).Skip(fromRow).Take(toRow).ToList().Select(n => new Notification
+                        {
+                            NotificationId = n.NotificationId,
+                            TitleE = n.TitleE,
+                            TitleA = n.TitleA,
+                            SystemGenerated = n.SystemGenerated,
+                            SubCategoryId = n.SubCategoryId,
+                            AlertAppearDate = n.AlertAppearDate,
+                            AlertBefore = n.AlertBefore,
+                            ItemId = n.ItemId,
+                            AlertDateType = n.AlertDateType,
+                            IsEmailSent = n.IsEmailSent,
+                            IsSMSsent = n.IsSMSsent,
+                            AlertDate = n.AlertDate,
+                            CategoryId = n.CategoryId,
+                            ForAdmin = n.ForAdmin,
+                            NotificationRecipients = n.NotificationRecipients,
+                            RecCreatedBy = n.RecCreatedBy,
+                            RecCreatedDate = n.RecCreatedDate,
+                            RecLastUpdatedBy = n.RecLastUpdatedBy,
+                            RecLastUpdatedDate = n.RecLastUpdatedDate,
+                        }).ToList();
             }
             else
             {

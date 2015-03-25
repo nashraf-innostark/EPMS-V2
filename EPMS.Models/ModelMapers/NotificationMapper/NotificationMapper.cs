@@ -139,9 +139,16 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                     notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer.CustomerMobile;
                     notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Email;
                 }
-                
-                notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault().IsRead ? Resources.Notification.Yes : Resources.Notification.No;
-           
+                if (notificationListResponse.MobileNo == "" || notificationListResponse.Email == "")
+                {
+                    notificationListResponse.Notified = "No Data";
+                }
+                else
+                {
+                    notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault().IsRead
+                        ? Resources.Notification.Yes
+                        : Resources.Notification.No;
+                }
             }
             
             switch (notification.CategoryId)
