@@ -431,15 +431,16 @@
             $("#CKEditor").show();
         }
 
-
-        setTimeout(function () {
-            //CKEDITOR.instances.Agenda.setReadOnly(true);
-            //CKEDITOR.instances.AgendaAr.setReadOnly(true);
-            CKEDITOR.instances.Discussion.setReadOnly(true);
-            CKEDITOR.instances.DiscussionAr.setReadOnly(true);
-            CKEDITOR.instances.Decisions.setReadOnly(true);
-            CKEDITOR.instances.DecisionsAr.setReadOnly(true);
-        }, 1000);
+        if (isDetail == false) {
+            setTimeout(function () {
+                //CKEDITOR.instances.Agenda.setReadOnly(true);
+                //CKEDITOR.instances.AgendaAr.setReadOnly(true);
+                CKEDITOR.instances.Discussion.setReadOnly(true);
+                CKEDITOR.instances.DiscussionAr.setReadOnly(true);
+                CKEDITOR.instances.Decisions.setReadOnly(true);
+                CKEDITOR.instances.DecisionsAr.setReadOnly(true);
+            }, 1000);
+        }
 
         var meetingId = $("#Meeting_MeetingId").val();
 
