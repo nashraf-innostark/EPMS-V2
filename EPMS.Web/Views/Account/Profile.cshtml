@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "My Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -29,7 +29,7 @@
 @Html.Partial("_Alert")
 
 <!-- Form starts.  -->
-@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm("Profile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         @Html.AntiForgeryToken()
@@ -42,7 +42,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.UserName, new { @readonly = "readonly", @placeholder = "First Name" })
+                    @Html.TextBoxFor(model => model.UserName, new { @readonly = "readonly", @placeholder = "User Name" })
                     @Html.ValidationMessageFor(m => m.UserName)
                 </div>
             </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { @readonly = "readonly", @placeholder = "Email" })
                     @Html.ValidationMessageFor(m => m.Email)
                 </div>
             </div>
@@ -64,7 +64,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Address)
+                    @Html.TextBoxFor(model => model.Address, new { @placeholder = "Address", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.Address)
                 </div>
             </div>
@@ -83,57 +83,62 @@
                 </div>
             </div>
         </div>
-        <!--Drag And Drop Upload end-->
-        <div class="control-group row-fluid">
-            <div class="span12 span-inset">
-                <button type="submit" class="btn">Update</button>
+        @if (userPermissionsSet.Contains("AccountProfile"))
+        {
+            <!--Drag And Drop Upload end-->
+            <div class="control-group row-fluid">
+                <div class="span12 span-inset">
+                    <button type="submit" class="btn">Update</button>
+                </div>
             </div>
-        </div>
+        }
     </div>
 }
 
 <script>
-        $().ready(function() {
+    $().ready(function () {
+        if ('@userPermissionsSet.Contains("AccountProfile")' == 'False') {
+            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+        }
+        var errors = "";
+        var url = $('#siteURL').val() + "/Account/UploadUserPhoto";
+        $('#upload').mfupload({
+            type: 'jpg,png,tif,jpeg', // type: '', for all types
+            maxsize: 1, //file size in MBs
+            post_upload: url,
+            folder: "./",
+            ini_text: "Drag your file here or click (max: 1MB)",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
 
-            var errors = "";
-            var url = $('#siteURL').val() + "/Account/UploadUserPhoto";
-            $('#upload').mfupload({
-                type: 'jpg,png,tif,jpeg', // type: '', for all types
-                maxsize: 1, //file size in MBs
-                post_upload: url,
-                folder: "./",
-                ini_text: "Drag your file here or click (max: 1MB)",
-                over_text: "Drop Here",
-                over_col: '#666666',
-                over_bkcol: '#f0f0f0',
+            init: function () {
+                $("#uploaded").empty();
+            },
 
-                init: function() {
-                    $("#uploaded").empty();
-                },
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
 
-                start: function(result) {
-                    $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
-                },
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+            },
 
-                loaded: function(result) {
-                    $("#PRO" + result.fileno).remove();
-                    $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
-                },
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
 
-                progress: function(result) {
-                    $("#PRO" + result.fileno).css("width", result.perc + "%");
-                },
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
 
-                error: function(error) {
-                    errors += error.filename + ": " + error.err_des + "\n";
-                },
-
-                completed: function() {
-                    if (errors != "") {
-                        alert(errors);
-                        errors = "";
-                    }
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
                 }
-            });
+            }
         });
+    });
 </script>

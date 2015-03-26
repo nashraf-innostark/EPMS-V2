@@ -307,32 +307,38 @@
 
         @if (Model.MeetingDocuments != null)
         {
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Download</label>
-            </div>
-            <div class="control-group row-fluid">
-                @foreach (var doc in Model.MeetingDocuments)
-                {
-                    <div class="controls">
-                        <div class="span-inset">
-                            <a href="~/Meeting/Meeting/Download?fileName=@doc.FileName" class="btn">Download @doc.FileName</a>
+            if (userPermissionsSet.Contains("MeetingDetails"))
+            {
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Download</label>
+                </div>
+                <div class="control-group row-fluid">
+                    @foreach (var doc in Model.MeetingDocuments)
+                    {
+                        <div class="controls">
+                            <div class="span-inset">
+                                <a href="~/Meeting/Meeting/Download?fileName=@doc.FileName" class="btn">Download @doc.FileName</a>
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Delete</label>
-            </div>
-            <div class="control-group row-fluid">
-                @foreach (var doc in Model.MeetingDocuments)
-                {
-                    <div class="controls">
-                        <div class="span-inset">
-                            <button type="button" class="btn" onclick="deleteDoc(this,@doc.DocumentId)">@EPMS.Web.Resources.PMS.Project.DeleteFile @doc.FileName</button>
+                    }
+                </div>
+            }
+            if (userPermissionsSet.Contains("MeetingCreate"))
+            {
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Delete</label>
+                </div>
+                <div class="control-group row-fluid">
+                    @foreach (var doc in Model.MeetingDocuments)
+                    {
+                        <div class="controls">
+                            <div class="span-inset">
+                                <button type="button" class="btn" onclick=" deletedoc(this, @doc.DocumentId ) ">@EPMS.Web.Resources.PMS.Project.DeleteFile @doc.FileName</button>
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+            }
 
         }
         <!--Drag And Drop Upload end-->

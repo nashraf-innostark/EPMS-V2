@@ -961,6 +961,7 @@ namespace IdentitySample.Controllers
 
         #region Profile Work
         [Authorize]
+        [SiteAuthorize(PermissionKey = "AccountProfile")]
         public ActionResult Profile()
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
