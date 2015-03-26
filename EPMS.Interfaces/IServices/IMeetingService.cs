@@ -15,6 +15,7 @@ namespace EPMS.Interfaces.IServices
         /// Get Meetings by Search Request
         /// </summary>
         MeetingResponse GetMeetings(MeetingSearchRequest meetingResponse);
+        MeetingResponse GetMeetingsResponse(long id);
         Meeting FindMeetingById(long id);
         Meeting AddMeeting(Meeting meeting);
         bool UpdateMeeting(Meeting meeting);

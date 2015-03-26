@@ -208,7 +208,9 @@
       <DependentUpon>Notification.resx</DependentUpon>
     </Compile>
     <Compile Include="ResponseModels\AvailableOrdersDDL.cs" />
+    <Compile Include="ResponseModels\ComplaintResponse.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
+    <Compile Include="ResponseModels\ContactListResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />

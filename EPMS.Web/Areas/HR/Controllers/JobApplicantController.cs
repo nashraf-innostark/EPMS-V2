@@ -9,6 +9,7 @@
 ﻿using System.Web.Mvc;
 ﻿using EPMS.Interfaces.IServices;
 ﻿using EPMS.Models.RequestModels;
+﻿using EPMS.Models.ResponseModels;
 ﻿using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 ﻿using EPMS.Web.Models;
@@ -62,8 +63,9 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 return RedirectToAction("Jobs");
             }
-            jobApplicantViewModel.JobOffered = jobOfferedService.FindJobOfferedById((long)id).CreateFrom();
-            jobApplicantViewModel.JobTitleList = jobTitleService.GetAll().Select(x => x.CreateFrom());
+            JobApplicantResponse response = jobOfferedService.GetJobOfferedResponse((long)id);
+            jobApplicantViewModel.JobOffered = response.JobOffered.CreateFrom();
+            jobApplicantViewModel.JobTitleList = response.JobTitles.Select(x => x.CreateFrom());
             return View(jobApplicantViewModel);
         }
 

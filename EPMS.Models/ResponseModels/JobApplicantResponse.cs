@@ -16,6 +16,8 @@ namespace EPMS.Models.ResponseModels
         /// List of Job Applicants
         /// </summary>
         public IEnumerable<JobApplicant> JobApplicants { get; set; }
+        public JobOffered JobOffered { get; set; }
+        public IEnumerable<JobTitle> JobTitles { get; set; }
         public int TotalCount { get; set; }
         public int TotalRecords { get; set; }
         public int TotalDisplayRecords { get; set; }

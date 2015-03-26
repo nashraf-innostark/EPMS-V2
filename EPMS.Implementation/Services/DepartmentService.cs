@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -36,6 +37,15 @@ namespace EPMS.Implementation.Services
             return departmentRepository.Find(id);
         }
 
+        public DepartmentResponse FindDepartmentResponseByDepartmentId(long id)
+        {
+            DepartmentResponse response = new DepartmentResponse
+            {
+                Department = FindDepartmentById(id),
+                Employees = FindEmployeeByDeprtmentId(id)
+            };
+            return response;
+        }
         public bool AddDepartment(Department department)
         {
             if (departmentRepository.DepartmentExists(department))

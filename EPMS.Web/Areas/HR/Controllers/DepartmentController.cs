@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
@@ -50,9 +51,9 @@ namespace EPMS.Web.Areas.HR.Controllers
             DepartmentListViewModel detailViewModel = new DepartmentListViewModel();
             if (id != null)
             {
-                detailViewModel.Department = oService.FindDepartmentById((long)id).CreateFrom();
-                detailViewModel.EmployeeList = oService.FindEmployeeByDeprtmentId(id.Value).Select(employee => employee.CreateFromServerToClient());
-
+                DepartmentResponse response = oService.FindDepartmentResponseByDepartmentId((long)id);
+                detailViewModel.Department = response.Department.CreateFrom();
+                detailViewModel.EmployeeList = response.Employees.Select(employee => employee.CreateFromServerToClient());
             }
             return View(detailViewModel);
         }

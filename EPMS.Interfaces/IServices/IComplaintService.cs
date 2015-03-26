@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -11,5 +12,6 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Complaint> LoadAllComplaints();
         IEnumerable<Complaint> LoadAllComplaintsByCustomerId(long id);
         IEnumerable<Complaint> LoadComplaintsForDashboard(string requester);
+        ComplaintResponse GetComplaintResponse(long complaintId, long customerId, string roleName);
     }
 }

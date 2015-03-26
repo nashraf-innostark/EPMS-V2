@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -16,6 +17,11 @@ namespace EPMS.Interfaces.IServices
         /// Find Customer By Id
         /// </summary>
         Customer FindCustomerById(long id);
+        /// <summary>
+        /// Get ContactList Response
+        /// </summary>
+        /// <returns></returns>
+        ContactListResponse GetContactListResponse();
         /// <summary>
         /// Add Customer
         /// </summary>

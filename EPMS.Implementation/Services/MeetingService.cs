@@ -22,10 +22,13 @@ namespace EPMS.Implementation.Services
         private readonly IMeetingAttendeeRepository meetingAttendeeRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IMeetingDocumentRepository meetingDocumentRepository;
+        private readonly IMeetingAttendeeService meetingAttendeeService;
+        private readonly IMeetingDocumentService meetingDocumentService;
+        private readonly IEmployeeService employeeService;
 
         #region Constructor
 
-        public MeetingService(IAspNetUserRepository aspNetUserRepository,INotificationRepository notificationRepository,IMeetingRepository meetingRepository,INotificationService notificationService, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository)
+        public MeetingService(IAspNetUserRepository aspNetUserRepository, INotificationRepository notificationRepository, IMeetingRepository meetingRepository, INotificationService notificationService, IMeetingAttendeeRepository meetingAttendeeRepository, IEmployeeRepository employeeRepository, IMeetingDocumentRepository meetingDocumentRepository, IMeetingAttendeeService meetingAttendeeService, IMeetingDocumentService meetingDocumentService, IEmployeeService employeeService)
         {
             this.aspNetUserRepository = aspNetUserRepository;
             this.notificationRepository = notificationRepository;
@@ -34,6 +37,9 @@ namespace EPMS.Implementation.Services
             this.meetingAttendeeRepository = meetingAttendeeRepository;
             this.employeeRepository = employeeRepository;
             this.meetingDocumentRepository = meetingDocumentRepository;
+            this.meetingAttendeeService = meetingAttendeeService;
+            this.meetingDocumentService = meetingDocumentService;
+            this.employeeService = employeeService;
         }
 
         #endregion
@@ -47,7 +53,23 @@ namespace EPMS.Implementation.Services
         {
             return meetingRepository.GetAllMeetings(meetingResponse);
         }
-
+        public MeetingResponse GetMeetingsResponse(long id)
+        {
+            MeetingResponse response = new MeetingResponse
+            {
+                Meeting = new Meeting(),
+                MeetingAttendees = new List<MeetingAttendee>(),
+                MeetingDocuments = new List<MeetingDocument>()
+            };
+            if (id > 0)
+            {
+                response.Meeting = FindMeetingById(id);
+                response.MeetingAttendees = meetingAttendeeService.FindAttendeeByMeetingId(id);
+                response.MeetingDocuments = meetingDocumentService.FindDocumentByMeetingId(id);
+            }
+            response.Employees = employeeService.GetAll();
+            return response;
+        }
         public Meeting FindMeetingById(long id)
         {
             return meetingRepository.Find((int)id);
@@ -137,7 +159,7 @@ namespace EPMS.Implementation.Services
                     meetingAttendee.EmployeeId = attendee;
                     meetingAttendeeRepository.Add(meetingAttendee);
                     meetingAttendeeRepository.SaveChanges();
-                   
+
                 }
             }
         }
@@ -296,7 +318,7 @@ namespace EPMS.Implementation.Services
 
             #region Send notification to admin
             notificationViewModel.NotificationResponse.NotificationId =
-                        notificationRepository.GetNotificationsIdByCategories(4,0, meeting.MeetingId);
+                        notificationRepository.GetNotificationsIdByCategories(4, 0, meeting.MeetingId);
 
             notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["MeetingE"];
             notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["MeetingA"];
@@ -305,13 +327,13 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.CategoryId = 4; //Meetings
             notificationViewModel.NotificationResponse.SubCategoryId = 0;
             notificationViewModel.NotificationResponse.ItemId = meeting.MeetingId;
-            
+
             notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.ForAdmin = false;
             notificationViewModel.NotificationResponse.SystemGenerated = true;
 
-            notificationService.AddUpdateMeetingNotification(notificationViewModel,employeeIds);
+            notificationService.AddUpdateMeetingNotification(notificationViewModel, employeeIds);
 
             #endregion
         }

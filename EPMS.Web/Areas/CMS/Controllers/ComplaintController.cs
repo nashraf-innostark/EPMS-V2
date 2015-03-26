@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
@@ -65,6 +66,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Create(long? id)
         {
             ComplaintViewModel requestViewModel = new ComplaintViewModel();
+            ComplaintResponse response = new ComplaintResponse();
             var userId = User.Identity.GetUserId();
             if (userId == null)
                 RedirectToAction("Login", "Account");
@@ -74,13 +76,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 if (id != null)
                 {
-                    var complaint = complaintService.FindComplaintById((long)id);
-                    if (complaint != null)
+                    response = complaintService.GetComplaintResponse((long)id, 0,Session["RoleName"].ToString());
+                    if (response.Complaint != null)
                     {
-                        requestViewModel.Complaint = complaint.CreateFromServerToClient();
+                        requestViewModel.Complaint = response.Complaint.CreateFromServerToClient();
 
-                        requestViewModel.Orders = ordersService.GetOrdersByCustomerId(requestViewModel.Complaint.CustomerId).Where(x => x.OrderId.Equals(requestViewModel.Complaint.OrderId)).Select(x => x.CreateFromServerToClient());
-                        requestViewModel.Departments = departmentService.GetAll().Where(x => x.DepartmentId == requestViewModel.Complaint.DepartmentId).Select(x => x.CreateFrom());
+                        requestViewModel.Orders = response.Orders.Where(x => x.OrderId.Equals(requestViewModel.Complaint.OrderId)).Select(x => x.CreateFromServerToClient());
+                        requestViewModel.Departments = response.Departments.Where(x => x.DepartmentId == requestViewModel.Complaint.DepartmentId).Select(x => x.CreateFrom());
                         requestViewModel.DeptId = requestViewModel.Complaint.DepartmentId;
                         requestViewModel.OdrId = requestViewModel.Complaint.OrderId;
                         if (!requestViewModel.Complaint.IsReplied)
@@ -89,12 +91,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
                 else if (Session["RoleName"].ToString()=="Customer")
                 {
-
+                    response = complaintService.GetComplaintResponse(0, (long)currentUser.CustomerId, Session["RoleName"].ToString());
                     requestViewModel.Complaint.ComplaintDateString = DateTime.Now.ToShortDateString();
                     requestViewModel.Complaint.ClientName = currentUser.Customer.CustomerNameE;
                     requestViewModel.Complaint.CustomerId = Convert.ToInt64(currentUser.CustomerId);
-                    requestViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
-                    requestViewModel.Orders = ordersService.GetOrdersByCustomerId(Convert.ToInt64(currentUser.CustomerId)).Select(x => x.CreateFromServerToClient());
+                    requestViewModel.Departments = response.Departments.Select(x => x.CreateFrom());
+                    requestViewModel.Orders = response.Orders.Select(x => x.CreateFromServerToClient());
                 }
                 else
                 {

@@ -16,5 +16,8 @@ namespace EPMS.Models.ResponseModels
         /// Total Count
         /// </summary>
         public int TotalCount { get; set; }
+
+        public Department Department { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
     }
 }

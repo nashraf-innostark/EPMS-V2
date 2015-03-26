@@ -13,6 +13,11 @@ namespace EPMS.Models.ResponseModels
             Meetings = new List<Meeting>();
         }
         public IEnumerable<Meeting> Meetings { get; set; }
+        public Meeting Meeting { get; set; }
+        public IEnumerable<MeetingAttendee> MeetingAttendees { get; set; }
+        public IEnumerable<MeetingDocument> MeetingDocuments { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
+
         public int TotalCount { get; set; }
         public int TotalRecords { get; set; }
         public int TotalDisplayRecords { get; set; }

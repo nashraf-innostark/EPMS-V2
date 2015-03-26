@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -12,7 +13,7 @@ namespace EPMS.Interfaces.IServices
         //DepartmentResponse GetAllDepartment(DepartmentSearchRequest departmentSearchRequest);
 
         Department FindDepartmentById(long id);
-
+        DepartmentResponse FindDepartmentResponseByDepartmentId(long id);
         bool AddDepartment(Department department);
         bool UpdateDepartment(Department department);
         void DeleteDepartment(Department department);

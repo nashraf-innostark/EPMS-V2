@@ -110,19 +110,20 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         public ActionResult Create(long? id)
         {
             MeetingViewModel meetingViewModel = new MeetingViewModel();
+            MeetingResponse response = id > 0 ? meetingService.GetMeetingsResponse((long)id) : meetingService.GetMeetingsResponse(0);
             if (id != null)
             {
-                var meeting = meetingService.FindMeetingById((long)id);
+                var meeting = response.Meeting;
                 if (meeting != null)
                 {
                     meetingViewModel.Meeting = meeting.CreateFromServertoClient();
                     if (meeting.MeetingAttendees.Count > 0)
                     {
-                        meetingViewModel.MeetingAttendees = meetingAttendeeService.FindAttendeeByMeetingId((long)id).Select(x => x.CreateFromServertoClient());
+                        meetingViewModel.MeetingAttendees = response.MeetingAttendees.Select(x => x.CreateFromServertoClient());
                     }
                     if (meeting.MeetingDocuments.Count > 0)
                     {
-                        meetingViewModel.MeetingDocuments = meetingDocumentService.FindDocumentByMeetingId((long)id);
+                        meetingViewModel.MeetingDocuments = response.MeetingDocuments;
                     }
                 }
             }
