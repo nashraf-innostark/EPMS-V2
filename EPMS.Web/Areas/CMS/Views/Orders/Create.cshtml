@@ -14,6 +14,8 @@
         backUrl = "/CMS/Orders/Index";
     }
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    long customerId = Convert.ToInt64(Session["CustomerID"]);
+    var isDetailView = customerId != Model.Orders.CustomerId;
 }
 
 <!-- Navigation Bar -->
@@ -109,11 +111,14 @@
         </div>
         @if (userPermissionsSet.Contains("OrderCreate"))
         {
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn" onclick="validateForm(event)">@Model.BtnText</button>
+            if (!isDetailView)
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick=" validateForm(event) ">@Model.BtnText</button>
+                    </div>
                 </div>
-            </div>
+            }
         }
         @if (userPermissionsSet.Contains("OrderDetails"))
         {
