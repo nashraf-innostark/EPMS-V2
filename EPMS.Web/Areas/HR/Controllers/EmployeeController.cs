@@ -63,17 +63,22 @@ namespace EPMS.Web.Areas.HR.Controllers
         [SiteAuthorize(PermissionKey = "EmployeeIndex")]
         public ActionResult Index()
         {
-            if (Convert.ToString(Session["RoleName"]) == "Employee")
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            if (userPermissionsSet.Contains("EmployeeCreate"))
             {
-                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
+                EmployeeViewModel employeeViewModel = new EmployeeViewModel
+                {
+                    SearchRequest = new EmployeeSearchRequset()
+                };
+                ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+                return View(employeeViewModel);
+            }
+            if (Session["EmployeeID"] != null)
+            {
+                long id = Convert.ToInt64(Session["EmployeeID"]);
                 return RedirectToAction("Create", new { id });
             }
-            EmployeeViewModel employeeViewModel = new EmployeeViewModel
-            {
-                SearchRequest = new EmployeeSearchRequset()
-            };
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(employeeViewModel);
+            return RedirectToAction("Index","Dashboard");
         }
 
         /// <summary>
@@ -149,15 +154,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                 EmployeeResponse employeeResponse = EmployeeService.GetEmployeeAlongJobHistory(id);
                 viewModel.EmployeeViewModel.Employee = employeeResponse.Employee.CreateFromServerToClient();
                 viewModel.EmployeeViewModel.JobTitleDeptList = employeeResponse.JobTitleList.Select(x => x.CreateFromServerToClient());
-                // Get Allowances
-                var allowance =
-                    AllowanceService.FindByEmpIdDate(viewModel.EmployeeViewModel.Employee.EmployeeId, DateTime.Now);
-                if (allowance != null)
+
+                if (employeeResponse.Allowance != null)
                 {
-                    viewModel.EmployeeViewModel.Allowance = allowance.CreateFromServerToClient();
+                    viewModel.EmployeeViewModel.Allowance = employeeResponse.Allowance.CreateFromServerToClient();
                     viewModel.EmployeeViewModel.OldAllowance = viewModel.EmployeeViewModel.Allowance;
                 }
-                viewModel.EmployeeViewModel.JobHistories = employeeResponse.JobHistories.Select(x=>x.CreateFromServerToClientForJobHistory()).ToList();
+                viewModel.EmployeeViewModel.JobHistories = employeeResponse.JobHistories.Select(x => x.CreateFromServerToClientForJobHistory()).ToList();
                 viewModel.EmployeeViewModel.EmployeeName = direction == "ltr" ? viewModel.EmployeeViewModel.Employee.EmployeeFullNameE : viewModel.EmployeeViewModel.Employee.EmployeeFullNameA;
                 if (String.IsNullOrEmpty(viewModel.EmployeeViewModel.Employee.EmployeeImagePath))
                 {
@@ -220,7 +223,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 return View(viewModel);
             }
-            return null;
+            return RedirectToAction("Index", "Dashboard");
         }
 
         /// <summary>

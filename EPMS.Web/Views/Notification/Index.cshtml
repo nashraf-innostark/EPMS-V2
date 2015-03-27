@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NotificationList;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
 }
 
 <!-- Navigation Bar -->
@@ -22,7 +23,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="@(ConfigurationManager.AppSettings["SiteUrl"])/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>
+    @if (userPermissionsSet.Contains("NotificationCreate"))
+    {
+        <h3> <small><a href="@(ConfigurationManager.AppSettings["SiteUrl"])/Notification/Create">@EPMS.Web.Resources.Notification.Notification.CreateNew</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")

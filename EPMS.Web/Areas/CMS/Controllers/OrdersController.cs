@@ -51,13 +51,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
             searchRequest.SearchString = Request["search"];
             OrdersResponse ordersList = null;
             IEnumerable<Order> orders = null;
-            if (Session["RoleName"].ToString() == "Admin")
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            if (!userPermissionsSet.Contains("OrderCreate"))
             {
                 searchRequest.CustomerId = 0;
                 ordersList = OrdersService.GetAllOrders(searchRequest);
                 orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
             }
-            if (Session["RoleName"].ToString() == "Customer")
+            if (userPermissionsSet.Contains("OrderCreate"))
             {
                 searchRequest.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 ordersList = OrdersService.GetAllOrders(searchRequest);

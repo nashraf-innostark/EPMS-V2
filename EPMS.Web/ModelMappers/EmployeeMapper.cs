@@ -194,11 +194,13 @@ namespace EPMS.Web.ModelMappers
             {
                 descpEn = source.EmployeeDetailsE.Replace("\n", "");
                 descpEn = descpEn.Replace("\r", "");
+                descpEn = descpEn.Replace("\t", "");
             }
             if (!String.IsNullOrEmpty(source.EmployeeDetailsA))
             {
                 descpAr = source.EmployeeDetailsA.Replace("\n", "");
                 descpAr = descpAr.Replace("\r", "");
+                descpAr = descpAr.Replace("\t", "");
             }
             return new Models.Employee
             {
@@ -239,7 +241,7 @@ namespace EPMS.Web.ModelMappers
 
         }
 
-        public static Models.EmployeeForDropDownList CreateFromServerToClientForDropDownList(this Employee source)
+        public static EmployeeForDropDownList CreateFromServerToClientForDropDownList(this Employee source)
         {
             return new EmployeeForDropDownList
             {
@@ -250,9 +252,9 @@ namespace EPMS.Web.ModelMappers
             };
         }
 
-        public static Models.ContactList CreateForContactList(this Employee source)
+        public static ContactList CreateForContactList(this Employee source)
         {
-            return new Models.ContactList
+            return new ContactList
             {
                 Link = "/HR/Employee/Create/" + source.EmployeeId,
                 NameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
