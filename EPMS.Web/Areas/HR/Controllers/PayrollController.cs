@@ -47,7 +47,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         #region ListView
 
         [SiteAuthorize(PermissionKey = "PayrollIndex")]
-        //[SiteAuthorize(PermissionKey = "PayrollIndex")]
         // GET: HR/Payroll
         public ActionResult Index()
         {
@@ -65,7 +64,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 };
                 return View(employeeViewModel);
             }
-            if (Session["EmployeeID"] == null) return RedirectToAction("Index", "Dashboard");
+            if (Session["EmployeeID"] == null) return RedirectToAction("Index", "Dashboard", new { area = "" });
             long id = Convert.ToInt64(Session["EmployeeID"]);
             return RedirectToAction("Detail", new {id});
         }

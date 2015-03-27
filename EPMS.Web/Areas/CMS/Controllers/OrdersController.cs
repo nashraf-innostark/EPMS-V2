@@ -96,7 +96,6 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "OrderCreate,OrderDetails")]
         public ActionResult Create(long? id)
         {
-            var direction = Resources.Shared.Common.TextDirection;
             OrdersCreateViewModel viewModel = new OrdersCreateViewModel();
             if (Request.UrlReferrer != null)
             {
@@ -106,7 +105,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 ViewBag.backUrl = "";
             }
-            if (id != null)
+            if (id != null )
             {
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
                 if (Session["RoleName"].ToString() == "Customer")

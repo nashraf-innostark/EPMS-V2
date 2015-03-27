@@ -223,7 +223,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 return View(viewModel);
             }
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index", "Dashboard", new { area = "" });
         }
 
         /// <summary>
