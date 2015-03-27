@@ -747,6 +747,7 @@
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Notification\Sent.cshtml" />
     <Content Include="Views\Shared\_HelpLayout.cshtml" />
+    <Content Include="Areas\CMS\Views\Customer\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2634,7 +2635,6 @@
     <Content Include="Areas\CMS\Views\Complaint\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Index.cshtml" />
     <Content Include="Content\CSS\ie-only.less" />
-    <Content Include="Areas\CMS\Views\Customer\Details.cshtml" />
     <Content Include="Areas\CMS\Views\Quotation\Index.cshtml" />
     <Content Include="Content\CSS\ie8-only.less" />
     <Content Include="Areas\CP\Views\web.config" />
