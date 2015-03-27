@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity.Owin;
 using EPMS.Web.ModelMappers;
 using EPMS.Models.ResponseModels;
 using Org.BouncyCastle.Ocsp;
+using Employee = EPMS.Web.Models.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -24,8 +25,12 @@ namespace EPMS.Web.Areas.HR.Controllers
     [SiteAuthorize(PermissionKey = "HRS", IsModule = true)]
     public class PayrollController : BaseController
     {
+        #region Private
+
         private readonly IEmployeeService EmployeeService;
         private readonly IAspNetUserService AspNetUserService;
+
+        #endregion
 
         #region Constructor
 
@@ -38,6 +43,9 @@ namespace EPMS.Web.Areas.HR.Controllers
         #endregion
 
         #region Public
+
+        #region ListView
+
         [SiteAuthorize(PermissionKey = "PayrollIndex")]
         //[SiteAuthorize(PermissionKey = "PayrollIndex")]
         // GET: HR/Payroll
@@ -59,9 +67,14 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             if (Session["EmployeeID"] == null) return RedirectToAction("Index", "Dashboard");
             long id = Convert.ToInt64(Session["EmployeeID"]);
-            return RedirectToAction("Detail", new { id });
+            return RedirectToAction("Detail", new {id});
         }
 
+        /// <summary>
+        /// Get Empoyees' List for Payroll
+        /// </summary>
+        /// <param name="employeeSearchRequest"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
@@ -73,7 +86,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             employeeSearchRequest.SearchString = Request["search"];
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
-            IEnumerable<Models.Employee> employeeList =
+            IEnumerable<Employee> employeeList =
                 employees.Employeess.Select(x => x.CreateFromServerToClientWithImage()).ToList();
             EmployeeViewModel employeeViewModel = new EmployeeViewModel
             {
@@ -88,6 +101,17 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Detail
+        
+        /// <summary>
+        /// Details of Employee Payroll
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
         [SiteAuthorize(PermissionKey = "PayrollDetail")]
         public ActionResult Detail(long? id, DateTime? date)
         {
@@ -100,7 +124,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     date = DateTime.Now;
                 }
                 date = DateTime.Parse(date.ToString());
-                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, (DateTime)date);
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, (DateTime) date);
                 if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();
@@ -114,7 +138,10 @@ namespace EPMS.Web.Areas.HR.Controllers
                 // get employee requests
                 if (response.Requests != null)
                 {
-                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll()).Select(x => x.RequestDetails).ToList();
+                    var requests =
+                        response.Requests.Select(x => x.CreateFromServerToClientPayroll())
+                            .Select(x => x.RequestDetails)
+                            .ToList();
                     if (requests.Any())
                     {
                         switch (requests.Count)
@@ -167,10 +194,17 @@ namespace EPMS.Web.Areas.HR.Controllers
                                  viewModel.Allowances.Allowance5 ?? 0;
                 }
                 viewModel.Total = (basicSalary + allowances) - (viewModel.Deduction1 + viewModel.Deduction2);
-                viewModel.Date = DateTime.Now.ToString("MM/yyyy"); ;
+                viewModel.Date = DateTime.Now.ToString("MM/yyyy");
+                ;
             }
             return View(viewModel);
         }
+
+        /// <summary>
+        /// Get Details of Employee Payroll in Json response on Month Change
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult Detail(PayrollViewModel viewModel)
         {
@@ -178,7 +212,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             if (id > 0)
             {
                 var date = DateTime.ParseExact(viewModel.Date, "MM/yyyy", new CultureInfo("en"));
-                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id,date);
+                PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, date);
                 if (response.Employee != null)
                 {
                     viewModel.Employee = response.Employee.CreateFromServerToClient();
@@ -191,7 +225,10 @@ namespace EPMS.Web.Areas.HR.Controllers
                 // get employee requests
                 if (response.Requests != null)
                 {
-                    var requests = response.Requests.Select(x => x.CreateFromServerToClientPayroll()).Select(x => x.RequestDetails).ToList();
+                    var requests =
+                        response.Requests.Select(x => x.CreateFromServerToClientPayroll())
+                            .Select(x => x.RequestDetails)
+                            .ToList();
                     if (requests.Any())
                     {
                         switch (requests.Count)
@@ -247,6 +284,9 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
         #endregion
     }
 }
