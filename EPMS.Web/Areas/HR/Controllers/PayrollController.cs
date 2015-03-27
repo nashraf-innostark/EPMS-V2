@@ -43,30 +43,33 @@ namespace EPMS.Web.Areas.HR.Controllers
         // GET: HR/Payroll
         public ActionResult Index()
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
-            if (userRole != null && userRole.Name == "Admin")
+            string userRole = "";
+            if (Session["RoleName"] != null)
+            {
+                userRole = Convert.ToString(Session["RoleName"]);
+            }
+            if (userRole == "Admin")
             {
                 EmployeeViewModel employeeViewModel = new EmployeeViewModel
                 {
                     SearchRequest = new EmployeeSearchRequset(),
-                    Role = userRole.Name,
+                    Role = userRole,
                 };
                 return View(employeeViewModel);
             }
-            if (userRole != null && userRole.Name == "Employee")
-            {
-                long id = AspNetUserService.FindById(User.Identity.GetUserId()).Employee.EmployeeId;
-                return RedirectToAction("Detail", new { id });
-            }
-            return null;
+            if (Session["EmployeeID"] == null) return RedirectToAction("Index", "Dashboard");
+            long id = Convert.ToInt64(Session["EmployeeID"]);
+            return RedirectToAction("Detail", new { id });
         }
 
         [HttpPost]
         public ActionResult Index(EmployeeSearchRequset employeeSearchRequest)
         {
-            AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
-            var userRole = result.AspNetRoles.FirstOrDefault();
+            string userRole = "";
+            if (Session["RoleName"] != null)
+            {
+                userRole = Convert.ToString(Session["RoleName"]);
+            }
             employeeSearchRequest.UserId = Guid.Parse(User.Identity.GetUserId());
             employeeSearchRequest.SearchString = Request["search"];
             var employees = EmployeeService.GetAllEmployees(employeeSearchRequest);
@@ -79,9 +82,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                 iTotalDisplayRecords = Convert.ToInt32(employeeList.Count()),
                 sEcho = employeeSearchRequest.sEcho,
             };
-            if (userRole != null)
+            if (userRole != "")
             {
-                employeeViewModel.Role = userRole.Name;
+                employeeViewModel.Role = userRole;
             }
             return Json(employeeViewModel, JsonRequestBehavior.AllowGet);
         }
