@@ -89,7 +89,7 @@
                         <div class="span3">
                             <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Absences</label>
                         </div>
-                        <div class="span9">
+                        <div class="span9" id="attendees">
 
                             <div class="controls">
                                 @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
@@ -157,11 +157,11 @@
             </div>
             <div class="span9">
                 <div class="controls span4">
-                    @Html.TextBox("Meeting Date", null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')" })
+                    @Html.TextBox("Meeting Date", null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')" })
                     @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
                 </div>
                 <div class="controls span4">
-                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
                 </div>
             </div>
         </div>
@@ -383,6 +383,7 @@
         $('#submit').click(function () {
             $("#meetingForm").submit();
         });
+        
         var isDetail;
         var val = '@userPermissionsSet.Contains("MeetingCreate")';
         if (val == 'True') {
@@ -418,6 +419,8 @@
             $("#decisionAr").val(result);
             $("#Detail").show();
             $("#CKEditor").hide();
+            $("#checked").addClass('disableList');
+            $("#attendees").addClass('disableList');
         }
         if (isDetail == false) {
             // CK Editor
@@ -431,16 +434,18 @@
             $("#CKEditor").show();
         }
 
-        if (isDetail == false) {
-            setTimeout(function () {
+        setTimeout(function () {
+            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
                 //CKEDITOR.instances.Agenda.setReadOnly(true);
                 //CKEDITOR.instances.AgendaAr.setReadOnly(true);
                 CKEDITOR.instances.Discussion.setReadOnly(true);
                 CKEDITOR.instances.DiscussionAr.setReadOnly(true);
                 CKEDITOR.instances.Decisions.setReadOnly(true);
                 CKEDITOR.instances.DecisionsAr.setReadOnly(true);
-            }, 1000);
-        }
+                $("#attendees").addClass('disableList');
+                $("#checked").addClass('disableList');
+                $("#attendees").addClass('disableList');
+        }, 1000);
 
         var meetingId = $("#Meeting_MeetingId").val();
 
@@ -457,8 +462,8 @@
         }
 
         $("#edit").click(function (event) {
-            CKEDITOR.instances.Agenda.setReadOnly(false);
-            CKEDITOR.instances.AgendaAr.setReadOnly(false);
+            //CKEDITOR.instances.Agenda.setReadOnly(false);
+            //CKEDITOR.instances.AgendaAr.setReadOnly(false);
             CKEDITOR.instances.Discussion.setReadOnly(false);
             CKEDITOR.instances.DiscussionAr.setReadOnly(false);
             CKEDITOR.instances.Decisions.setReadOnly(false);
@@ -466,6 +471,8 @@
             if (meetingDate > today) {
                 $("#checked").addClass('enableList');
             }
+            $('.' + 'toBeDisable' + ':input').attr('disabled', false);
+            $("#attendees").addClass('enableList');
             $("#savebtn").show();
             $("#sendButton").show();
             $("#cancel").show();

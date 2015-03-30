@@ -189,11 +189,11 @@
                 </label>
             </div>
             <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
                 <label id="projectStartDateValidation"></label>
             </div>
             <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
             </div>
         </div>
         <div id="Date_Picker2" class="control-group row-fluid endDate">
@@ -203,11 +203,11 @@
                 </label>
             </div>
             <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly" })
                 <label id="projectEndDateValidation"></label>
             </div>
             <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand", @id = "TaskEndDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskEndDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly" })
             </div>
         </div>
         @if (userPermissionsSet.Contains("CreateTask"))

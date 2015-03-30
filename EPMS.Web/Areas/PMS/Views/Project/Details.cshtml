@@ -198,7 +198,18 @@
                                 <tr>
                                     <td>@item.TaskId</td>
                                     <td><a href="@ConfigurationManager.AppSettings["SiteURL"]/PMS/Task/Create/@item.TaskId">@item.TaskNameE</a></td>
-                                    <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
+                                    @if (direction == "ltr")
+                                    {
+                                        <td>@(Convert.ToDateTime(item.StartDate).ToShortDateString())</td>
+                                    }
+                                    else
+                                    {
+                                        <td id="@item.TaskId"></td>
+                                        <script>
+                                            var date = ConvertDates('@item.StartDate', "gregorian", "islamic");
+                                            $("#" + '@item.TaskId').text(date);
+                                        </script>
+                                    }
                                     <td>@item.PreReqTasks</td>
                                     <td>@item.EmployeesAssigned</td>
                                     <td>

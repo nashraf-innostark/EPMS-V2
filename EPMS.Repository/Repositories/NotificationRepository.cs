@@ -95,7 +95,8 @@ namespace EPMS.Repository.Repositories
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
-                    (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) &&
+                    (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
+                    &&
                     (((s.NotificationRecipients.Any(r=>r.UserId == searchRequset.NotificationRequestParams.UserId))||(s.NotificationRecipients.Any(r=>r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) &&
                            (s.AlertAppearDate <= today))
                     );
@@ -105,7 +106,7 @@ namespace EPMS.Repository.Repositories
             if (searchRequset.iSortCol_0 == 0)
             {
                 notifications = DbSet
-                .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead == false)).Skip(fromRow).Take(toRow).ToList();
+                .Where(query).OrderBy(x => x.NotificationRecipients.Any(y => y.IsRead)).Skip(fromRow).Take(toRow).ToList();
             }
             else if (searchRequset.iSortCol_0 == 8 || searchRequset.SearchString.ToLower() == "yes" || searchRequset.SearchString.ToLower() == "no")
             {
@@ -114,13 +115,109 @@ namespace EPMS.Repository.Repositories
                 {
                     case "yes":
                         isNotified = true;
-                        query = s => ((string.IsNullOrEmpty(searchRequset.SearchString) || 
-                            s.NotificationRecipients.Any(r => r.IsRead == isNotified)) && s.ForAdmin == true);
+                        if (searchRequset.NotificationRequestParams.SystemGenerated)
+                        {
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) ||
+                          (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) || s.NotificationRecipients.Any(r => r.IsRead == isNotified)) 
+                            && 
+                            (((s.ForAdmin == true) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
+                           (s.AlertAppearDate <= today)));
+                        }
+                        else
+                        {
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) || s.NotificationRecipients.Any(r => r.IsRead == isNotified))
+                                && (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) || 
+                                (s.NotificationRecipients.Any(r => r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) && (s.AlertAppearDate <= today))
+                                );
+                        }
                         break;
                     case "no":
                         isNotified = false;
-                        query = s => ((string.IsNullOrEmpty(searchRequset.SearchString) || 
-                            s.NotificationRecipients.All(r => r.IsRead == isNotified)) && s.ForAdmin == true);
+                        if (searchRequset.NotificationRequestParams.SystemGenerated)
+                        {
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) ||
+                          (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) || s.NotificationRecipients.Any(r => r.IsRead == isNotified))
+                            &&
+                            (((s.ForAdmin == true) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
+                           (s.AlertAppearDate <= today)));
+                        }
+                        else
+                        {
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) || s.NotificationRecipients.All(r => r.IsRead == isNotified))
+                                && (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) ||
+                                (s.NotificationRecipients.Any(r => r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) && (s.AlertAppearDate <= today))
+                                );
+                        }
+                        break;
+                    case "":
+                        if (searchRequset.NotificationRequestParams.SystemGenerated)
+                        {
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))))
+                            &&
+                            (((s.ForAdmin == true) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
+                           (s.AlertAppearDate <= today)));
+                        }
+                        else
+                        {
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                          (s.TitleE.Contains(searchRequset.SearchString)) || (s.TitleA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
+                          (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))))
+                                && (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) ||
+                                (s.NotificationRecipients.Any(r => r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) && (s.AlertAppearDate <= today))
+                                );
+                        }
                         break;
                 }
                 

@@ -682,7 +682,14 @@
                                         <div class="widget-head ">
                                             @if (Model.Project != null)
                                             {
-                                                <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                                if (direction == "ltr")
+                                                {
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</a>
+                                                }
                                             }
                                             else
                                             {
@@ -700,11 +707,11 @@
                                                 <li class="dashProject dashTask">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">Project - @Model.Project.Project.NameEShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</a>
                                                     }
                                                     else
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">Project - @Model.Project.Project.NameAShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</a>
                                                     }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)
@@ -733,11 +740,11 @@
                                                 <li class="processed-pct">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <span title="@Model.Project.Project.NameE">@Model.Project.Project.NameEShort</span>
+                                                        <span title="@Model.Project.Project.NameE">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</span>
                                                     }
                                                     else
                                                     {
-                                                        <span title="@Model.Project.Project.NameA">@Model.Project.Project.NameAShort</span>
+                                                        <span title="@Model.Project.Project.NameA">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</span>
                                                     }
                                                     <div class="progress progress-info">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: @Model.Project.Project.ProgressTotal;">@Model.Project.Project.ProgressTotal%</div>
