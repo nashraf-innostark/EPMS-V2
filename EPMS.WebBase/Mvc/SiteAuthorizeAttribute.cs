@@ -34,11 +34,11 @@ namespace EPMS.WebBase.Mvc
             Modules = splitLicenseKey[4].Split(';');
 
             // check MAC Address
-            string userMacAddress = GetMacAddress();
+            /*string userMacAddress = GetMacAddress();
             if (MacAddress != userMacAddress)
             {
                 return false;
-            }
+            }*/
 
             // check Domain
             var dir = AppDomain.CurrentDomain.BaseDirectory;
