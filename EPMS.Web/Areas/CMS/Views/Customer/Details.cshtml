@@ -77,7 +77,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.User.Email, new { id = "CustomerEmail", @class = "tbdisable", @ViewBag.Disabled })
+                    @Html.TextBoxFor(model => model.User.Email, new { id = "CustomerEmail", @class = "", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "required" })
                 </div>
             </div>

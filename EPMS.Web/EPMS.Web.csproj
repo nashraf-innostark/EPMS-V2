@@ -404,25 +404,6 @@
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Models\TaskEmployee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\ESDS.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ESDS.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\PrisonerInfo.aspx.cs">
-      <DependentUpon>PrisonerInfo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\PrisonerInfo.aspx.designer.cs">
-      <DependentUpon>PrisonerInfo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\PrisonerReport.aspx.cs">
-      <DependentUpon>PrisonerReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\PrisonerReport.aspx.designer.cs">
-      <DependentUpon>PrisonerReport.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -656,8 +637,6 @@
     <Compile Include="ViewModels\JobOffered\JobOfferedViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleListViewModel.cs" />
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
-    <Compile Include="ViewModels\License\LicenseCreateViewModel.cs" />
-    <Compile Include="ViewModels\License\LicenseIndexViewModel.cs" />
     <Compile Include="ViewModels\Meeting\MeetingListViewModel.cs" />
     <Compile Include="ViewModels\Meeting\MeetingViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
@@ -748,6 +727,9 @@
     <Content Include="Views\Notification\Sent.cshtml" />
     <Content Include="Views\Shared\_HelpLayout.cshtml" />
     <Content Include="Areas\CMS\Views\Customer\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Customer\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2022,8 +2004,6 @@
     <Content Include="Images\w_shadow.png" />
     <Content Include="Images\w_task%402x.png" />
     <Content Include="Images\w_twitter%402x.png" />
-    <Content Include="Reports\PrisonerInfo.aspx" />
-    <Content Include="Reports\PrisonerReport.aspx" />
     <Content Include="RichTextEditor\adapters\jquery.js" />
     <Content Include="RichTextEditor\build-config.js" />
     <Content Include="RichTextEditor\ckeditor.js" />
@@ -2493,9 +2473,6 @@
     <Content Include="Content\CSS\Admin\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\CSS\Admin\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\CSS\Admin\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Reports\ESDS.xsc">
-      <DependentUpon>ESDS.xsd</DependentUpon>
-    </Content>
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\PMS\Views\web.config" />
     <Content Include="Images\photon\entypo.eot" />
@@ -2663,14 +2640,6 @@
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
-    <None Include="Reports\ESDS.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ESDS.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\ESDS.xss">
-      <DependentUpon>ESDS.xsd</DependentUpon>
-    </Content>
     <Content Include="Scripts\App\select2\bower.json" />
     <Content Include="Scripts\App\select2\component.json" />
     <Content Include="Scripts\App\select2\composer.json" />
@@ -3087,27 +3056,9 @@
     <Content Include="Views\Account\Users.cshtml" />
     <Content Include="Views\Admin\AppointmentLV.cshtml" />
     <Content Include="Views\Admin\GalleryLV.cshtml" />
-    <Content Include="Views\Prisoner\AddEdit.cshtml" />
-    <Content Include="Views\Prisoner\Index.cshtml" />
     <Content Include="Views\Shared\ES.Master" />
-    <Content Include="Views\Reports\PrisonerReport.cshtml" />
     <Content Include="Views\RolesAdmin\RightsManagement.cshtml" />
-    <Content Include="Views\CaseType\Index.cshtml" />
-    <Content Include="Views\CaseType\AddEdit.cshtml" />
-    <Content Include="Views\CaseStatus\Index.cshtml" />
-    <Content Include="Views\CaseStatus\AddEdit.cshtml" />
-    <Content Include="Views\DetentionAuthority\Index.cshtml" />
-    <Content Include="Views\DetentionAuthority\AddEdit.cshtml" />
-    <Content Include="Views\DetentionLocation\Index.cshtml" />
-    <Content Include="Views\DetentionLocation\AddEdit.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Employee\EmployeeLV.cshtml" />
-    <Content Include="Views\Employee\AddEdit.cshtml" />
-    <Content Include="Views\JobTitle\JobTitleLV.cshtml" />
-    <Content Include="Views\Department\DepartmentLV.cshtml" />
-    <Content Include="Views\Employee\DDL.cshtml" />
-    <Content Include="Views\JobTitle\ComboBox.cshtml" />
-    <Content Include="Views\JobTitle\AddEdit.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_Alert.cshtml" />
     <Content Include="Views\Shared\_DashboardLayout.cshtml" />
@@ -3134,6 +3085,7 @@
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
   </ItemGroup>
@@ -3167,8 +3119,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Reports\PrisonerInfo.rdlc" />
-    <EmbeddedResource Include="Reports\PrisonerReport.rdlc" />
     <EmbeddedResource Include="Resources\HR\Request.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Request.ar.Designer.cs</LastGenOutput>

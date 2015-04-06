@@ -369,17 +369,15 @@ function NoRecord(control, msg) {
 }
 function ProjectWidgetEvents() {
     $("#progressId li.dashTask").on("click", function () {
-        //$(".progress")
-        //if($(this).hasClass("processed-pct")){
         var target = 0;
         if ($(this).find("a").is('[data-task]')) {
             target = parseInt($(this).find("a").attr('data-task'));
-            $('.processed-pct').find("span").text($(this).find("a").text());
+            //$('.processed-pct').find("span").text($(this).find("a").text());
         }
         else if ($(this).find("a").is('[data-overall]')) {
 
             target = parseInt($(this).find("a").attr('data-overall'));
-            $('.processed-pct').find("span").text($(this).find("a").text());
+            //$('.processed-pct').find("span").text($(this).find("a").text());
 
         }
 
@@ -398,7 +396,7 @@ function ProjectWidgetEvents() {
         count++;
     });
 
-    if (count >= 4) {
+    if (count > 4) {
         $("#progressId .dashNext").show();
     }
     $("#progressId .dashNext").on("click", function () {

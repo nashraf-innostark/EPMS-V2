@@ -19,7 +19,6 @@ namespace EPMS.Web.Areas.HR.Controllers
         #region Private
 
         private readonly IDepartmentService oService;
-        private readonly IEmployeeService empService;
 
         #endregion
 
