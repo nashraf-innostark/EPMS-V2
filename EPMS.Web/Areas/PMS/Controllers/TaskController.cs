@@ -49,7 +49,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
 
         #region Task ListView for Admin
 
-// GET: PMS/Task
+        // GET: PMS/Task
+        [SiteAuthorize(PermissionKey = "TaskIndex")]
         public ActionResult Index()
         {
             var test = Session["UserPermissionSet"];
@@ -112,6 +113,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         /// Get Tasks specific to User
         /// </summary>
         /// <returns></returns>
+        [SiteAuthorize(PermissionKey = "MyTasks")]
         public ActionResult MyTasks()
         {
             TaskListViewModel viewModel = new TaskListViewModel();

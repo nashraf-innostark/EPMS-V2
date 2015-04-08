@@ -125,8 +125,11 @@ namespace EPMS.WebBase.Mvc
             {
                 if (sMacAddress == String.Empty)// only return MAC Address from first card  
                 {
-                    //IPInterfaceProperties properties = adapter.GetIPProperties(); Line is not required
-                    sMacAddress = adapter.GetPhysicalAddress().ToString();
+                    string networkType = adapter.NetworkInterfaceType.ToString();
+                    if (networkType == "Ethernet")
+                    {
+                        sMacAddress = adapter.GetPhysicalAddress().ToString();
+                    }
                 }
             } return sMacAddress;
         }
