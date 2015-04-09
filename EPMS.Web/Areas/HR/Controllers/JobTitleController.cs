@@ -115,7 +115,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
                 return RedirectToAction("Create", e);
             }
-            
+            jobTitleViewModel.DepartmentList = departmentService.GetAll().Select(x => x.CreateFrom());
             return View(jobTitleViewModel);
         }
 

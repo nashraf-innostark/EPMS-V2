@@ -34,7 +34,7 @@ namespace EPMS.Implementation.Services
             return repository.GetJobTitlesByDepartmentId(deptId);
         }
 
-        
+
         //public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
         //{
         //    return repository.GetAllJobTitle(jobTitleSearchRequest);
@@ -56,7 +56,7 @@ namespace EPMS.Implementation.Services
             }
             return response;
         }
-        public JobTitle GetJobTitlesByJobOfferedId (long id)
+        public JobTitle GetJobTitlesByJobOfferedId(long id)
         {
             if (id > 0) return repository.GetJobOfferedByJobTitleId(id);
             return null;
@@ -69,44 +69,37 @@ namespace EPMS.Implementation.Services
 
         public bool AddJob(JobTitle jobTitle)
         {
-                if (repository.JobTitleExists(jobTitle))
-                {
-                    throw new InvalidOperationException("Job Title with same name already exists.");
-                }
-                repository.Add(jobTitle);
-                repository.SaveChanges();
-                return true;
+            if (repository.JobTitleExists(jobTitle))
+            {
+                throw new InvalidOperationException("Job Title with same name already exists.");
+            }
+            repository.Add(jobTitle);
+            repository.SaveChanges();
+            return true;
         }
 
         public bool UpdateJob(JobTitle jobTitle)
         {
-            try
+            if (repository.JobTitleExists(jobTitle))
             {
-                if (repository.JobTitleExists(jobTitle))
-                {
-                    throw new InvalidOperationException("Job Title with same name already exists.");
-                }
-                var tempjobTitle = repository.Find(jobTitle.JobTitleId);
-                if (jobTitle.BasicSalary != tempjobTitle.BasicSalary)
-                {
-                    var jobHistory = new JobTitleHistory
-                    {
-                        JobTitleId = Convert.ToInt64(jobTitle.JobTitleId),
-                        BasicSalary = Convert.ToDouble(jobTitle.BasicSalary),
-                        RecCreatedDate = DateTime.Now,
-                        RecCreatedBy = jobTitle.RecLastUpdatedBy
-                    };
-                    jobTitleHistoryRepository.Add(jobHistory);
-                    jobTitleHistoryRepository.SaveChanges();
-                }
-                repository.Update(jobTitle);
-                repository.SaveChanges();
-                return true;
+                throw new InvalidOperationException("Job Title with same name already exists.");
             }
-            catch (Exception e)
+            var tempjobTitle = repository.Find(jobTitle.JobTitleId);
+            if (jobTitle.BasicSalary != tempjobTitle.BasicSalary)
             {
-               return false;
+                var jobHistory = new JobTitleHistory
+                {
+                    JobTitleId = Convert.ToInt64(jobTitle.JobTitleId),
+                    BasicSalary = Convert.ToDouble(jobTitle.BasicSalary),
+                    RecCreatedDate = DateTime.Now,
+                    RecCreatedBy = jobTitle.RecLastUpdatedBy
+                };
+                jobTitleHistoryRepository.Add(jobHistory);
+                jobTitleHistoryRepository.SaveChanges();
             }
+            repository.Update(jobTitle);
+            repository.SaveChanges();
+            return true;
         }
 
         public void DeleteJob(JobTitle jobTitle)
