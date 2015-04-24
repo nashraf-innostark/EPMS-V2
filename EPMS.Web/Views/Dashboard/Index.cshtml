@@ -1,8 +1,10 @@
 ﻿@using System.Configuration
+@using System.Web.UI.WebControls
 @using iTextSharp.text.pdf.qrcode
 @model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
 
 @{
+    ViewBag.Title = EPMS.Web.Resources.Dashboard.Dashboard.DashboardTitle;
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;

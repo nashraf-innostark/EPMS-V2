@@ -1,7 +1,7 @@
 ﻿@model EPMS.Models.IdentityModels.ViewModels.RoleViewModel
 
 @{
-    ViewBag.Title = "Roles";
+    ViewBag.Title = EPMS.Web.Resources.UserManagement.Role.Roles;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -23,7 +23,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/RolesAdmin/Create">Create New Role</a></small></h3>
+    <h3> <small><a href="~/RolesAdmin/Create">@EPMS.Web.Resources.UserManagement.Role.AddNew</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Roles</th>
+                                <th>@ViewBag.Title</th>
                             </tr>
                         </thead>
                         <tbody>

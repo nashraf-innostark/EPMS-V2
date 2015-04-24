@@ -88,6 +88,12 @@ namespace EPMS.Web.Controllers
             SetCultureInfo();
             //Get Notifications Count
             GetNotifications();
+            // Set user allowed modules
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            var licenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = licenseKey.Split('|');
+            var modules = splitLicenseKey[4].Split(';');
+            Session["UserModules"] = modules;
         }
         #endregion
 
@@ -143,12 +149,7 @@ namespace EPMS.Web.Controllers
 
             string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
             Session["UserPermissionSet"] = userPermissions;
-            // Set user allowed modules
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            var licenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            var splitLicenseKey = licenseKey.Split('|');
-            var modules = splitLicenseKey[4].Split(';');
-            Session["UserModules"] = modules;
+            
         }
         public ApplicationUserManager UserManager
         {

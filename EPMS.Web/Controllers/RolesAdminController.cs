@@ -14,6 +14,8 @@ using EPMS.Interfaces.IServices;
 using EPMS.Web.ViewModels.RightsManagement;
 using EPMS.Web.ViewModels.Common;
 using EPMS.WebBase.Mvc;
+using System.Globalization;
+using EPMS.WebBase.UnityConfiguration;
 
 namespace IdentitySample.Controllers
 {
@@ -21,6 +23,7 @@ namespace IdentitySample.Controllers
     public class RolesAdminController : Controller
     {
         private IMenuRightsService menuRightsService;
+        private IUserPrefrencesService userPrefrencesService;
         private IDashboardWidgetPreferencesService PreferencesService;
         public RolesAdminController()
         {
@@ -64,6 +67,16 @@ namespace IdentitySample.Controllers
                 _roleManager = value;
             }
         }
+        private void SetCultureInfo()
+        {
+            if (Session["Culture"] != null)
+            {
+                CultureInfo info = new CultureInfo(Session["Culture"].ToString());
+                info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+                System.Threading.Thread.CurrentThread.CurrentCulture = info;
+                System.Threading.Thread.CurrentThread.CurrentUICulture = info;
+            }
+        }
 
         //
         // GET: /Roles/
@@ -71,6 +84,7 @@ namespace IdentitySample.Controllers
         {
             RoleViewModel roleViewModel = new RoleViewModel();
             roleViewModel.Roles = RoleManager.Roles.ToList();
+            SetCultureInfo();
             return View(roleViewModel);
         }
 
@@ -233,24 +247,26 @@ namespace IdentitySample.Controllers
             RightsManagementViewModel viewModel = new RightsManagementViewModel();
 
             viewModel.Roles = userMenuRights.Roles.ToList();
+            var rightes = userMenuRights.Menus;
             viewModel.Rights =
-                userMenuRights.Menus.Select(
+                rightes.Select(
                     m =>
                         new Rights
                         {
                             MenuId = m.MenuId,
                             MenuTitle = m.MenuTitle,
+                            MenuTitleA = m.MenuTitleA,
                             IsParent = m.IsRootItem,
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            SetCultureInfo();
             return View(viewModel);
         }
 
         public ActionResult PostRightsManagement(string roleValue, string selectedList)
         {
-
             UserMenuResponse userMenuRights = menuRightsService.SaveRoleMenuRight(roleValue, selectedList, RoleManager.FindById(roleValue));
             //string[] roles = selectedList.Split(',');
             //IList<string> userWidgets = new List<string>();
@@ -339,12 +355,13 @@ namespace IdentitySample.Controllers
                         {
                             MenuId = m.MenuId,
                             MenuTitle = m.MenuTitle,
+                            MenuTitleA = m.MenuTitleA,
                             IsParent = m.IsRootItem,
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null,
-
                         }).ToList();
             viewModel.SelectedRoleId = RoleId;
+            SetCultureInfo();
             return View(viewModel);
         }
     }
