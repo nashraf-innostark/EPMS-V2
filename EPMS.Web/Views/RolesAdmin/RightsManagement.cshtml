@@ -1,10 +1,16 @@
 ﻿@model EPMS.Web.ViewModels.RightsManagement.RightsManagementViewModel
 
 @{
-    ViewBag.Title = "Rights Management";
+    ViewBag.Title = EPMS.Web.Resources.UserManagement.RightsManagement.RightsManagementText;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
+<style>
+    .chkbMargin {
+        margin-right: -20px !important;
+    }
+</style>
 <!-- Navigation Bar -->
 <div class="breadcrumb-container" dir="ltr">
     <ul class="xbreadcrumbs">
@@ -38,7 +44,7 @@
         <div class="form-horizontal">
             <div class="control-group row-fluid">
                 <div class="span1">
-                    <label class="control-label" style="font-weight: bold">Role</label>
+                    <label class="control-label" style="font-weight: bold">@EPMS.Web.Resources.UserManagement.RightsManagement.Role</label>
                 </div>
                 <div class="span3">
                     @Html.DropDownListFor(x => x.SelectedRoleId, new SelectList(Model.Roles, "Id", "Name"), new { @class = " mandatory form-control", onchange = "this.form.submit();" })
@@ -48,23 +54,47 @@
             {
                 <div class="control-group row-fluid area">
                     <div class="span3 areaItem">
-                        @Html.CheckBoxFor(m => item.IsSelected, new { value = item.MenuId, @class = "parentCheckbox" })
-                        <h4 class="areaLabel">@item.MenuTitle</h4>
+                        @if (direction == "ltr")
+                        {
+                            @Html.CheckBoxFor(m => item.IsSelected, new { value = item.MenuId, @class = "parentCheckbox" })
+                            <h4 class="areaLabel">@item.MenuTitle</h4>
+                        }
+                        else
+                        {
+                            @Html.CheckBoxFor(m => item.IsSelected, new { value = item.MenuId, @class = "parentCheckbox chkbMargin" })
+                            <h4 class="areaLabel">@item.MenuTitleA</h4>
+                        }
                         @*<label style="padding-left:10px;font-weight: 700">@item.MenuTitle</label>*@
                     </div>
                     @foreach (var childItems in @Model.Rights.Where(childItem => childItem.ParentId == item.MenuId))
                     {
                         <div class="control-group row-fluid childItem">
                             <div class="span12">
-                                @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
                                 @*<label class="controllerLabel">@childItems.MenuTitle</label>*@
-                                <h5 class="controllerLabel">@childItems.MenuTitle</h5>
+                                @if (direction == "ltr")
+                                {
+                                    @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
+                                    <h5 class="controllerLabel">@childItems.MenuTitle</h5>
+                                }
+                                else
+                                {
+                                    @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox chkbMargin" })
+                                    <h5 class="controllerLabel">@childItems.MenuTitleA</h5>
+                                }
                                 <div class="control-group row-fluid childItem">
                                     @foreach (var actions in @Model.Rights.Where(actions => actions.ParentId == childItems.MenuId))
                                     {
                                         <div class="span2">
-                                            @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek" })
-                                            <label class="actionLabel">@actions.MenuTitle</label>
+                                            @if (direction == "ltr")
+                                            {
+                                                @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek" })
+                                                <label class="actionLabel">@actions.MenuTitle</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek chkbMargin" })
+                                                <label class="actionLabel">@actions.MenuTitleA</label>
+                                            }
                                         </div>
                                     }
                                 </div>
@@ -77,7 +107,7 @@
             }
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    @Html.ActionLink("Save", "PostRightsManagement", new { roleValue = "SelectedRoleValue", selectedList = "SelectedListValues" }, new { @class = "btn", id = "btnSave" })
+                    @Html.ActionLink( EPMS.Web.Resources.UserManagement.RightsManagement.Btn_Save, "PostRightsManagement", new { roleValue = "SelectedRoleValue", selectedList = "SelectedListValues" }, new { @class = "btn", id = "btnSave" })
                 </div>
             </div>
         </div>

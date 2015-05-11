@@ -24,6 +24,7 @@ using EPMS.Web.ModelMappers;
 using EPMS.Models.ModelMapers;
 using EPMS.WebBase.Mvc;
 using System.Globalization;
+using EPMS.WebBase.UnityConfiguration;
 
 namespace IdentitySample.Controllers
 {
@@ -104,6 +105,7 @@ namespace IdentitySample.Controllers
         #region Change Password
         public ActionResult ChangePassword()
         {
+            SetCultureInfo(User.Identity.GetUserId());
             return View();
         }
         // POST: /Account/ChangePassword
@@ -346,6 +348,7 @@ namespace IdentitySample.Controllers
                     });
                 }
             }
+            SetCultureInfo(User.Identity.GetUserId());
             return View(oVM);
         }
 
@@ -975,6 +978,7 @@ namespace IdentitySample.Controllers
             };
             ViewBag.FilePath = ConfigurationManager.AppSettings["ProfileImage"] + ProfileViewModel.ImageName;//Server.MapPath
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            SetCultureInfo(User.Identity.GetUserId());
             return View(ProfileViewModel);
         }
 

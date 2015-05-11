@@ -614,6 +614,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\UserManagement\ChangePassword.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChangePassword.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserManagement\MyProfile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyProfile.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserManagement\RightsManagement.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RightsManagement.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserManagement\Role.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Role.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UserManagement\Users.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Users.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -2994,6 +3019,31 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
+    <EmbeddedResource Include="Resources\UserManagement\ChangePassword.ar.resx" />
+    <EmbeddedResource Include="Resources\UserManagement\ChangePassword.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\MyProfile.ar.resx" />
+    <EmbeddedResource Include="Resources\UserManagement\MyProfile.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MyProfile.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\RightsManagement.ar.resx" />
+    <EmbeddedResource Include="Resources\UserManagement\RightsManagement.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RightsManagement.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\Role.ar.resx" />
+    <EmbeddedResource Include="Resources\UserManagement\Role.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Role.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\Users.ar.resx" />
+    <EmbeddedResource Include="Resources\UserManagement\Users.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Users.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="Scripts\App\select2\bower.json" />
