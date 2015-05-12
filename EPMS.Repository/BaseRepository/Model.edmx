@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EPMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aisle">
+          <Key>
+            <PropertyRef Name="AisleId" />
+          </Key>
+          <Property Name="AisleId" Type="bigint" Nullable="false" />
+          <Property Name="AisleName" Type="nvarchar" MaxLength="200" />
+          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -310,6 +322,57 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMSInventory.dbo.InventoryDepartment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InventoryDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="DepartmentId" Type="bigint" Nullable="false" />
+          <Property Name="DepartmentNameEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="DepartmentNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="DepartmentColor" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMSInventory.dbo.InventoryItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InventoryItems">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="ItemId" Type="bigint" Nullable="false" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="200" />
+          <Property Name="ItemNameEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="ItemNameAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="ItemImagePath" Type="nvarchar" MaxLength="400" />
+          <Property Name="ItemDescriptionEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ItemDescriptionAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DescriptionForQuotationEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DescriptionForQuotationAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HazardousEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HazardousAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UsageEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="UsageAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ReorderLevel" Type="int" />
+          <Property Name="DepartmentId" Type="bigint" />
+          <Property Name="WarehouseID" Type="bigint" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="JobApplicants">
           <Key>
@@ -656,6 +719,42 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar(max)" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
         </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="bigint" Nullable="false" />
+          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="AisleId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shelf">
+          <Key>
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="ShelfId" Type="bigint" Nullable="false" />
+          <Property Name="ShelfName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShelfSection">
+          <Key>
+            <PropertyRef Name="ShelfSectionId" />
+          </Key>
+          <Property Name="ShelfSectionId" Type="bigint" Nullable="false" />
+          <Property Name="ShelfSectionName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ShelfId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="TaskEmployee">
           <Key>
             <PropertyRef Name="TaskEmployeeId" />
@@ -676,6 +775,55 @@
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Culture" Type="nvarchar" MaxLength="3" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="VendorId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="VendorId" Type="bigint" Nullable="false" />
+          <Property Name="VendorNameEn" Type="nvarchar" MaxLength="400" />
+          <Property Name="VendorNameAr" Type="nvarchar" MaxLength="400" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="200" />
+          <Property Name="VendorEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="VendorContact" Type="nvarchar" MaxLength="50" />
+          <Property Name="VendorField" Type="nvarchar" MaxLength="400" />
+          <Property Name="DetailsEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="DetailsAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="WarehouseNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="WarehouseManager" Type="bigint" />
+          <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Aisle_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="Aisle" Type="Self.Aisle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Aisle">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
@@ -1008,6 +1156,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_NotificationRecipient_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NotificationRecipient_Notification">
           <End Role="Notification" Type="Self.Notification" Multiplicity="1" />
           <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
@@ -1164,6 +1324,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Section_Aisle">
+          <End Role="Aisle" Type="Self.Aisle" Multiplicity="1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shelf_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="1" />
+          <End Role="Shelf" Type="Self.Shelf" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Shelf">
+              <PropertyRef Name="ShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShelfSection_Shelf">
+          <End Role="Shelf" Type="Self.Shelf" Multiplicity="1" />
+          <End Role="ShelfSection" Type="Self.ShelfSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shelf">
+              <PropertyRef Name="ShelfId" />
+            </Principal>
+            <Dependent Role="ShelfSection">
+              <PropertyRef Name="ShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TaskEmployee_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
@@ -1200,7 +1396,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Warehouse_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EPMSModelStoreContainer">
+          <EntitySet Name="Aisle" EntityType="Self.Aisle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -1239,8 +1448,70 @@
           <EntitySet Name="Quotation" EntityType="Self.Quotation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shelf" EntityType="Self.Shelf" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShelfSection" EntityType="Self.ShelfSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryDepartment" EntityType="Self.InventoryDepartment" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InventoryDepartment].[DepartmentId] AS [DepartmentId], 
+    [InventoryDepartment].[DepartmentNameEn] AS [DepartmentNameEn], 
+    [InventoryDepartment].[DepartmentNameAr] AS [DepartmentNameAr], 
+    [InventoryDepartment].[DepartmentColor] AS [DepartmentColor], 
+    [InventoryDepartment].[DepartmentDesc] AS [DepartmentDesc], 
+    [InventoryDepartment].[RecCreatedBy] AS [RecCreatedBy], 
+    [InventoryDepartment].[RecCreatedDt] AS [RecCreatedDt], 
+    [InventoryDepartment].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
+    [InventoryDepartment].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
+    FROM [dbo].[InventoryDepartment] AS [InventoryDepartment]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InventoryItems].[ItemId] AS [ItemId], 
+    [InventoryItems].[ItemCode] AS [ItemCode], 
+    [InventoryItems].[ItemNameEn] AS [ItemNameEn], 
+    [InventoryItems].[ItemNameAr] AS [ItemNameAr], 
+    [InventoryItems].[ItemImagePath] AS [ItemImagePath], 
+    [InventoryItems].[ItemDescriptionEn] AS [ItemDescriptionEn], 
+    [InventoryItems].[ItemDescriptionAr] AS [ItemDescriptionAr], 
+    [InventoryItems].[DescriptionForQuotationEn] AS [DescriptionForQuotationEn], 
+    [InventoryItems].[DescriptionForQuotationAr] AS [DescriptionForQuotationAr], 
+    [InventoryItems].[HazardousEn] AS [HazardousEn], 
+    [InventoryItems].[HazardousAr] AS [HazardousAr], 
+    [InventoryItems].[UsageEn] AS [UsageEn], 
+    [InventoryItems].[UsageAr] AS [UsageAr], 
+    [InventoryItems].[ReorderLevel] AS [ReorderLevel], 
+    [InventoryItems].[DepartmentId] AS [DepartmentId], 
+    [InventoryItems].[WarehouseID] AS [WarehouseID], 
+    [InventoryItems].[RecCreatedBy] AS [RecCreatedBy], 
+    [InventoryItems].[RecCreatedDt] AS [RecCreatedDt], 
+    [InventoryItems].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
+    [InventoryItems].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
+    FROM [dbo].[InventoryItems] AS [InventoryItems]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vendors].[VendorId] AS [VendorId], 
+    [Vendors].[VendorNameEn] AS [VendorNameEn], 
+    [Vendors].[VendorNameAr] AS [VendorNameAr], 
+    [Vendors].[ContactPerson] AS [ContactPerson], 
+    [Vendors].[VendorEmail] AS [VendorEmail], 
+    [Vendors].[VendorContact] AS [VendorContact], 
+    [Vendors].[VendorField] AS [VendorField], 
+    [Vendors].[DetailsEn] AS [DetailsEn], 
+    [Vendors].[DetailsAr] AS [DetailsAr], 
+    [Vendors].[RecCreatedBy] AS [RecCreatedBy], 
+    [Vendors].[RecCreatedDt] AS [RecCreatedDt], 
+    [Vendors].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
+    [Vendors].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
+    FROM [dbo].[Vendors] AS [Vendors]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Aisle_Warehouse" Association="Self.FK_Aisle_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="Aisle" EntitySet="Aisle" />
+          </AssociationSet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -1349,6 +1620,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
           </AssociationSet>
+          <AssociationSet Name="FK_NotificationRecipient_Employee" Association="Self.FK_NotificationRecipient_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
+          </AssociationSet>
           <AssociationSet Name="FK_NotificationRecipient_Notification" Association="Self.FK_NotificationRecipient_Notification">
             <End Role="Notification" EntitySet="Notification" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipient" />
@@ -1401,6 +1676,18 @@
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
             <End Role="RequestDetails" EntitySet="RequestDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_Section_Aisle" Association="Self.FK_Section_Aisle">
+            <End Role="Aisle" EntitySet="Aisle" />
+            <End Role="Section" EntitySet="Section" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shelf_Section" Association="Self.FK_Shelf_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Shelf" EntitySet="Shelf" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShelfSection_Shelf" Association="Self.FK_ShelfSection_Shelf">
+            <End Role="Shelf" EntitySet="Shelf" />
+            <End Role="ShelfSection" EntitySet="ShelfSection" />
+          </AssociationSet>
           <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="TaskEmployee" EntitySet="TaskEmployee" />
@@ -1412,6 +1699,10 @@
           <AssociationSet Name="FK_UserPrefrences_AspNetUsers" Association="Self.FK_UserPrefrences_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserPrefrences" EntitySet="UserPrefrences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehouse_Employee" Association="Self.FK_Warehouse_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1495,8 +1786,8 @@
           <NavigationProperty Name="Customer" Relationship="Self.FK_AspNetUsers_Customer" FromRole="AspNetUsers" ToRole="Customer" />
           <NavigationProperty Name="UserPrefrences" Relationship="Self.FK_UserPrefrences_AspNetUsers" FromRole="AspNetUsers" ToRole="UserPrefrences" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
           <NavigationProperty Name="NotificationRecipients" Relationship="EPMSModel.FK_NotificationRecipient_AspNetUsers" FromRole="AspNetUser" ToRole="NotificationRecipient" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_AspNetUsers_Employee" FromRole="AspNetUser" ToRole="Employee" />
         </EntityType>
         <EntityType Name="CompanyBankDetail">
           <Key>
@@ -2583,8 +2874,41 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
-          <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
           <EntitySet Name="NotificationRecipients" EntityType="EPMSModel.NotificationRecipient" />
+          <AssociationSet Name="FK_NotificationRecipient_AspNetUsers" Association="EPMSModel.FK_NotificationRecipient_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NotificationRecipient_Notification" Association="EPMSModel.FK_NotificationRecipient_Notification">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          </AssociationSet>
+          <EntitySet Name="Complaints" EntityType="EPMSModel.Complaint" />
+          <AssociationSet Name="FK_Complaint_Customer" Association="EPMSModel.FK_Complaint_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaint_Department" Association="EPMSModel.FK_Complaint_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <EntitySet Name="InventoryDepartments" EntityType="EPMSModel.InventoryDepartment" />
+          <EntitySet Name="InventoryItems" EntityType="EPMSModel.InventoryItem" />
+          <EntitySet Name="Vendors" EntityType="EPMSModel.Vendor" />
+          <EntitySet Name="Aisles" EntityType="EPMSModel.Aisle" />
+          <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
+          <EntitySet Name="Sections" EntityType="EPMSModel.Section" />
+          <EntitySet Name="Shelves" EntityType="EPMSModel.Shelf" />
+          <EntitySet Name="ShelfSections" EntityType="EPMSModel.ShelfSection" />
+          <EntitySet Name="Warehouses" EntityType="EPMSModel.Warehouse" />
+          <AssociationSet Name="FK_Aisle_Warehouse" Association="EPMSModel.FK_Aisle_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Aisle" EntitySet="Aisles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Section_Aisle" Association="EPMSModel.FK_Section_Aisle">
+            <End Role="Aisle" EntitySet="Aisles" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
           <AssociationSet Name="FK_Allowance_Employee" Association="EPMSModel.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Allowance" EntitySet="Allowances" />
@@ -2592,10 +2916,6 @@
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="EPMSModel.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NotificationRecipient_AspNetUsers" Association="EPMSModel.FK_NotificationRecipient_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_JobTitle" Association="EPMSModel.FK_Employee_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
@@ -2621,20 +2941,186 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
-          <AssociationSet Name="FK_NotificationRecipient_Notification" Association="EPMSModel.FK_NotificationRecipient_Notification">
-            <End Role="Notification" EntitySet="Notifications" />
-            <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
+          <AssociationSet Name="FK_Warehouse_Employee" Association="EPMSModel.FK_Warehouse_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
           </AssociationSet>
-          <EntitySet Name="Complaints" EntityType="EPMSModel.Complaint" />
-          <AssociationSet Name="FK_Complaint_Customer" Association="EPMSModel.FK_Complaint_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Complaint" EntitySet="Complaints" />
+          <AssociationSet Name="FK_Shelf_Section" Association="EPMSModel.FK_Shelf_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="Shelf" EntitySet="Shelves" />
           </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Department" Association="EPMSModel.FK_Complaint_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Complaint" EntitySet="Complaints" />
+          <AssociationSet Name="FK_ShelfSection_Shelf" Association="EPMSModel.FK_ShelfSection_Shelf">
+            <End Role="Shelf" EntitySet="Shelves" />
+            <End Role="ShelfSection" EntitySet="ShelfSections" />
           </AssociationSet>
           </EntityContainer>
+        <EntityType Name="NotificationRecipient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationId" Type="Int64" Nullable="false" />
+          <Property Name="IsRead" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_NotificationRecipient_AspNetUsers" FromRole="NotificationRecipient" ToRole="AspNetUser" />
+          <NavigationProperty Name="Notification" Relationship="EPMSModel.FK_NotificationRecipient_Notification" FromRole="NotificationRecipient" ToRole="Notification" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_NotificationRecipient_Employee" FromRole="NotificationRecipient" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_NotificationRecipient_AspNetUsers">
+          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NotificationRecipient_Notification">
+          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="1" />
+          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="NotificationId" />
+            </Principal>
+            <Dependent Role="NotificationRecipient">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Complaint">
+          <Key>
+            <PropertyRef Name="ComplaintId" />
+          </Key>
+          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="Topic" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
+          <NavigationProperty Name="Department" Relationship="EPMSModel.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
+        </EntityType>
+        <Association Name="FK_Complaint_Customer">
+          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Department">
+          <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="InventoryDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
+          <Property Name="DepartmentNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="InventoryItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescriptionEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescriptionAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HazardousEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HazardousAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UsageEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UsageAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ReorderLevel" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int64" />
+          <Property Name="WarehouseID" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="VendorId" Type="Int64" Nullable="false" />
+          <Property Name="VendorNameEn" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="VendorNameAr" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VendorEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VendorContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorField" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="DetailsEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DetailsAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Aisle">
+          <Key>
+            <PropertyRef Name="AisleId" />
+          </Key>
+          <Property Name="AisleId" Type="Int64" Nullable="false" />
+          <Property Name="AisleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Aisle" ToRole="Warehouse" />
+          <NavigationProperty Name="Sections" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -2675,22 +3161,88 @@
           <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
           <NavigationProperty Name="NotificationRecipients" Relationship="EPMSModel.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
           <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
         </EntityType>
-        <EntityType Name="NotificationRecipient">
+        <EntityType Name="Section">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="SectionId" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NotificationId" Type="Int64" Nullable="false" />
-          <Property Name="IsRead" Type="Boolean" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeId" Type="Int64" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSModel.FK_NotificationRecipient_AspNetUsers" FromRole="NotificationRecipient" ToRole="AspNetUser" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_NotificationRecipient_Employee" FromRole="NotificationRecipient" ToRole="Employee" />
-          <NavigationProperty Name="Notification" Relationship="EPMSModel.FK_NotificationRecipient_Notification" FromRole="NotificationRecipient" ToRole="Notification" />
+          <Property Name="SectionId" Type="Int64" Nullable="false" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AisleId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Aisle" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Section" ToRole="Aisle" />
+          <NavigationProperty Name="Shelf" Relationship="EPMSModel.FK_Shelf_Section" FromRole="Section" ToRole="Shelf" />
         </EntityType>
+        <EntityType Name="Shelf">
+          <Key>
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="ShelfId" Type="Int64" Nullable="false" />
+          <Property Name="ShelfName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Section" Relationship="EPMSModel.FK_Shelf_Section" FromRole="Shelf" ToRole="Section" />
+          <NavigationProperty Name="ShelfSections" Relationship="EPMSModel.FK_ShelfSection_Shelf" FromRole="Shelf" ToRole="ShelfSection" />
+        </EntityType>
+        <EntityType Name="ShelfSection">
+          <Key>
+            <PropertyRef Name="ShelfSectionId" />
+          </Key>
+          <Property Name="ShelfSectionId" Type="Int64" Nullable="false" />
+          <Property Name="ShelfSectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ShelfId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Shelf" Relationship="EPMSModel.FK_ShelfSection_Shelf" FromRole="ShelfSection" ToRole="Shelf" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseManager" Type="Int64" />
+          <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Aisles" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Warehouse" ToRole="Aisle" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Aisle_Warehouse">
+          <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSModel.Aisle" Role="Aisle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Aisle">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Section_Aisle">
+          <End Type="EPMSModel.Aisle" Role="Aisle" Multiplicity="1" />
+          <End Type="EPMSModel.Section" Role="Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Allowance_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="EPMSModel.Allowance" Role="Allowance" Multiplicity="*" />
@@ -2712,18 +3264,6 @@
             </Principal>
             <Dependent Role="AspNetUser">
               <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_NotificationRecipient_AspNetUsers">
-          <End Type="EPMSModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="NotificationRecipient">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2799,60 +3339,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_NotificationRecipient_Notification">
-          <End Type="EPMSModel.Notification" Role="Notification" Multiplicity="1" />
-          <End Type="EPMSModel.NotificationRecipient" Role="NotificationRecipient" Multiplicity="*" />
+        <Association Name="FK_Warehouse_Employee">
+          <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Notification">
-              <PropertyRef Name="NotificationId" />
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
             </Principal>
-            <Dependent Role="NotificationRecipient">
-              <PropertyRef Name="NotificationId" />
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Complaint">
-          <Key>
-            <PropertyRef Name="ComplaintId" />
-          </Key>
-          <Property Name="ComplaintId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="Topic" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Reply" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsReplied" Type="Boolean" Nullable="false" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="ComplaintDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="EPMSModel.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
-          <NavigationProperty Name="Department" Relationship="EPMSModel.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
-        </EntityType>
-        <Association Name="FK_Complaint_Customer">
-          <End Type="EPMSModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+        <Association Name="FK_Shelf_Section">
+          <End Type="EPMSModel.Section" Role="Section" Multiplicity="1" />
+          <End Type="EPMSModel.Shelf" Role="Shelf" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
             </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="CustomerId" />
+            <Dependent Role="Shelf">
+              <PropertyRef Name="ShelfId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Complaint_Department">
-          <End Type="EPMSModel.Department" Role="Department" Multiplicity="1" />
-          <End Type="EPMSModel.Complaint" Role="Complaint" Multiplicity="*" />
+        <Association Name="FK_ShelfSection_Shelf">
+          <End Type="EPMSModel.Shelf" Role="Shelf" Multiplicity="1" />
+          <End Type="EPMSModel.ShelfSection" Role="ShelfSection" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
+            <Principal Role="Shelf">
+              <PropertyRef Name="ShelfId" />
             </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="DepartmentId" />
+            <Dependent Role="ShelfSection">
+              <PropertyRef Name="ShelfId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3502,6 +4021,112 @@
               <ScalarProperty Name="TaskId" ColumnName="TaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="NotificationRecipients">
+            <EntityTypeMapping TypeName="EPMSModel.NotificationRecipient">
+              <MappingFragment StoreEntitySet="NotificationRecipient">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Complaints">
+            <EntityTypeMapping TypeName="EPMSModel.Complaint">
+              <MappingFragment StoreEntitySet="Complaint">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
+                <ScalarProperty Name="Reply" ColumnName="Reply" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryDepartments">
+            <EntityTypeMapping TypeName="EPMSModel.InventoryDepartment">
+              <MappingFragment StoreEntitySet="InventoryDepartment">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
+                <ScalarProperty Name="DepartmentColor" ColumnName="DepartmentColor" />
+                <ScalarProperty Name="DepartmentNameAr" ColumnName="DepartmentNameAr" />
+                <ScalarProperty Name="DepartmentNameEn" ColumnName="DepartmentNameEn" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryItems">
+            <EntityTypeMapping TypeName="EPMSModel.InventoryItem">
+              <MappingFragment StoreEntitySet="InventoryItems">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="UsageAr" ColumnName="UsageAr" />
+                <ScalarProperty Name="UsageEn" ColumnName="UsageEn" />
+                <ScalarProperty Name="HazardousAr" ColumnName="HazardousAr" />
+                <ScalarProperty Name="HazardousEn" ColumnName="HazardousEn" />
+                <ScalarProperty Name="DescriptionForQuotationAr" ColumnName="DescriptionForQuotationAr" />
+                <ScalarProperty Name="DescriptionForQuotationEn" ColumnName="DescriptionForQuotationEn" />
+                <ScalarProperty Name="ItemDescriptionAr" ColumnName="ItemDescriptionAr" />
+                <ScalarProperty Name="ItemDescriptionEn" ColumnName="ItemDescriptionEn" />
+                <ScalarProperty Name="ItemImagePath" ColumnName="ItemImagePath" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="EPMSModel.Vendor">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DetailsAr" ColumnName="DetailsAr" />
+                <ScalarProperty Name="DetailsEn" ColumnName="DetailsEn" />
+                <ScalarProperty Name="VendorField" ColumnName="VendorField" />
+                <ScalarProperty Name="VendorContact" ColumnName="VendorContact" />
+                <ScalarProperty Name="VendorEmail" ColumnName="VendorEmail" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="VendorNameAr" ColumnName="VendorNameAr" />
+                <ScalarProperty Name="VendorNameEn" ColumnName="VendorNameEn" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aisles">
+            <EntityTypeMapping TypeName="EPMSModel.Aisle">
+              <MappingFragment StoreEntitySet="Aisle">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="AisleName" ColumnName="AisleName" />
+                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="EPMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -3536,36 +4161,56 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NotificationRecipients">
-            <EntityTypeMapping TypeName="EPMSModel.NotificationRecipient">
-              <MappingFragment StoreEntitySet="NotificationRecipient">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
-                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Complaints">
-            <EntityTypeMapping TypeName="EPMSModel.Complaint">
-              <MappingFragment StoreEntitySet="Complaint">
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="EPMSModel.Section">
+              <MappingFragment StoreEntitySet="Section">
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="ComplaintDate" ColumnName="ComplaintDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="IsReplied" ColumnName="IsReplied" />
-                <ScalarProperty Name="Reply" ColumnName="Reply" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Topic" ColumnName="Topic" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ComplaintId" ColumnName="ComplaintId" />
+                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shelves">
+            <EntityTypeMapping TypeName="EPMSModel.Shelf">
+              <MappingFragment StoreEntitySet="Shelf">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="ShelfName" ColumnName="ShelfName" />
+                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShelfSections">
+            <EntityTypeMapping TypeName="EPMSModel.ShelfSection">
+              <MappingFragment StoreEntitySet="ShelfSection">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
+                <ScalarProperty Name="ShelfSectionName" ColumnName="ShelfSectionName" />
+                <ScalarProperty Name="ShelfSectionId" ColumnName="ShelfSectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="EPMSModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
+                <ScalarProperty Name="WarehouseManager" ColumnName="WarehouseManager" />
+                <ScalarProperty Name="WarehouseNumber" ColumnName="WarehouseNumber" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3657,21 +4302,34 @@
         <AssociationConnector Association="EPMSModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSModel.PreRequisitTask" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="22.875" />
         <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="22.25" />
+        <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" />
+        <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
+        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="22.25" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
+        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
+        <EntityTypeShape EntityType="EPMSModel.InventoryDepartment" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSModel.InventoryItem" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EPMSModel.Vendor" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EPMSModel.Aisle" Width="1.5" PointX="9.75" PointY="55.375" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="52.75" />
+        <EntityTypeShape EntityType="EPMSModel.Section" Width="1.5" PointX="12" PointY="55.375" />
+        <EntityTypeShape EntityType="EPMSModel.Shelf" Width="1.5" PointX="14.25" PointY="55.375" />
+        <EntityTypeShape EntityType="EPMSModel.ShelfSection" Width="1.5" PointX="16.5" PointY="55.5" />
+        <EntityTypeShape EntityType="EPMSModel.Warehouse" Width="1.5" PointX="7.5" PointY="55.375" />
+        <AssociationConnector Association="EPMSModel.FK_Aisle_Warehouse" />
+        <AssociationConnector Association="EPMSModel.FK_Section_Aisle" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
-        <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" />
         <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeJobHistory_Employee" />
         <AssociationConnector Association="EPMSModel.FK_EmployeeRequests_Employee" />
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
-        <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
-        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="22.25" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
-        <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
+        <AssociationConnector Association="EPMSModel.FK_Warehouse_Employee" />
+        <AssociationConnector Association="EPMSModel.FK_Shelf_Section" />
+        <AssociationConnector Association="EPMSModel.FK_ShelfSection_Shelf" />
         </Diagram>
     </Diagrams>
   </Designer>

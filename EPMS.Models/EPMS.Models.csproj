@@ -108,6 +108,7 @@
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
     <Compile Include="Common\TaskByColumn.cs" />
+    <Compile Include="DomainModels\Aisle.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
@@ -147,8 +148,12 @@
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
+    <Compile Include="DomainModels\Section.cs" />
+    <Compile Include="DomainModels\Shelf.cs" />
+    <Compile Include="DomainModels\ShelfSection.cs" />
     <Compile Include="DomainModels\TaskEmployee.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
+    <Compile Include="DomainModels\Warehouse.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>
