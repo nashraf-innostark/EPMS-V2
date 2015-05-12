@@ -87,7 +87,14 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.ProjectsForDdls, "ProjectId", "NameE"), "--Select--", new { @id = "ProjectId", @class = "select2me projectDDL" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.ProjectsForDdls, "ProjectId", "NameE"), "--Select--", new {@id = "ProjectId", @class = "select2me projectDDL"})
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.ProjectTask.ProjectId, new SelectList(Model.ProjectsForDdls, "ProjectId", "NameA"), "--Select--", new { @id = "ProjectId", @class = "select2me projectDDL" })
+                    }
                     <label id="projectValidation"></label>
                 </div>
             </div>
