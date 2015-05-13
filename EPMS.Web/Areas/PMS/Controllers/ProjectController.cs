@@ -193,6 +193,9 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 return View(projectViewModel);
             }
+            var customers = customerService.GetAll();
+            var orders = ordersService.GetAll();
+            CheckHasCustomerModule(projectViewModel, customers, orders);
             return RedirectToAction("Index", "Project");
         }
 

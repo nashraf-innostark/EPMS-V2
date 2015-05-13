@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Models;
 using Employee = EPMS.Models.DomainModels.Employee;
@@ -12,6 +13,7 @@ namespace EPMS.Web.ModelMappers
     {
         public static Employee CreateFromClientToServer(this Models.Employee source)
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
             string descpEn = "";
             string descpAr = "";
             if (!String.IsNullOrEmpty(source.EmployeeDetailsE) )
@@ -54,6 +56,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeJobId = source.EmployeeJobId,
                 IsActivated = source.IsActivated,
             };
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
             return caseType;
         }
         public static Models.Employee CreateFromServerToClient(this Employee source)

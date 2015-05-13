@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Threading;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -73,8 +75,10 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.CategoryId = 6; //Other
             notificationViewModel.NotificationResponse.SubCategoryId = jobApplicant.JobOfferedId;
             notificationViewModel.NotificationResponse.ItemId = jobApplicant.ApplicantId;
-
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy");
+            
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = true;

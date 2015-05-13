@@ -139,11 +139,17 @@
         </div>
     </div>
 }
-<script src="~/RichTextEditor/ckeditor.js"></script>
+<script src="~/RTE/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        CKEDITOR.replace('DescriptionCK');
-        CKEDITOR.replace('ReplyCK');
+        CKEDITOR.replace('DescriptionCK', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/Common/FileUploadCkController/UploadPartial',
+            filebrowserUploadUrl: $("#siteURL").val() + '/Common/FileUploadCkController/FileUpload'
+        });
+        CKEDITOR.replace('ReplyCK', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/Common/FileUploadCkController/UploadPartial',
+            filebrowserUploadUrl: $("#siteURL").val() + '/Common/FileUploadCkController/FileUpload'
+        });
         $(".date").mask('99/99/9999');
         //If complaint has been resolved, disable all fields, and just show records
         if ($("#UserRole").val() == "Customer") {
@@ -209,4 +215,8 @@
         }
         return true;
     };
+    function updateValue(id, value) {
+        var dialog = CKEDITOR.dialog.getCurrent();
+        dialog.setValueOf('info', 'txtUrl', value);
+    }
 </script>

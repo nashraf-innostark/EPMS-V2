@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -309,7 +310,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
                 notificationViewModel.NotificationResponse.SubCategoryId = 3; //Task delivery date
                 notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task
-                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(task.EndDate).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDate = task.EndDateOriginal;
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
                 notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -327,8 +328,15 @@ namespace EPMS.Implementation.Services
 
             notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
             notificationViewModel.NotificationResponse.SubCategoryId = 10; //Task delivery date
-            notificationViewModel.NotificationResponse.ItemId = task.TaskId; 
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            notificationViewModel.NotificationResponse.ItemId = task.TaskId;
+            if (DateTime.ParseExact(notificationViewModel.NotificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")) > DateTime.Now)
+            {
+                notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            }
+            else
+            {
+                notificationViewModel.NotificationResponse.AlertDate = task.EndDateOriginal;
+            }
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
             notificationService.AddUpdateMeetingNotification(notificationViewModel, employeeIds);

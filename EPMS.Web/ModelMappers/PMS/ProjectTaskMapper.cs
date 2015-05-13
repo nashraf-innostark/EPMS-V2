@@ -106,6 +106,7 @@ namespace EPMS.Web.ModelMappers.PMS
                 descpAr = descpAr.Replace("\r", "");
             }
             projectTask.DescriptionA = descpAr;
+            projectTask.EndDateOriginal = source.EndDate;
             projectTask.StartDate = source.StartDate == null ? (DateTime?)null : DateTime.ParseExact(source.StartDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = source.EndDate == null ? (DateTime?)null : DateTime.ParseExact(source.EndDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.TotalCost = source.TotalCost;

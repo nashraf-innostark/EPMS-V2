@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
@@ -8,6 +9,7 @@ namespace EPMS.Web.ModelMappers.PMS
     {
         public static Project CreateFromClientToServer(this Models.Project source)
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
             string decspE = "";
             string decspA = "";
             if (!String.IsNullOrEmpty(source.DescriptionE))
