@@ -5,6 +5,7 @@
     ViewBag.Title = @EPMS.Web.Resources.Meeting.Meeting.Create;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -75,9 +76,18 @@
                 <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Attendees</label>
             </div>
             <div class="span9" id="checked">
-                <div class="controls">
-                    @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeFullNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox" })
-                </div>
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeFullNameE"), new {@name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox"})
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeFullNameA"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox" })
+                    </div>
+                }
             </div>
         </div>
         <div class="divToHide" style="display: none">
@@ -90,10 +100,18 @@
                             <label class="control-label">@EPMS.Web.Resources.Meeting.Meeting.Absences</label>
                         </div>
                         <div class="span9" id="attendees">
-
-                            <div class="controls">
-                                @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
-                            </div>
+                            @if (direction == "ltr")
+                            {
+                                <div class="controls">
+                                    @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new {@name = "dualMultiAttendee", @id = "dualMultiAttendee"})
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="controls">
+                                    @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameA"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
+                                </div>
+                            }
                         </div>
                     </div>
                 }
