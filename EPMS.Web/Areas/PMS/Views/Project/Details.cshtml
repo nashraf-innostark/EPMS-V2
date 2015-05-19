@@ -7,6 +7,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] module = (string[])Session["UserModules"];
 }
+<style>
+    .form-horizontal input {
+        margin-bottom: 6px !important;
+    }
+</style>
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -43,6 +48,22 @@
         @Html.HiddenFor(model => model.Project.RecCreatedBy)
         <!--Input Field begin-->
         <div class="control-group row-fluid">
+            <div class="span3"></div>
+            <div class="span9">
+                <div class="controls">
+                    <label>
+                        <input id="order" type="radio" name="CreateFrom" value="order" disabled="disabled">
+                        Create from Order
+                    </label>
+                    <br />
+                    <label>
+                        <input id="quotation" type="radio" name="CreateFrom" value="quotation" disabled="disabled">
+                        Create From Quotation
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectNameE</label>
             </div>
@@ -76,7 +97,25 @@
                 </div>
 
             </div>
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid" id="quotationControl">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Quotation</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @if (Model.Project.CustomerId > 0)
+                        {
+                            @Html.DropDownListFor(m => m.Project.QuotationId, new SelectList(Model.Quotations, "QuotationId", "GreetingsEn"), "", new { @disabled = true, @id = "QuotationId" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.Project.QuotationId, Enumerable.Empty<SelectListItem>(), "none", new { @disabled = true, @id = "QuotationId" })
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group row-fluid" id="orderControl">
                 <div class="span3">
                     <label class="control-label">@EPMS.Web.Resources.PMS.Project.OrderNo</label>
                 </div>
@@ -471,6 +510,23 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
     $(document).ready(function () {
+        if ('@Model.Project.OrderId' == 0) {
+            $("#orderControl").hide();
+            $("#quotationControl").show();
+            var $radios = $('input:radio[name=CreateFrom]');
+            $radios.filter('[value=quotation]').prop('checked', true);
+        } else {
+            $("#orderControl").show();
+            $("#quotationControl").hide();
+            var $radios = $('input:radio[name=CreateFrom]');
+            $radios.filter('[value=order]').prop('checked', true);
+        }
+        if ('@Model.Project.ProjectId' == 0) {
+            var $radios = $('input:radio[name=CreateFrom]');
+            $radios.filter('[value=order]').prop('checked', true);
+            $("#orderControl").show();
+            $("#quotationControl").hide();
+        }
         var descpE = '@Html.Raw(Model.Project.DescriptionE)';
         var regex = /(<([^>]+)>)/ig;
         var result = descpE.replace(regex, "");

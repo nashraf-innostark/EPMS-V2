@@ -840,7 +840,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "IqamaExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "IqamaExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#IqamaExpiryDateAr')" })
+                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "IqamaExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#IqamaExpiryDate')" })
                     @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, "", new { @class = "required" })
                 </div>
                 @*<div class="controls span4">
@@ -1234,8 +1234,18 @@
         }
         if (isDetail == false) {
             // CK Editor
-            CKEDITOR.replace('ExtraInformationE');
-            CKEDITOR.replace('ExtraInformationA');
+            editor = CKEDITOR.replace('ExtraInformationE', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('ExtraInformationA', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
             $("#Descp").hide();
             $("#CKEditorDescp").show();
         }

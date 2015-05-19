@@ -44,7 +44,7 @@ namespace EPMS.Web.ModelMappers
                 QuotationId = source.QuotationId,
                 ClientName = source.ClientName,
                 CustomerId = source.CustomerId,
-                OrderId = source.OrderId,
+                OrderId = source.OrderId ?? 0,
                 CreatedByEmployee = source.CreatedByEmployee,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
@@ -66,6 +66,20 @@ namespace EPMS.Web.ModelMappers
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),
             };
         }
+
+        public static Models.Quotation CreateFromServerToClientDdl(this Quotation source)
+        {
+            return new Models.Quotation
+            {
+                QuotationId = source.QuotationId,
+                ClientName = source.ClientName,
+                CustomerId = source.CustomerId,
+                Customers = source.Customer.CreateFromServerToClient(),
+                GreetingsEn = source.GreetingsEn,
+                GreetingsAr = source.GreetingsAr,
+            };
+        }
+
         public static Models.Quotation CreateFromServerToClientLv(this Quotation source)
         {
             return new Models.Quotation
@@ -73,7 +87,7 @@ namespace EPMS.Web.ModelMappers
                 QuotationId = source.QuotationId,
                 ClientName = source.ClientName,
                 CustomerId = source.CustomerId,
-                OrderId = source.OrderId,
+                OrderId = source.OrderId ?? 0,
                 CreatedByEmployee = source.CreatedByEmployee,
                 Customers = source.Customer.CreateFromServerToClient(),
                 RecCreatedDt = source.RecCreatedDt,
@@ -91,6 +105,19 @@ namespace EPMS.Web.ModelMappers
                 NotesAr = source.NotesAr,
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()),
                 QuotationDiscount = source.QuotationDiscount,
+            };
+        }
+        public static Models.Quotation CreateFromServerToClientForProject(this Quotation source)
+        {
+            return new Models.Quotation
+            {
+                QuotationId = source.QuotationId,
+                ClientName = source.ClientName,
+                CustomerId = source.CustomerId,
+                OrderId = source.OrderId ?? 0,
+                CreatedByEmployee = source.CreatedByEmployee,
+                GreetingsEn = source.GreetingsEn,
+                GreetingsAr = source.GreetingsAr,
             };
         }
 

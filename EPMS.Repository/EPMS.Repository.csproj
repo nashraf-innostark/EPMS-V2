@@ -128,6 +128,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AllowanceRepository.cs" />
+    <Compile Include="Repositories\ApplicantExperienceRepository.cs" />
+    <Compile Include="Repositories\ApplicantQualificationRepository.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
     <Compile Include="Repositories\CompanyBankRepository.cs" />

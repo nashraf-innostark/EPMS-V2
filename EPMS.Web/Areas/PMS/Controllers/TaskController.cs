@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -14,7 +13,6 @@ using EPMS.Web.Resources.PMS;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Tasks;
 using EPMS.WebBase.Mvc;
-using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.PMS.Controllers
@@ -166,6 +164,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 ? TaskService.GetResponseForAddEdit((long) id)
                 : TaskService.GetResponseForAddEdit(0);
             ViewBag.Customers = response.Customers.Select(x => x.CreateFromServerToClient());
+            viewModel.AllParentTasks = response.AllParentTasks.Select(x => x.CreateFromServerToClientParentTasks());
             if (id == null)
             {
                 viewModel.AllEmployees = response.Employees.Select(x => x.CreateFromServerToClientForTask());
@@ -237,6 +236,10 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 }
                 else
                 {
+                    if (viewModel.ProjectTask.IsParent)
+                    {
+                        viewModel.AssignedEmployees = new List<long>();
+                    }
                     // Add case
                     viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
                     viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
@@ -327,9 +330,16 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [HttpGet]
         public JsonResult GetProjectTasks(long projectId)
         {
-            var projects = TaskService.FindProjectTaskByProjectId(projectId, 0)
-                .Select(x => x.CreateFromServerToClient());
-            return Json(projects.ToList(), JsonRequestBehavior.AllowGet);
+            ParentProjectTaskAndProject taskAndParent = new ParentProjectTaskAndProject
+            {
+                ProjectTasks = TaskService.FindProjectTaskByProjectId(projectId, 0).Select(x => x.CreateFromServerToClient()).ToList(),
+                ParentTasks = TaskService.FindParentTasksByProjectId(projectId).Select(x => x.CreateFromServerToClient()).ToList()
+            };
+            //var projects = TaskService.FindProjectTaskByProjectId(projectId, 0)
+            //    .Select(x => x.CreateFromServerToClient());
+            //var parentTasks = TaskService.FindParentTasksByProjectId(projectId)
+            //    .Select(x => x.CreateFromServerToClient());
+            return Json(taskAndParent, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

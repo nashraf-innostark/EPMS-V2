@@ -16,6 +16,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
+            projectTask.IsParent = source.IsParent;
+            projectTask.ParentTask = source.ParentTask;
             string descpEn = "";
             if (!String.IsNullOrEmpty(source.DescriptionE))
             {
@@ -92,6 +94,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
+            projectTask.IsParent = source.IsParent;
+            projectTask.ParentTask = source.ParentTask;
             string descpEn = "";
             if (!String.IsNullOrEmpty(source.DescriptionE))
             {
@@ -142,6 +146,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
+            projectTask.TotalWeight = source.TotalWeight;
             projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             return projectTask;
@@ -156,6 +161,25 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.ProjectNameA = source.Project.NameA;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
+            return projectTask;
+        }
+        public static Models.ProjectTask CreateFromServerToClientParentTasks(this ProjectTask source)
+        {
+            Models.ProjectTask projectTask = new Models.ProjectTask();
+            projectTask.TaskId = source.TaskId;
+            projectTask.ProjectId = source.ProjectId;
+            projectTask.CustomerId = source.CustomerId;
+            projectTask.ProjectNameE = source.Project.NameE;
+            projectTask.ProjectNameA = source.Project.NameA;
+            projectTask.TaskNameE = source.TaskNameE;
+            projectTask.TaskNameA = source.TaskNameA;
+            projectTask.TotalWeight = source.TotalWeight;
+            projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            foreach (var subTask in source.SubTasks)
+            {
+                projectTask.SubTasksPercentageCount += Convert.ToInt32(subTask.TotalWeight.Split('%')[0]);
+            }
             return projectTask;
         }
     }

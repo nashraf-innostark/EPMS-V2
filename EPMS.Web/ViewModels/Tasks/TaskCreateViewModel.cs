@@ -21,8 +21,9 @@ namespace EPMS.Web.ViewModels.Tasks
         public List<long> AssignedEmployees { get; set; }
         public List<long> OldAssignedEmployees { get; set; }
         public IEnumerable<Models.Project> Projects { get; set; }
-        public IEnumerable<Models.ProjectsForDDL> ProjectsForDdls { get; set; }
-        public IEnumerable<Models.ProjectTask> ProjectAllTasks { get; set; }
+        public IEnumerable<ProjectsForDDL> ProjectsForDdls { get; set; }
+        public IEnumerable<ProjectTask> ProjectAllTasks { get; set; }
+        public IEnumerable<ProjectTask> AllParentTasks { get; set; }
         public IEnumerable<Models.Employee> AllEmployees { get; set; }
         public string PageTitle { get; set; }
         public string BtnText { get; set; }

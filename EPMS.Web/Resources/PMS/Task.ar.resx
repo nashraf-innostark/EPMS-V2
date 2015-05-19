@@ -225,4 +225,10 @@
   <data name="TaskProgeress" xml:space="preserve">
     <value>تقدم مهمة</value>
   </data>
+  <data name="IsParent" xml:space="preserve">
+    <value>هو العمل الرئيسي</value>
+  </data>
+  <data name="ParentTask" xml:space="preserve">
+    <value>العمل الوالد</value>
+  </data>
 </root>

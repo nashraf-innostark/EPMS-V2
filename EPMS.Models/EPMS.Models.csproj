@@ -109,6 +109,8 @@
     <Compile Include="Common\QuotationByColumn.cs" />
     <Compile Include="Common\TaskByColumn.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
+    <Compile Include="DomainModels\ApplicantExperience.cs" />
+    <Compile Include="DomainModels\ApplicantQualification.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
     <Compile Include="DomainModels\AspNetUser%27.cs" />

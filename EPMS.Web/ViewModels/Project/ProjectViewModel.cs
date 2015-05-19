@@ -14,6 +14,7 @@ namespace EPMS.Web.ViewModels.Project
         public Models.Project Project { get; set; }
         public IEnumerable<Models.Customer> Customers { get; set; }
         public IEnumerable<Models.Order> Orders { get; set; }
+        public IEnumerable<Models.Quotation> Quotations { get; set; }
         public IEnumerable<Models.ProjectTask> ProjectTasks { get; set; }
         public IEnumerable<ProjectDocument> ProjectDocsNames { get; set; }
         public Models.Quotation Installment { get; set; }

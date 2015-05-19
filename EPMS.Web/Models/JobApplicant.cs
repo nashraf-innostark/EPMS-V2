@@ -7,31 +7,38 @@ namespace EPMS.Web.Models
     {
         public long ApplicantId { get; set; }
         public long JobOfferedId { get; set; }
-        [Required(ErrorMessageResourceType = typeof (Resources.HR.JobApplicant), ErrorMessageResourceName = "ApplicantNameValidation")]
-        [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
-        public string ApplicantName { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resources.HR.JobApplicant), ErrorMessageResourceName = "ApplicantMobileValidation")]
-        [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
-        public string ApplicantMobile { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resources.HR.JobApplicant), ErrorMessageResourceName = "ApplicantEmailValidation")]
-        [StringLength(200, ErrorMessage = "Cannot exceed 200 characters.")]
-        [EmailAddress]
-        public string ApplicantEmail { get; set; }
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid Number")]
-        public int? ApplicantAge { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Resources.HR.JobApplicant), ErrorMessageResourceName = "ApplicantCvValidation")]
-        public string ApplicantCvPath { get; set; }
-        public bool MaritalStatus { get; set; }
-        [StringLength(50, ErrorMessage = "Cannot exceed 50 characters.")]
-        public string Nationality { get; set; }
-        [StringLength(50, ErrorMessage = "Cannot exceed 50 characters.")]
-        public string IqamaOrNationalIdNo { get; set; }
-        public bool DrivingLicense { get; set; }
-        public string DrivingLicenseStatus { get; set; }
-        public string RecCreatedBy { get; set; }
-        public DateTime? RecCreatedDt { get; set; }
-        public string RecLastUpdatedBy { get; set; }
-        public DateTime? RecLastUpdatedDt { get; set; }
+        [Required(ErrorMessage = "Applicant First Name is required")]
+        public string ApplicantFirstNameE { get; set; }
+        [Required(ErrorMessage = "Applicant Middle Name is required")]
+        public string ApplicantMiddleNameE { get; set; }
+        [Required(ErrorMessage = "Applicant First Name Arabic is required")]
+        public string ApplicantFirstNameA { get; set; }
+        [Required(ErrorMessage = "Applicant Middle Name Arabic is required")]
+        public string ApplicantMiddleNameA { get; set; }
+        public string ApplicantFamilyNameE { get; set; }
+        public string ApplicantFamilyNameA { get; set; }
+        public long? DepartmentId { get; set; }
+        public byte? ApplicantSex { get; set; }
+        public string ApplicantNationality { get; set; }
+        public string DateOfBirth { get; set; }
+        public string PlaceOfBirth { get; set; }
+        public string PassportNumber { get; set; }
+        public int? NoOfFamilyMembers { get; set; }
+        public string LanguagesKnown { get; set; }
+        public bool EmployedNow { get; set; }
+        public bool GetMonthlyPayment { get; set; }
+        public bool GovernmentEmployeeEver { get; set; }
+        public string GovernmentAreaWorked { get; set; }
+        public bool GovernmentJobOfficial { get; set; }
+        public string ReasonOfLeaving { get; set; }
+        public string JobLeavingDate { get; set; }
+        public bool AcceptAgreement { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string LastUpdatedBy { get; set; }
+        public DateTime? LastUpdatedDate { get; set; }
+        public string Email { get; set; }
+        public string MobileNumber { get; set; }
         public string DepartmentNameE { get; set; }
         public string DepartmentNameA { get; set; }
         public string JobDescriptionE { get; set; }

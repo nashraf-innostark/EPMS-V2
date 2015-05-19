@@ -55,6 +55,16 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.ProjectId == projectId);
         }
 
+        public IEnumerable<ProjectTask> GetAllParentTasks()
+        {
+            return DbSet.Where(pt => pt.IsParent);
+        }
+
+        public IEnumerable<ProjectTask> FindParentTasksByProjectId(long projectid)
+        {
+            return DbSet.Where(t => t.ProjectId == projectid && t.IsParent);
+        }
+
         public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId)
         {
             return DbSet.Where(x => x.ProjectId == projectid && x.TaskId != taskId);

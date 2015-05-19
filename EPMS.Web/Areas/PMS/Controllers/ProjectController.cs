@@ -142,6 +142,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
                 projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
+                projectViewModel.Quotations = quotationService.GetAllQuotationByCustomerId(Convert.ToInt32(projectViewModel.Project.CustomerId)).Select(x=>x.CreateFromServerToClientForProject());
                 ViewBag.HasModule = true;
             }
             else
@@ -303,6 +304,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     }
                     //If company has not CUSTOMER MODULE then, dont load Customers and Orders. and hide the html fields
                     CheckHasCustomerModule(projectViewModel, customers, orders);
+                    projectViewModel.Quotations = quotationService.FindQuotationByIdForProjectDetail(Convert.ToInt32(projectViewModel.Project.QuotationId)).Select(x=>x.CreateFromServerToClientDdl());
                     return View(projectViewModel);
                 }
             }
@@ -321,6 +323,14 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             var orders = ordersService.GetAllAvailableOrdersDDL(customerId);
             return Json(orders, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Get Customer Quotations
+        [HttpGet]
+        public JsonResult GetCustomerQuotations(long customerId)
+        {
+            var quotations = quotationService.GetAllQuotationByCustomerId(customerId).Select(x => x.CreateFromServerToClientForProject());
+            return Json(quotations, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

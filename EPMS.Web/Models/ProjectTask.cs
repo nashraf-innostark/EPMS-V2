@@ -15,6 +15,8 @@ namespace EPMS.Web.Models
         public long? CustomerId { get; set; }
         [Required(ErrorMessage = "Please select Project.")]
         public long ProjectId { get; set; }
+
+        public bool IsParent { get; set; }
         [Required(ErrorMessage = "Task Name (English) is required.")]
         public string TaskNameE { get; set; }
         [Required(ErrorMessage = "Task Name (Arabic) is required.")]
@@ -41,7 +43,10 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public string ProjectNameE { get; set; }
         public string ProjectNameA { get; set; }
-
+        public long? ParentTask { get; set; }
+        public int SubTasksPercentageCount { get; set; }
+        public int PrevTasksWeightSum { get; set; }
+        
         public string PreReqTasks { get; set; }
         public List<ProjectTask> RequisitTasks { get; set; }
         public List<TaskEmployee> TaskEmployees { get; set; }

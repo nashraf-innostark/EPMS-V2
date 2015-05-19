@@ -9,6 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         ProjectTask FindProjectTaskById(long id);
         IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId);
+        IEnumerable<ProjectTask> FindParentTasksByProjectId(long projectid);
         IEnumerable<ProjectTaskResponse> LoadProjectTasksByEmployeeId(long employeeId, long projectId);
         IEnumerable<ProjectTask> GetAll();
         IEnumerable<ProjectTask> GetTasksByProjectId(long projectId);

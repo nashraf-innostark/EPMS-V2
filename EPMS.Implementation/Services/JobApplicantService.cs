@@ -16,6 +16,8 @@ namespace EPMS.Implementation.Services
     {
         private readonly INotificationService notificationService;
         private readonly IJobApplicantRepository jobApplicantRepository;
+        private readonly IApplicantQualificationRepository applicantQualificationRepository;
+        private readonly IApplicantExperienceRepository applicantExperienceRepository;
 
         #region Constructor
 
@@ -24,10 +26,12 @@ namespace EPMS.Implementation.Services
         /// </summary>
         /// <param name="notificationService"></param>
         /// <param name="jobApplicantRepository"></param>
-        public JobApplicantService(INotificationService notificationService,IJobApplicantRepository jobApplicantRepository)
+        public JobApplicantService(INotificationService notificationService,IJobApplicantRepository jobApplicantRepository, IApplicantQualificationRepository applicantQualificationRepository, IApplicantExperienceRepository applicantExperienceRepository)
         {
             this.notificationService = notificationService;
             this.jobApplicantRepository = jobApplicantRepository;
+            this.applicantQualificationRepository = applicantQualificationRepository;
+            this.applicantExperienceRepository = applicantExperienceRepository;
         }
 
         #endregion
@@ -53,6 +57,26 @@ namespace EPMS.Implementation.Services
             {
                 jobApplicantRepository.Add(jobApplicant);
                 jobApplicantRepository.SaveChanges();
+                //// Save Applicant Qualification
+                //foreach (var applicantQualification in jobApplicant.ApplicantQualifications)
+                //{
+                //    if (IsNotNullOrEmptyQualification(applicantQualification))
+                //    {
+                //        applicantQualification.ApplicantId = jobApplicant.ApplicantId;
+                //        applicantQualificationRepository.Add(applicantQualification);
+                //        applicantQualificationRepository.SaveChanges();
+                //    }
+                //}
+                //// Save Applicant Experience
+                //foreach (var applicantExperience in jobApplicant.ApplicantExperiences)
+                //{
+                //    if (IsNotNullOrEmptyExperience(applicantExperience))
+                //    {
+                //        applicantExperience.ApplicantId = jobApplicant.ApplicantId;
+                //        applicantExperienceRepository.Add(applicantExperience);
+                //        applicantExperienceRepository.SaveChanges();
+                //    }
+                //}
                 SendNotification(jobApplicant);
                 return true;
             }
@@ -86,6 +110,27 @@ namespace EPMS.Implementation.Services
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 
             #endregion
+        }
+
+        public bool IsNotNullOrEmptyQualification(ApplicantQualification qualification)
+        {
+            if (!string.IsNullOrEmpty(qualification.Certificate) || !string.IsNullOrEmpty(qualification.Field) ||
+                !string.IsNullOrEmpty(qualification.PlaceOfStudy) ||
+                !string.IsNullOrEmpty(qualification.CollegeSchoolName) || !string.IsNullOrEmpty(qualification.NoOfYears) ||
+                !string.IsNullOrEmpty(qualification.Notes))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsNotNullOrEmptyExperience(ApplicantExperience experience)
+        {
+            if (!string.IsNullOrEmpty(experience.CompanyName) || !string.IsNullOrEmpty(experience.JobTitle) || !string.IsNullOrEmpty(experience.Position) || experience.Salary != 0 || !string.IsNullOrEmpty(experience.TypeOfWork) || !string.IsNullOrEmpty(experience.ReasonToLeave))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

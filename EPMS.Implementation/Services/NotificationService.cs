@@ -595,7 +595,7 @@ namespace EPMS.Implementation.Services
             {
                 //JobApplicant=ItemId,JobOfferedId=SubCategoryId 
                 var jobApplicant = jobApplicantRepository.Find(notificationResponse.ItemId);
-                fileText = fileText.Replace("[ApplicantName]", jobApplicant.ApplicantName);
+                fileText = fileText.Replace("[ApplicantName]", jobApplicant.ApplicantFirstNameE + " " +jobApplicant.ApplicantMiddleNameE);
                 var jobTitle = jobApplicant.JobOffered.JobTitle;
                 fileText = fileText.Replace("[JobTitleEng]", jobTitle.JobTitleNameE);
                 fileText = fileText.Replace("[JobTitleAr]", jobTitle.JobTitleNameA);

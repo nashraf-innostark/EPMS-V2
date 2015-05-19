@@ -142,13 +142,17 @@
 <script src="~/RTE/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        CKEDITOR.replace('DescriptionCK', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/Common/FileUploadCkController/UploadPartial',
-            filebrowserUploadUrl: $("#siteURL").val() + '/Common/FileUploadCkController/FileUpload'
+        editor = CKEDITOR.replace('DescriptionCK', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        CKEDITOR.replace('ReplyCK', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/Common/FileUploadCkController/UploadPartial',
-            filebrowserUploadUrl: $("#siteURL").val() + '/Common/FileUploadCkController/FileUpload'
+        editor = CKEDITOR.replace('ReplyCK', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
         $(".date").mask('99/99/9999');
         //If complaint has been resolved, disable all fields, and just show records
@@ -215,8 +219,4 @@
         }
         return true;
     };
-    function updateValue(id, value) {
-        var dialog = CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('info', 'txtUrl', value);
-    }
 </script>

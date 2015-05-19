@@ -364,7 +364,9 @@
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
+    <Compile Include="Models\ApplicantExperience.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\ApplicantQualification.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
     <Compile Include="Models\CompanyLicenseInformation.cs" />
@@ -510,10 +512,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobApplicant.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\HR\JobApplicantAr.Designer.cs">
+    <Compile Include="Resources\HR\JobApplicant.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>JobApplicantAr.resx</DependentUpon>
+      <DependentUpon>JobApplicant.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\JobOffered.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -678,6 +680,7 @@
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
@@ -1472,22 +1475,97 @@
     <Content Include="RTE\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
     <Content Include="RTE\plugins\about\dialogs\logo_ckeditor.png" />
     <Content Include="RTE\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="RTE\plugins\colordialog\dialogs\colordialog.js" />
     <Content Include="RTE\plugins\dialog\dialogDefinition.js" />
+    <Content Include="RTE\plugins\div\dialogs\div.js" />
+    <Content Include="RTE\plugins\find\dialogs\find.js" />
+    <Content Include="RTE\plugins\flash\dialogs\flash.js" />
+    <Content Include="RTE\plugins\flash\images\placeholder.png" />
+    <Content Include="RTE\plugins\forms\dialogs\button.js" />
+    <Content Include="RTE\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="RTE\plugins\forms\dialogs\form.js" />
+    <Content Include="RTE\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="RTE\plugins\forms\dialogs\radio.js" />
+    <Content Include="RTE\plugins\forms\dialogs\select.js" />
+    <Content Include="RTE\plugins\forms\dialogs\textarea.js" />
+    <Content Include="RTE\plugins\forms\dialogs\textfield.js" />
+    <Content Include="RTE\plugins\forms\images\hiddenfield.gif" />
     <Content Include="RTE\plugins\icons.png" />
     <Content Include="RTE\plugins\icons_hidpi.png" />
+    <Content Include="RTE\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="RTE\plugins\iframe\images\placeholder.png" />
     <Content Include="RTE\plugins\image\dialogs\image.js" />
     <Content Include="RTE\plugins\image\images\noimage.png" />
     <Content Include="RTE\plugins\link\dialogs\anchor.js" />
     <Content Include="RTE\plugins\link\dialogs\link.js" />
     <Content Include="RTE\plugins\link\images\anchor.png" />
     <Content Include="RTE\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="RTE\plugins\liststyle\dialogs\liststyle.js" />
     <Content Include="RTE\plugins\magicline\images\hidpi\icon-rtl.png" />
     <Content Include="RTE\plugins\magicline\images\hidpi\icon.png" />
     <Content Include="RTE\plugins\magicline\images\icon-rtl.png" />
     <Content Include="RTE\plugins\magicline\images\icon.png" />
+    <Content Include="RTE\plugins\pagebreak\images\pagebreak.gif" />
     <Content Include="RTE\plugins\pastefromword\filter\default.js" />
+    <Content Include="RTE\plugins\preview\preview.html" />
     <Content Include="RTE\plugins\scayt\dialogs\options.js" />
     <Content Include="RTE\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="RTE\plugins\showblocks\images\block_address.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_div.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_h1.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_h2.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_h3.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_h4.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_h5.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_h6.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_p.png" />
+    <Content Include="RTE\plugins\showblocks\images\block_pre.png" />
+    <Content Include="RTE\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="RTE\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\angel_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\angry_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="RTE\plugins\smiley\images\broken_heart.png" />
+    <Content Include="RTE\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\confused_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\cry_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\devil_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\envelope.gif" />
+    <Content Include="RTE\plugins\smiley\images\envelope.png" />
+    <Content Include="RTE\plugins\smiley\images\heart.gif" />
+    <Content Include="RTE\plugins\smiley\images\heart.png" />
+    <Content Include="RTE\plugins\smiley\images\kiss.gif" />
+    <Content Include="RTE\plugins\smiley\images\kiss.png" />
+    <Content Include="RTE\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="RTE\plugins\smiley\images\lightbulb.png" />
+    <Content Include="RTE\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\omg_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\regular_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\sad_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\shades_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="RTE\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="RTE\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="RTE\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="RTE\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="RTE\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="RTE\plugins\smiley\images\wink_smile.png" />
     <Content Include="RTE\plugins\specialchar\dialogs\lang\af.js" />
     <Content Include="RTE\plugins\specialchar\dialogs\lang\ar.js" />
     <Content Include="RTE\plugins\specialchar\dialogs\lang\bg.js" />
@@ -1541,6 +1619,12 @@
     <Content Include="RTE\plugins\specialchar\dialogs\specialchar.js" />
     <Content Include="RTE\plugins\tabletools\dialogs\tableCell.js" />
     <Content Include="RTE\plugins\table\dialogs\table.js" />
+    <Content Include="RTE\plugins\templates\dialogs\templates.css" />
+    <Content Include="RTE\plugins\templates\dialogs\templates.js" />
+    <Content Include="RTE\plugins\templates\templates\default.js" />
+    <Content Include="RTE\plugins\templates\templates\images\template1.gif" />
+    <Content Include="RTE\plugins\templates\templates\images\template2.gif" />
+    <Content Include="RTE\plugins\templates\templates\images\template3.gif" />
     <Content Include="RTE\plugins\wsc\dialogs\ciframe.html" />
     <Content Include="RTE\plugins\wsc\dialogs\tmpFrameset.html" />
     <Content Include="RTE\plugins\wsc\dialogs\wsc.css" />
@@ -1612,6 +1696,12 @@
     <Content Include="Areas\CMS\Views\Customer\Details.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
+    <Content Include="Images\CKUploads\SetUp project.docx" />
+    <Content Include="Areas\Common\Views\Shared\_CKFinderLayout.cshtml" />
+    <Content Include="Areas\Common\Views\FileUploadCkController\UploadPartial.cshtml" />
+    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
+    <Content Include="RTB\userfiles\.htaccess" />
     <Content Include="RTE\CHANGES.md" />
     <Content Include="RTE\LICENSE.md" />
     <Content Include="RTE\plugins\scayt\LICENSE.md" />
@@ -1623,12 +1713,8 @@
     <Content Include="RTE\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="RTE\samples\sample_posteddata.php" />
     <Content Include="RTE\skins\moono\readme.md" />
-    <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
-    <Content Include="Images\CKUploads\SetUp project.docx" />
-    <Content Include="Areas\Common\Views\Shared\_CKFinderLayout.cshtml" />
-    <Content Include="Areas\Common\Views\FileUploadCkController\UploadPartial.cshtml" />
-    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
-    <Content Include="RTB\userfiles\.htaccess" />
+    <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Views\Shared\_ApplicantApplyLayout.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3495,7 +3581,7 @@
     <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
-    <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\ApplyOld.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
@@ -3661,9 +3747,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobApplicant.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HR\JobApplicantAr.resx">
+    <EmbeddedResource Include="Resources\HR\JobApplicant.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>JobApplicantAr.Designer.cs</LastGenOutput>
+      <LastGenOutput>JobApplicant.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobOffered.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4009,23 +4095,6 @@
     <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Migrations\" />
     <Folder Include="Reports\" />
-    <Folder Include="RTE\plugins\colordialog\dialogs\" />
-    <Folder Include="RTE\plugins\div\dialogs\" />
-    <Folder Include="RTE\plugins\find\dialogs\" />
-    <Folder Include="RTE\plugins\flash\dialogs\" />
-    <Folder Include="RTE\plugins\flash\images\" />
-    <Folder Include="RTE\plugins\forms\dialogs\" />
-    <Folder Include="RTE\plugins\forms\images\" />
-    <Folder Include="RTE\plugins\iframe\dialogs\" />
-    <Folder Include="RTE\plugins\iframe\images\" />
-    <Folder Include="RTE\plugins\liststyle\dialogs\" />
-    <Folder Include="RTE\plugins\pagebreak\images\" />
-    <Folder Include="RTE\plugins\preview\" />
-    <Folder Include="RTE\plugins\showblocks\images\" />
-    <Folder Include="RTE\plugins\smiley\dialogs\" />
-    <Folder Include="RTE\plugins\smiley\images\" />
-    <Folder Include="RTE\plugins\templates\dialogs\" />
-    <Folder Include="RTE\plugins\templates\templates\images\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
   </ItemGroup>
