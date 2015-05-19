@@ -1,0 +1,517 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Vendor.VendorViewModel
+
+@{
+    ViewBag.Title = Model.Vendor.VendorId > 0 ? EPMS.Web.Resources.Inventory.Vendor.UpdatPageTitle : EPMS.Web.Resources.Inventory.Vendor.CreatePageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Inventory/Vendor/Index">
+                @EPMS.Web.Resources.Inventory.Vendor.Label
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "Vendor", FormMethod.Post, new { @id = "VendorForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Vendor.VendorId)
+        @Html.HiddenFor(m => m.Vendor.RecCreatedBy)
+        @Html.HiddenFor(m => m.Vendor.RecCreatedDt)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.VendorNameEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.VendorNameEn, new { @dir = "ltr", id = "VendorNameEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.VendorNameEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.VendorNameAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.VendorNameAr, new { id = "VendorNameAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.VendorNameAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.ContactPerson</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.ContactPerson, new { id = "ContactPerson", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.ContactPerson, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Email</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.VendorEmail, new { id = "Email", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.VendorEmail, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Number</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.VendorContact, new { id = "VendorContact", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.VendorContact, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.FieldOnCreate</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.VendorField, new { id = "VendorField", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.VendorField, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.DetailsEn, new { id = "DetailsEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.DetailsEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.NotesAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Vendor.DetailsAr, new { id = "DetailsAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.Vendor.DetailsAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <!--WYSIWYG Editor - Minimum Options begin-->
+        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Excel Import</label>
+            </div>
+            <div class="span9">
+                <div class="controls elrte-wrapper">
+                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
+                    <script>
+                        $('#tiny').elrte({
+                            lang: "en",
+                            styleWithCSS: false,
+                            height: 200,
+                            toolbar: 'tiny'
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" id="importEx" class="btn">Import</button>
+            </div>
+        </div>
+
+        <!--Basic Responsive Table begin-->
+        <div class="row-fluid" id="ress">
+            <div class="span12">
+                <table class="table table-striped table-responsive ">
+                    <thead class="">
+                        <tr>
+                            <th>Serial</th>
+                            <th style="width:85%">Item Details</th>
+
+
+                            <th style="width:4%">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="qouteAdd">
+                        @if (Model.Vendor.VendorItems.Any())
+                        {
+                            var serial = 0;
+                            for (int i = 0; i < Model.Vendor.VendorItems.Count(); i++)
+                            {
+                                serial = serial + 1;
+                                <tr>
+                                    <td>
+                                        <div class="control-group row-fluid">
+                                            <div class="span1">
+                                                <label class="control-label serialNumber">@serial</label>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(model => model.Vendor.VendorItems[i].ItemDetails, new { @class = "auto-resize vendorItem" })
+                                        @*<textarea rows="2" class="auto-resize"></textarea>*@
+                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    <div class="control-group row-fluid">
+                                        <div class="span1">
+                                            <label class="control-label serialNumber">1</label>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <textarea rows="2" class="auto-resize" name="Vendor.VendorItems[0].ItemDetails"></textarea>
+                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                </td>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow"></i>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn trAdder">Add</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">@EPMS.Web.Resources.Inventory.Vendor.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit" onclick="validateJobTitle(event)">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Vendor/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<!--Item Search Dialogue-->
+<div id="itemSearcher" class="modal fade treeSelector">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Item Search</h3>
+    </div>
+    <div class="modal-body ">
+        <form class="form-horizontal">
+            <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="selectBoxFilter">Select Item</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <select name="selectBoxFilter" id="selectBoxFilter">
+                            <option selected="" value="All">Item1 - sku1</option>
+                            <option value="Beige">Item2 - sku1</option>
+                            <option value="Beige">Item2 - sku2</option>
+                            <option value="Beige">Item2 - sku3</option>
+                            <option value="Beige">Item3 - sku1</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span4">
+                    <label class="control-label" for="selectBoxFilter">Item Tree Selector</label>
+                </div>
+                <div class="span8 span-inset">
+                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemTreeSelector">+</button>
+                </div>
+
+            </div>
+            <div class="control-group row-fluid">
+
+                <div class="span9 ">
+                    <label class="control-label">
+                        <input type="checkbox" class="uniformCheckbox" value="checkbox1" style="margin: -1px 2px 0px 0px;">Add Item Description
+                    </label>
+
+                    <label class="control-label">
+                        <input type="checkbox" class="uniformCheckbox" value="checkbox1" style="margin: -1px 2px 0px 0px;">Add Item SKU
+                    </label>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-primary">Save Changes</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+    </div>
+</div>
+
+
+<div id="itemTreeSelector" class="modal hide fade treeSelector">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Place in Warehouse Tree</h3>
+    </div>
+    <div class="modal-body ">
+        <form class="form-horizontal">
+            <div class="sidebarMenuHolder">
+                <div class="JStree">
+                    <div class="Jstree_shadow_top"></div>
+                    <div id="jstree"></div>
+                    <div class="Jstree_shadow_bottom"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    var itemsCount;
+    var iExcelData = false;
+    var isUpdate = false;
+    var elementToDelete;
+    var vendorId = parseInt($('#Vendor_VendorId').val());
+    $(document).ready(function () {
+        if (vendorId == 0 || vendorId == "") {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+            itemsCount = 0;
+        } else {
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+            $(".deleteRow").hide();
+            $(".itemAdder").hide();
+            $(".trAdder").hide();
+            itemsCount = parseInt('@Model.Vendor.VendorItems.Count');
+        }
+        $("#JobTitleForm").validate({
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "req": {
+                    required: true
+                },
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "email": {
+                    email: true
+                },
+                "url": {
+                    url: true
+                },
+                "date": {
+                    date: true
+                }
+            }
+        });
+        $("#selectBoxFilter").select2();
+    });
+    
+    $("#edit").click(function (event) {
+        $('.' + 'tbdisable' + ':input').attr('disabled', false);
+        $("#savebtn").show();
+        $("#cancel").show();
+        $("#edit").hide();
+        $(".deleteRow").show();
+        $(".itemAdder").show();
+        $(".trAdder").show();
+        event.preventDefault();
+    });
+
+    $("#importEx").on("click", function () {
+
+        var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
+        var coln = $(excel).find("tr:first td").length;
+        var count = 0;
+        var x = 0;
+        itemsCount = 0;
+        if (coln == 1) {
+            $(excel).find("tr").each(function () {
+                var y = 0;
+                var t1 = "";
+                var t2 = 0;
+                var t3 = 0;
+                var t4 = 0;
+                $(this).find("td").each(function () {
+                    if (y == 0) {
+                        t1 = $(this).text();
+                    }
+                    else if (y == 1) {
+                        t2 = parseInt($(this).text());
+                    }
+                    else if (y == 2) {
+                        t3 = parseInt($(this).text());
+                    }
+                    y++;
+                });
+                var html = '<tr>' +
+                    '<td >' +
+                    '<div class="control-group row-fluid">' +
+                    '<div class="span1">' +
+                    '<label class="control-label serialNumber">' +
+                    '</label>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
+                    '<td >' +
+                    '<textarea rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails">' + t1 + '</textarea>' +
+                    '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                    '</td>' +
+                    '<td class="delete">' +
+                    '<i class="icon-photon minus deleteRow"></i> ' +
+                    '</td>' +
+                    '</tr>';
+                itemsCount = itemsCount + 1;
+                iExcelData = true;
+                if (count == 0) {
+                    $('.qouteAdd').html("");
+                }
+                $('.qouteAdd').append(html);
+                reActivateDelete();
+                //reactivateCount();
+                count++;
+            });
+            activateSerial();
+        }
+        else {
+
+            $.pnotify({
+                title: 'Sorry',
+                type: 'info',
+                text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
+            });
+
+        }
+
+    });
+
+    $('.trAdder').on("click", function (event) {
+        var html = ' <tr>' +
+            '<td >' +
+            '<div class="control-group row-fluid">' +
+            '<div class="span1">' +
+            '<label class="control-label serialNumber"  >' +
+            '</label>' +
+            '</div>' +
+            '</div>' +
+            '</td>' +
+            '<td >' +
+            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails">' +
+            '</textarea>' +
+            '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+            '</td>' +
+            '<td class="delete">' +
+            '<i class="icon-photon minus deleteRow"></i> ' +
+            '</td>' +
+            '</tr>';
+
+        $('.qouteAdd').append(html);
+        itemsCount = itemsCount +1;
+        iExcelData = false;
+        isUpdate = false;
+        activateSerial();
+        //reActivateDelete();
+        event.PreventDefault();
+    });
+
+    $('.deleteRow').on("click", function () {
+        var count = $('.qouteAdd tr').length;
+        if (count > 1) {
+            $(this).parent().parent().remove();
+            itemsCount = itemsCount - 1;
+        }
+        activateSerial();
+        setControlID();
+    });
+
+    function activateSerial() {
+        debugger;
+        var count = $('.qouteAdd tr').length;
+        var add = 0;
+        $('.qouteAdd tr').each(function () {
+            add++;
+            $(this).find(".serialNumber").text(add);
+        });
+    }
+
+    function setControlID() {
+        var textVarList = $('.vendorItem');
+        var counter = $('.qouteAdd tr').length;
+        debugger
+        for (var i = 0; i < textVarList.length; i++) {
+            $(textVarList[i]).attr('name', "Vendor.VendorItems[" + i + "].ItemDetails");
+        }
+
+    }
+
+</script>

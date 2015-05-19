@@ -67,6 +67,7 @@
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\IEmployeeRequestService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
+    <Compile Include="IServices\IInventoryDepartmentService.cs" />
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
@@ -88,6 +89,8 @@
     <Compile Include="IServices\ITaskEmployeeService.cs" />
     <Compile Include="IServices\IUserPrefrencesService.cs" />
     <Compile Include="IServices\IQuickLaunchItemService.cs" />
+    <Compile Include="IServices\IVendorItemsService.cs" />
+    <Compile Include="IServices\IVendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="Repository\IEmployeeRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestDetailRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestRepository.cs" />
+    <Compile Include="Repository\IInventoryDepartmentRepository.cs" />
     <Compile Include="Repository\IJobApplicantRepository.cs" />
     <Compile Include="Repository\IJobOfferedRepository.cs" />
     <Compile Include="Repository\IJobTitleHistoryRepository.cs" />
@@ -126,6 +130,8 @@
     <Compile Include="Repository\IQuotationRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />
     <Compile Include="Repository\IUserPrefrencesRepository.cs" />
+    <Compile Include="Repository\IVendorItemsRepository.cs" />
+    <Compile Include="Repository\IVendorRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

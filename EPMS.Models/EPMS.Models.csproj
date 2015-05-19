@@ -117,6 +117,7 @@
     <Compile Include="DomainModels\AspNetUserClaim.cs" />
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
+    <Compile Include="DomainModels\InventoryDepartment.cs" />
     <Compile Include="DomainModels\CompanyBankDetail.cs" />
     <Compile Include="DomainModels\CompanyDocumentDetail.cs" />
     <Compile Include="DomainModels\CompanyProfile.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="DomainModels\Meeting.cs" />
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
+    <Compile Include="DomainModels\Vendor.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\NotificationRecipient.cs" />
     <Compile Include="DomainModels\Order.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="DomainModels\ShelfSection.cs" />
     <Compile Include="DomainModels\TaskEmployee.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
+    <Compile Include="DomainModels\VendorItem.cs" />
     <Compile Include="DomainModels\Warehouse.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
@@ -180,6 +183,7 @@
     <Compile Include="RequestModels\EmployeeRequestSearchRequest.cs" />
     <Compile Include="RequestModels\EmployeeSearchRequset.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
+    <Compile Include="RequestModels\InventoryDepartmentRequest.cs" />
     <Compile Include="RequestModels\JobApplicantSearchRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
+    <Compile Include="RequestModels\VendorRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -241,7 +246,9 @@
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
+    <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
+    <Compile Include="ResponseModels\SaveVendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
   </ItemGroup>
   <ItemGroup>

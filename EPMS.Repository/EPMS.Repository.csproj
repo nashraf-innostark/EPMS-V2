@@ -142,6 +142,7 @@
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestDetailRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestRepository.cs" />
+    <Compile Include="Repositories\InventoryDepartmentRepository.cs" />
     <Compile Include="Repositories\JobApplicantRepository.cs" />
     <Compile Include="Repositories\JobOfferedRepository.cs" />
     <Compile Include="Repositories\JobTitleHistoryRepository.cs" />
@@ -166,6 +167,8 @@
     <Compile Include="Repositories\UserPrefrencesRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />
+    <Compile Include="Repositories\VendorItemsRepository.cs" />
+    <Compile Include="Repositories\VendorRepository.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>

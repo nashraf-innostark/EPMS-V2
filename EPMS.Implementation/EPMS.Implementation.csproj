@@ -135,6 +135,7 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\InventoryDepartmentService.cs" />
     <Compile Include="Services\JobApplicantService.cs" />
     <Compile Include="Services\JobOfferedService.cs" />
     <Compile Include="Services\JobTitleService.cs" />
@@ -157,6 +158,8 @@
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />
     <Compile Include="Services\UserPrefrencesService.cs" />
+    <Compile Include="Services\VendorItemsService.cs" />
+    <Compile Include="Services\VendorService.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

@@ -107,5 +107,8 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<DashboardWidgetPreference> Preferences { get; set; }
         public DbSet<QuickLaunchItem> QuickLaunchItems { get; set; }
         public DbSet<LicenseControlPanel> LicenseControlPanels { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<VendorItem> VendorItems { get; set; }
+        public DbSet<InventoryDepartment> InventoryDepartments { get; set; }
     }
 }

@@ -303,6 +303,8 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
     <Compile Include="Areas\Meeting\MeetingAreaRegistration.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="ModelMappers\DepartmentMapper.cs" />
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
+    <Compile Include="ModelMappers\InventoryDepartmentMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
@@ -362,6 +365,7 @@
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
+    <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
@@ -378,6 +382,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeJobHistory.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
+    <Compile Include="Models\InventoryDepartment.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\LicenseControlPanel.cs" />
     <Compile Include="Models\Meeting.cs" />
@@ -404,6 +409,8 @@
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Models\TaskEmployee.cs" />
+    <Compile Include="Models\Vendor.cs" />
+    <Compile Include="Models\VendorItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -565,6 +572,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tasks.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\Vendor.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Vendor.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Meeting\Meeting.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -656,6 +668,7 @@
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpViewModel.cs" />
+    <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
       <SubType>Code</SubType>
@@ -679,6 +692,7 @@
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
+    <Compile Include="ViewModels\Vendor\VendorViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1113,6 +1127,10 @@
     <Content Include="RTE\samples\sample_posteddata.php" />
     <Content Include="RTE\skins\moono\readme.md" />
     <Content Include="Areas\Inventory\Views\web.config" />
+    <Content Include="Areas\Inventory\Views\Vendor\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
+    <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3021,6 +3039,11 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
+    <EmbeddedResource Include="Resources\Inventory\Vendor.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\Vendor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Vendor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.ar.resx" />
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3485,7 +3508,6 @@
     <Folder Include="Areas\CP\Views\Shared\" />
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
-    <Folder Include="Areas\Inventory\Controllers\" />
     <Folder Include="Areas\Inventory\Models\" />
     <Folder Include="Areas\Inventory\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />

@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="AisleId" />
           </Key>
-          <Property Name="AisleId" Type="bigint" Nullable="false" />
+          <Property Name="AisleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AisleName" Type="nvarchar" MaxLength="200" />
           <Property Name="WarehouseId" Type="bigint" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -323,37 +323,26 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMSInventory.dbo.InventoryDepartment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="InventoryDepartment">
           <Key>
             <PropertyRef Name="DepartmentId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
           </Key>
-          <Property Name="DepartmentId" Type="bigint" Nullable="false" />
+          <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DepartmentNameEn" Type="nvarchar" MaxLength="200" />
           <Property Name="DepartmentNameAr" Type="nvarchar" MaxLength="200" />
           <Property Name="DepartmentColor" Type="nvarchar" MaxLength="50" />
           <Property Name="DepartmentDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="ParentId" Type="bigint" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMSInventory.dbo.InventoryItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="InventoryItems">
           <Key>
             <PropertyRef Name="ItemId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
           </Key>
-          <Property Name="ItemId" Type="bigint" Nullable="false" />
+          <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemCode" Type="nvarchar" MaxLength="200" />
           <Property Name="ItemNameEn" Type="nvarchar" MaxLength="500" />
           <Property Name="ItemNameAr" Type="nvarchar" MaxLength="500" />
@@ -723,7 +712,7 @@ warning 6002: The table/view 'EPMSInventory.dbo.InventoryItems' does not have a 
           <Key>
             <PropertyRef Name="SectionId" />
           </Key>
-          <Property Name="SectionId" Type="bigint" Nullable="false" />
+          <Property Name="SectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
           <Property Name="AisleId" Type="bigint" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -735,7 +724,7 @@ warning 6002: The table/view 'EPMSInventory.dbo.InventoryItems' does not have a 
           <Key>
             <PropertyRef Name="ShelfId" />
           </Key>
-          <Property Name="ShelfId" Type="bigint" Nullable="false" />
+          <Property Name="ShelfId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShelfName" Type="nvarchar" MaxLength="200" />
           <Property Name="SectionId" Type="bigint" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -747,7 +736,7 @@ warning 6002: The table/view 'EPMSInventory.dbo.InventoryItems' does not have a 
           <Key>
             <PropertyRef Name="ShelfSectionId" />
           </Key>
-          <Property Name="ShelfSectionId" Type="bigint" Nullable="false" />
+          <Property Name="ShelfSectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShelfSectionName" Type="nvarchar" MaxLength="200" />
           <Property Name="ShelfId" Type="bigint" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -775,17 +764,11 @@ warning 6002: The table/view 'EPMSInventory.dbo.InventoryItems' does not have a 
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Culture" Type="nvarchar" MaxLength="3" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Vendors">
+        <EntityType Name="Vendor">
           <Key>
             <PropertyRef Name="VendorId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
           </Key>
-          <Property Name="VendorId" Type="bigint" Nullable="false" />
+          <Property Name="VendorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VendorNameEn" Type="nvarchar" MaxLength="400" />
           <Property Name="VendorNameAr" Type="nvarchar" MaxLength="400" />
           <Property Name="ContactPerson" Type="nvarchar" MaxLength="200" />
@@ -799,11 +782,19 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="VendorItems">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemDetails" Type="nvarchar" MaxLength="300" />
+          <Property Name="VendorId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="WarehouseId" />
           </Key>
-          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="WarehouseId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WarehouseNumber" Type="nvarchar" MaxLength="200" />
           <Property Name="WarehouseManager" Type="bigint" />
           <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
@@ -1057,6 +1048,18 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             </Principal>
             <Dependent Role="EmployeeRequests">
               <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryDepartment_InventoryDepartment">
+          <End Role="InventoryDepartment" Type="Self.InventoryDepartment" Multiplicity="0..1" />
+          <End Role="InventoryDepartment1" Type="Self.InventoryDepartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryDepartment">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="InventoryDepartment1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1396,6 +1399,18 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VendorItems_Vendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
+          <End Role="VendorItems" Type="Self.VendorItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="VendorItems">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Warehouse_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
@@ -1427,6 +1442,8 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeJobHistory" EntityType="Self.EmployeeJobHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryDepartment" EntityType="Self.InventoryDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobApplicants" EntityType="Self.JobApplicants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobOffered" EntityType="Self.JobOffered" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
@@ -1453,61 +1470,9 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <EntitySet Name="ShelfSection" EntityType="Self.ShelfSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorItems" EntityType="Self.VendorItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InventoryDepartment" EntityType="Self.InventoryDepartment" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [InventoryDepartment].[DepartmentId] AS [DepartmentId], 
-    [InventoryDepartment].[DepartmentNameEn] AS [DepartmentNameEn], 
-    [InventoryDepartment].[DepartmentNameAr] AS [DepartmentNameAr], 
-    [InventoryDepartment].[DepartmentColor] AS [DepartmentColor], 
-    [InventoryDepartment].[DepartmentDesc] AS [DepartmentDesc], 
-    [InventoryDepartment].[RecCreatedBy] AS [RecCreatedBy], 
-    [InventoryDepartment].[RecCreatedDt] AS [RecCreatedDt], 
-    [InventoryDepartment].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
-    [InventoryDepartment].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
-    FROM [dbo].[InventoryDepartment] AS [InventoryDepartment]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [InventoryItems].[ItemId] AS [ItemId], 
-    [InventoryItems].[ItemCode] AS [ItemCode], 
-    [InventoryItems].[ItemNameEn] AS [ItemNameEn], 
-    [InventoryItems].[ItemNameAr] AS [ItemNameAr], 
-    [InventoryItems].[ItemImagePath] AS [ItemImagePath], 
-    [InventoryItems].[ItemDescriptionEn] AS [ItemDescriptionEn], 
-    [InventoryItems].[ItemDescriptionAr] AS [ItemDescriptionAr], 
-    [InventoryItems].[DescriptionForQuotationEn] AS [DescriptionForQuotationEn], 
-    [InventoryItems].[DescriptionForQuotationAr] AS [DescriptionForQuotationAr], 
-    [InventoryItems].[HazardousEn] AS [HazardousEn], 
-    [InventoryItems].[HazardousAr] AS [HazardousAr], 
-    [InventoryItems].[UsageEn] AS [UsageEn], 
-    [InventoryItems].[UsageAr] AS [UsageAr], 
-    [InventoryItems].[ReorderLevel] AS [ReorderLevel], 
-    [InventoryItems].[DepartmentId] AS [DepartmentId], 
-    [InventoryItems].[WarehouseID] AS [WarehouseID], 
-    [InventoryItems].[RecCreatedBy] AS [RecCreatedBy], 
-    [InventoryItems].[RecCreatedDt] AS [RecCreatedDt], 
-    [InventoryItems].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
-    [InventoryItems].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
-    FROM [dbo].[InventoryItems] AS [InventoryItems]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Vendors" EntityType="Self.Vendors" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Vendors].[VendorId] AS [VendorId], 
-    [Vendors].[VendorNameEn] AS [VendorNameEn], 
-    [Vendors].[VendorNameAr] AS [VendorNameAr], 
-    [Vendors].[ContactPerson] AS [ContactPerson], 
-    [Vendors].[VendorEmail] AS [VendorEmail], 
-    [Vendors].[VendorContact] AS [VendorContact], 
-    [Vendors].[VendorField] AS [VendorField], 
-    [Vendors].[DetailsEn] AS [DetailsEn], 
-    [Vendors].[DetailsAr] AS [DetailsAr], 
-    [Vendors].[RecCreatedBy] AS [RecCreatedBy], 
-    [Vendors].[RecCreatedDt] AS [RecCreatedDt], 
-    [Vendors].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
-    [Vendors].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
-    FROM [dbo].[Vendors] AS [Vendors]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Aisle_Warehouse" Association="Self.FK_Aisle_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="Aisle" EntitySet="Aisle" />
@@ -1587,6 +1552,10 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <AssociationSet Name="FK_EmployeeRequests_Employee" Association="Self.FK_EmployeeRequests_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryDepartment_InventoryDepartment" Association="Self.FK_InventoryDepartment_InventoryDepartment">
+            <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
+            <End Role="InventoryDepartment1" EntitySet="InventoryDepartment" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApplicants_JobOffered" Association="Self.FK_JobApplicants_JobOffered">
             <End Role="JobOffered" EntitySet="JobOffered" />
@@ -1699,6 +1668,10 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <AssociationSet Name="FK_UserPrefrences_AspNetUsers" Association="Self.FK_UserPrefrences_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserPrefrences" EntitySet="UserPrefrences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VendorItems_Vendor" Association="Self.FK_VendorItems_Vendor">
+            <End Role="Vendor" EntitySet="Vendor" />
+            <End Role="VendorItems" EntitySet="VendorItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Warehouse_Employee" Association="Self.FK_Warehouse_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -2892,23 +2865,7 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             <End Role="Department" EntitySet="Departments" />
             <End Role="Complaint" EntitySet="Complaints" />
           </AssociationSet>
-          <EntitySet Name="InventoryDepartments" EntityType="EPMSModel.InventoryDepartment" />
-          <EntitySet Name="InventoryItems" EntityType="EPMSModel.InventoryItem" />
-          <EntitySet Name="Vendors" EntityType="EPMSModel.Vendor" />
-          <EntitySet Name="Aisles" EntityType="EPMSModel.Aisle" />
           <EntitySet Name="Employees" EntityType="EPMSModel.Employee" />
-          <EntitySet Name="Sections" EntityType="EPMSModel.Section" />
-          <EntitySet Name="Shelves" EntityType="EPMSModel.Shelf" />
-          <EntitySet Name="ShelfSections" EntityType="EPMSModel.ShelfSection" />
-          <EntitySet Name="Warehouses" EntityType="EPMSModel.Warehouse" />
-          <AssociationSet Name="FK_Aisle_Warehouse" Association="EPMSModel.FK_Aisle_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="Aisle" EntitySet="Aisles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Section_Aisle" Association="EPMSModel.FK_Section_Aisle">
-            <End Role="Aisle" EntitySet="Aisles" />
-            <End Role="Section" EntitySet="Sections" />
-          </AssociationSet>
           <AssociationSet Name="FK_Allowance_Employee" Association="EPMSModel.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Allowance" EntitySet="Allowances" />
@@ -2941,6 +2898,20 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             <End Role="Employee" EntitySet="Employees" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
+          <EntitySet Name="Aisles" EntityType="EPMSModel.Aisle" />
+          <EntitySet Name="InventoryItems" EntityType="EPMSModel.InventoryItem" />
+          <EntitySet Name="Sections" EntityType="EPMSModel.Section" />
+          <EntitySet Name="Shelves" EntityType="EPMSModel.Shelf" />
+          <EntitySet Name="ShelfSections" EntityType="EPMSModel.ShelfSection" />
+          <EntitySet Name="Warehouses" EntityType="EPMSModel.Warehouse" />
+          <AssociationSet Name="FK_Aisle_Warehouse" Association="EPMSModel.FK_Aisle_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Aisle" EntitySet="Aisles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Section_Aisle" Association="EPMSModel.FK_Section_Aisle">
+            <End Role="Aisle" EntitySet="Aisles" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
           <AssociationSet Name="FK_Warehouse_Employee" Association="EPMSModel.FK_Warehouse_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Warehouse" EntitySet="Warehouses" />
@@ -2952,6 +2923,17 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <AssociationSet Name="FK_ShelfSection_Shelf" Association="EPMSModel.FK_ShelfSection_Shelf">
             <End Role="Shelf" EntitySet="Shelves" />
             <End Role="ShelfSection" EntitySet="ShelfSections" />
+          </AssociationSet>
+          <EntitySet Name="Vendors" EntityType="EPMSModel.Vendor" />
+          <EntitySet Name="VendorItems" EntityType="EPMSModel.VendorItem" />
+          <AssociationSet Name="FK_VendorItems_Vendor" Association="EPMSModel.FK_VendorItems_Vendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="VendorItem" EntitySet="VendorItems" />
+          </AssociationSet>
+          <EntitySet Name="InventoryDepartments" EntityType="EPMSModel.InventoryDepartment" />
+          <AssociationSet Name="FK_InventoryDepartment_InventoryDepartment" Association="EPMSModel.FK_InventoryDepartment_InventoryDepartment">
+            <End Role="InventoryDepartment" EntitySet="InventoryDepartments" />
+            <End Role="InventoryDepartment1" EntitySet="InventoryDepartments" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="NotificationRecipient">
@@ -3038,89 +3020,6 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="InventoryDepartment">
-          <Key>
-            <PropertyRef Name="DepartmentId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
-          </Key>
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" />
-          <Property Name="DepartmentNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DepartmentNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DepartmentColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DepartmentDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="InventoryItem">
-          <Key>
-            <PropertyRef Name="ItemId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" />
-          <Property Name="ItemCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescriptionEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescriptionAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionForQuotationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionForQuotationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="HazardousEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="HazardousAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="UsageEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="UsageAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ReorderLevel" Type="Int32" />
-          <Property Name="DepartmentId" Type="Int64" />
-          <Property Name="WarehouseID" Type="Int64" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Vendor">
-          <Key>
-            <PropertyRef Name="VendorId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
-          </Key>
-          <Property Name="VendorId" Type="Int64" Nullable="false" />
-          <Property Name="VendorNameEn" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="VendorNameAr" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="VendorEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="VendorContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="VendorField" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="DetailsEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DetailsAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="Aisle">
-          <Key>
-            <PropertyRef Name="AisleId" />
-          </Key>
-          <Property Name="AisleId" Type="Int64" Nullable="false" />
-          <Property Name="AisleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Warehouse" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Aisle" ToRole="Warehouse" />
-          <NavigationProperty Name="Sections" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
-        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -3161,88 +3060,8 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
           <NavigationProperty Name="MeetingAttendees" Relationship="EPMSModel.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendee" />
           <NavigationProperty Name="NotificationRecipients" Relationship="EPMSModel.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
           <NavigationProperty Name="TaskEmployees" Relationship="EPMSModel.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
-          <NavigationProperty Name="Warehouse" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouses" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
         </EntityType>
-        <EntityType Name="Section">
-          <Key>
-            <PropertyRef Name="SectionId" />
-          </Key>
-          <Property Name="SectionId" Type="Int64" Nullable="false" />
-          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AisleId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Aisle" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Section" ToRole="Aisle" />
-          <NavigationProperty Name="Shelf" Relationship="EPMSModel.FK_Shelf_Section" FromRole="Section" ToRole="Shelf" />
-        </EntityType>
-        <EntityType Name="Shelf">
-          <Key>
-            <PropertyRef Name="ShelfId" />
-          </Key>
-          <Property Name="ShelfId" Type="Int64" Nullable="false" />
-          <Property Name="ShelfName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SectionId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Section" Relationship="EPMSModel.FK_Shelf_Section" FromRole="Shelf" ToRole="Section" />
-          <NavigationProperty Name="ShelfSections" Relationship="EPMSModel.FK_ShelfSection_Shelf" FromRole="Shelf" ToRole="ShelfSection" />
-        </EntityType>
-        <EntityType Name="ShelfSection">
-          <Key>
-            <PropertyRef Name="ShelfSectionId" />
-          </Key>
-          <Property Name="ShelfSectionId" Type="Int64" Nullable="false" />
-          <Property Name="ShelfSectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ShelfId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Shelf" Relationship="EPMSModel.FK_ShelfSection_Shelf" FromRole="ShelfSection" ToRole="Shelf" />
-        </EntityType>
-        <EntityType Name="Warehouse">
-          <Key>
-            <PropertyRef Name="WarehouseId" />
-          </Key>
-          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
-          <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseManager" Type="Int64" />
-          <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Aisles" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Warehouse" ToRole="Aisle" />
-          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
-        </EntityType>
-        <Association Name="FK_Aisle_Warehouse">
-          <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="1" />
-          <End Type="EPMSModel.Aisle" Role="Aisle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
-            </Principal>
-            <Dependent Role="Aisle">
-              <PropertyRef Name="WarehouseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Section_Aisle">
-          <End Type="EPMSModel.Aisle" Role="Aisle" Multiplicity="1" />
-          <End Type="EPMSModel.Section" Role="Section" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Aisle">
-              <PropertyRef Name="AisleId" />
-            </Principal>
-            <Dependent Role="Section">
-              <PropertyRef Name="AisleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Allowance_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="EPMSModel.Allowance" Role="Allowance" Multiplicity="*" />
@@ -3339,6 +3158,125 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Aisle">
+          <Key>
+            <PropertyRef Name="AisleId" />
+          </Key>
+          <Property Name="AisleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AisleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Aisle" ToRole="Warehouse" />
+          <NavigationProperty Name="Sections" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="InventoryItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescriptionEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescriptionAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HazardousEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HazardousAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UsageEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UsageAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ReorderLevel" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int64" />
+          <Property Name="WarehouseID" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AisleId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Aisle" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Section" ToRole="Aisle" />
+          <NavigationProperty Name="Shelf" Relationship="EPMSModel.FK_Shelf_Section" FromRole="Section" ToRole="Shelf" />
+        </EntityType>
+        <EntityType Name="Shelf">
+          <Key>
+            <PropertyRef Name="ShelfId" />
+          </Key>
+          <Property Name="ShelfId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShelfName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Section" Relationship="EPMSModel.FK_Shelf_Section" FromRole="Shelf" ToRole="Section" />
+          <NavigationProperty Name="ShelfSections" Relationship="EPMSModel.FK_ShelfSection_Shelf" FromRole="Shelf" ToRole="ShelfSection" />
+        </EntityType>
+        <EntityType Name="ShelfSection">
+          <Key>
+            <PropertyRef Name="ShelfSectionId" />
+          </Key>
+          <Property Name="ShelfSectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShelfSectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ShelfId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Shelf" Relationship="EPMSModel.FK_ShelfSection_Shelf" FromRole="ShelfSection" ToRole="Shelf" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseManager" Type="Int64" />
+          <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Aisles" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Warehouse" ToRole="Aisle" />
+          <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Aisle_Warehouse">
+          <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSModel.Aisle" Role="Aisle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Aisle">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Section_Aisle">
+          <End Type="EPMSModel.Aisle" Role="Aisle" Multiplicity="1" />
+          <End Type="EPMSModel.Section" Role="Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Aisle">
+              <PropertyRef Name="AisleId" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="AisleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Warehouse_Employee">
           <End Type="EPMSModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
@@ -3372,6 +3310,75 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
             </Principal>
             <Dependent Role="ShelfSection">
               <PropertyRef Name="ShelfId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VendorNameEn" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="VendorNameAr" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="VendorEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VendorContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VendorField" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="DetailsEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DetailsAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="VendorItems" Relationship="EPMSModel.FK_VendorItems_Vendor" FromRole="Vendor" ToRole="VendorItem" />
+        </EntityType>
+        <EntityType Name="VendorItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemDetails" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="VendorId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Vendor" Relationship="EPMSModel.FK_VendorItems_Vendor" FromRole="VendorItem" ToRole="Vendor" />
+        </EntityType>
+        <Association Name="FK_VendorItems_Vendor">
+          <End Type="EPMSModel.Vendor" Role="Vendor" Multiplicity="1" />
+          <End Type="EPMSModel.VendorItem" Role="VendorItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="VendorItem">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="InventoryDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="InventoryDepartments" Relationship="EPMSModel.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryDepartment1" />
+          <NavigationProperty Name="ParentDepartment" Relationship="EPMSModel.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment1" ToRole="InventoryDepartment" />
+        </EntityType>
+        <Association Name="FK_InventoryDepartment_InventoryDepartment">
+          <End Type="EPMSModel.InventoryDepartment" Role="InventoryDepartment" Multiplicity="0..1" />
+          <End Type="EPMSModel.InventoryDepartment" Role="InventoryDepartment1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryDepartment">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="InventoryDepartment1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4054,79 +4061,6 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="InventoryDepartments">
-            <EntityTypeMapping TypeName="EPMSModel.InventoryDepartment">
-              <MappingFragment StoreEntitySet="InventoryDepartment">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
-                <ScalarProperty Name="DepartmentColor" ColumnName="DepartmentColor" />
-                <ScalarProperty Name="DepartmentNameAr" ColumnName="DepartmentNameAr" />
-                <ScalarProperty Name="DepartmentNameEn" ColumnName="DepartmentNameEn" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InventoryItems">
-            <EntityTypeMapping TypeName="EPMSModel.InventoryItem">
-              <MappingFragment StoreEntitySet="InventoryItems">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
-                <ScalarProperty Name="UsageAr" ColumnName="UsageAr" />
-                <ScalarProperty Name="UsageEn" ColumnName="UsageEn" />
-                <ScalarProperty Name="HazardousAr" ColumnName="HazardousAr" />
-                <ScalarProperty Name="HazardousEn" ColumnName="HazardousEn" />
-                <ScalarProperty Name="DescriptionForQuotationAr" ColumnName="DescriptionForQuotationAr" />
-                <ScalarProperty Name="DescriptionForQuotationEn" ColumnName="DescriptionForQuotationEn" />
-                <ScalarProperty Name="ItemDescriptionAr" ColumnName="ItemDescriptionAr" />
-                <ScalarProperty Name="ItemDescriptionEn" ColumnName="ItemDescriptionEn" />
-                <ScalarProperty Name="ItemImagePath" ColumnName="ItemImagePath" />
-                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
-                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Vendors">
-            <EntityTypeMapping TypeName="EPMSModel.Vendor">
-              <MappingFragment StoreEntitySet="Vendors">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DetailsAr" ColumnName="DetailsAr" />
-                <ScalarProperty Name="DetailsEn" ColumnName="DetailsEn" />
-                <ScalarProperty Name="VendorField" ColumnName="VendorField" />
-                <ScalarProperty Name="VendorContact" ColumnName="VendorContact" />
-                <ScalarProperty Name="VendorEmail" ColumnName="VendorEmail" />
-                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
-                <ScalarProperty Name="VendorNameAr" ColumnName="VendorNameAr" />
-                <ScalarProperty Name="VendorNameEn" ColumnName="VendorNameEn" />
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Aisles">
-            <EntityTypeMapping TypeName="EPMSModel.Aisle">
-              <MappingFragment StoreEntitySet="Aisle">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="AisleName" ColumnName="AisleName" />
-                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="EPMSModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -4158,6 +4092,45 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
                 <ScalarProperty Name="EmployeeMiddleNameE" ColumnName="EmployeeMiddleNameE" />
                 <ScalarProperty Name="EmployeeFirstNameE" ColumnName="EmployeeFirstNameE" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aisles">
+            <EntityTypeMapping TypeName="EPMSModel.Aisle">
+              <MappingFragment StoreEntitySet="Aisle">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="AisleName" ColumnName="AisleName" />
+                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryItems">
+            <EntityTypeMapping TypeName="EPMSModel.InventoryItem">
+              <MappingFragment StoreEntitySet="InventoryItems">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="UsageAr" ColumnName="UsageAr" />
+                <ScalarProperty Name="UsageEn" ColumnName="UsageEn" />
+                <ScalarProperty Name="HazardousAr" ColumnName="HazardousAr" />
+                <ScalarProperty Name="HazardousEn" ColumnName="HazardousEn" />
+                <ScalarProperty Name="DescriptionForQuotationAr" ColumnName="DescriptionForQuotationAr" />
+                <ScalarProperty Name="DescriptionForQuotationEn" ColumnName="DescriptionForQuotationEn" />
+                <ScalarProperty Name="ItemDescriptionAr" ColumnName="ItemDescriptionAr" />
+                <ScalarProperty Name="ItemDescriptionEn" ColumnName="ItemDescriptionEn" />
+                <ScalarProperty Name="ItemImagePath" ColumnName="ItemImagePath" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4214,6 +4187,50 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="EPMSModel.Vendor">
+              <MappingFragment StoreEntitySet="Vendor">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DetailsAr" ColumnName="DetailsAr" />
+                <ScalarProperty Name="DetailsEn" ColumnName="DetailsEn" />
+                <ScalarProperty Name="VendorField" ColumnName="VendorField" />
+                <ScalarProperty Name="VendorContact" ColumnName="VendorContact" />
+                <ScalarProperty Name="VendorEmail" ColumnName="VendorEmail" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="VendorNameAr" ColumnName="VendorNameAr" />
+                <ScalarProperty Name="VendorNameEn" ColumnName="VendorNameEn" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorItems">
+            <EntityTypeMapping TypeName="EPMSModel.VendorItem">
+              <MappingFragment StoreEntitySet="VendorItems">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryDepartments">
+            <EntityTypeMapping TypeName="EPMSModel.InventoryDepartment">
+              <MappingFragment StoreEntitySet="InventoryDepartment">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="DepartmentDesc" ColumnName="DepartmentDesc" />
+                <ScalarProperty Name="DepartmentColor" ColumnName="DepartmentColor" />
+                <ScalarProperty Name="DepartmentNameAr" ColumnName="DepartmentNameAr" />
+                <ScalarProperty Name="DepartmentNameEn" ColumnName="DepartmentNameEn" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4236,7 +4253,7 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="826ffd5d2a114697a2f16160859acdf6" Name="Diagram1" ZoomLevel="82">
+      <Diagram DiagramId="826ffd5d2a114697a2f16160859acdf6" Name="Diagram1" ZoomLevel="92">
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="21" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="12.75" PointY="22.375" IsExpanded="true" />
@@ -4308,17 +4325,7 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
         <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="22.25" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
-        <EntityTypeShape EntityType="EPMSModel.InventoryDepartment" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="EPMSModel.InventoryItem" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="EPMSModel.Vendor" Width="1.5" PointX="0.75" PointY="8.75" />
-        <EntityTypeShape EntityType="EPMSModel.Aisle" Width="1.5" PointX="9.75" PointY="55.375" />
-        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="52.75" />
-        <EntityTypeShape EntityType="EPMSModel.Section" Width="1.5" PointX="12" PointY="55.375" />
-        <EntityTypeShape EntityType="EPMSModel.Shelf" Width="1.5" PointX="14.25" PointY="55.375" />
-        <EntityTypeShape EntityType="EPMSModel.ShelfSection" Width="1.5" PointX="16.5" PointY="55.5" />
-        <EntityTypeShape EntityType="EPMSModel.Warehouse" Width="1.5" PointX="7.5" PointY="55.375" />
-        <AssociationConnector Association="EPMSModel.FK_Aisle_Warehouse" />
-        <AssociationConnector Association="EPMSModel.FK_Section_Aisle" />
+        <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="22.75" />
         <AssociationConnector Association="EPMSModel.FK_Allowance_Employee" />
         <AssociationConnector Association="EPMSModel.FK_AspNetUsers_Employee" />
         <AssociationConnector Association="EPMSModel.FK_Employee_JobTitle" />
@@ -4327,9 +4334,22 @@ warning 6002: The table/view 'EPMSInventory.dbo.Vendors' does not have a primary
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
+        <EntityTypeShape EntityType="EPMSModel.Aisle" Width="1.5" PointX="10.125" PointY="1.5" />
+        <EntityTypeShape EntityType="EPMSModel.InventoryItem" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EPMSModel.Section" Width="1.5" PointX="12.375" PointY="1.5" />
+        <EntityTypeShape EntityType="EPMSModel.Shelf" Width="1.5" PointX="14.625" PointY="1.5" />
+        <EntityTypeShape EntityType="EPMSModel.ShelfSection" Width="1.5" PointX="16.875" PointY="1.5" />
+        <EntityTypeShape EntityType="EPMSModel.Warehouse" Width="1.5" PointX="7.875" PointY="1.375" />
+        <AssociationConnector Association="EPMSModel.FK_Aisle_Warehouse" />
+        <AssociationConnector Association="EPMSModel.FK_Section_Aisle" />
         <AssociationConnector Association="EPMSModel.FK_Warehouse_Employee" />
         <AssociationConnector Association="EPMSModel.FK_Shelf_Section" />
         <AssociationConnector Association="EPMSModel.FK_ShelfSection_Shelf" />
+        <EntityTypeShape EntityType="EPMSModel.Vendor" Width="1.5" PointX="10.375" PointY="9" />
+        <EntityTypeShape EntityType="EPMSModel.VendorItem" Width="1.5" PointX="12.625" PointY="10" />
+        <AssociationConnector Association="EPMSModel.FK_VendorItems_Vendor" />
+        <EntityTypeShape EntityType="EPMSModel.InventoryDepartment" Width="2" PointX="5.25" PointY="5.125" />
+        <AssociationConnector Association="EPMSModel.FK_InventoryDepartment_InventoryDepartment" />
         </Diagram>
     </Diagrams>
   </Designer>
