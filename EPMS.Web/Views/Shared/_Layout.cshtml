@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using EPMS.Models.DomainModels
 @{
     var url = Session["CompWebsiteUrl"];
 }
@@ -18,6 +19,9 @@
     <link rel="stylesheet" href="~/Content/css/photon.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
+    @*<link rel="stylesheet" href="~/Content/css/help-photon.css" media="all" />*@
+    
+
     @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
     {
         <link rel="stylesheet" href="~/Content/css/arabic.css" media="all" />
@@ -195,7 +199,7 @@
         <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
     }
     <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
-
+    @RenderSection("popups", required: false)
     <script>
         $(function () {
             setTimeout(function () {

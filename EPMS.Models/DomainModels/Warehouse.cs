@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EPMS.Models.DomainModels
 {
@@ -19,5 +16,6 @@ namespace EPMS.Models.DomainModels
 
         public virtual ICollection<Aisle> Aisles { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual ICollection<ItemVariation> ItemVariations { get; set; }
     }
 }

@@ -93,6 +93,19 @@
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="ImageName" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ColorNameEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColorNameAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="ColorCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CompanyBankDetails">
           <Key>
             <PropertyRef Name="CompanyId" />
@@ -363,6 +376,88 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="ItemColor">
+          <Key>
+            <PropertyRef Name="ColorId" />
+            <PropertyRef Name="ItemVariationId" />
+          </Key>
+          <Property Name="ColorId" Type="bigint" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemImagePath" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImageOrder" Type="int" />
+          <Property Name="ShowImage" Type="bit" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemManufacturer">
+          <Key>
+            <PropertyRef Name="ItemVariationId" />
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="ManufacturerId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemSize">
+          <Key>
+            <PropertyRef Name="ItemVariationId" />
+            <PropertyRef Name="SizeId" />
+          </Key>
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="SizeId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemStatus">
+          <Key>
+            <PropertyRef Name="ItemVariationId" />
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="StatusId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemVariation">
+          <Key>
+            <PropertyRef Name="ItemVariationId" />
+          </Key>
+          <Property Name="ItemVariationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemBarcode" Type="nvarchar" MaxLength="50" />
+          <Property Name="SKUCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="UnitPrice" Type="float" />
+          <Property Name="PackagePrice" Type="float" />
+          <Property Name="PriceCalculation" Type="bit" Nullable="false" />
+          <Property Name="DescriptionEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="DescriptionAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="SKUDescriptionEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="SKUDescriptionAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="QuantityInHand" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuantitySold" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReorderPoint" Type="nvarchar" MaxLength="50" />
+          <Property Name="QuantityInManufacturing" Type="nvarchar" MaxLength="50" />
+          <Property Name="Weight" Type="nvarchar" MaxLength="50" />
+          <Property Name="Height" Type="nvarchar" MaxLength="50" />
+          <Property Name="Width" Type="nvarchar" MaxLength="50" />
+          <Property Name="Depth" Type="nvarchar" MaxLength="50" />
+          <Property Name="NotesEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="NotesAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="AdditionalInfoEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="AdditionalInfoAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+          <Property Name="InventoryItemId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemWarehouse">
+          <Key>
+            <PropertyRef Name="WarehousrId" />
+            <PropertyRef Name="ItemVariationId" />
+          </Key>
+          <Property Name="WarehousrId" Type="bigint" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+        </EntityType>
         <EntityType Name="JobApplicants">
           <Key>
             <PropertyRef Name="ApplicantId" />
@@ -444,6 +539,18 @@
           <Property Name="LicenseNumber" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
           <Property Name="EndDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufacturerNameEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="ManufacturerNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Meeting">
           <Key>
@@ -739,6 +846,30 @@
           <Property Name="ShelfSectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShelfSectionName" Type="nvarchar" MaxLength="200" />
           <Property Name="ShelfId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="SizeId" />
+          </Key>
+          <Property Name="SizeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SizeNameEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="SizeNameAr" Type="nvarchar" MaxLength="50" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusNameEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusNameAr" Type="nvarchar" MaxLength="50" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -1060,6 +1191,150 @@
             </Principal>
             <Dependent Role="InventoryDepartment1">
               <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemColor_Color">
+          <End Role="Color" Type="Self.Color" Multiplicity="1" />
+          <End Role="ItemColor" Type="Self.ItemColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Color">
+              <PropertyRef Name="ColorId" />
+            </Principal>
+            <Dependent Role="ItemColor">
+              <PropertyRef Name="ColorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemColor_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemColor" Type="Self.ItemColor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemColor">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemImage_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemImage" Type="Self.ItemImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemImage">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemManufacturer_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemManufacturer" Type="Self.ItemManufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemManufacturer">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemManufacturer_Manufacturer">
+          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+          <End Role="ItemManufacturer" Type="Self.ItemManufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Principal>
+            <Dependent Role="ItemManufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemSize_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemSize" Type="Self.ItemSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemSize">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemSize_Size">
+          <End Role="Size" Type="Self.Size" Multiplicity="1" />
+          <End Role="ItemSize" Type="Self.ItemSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Size">
+              <PropertyRef Name="SizeId" />
+            </Principal>
+            <Dependent Role="ItemSize">
+              <PropertyRef Name="SizeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemStatus_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemStatus" Type="Self.ItemStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemStatus">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemStatus_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="ItemStatus" Type="Self.ItemStatus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="ItemStatus">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemVariation_InventoryItems">
+          <End Role="InventoryItems" Type="Self.InventoryItems" Multiplicity="1" />
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryItems">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ItemVariation">
+              <PropertyRef Name="InventoryItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemWarehouse_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemWarehouse" Type="Self.ItemWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemWarehouse">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="ItemWarehouse" Type="Self.ItemWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="ItemWarehouse">
+              <PropertyRef Name="WarehousrId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1431,6 +1706,7 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyBankDetails" EntityType="Self.CompanyBankDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyDocumentDetails" EntityType="Self.CompanyDocumentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CompanyProfile" EntityType="Self.CompanyProfile" Schema="dbo" store:Type="Tables" />
@@ -1444,11 +1720,19 @@
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryDepartment" EntityType="Self.InventoryDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemColor" EntityType="Self.ItemColor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemImage" EntityType="Self.ItemImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemManufacturer" EntityType="Self.ItemManufacturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemSize" EntityType="Self.ItemSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemStatus" EntityType="Self.ItemStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemVariation" EntityType="Self.ItemVariation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemWarehouse" EntityType="Self.ItemWarehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobApplicants" EntityType="Self.JobApplicants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobOffered" EntityType="Self.JobOffered" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTitleHistory" EntityType="Self.JobTitleHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LicenseControlPanel" EntityType="Self.LicenseControlPanel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MeetingAttendees" EntityType="Self.MeetingAttendees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MeetingDocuments" EntityType="Self.MeetingDocuments" Schema="dbo" store:Type="Tables" />
@@ -1468,6 +1752,8 @@
           <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shelf" EntityType="Self.Shelf" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShelfSection" EntityType="Self.ShelfSection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
@@ -1556,6 +1842,54 @@
           <AssociationSet Name="FK_InventoryDepartment_InventoryDepartment" Association="Self.FK_InventoryDepartment_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
             <End Role="InventoryDepartment1" EntitySet="InventoryDepartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemColor_Color" Association="Self.FK_ItemColor_Color">
+            <End Role="Color" EntitySet="Color" />
+            <End Role="ItemColor" EntitySet="ItemColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemColor_ItemVariation" Association="Self.FK_ItemColor_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemColor" EntitySet="ItemColor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemImage_ItemVariation" Association="Self.FK_ItemImage_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemImage" EntitySet="ItemImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemManufacturer_ItemVariation" Association="Self.FK_ItemManufacturer_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemManufacturer_Manufacturer" Association="Self.FK_ItemManufacturer_Manufacturer">
+            <End Role="Manufacturer" EntitySet="Manufacturer" />
+            <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemSize_ItemVariation" Association="Self.FK_ItemSize_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemSize" EntitySet="ItemSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemSize_Size" Association="Self.FK_ItemSize_Size">
+            <End Role="Size" EntitySet="Size" />
+            <End Role="ItemSize" EntitySet="ItemSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemStatus_ItemVariation" Association="Self.FK_ItemStatus_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemStatus" EntitySet="ItemStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemStatus_Status" Association="Self.FK_ItemStatus_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ItemStatus" EntitySet="ItemStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemVariation_InventoryItems" Association="Self.FK_ItemVariation_InventoryItems">
+            <End Role="InventoryItems" EntitySet="InventoryItems" />
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemWarehouse_ItemVariation" Association="Self.FK_ItemWarehouse_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemWarehouse_Warehouse" Association="Self.FK_ItemWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApplicants_JobOffered" Association="Self.FK_JobApplicants_JobOffered">
             <End Role="JobOffered" EntitySet="JobOffered" />
@@ -2899,7 +3233,6 @@
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
           <EntitySet Name="Aisles" EntityType="EPMSModel.Aisle" />
-          <EntitySet Name="InventoryItems" EntityType="EPMSModel.InventoryItem" />
           <EntitySet Name="Sections" EntityType="EPMSModel.Section" />
           <EntitySet Name="Shelves" EntityType="EPMSModel.Shelf" />
           <EntitySet Name="ShelfSections" EntityType="EPMSModel.ShelfSection" />
@@ -2934,6 +3267,41 @@
           <AssociationSet Name="FK_InventoryDepartment_InventoryDepartment" Association="EPMSModel.FK_InventoryDepartment_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartments" />
             <End Role="InventoryDepartment1" EntitySet="InventoryDepartments" />
+          </AssociationSet>
+          <EntitySet Name="Colors" EntityType="EPMSModel.Color" />
+          <EntitySet Name="ItemImages" EntityType="EPMSModel.ItemImage" />
+          <EntitySet Name="ItemVariations" EntityType="EPMSModel.ItemVariation" />
+          <EntitySet Name="Manufacturers" EntityType="EPMSModel.Manufacturer" />
+          <EntitySet Name="Sizes" EntityType="EPMSModel.Size" />
+          <EntitySet Name="Status" EntityType="EPMSModel.Status" />
+          <AssociationSet Name="FK_ItemImage_ItemVariation" Association="EPMSModel.FK_ItemImage_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="ItemImage" EntitySet="ItemImages" />
+          </AssociationSet>
+          <AssociationSet Name="ItemColor" Association="EPMSModel.ItemColor">
+            <End Role="Color" EntitySet="Colors" />
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+          </AssociationSet>
+          <AssociationSet Name="ItemManufacturer" Association="EPMSModel.ItemManufacturer">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Manufacturer" EntitySet="Manufacturers" />
+          </AssociationSet>
+          <AssociationSet Name="ItemSize" Association="EPMSModel.ItemSize">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Size" EntitySet="Sizes" />
+          </AssociationSet>
+          <AssociationSet Name="ItemStatus" Association="EPMSModel.ItemStatus">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <AssociationSet Name="ItemWarehouse" Association="EPMSModel.ItemWarehouse">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
+          <EntitySet Name="InventoryItems" EntityType="EPMSModel.InventoryItem" />
+          <AssociationSet Name="FK_ItemVariation_InventoryItems" Association="EPMSModel.FK_ItemVariation_InventoryItems">
+            <End Role="InventoryItem" EntitySet="InventoryItems" />
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="NotificationRecipient">
@@ -3172,31 +3540,6 @@
           <NavigationProperty Name="Warehouse" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Aisle" ToRole="Warehouse" />
           <NavigationProperty Name="Sections" Relationship="EPMSModel.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
         </EntityType>
-        <EntityType Name="InventoryItem">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ItemImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescriptionEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescriptionAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionForQuotationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionForQuotationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="HazardousEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="HazardousAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="UsageEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="UsageAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ReorderLevel" Type="Int32" />
-          <Property Name="DepartmentId" Type="Int64" />
-          <Property Name="WarehouseID" Type="Int64" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="Section">
           <Key>
             <PropertyRef Name="SectionId" />
@@ -3252,6 +3595,7 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Aisles" Relationship="EPMSModel.FK_Aisle_Warehouse" FromRole="Warehouse" ToRole="Aisle" />
           <NavigationProperty Name="Employee" Relationship="EPMSModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSModel.ItemWarehouse" FromRole="Warehouse" ToRole="ItemVariation" />
         </EntityType>
         <Association Name="FK_Aisle_Warehouse">
           <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -3379,6 +3723,179 @@
             </Principal>
             <Dependent Role="InventoryDepartment1">
               <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ColorNameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColorNameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSModel.ItemColor" FromRole="Color" ToRole="ItemVariation" />
+          <Property Name="ColorCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ItemImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageOrder" Type="Int32" />
+          <Property Name="ShowImage" Type="Boolean" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSModel.FK_ItemImage_ItemVariation" FromRole="ItemImage" ToRole="ItemVariation" />
+        </EntityType>
+        <EntityType Name="ItemVariation">
+          <Key>
+            <PropertyRef Name="ItemVariationId" />
+          </Key>
+          <Property Name="ItemVariationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemBarcode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SKUCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Double" />
+          <Property Name="PackagePrice" Type="Double" />
+          <Property Name="PriceCalculation" Type="Boolean" Nullable="false" />
+          <Property Name="DescriptionEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SKUDescriptionEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SKUDescriptionAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityInHand" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantitySold" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReorderPoint" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityInManufacturing" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Height" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Width" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Depth" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NotesEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NotesAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionalInfoEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionalInfoAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InventoryItemId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ItemImages" Relationship="EPMSModel.FK_ItemImage_ItemVariation" FromRole="ItemVariation" ToRole="ItemImage" />
+          <NavigationProperty Name="Colors" Relationship="EPMSModel.ItemColor" FromRole="ItemVariation" ToRole="Color" />
+          <NavigationProperty Name="Manufacturers" Relationship="EPMSModel.ItemManufacturer" FromRole="ItemVariation" ToRole="Manufacturer" />
+          <NavigationProperty Name="Sizes" Relationship="EPMSModel.ItemSize" FromRole="ItemVariation" ToRole="Size" />
+          <NavigationProperty Name="Status" Relationship="EPMSModel.ItemStatus" FromRole="ItemVariation" ToRole="Status" />
+          <NavigationProperty Name="Warehouses" Relationship="EPMSModel.ItemWarehouse" FromRole="ItemVariation" ToRole="Warehouse" />
+          <NavigationProperty Name="InventoryItem" Relationship="EPMSModel.FK_ItemVariation_InventoryItems" FromRole="ItemVariation" ToRole="InventoryItem" />
+        </EntityType>
+        <EntityType Name="Manufacturer">
+          <Key>
+            <PropertyRef Name="ManufacturerId" />
+          </Key>
+          <Property Name="ManufacturerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ManufacturerNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSModel.ItemManufacturer" FromRole="Manufacturer" ToRole="ItemVariation" />
+        </EntityType>
+        <EntityType Name="Size">
+          <Key>
+            <PropertyRef Name="SizeId" />
+          </Key>
+          <Property Name="SizeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SizeNameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SizeNameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSModel.ItemSize" FromRole="Size" ToRole="ItemVariation" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusNameEn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusNameAr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSModel.ItemStatus" FromRole="Status" ToRole="ItemVariation" />
+        </EntityType>
+        <Association Name="FK_ItemImage_ItemVariation">
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="1" />
+          <End Type="EPMSModel.ItemImage" Role="ItemImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemImage">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ItemColor">
+          <End Type="EPMSModel.Color" Role="Color" Multiplicity="*" />
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+        </Association>
+        <Association Name="ItemManufacturer">
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <End Type="EPMSModel.Manufacturer" Role="Manufacturer" Multiplicity="*" />
+        </Association>
+        <Association Name="ItemSize">
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <End Type="EPMSModel.Size" Role="Size" Multiplicity="*" />
+        </Association>
+        <Association Name="ItemStatus">
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <End Type="EPMSModel.Status" Role="Status" Multiplicity="*" />
+        </Association>
+        <Association Name="ItemWarehouse">
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <End Type="EPMSModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+        </Association>
+        <EntityType Name="InventoryItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemNameAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ItemImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescriptionEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescriptionAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HazardousEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HazardousAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UsageEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="UsageAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ReorderLevel" Type="Int32" />
+          <Property Name="DepartmentId" Type="Int64" />
+          <Property Name="WarehouseID" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSModel.FK_ItemVariation_InventoryItems" FromRole="InventoryItem" ToRole="ItemVariation" />
+        </EntityType>
+        <Association Name="FK_ItemVariation_InventoryItems">
+          <End Type="EPMSModel.InventoryItem" Role="InventoryItem" Multiplicity="1" />
+          <End Type="EPMSModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryItem">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="ItemVariation">
+              <PropertyRef Name="InventoryItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4108,32 +4625,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="InventoryItems">
-            <EntityTypeMapping TypeName="EPMSModel.InventoryItem">
-              <MappingFragment StoreEntitySet="InventoryItems">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
-                <ScalarProperty Name="UsageAr" ColumnName="UsageAr" />
-                <ScalarProperty Name="UsageEn" ColumnName="UsageEn" />
-                <ScalarProperty Name="HazardousAr" ColumnName="HazardousAr" />
-                <ScalarProperty Name="HazardousEn" ColumnName="HazardousEn" />
-                <ScalarProperty Name="DescriptionForQuotationAr" ColumnName="DescriptionForQuotationAr" />
-                <ScalarProperty Name="DescriptionForQuotationEn" ColumnName="DescriptionForQuotationEn" />
-                <ScalarProperty Name="ItemDescriptionAr" ColumnName="ItemDescriptionAr" />
-                <ScalarProperty Name="ItemDescriptionEn" ColumnName="ItemDescriptionEn" />
-                <ScalarProperty Name="ItemImagePath" ColumnName="ItemImagePath" />
-                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
-                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Sections">
             <EntityTypeMapping TypeName="EPMSModel.Section">
               <MappingFragment StoreEntitySet="Section">
@@ -4231,6 +4722,169 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="EPMSModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="ColorCode" ColumnName="ColorCode" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ColorNameAr" ColumnName="ColorNameAr" />
+                <ScalarProperty Name="ColorNameEn" ColumnName="ColorNameEn" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemImages">
+            <EntityTypeMapping TypeName="EPMSModel.ItemImage">
+              <MappingFragment StoreEntitySet="ItemImage">
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="ShowImage" ColumnName="ShowImage" />
+                <ScalarProperty Name="ImageOrder" ColumnName="ImageOrder" />
+                <ScalarProperty Name="ItemImagePath" ColumnName="ItemImagePath" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemVariations">
+            <EntityTypeMapping TypeName="EPMSModel.ItemVariation">
+              <MappingFragment StoreEntitySet="ItemVariation">
+                <ScalarProperty Name="InventoryItemId" ColumnName="InventoryItemId" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="AdditionalInfoAr" ColumnName="AdditionalInfoAr" />
+                <ScalarProperty Name="AdditionalInfoEn" ColumnName="AdditionalInfoEn" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
+                <ScalarProperty Name="Depth" ColumnName="Depth" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="QuantityInManufacturing" ColumnName="QuantityInManufacturing" />
+                <ScalarProperty Name="ReorderPoint" ColumnName="ReorderPoint" />
+                <ScalarProperty Name="QuantitySold" ColumnName="QuantitySold" />
+                <ScalarProperty Name="QuantityInHand" ColumnName="QuantityInHand" />
+                <ScalarProperty Name="SKUDescriptionAr" ColumnName="SKUDescriptionAr" />
+                <ScalarProperty Name="SKUDescriptionEn" ColumnName="SKUDescriptionEn" />
+                <ScalarProperty Name="DescriptionAr" ColumnName="DescriptionAr" />
+                <ScalarProperty Name="DescriptionEn" ColumnName="DescriptionEn" />
+                <ScalarProperty Name="PriceCalculation" ColumnName="PriceCalculation" />
+                <ScalarProperty Name="PackagePrice" ColumnName="PackagePrice" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
+                <ScalarProperty Name="ItemBarcode" ColumnName="ItemBarcode" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="EPMSModel.Manufacturer">
+              <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ManufacturerNameAr" ColumnName="ManufacturerNameAr" />
+                <ScalarProperty Name="ManufacturerNameEn" ColumnName="ManufacturerNameEn" />
+                <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sizes">
+            <EntityTypeMapping TypeName="EPMSModel.Size">
+              <MappingFragment StoreEntitySet="Size">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="SizeNameAr" ColumnName="SizeNameAr" />
+                <ScalarProperty Name="SizeNameEn" ColumnName="SizeNameEn" />
+                <ScalarProperty Name="SizeId" ColumnName="SizeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="EPMSModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="StatusNameAr" ColumnName="StatusNameAr" />
+                <ScalarProperty Name="StatusNameEn" ColumnName="StatusNameEn" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ItemColor" TypeName="EPMSModel.ItemColor" StoreEntitySet="ItemColor">
+            <EndProperty Name="ItemVariation">
+              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+            </EndProperty>
+            <EndProperty Name="Color">
+              <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ItemManufacturer" TypeName="EPMSModel.ItemManufacturer" StoreEntitySet="ItemManufacturer">
+            <EndProperty Name="Manufacturer">
+              <ScalarProperty Name="ManufacturerId" ColumnName="ManufacturerId" />
+            </EndProperty>
+            <EndProperty Name="ItemVariation">
+              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ItemSize" TypeName="EPMSModel.ItemSize" StoreEntitySet="ItemSize">
+            <EndProperty Name="Size">
+              <ScalarProperty Name="SizeId" ColumnName="SizeId" />
+            </EndProperty>
+            <EndProperty Name="ItemVariation">
+              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ItemStatus" TypeName="EPMSModel.ItemStatus" StoreEntitySet="ItemStatus">
+            <EndProperty Name="Status">
+              <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+            </EndProperty>
+            <EndProperty Name="ItemVariation">
+              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ItemWarehouse" TypeName="EPMSModel.ItemWarehouse" StoreEntitySet="ItemWarehouse">
+            <EndProperty Name="Warehouse">
+              <ScalarProperty Name="WarehouseId" ColumnName="WarehousrId" />
+            </EndProperty>
+            <EndProperty Name="ItemVariation">
+              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="InventoryItems">
+            <EntityTypeMapping TypeName="EPMSModel.InventoryItem">
+              <MappingFragment StoreEntitySet="InventoryItems">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ReorderLevel" ColumnName="ReorderLevel" />
+                <ScalarProperty Name="UsageAr" ColumnName="UsageAr" />
+                <ScalarProperty Name="UsageEn" ColumnName="UsageEn" />
+                <ScalarProperty Name="HazardousAr" ColumnName="HazardousAr" />
+                <ScalarProperty Name="HazardousEn" ColumnName="HazardousEn" />
+                <ScalarProperty Name="DescriptionForQuotationAr" ColumnName="DescriptionForQuotationAr" />
+                <ScalarProperty Name="DescriptionForQuotationEn" ColumnName="DescriptionForQuotationEn" />
+                <ScalarProperty Name="ItemDescriptionAr" ColumnName="ItemDescriptionAr" />
+                <ScalarProperty Name="ItemDescriptionEn" ColumnName="ItemDescriptionEn" />
+                <ScalarProperty Name="ItemImagePath" ColumnName="ItemImagePath" />
+                <ScalarProperty Name="ItemNameAr" ColumnName="ItemNameAr" />
+                <ScalarProperty Name="ItemNameEn" ColumnName="ItemNameEn" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4253,7 +4907,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="826ffd5d2a114697a2f16160859acdf6" Name="Diagram1" ZoomLevel="92">
+      <Diagram DiagramId="826ffd5d2a114697a2f16160859acdf6" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="EPMSModel.Allowance" Width="1.5" PointX="7.5" PointY="21" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetRole" Width="1.5" PointX="8.25" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSModel.AspNetUserClaim" Width="1.5" PointX="12.75" PointY="22.375" IsExpanded="true" />
@@ -4322,7 +4976,7 @@
         <EntityTypeShape EntityType="EPMSModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="22.25" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_AspNetUsers" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Notification" />
-        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3" PointY="22.25" />
+        <EntityTypeShape EntityType="EPMSModel.Complaint" Width="1.5" PointX="3.25" PointY="22.125" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Customer" />
         <AssociationConnector Association="EPMSModel.FK_Complaint_Department" />
         <EntityTypeShape EntityType="EPMSModel.Employee" Width="1.5" PointX="5.25" PointY="22.75" />
@@ -4335,7 +4989,6 @@
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
         <EntityTypeShape EntityType="EPMSModel.Aisle" Width="1.5" PointX="10.125" PointY="1.5" />
-        <EntityTypeShape EntityType="EPMSModel.InventoryItem" Width="1.5" PointX="0.75" PointY="8.75" />
         <EntityTypeShape EntityType="EPMSModel.Section" Width="1.5" PointX="12.375" PointY="1.5" />
         <EntityTypeShape EntityType="EPMSModel.Shelf" Width="1.5" PointX="14.625" PointY="1.5" />
         <EntityTypeShape EntityType="EPMSModel.ShelfSection" Width="1.5" PointX="16.875" PointY="1.5" />
@@ -4350,6 +5003,20 @@
         <AssociationConnector Association="EPMSModel.FK_VendorItems_Vendor" />
         <EntityTypeShape EntityType="EPMSModel.InventoryDepartment" Width="2" PointX="5.25" PointY="5.125" />
         <AssociationConnector Association="EPMSModel.FK_InventoryDepartment_InventoryDepartment" />
+        <EntityTypeShape EntityType="EPMSModel.Color" Width="1.5" PointX="22.375" PointY="1.125" />
+        <EntityTypeShape EntityType="EPMSModel.ItemImage" Width="1.5" PointX="26.875" PointY="8" />
+        <EntityTypeShape EntityType="EPMSModel.ItemVariation" Width="1.5" PointX="24.625" PointY="3.75" />
+        <EntityTypeShape EntityType="EPMSModel.Manufacturer" Width="1.5" PointX="26.875" PointY="11" />
+        <EntityTypeShape EntityType="EPMSModel.Size" Width="1.5" PointX="26.875" PointY="4.75" />
+        <EntityTypeShape EntityType="EPMSModel.Status" Width="1.5" PointX="26.875" PointY="1.375" />
+        <AssociationConnector Association="EPMSModel.FK_ItemImage_ItemVariation" />
+        <AssociationConnector Association="EPMSModel.ItemColor" />
+        <AssociationConnector Association="EPMSModel.ItemManufacturer" />
+        <AssociationConnector Association="EPMSModel.ItemSize" />
+        <AssociationConnector Association="EPMSModel.ItemStatus" />
+        <AssociationConnector Association="EPMSModel.ItemWarehouse" />
+        <EntityTypeShape EntityType="EPMSModel.InventoryItem" Width="1.5" PointX="0.75" PointY="9.125" />
+        <AssociationConnector Association="EPMSModel.FK_ItemVariation_InventoryItems" />
         </Diagram>
     </Diagrams>
   </Designer>

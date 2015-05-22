@@ -1,0 +1,276 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.InventoryItem.InventoryItemViewModel
+
+@{
+    ViewBag.Title = Model.InventoryItem.ItemId > 0 ? EPMS.Web.Resources.Inventory.InventoryItem.UpdateTitle : EPMS.Web.Resources.Inventory.InventoryItem.CreateTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Inventory/InventoryItem/Index">
+                @EPMS.Web.Resources.Inventory.Vendor.Label
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "InventoryItem", FormMethod.Post, new { @id = "ItemForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.InventoryItem.ItemId)
+        @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
+        @Html.HiddenFor(m => m.InventoryItem.RecCreatedDt)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemCode</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemCode, new { @dir = "ltr", id = "ItemCode", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemCode)
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new { @dir = "ltr", id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new { @dir = "ltr", id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.AveragePrice</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.AveragePrice, new { @dir = "ltr", id = "AveragePrice", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.AveragePrice, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.AverageCost</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.AverageCost, new { @dir = "ltr", id = "AverageCost", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.AverageCost, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.AveragePackagePrice</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.AveragePackagePrice, new { @dir = "ltr", id = "AveragePackagePrice", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.AveragePackagePrice, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.QuantityInPackage</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInPackage, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.QuantityInHand</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInHand, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.QuantitySold</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.QuantitySold, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.HazardousEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.HazardousAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.UsageEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.UsageAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ReorderPoint</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.ReorderLevel, new { @dir = "ltr", id = "ReorderLevel", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.ReorderLevel, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DeptInfo</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.DepartmentId, new { @dir = "ltr", id = "DepartmentId", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.DepartmentId, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+
+<script>
+
+    var itemId = parseInt($('#InventoryItem_ItemId').val());
+
+    $(document).ready(function() {
+        if (itemId == 0 || itemId == "") {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+        }
+    });
+
+</script>
