@@ -38,9 +38,19 @@ namespace EPMS.Implementation.Services
             return Repository.GetAll();
         }
 
+        public IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId)
+        {
+            return Repository.GetAllQuotationByCustomerId(customerId);
+        }
+
         public Quotation FindQuotationById(long id)
         {
             return Repository.Find(id);
+        }
+
+        public IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id)
+        {
+            return Repository.FindQuotationByIdForProjectDetail(id);
         }
 
         public long AddQuotation(Quotation quotation)

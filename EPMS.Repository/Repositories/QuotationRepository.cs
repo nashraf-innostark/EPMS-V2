@@ -74,6 +74,16 @@ namespace EPMS.Repository.Repositories
             return DbSet.FirstOrDefault(x => x.OrderId == orderId);
         }
 
+        public IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId)
+        {
+            return DbSet.Where(quot => quot.CustomerId == customerId && quot.Projects.Count == 0).ToList();
+        }
+
+        public IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id)
+        {
+            return DbSet.Where(quot => quot.QuotationId == id);
+        }
+
         #endregion
     }
 }

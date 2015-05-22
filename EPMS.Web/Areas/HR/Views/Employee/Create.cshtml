@@ -95,7 +95,6 @@
 
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameE, new { @id = "EmployeeMiddleNameE", @class = "toBeRequired toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMiddleNameE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -129,7 +128,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeMiddleNameA, new { @id = "EmployeeMiddleNameA", @class = "toBeRequired toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeMiddleNameA, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -152,16 +150,16 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls jobTitleDDL">
-                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleDeptList, "JobId", "JobTitleE"), "--Select--", new {@class = "select2me setDeptJobId", @id = "JobTitle"})
+                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleDeptList, "JobId", "JobTitleE"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
                     </div>
                 }
                 else
                 {
                     <div class="controls jobTitleDDL">
-                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleDeptList, "JobId", "JobTitleA"), "--Select--", new {@class = "select2me setDeptJobId", @id = "JobTitle"})
+                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleDeptList, "JobId", "JobTitleA"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
                     </div>
                 }
-                
+
             </div>
             <div class="span3" style="margin-left: 40px; margin-top: 20px;">
                 <label id="jobTitleValidation"></label>
@@ -230,7 +228,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeLandlineNum, new { @id = "LandlineNumber", @class = "toBeRequired toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeLandlineNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -253,7 +250,7 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] {new SelectListItem {Text = "--Select--", Value = ""}, new SelectListItem {Text = "Unmaried", Value = "1"}, new SelectListItem {Text = "Married", Value = "0"}}, new {@id = "MaritalStatus", @class = "select2me"})
+                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.MaritalStatus, new[] { new SelectListItem { Text = "--Select--", Value = "" }, new SelectListItem { Text = "Unmaried", Value = "1" }, new SelectListItem { Text = "Married", Value = "0" } }, new { @id = "MaritalStatus", @class = "select2me" })
                     </div>
                 }
                 else
@@ -270,9 +267,16 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "datepickerDOB cursorHand span4", @id = "EmployeeDOB", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EmpDateOfBirthArabic')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerDOBAr cursorHand span4", @id = "EmpDateOfBirthArabic", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EmployeeDOB')" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeDOB, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "datepickerDOB cursorHand span4", @id = "EmployeeDOB", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EmpDateOfBirthArabic')" })
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerDOBAr cursorHand span4 marginForDatesLeft", @id = "EmpDateOfBirthArabic", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EmployeeDOB')" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerDOBAr cursorHand span4", @id = "EmpDateOfBirthArabic", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EmployeeDOB')" })
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeDOB, new { @class = "datepickerDOB cursorHand span4 marginForDatesRight", @id = "EmployeeDOB", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EmpDateOfBirthArabic')" })
+                    }
                 </div>
                 @*<div class="controls span4">
                         @Html.TextBox("Date",null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand", @readonly = true, onchange = "HijriToGregorian(this,'#EmployeeDOB')", @id = "EmpDateOfBirthArabic" })
@@ -543,13 +547,13 @@
                             new SelectListItem {Value = "YE", Text = "YEMEN"},
                             new SelectListItem {Value = "ZM", Text = "ZAMBIA"},
                             new SelectListItem {Value = "ZW", Text = "ZIMBABWE"}
-                        }, new {@id = "Nationality", @class = "select2me"})
+                        }, new { @id = "Nationality", @class = "select2me" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                    @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.EmployeeNationality, new[]
+                        @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.EmployeeNationality, new[]
                     {
                         new SelectListItem { Value = "", Text = ""},
                         new SelectListItem { Value = "AF", Text = "أفغانستان"},
@@ -802,9 +806,9 @@
                         new SelectListItem { Value = "ZM", Text = "زامبيا"},
                         new SelectListItem { Value = "ZW", Text = "زيمبابوي"}
                     }, new { @id = "Nationality", @class = "select2me" })
-                </div>
+                    </div>
                 }
-                
+
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -814,7 +818,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqama, new { @id = "IqamaId", @class = "toBeRequired toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqama, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -839,9 +842,16 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "IqamaExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "IqamaExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#IqamaExpiryDateAr')" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "IqamaExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')" })
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4 marginForDatesLeft", @id = "IqamaExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#IqamaExpiryDate')" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4 marginForDatesLeft", @id = "IqamaExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#IqamaExpiryDate')" })
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDt, new { @class = "datepickerGregorian cursorHand span4", @id = "IqamaExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#IqamaExpiryDateAr')" })
+                    }
                 </div>
                 @*<div class="controls span4">
                         @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeeIqamaExpiryDtAr, new { @id = "IqamaExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#IqamaExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
@@ -859,7 +869,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportNum, new { @id = "PassportID", @class = "toBeRequired toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportNum, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -869,9 +878,16 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @class = "datepickerPassport cursorHand span4", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArPassport cursorHand span4", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.EmployeePassportExpiryDt, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new {@class = "datepickerPassport cursorHand span4", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')"})
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArPassport cursorHand span4 marginForDatesLeft", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')"})
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArPassport cursorHand span4", @id = "PassportExpiryDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#PassportExpiryDate')"})
+                        @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDt, new { @class = "datepickerPassport cursorHand span4 marginForDatesRight", @id = "PassportExpiryDate", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#PassportExpiryDateAr')" })
+                    }
                 </div>
                 @*<div class="controls span4">
                         @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.EmployeePassportExpiryDtAr, new { @id = "PassportExpiryDateAr", @readonly = true, onchange = "HijriToGregorian(this,'#PassportExpiryDate')", @class = "cursorHand col-lg-2 datepickerArabic form-control " })
@@ -933,7 +949,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Employee.JobTitle.BasicSalary, new { @readonly = true, @id = "BasicSalary", @class = "toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Employee.JobTitle.BasicSalary)
                 </div>
             </div>
         </div>
@@ -944,7 +959,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance1, new { @id = "Allownce1", @class = "toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance1)
                 </div>
             </div>
         </div>
@@ -955,7 +969,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance2, new { @id = "Allownce2", @class = "toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance2)
                 </div>
             </div>
         </div>
@@ -966,7 +979,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance3, new { @id = "Allownce3", @class = "toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance3)
                 </div>
             </div>
         </div>
@@ -977,7 +989,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance4, new { @id = "Allownce4", @class = "toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance4)
                 </div>
             </div>
         </div>
@@ -988,7 +999,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.EmployeeViewModel.Allowance.Allowance5, new { @id = "Allownce5", @class = "toBeDisable" })
-                    @Html.ValidationMessageFor(m => m.EmployeeViewModel.Allowance.Allowance5)
                 </div>
             </div>
         </div>
@@ -1234,8 +1244,18 @@
         }
         if (isDetail == false) {
             // CK Editor
-            CKEDITOR.replace('ExtraInformationE');
-            CKEDITOR.replace('ExtraInformationA');
+            editor = CKEDITOR.replace('ExtraInformationE', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('ExtraInformationA', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
             $("#Descp").hide();
             $("#CKEditorDescp").show();
         }

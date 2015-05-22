@@ -107,5 +107,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<DashboardWidgetPreference> Preferences { get; set; }
         public DbSet<QuickLaunchItem> QuickLaunchItems { get; set; }
         public DbSet<LicenseControlPanel> LicenseControlPanels { get; set; }
+        public DbSet<ApplicantQualification> ApplicantQualifications { get; set; }
+        public DbSet<ApplicantExperience> ApplicantExperiences { get; set; }
     }
 }

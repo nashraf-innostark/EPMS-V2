@@ -9,7 +9,9 @@ namespace EPMS.Interfaces.IServices
     {
         QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest);
         IEnumerable<Quotation> GetAll();
+        IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId);
         Quotation FindQuotationById(long id);
+        IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id);
         Quotation FindQuotationByOrderId(long orderId);
         long AddQuotation(Quotation quotation);
         bool UpdateQuotation(Quotation quotation);

@@ -17,5 +17,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<JobTitle> JobTitles { get; set; }
         public virtual ICollection<JobOffered> JobOffereds { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
+        public virtual ICollection<JobApplicant> JobApplicants { get; set; }
     }
 }

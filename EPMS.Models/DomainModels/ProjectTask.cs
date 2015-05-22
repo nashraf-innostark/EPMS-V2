@@ -15,7 +15,7 @@ namespace EPMS.Models.DomainModels
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string EndDateOriginal { get; set; }
-        public decimal TotalCost { get; set; }
+        public decimal? TotalCost { get; set; }
         public string TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
@@ -24,11 +24,15 @@ namespace EPMS.Models.DomainModels
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public bool IsParent { get; set; }
+        public long? ParentTask { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual Project Project { get; set; }
         public virtual ICollection<TaskEmployee> TaskEmployees { get; set; }
         public virtual ICollection<ProjectTask> PreRequisitTask { get; set; }
         public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
+        public virtual ICollection<ProjectTask> SubTasks { get; set; }
+        public virtual ProjectTask ParentProjectTask { get; set; }
     }
 }

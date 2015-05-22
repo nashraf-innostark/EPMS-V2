@@ -12,6 +12,7 @@ namespace EPMS.Web.Models
         public string NameA { get; set; }
         public long? CustomerId { get; set; }
         public long? OrderId { get; set; }
+        public long? QuotationId { get; set; }
         public string SerialNo { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }

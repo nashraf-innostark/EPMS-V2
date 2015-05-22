@@ -79,7 +79,7 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeFullNameE"), new {@name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox"})
+                        @Html.ListBoxFor(m => m.Meeting.EmployeeIds, new MultiSelectList(Model.Employees, "EmployeeId", "EmployeeFullNameE"), new { @name = "dualMultiEmployee", @id = "dualMultiEmployee", @class = "employeeSelectBox" })
                     </div>
                 }
                 else
@@ -103,7 +103,7 @@
                             @if (direction == "ltr")
                             {
                                 <div class="controls">
-                                    @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new {@name = "dualMultiAttendee", @id = "dualMultiAttendee"})
+                                    @Html.ListBoxFor(m => m.Meeting.AbsentEmployeeIds, new MultiSelectList(Model.Meeting.MeetingAttendees, "EmployeeId", "EmployeeNameE"), new { @name = "dualMultiAttendee", @id = "dualMultiAttendee" })
                                 </div>
                             }
                             else
@@ -174,13 +174,26 @@
                 </label>
             </div>
             <div class="span9">
-                <div class="controls span4">
-                    @Html.TextBox("Meeting Date", null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')" })
-                    @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
-                </div>
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
-                </div>
+                @if (direction == "ltr")
+                {
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.Meeting.Date, new {@class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly"})
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBox("Meeting Date", null, new {@class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')"})
+                        @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
+                    </div>
+                }
+                else
+                {
+                    <div class="controls span4">
+                        @Html.TextBox("Meeting Date", null, new {@class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')"})
+                        @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.Meeting.Date, new {@class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly"})
+                    </div>
+                }
             </div>
         </div>
         <div id="Detail">
@@ -401,7 +414,7 @@
         $('#submit').click(function () {
             $("#meetingForm").submit();
         });
-        
+
         var isDetail;
         var val = '@userPermissionsSet.Contains("MeetingCreate")';
         if (val == 'True') {
@@ -442,18 +455,49 @@
         }
         if (isDetail == false) {
             // CK Editor
-            CKEDITOR.replace('Agenda');
-            CKEDITOR.replace('AgendaAr');
-            CKEDITOR.replace('Discussion');
-            CKEDITOR.replace('DiscussionAr');
-            CKEDITOR.replace('Decisions');
-            CKEDITOR.replace('DecisionsAr');
+            editor = CKEDITOR.replace('Agenda', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('AgendaAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('Discussion', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('DiscussionAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('Decisions', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('DecisionsAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
             $("#Detail").hide();
             $("#CKEditor").show();
         }
 
-        setTimeout(function () {
-            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+        if (meetingId > 0) {
+            setTimeout(function () {
+                $('.' + 'toBeDisable' + ':input').attr('disabled', true);
                 //CKEDITOR.instances.Agenda.setReadOnly(true);
                 //CKEDITOR.instances.AgendaAr.setReadOnly(true);
                 CKEDITOR.instances.Discussion.setReadOnly(true);
@@ -463,7 +507,8 @@
                 $("#attendees").addClass('disableList');
                 $("#checked").addClass('disableList');
                 $("#attendees").addClass('disableList');
-        }, 1000);
+            }, 1000);
+        }
 
         var meetingId = $("#Meeting_MeetingId").val();
 

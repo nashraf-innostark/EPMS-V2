@@ -42,9 +42,9 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<JobApplicantByColumn, Func<JobApplicant, object>>
                     {
-                        { JobApplicantByColumn.ApplicantName,  c => c.ApplicantName},
-                        { JobApplicantByColumn.ApplicantEmail, c => c.ApplicantEmail},
-                        { JobApplicantByColumn.ApplicantMobile, c => c.ApplicantMobile},
+                        { JobApplicantByColumn.ApplicantName,  c => c.ApplicantFirstNameE},
+                        { JobApplicantByColumn.ApplicantEmail, c => c.Email},
+                        { JobApplicantByColumn.ApplicantMobile, c => c.MobileNumber},
                         { JobApplicantByColumn.JobOffered, c => c.JobOffered.JobTitle.JobTitleNameE},
                         {JobApplicantByColumn.Departemnt, c => c.JobOffered.JobTitle.Department.DepartmentNameE}
                     };
@@ -56,8 +56,8 @@ namespace EPMS.Repository.Repositories
             int toRow = jobApplicantSearchRequest.iDisplayStart + jobApplicantSearchRequest.iDisplayLength;
             
             Expression<Func<JobApplicant, bool>> query =
-                s => ((string.IsNullOrEmpty(jobApplicantSearchRequest.SearchString)) || (s.ApplicantName.Contains(jobApplicantSearchRequest.SearchString)) ||
-                    (s.ApplicantEmail.Contains(jobApplicantSearchRequest.SearchString)) || (s.ApplicantMobile.Contains(jobApplicantSearchRequest.SearchString)) ||
+                s => ((string.IsNullOrEmpty(jobApplicantSearchRequest.SearchString)) || (s.ApplicantFirstNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.ApplicantMiddleNameE.Contains(jobApplicantSearchRequest.SearchString)) ||
+                    (s.Email.Contains(jobApplicantSearchRequest.SearchString)) || (s.MobileNumber.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.JobTitleNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.JobTitleNameA.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.Department.DepartmentNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.Department.DepartmentNameA.Contains(jobApplicantSearchRequest.SearchString)));
             IEnumerable<JobApplicant> jobApplicants = jobApplicantSearchRequest.sSortDir_0=="asc" ?

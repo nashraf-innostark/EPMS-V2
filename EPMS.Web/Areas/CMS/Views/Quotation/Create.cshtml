@@ -73,7 +73,7 @@
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId", @class = "select2me OrderDDL" })
+                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId", @class = "select2me OrderDDL", @disabled = (Model.OrderId == 0) })
                     }
                     <label id="orderValidation"></label>
                 </div>
@@ -397,7 +397,7 @@
         }
         var counter = 0;
         var customerId = $("#Client").val();
-        var orderId = $("#OrderId").val();
+        //var orderId = $("#OrderId").val();
         var error = "";
         if (customerId == null || customerId == "" || customerId == undefined) {
             $("#customerValidation").text("Please Select Customer");
@@ -408,15 +408,15 @@
             $("#customerValidation").text("");
             $("#customerValidation").removeClass("Error");
         }
-        if (orderId == null || orderId == "" || orderId == undefined) {
-            $("#orderValidation").text("Please Select Order");
-            $("#orderValidation").addClass("Error");
-            counter++;
-            error = "Order";
-        } else {
-            $("#orderValidation").text("");
-            $("#orderValidation").removeClass("Error");
-        }
+        //if (orderId == null || orderId == "" || orderId == undefined) {
+        //    $("#orderValidation").text("Please Select Order");
+        //    $("#orderValidation").addClass("Error");
+        //    counter++;
+        //    error = "Order";
+        //} else {
+        //    $("#orderValidation").text("");
+        //    $("#orderValidation").removeClass("Error");
+        //}
         if (counter > 0) {
             //implementing focus back to error
             if ($(".Error").length > 0) {
@@ -474,8 +474,18 @@
     var isUpdate = false;
     var elementToDelete;
     $(document).ready(function () {
-        CKEDITOR.replace('ExtraInformationEn');
-        CKEDITOR.replace('ExtraInformationAr');
+        editor = CKEDITOR.replace('ExtraInformationEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('ExtraInformationAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
             $("#Discount").val(0);

@@ -155,13 +155,17 @@
         }
         if (isDetail == false) {
             // CK Editor
-            CKEDITOR.replace('OrderDescription', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/Common/FileUploadCkController/UploadPartial',
-                filebrowserUploadUrl: $("#siteURL").val() + '/Common/FileUploadCkController/FileUpload'
+            editor = CKEDITOR.replace('OrderDescription', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
-            CKEDITOR.replace('OrderNotes', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/Common/FileUploadCkController/UploadPartial',
-                filebrowserUploadUrl: $("#siteURL").val() + '/Common/FileUploadCkController/FileUpload'
+            editor = CKEDITOR.replace('OrderNotes', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
             $("#Descp").hide();
             $("#CKEditorDescp").show();
@@ -187,9 +191,5 @@
             return false;
         }
         return true;
-    }
-    function updateValue(id, value) {
-        var dialog = CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('info', 'txtUrl', value);
     }
 </script>

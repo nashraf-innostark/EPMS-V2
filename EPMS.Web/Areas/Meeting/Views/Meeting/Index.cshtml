@@ -43,7 +43,7 @@
                 <table id="meetingsTable" class="table table-striped table-responsive">
                     <thead class="cf sorthead">
                         <tr>
-                            <th></th>
+                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
                             @if (direction == "ltr")
                             {
                                 <th>@EPMS.Web.Resources.Meeting.Meeting.TopicName</th>
@@ -73,11 +73,8 @@
             "aoColumns": [
                 {
                     "aTargets": [0],
-                    "sDefaultContent": "No Data",
-                    "mRender": function(data, type, full) {
-                        return full["MeetingId"];
-                    },
-                    "bVisible": false,
+                    "sDefaultContent": "",
+                    "bVisible": true,
                     "bSortable": false
                 },
                 {
@@ -127,7 +124,12 @@
                 //"sProcessing": "Fetching record(s)",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
-            }
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'

@@ -7,7 +7,7 @@ namespace EPMS.Models.DomainModels
     {
         public long QuotationId { get; set; }
         public string ClientName { get; set; }
-        public long OrderId { get; set; }
+        public long? OrderId { get; set; }
         public long CreatedByEmployee { get; set; }
         public string GreetingsEn { get; set; }
         public string GreetingsAr { get; set; }
@@ -30,5 +30,6 @@ namespace EPMS.Models.DomainModels
 
         public virtual Customer Customer { get; set; }
         public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

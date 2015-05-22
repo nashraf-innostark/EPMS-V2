@@ -89,7 +89,7 @@
                                                 <a href="javascript:;" class="refresher" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 @if (ViewBag.UserRole == "Admin")
                                                 {
-                                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                                                 }
                                                 <i class="icon-photon user opc1"></i>
                                             </div>
@@ -99,32 +99,32 @@
                                             {
                                                 foreach (var item in Model.EmployeeRequests.ToList())
                                                 {
-                                                    <li>
-                                                        <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
-                                                        <div>
-                                                            @if (direction == "ltr")
+                                            <li>
+                                                <a href="~/HR/Request/Create/@item.RequestId">  <span title="@item.RequestTopic">@item.RequestTopicShort</span></a>
+                                                <div>
+                                                    @if (direction == "ltr")
                                                             {
-                                                                <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
+                                                            <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span>
                                                             }
                                                             else
                                                             {
-                                                                <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span>
+                                                            <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span>
                                                             }
-                                                            @if (item.IsReplied)
+                                                    @if (item.IsReplied)
                                                             {
-                                                                <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
                                                             }
                                                             else
                                                             {
-                                                                <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
                                                             }
-                                                        </div>
-                                                    </li>
+                                                </div>
+                                            </li>
                                                 }
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                            <li>No record found</li>
                                             }
                                         </ul>
                                     </div>
@@ -136,37 +136,37 @@
                                         <form>
                                             @if (direction == "ltr")
                                             {
-                                                <div class="container-fluid widget-settings">
-                                                    <div class="control-group row-fluid">
-                                                        <div class="span12">
-                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
-                                                        </div>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
                                                     </div>
-                                                    <div class="control-group row-fluid">
-                                                        <div class="span12">
-                                                            <div class="controls">
-                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
-                                                            </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             }
                                             else
                                             {
-                                                <div class="container-fluid widget-settings">
-                                                    <div class="control-group row-fluid">
-                                                        <div class="span12">
-                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
-                                                        </div>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
                                                     </div>
-                                                    <div class="control-group row-fluid">
-                                                        <div class="span12">
-                                                            <div class="controls">
-                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
-                                                            </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             }
                                         </form>
                                     </div>
@@ -196,32 +196,32 @@
                                             {
                                                 foreach (var item in Model.Orders.ToList())
                                                 {
-                                                    <li>
-                                                        <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
-                                                        <div class="dateFormatter">
-                                                            @item.OrderDate
-                                                            @switch (item.OrderStatus)
+                                            <li>
+                                                <a href="~/CMS/Orders/Create/@item.OrderId">  <span>@item.OrderNo</span></a>
+                                                <div class="dateFormatter">
+                                                    @item.OrderDate
+                                                    @switch (item.OrderStatus)
                                                             {
                                                                 case 2:
-                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
                                                                     break;
                                                                 case 1:
-                                                                <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
+                                                            <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
                                                                     break;
                                                                 case 3:
-                                                                <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
+                                                            <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
                                                                     break;
                                                                 case 4:
-                                                                <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
                                                                     break;
                                                             }
-                                                        </div>
-                                                    </li>
+                                                </div>
+                                            </li>
                                                 }
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                            <li>No record found</li>
                                             }
 
                                         </ul>
@@ -290,7 +290,7 @@
                                                 <a href="javascript:;" class="refresher" onclick=" LoadComplaints(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 @if (ViewBag.UserRole != "Customer")
                                                 {
-                                                    <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                                                 }
 
                                                 <i class="icon-photon user opc1"></i>
@@ -301,38 +301,38 @@
                                             {
                                                 foreach (var item in Model.Complaints.ToList())
                                                 {
-                                                    <li>
-                                                        <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
-                                                        <div>
-                                                            @if (direction == "ltr")
+                                            <li>
+                                                <a href="~/CMS/Complaint/Create/@item.ComplaintId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                <div>
+                                                    @if (direction == "ltr")
                                                             {
-                                                                <span title="@item.ClientName">@item.ClientNameShort</span>
+                                                            <span title="@item.ClientName">@item.ClientNameShort</span>
                                                             }
                                                             else
                                                             {
-                                                                <span title="@item.ClientName">@item.ClientNameAShort</span>
+                                                            <span title="@item.ClientName">@item.ClientNameAShort</span>
                                                             }
-                                                            @if (item.IsReplied)
+                                                    @if (item.IsReplied)
                                                             {
-                                                                <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Replied" title="Replied" class="status" />
                                                             }
                                                             else
                                                             {
-                                                                <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
+                                                            <img src="~/Images/photon/notDone.png" alt="Pending" title="Pending" class="status" />
                                                             }
-                                                        </div>
-                                                    </li>
+                                                </div>
+                                            </li>
                                                 }
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                            <li>No record found</li>
                                             }
                                             @if (ViewBag.UserRole == "Customer")
                                             {
-                                                <li>
-                                                    <a href="~/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
-                                                </li>
+                                            <li>
+                                                <a href="~/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
+                                            </li>
                                             }
 
                                         </ul>
@@ -385,24 +385,24 @@
                                             {
                                                 foreach (var item in Model.Recruitments.ToList())
                                                 {
-                                                    <li>
-                                                        @if (direction == "ltr")
+                                            <li>
+                                                @if (direction == "ltr")
                                                         {
-                                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleE</span></a>
+                                                        <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleE</span></a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleA</span></a>
+                                                        <a href="~/HR/JobOffered/Create/@item.JobOfferedId"><span>@item.TitleA</span></a>
                                                         }
-                                                        <div>
-                                                            @item.NoOfApplicants
-                                                        </div>
-                                                    </li>
+                                                <div>
+                                                    @item.NoOfApplicants
+                                                </div>
+                                            </li>
                                                 }
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                            <li>No record found</li>
                                             }
 
                                         </ul>
@@ -432,30 +432,30 @@
                                             {
                                                 foreach (var item in Model.Meetings.ToList())
                                                 {
-                                                    <li>
-                                                        @if (direction == "ltr")
+                                            <li>
+                                                @if (direction == "ltr")
                                                         {
-                                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
+                                                        <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.Topic">@item.TopicShort</span></a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.TopicA">@item.TopicAShort</span></a>
+                                                        <a href="~/Meeting/Meeting/Create/@item.MeetingId">  <span title="@item.TopicA">@item.TopicAShort</span></a>
                                                         }
-                                                        <div>
-                                                            @item.MeetingDate
-                                                        </div>
-                                                    </li>
+                                                <div>
+                                                    @item.MeetingDate
+                                                </div>
+                                            </li>
                                                 }
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                            <li>No record found</li>
                                             }
                                             @if (ViewBag.UserRole == "Admin")
                                             {
-                                                <li>
-                                                    <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting</a>
-                                                </li>
+                                            <li>
+                                                <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting</a>
+                                            </li>
                                             }
                                         </ul>
                                     </div>
@@ -486,11 +486,11 @@
                                                 </div>
                                                 @if (direction == "ltr")
                                                 {
-                                                    <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
+                                                <div title="@Model.Profile.EmployeeNameE">@Model.Profile.EmployeeNameEShort</div>
                                                 }
                                                 else
                                                 {
-                                                    <div title="@Model.Profile.EmployeeNameA">@Model.Profile.EmployeeNameAShort</div>
+                                                <div title="@Model.Profile.EmployeeNameA">@Model.Profile.EmployeeNameAShort</div>
                                                 }
                                             </li>
                                             <li>
@@ -503,15 +503,15 @@
                                                 <span>Job Title</span>
                                                 @if (direction == "ltr")
                                                 {
-                                                    <div>
-                                                        @Model.Profile.EmployeeJobTitleE
-                                                    </div>
+                                                <div>
+                                                    @Model.Profile.EmployeeJobTitleE
+                                                </div>
                                                 }
                                                 else
                                                 {
-                                                    <div>
-                                                        @Model.Profile.EmployeeJobTitleA
-                                                    </div>
+                                                <div>
+                                                    @Model.Profile.EmployeeJobTitleA
+                                                </div>
                                                 }
                                             </li>
                                             <li>
@@ -621,27 +621,27 @@
                                             {
                                                 foreach (var item in Model.EmployeesRecent.ToList())
                                                 {
-                                                    <li>
-                                                        <div class="avatar-image">
-                                                            <img src="@item.EmployeeImagePath" alt="profile image" />
-                                                        </div>
-                                                        @if (direction == "ltr")
+                                            <li>
+                                                <div class="avatar-image">
+                                                    <img src="@item.EmployeeImagePath" alt="profile image" />
+                                                </div>
+                                                @if (direction == "ltr")
                                                         {
-                                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
+                                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameE">@item.EmployeeNameEShort</span></a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span></a>
+                                                        <a href="~/HR/Employee/Create/@item.EmployeeId">  <span title="@item.EmployeeNameA">@item.EmployeeNameAShort</span></a>
                                                         }
-                                                        <div>
-                                                            @item.EmployeeJobId
-                                                        </div>
-                                                    </li>
+                                                <div>
+                                                    @item.EmployeeJobId
+                                                </div>
+                                            </li>
                                                 }
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                            <li>No record found</li>
                                             }
 
                                         </ul>
@@ -686,11 +686,11 @@
                                             {
                                                 if (direction == "ltr")
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA) </a>
                                                 }
                                             }
                                             else
@@ -713,7 +713,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</a>
                                                     }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)
@@ -727,7 +727,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@task.TaskNameAShort</a>
+                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@(task.TaskNameA.Length > 15 ? task.TaskNameA.Substring(0, 15) : task.TaskNameA)</a>
                                                             }
                                                         </li>
                                                     }
@@ -739,16 +739,16 @@
                                                 <li class="dashNext">
                                                     <a><i class='icon-photon arrow_right'></i></a>
                                                 </li>
-                                                <li class="processed-pct">
+                                                <li class="processed-pct" style="">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <span title="@Model.Project.Project.NameE">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</span>
+                                                        <span title="@Model.Project.Project.NameE" class="pText">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</span>
                                                     }
                                                     else
                                                     {
-                                                        <span title="@Model.Project.Project.NameA">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</span>
+                                                        <span title="@Model.Project.Project.NameA" class="pText" style="margin-right: 33%; direction: ltr">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</span>
                                                     }
-                                                    <div class="progress progress-info">
+                                                    <div class="progress progress-info" style="clear: both;">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: @Model.Project.Project.ProgressTotal;">@Model.Project.Project.ProgressTotal%</div>
                                                     </div>
                                                 </li>
@@ -981,6 +981,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    var dir = '@direction';
     $(document).ready(function () {
         if ('@direction' == "ltr") {
             setTimeout(function () {

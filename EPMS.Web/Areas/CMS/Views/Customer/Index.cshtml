@@ -3,6 +3,7 @@
     ViewBag.Title = EPMS.Web.Resources.CMS.Customer.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    int i = 0;
 }
 
 <div class="breadcrumb-container">
@@ -33,7 +34,7 @@
                 <table id="CustomerList" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
                             @if(direction == "ltr"){
                             <th>@EPMS.Web.Resources.CMS.Customer.NameEn</th>
                             }
@@ -51,7 +52,7 @@
                         @foreach (var item in Model.CustomerList.ToList())
                         {
                             <tr>
-                                <td>@item.CustomerId</td>
+                                <td>@(i += 1)</td>
                                 <td>@Html.ActionLink(@item.CustomerNameE, "Details", new { id = item.CustomerId }) </td>
                                 <td>@item.OrdersCount</td>
                                 <td>@item.LatestComplaint</td>
@@ -72,7 +73,7 @@
         $('#CustomerList').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                { "bVisible": false },
+                { "bVisible": true, "bSortable": false },
                   null,
                   null,
                   null,
@@ -84,7 +85,7 @@
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
-            }
+            },
         });
     });
 </script>

@@ -2,11 +2,11 @@
 {
     public enum TaskByColumn
     {
-        TaskName = 1,
-        ProjectName = 2,
-        StartDate = 3,
-        DeliveryDate = 4,
-        Cost = 5,
-        Progress = 6
+        TaskName = 2,
+        ProjectName = 3,
+        StartDate = 4,
+        DeliveryDate = 5,
+        Cost = 6,
+        Progress = 7
     }
 }

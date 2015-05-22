@@ -23,6 +23,11 @@
     string[] module = (string[])Session["UserModules"];
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
+<style>
+    .form-horizontal input {
+        margin-bottom: 6px !important;
+    }
+</style>
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -59,7 +64,22 @@
         @Html.HiddenFor(model => model.Project.ProjectId)
         @Html.HiddenFor(model => model.Project.RecCreatedDate)
         @Html.HiddenFor(model => model.Project.RecCreatedBy)
-        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3"></div>
+            <div class="span9">
+                <div class="controls">
+                    <label>
+                        <input id="order" type="radio" name="CreateFrom" value="order">
+                        @EPMS.Web.Resources.PMS.Project.CreateFromOrder
+                    </label>
+                    <br />
+                    <label>
+                        <input id="quotation" type="radio" name="CreateFrom" value="quotation">
+                        @EPMS.Web.Resources.PMS.Project.CreateFromQuotation
+                    </label>
+                </div>
+            </div>
+        </div>
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectNameE</label>
@@ -95,7 +115,25 @@
                 </div>
 
             </div>
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid" id="quotationControl">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Quotation</label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @if (Model.Project.CustomerId > 0)
+                        {
+                            @Html.DropDownListFor(m => m.Project.QuotationId, new SelectList(Model.Quotations, "QuotationId", "GreetingsEn"), "", new { @class = "select2me", @id = "QuotationId" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.Project.QuotationId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "QuotationId" })
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group row-fluid" id="orderControl">
                 <div class="span3">
                     <label class="control-label">@EPMS.Web.Resources.PMS.Project.OrderNo</label>
                 </div>
@@ -111,7 +149,6 @@
                         }
                     </div>
                 </div>
-
             </div>
         }
 
@@ -157,9 +194,19 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
-                    @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+
+                        @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3 marginForDatesLeft", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                        @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                        @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3 marginForDatesRight", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
+                        @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
+                    }
                 </div>
             </div>
         </div>
@@ -174,9 +221,18 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.EndDate, new { @class = "datepickerGregorian cursorHand span3", @id = "EndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EndDateA')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EndDateE')" })
-                    @Html.ValidationMessageFor(m => m.Project.EndDate, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.Project.EndDate, new {@class = "datepickerGregorian cursorHand span3", @id = "EndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EndDateA')"})
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArabic cursorHand span3 marginForDatesLeft", @id = "EndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EndDateE')"})
+                        @Html.ValidationMessageFor(m => m.Project.EndDate, "", new {@class = "required"})
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EndDateE')"})
+                        @Html.TextBoxFor(model => model.Project.EndDate, new {@class = "datepickerGregorian cursorHand span3 marginForDatesRight", @id = "EndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EndDateA')"})
+                        @Html.ValidationMessageFor(m => m.Project.EndDate, "", new {@class = "required"})
+                    }
                 </div>
                 <label id="ProjEndDateValidationError"></label>
             </div>
@@ -494,13 +550,60 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
     $(document).ready(function () {
+        if ('@Model.Project.OrderId' == 0) {
+            $("#orderControl").hide();
+            $("#quotationControl").show();
+            var $radios = $('input:radio[name=CreateFrom]');
+            $radios.filter('[value=quotation]').prop('checked', true);
+        } else {
+            $("#orderControl").show();
+            $("#quotationControl").hide();
+            var $radios = $('input:radio[name=CreateFrom]');
+            $radios.filter('[value=order]').prop('checked', true);
+        }
+        if ('@Model.Project.ProjectId' == 0) {
+            var $radios = $('input:radio[name=CreateFrom]');
+            $radios.filter('[value=order]').prop('checked', true);
+            $("#orderControl").show();
+            $("#quotationControl").hide();
+        }
         var siteUrl = $('#siteURL').val();
-        CKEDITOR.replace('DescriptionA');
-        CKEDITOR.replace('DescriptionE');
-        CKEDITOR.replace('NotesA');
-        CKEDITOR.replace('NotesE');
-        CKEDITOR.replace('NotesForCustomerA');
-        CKEDITOR.replace('NotesForCustomerE');
+        editor = CKEDITOR.replace('DescriptionE', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('DescriptionA', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('NotesE', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('NotesA', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('NotesForCustomerE', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('NotesForCustomerA', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
         $('#TasksTable, #InstallmentTable').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
@@ -568,7 +671,14 @@
 
         $("#Client").on("change", function () {
             var customerId = $(this).val();
-            var url = siteUrl + "/PMS/Project/GetCustomerOrders";
+            var getDataUrl;
+            var createFrom = $("input[name=CreateFrom]:checked").val();
+            if (createFrom == "order") {
+                getDataUrl = siteUrl + "/PMS/Project/GetCustomerOrders";
+            }
+            if (createFrom == "quotation") {
+                getDataUrl = siteUrl + "/PMS/Project/GetCustomerQuotations";
+            }
             if (customerId > 0) {
                 $("#ClientName").val($("#Client option:selected").text());
                 //$('#SearchRequest_JobId').empty();
@@ -577,17 +687,23 @@
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
                 });
                 $.ajax({
-                    url: url,
+                    url: getDataUrl,
                     type: 'GET',
                     dataType: "json",
                     data: {
                         customerId: customerId
                     },
                     success: function (data) {
-                        populateDDL(data);
+                        if (createFrom == "order") {
+                            populateDDL(data);
+                        }
+                        if (createFrom == "quotation") {
+                            populateQuotDDL(data);
+                        }
                     },
                     error: function (e) {
                         alert('Error=' + e.toString());
+                        $.unblockUI();
                     }
                 });
             } else {
@@ -607,6 +723,34 @@
         $("#OrderNo").on("change", function () {
             var orderTitle = $("#OrderNo option:selected").text();
             SetNames(orderTitle);
+        });
+        $("#QuotationId").on("change", function () {
+            var quotTitle = "2015000" + $("#QuotationId").val();
+            SetNames(quotTitle);
+        });
+        $("input[name=CreateFrom]:radio").change(function () {
+            if ($(this).val() == "order") {
+                $("#orderControl").show();
+                $("#quotationControl").hide();
+            }
+            if ($(this).val() == "quotation") {
+                $("#orderControl").hide();
+                $("#quotationControl").show();
+            }
+            $("#Client").val(0);
+            $("#OrderNo").empty();
+            $("#OrderNo").append(
+                    $('<option></option>').val("").html("none")
+                );
+            $("#QuotationId").empty();
+            $("#QuotationId").append(
+                    $('<option></option>').val("").html("none")
+                );
+            $(".select2me").select2("destroy");
+            $('.select2me').select2({
+                placeholder: "Select",
+            });
+            SetNames("");
         });
     });
 
@@ -640,6 +784,29 @@
             SetNames(orderTitle);
         } else {
             $("#OrderNo").append(
+                    $('<option></option>').val("").html("none")
+                );
+            SetNames("");
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
+    }
+    function populateQuotDDL(data) {
+        $("#QuotationId").empty();
+        if (data.length > 0) {
+            for (var i = 0; i < data.length; i++) {
+                $("#QuotationId").append(
+                    $('<option></option>').val(data[i].QuotationId).html(data[i].GreetingsEn)
+                );
+            }
+            //set first order's no as a project name
+            var orderTitle = "2015000" + data[0].QuotationId;
+            SetNames(orderTitle);
+        } else {
+            $("#QuotationId").append(
                     $('<option></option>').val("").html("none")
                 );
             SetNames("");

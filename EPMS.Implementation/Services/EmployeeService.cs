@@ -181,8 +181,14 @@ namespace EPMS.Implementation.Services
             repository.Add(employee);
             repository.SaveChanges();
 
-            notificationService.CreateNotification("iqama",employee.EmployeeId,employee.EmployeeIqamaExpiryDt);
-            notificationService.CreateNotification("passport", employee.EmployeeId, employee.EmployeePassportExpiryDt);
+            if (employee.EmployeeIqamaExpiryDt != null)
+            {
+                notificationService.CreateNotification("iqama", employee.EmployeeId, employee.EmployeeIqamaExpiryDt);
+            }
+            if (employee.EmployeePassportExpiryDt != null)
+            {
+                notificationService.CreateNotification("passport", employee.EmployeeId, employee.EmployeePassportExpiryDt);
+            }
             return employee.EmployeeId;
         }
         /// <summary>
@@ -209,9 +215,15 @@ namespace EPMS.Implementation.Services
                 }
                 repository.Update(employee);
                 repository.SaveChanges();
-
-                notificationService.CreateNotification("iqama", employee.EmployeeId, employee.EmployeeIqamaExpiryDt);
-                notificationService.CreateNotification("passport", employee.EmployeeId, employee.EmployeePassportExpiryDt);
+                
+                if (employee.EmployeeIqamaExpiryDt != null)
+                {
+                    notificationService.CreateNotification("iqama", employee.EmployeeId, employee.EmployeeIqamaExpiryDt);
+                }
+                if (employee.EmployeePassportExpiryDt != null)
+                {
+                    notificationService.CreateNotification("passport", employee.EmployeeId, employee.EmployeePassportExpiryDt);
+                }
                 return true;
             }
             catch (Exception e)
