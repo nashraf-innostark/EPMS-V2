@@ -340,8 +340,11 @@
     }
     function successCreatingNode(data) {
         if (data != null) {
-            //alert("Changes has been done successfully.");
-            window.location.reload();
+            if (data == "Department Already Exists") {
+                alert(data);
+            } else {
+                window.location.reload();
+            }
         }
         else {
             alert("Problem in Saving Changes.");

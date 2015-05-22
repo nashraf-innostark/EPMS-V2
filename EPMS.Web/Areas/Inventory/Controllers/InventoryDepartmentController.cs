@@ -78,72 +78,79 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult SaveInventoryDepartment(int nodeId, int parent, string nameEn, string nameAr, string color, string description)
         {
             InventoryDepartment model = new InventoryDepartment();
-            if (nodeId > 0)
+            try
             {
-                // Update
-                model.DepartmentId = nodeId;
-                if (parent > 0)
+                if (nodeId > 0)
                 {
-                    model.ParentId = parent;
+                    // Update
+                    model.DepartmentId = nodeId;
+                    if (parent > 0)
+                    {
+                        model.ParentId = parent;
+                    }
+                    else
+                    {
+                        model.ParentId = null;
+                    }
+                    model.DepartmentNameEn = nameEn;
+                    model.DepartmentNameAr = nameAr;
+                    model.DepartmentColor = color;
+                    var descp = description.Replace("\n", "");
+                    descp = descp.Replace("\t", "");
+                    descp = descp.Replace("\r", "");
+                    model.DepartmentDesc = descp;
+                    model.RecCreatedBy = User.Identity.GetUserId();
+                    model.RecCreatedDt = DateTime.Now;
+                    model.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.RecLastUpdatedDt = DateTime.Now;
+                    var nodeToUpdate = model.CreateFromClientToServerModel();
+                    if (departmentService.UpdateDepartment(nodeToUpdate))
+                    {
+                        var inventoryDepartments = departmentService.GetAll();
+                        InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel
+                        {
+                            InventoryDepartments = inventoryDepartments.Select(x => x.CreateFromServerToClient()).ToList()
+                        };
+                        return Json(viewModel, JsonRequestBehavior.AllowGet);
+                    }
                 }
                 else
                 {
-                    model.ParentId = null;
-                }
-                model.DepartmentNameEn = nameEn;
-                model.DepartmentNameAr = nameAr;
-                model.DepartmentColor = color;
-                var descp = description.Replace("\n", "");
-                descp = descp.Replace("\t", "");
-                descp = descp.Replace("\r", "");
-                model.DepartmentDesc = descp;
-                model.RecCreatedBy = User.Identity.GetUserId();
-                model.RecCreatedDt = DateTime.Now;
-                model.RecLastUpdatedBy = User.Identity.GetUserId();
-                model.RecLastUpdatedDt = DateTime.Now;
-                var nodeToUpdate = model.CreateFromClientToServerModel();
-                if (departmentService.UpdateDepartment(nodeToUpdate))
-                {
-                    var inventoryDepartments = departmentService.GetAll();
-                    InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel
+                    // Add
+                    if (parent > 0)
                     {
-                        InventoryDepartments = inventoryDepartments.Select(x => x.CreateFromServerToClient()).ToList()
-                    };
-                    return Json(viewModel, JsonRequestBehavior.AllowGet);
+                        model.ParentId = parent;
+                    }
+                    else
+                    {
+                        model.ParentId = null;
+                    }
+                    model.DepartmentNameEn = nameEn;
+                    model.DepartmentNameAr = nameAr;
+                    model.DepartmentColor = color;
+                    var descp = description.Replace("\n", "");
+                    descp = descp.Replace("\t", "");
+                    descp = descp.Replace("\r", "");
+                    model.DepartmentDesc = descp;
+                    model.RecCreatedBy = User.Identity.GetUserId();
+                    model.RecCreatedDt = DateTime.Now;
+                    model.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.RecLastUpdatedDt = DateTime.Now;
+                    var newNodeToAdd = model.CreateFromClientToServerModel();
+                    if (departmentService.AddDepartment(newNodeToAdd))
+                    {
+                        var inventoryDepartments = departmentService.GetAll();
+                        InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel
+                        {
+                            InventoryDepartments = inventoryDepartments.Select(x => x.CreateFromServerToClient()).ToList()
+                        };
+                        return Json(viewModel, JsonRequestBehavior.AllowGet);
+                    }
                 }
             }
-            else
+            catch (Exception exception)
             {
-                // Add
-                if (parent > 0)
-                {
-                    model.ParentId = parent;
-                }
-                else
-                {
-                    model.ParentId = null;
-                }
-                model.DepartmentNameEn = nameEn;
-                model.DepartmentNameAr = nameAr;
-                model.DepartmentColor = color;
-                var descp = description.Replace("\n", "");
-                descp = descp.Replace("\t", "");
-                descp = descp.Replace("\r", "");
-                model.DepartmentDesc = descp;
-                model.RecCreatedBy = User.Identity.GetUserId();
-                model.RecCreatedDt = DateTime.Now;
-                model.RecLastUpdatedBy = User.Identity.GetUserId();
-                model.RecLastUpdatedDt = DateTime.Now;
-                var newNodeToAdd = model.CreateFromClientToServerModel();
-                if (departmentService.AddDepartment(newNodeToAdd))
-                {
-                    var inventoryDepartments = departmentService.GetAll();
-                    InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel
-                    {
-                        InventoryDepartments = inventoryDepartments.Select(x => x.CreateFromServerToClient()).ToList()
-                    };
-                    return Json(viewModel, JsonRequestBehavior.AllowGet);
-                }
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
             }
             return Json(null, JsonRequestBehavior.AllowGet);
         }
