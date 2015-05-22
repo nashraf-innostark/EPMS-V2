@@ -1,5 +1,4 @@
-﻿using System.Web.Razor.Parser.SyntaxTree;
-using EPMS.Models.RequestModels;
+﻿using EPMS.Models.RequestModels;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -37,8 +36,7 @@ namespace EPMS.Web.ModelMappers
             dept.RecCreatedDt = source.RecCreatedDt;
             dept.RecLastUpdatedBy = source.RecLastUpdatedBy;
             dept.RecLastUpdatedDt = source.RecLastUpdatedDt;
-            var request = new InventoryDepartmentRequest();
-            request.InventoryDepartment = dept;
+            var request = new InventoryDepartmentRequest {InventoryDepartment = dept};
             return request;
         }
     }

@@ -117,6 +117,8 @@
     <Compile Include="DomainModels\AspNetUserClaim.cs" />
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
+    <Compile Include="DomainModels\Color.cs" />
+    <Compile Include="DomainModels\IItemVariationService.cs" />
     <Compile Include="DomainModels\InventoryDepartment.cs" />
     <Compile Include="DomainModels\CompanyBankDetail.cs" />
     <Compile Include="DomainModels\CompanyDocumentDetail.cs" />
@@ -129,15 +131,21 @@
     <Compile Include="DomainModels\Employee.cs" />
     <Compile Include="DomainModels\EmployeeJobHistory.cs" />
     <Compile Include="DomainModels\EmployeeRequest.cs" />
+    <Compile Include="DomainModels\InventoryItem.cs" />
+    <Compile Include="DomainModels\ItemImage.cs" />
+    <Compile Include="DomainModels\ItemVariation.cs" />
     <Compile Include="DomainModels\JobApplicant.cs" />
     <Compile Include="DomainModels\JobHistory.cs" />
     <Compile Include="DomainModels\JobOffered.cs" />
     <Compile Include="DomainModels\JobTitle.cs" />
     <Compile Include="DomainModels\JobTitleHistory.cs" />
     <Compile Include="DomainModels\LicenseControlPanel.cs" />
+    <Compile Include="DomainModels\Manufacturer.cs" />
     <Compile Include="DomainModels\Meeting.cs" />
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
+    <Compile Include="DomainModels\Size.cs" />
+    <Compile Include="DomainModels\Status.cs" />
     <Compile Include="DomainModels\Vendor.cs" />
     <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="DomainModels\NotificationRecipient.cs" />
@@ -184,6 +192,8 @@
     <Compile Include="RequestModels\EmployeeSearchRequset.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\InventoryDepartmentRequest.cs" />
+    <Compile Include="RequestModels\InventoryItemRequest.cs" />
+    <Compile Include="RequestModels\ItemVariationRequest.cs" />
     <Compile Include="RequestModels\JobApplicantSearchRequest.cs" />
     <Compile Include="RequestModels\JobOfferedSearchRequest.cs" />
     <Compile Include="RequestModels\JobTitleSearchRequest.cs" />
@@ -247,6 +257,7 @@
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
+    <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
     <Compile Include="ResponseModels\SaveVendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />

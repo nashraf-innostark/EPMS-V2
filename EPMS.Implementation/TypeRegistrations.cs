@@ -1,6 +1,8 @@
 ﻿using EPMS.Implementation.Identity;
 using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
+using EPMS.Interfaces.Repository;
+using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -51,6 +53,14 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IVendorService, VendorService>();
             unityContainer.RegisterType<IVendorItemsService, VendorItemsService>();
             unityContainer.RegisterType<IInventoryDepartmentService, InventoryDepartmentService>();
+            unityContainer.RegisterType<IInventoryItemService, InventoryItemService>();
+            unityContainer.RegisterType<IColorService, ColorService>();
+            unityContainer.RegisterType<ISizeService, SizeService>();
+            unityContainer.RegisterType<IStatusService, StatusService>();
+            unityContainer.RegisterType<IManufacturerService, ManufacturerService>();
+            unityContainer.RegisterType<IItemImageService, ItemImageService>();
+            unityContainer.RegisterType<IWarehouseService, WarehouseService>();
+            unityContainer.RegisterType<IItemVariationService, ItemVariationService>();
         }
     }
 }

@@ -110,5 +110,13 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<VendorItem> VendorItems { get; set; }
         public DbSet<InventoryDepartment> InventoryDepartments { get; set; }
+        public DbSet<InventoryItem> InventoryItems { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<Size> Sizes { get; set; }
+        public DbSet<ItemImage> ItemImages { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<ItemVariation> ItemVariations { get; set; }
     }
 }

@@ -125,6 +125,7 @@
     <Compile Include="Identity\IdentityOperation.cs" />
     <Compile Include="Services\AllowanceService.cs" />
     <Compile Include="Services\AspNetUserService.cs" />
+    <Compile Include="Services\ColorService.cs" />
     <Compile Include="Services\CompanyBankService.cs" />
     <Compile Include="Services\CompanyDocumentService.cs" />
     <Compile Include="Services\CompanyProfileService.cs" />
@@ -136,11 +137,15 @@
     <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\InventoryDepartmentService.cs" />
+    <Compile Include="Services\InventoryItemService.cs" />
+    <Compile Include="Services\ItemImageService.cs" />
+    <Compile Include="Services\ItemVariationService.cs" />
     <Compile Include="Services\JobApplicantService.cs" />
     <Compile Include="Services\JobOfferedService.cs" />
     <Compile Include="Services\JobTitleService.cs" />
     <Compile Include="Services\LicenseControlPanelService.cs" />
     <Compile Include="Services\LoggerService.cs" />
+    <Compile Include="Services\ManufacturerService.cs" />
     <Compile Include="Services\MeetingAttendeeService.cs" />
     <Compile Include="Services\MeetingDocumentService.cs" />
     <Compile Include="Services\MeetingService.cs" />
@@ -156,10 +161,13 @@
     <Compile Include="Services\QuickLaunchItemService.cs" />
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
+    <Compile Include="Services\SizeService.cs" />
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />
     <Compile Include="Services\UserPrefrencesService.cs" />
     <Compile Include="Services\VendorItemsService.cs" />
     <Compile Include="Services\VendorService.cs" />
+    <Compile Include="Services\WarehouseService.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

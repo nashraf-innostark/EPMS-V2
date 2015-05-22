@@ -49,6 +49,14 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IVendorRepository, VendorRepository>();
             unityContainer.RegisterType<IVendorItemsRepository, VendorItemsRepository>();
             unityContainer.RegisterType<IInventoryDepartmentRepository, InventoryDepartmentRepository>();
+            unityContainer.RegisterType<IInventoryItemRepository, InventoryItemRepository>();
+            unityContainer.RegisterType<IColorRepository, ColorRepository>();
+            unityContainer.RegisterType<ISizeRepository, SizeRepository>();
+            unityContainer.RegisterType<IStatusRepository, StatusRepository>();
+            unityContainer.RegisterType<IItemImageRepository, IItemImageRepository>();
+            unityContainer.RegisterType<IManufacturerRepository, ManufacturerRepository>();
+            unityContainer.RegisterType<IWarehouseRepository, WarehouseRepository>();
+            unityContainer.RegisterType<IItemVariationRepository, ItemVariationRepository>();
         }
     }
 }

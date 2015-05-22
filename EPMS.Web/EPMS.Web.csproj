@@ -304,6 +304,8 @@
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
@@ -340,6 +342,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\ColorMapper.cs" />
     <Compile Include="ModelMappers\CompanyProfileMapper.cs" />
     <Compile Include="ModelMappers\ComplaintMapper.cs" />
     <Compile Include="ModelMappers\CustomerMapper.cs" />
@@ -349,11 +352,15 @@
     <Compile Include="ModelMappers\EmployeeMapper.cs" />
     <Compile Include="ModelMappers\EmployeeRequestMapper.cs" />
     <Compile Include="ModelMappers\InventoryDepartmentMapper.cs" />
+    <Compile Include="ModelMappers\InventoryItemMapper.cs" />
+    <Compile Include="ModelMappers\ItemImageMapper.cs" />
+    <Compile Include="ModelMappers\ItemVariationMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
     <Compile Include="ModelMappers\JobOfferedMapper.cs" />
     <Compile Include="ModelMappers\JobTitleMapper.cs" />
     <Compile Include="ModelMappers\LicenseMapper.cs" />
+    <Compile Include="ModelMappers\ManufacturerMapper.cs" />
     <Compile Include="ModelMappers\MeetingAttendeeMapper.cs" />
     <Compile Include="ModelMappers\MeetingMapper.cs" />
     <Compile Include="ModelMappers\OrdersMapper.cs" />
@@ -364,11 +371,14 @@
     <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
+    <Compile Include="ModelMappers\SizeMapper.cs" />
+    <Compile Include="ModelMappers\StatusMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\Color.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
     <Compile Include="Models\CompanyLicenseInformation.cs" />
@@ -383,8 +393,12 @@
     <Compile Include="Models\EmployeeJobHistory.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\InventoryDepartment.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
+    <Compile Include="Models\ItemImage.cs" />
+    <Compile Include="Models\ItemVariation.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\LicenseControlPanel.cs" />
+    <Compile Include="Models\Manufacturer.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\MeetingAttendee.cs" />
     <Compile Include="Models\MeetingModel.cs" />
@@ -407,6 +421,8 @@
     <Compile Include="Models\Payroll.cs" />
     <Compile Include="Models\RequestDetail.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Models\TaskEmployee.cs" />
     <Compile Include="Models\Vendor.cs" />
@@ -572,6 +588,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tasks.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\InventoryItem.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryItem.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\ItemVariation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ItemVariation.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\Vendor.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -669,6 +695,8 @@
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpViewModel.cs" />
     <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
+    <Compile Include="ViewModels\InventoryItem\InventoryItemViewModel.cs" />
+    <Compile Include="ViewModels\ItemVariation\ItemVariationViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
       <SubType>Code</SubType>
@@ -1131,6 +1159,9 @@
     <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
     <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryItem\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryItem\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\ItemVariation\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3039,6 +3070,14 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
+    <EmbeddedResource Include="Resources\Inventory\InventoryItem.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InventoryItem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ItemVariation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\Vendor.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\Vendor.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

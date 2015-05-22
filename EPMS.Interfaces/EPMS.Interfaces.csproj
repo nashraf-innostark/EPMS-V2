@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IColorService.cs" />
     <Compile Include="IServices\ICompanyBankService.cs" />
     <Compile Include="IServices\ICompanyDocumentService.cs" />
     <Compile Include="IServices\ICompanyProfileService.cs" />
@@ -68,11 +69,14 @@
     <Compile Include="IServices\IEmployeeRequestService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
     <Compile Include="IServices\IInventoryDepartmentService.cs" />
+    <Compile Include="IServices\IInventoryItemService.cs" />
+    <Compile Include="IServices\IItemImageService.cs" />
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
     <Compile Include="IServices\ILicenseControlPanelService.cs" />
     <Compile Include="IServices\ILogger.cs" />
+    <Compile Include="IServices\IManufacturerService.cs" />
     <Compile Include="IServices\IMeetingAttendeeService.cs" />
     <Compile Include="IServices\IMeetingDocumentService.cs" />
     <Compile Include="IServices\IMeetingService.cs" />
@@ -86,6 +90,8 @@
     <Compile Include="IServices\IProjectTaskService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
+    <Compile Include="IServices\ISizeService.cs" />
+    <Compile Include="IServices\IStatusService.cs" />
     <Compile Include="IServices\ITaskEmployeeService.cs" />
     <Compile Include="IServices\IUserPrefrencesService.cs" />
     <Compile Include="IServices\IQuickLaunchItemService.cs" />
@@ -95,6 +101,7 @@
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs" />
+    <Compile Include="Repository\IColorRepository.cs" />
     <Compile Include="Repository\ICompanyBankRepository.cs" />
     <Compile Include="Repository\ICompanyDocumentRepository.cs" />
     <Compile Include="Repository\ICompanyProfileRepository.cs" />
@@ -108,11 +115,15 @@
     <Compile Include="Repository\IEmployeeRequestDetailRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestRepository.cs" />
     <Compile Include="Repository\IInventoryDepartmentRepository.cs" />
+    <Compile Include="Repository\IInventoryItemRepository.cs" />
+    <Compile Include="Repository\IItemImageRepository.cs" />
+    <Compile Include="Repository\IItemVariationRepository.cs" />
     <Compile Include="Repository\IJobApplicantRepository.cs" />
     <Compile Include="Repository\IJobOfferedRepository.cs" />
     <Compile Include="Repository\IJobTitleHistoryRepository.cs" />
     <Compile Include="Repository\IJobTitleRepository.cs" />
     <Compile Include="Repository\ILicenseControlPanelRepository.cs" />
+    <Compile Include="Repository\IManufacturerRepository.cs" />
     <Compile Include="Repository\IMeetingAttendeeRepository.cs" />
     <Compile Include="Repository\IMeetingDocumentRepository.cs" />
     <Compile Include="Repository\IMeetingRepository.cs" />
@@ -128,10 +139,14 @@
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
+    <Compile Include="Repository\ISizeRepository.cs" />
+    <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />
     <Compile Include="Repository\IUserPrefrencesRepository.cs" />
     <Compile Include="Repository\IVendorItemsRepository.cs" />
     <Compile Include="Repository\IVendorRepository.cs" />
+    <Compile Include="IServices\IWarehouseService.cs" />
+    <Compile Include="Repository\IWarehouseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
