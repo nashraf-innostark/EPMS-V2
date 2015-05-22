@@ -89,7 +89,6 @@ function errorSaveAppointment(e, status) {
 }
 
 function validateEmail(email) {
-    debugger
     var oEmail = $(email);
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(oEmail.val())) {

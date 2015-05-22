@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
@@ -83,6 +84,10 @@ namespace EPMS.Repository.Repositories
 
         public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
         {
+            if (searchRequest.iSortCol_0 == 1)
+            {
+                searchRequest.iSortCol_0 = 2;
+            }
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
             //DateTime startDate = Convert.ToDateTime(searchRequest.SearchString);
@@ -103,7 +108,8 @@ namespace EPMS.Repository.Repositories
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList();
-            return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+            //var countOfTasks = DbSet.Count(x => x.ParentTask == null);
+            return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Where(x => x.ParentTask == null).Count(query), TotalRecords = DbSet.Where(x => x.ParentTask == null).Count(query) };
         }
 
         public TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId)

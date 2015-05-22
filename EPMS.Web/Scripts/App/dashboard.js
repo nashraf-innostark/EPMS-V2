@@ -1083,8 +1083,8 @@ function LoadProjects(control) {
                         '<a><i class="icon-photon arrow_right"></i></a>' +
                     '</li>' +
                     '<li class="processed-pct">' +
-                        '<span class="pText" title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA.substring(0, 5) + "..." + '</span>' +
-                        '<div class="progress progress-info" style="margin-left: -7px">' +
+                        '<span class="pText" title="' + data.Project.NameA + '" style="margin-right: 33%; direction: ltr">' + "..." + "مشاريع" + " - " + data.Project.NameA.substring(0, 5) + '</span>' +
+                        '<div class="progress progress-info" style="clear: both;">' +
                             '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
                         '</div>' +
                     '</li>');
@@ -1097,8 +1097,8 @@ function LoadProjects(control) {
                         '<a><i class="icon-photon arrow_right"></i></a>' +
                     '</li>' +
                     '<li class="processed-pct">' +
-                        '<span class="pText" title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA + '</span>' +
-                        '<div class="progress progress-info">' +
+                        '<span class="pText" title="' + data.Project.NameA + '" style="margin-right: 33%; direction: ltr">' + "مشاريع" + " - " + data.Project.NameA + '</span>' +
+                        '<div class="progress progress-info" style="clear: both;">' +
                             '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
                         '</div>' +
                     '</li>');

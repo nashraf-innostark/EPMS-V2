@@ -49,7 +49,7 @@
                     <table class="table table-striped table-responsive" id="projectTaskTable" style="width: 100% !important;">
                         <thead class="">
                             <tr>
-                                <th></th>
+                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
                                 <th></th>
                                 <th>@EPMS.Web.Resources.PMS.Task.TaskName</th>
                                 <th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>
@@ -249,10 +249,7 @@
             "sEcho": 1,
             "aoColumns": [
                 {
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["TaskId"];
-                    }
+                    "sDefaultContent": ""
                 },
                 {
                     "sDefaultContent": "No Data",
@@ -332,7 +329,12 @@
             "fnInitComplete": function () {
                 this.fnAdjustColumnSizing();
                 $('div.dataTables_filter input').focus();
-            }
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
@@ -347,7 +349,7 @@
                 '<table class="table table-striped table-responsive subProjectTaskTable" id="' + oData.TaskId + "_Parent" + '" style="width: 100% !important;">' +
                 '<thead class="">' +
                 '<tr>' +
-                '<th style="width:34px !important"></th>' +
+                '<th style="width:34px !important">@EPMS.Web.Resources.Shared.Common.Serial</th>' +
                 '<th>@EPMS.Web.Resources.PMS.Task.TaskName</th>' +
                 '<th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>' +
                 '<th>@EPMS.Web.Resources.PMS.Task.StartDate</th>' +
