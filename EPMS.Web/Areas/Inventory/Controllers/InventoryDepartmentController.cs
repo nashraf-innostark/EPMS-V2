@@ -8,7 +8,6 @@ using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryDepartment;
 using EPMS.Web.ModelMappers;
-using iTextSharp.text.pdf.qrcode;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
