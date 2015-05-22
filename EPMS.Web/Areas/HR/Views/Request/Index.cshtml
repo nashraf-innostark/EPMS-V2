@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = EPMS.Web.Resources.HR.Request.Label;
     Layout = "~/Views/Shared/_Layout.cshtml";
-
+    int i = 0;
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container" dir="ltr">
@@ -40,7 +40,7 @@
                         @if (ViewBag.UserRole == "Admin")
                         {
                             <tr>
-                                <th>ID</th>
+                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
                                 <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
                                 <th>@EPMS.Web.Resources.HR.Request.EmployeeName</th>
                                 <th>@EPMS.Web.Resources.HR.Request.EmployeeJobId</th>
@@ -53,7 +53,7 @@
                         else
                         {
                             <tr>
-                                <th></th>
+                                <th>@(i += 1)</th>
                                 <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
                                 <th>@EPMS.Web.Resources.HR.Request.Status</th>
                             </tr>
@@ -76,11 +76,8 @@
                 "aoColumns": [
                     {
                         "aTargets": [0],
-                        "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
-                            return full["RequestId"];
-                        },
-                        "bVisible": false,
+                        "sDefaultContent": "",
+                        "bVisible": true,
                         "bSortable": false
                     },
                     {
@@ -156,6 +153,10 @@
                     "sZeroRecords": "No records to display.",
                     "sProcessing": "Processing...",
                     "sInfoEmpty": "No entries to display."
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    $("td:first", nRow).html(iDisplayIndex + 1);
+                    return nRow;
                 },
             });
         } else {

@@ -117,43 +117,151 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Age" xml:space="preserve">
-    <value>العمر</value>
+  <data name="Accept" xml:space="preserve">
+    <value>انا اقر</value>
   </data>
-  <data name="ApplicantName" xml:space="preserve">
-    <value>الاسم</value>
+  <data name="Agreement" xml:space="preserve">
+    <value>اقرار</value>
   </data>
-  <data name="Apply" xml:space="preserve">
-    <value>ارسال</value>
+  <data name="BirthDate" xml:space="preserve">
+    <value>تاريخ الميلاد</value>
+  </data>
+  <data name="BirthPlace" xml:space="preserve">
+    <value>مكان الميلاد</value>
+  </data>
+  <data name="Certificate" xml:space="preserve">
+    <value>شهادة</value>
+  </data>
+  <data name="CertificateDate" xml:space="preserve">
+    <value>تاريخ حصول على الشهادة</value>
+  </data>
+  <data name="CollegeSchoolName" xml:space="preserve">
+    <value>اسم الكلية / اسم المدرسة</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>جهة التي عملت بها</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>الادارة</value>
+    <value>قسم</value>
   </data>
-  <data name="DrivingLicense" xml:space="preserve">
-    <value>هل لديك رخصة قيادة</value>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>اقر انا الموضح اسمه في اول النموذج بانني على حسن سيرة و سلوك و ان المعلومات المدونة في جميع الفقرات السابقة في هذه النموذج صحيحة و غير مزورة و في حالة ثبوت عكي ذلك فانيي اتحمل جميع ما تفرضه علي النظام والاوامر و التعليمات النافذة بما في ذلك الغقبات المنصوص عليها في نظام مكافحة التزوير</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>البريد الالكتروني</value>
+    <value>البريد الإلكتروني</value>
   </data>
-  <data name="IqamaNo" xml:space="preserve">
-    <value>رقم البطاقة / اقامة</value>
+  <data name="EmployeedNow" xml:space="preserve">
+    <value>هل انت منتظم ام منتسب؟</value>
   </data>
-  <data name="JobDescription" xml:space="preserve">
-    <value>تفاصيل الوظيفة</value>
+  <data name="ErrorJobApplicant" xml:space="preserve">
+    <value>هناك بعض الخطأ في التطبيق. يرجى التحقق</value>
   </data>
-  <data name="MaritalStatus" xml:space="preserve">
-    <value>الحالة الاجتماعية</value>
+  <data name="EverWorkInGoverment" xml:space="preserve">
+    <value>هل سبق لك ان عملت في جهاز حكومي</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>خدماتك و خبراتك الوظيفية السابقة</value>
+  </data>
+  <data name="FamilyName" xml:space="preserve">
+    <value>اسم العائلة بالانجليزية</value>
+  </data>
+  <data name="FamilyNameAr" xml:space="preserve">
+    <value>اسم العائلة بالعربي</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>تخصص</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>اسم الاول بالانجليزية</value>
+  </data>
+  <data name="FirstNameAr" xml:space="preserve">
+    <value>اسم الاول بالعربي</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>من</value>
+  </data>
+  <data name="GetMonthlyPayment" xml:space="preserve">
+    <value>هل يصرفلك مكافئة شهرية؟</value>
+  </data>
+  <data name="GovermentAreaWorked" xml:space="preserve">
+    <value>اذا كان الجواب نعم ما هي الجهة</value>
+  </data>
+  <data name="GovernmentJobOfficial" xml:space="preserve">
+    <value>هل الوظيفة رسمية؟</value>
+  </data>
+  <data name="GovtJobLeavingDateG" xml:space="preserve">
+    <value>تاريخ الانفكاك الميلادي</value>
+  </data>
+  <data name="GovtJobLeavingDateH" xml:space="preserve">
+    <value>تاريخ الانفكاك المقالات</value>
+  </data>
+  <data name="JobTitle" xml:space="preserve">
+    <value>اسم الوظيفي</value>
+  </data>
+  <data name="LanguagesCanSpeak" xml:space="preserve">
+    <value>لغات التي تجيدها</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>اسم الجد بالانجليزية</value>
+  </data>
+  <data name="MiddleNameAr" xml:space="preserve">
+    <value>اسم الجد بالعربي</value>
   </data>
   <data name="MobileNumber" xml:space="preserve">
-    <value>رقم الجوال</value>
+    <value>رقم الهاتف</value>
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>الجنسية</value>
   </data>
-  <data name="SaveJobApplicant" xml:space="preserve">
-    <value>وقد قدم "أبليكانشن وظيفة" الخاص بك. سوف يكون الاتصال قريبا</value>
+  <data name="NoOfFamilyMembers" xml:space="preserve">
+    <value>عدد افراد الاسرة</value>
   </data>
-  <data name="UploadCv" xml:space="preserve">
-    <value>ارفق السيرة الذاتية</value>
+  <data name="NoOfYears" xml:space="preserve">
+    <value>عدد سنوات الدراسة</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
+  <data name="PassportNumber" xml:space="preserve">
+    <value>رقم الجواز</value>
+  </data>
+  <data name="PlaceOfStudy" xml:space="preserve">
+    <value>مكان الدراسة</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>المرتبة</value>
+  </data>
+  <data name="Qualification" xml:space="preserve">
+    <value>شهادات</value>
+  </data>
+  <data name="ReasonOfLeaving" xml:space="preserve">
+    <value>ما سبب الانفكاك</value>
+  </data>
+  <data name="ReasonToLeave" xml:space="preserve">
+    <value>سبب الانفكاك</value>
+  </data>
+  <data name="Salary" xml:space="preserve">
+    <value>الراتب</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>تسلسل</value>
+  </data>
+  <data name="Sex" xml:space="preserve">
+    <value>جنس</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="SuccessJobApplicant" xml:space="preserve">
+    <value>لقد طبقت بنجاح عن وظيفة. سوف اتصلت في وقت قريب.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>مقدم الوظيفة</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>الى</value>
+  </data>
+  <data name="TypeOfWork" xml:space="preserve">
+    <value>نوع العمل</value>
   </data>
 </root>

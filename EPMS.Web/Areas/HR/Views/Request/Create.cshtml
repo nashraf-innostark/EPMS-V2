@@ -400,8 +400,18 @@
         return true;
     }
     $(document).ready(function () {
-        CKEDITOR.replace('RequestDescCK');
-        CKEDITOR.replace('RequestReplyCK');
+        editor = CKEDITOR.replace('RequestDescCK', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('RequestReplyCK', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
         DivHideShow('IsMonetary', 'monetaryRequestControls');
         DivHideShow('IsMonetary', 'monetaryRequestReplyControls');
         $(".datepickerLoan").mask('99/99/9999');

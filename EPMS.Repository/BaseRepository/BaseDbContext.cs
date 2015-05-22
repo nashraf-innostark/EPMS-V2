@@ -109,6 +109,8 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<LicenseControlPanel> LicenseControlPanels { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<VendorItem> VendorItems { get; set; }
+        public DbSet<ApplicantQualification> ApplicantQualifications { get; set; }
+        public DbSet<ApplicantExperience> ApplicantExperiences { get; set; }
         public DbSet<InventoryDepartment> InventoryDepartments { get; set; }
         public DbSet<InventoryItem> InventoryItems { get; set; }
         public DbSet<Color> Colors { get; set; }

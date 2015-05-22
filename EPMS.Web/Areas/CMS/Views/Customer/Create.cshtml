@@ -131,7 +131,7 @@
     </div>
 }
 
-<script src="~/RichTextEditor/ckeditor.js"></script>
+<script src="~/RTE/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
         var isDetail;
@@ -155,8 +155,18 @@
         }
         if (isDetail == false) {
             // CK Editor
-            CKEDITOR.replace('OrderDescription');
-            CKEDITOR.replace('OrderNotes');
+            editor = CKEDITOR.replace('OrderDescription', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('OrderNotes', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
             $("#Descp").hide();
             $("#CKEditorDescp").show();
         }

@@ -42,7 +42,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             ContactListResponse response = customerService.GetContactListResponse();
             var empList = response.Employees.Where(x =>  !string.IsNullOrEmpty(x.Email) || !string.IsNullOrEmpty(x.EmployeeMobileNum)).Select(x => x.CreateForContactList());
             var customerList = response.Customers.Select(x => x.CreateForContactList());
-            var applicantList = response.JobApplicants.Where(x => !string.IsNullOrEmpty(x.ApplicantEmail) || !string.IsNullOrEmpty(x.ApplicantMobile)).Select(x => x.CreateForContactList());
+            var applicantList = response.JobApplicants.Where(x => !string.IsNullOrEmpty(x.Email) || !string.IsNullOrEmpty(x.MobileNumber)).Select(x => x.CreateForContactList());
             contactList.AddRange(empList);
             contactList.AddRange(customerList);
             contactList.AddRange(applicantList);

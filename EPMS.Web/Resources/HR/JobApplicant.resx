@@ -117,32 +117,95 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Age" xml:space="preserve">
-    <value>Age</value>
+  <data name="Accept" xml:space="preserve">
+    <value>I Accept</value>
   </data>
-  <data name="ApplicantName" xml:space="preserve">
-    <value>Applicant Name</value>
+  <data name="Agreement" xml:space="preserve">
+    <value>Agreement</value>
   </data>
-  <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Birth Date</value>
+  </data>
+  <data name="BirthPlace" xml:space="preserve">
+    <value>Birth Place</value>
+  </data>
+  <data name="Certificate" xml:space="preserve">
+    <value>Certificate</value>
+  </data>
+  <data name="CertificateDate" xml:space="preserve">
+    <value>Certificate Date</value>
+  </data>
+  <data name="CollegeSchoolName" xml:space="preserve">
+    <value>College Name / School Name</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Company Name</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Department</value>
   </data>
-  <data name="DrivingLicense" xml:space="preserve">
-    <value>Driving License</value>
+  <data name="Disclaimer" xml:space="preserve">
+    <value>I whose name is mentioned in the beginning of this form confirm that I am a person with good behavior and personality and the information that I have provided in all the fields in the form above are accurate and are not false or forged in any way, and if in case anything was proven otherwise, I would take total responsibility of all the penalties that would be put on me according to the Anti-Fraud system.</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="IqamaNo" xml:space="preserve">
-    <value>IqamaNo</value>
+  <data name="EmployeedNow" xml:space="preserve">
+    <value>Are You Employeed Now?</value>
   </data>
-  <data name="JobDescription" xml:space="preserve">
-    <value>Job Description</value>
+  <data name="ErrorJobApplicant" xml:space="preserve">
+    <value>There is some error in Application. Please verify.</value>
   </data>
-  <data name="MaritalStatus" xml:space="preserve">
-    <value>Marital Status</value>
+  <data name="EverWorkInGoverment" xml:space="preserve">
+    <value>Did You Ever Work In Goverment</value>
+  </data>
+  <data name="Experience" xml:space="preserve">
+    <value>Experience</value>
+  </data>
+  <data name="FamilyName" xml:space="preserve">
+    <value>Family Name</value>
+  </data>
+  <data name="FamilyNameAr" xml:space="preserve">
+    <value>Family Name Arabic</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="FirstNameAr" xml:space="preserve">
+    <value>First Name Arabic</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="GetMonthlyPayment" xml:space="preserve">
+    <value>Do You Get Monthly Payment</value>
+  </data>
+  <data name="GovermentAreaWorked" xml:space="preserve">
+    <value>What is the Goverment Area you Worked For</value>
+  </data>
+  <data name="GovernmentJobOfficial" xml:space="preserve">
+    <value>Was The Government Job Official?</value>
+  </data>
+  <data name="GovtJobLeavingDateG" xml:space="preserve">
+    <value>When did you leave - Gregorian</value>
+  </data>
+  <data name="GovtJobLeavingDateH" xml:space="preserve">
+    <value>When did you leave - Hijri</value>
+  </data>
+  <data name="JobTitle" xml:space="preserve">
+    <value>Job Title</value>
+  </data>
+  <data name="LanguagesCanSpeak" xml:space="preserve">
+    <value>Languages You Can Speak</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Middle Name</value>
+  </data>
+  <data name="MiddleNameAr" xml:space="preserve">
+    <value>Middle Name Arabic</value>
   </data>
   <data name="MobileNumber" xml:space="preserve">
     <value>Mobile Number</value>
@@ -150,22 +213,55 @@
   <data name="Nationality" xml:space="preserve">
     <value>Nationality</value>
   </data>
-  <data name="UploadCv" xml:space="preserve">
-    <value>Upload CV</value>
+  <data name="NoOfFamilyMembers" xml:space="preserve">
+    <value>Number of Family Members</value>
   </data>
-  <data name="ApplicantNameValidation" xml:space="preserve">
-    <value>Applicant Name is required</value>
+  <data name="NoOfYears" xml:space="preserve">
+    <value>Number of Years</value>
   </data>
-  <data name="ApplicantCvValidation" xml:space="preserve">
-    <value>CV is required</value>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
   </data>
-  <data name="ApplicantEmailValidation" xml:space="preserve">
-    <value>Email is required</value>
+  <data name="PassportNumber" xml:space="preserve">
+    <value>Passport Number</value>
   </data>
-  <data name="ApplicantMobileValidation" xml:space="preserve">
-    <value>Mobile Number is required</value>
+  <data name="PlaceOfStudy" xml:space="preserve">
+    <value>Place of Study</value>
   </data>
-  <data name="SaveJobApplicant" xml:space="preserve">
-    <value>Your Job Applicantion has been submitted. You will be contacted soon</value>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Qualification" xml:space="preserve">
+    <value>Qualification</value>
+  </data>
+  <data name="ReasonOfLeaving" xml:space="preserve">
+    <value>What is the reason of leaving</value>
+  </data>
+  <data name="ReasonToLeave" xml:space="preserve">
+    <value>Reason to Leave</value>
+  </data>
+  <data name="Salary" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>Serial</value>
+  </data>
+  <data name="Sex" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="SuccessJobApplicant" xml:space="preserve">
+    <value>You have successfully applied for job. You will contacted soon.</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Job Applicant</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="TypeOfWork" xml:space="preserve">
+    <value>Type of Work</value>
   </data>
 </root>

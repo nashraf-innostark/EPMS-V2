@@ -225,4 +225,13 @@
   <data name="TaskProgeress" xml:space="preserve">
     <value>Task Progress</value>
   </data>
+  <data name="IsParent" xml:space="preserve">
+    <value>Is Parent Task</value>
+  </data>
+  <data name="ParentTask" xml:space="preserve">
+    <value>Parent Task</value>
+  </data>
+  <data name="ErrorSaving" xml:space="preserve">
+    <value>Error while Saving</value>
+  </data>
 </root>

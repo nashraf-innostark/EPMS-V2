@@ -12,5 +12,6 @@ namespace EPMS.Web.Models
         public string NameA { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public int ProjectTasksSum { get; set; }
     }
 }

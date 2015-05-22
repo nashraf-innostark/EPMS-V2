@@ -11,16 +11,18 @@ namespace EPMS.Implementation.Services
     {
         private readonly IJobOfferedRepository jobOfferedRepository;
         private readonly IJobTitleRepository jobTitleRepository;
+        private readonly IDepartmentService departmentService;
 
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="jobOfferedRepository"></param>
-        public JobOfferedService(IJobOfferedRepository jobOfferedRepository, IJobTitleRepository jobTitleRepository)
+        public JobOfferedService(IJobOfferedRepository jobOfferedRepository, IJobTitleRepository jobTitleRepository, IDepartmentService departmentService)
         {
             this.jobOfferedRepository = jobOfferedRepository;
             this.jobTitleRepository = jobTitleRepository;
+            this.departmentService = departmentService;
         }
 
         #endregion
@@ -45,7 +47,8 @@ namespace EPMS.Implementation.Services
             JobApplicantResponse response = new JobApplicantResponse
             {
                 JobOffered = FindJobOfferedById(id),
-                JobTitles = jobTitleRepository.GetAll()
+                JobTitles = jobTitleRepository.GetAll(),
+                Departments = departmentService.GetAll()
             };
             return response;
         }

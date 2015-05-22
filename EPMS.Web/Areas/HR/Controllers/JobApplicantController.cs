@@ -28,18 +28,20 @@ namespace EPMS.Web.Areas.HR.Controllers
         private readonly IJobOfferedService jobOfferedService;
         private readonly IJobTitleService jobTitleService;
         private readonly IJobApplicantService jobApplicantService;
+        private readonly IDepartmentService departmentService;
 
         #endregion
 
         #region Constructor
 
-        public JobApplicantController(IJobOfferedService jobOfferedService, IJobTitleService jobTitleService, IJobApplicantService jobApplicantService)
+        public JobApplicantController(IJobOfferedService jobOfferedService, IJobTitleService jobTitleService, IJobApplicantService jobApplicantService, IDepartmentService departmentService)
         {
             this.jobOfferedService = jobOfferedService;
             this.jobTitleService = jobTitleService;
             this.jobApplicantService = jobApplicantService;
+            this.departmentService = departmentService;
         }
-        
+
         #endregion
 
         #region Public
@@ -47,7 +49,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [AllowAnonymous]
         public ActionResult Jobs()
         {
-            JobApplicantViewModel viewModel=new JobApplicantViewModel
+            JobApplicantViewModel viewModel = new JobApplicantViewModel
             {
                 JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
             };
@@ -64,8 +66,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return RedirectToAction("Jobs");
             }
             JobApplicantResponse response = jobOfferedService.GetJobOfferedResponse((long)id);
-            jobApplicantViewModel.JobOffered = response.JobOffered.CreateFrom();
-            jobApplicantViewModel.JobTitleList = response.JobTitles.Select(x => x.CreateFrom());
+            jobApplicantViewModel.Departments = response.Departments.Select(x => x.CreateFrom());
+            jobApplicantViewModel.JobApplicant.JobOfferedId = (long)id;
             return View(jobApplicantViewModel);
         }
 
@@ -79,19 +81,39 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                 #region Add
                 {
-                    jobApplicantViewModel.JobApplicant.RecCreatedBy = User.Identity.GetUserId();
-                    jobApplicantViewModel.JobApplicant.RecCreatedDt = DateTime.Now;
-                    jobApplicantViewModel.JobApplicant.RecLastUpdatedBy = User.Identity.GetUserId();
-                    jobApplicantViewModel.JobApplicant.RecLastUpdatedDt = DateTime.Now;
-                    JobApplicant modelToSave = jobApplicantViewModel.JobApplicant.CreateFrom();
-                    modelToSave.JobOfferedId = jobApplicantViewModel.JobOffered.JobOfferedId;
-
+                    jobApplicantViewModel.JobApplicant.CreatedBy = User.Identity.GetUserId();
+                    jobApplicantViewModel.JobApplicant.CreatedDate = DateTime.Now;
+                    jobApplicantViewModel.JobApplicant.LastUpdatedBy = User.Identity.GetUserId();
+                    jobApplicantViewModel.JobApplicant.LastUpdatedDate = DateTime.Now;
+                    foreach (var applicantQualification in jobApplicantViewModel.Qualifications.ToList())
+                    {
+                        if (!IsNotNullOrEmptyQualification(applicantQualification))
+                        {
+                            jobApplicantViewModel.Qualifications.Remove(applicantQualification);
+                        }
+                        applicantQualification.CreatedBy = User.Identity.GetUserId();
+                        applicantQualification.CreatedDate = DateTime.Now;
+                        applicantQualification.LastUpdatedBy = User.Identity.GetUserId();
+                        applicantQualification.LastUpdatedDate = DateTime.Now;
+                    }
+                    foreach (var applicantExperience in jobApplicantViewModel.Experiences.ToList())
+                    {
+                        if (!IsNotNullOrEmptyExperience(applicantExperience))
+                        {
+                            jobApplicantViewModel.Experiences.Remove(applicantExperience);
+                        }
+                        applicantExperience.CreatedBy = User.Identity.GetUserId();
+                        applicantExperience.CreatedDate = DateTime.Now;
+                        applicantExperience.LastUpdatedBy = User.Identity.GetUserId();
+                        applicantExperience.LastUpdatedDate = DateTime.Now;
+                    }
+                    JobApplicant modelToSave = jobApplicantViewModel.JobApplicant.CreateFrom(jobApplicantViewModel.Qualifications.ToList(), jobApplicantViewModel.Experiences.ToList());
                     if (jobApplicantService.AddJobApplicant(modelToSave))
                     {
-                        //TempData["message"] = new MessageViewModel { Message = Resources.HR.JobApplicant.SaveJobApplicant, IsSaved = true };
-                        TempData["Messages"] = Resources.HR.JobApplicant.SaveJobApplicant;
-                        jobApplicantViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
-                        return RedirectToAction("Jobs");
+                        ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.JobApplicant.SuccessJobApplicant, IsSaved = true };
+                        jobApplicantViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
+                        jobApplicantViewModel.JobApplicant.AcceptAgreement = false;
+                        return View(jobApplicantViewModel);
                     }
                 }
 
@@ -100,10 +122,11 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             catch (Exception e)
             {
-                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
-                return RedirectToAction("Apply", e);
+                ViewBag.MessageVM = new MessageViewModel { Message = e.Message, IsError = true };
+                return View(jobApplicantViewModel);
             }
-            TempData["message"] = new MessageViewModel { Message = "Error", IsError = true };
+            jobApplicantViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
+            ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.JobApplicant.ErrorJobApplicant, IsError = true };
             return View(jobApplicantViewModel);
         }
         public ActionResult UploadCv()
@@ -137,7 +160,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             };
             return View(jobApplicantListViewModel);
         }
-        
+
         [HttpPost]
         public ActionResult JobApplicantList(JobApplicantSearchRequest jobApplicantSearchRequest)
         {
@@ -158,24 +181,51 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
         [SiteAuthorize(PermissionKey = "ApplicantDetail")]
         public ActionResult ApplicantDetail(long id)
-       {
+        {
             JobApplicantViewModel jobApplicantViewModel = new JobApplicantViewModel();
-            if (id>0)
+            if (id > 0)
             {
                 var applicant = jobApplicantService.FindJobApplicantById(id);
                 if (applicant != null)
                 {
+                    jobApplicantViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
                     jobApplicantViewModel.JobApplicant = applicant.CreateJobApplicant();
+                    jobApplicantViewModel.Qualifications =
+                        applicant.ApplicantQualifications.Select(x => x.CreateFromServerToClient()).ToList();
+                    jobApplicantViewModel.Experiences =
+                        applicant.ApplicantExperiences.Select(x => x.CreateFromServerToClient()).ToList();
                     return View(jobApplicantViewModel);
                 }
             }
             return RedirectToAction("JobApplicantList");
-            
+
         }
         public FileResult Download(string fileName)
         {
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ApplicantCv"] + fileName));
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+        public bool IsNotNullOrEmptyQualification(ApplicantQualification qualification)
+        {
+            if (!string.IsNullOrEmpty(qualification.Certificate) || !string.IsNullOrEmpty(qualification.Field) ||
+                !string.IsNullOrEmpty(qualification.PlaceOfStudy) ||
+                !string.IsNullOrEmpty(qualification.CollegeSchoolName) || !string.IsNullOrEmpty(qualification.NoOfYears) ||
+                !string.IsNullOrEmpty(qualification.Notes))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsNotNullOrEmptyExperience(ApplicantExperience experience)
+        {
+            if (!string.IsNullOrEmpty(experience.CompanyName) || !string.IsNullOrEmpty(experience.JobTitle) ||
+                !string.IsNullOrEmpty(experience.Position) || experience.Salary != null ||
+                !string.IsNullOrEmpty(experience.TypeOfWork) || !string.IsNullOrEmpty(experience.ReasonToLeave))
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
     }

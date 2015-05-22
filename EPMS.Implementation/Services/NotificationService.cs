@@ -265,7 +265,7 @@ namespace EPMS.Implementation.Services
             }
 
             notificationResponse.ItemId = itemId;
-            notificationResponse.AlertDate = Convert.ToDateTime(alertDate).ToShortDateString();
+            notificationResponse.AlertDate = Convert.ToDateTime(alertDate).ToString("dd/MM/yyyy");
 
             notificationResponse.SystemGenerated = true;
             AddUpdateNotification(notificationResponse);
@@ -553,13 +553,10 @@ namespace EPMS.Implementation.Services
                                        employee.EmployeeLastNameE;
                 var employeeFullNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
                                        employee.EmployeeLastNameA;
-                if (employee != null)
-                {
-                    fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin ? employeeFullNameE : "Your");
-                    fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
-                    fileText = fileText.Replace("[IqamaExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
-                    fileText = fileText.Replace("[PassportExpiryDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
-                }
+                fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin ? employeeFullNameE+"'s" : "Your");
+                fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
+                fileText = fileText.Replace("[AlertDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
+                fileText = fileText.Replace("[AlertDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
             }
             if (notificationResponse.NotificationCode == "30")//Employee Request
             {
@@ -595,7 +592,7 @@ namespace EPMS.Implementation.Services
             {
                 //JobApplicant=ItemId,JobOfferedId=SubCategoryId 
                 var jobApplicant = jobApplicantRepository.Find(notificationResponse.ItemId);
-                fileText = fileText.Replace("[ApplicantName]", jobApplicant.ApplicantName);
+                fileText = fileText.Replace("[ApplicantName]", jobApplicant.ApplicantFirstNameE + " " +jobApplicant.ApplicantMiddleNameE);
                 var jobTitle = jobApplicant.JobOffered.JobTitle;
                 fileText = fileText.Replace("[JobTitleEng]", jobTitle.JobTitleNameE);
                 fileText = fileText.Replace("[JobTitleAr]", jobTitle.JobTitleNameA);

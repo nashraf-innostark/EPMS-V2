@@ -292,6 +292,7 @@
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
     <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
+    <Compile Include="Areas\Common\Controllers\FileUploadCkControllerController.cs" />
     <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
     <Compile Include="Areas\CP\CPAreaRegistration.cs" />
     <Compile Include="Areas\HR\Controllers\ContactListController.cs" />
@@ -377,8 +378,10 @@
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
+    <Compile Include="Models\ApplicantExperience.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\Color.cs" />
+    <Compile Include="Models\ApplicantQualification.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
     <Compile Include="Models\CompanyLicenseInformation.cs" />
@@ -422,6 +425,7 @@
     <Compile Include="Models\RequestDetail.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\SubTaskWeight.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Models\TaskEmployee.cs" />
@@ -533,10 +537,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobApplicant.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\HR\JobApplicantAr.Designer.cs">
+    <Compile Include="Resources\HR\JobApplicant.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>JobApplicantAr.resx</DependentUpon>
+      <DependentUpon>JobApplicant.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\JobOffered.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -682,6 +686,7 @@
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
+    <Compile Include="ViewModels\CKEditor\ImagesViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
     <Compile Include="ViewModels\CompanyProfile\CompanyProfileViewModel.cs" />
@@ -718,6 +723,7 @@
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
     <Compile Include="ViewModels\Vendor\VendorViewModel.cs" />
@@ -752,6 +758,10 @@
     <Content Include="Content\CSS\print.css" />
     <Content Include="Content\CSS\screen.css" />
     <Content Include="Content\plugins\jstree\default\style.css" />
+    <Content Include="Images\CKUploads\10947672_10152685878817657_642879663_n.jpg" />
+    <Content Include="Images\CKUploads\10966523_10152685879702657_1713565689_n.jpg" />
+    <Content Include="Images\CKUploads\11079327_10152685878212657_284329175_n.jpg" />
+    <Content Include="Images\CKUploads\11106462_10152685879987657_1716894699_n.jpg" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />
     <Content Include="NotificationsTextFiles\CommercialRegisterExpiryDateEmail.txt" />
@@ -1738,6 +1748,12 @@
     <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Create.cshtml" />
+    <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
+    <Content Include="Images\CKUploads\SetUp project.docx" />
+    <Content Include="Areas\Common\Views\Shared\_CKFinderLayout.cshtml" />
+    <Content Include="Areas\Common\Views\FileUploadCkController\UploadPartial.cshtml" />
+    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
+    <Content Include="RTB\userfiles\.htaccess" />
     <Content Include="RTE\CHANGES.md" />
     <Content Include="RTE\LICENSE.md" />
     <Content Include="RTE\plugins\scayt\LICENSE.md" />
@@ -1752,9 +1768,11 @@
     <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="RTB\userfiles\.htaccess" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Index.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Views\Shared\_ApplicantApplyLayout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemVariation\Create.cshtml" />
-    <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -3620,7 +3638,7 @@
     <Content Include="Areas\HR\Views\Payroll\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobOffered\Create.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Jobs.cshtml" />
-    <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
+    <Content Include="Areas\HR\Views\JobApplicant\ApplyOld.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\JobApplicantList.cshtml" />
     <Content Include="Areas\HR\Views\Payroll\Detail.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\ApplicantDetail.cshtml" />
@@ -3799,9 +3817,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobApplicant.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HR\JobApplicantAr.resx">
+    <EmbeddedResource Include="Resources\HR\JobApplicant.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>JobApplicantAr.Designer.cs</LastGenOutput>
+      <LastGenOutput>JobApplicant.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobOffered.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4068,7 +4086,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Details.cshtml" />
@@ -4127,12 +4144,12 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_ApplicantLayout.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
     <Folder Include="Areas\CMS\Models\" />
     <Folder Include="Areas\CMS\Views\Shared\" />
-    <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Areas\CP\Models\" />
