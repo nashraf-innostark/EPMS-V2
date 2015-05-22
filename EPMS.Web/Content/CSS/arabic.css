@@ -1,9 +1,7 @@
 /* --------------------------------------------------------------
-Noto Kufi Arabic-droidarabickufi-lateef-Noto Naskh Arabic-scheherazade
+
 -------------------------------------------------------------- */
 
-@import url(http://fonts.googleapis.com/earlyaccess/notokufiarabic.css);
-@import url(http://fonts.googleapis.com/earlyaccess/scheherazade.css);
 form { direction: rtl; }
 
 .form-horizontal .control-label {
@@ -60,22 +58,8 @@ float:left;
   float:right;
  }
 }
-.nav-user-menu > li > a, .user-sub-menu > li > a{
-font-size: 10px;
-}
-.nav-user-menu > li.active-user-menu > a, .user-sub-menu > li.active-user-menu > a{
-font-size: 10px;
-}
-.nav-user-menu > li > a:hover, .user-sub-menu > li > a:hover, .nav-user-menu > li > a:focus, .user-sub-menu > li > a:focus{
-font-size: 10px;
-}
-.nav-side-menu > li > a{
-font-size: 12px;
-}
-.sub-nav a{
-font-size: 12px;
-text-align:right;
-}
+
+
 @media screen and (max-width: 767px) {
 .nav-side-menu > li > a{
 text-align:right;
@@ -248,56 +232,22 @@ padding-left:0px;
 	float: left;
 	margin-top: 13px;
 	margin-right: 5px;
-	margin-left: 0 !important;
+	margin-left: 0px !important;
 }
-.xbreadcrumbs > LI A{
-	font-size:10px;
-	font-weight:700;
+.tab-content{
+overflow:hidden !important;
 }
-.xbreadcrumbs > LI.current A{
-    font-size:11px;
-}
-.xbreadcrumbs > LI:first-child A{
-	
-	font-weight:500;
+.modal-body {
+overflow-x:hidden !important;
 }
 
-.upload-boxes #upload{
- float:right;
+.modal-body  input[type="checkbox"]{
+  margin: -1px 0px 0px 2px !important;
 }
-
-.upload-boxes #uploaded{
- float:left;
- margin:0px;
-}
-
-.nav-tabs > li, .nav-pills > li{
-float:right;
-}
-
-.pickList_sourceListContainer, .pickList_controlsContainer, .pickList_targetListContainer{
-float:right;
-}
-.login-member{
-direction: rtl;
-}
-
-.jobSectionButton{
- float:right;
-}
-
-.applyJobWidget .btn{
- position:absolute;
- bottom:0px;
- left:auto;
- right:15px;
- }
-
 /* Typography with RTL support */
 body h1,body h2,body h3,
-body h4,body h5,body h6 { font-family: 'Noto Kufi Arabic',Arial, serif; }
-html body { font-family: 'Noto Kufi Arabic',Arial, serif; font-size:12px;}
-.form-horizontal .control-label{font-size:12px;}
+body h4,body h5,body h6 { font-family: Arial, sans-serif; }
+html body { font-family: Arial, sans-serif;  }
 body pre,body code,body tt { font-family: monospace; }
 
 /* Mirror floats and margins on typographic elements */

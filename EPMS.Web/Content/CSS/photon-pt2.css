@@ -1004,40 +1004,6 @@ a:active,
 .widget-latest-users .tooltip .tooltip-inner .text-section .user-info {
   color: #999999;
 }
-.applyJobWidget{
- height:400px;
-}
-
-.csstransitions .applyJobWidget  .widget-flipper {
-height:400px;
-}
-.jobsOffred li:last-child{
-	height:175px;
-}
-.jobsOffred li:last-child span{
-
-  display:block;
-  clear:both;
-}
-.jobsOffred li .jobDesc{
- display:block;
- clear:both;
- float:left;
-  height:120px;
-  overflow:scroll;
-  overflow-x:hidden;
-  padding:5px;
-  width: 270px;
- 
-}
-.jobSectionButton{
- float:left;
-}
-.applyJobWidget .btn{
- position:absolute;
- bottom:0px;
- left:15px;
-}
 .task-completion .progress-info {
   background: rgba(53, 61, 72, 0.5) !important;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM1M2Q0OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyYTMxM2EiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -7039,6 +7005,11 @@ html > body .ui-pnotify {
 .sidebarMenuHolder {
   position: relative;
 }
+  /*Inventory <*/
+.modal-body .sidebarMenuHolder{
+  background-image: url('../../images/photon/panel_bck.jpg');
+}
+  /*Inventory >*/
 .Jstree_shadow_top {
   position: absolute;
   top: -2px;
@@ -7135,6 +7106,30 @@ html > body .ui-pnotify {
   .jstree.jstree-default > ul > li > ul > li > ul > li > ins {
     margin-left: 60px;
   }
+    /*Inventory <*/
+  .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ins {
+    margin-left: 80px;
+  }
+  .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ul > li > ins {
+    margin-left: 100px;
+  }
+  .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ins  {
+    margin-left: 120px;
+  }
+   .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ins  {
+    margin-left: 140px;
+  }
+   .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ins  {
+    margin-left: 160px;
+  }
+   .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ins{
+    margin-left: 180px;
+  }
+  .jstree.jstree-default > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ins{
+    margin-left: 200px;
+  }
+    /*Inventory >*/
+
 }
 @media (max-width: 767px) {
   .Jstree_shadow_bottom {
@@ -7212,6 +7207,11 @@ html > body .ui-pnotify {
   margin-bottom: 30px;
   overflow: hidden;
 }
+  /*Inventory <*/
+.modal-body .mCSB_container{
+ padding:15px;
+}
+  /*Inventory >*/
 .mCSB_horizontal .mCSB_container.mCS_no_scrollbar {
   margin-bottom: 0;
 }
@@ -9504,6 +9504,14 @@ background-color:rgba(164, 164, 252, 0.39) !important;
 .nav-side-menu > li.helpSection:hover a{
 background-color:rgba(77, 132, 194, 0.32) !important;
 }
+  /*Inventory <*/
+.nav-side-menu > li.inventorySys:hover a {
+    background-color: rgba(249, 220, 132, 0.39) !important;
+}
+.nav-side-menu > li.userManageSys:hover a {
+    background-color: rgba(103, 236, 206, 0.34) !important;
+}
+  /*Inventory >*/
 
  .lightBlue{
 	color:rgb(97, 196, 239) !important;
@@ -9532,6 +9540,11 @@ background-color:rgba(77, 132, 194, 0.32) !important;
   .darkBlue{
 	color:rgb(77, 132, 194) !important;
   }
+  /*Inventory <*/
+  .lighterOrange{
+  color: rgb(252, 193, 86) !important;
+  }
+   /*Inventory >*/
   .employeeImg{
 	height: 100px;
 	margin: 5px;
@@ -9653,4 +9666,7 @@ cursor:pointer;
 .centTitle{ text-align:center;}
 .print{
 	float:right;
+}
+.tableDbM{
+margin:0px !important;
 }

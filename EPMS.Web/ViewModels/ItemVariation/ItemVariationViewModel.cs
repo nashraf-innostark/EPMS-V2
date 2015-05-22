@@ -21,11 +21,18 @@ namespace EPMS.Web.ViewModels.ItemVariation
                 Sizes = new List<Size>(),
                 Manufacturers = new List<Manufacturer>(),
                 Statuses = new List<Status>(),
-                ItemImage = new List<ItemImage>(),
+                ItemImages = new List<ItemImage>(),
                 Warehouses = new List<Warehouse>()
             };
         }
         public Models.ItemVariation ItemVariation { get; set; }
         public IEnumerable<Models.ItemVariation> ItemVariations { get; set; }
+
+        public Color Color { get; set; }
+        public Size Size { get; set; }
+        public Manufacturer Manufacturer { get; set; }
+        public Status Statuse { get; set; }
+        public Warehouse Warehouse { get; set; }
+        public ItemImage ItemImage { get; set; }
     }
 }

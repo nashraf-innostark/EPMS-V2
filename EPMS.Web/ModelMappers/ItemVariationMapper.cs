@@ -41,7 +41,7 @@ namespace EPMS.Web.ModelMappers
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 Statuses = source.Status.Select(x=>x.CreateFromServerToClent()).ToList(),
                 Manufacturers = source.Manufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
-                ItemImage = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
+                ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
     }
