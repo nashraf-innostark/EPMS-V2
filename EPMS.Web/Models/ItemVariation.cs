@@ -39,7 +39,7 @@ namespace EPMS.Web.Models
         public List<Manufacturer> Manufacturers { get; set; }
         public List<Status> Statuses { get; set; }
         public List<Warehouse> Warehouses { get; set; }
-        public List<ItemImage> ItemImage { get; set; }
+        public List<ItemImage> ItemImages { get; set; }
 
     }
 }

@@ -750,6 +750,8 @@
     <Content Include="Content\CSS\help-photon.css" />
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\plugins\jstree\default\style.css" />
+    <Content Include="Content\CSS\print.css" />
+    <Content Include="Content\CSS\screen.css" />
     <Content Include="Content\plugins\jstree\default\style.css" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />

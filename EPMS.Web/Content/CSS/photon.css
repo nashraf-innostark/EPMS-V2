@@ -6808,11 +6808,13 @@ a.btn-facebook.active {
   }
   .panel-logo {
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    background: url('../../images/photon/panel_logo@2x.png') no-repeat;
-    background-size: 125px 30px;
-    line-height: 60px;
-    background-position: 0 center;
-  }
+  background: url('../../images/photon/200x100.png') no-repeat;
+  background-size: 180px 90px;
+  line-height: 60px;
+  background-position: center center;
+  height: 100px !important;
+}
+
   .panel-header {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
@@ -7109,20 +7111,23 @@ a.btn-facebook.active {
   background-image: url('../../images/photon/body_bck.jpg');
 }
 @media screen and (min-width: 768px) {
-  .main-content {
-    position: absolute;
-    overflow: hidden;
-    left: 30px;
-    right: 0;
-    width: auto;
-    min-height: 100%;
-    z-index: 1;
-    background: #f6f6f6;
-    -webkit-transition: left 0.1s ease-out;
-    -moz-transition: left 0.1s ease-out;
-    -o-transition: left 0.1s ease-out;
-    transition: left 0.1s ease-out;
-  }
+.main-content {
+  position: absolute;
+  overflow: hidden;
+  left: 30px;
+  right: 0;
+  width: auto;
+  min-height: 100%;
+  z-index: 1;
+  background: #f6f6f6;
+  -webkit-transition: left 0.1s ease-out;
+  -moz-transition: left 0.1s ease-out;
+  -o-transition: left 0.1s ease-out;
+  transition: left 0.1s ease-out;
+}
+.withPanel{
+left:400px;
+}
 }
 .span-inset {
   padding: 15px 10px 0;
@@ -9012,3 +9017,9 @@ form span.error.exceeded {
 .helpContentHide{
 display:none;
 }
+ /*Inventory <*/
+.txt-center{
+text-align:center !important;
+float:none !important;
+}
+ /*Inventory >*/
