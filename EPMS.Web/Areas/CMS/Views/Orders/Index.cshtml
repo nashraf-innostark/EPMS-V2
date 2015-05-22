@@ -72,11 +72,8 @@
             "aoColumns": [
                 {
                     "aTargets": [0],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["OrderId"];
-                    },
-                    "bVisible": false,
+                    "sDefaultContent": "",
+                    "bVisible": true,
                     "bSortable": false
                 },
                 {
@@ -172,6 +169,11 @@
                 //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
             },
         });
         $(".dataTables_length select").select2({

@@ -10,6 +10,7 @@ namespace EPMS.Web.Models
         {
             RequisitTasks = new List<ProjectTask>();
             TaskEmployees = new List<TaskEmployee>();
+            SubTasksWeight = new List<SubTaskWeight>();
         }
         public long TaskId { get; set; }
         public long? CustomerId { get; set; }
@@ -29,7 +30,6 @@ namespace EPMS.Web.Models
         //[Required(ErrorMessage = "Please select Task end date according to Project start/end date")]
         public string EndDate { get; set; }
         public string EndDateAr { get; set; }
-        [Required(ErrorMessage = "Total Cost is required.")]
         public decimal TotalCost { get; set; }
         [Required(ErrorMessage = "Total Weight is required.")]
         public string TotalWeight { get; set; }
@@ -44,12 +44,14 @@ namespace EPMS.Web.Models
         public string ProjectNameE { get; set; }
         public string ProjectNameA { get; set; }
         public long? ParentTask { get; set; }
-        public int SubTasksPercentageCount { get; set; }
+        //public int SubTasksPercentageCount { get; set; }
         public int PrevTasksWeightSum { get; set; }
         
         public string PreReqTasks { get; set; }
         public List<ProjectTask> RequisitTasks { get; set; }
         public List<TaskEmployee> TaskEmployees { get; set; }
+        public List<ProjectTask> SubTasks { get; set; }
+        public List<SubTaskWeight> SubTasksWeight { get; set; }
         public string EmployeesAssigned { get; set; }
     }
 }

@@ -38,7 +38,7 @@
 <!-- Page heading ends -->
 @using (Html.BeginForm("Create", "Task", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditTaskForm", role = "form", enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(model => model.ProjectTask.TaskId)
+    @Html.HiddenFor(model => model.ProjectTask.TaskId, new { @id = "TaskId" })
     @Html.HiddenFor(model => model.ProjectTask.RecCreatedBy)
     @Html.HiddenFor(model => model.ProjectTask.RecCreatedDt)
     @Html.HiddenFor(model => model.ProjectTask.PrevTasksWeightSum, new { @id = "prevTasksWeight" })
@@ -223,13 +223,26 @@
                     @EPMS.Web.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
-            <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
-                <label id="projectStartDateValidation"></label>
-            </div>
-            <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
-            </div>
+            @if (direction == "rtl")
+            {
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
+                    <label id="projectStartDateValidation"></label>
+                </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
+                </div>
+            }
+            else
+            {
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskStartDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskStartDateAr)", @readonly = "readonly" })
+                </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.StartDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskStartDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskStartDate')", @readonly = "readonly" })
+                    <label id="projectStartDateValidation"></label>
+                </div>
+            }
         </div>
         <div id="Date_Picker2" class="control-group row-fluid endDate">
             <div class="span3">
@@ -237,13 +250,26 @@
                     @EPMS.Web.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
-            <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly" })
-                <label id="projectEndDateValidation"></label>
-            </div>
-            <div class="controls span4">
-                @Html.TextBoxFor(model => model.ProjectTask.EndDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskEndDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly" })
-            </div>
+            @if (direction == "rtl")
+            {
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new {@class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly"})
+                    <label id="projectEndDateValidation"></label>
+                </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new {@class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskEndDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly"})
+                </div>
+            }
+            else
+            {
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDate, new {@class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "TaskEndDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, TaskEndDateAr)", @readonly = "readonly"})
+                </div>
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.ProjectTask.EndDateAr, new {@class = "col-lg-2 datepickerArabic form-control cursorHand toBeDiable", @id = "TaskEndDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#TaskEndDate')", @readonly = "readonly"})
+                    <label id="projectEndDateValidation"></label>
+                </div>
+            }
         </div>
         @if (userPermissionsSet.Contains("CreateTask"))
         {
@@ -307,7 +333,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TaskProgress, new { @id = "TaskProgress", @class = "readonly  toBeDiable" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskProgress, new { @id = "TaskProgress", @class = "readonly  toBeDiabled" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TaskProgress, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -445,6 +471,9 @@
             $("#Notes").hide();
             $("#CKEditorNotes").show();
         }
+        if ('@Model.ProjectTask.IsParent' == 'True') {
+            $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
+        }
         // Set project start and end date
         var projId = parseInt($("#ProjectId").val());
         var projList = '@Html.Raw(Json.Encode(Model.ProjectsForDdls))';
@@ -472,74 +501,15 @@
             $(".readonly").attr("readonly", "true");
         }
 
-        //$('#TaskProgress').on("blur", function () {
-        //    var currVal = $(this).val();
-        //    if (currVal > 100 || isNaN(currVal)) {
-        //        notify();
-        //        return;
-        //    }
-        //    function notify() {
-        //        $.pnotify({
-        //            title: 'Sorry',
-        //            type: 'info',
-        //            text: 'This task progress should not exceed 100 and must be number.'
-        //        });
-        //        $('#TaskProgress').val("");
-        //        return;
-        //    }
-        //});
+        $('#TaskProgress').on("blur", function () {
+            if (!verifyTaskProgress(this))
+                return false;
+        });
         $('#TaskProgress').mask("99%");
         $('#TotalWeight').mask("99%");
         $('#TotalWeight').on("blur", function () {
-            var prevVal = parseInt($("#prevTasksWeight").val());
-            var temp = $(this).val();
-            var tempVal = temp.split('%');
-            var currVal = parseInt(tempVal[0]);
-            if (currVal > 0) {
-                if (($('#ProjectId').val() != "" || $('#ProjectId').val() != 0) && ($('#ParentTaskId').val() == "" || $('#ParentTaskId').val() == 0)) {
-                    if ((prevVal + currVal) > 100 || isNaN(currVal)) {
-                        notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
-                        return;
-                    }
-                    var projectTasksWeightSum;
-                    var projectsList = '@Html.Raw(Json.Encode(Model.ProjectsForDdls))';
-                    var parsed = JSON.parse(projectsList);
-                    $.each(parsed, function (key, value) {
-                        if (value.ProjectId == $('#ProjectId').val()) {
-                            projectTasksWeightSum = value.ProjectTasksSum;
-                        }
-                    });
-                    if ((projectTasksWeightSum + currVal - taskWeight) > 100) {
-                        notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
-                        return;
-                    }
-                }
-                if ($('#ParentTaskId').val() != "" || $('#ParentTaskId').val() != 0) {
-                    var parentWeight;
-                    var parentSubTasksWeight;
-                    var parentTasksList = '@Html.Raw(Json.Encode(Model.AllParentTasks))';
-                    var parsed = JSON.parse(parentTasksList);
-                    $.each(parsed, function (key, value) {
-                        if (value.TaskId == $('#ParentTaskId').val()) {
-                            parentWeight = parseInt(value.TotalWeight.split('%')[0]);
-                            parentSubTasksWeight = value.SubTasksPercentageCount;
-                        }
-                    });
-                    if ((parentSubTasksWeight + currVal) > parentWeight || isNaN(currVal)) {
-                        notify('Sum of Child Tasks weight should not exceed Parent task weight and must be number.');
-                        return;
-                    }
-                }
-            }
-            function notify(error) {
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: error
-                });
-                $('#TotalWeight').val(0);
-                return;
-            }
+            if (!verifyTaskWeight(this))
+                return false;
         });
         var idOfTask = parseInt('@Model.ProjectTask.TaskId');
         if ('@Model.ProjectTask.RequisitTasks.Count' > 0) {
@@ -664,13 +634,18 @@
     });
 
     $('#IsParentTask').change(function () {
-        debugger;
         if ($('#IsParentTask').is(":checked")) {
             $("#checked").addClass('disableList');
             $('#ParentTaskId').select2('disable');
+            //$("#TaskProgress").addClass('disableList');
+            //$('#TaskProgress').attr('readonly', true);
+            $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
         } else {
             $("#checked").removeClass('disableList');
             $('#ParentTaskId').select2('enable');
+            $('.' + 'toBeDiabled' + ':input').attr('disabled', false);
+            //$("#TaskProgress").removeClass('disableList');
+            //$('#TaskProgress').attr('readonly', false);
         }
     });
 
@@ -873,6 +848,18 @@
             $("#projectEndDateValidation").removeClass("required");
         }
         /// scetion ends -----Task dates compared to Parent Task dates----- ///
+
+        /// Task Progress
+        if (!verifyTaskProgress('#TaskProgress')) {
+            event.preventDefault();
+            return false;
+        }
+
+        /// Task Weight
+        if (!verifyTaskWeight('#TotalWeight')) {
+            event.preventDefault();
+            return false;
+        }
         return true;
     }
     function populateTaskDDL(data) {
@@ -880,7 +867,7 @@
         $("#dualMulti").empty();
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
-                if (data[i].TaskId != $("#ProjectTask_TaskId").val()) {
+                if (data[i].TaskId != parseInt($("#ProjectTask_TaskId").val()) && data[i].ParentTask == null) {
                     var temp = data[i].TotalWeight.split('%');
                     projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(temp[0]);
                     $("#dualMulti").append(
@@ -960,5 +947,78 @@
             placeholder: "Select",
         });
         $.unblockUI();
+    }
+    function verifyTaskProgress(elem) {
+        var currVal = parseInt($(elem).val().split('%')[0]);
+        if (currVal > parseInt($('#TotalWeight').val().split('%')[0]) || isNaN(currVal)) {
+            notify();
+            return false;
+        }
+        function notify() {
+            $.pnotify({
+                title: 'Sorry',
+                type: 'info',
+                text: 'This task progress should not exceed task weight and must be number.'
+            });
+            $('#TaskProgress').val("");
+            return;
+        }
+        return true;
+    }
+    function verifyTaskWeight(elem) {
+        var prevVal = parseInt($("#prevTasksWeight").val());
+        var temp = $(elem).val();
+        var tempVal = temp.split('%');
+        var currVal = parseInt(tempVal[0]);
+        if (currVal > 0) {
+            if (($('#ProjectId').val() != "" || $('#ProjectId').val() != 0) && ($('#ParentTaskId').val() == "" || $('#ParentTaskId').val() == 0)) {
+                if ((prevVal + currVal) > 100 || isNaN(currVal)) {
+                    notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
+                    return false;
+                }
+                var projectTasksWeightSum;
+                var projectsList = '@Html.Raw(Json.Encode(Model.ProjectsForDdls))';
+                var parsed = JSON.parse(projectsList);
+                $.each(parsed, function (key, value) {
+                    if (value.ProjectId == $('#ProjectId').val()) {
+                        projectTasksWeightSum = value.ProjectTasksSum;
+                    }
+                });
+                if ((projectTasksWeightSum + currVal - taskWeight) > 100) {
+                    notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
+                    return false;
+                }
+            }
+            if ($('#ParentTaskId').val() != "" || $('#ParentTaskId').val() != 0) {
+                var parentWeight = 0;
+                var parentSubTasksWeight = 0;
+                var parentTasksList = '@Html.Raw(Json.Encode(Model.AllParentTasks))';
+                var parsed = JSON.parse(parentTasksList);
+                $.each(parsed, function (key, value) {
+                    if (value.TaskId == $('#ParentTaskId').val()) {
+                        parentWeight = parseInt(value.TotalWeight.split('%')[0]);
+                        $.each(value.SubTasksWeight, function (key1, value1) {
+                            if (value1.TaskId != $('#TaskId').val()) {
+                                parentSubTasksWeight += value1.TaskWeight;
+                            }
+                        });
+                    }
+                });
+                if ((parentSubTasksWeight + currVal) > parentWeight || isNaN(currVal)) {
+                    notify('Sum of Child Tasks weight should not exceed Parent task weight and must be number.');
+                    return false;
+                }
+            }
+        }
+        function notify(error) {
+            $.pnotify({
+                title: 'Sorry',
+                type: 'info',
+                text: error
+            });
+            $('#TotalWeight').val(0);
+            return;
+        }
+        return true;
     }
 </script>

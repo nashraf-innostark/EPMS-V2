@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    int i = 0;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -48,7 +49,7 @@
                         @foreach (var item in Model.DepartmentList.ToList())
                         {
                             <tr>
-                                <td>@item.DepartmentId</td>
+                                <td>@(i += 1)</td>
                                 <td>
                                     @if (direction == "ltr")
                                     {
@@ -73,14 +74,14 @@
             $('#DepartmentList').dataTable({
                 "sPaginationType": "bootstrap",
                 "aoColumns": [
-                    { "bVisible": false },
+                    { "bVisible": true, "bSortable": false },
                       null
                 ],
                 "fnInitComplete": function () {
                     $(".dataTables_wrapper select").select2({
                         dropdownCssClass: 'noSearch'
                     });
-                }
+                },
             });
         });
     </script>

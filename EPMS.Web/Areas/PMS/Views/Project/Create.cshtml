@@ -70,12 +70,12 @@
                 <div class="controls">
                     <label>
                         <input id="order" type="radio" name="CreateFrom" value="order">
-                        Create from Order
+                        @EPMS.Web.Resources.PMS.Project.CreateFromOrder
                     </label>
                     <br />
                     <label>
                         <input id="quotation" type="radio" name="CreateFrom" value="quotation">
-                        Create From Quotation
+                        @EPMS.Web.Resources.PMS.Project.CreateFromQuotation
                     </label>
                 </div>
             </div>
@@ -194,9 +194,19 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
-                    @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+
+                        @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3 marginForDatesLeft", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                        @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "StartDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#StartDateE')" })
+                        @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian cursorHand span3 marginForDatesRight", @id = "StartDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#StartDateA')" })
+                        @Html.ValidationMessageFor(m => m.Project.StartDate, "", new { @class = "required" })
+                    }
                 </div>
             </div>
         </div>
@@ -211,9 +221,18 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.EndDate, new { @class = "datepickerGregorian cursorHand span3", @id = "EndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EndDateA')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EndDateE')" })
-                    @Html.ValidationMessageFor(m => m.Project.EndDate, "", new { @class = "required" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.Project.EndDate, new {@class = "datepickerGregorian cursorHand span3", @id = "EndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EndDateA')"})
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArabic cursorHand span3 marginForDatesLeft", @id = "EndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EndDateE')"})
+                        @Html.ValidationMessageFor(m => m.Project.EndDate, "", new {@class = "required"})
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArabic cursorHand span3", @id = "EndDateA", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#EndDateE')"})
+                        @Html.TextBoxFor(model => model.Project.EndDate, new {@class = "datepickerGregorian cursorHand span3 marginForDatesRight", @id = "EndDateE", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#EndDateA')"})
+                        @Html.ValidationMessageFor(m => m.Project.EndDate, "", new {@class = "required"})
+                    }
                 </div>
                 <label id="ProjEndDateValidationError"></label>
             </div>
@@ -530,7 +549,7 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         if ('@Model.Project.OrderId' == 0) {
             $("#orderControl").hide();
             $("#quotationControl").show();

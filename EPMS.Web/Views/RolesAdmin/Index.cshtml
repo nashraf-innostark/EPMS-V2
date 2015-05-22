@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.UserManagement.Role.Roles;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    int i = 0;
 }
 
 <!-- Navigation Bar -->
@@ -43,7 +44,7 @@
                             @foreach (var item in Model.Roles)
                             {
                                 <tr>
-                                    <td>@item.Id</td>
+                                    <td>@(i += 1)</td>
                                     <td>@item.Name</td>
                                 </tr>
                             }
@@ -59,7 +60,7 @@
             $('#RolesList').dataTable({
                 "sPaginationType": "bootstrap",
                 "aoColumns": [
-                    { "bVisible": false },
+                    { "bVisible": true, "bSortable": false },
                       null
                 ],
                 "fnInitComplete": function () {

@@ -23,23 +23,18 @@ namespace EPMS.Web.Areas.PMS.Controllers
     {
         #region Private
 
-        private readonly ICustomerService CustomerService;
         private readonly IProjectService ProjectService;
         private readonly IProjectTaskService TaskService;
-        private readonly IEmployeeService EmployeeService;
 
         #endregion
 
 
         #region Constructor
 
-        public TaskController(ICustomerService customerService, IProjectService projectService,
-            IProjectTaskService taskService, IEmployeeService employeeService)
+        public TaskController(IProjectService projectService, IProjectTaskService taskService)
         {
-            CustomerService = customerService;
             ProjectService = projectService;
             TaskService = taskService;
-            EmployeeService = employeeService;
         }
 
         #endregion
@@ -77,7 +72,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 var customerId = (long) Session["CustomerID"];
                 TaskResponse tasks = TaskService.GetProjectTasksForCustomer(searchRequest, customerId);
                 IEnumerable<ProjectTask> projectTaskList =
-                    tasks.ProjectTasks.Select(x => x.CreateFromServerToClient()).ToList();
+                    tasks.ProjectTasks.Where(x=> x.ParentTask == null).Select(x => x.CreateFromServerToClientLv()).ToList();
                 viewModel = new TaskListViewModel
                 {
                     aaData = projectTaskList,
@@ -90,7 +85,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 TaskResponse tasks = TaskService.GetAllTasks(searchRequest);
                 IEnumerable<ProjectTask> projectTaskList =
-                    tasks.ProjectTasks.Select(x => x.CreateFromServerToClient()).ToList();
+                    tasks.ProjectTasks.Where(x => x.ParentTask == null).Select(x => x.CreateFromServerToClientLv()).ToList();
                 viewModel = new TaskListViewModel
                 {
                     aaData = projectTaskList,
@@ -134,7 +129,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             TaskResponse tasks = TaskService.GetProjectTasksForEmployee(searchRequest, employeeId);
             IEnumerable<ProjectTask> projectTaskList =
-                tasks.ProjectTasks.Select(x => x.CreateFromServerToClient()).ToList();
+                tasks.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList();
             TaskListViewModel viewModel = new TaskListViewModel
             {
                 aaData = projectTaskList,
@@ -174,12 +169,13 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 viewModel.Header = Task.Create;
                 return View(viewModel);
             }
-            viewModel.ProjectTask = response.ProjectTask.CreateFromServerToClient();
+            viewModel.ProjectTask = response.ProjectTask.CreateFromServerToClientCreate();
             viewModel.OldRequisitTasks = viewModel.ProjectTask.RequisitTasks.Select(x => x.TaskId).ToList();
             viewModel.PreRequisitTasks = viewModel.ProjectTask.RequisitTasks.ToList();
             viewModel.OldAssignedEmployees = viewModel.ProjectTask.TaskEmployees.Select(x => x.EmployeeId).ToList();
             viewModel.ProjectsForDdls = response.Projects.Select(x => x.CreateFromServerToClientForDdl());
-            viewModel.ProjectAllTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClient());
+            //viewModel.ProjectAllTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClient());
+            viewModel.ProjectAllTasks = response.ProjectTasks.Where(x=> x.ParentTask == null).Select(x => x.CreateFromServerToClientCreate());
             viewModel.AllEmployees = response.Employees.Select(x => x.CreateFromServerToClientForTask());
             viewModel.BtnText = Task.BtnTextEdit;
             string userRole = (string) Session["RoleName"];
@@ -283,11 +279,31 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             TaskResponse response = TaskService.GetResponseForAddEdit(viewModel.ProjectTask.TaskId);
             // Error
+            viewModel.AllParentTasks = response.AllParentTasks.Select(x => x.CreateFromServerToClientParentTasks());
             ViewBag.Customers = response.Customers.Select(x => x.CreateFromServerToClient());
-            viewModel.ProjectTask = response.ProjectTask.CreateFromServerToClient();
+            viewModel.ProjectTask = response.ProjectTask != null ? response.ProjectTask.CreateFromServerToClientCreate() : new ProjectTask();
             viewModel.ProjectsForDdls = response.Projects.Select(x => x.CreateFromServerToClientForDdl());
-            viewModel.ProjectAllTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClient());
+            viewModel.ProjectAllTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClientCreate());
             viewModel.AllEmployees = response.Employees.Select(x => x.CreateFromServerToClientForTask());
+            viewModel.BtnText = Task.BtnTextEdit;
+            string userRole = (string)Session["RoleName"];
+            string taskName = "";
+            if (userRole == "Customer")
+            {
+                viewModel.PageTitle = taskName + Task.PageTitleDetail;
+                viewModel.Header = Task.Detail;
+            }
+            else
+            {
+                viewModel.PageTitle = Task.PageTitleEdit + taskName;
+                viewModel.Header = Task.Edit;
+            }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = Task.ErrorSaving,
+                IsError = true
+            };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
 
@@ -332,8 +348,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             ParentProjectTaskAndProject taskAndParent = new ParentProjectTaskAndProject
             {
-                ProjectTasks = TaskService.FindProjectTaskByProjectId(projectId, 0).Select(x => x.CreateFromServerToClient()).ToList(),
-                ParentTasks = TaskService.FindParentTasksByProjectId(projectId).Select(x => x.CreateFromServerToClient()).ToList()
+                ProjectTasks = TaskService.FindProjectTaskByProjectId(projectId, 0).Select(x => x.CreateFromServerToClientCreate()).ToList(),
+                ParentTasks = TaskService.FindParentTasksByProjectId(projectId).Select(x => x.CreateFromServerToClientCreate()).ToList()
             };
             //var projects = TaskService.FindProjectTaskByProjectId(projectId, 0)
             //    .Select(x => x.CreateFromServerToClient());

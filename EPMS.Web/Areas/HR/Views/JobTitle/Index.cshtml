@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    int i = 0;
 }
 
 <div class="breadcrumb-container">
@@ -48,7 +49,7 @@
                         @foreach (var item in Model.JobTitleList.ToList())
                         {
                             <tr>
-                                <td>@item.JobTitleId</td>
+                                <td>@(i += 1)</td>
                                 @if (direction == "ltr")
                                 {
                                     <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new { id = item.JobTitleId }) </td>
@@ -83,7 +84,7 @@
         $('#JobTitle').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                { "bVisible": false }, // cloumn to be hide
+                { "bVisible": true, "bSortable": false }, // cloumn to be hide
                   null, // not hide
                   null,
                   null
@@ -92,7 +93,7 @@
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
-            }
+            },
         });
         $("#simpleSelectBox").select2({
             dropdownCssClass: 'noSearch'

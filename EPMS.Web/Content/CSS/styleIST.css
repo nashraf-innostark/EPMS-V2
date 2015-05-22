@@ -292,3 +292,23 @@
 .enableList {
     pointer-events: all;
 }
+
+.ui-datepicker-next {
+    display: none !important;
+}
+
+.ui-datepicker-prev {
+    display: none !important;
+}
+
+.marginForDatesLeft {
+    margin-left: 5px !important;
+}
+
+.marginForDatesRight {
+    margin-right: 5px !important;
+}
+.widget-area.widget-back .widget-savehead .icon-photon {
+ 
+  margin-top: 4px;
+}

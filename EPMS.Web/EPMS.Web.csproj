@@ -404,6 +404,7 @@
     <Compile Include="Models\Payroll.cs" />
     <Compile Include="Models\RequestDetail.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\SubTaskWeight.cs" />
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Models\TaskEmployee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1715,7 +1716,7 @@
     <Content Include="RTE\skins\moono\readme.md" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
     <Content Include="Views\Shared\_ApplicantApplyLayout.cshtml" />
-    <None Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -4016,7 +4017,6 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Details.cshtml" />
@@ -4075,6 +4075,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_ApplicantLayout.cshtml" />
     <Content Include="Views\Account\Signup.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />

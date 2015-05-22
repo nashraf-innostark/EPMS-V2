@@ -88,6 +88,24 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create from Order.
+        /// </summary>
+        public static string CreateFromOrder {
+            get {
+                return ResourceManager.GetString("CreateFromOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create From Quotation.
+        /// </summary>
+        public static string CreateFromQuotation {
+            get {
+                return ResourceManager.GetString("CreateFromQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Project.
         /// </summary>
         public static string CreateProject {

@@ -100,7 +100,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreate());
                         foreach (var projectTask in projectViewModel.ProjectTasks)
                         {
                             projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
@@ -285,7 +285,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClient());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreate());
                         foreach (var projectTask in projectViewModel.ProjectTasks)
                         {
                             projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;

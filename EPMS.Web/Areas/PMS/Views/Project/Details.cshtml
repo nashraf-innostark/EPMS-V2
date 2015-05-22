@@ -53,12 +53,12 @@
                 <div class="controls">
                     <label>
                         <input id="order" type="radio" name="CreateFrom" value="order" disabled="disabled">
-                        Create from Order
+                        @EPMS.Web.Resources.PMS.Project.CreateFromOrder
                     </label>
                     <br />
                     <label>
                         <input id="quotation" type="radio" name="CreateFrom" value="quotation" disabled="disabled">
-                        Create From Quotation
+                        @EPMS.Web.Resources.PMS.Project.CreateFromQuotation
                     </label>
                 </div>
             </div>
@@ -176,8 +176,16 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Project.StartDate, new { @class = "datepickerGregorian span3", @id = "StartDateE", @disabled = true, @placeholder = "English" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic span3", @id = "StartDateA", @disabled = true, @placeholder = "Arabic" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.Project.StartDate, new {@class = "datepickerGregorian span3", @id = "StartDateE", @disabled = true, @placeholder = "English"})
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArabic span3 marginForDatesLeft", @id = "StartDateA", @disabled = true, @placeholder = "Arabic"})
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new {@class = "datepickerArabic span3", @id = "StartDateA", @disabled = true, @placeholder = "Arabic"})
+                        @Html.TextBoxFor(model => model.Project.StartDate, new {@class = "datepickerGregorian span3 marginForDatesRight", @id = "StartDateE", @disabled = true, @placeholder = "English"})
+                    }
                 </div>
             </div>
         </div>

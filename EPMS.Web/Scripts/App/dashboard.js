@@ -370,6 +370,7 @@ function NoRecord(control, msg) {
 function ProjectWidgetEvents() {
     $("#progressId li.dashTask").on("click", function () {
         var target = 0;
+        var progressText = this.innerText;
         if ($(this).find("a").is('[data-task]')) {
             target = parseInt($(this).find("a").attr('data-task'));
             //$('.processed-pct').find("span").text($(this).find("a").text());
@@ -385,6 +386,7 @@ function ProjectWidgetEvents() {
 
             $('.processed-pct .bar').attr('style', 'width: ' + target + '%');
             $('.processed-pct .bar').text(target + "%");
+            $('span.pText').text(progressText);
         }, 200);
     });
     var count = 0;
@@ -1001,21 +1003,64 @@ function LoadProjects(control) {
             success: function (data) {
                 $(".tempLoader").click();
                 $('#progressId').empty();
+                //$('#projectDetailId').empty();
                 if (data != null) {
                     $("#projectDetailId").attr("href", "/PMS/Project/Details/" + data.Project.ProjectId);
-                    $('#progressId').append(
+                    if (dir == "ltr") {
+                        $('#progressId').append(
                         '<li class="dashProject dashTask">' +
-                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameE + '">' + data.Project.NameEShort + '</a>' +
+                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameE + '">' + "Project - " + data.Project.NameEShort + '</a>' +
                         '</li>');
+                    } else {
+                        if (data.Project.NameA.length > 5) {
+                            $('#progressId').append(
+                        '<li class="dashProject dashTask">' +
+                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameA + '">' + "..." + "مشاريع" + " - " + data.Project.NameA.substring(0, 5) + '</a>' +
+                        '</li>');
+                        } else {
+                            $('#progressId').append(
+                        '<li class="dashProject dashTask">' +
+                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA + '</a>' +
+                        '</li>');
+                        }
+                    }
+                    var projectWidgetTitle;
+                    if (dir == "ltr") {
+                        projectWidgetTitle = "Project - " + data.Project.NameEShort;
+                    }
+                    else {
+                        if (data.Project.NameA.length > 5) {
+                            projectWidgetTitle = "..." + "مشاريع" + " - " + data.Project.NameA.substring(0, 5);
+                        } else {
+                            projectWidgetTitle = "مشاريع" + " - " + data.Project.NameA;
+                        }
+                    }
+                    $('#projectDetailId').attr('href', $("#siteURL").val() + '/PMS/Project/Details/' + data.Project.ProjectId);
+                    $('#projectDetailId').text(projectWidgetTitle);
                     if (data.ProjectTasks != null) {
                         $.each(data.ProjectTasks, function (itemIndex, item) {
-                            $('#progressId').append(
+                            if (dir == "ltr") {
+                                $('#progressId').append(
                                 '<li class="dashTask">' +
                                 '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
                                 '</li>');
+                            } else {
+                                if (item.TaskNameA.length > 15) {
+                                    $('#progressId').append(
+                                '<li class="dashTask">' +
+                                '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameA + '">' + "..." + item.TaskNameA.substring(0, 15) + '</a>' +
+                                '</li>');
+                                } else {
+                                    $('#progressId').append(
+                                '<li class="dashTask">' +
+                                '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameA + '">' + item.TaskNameA + '</a>' +
+                                '</li>');
+                                }
+                            }
                         });
                     }
-                    $('#progressId').append(
+                    if (dir == "ltr") {
+                        $('#progressId').append(
                     '<li class="dashBack">' +
                         '<a><i class="icon-photon arrow_left"></i></a>' +
                     '</li>' +
@@ -1023,11 +1068,43 @@ function LoadProjects(control) {
                         '<a><i class="icon-photon arrow_right"></i></a>' +
                     '</li>' +
                     '<li class="processed-pct">' +
-                        '<span title="' + data.Project.NameE + '">' + data.Project.NameEShort + '</span>' +
+                        '<span class="pText" title="' + data.Project.NameE + '">' + "Project - " + data.Project.NameEShort + '</span>' +
                         '<div class="progress progress-info">' +
                             '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
                         '</div>' +
                     '</li>');
+                    } else {
+                        if (data.Project.NameA.length > 5) {
+                            $('#progressId').append(
+                    '<li class="dashBack">' +
+                        '<a><i class="icon-photon arrow_left"></i></a>' +
+                    '</li>' +
+                    '<li class="dashNext">' +
+                        '<a><i class="icon-photon arrow_right"></i></a>' +
+                    '</li>' +
+                    '<li class="processed-pct">' +
+                        '<span class="pText" title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA.substring(0, 5) + "..." + '</span>' +
+                        '<div class="progress progress-info" style="margin-left: -7px">' +
+                            '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
+                        '</div>' +
+                    '</li>');
+                        } else {
+                            $('#progressId').append(
+                    '<li class="dashBack">' +
+                        '<a><i class="icon-photon arrow_left"></i></a>' +
+                    '</li>' +
+                    '<li class="dashNext">' +
+                        '<a><i class="icon-photon arrow_right"></i></a>' +
+                    '</li>' +
+                    '<li class="processed-pct">' +
+                        '<span class="pText" title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA + '</span>' +
+                        '<div class="progress progress-info">' +
+                            '<div class="bar" data-target=' + data.Project.ProgressTotal + ' style="width:' + data.Project.ProgressTotal + '%;">' + data.Project.ProgressTotal + '%</div>' +
+                        '</div>' +
+                    '</li>');
+                        }
+                    }
+                    
                     ProjectWidgetEvents();
                 }
                 else {

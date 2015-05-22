@@ -59,11 +59,8 @@
             "aoColumns": [
                 {
                     "aTargets": [0],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["EmployeeId"];
-                    },
-                    "bVisible": false,
+                    "sDefaultContent": "",
+                    "bVisible": true,
                     "bSortable": false
                 },
                 {
@@ -135,7 +132,12 @@
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
             },
-            "bAutoWidth": false
+            "bAutoWidth": false,
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'

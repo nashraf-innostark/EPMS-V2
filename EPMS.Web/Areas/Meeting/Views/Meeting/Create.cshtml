@@ -174,13 +174,26 @@
                 </label>
             </div>
             <div class="span9">
-                <div class="controls span4">
-                    @Html.TextBox("Meeting Date", null, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')" })
-                    @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
-                </div>
-                <div class="controls span4">
-                    @Html.TextBoxFor(model => model.Meeting.Date, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly" })
-                </div>
+                @if (direction == "ltr")
+                {
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.Meeting.Date, new {@class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly"})
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBox("Meeting Date", null, new {@class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')"})
+                        @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
+                    </div>
+                }
+                else
+                {
+                    <div class="controls span4">
+                        @Html.TextBox("Meeting Date", null, new {@class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate toBeDisable", @id = "metingDateAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')"})
+                        @*@Html.TextBoxFor(model => model.Meeting.DateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand disableOnDate", @id = "metingDateAr", @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#metingDate')", @readonly = "readonly" })*@
+                    </div>
+                    <div class="controls span4">
+                        @Html.TextBoxFor(model => model.Meeting.Date, new {@class = "col-lg-2 datepickerGregorian form-control cursorHand disableOnDate toBeDisable", @id = "metingDate", @placeholder = "Gregorian", onchange = "GregorianToHijri(this, metingDateAr)", @readonly = "readonly"})
+                    </div>
+                }
             </div>
         </div>
         <div id="Detail">

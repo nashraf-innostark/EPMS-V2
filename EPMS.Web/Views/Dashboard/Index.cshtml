@@ -686,11 +686,11 @@
                                             {
                                                 if (direction == "ltr")
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA) </a>
                                                 }
                                             }
                                             else
@@ -713,7 +713,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</a>
                                                     }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)
@@ -727,7 +727,7 @@
                                                             }
                                                             else
                                                             {
-                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@task.TaskNameAShort</a>
+                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@(task.TaskNameA.Length > 15 ? task.TaskNameA.Substring(0, 15) : task.TaskNameA)</a>
                                                             }
                                                         </li>
                                                     }
@@ -742,11 +742,11 @@
                                                 <li class="processed-pct">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <span title="@Model.Project.Project.NameE">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</span>
+                                                        <span title="@Model.Project.Project.NameE" class="pText">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</span>
                                                     }
                                                     else
                                                     {
-                                                        <span title="@Model.Project.Project.NameA">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</span>
+                                                        <span title="@Model.Project.Project.NameA" class="pText">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameAShort</span>
                                                     }
                                                     <div class="progress progress-info">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: @Model.Project.Project.ProgressTotal;">@Model.Project.Project.ProgressTotal%</div>
@@ -981,6 +981,7 @@
     </div>
 </div>
 <script type="text/javascript">
+    var dir = '@direction';
     $(document).ready(function () {
         if ('@direction' == "ltr") {
             setTimeout(function () {

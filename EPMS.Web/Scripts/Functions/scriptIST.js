@@ -224,7 +224,7 @@ $(document).ready(function () {
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd/mm/yy",
-        yearRange: "1950:2050"
+        yearRange: "1950:2050",
     });
     // Arabic Date Picker
     var calendar = $.calendars.instance('islamic');

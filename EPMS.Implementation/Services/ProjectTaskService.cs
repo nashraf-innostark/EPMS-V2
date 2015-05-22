@@ -115,7 +115,7 @@ namespace EPMS.Implementation.Services
             try
             {
                 // update Parent task progress
-                if (!task.IsParent && (task.ParentTask != 0 || task.ParentTask != null))
+                if (!task.IsParent && task.ParentTask != 0 && task.ParentTask != null)
                 {
                     var parentTask = Repository.Find(Convert.ToInt32(task.ParentTask));
                     int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress.Split('%')[0]));
@@ -132,6 +132,10 @@ namespace EPMS.Implementation.Services
                         Repository.Update(parentTask);
                         Repository.SaveChanges();
                     }
+                }
+                if (task.ParentTask == 0)
+                {
+                    task.ParentTask = null;
                 }
                 Repository.Add(task);
                 if (preReqList.Any())
@@ -171,13 +175,20 @@ namespace EPMS.Implementation.Services
             try
             {
                 // update Parent task progress
-                if (!task.IsParent && (task.ParentTask != 0 || task.ParentTask != null))
+                if (!task.IsParent && task.ParentTask != 0 && task.ParentTask != null)
                 {
                     var parentTask = Repository.Find(Convert.ToInt32(task.ParentTask));
-                    int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress.Split('%')[0]));
-                    int taskWeight = Convert.ToInt32(task.TotalWeight.Split('%')[0]);
-                    var progressToAdd = Convert.ToInt32(task.TaskProgress.Split('%')[0])*taskWeight;
-                    int parentTaskProgress = (countOtherTasksProgress + (progressToAdd/100));
+                    //int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32((Convert.ToDouble(projectTask.TaskProgress.Split('%')[0]) / Convert.ToDouble(projectTask.TotalWeight.Split('%')[0]))* 100));
+                    double otherTasksProgress = 0;
+                    foreach (var projectTask in parentTask.SubTasks)
+                    {
+                        if (projectTask.TaskId != task.TaskId)
+                        {
+                            otherTasksProgress += Convert.ToDouble(projectTask.TaskProgress.Split('%')[0]);
+                        }
+                    }
+                    otherTasksProgress = otherTasksProgress + Convert.ToInt32(task.TaskProgress.Split('%')[0]);
+                    int parentTaskProgress = Convert.ToInt32(otherTasksProgress);
                     if (parentTaskProgress <= 100)
                     {
                         parentTask.TaskProgress = parentTaskProgress + "%";

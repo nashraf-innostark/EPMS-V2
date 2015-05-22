@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DataAnnotationsExtensions;
 
 namespace EPMS.Web.Models
 {
@@ -16,13 +15,7 @@ namespace EPMS.Web.Models
         [Display(Name = "Employee First Name")]
         [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
         public string EmployeeFirstNameA { get; set; }
-        [Required(ErrorMessage = "Employee Middle Name (English) is required.")]
-        [Display(Name = "Employee Middle Name")]
-        [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
         public string EmployeeMiddleNameE { get; set; }
-        [Required(ErrorMessage = "Employee Middle Name (Arabic) is required.")]
-        [Display(Name = "Employee Middle Name")]
-        [StringLength(100, ErrorMessage = "Cannot exceed 100 characters.")]
         public string EmployeeMiddleNameA { get; set; }
         [Required(ErrorMessage = "Employee Last Name (English) is required.")]
         [Display(Name = "Employee Last Name")]
@@ -38,25 +31,19 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "Mobile Number is required.")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeMobileNum { get; set; }
-        [Required(ErrorMessage = "Telephone Number is required.")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeLandlineNum { get; set; }
         public byte? MaritalStatus { get; set; }
-        [Required(ErrorMessage = "Date of Birth is required.")]
         public string EmployeeDOB { get; set; }
         public string EmpDateOfBirthArabic { get; set; }
         public string EmployeeNationality { get; set; }
-        [Required(ErrorMessage = "Iqama Number Or National ID Number is required.")]
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeIqama { get; set; }
         public string EmployeeIqamaIssueDt { get; set; }
         public string EmployeeIqamaIssueDtAr { get; set; }
-        [Required(ErrorMessage = "Iqama Expiry Date is required.")]
         public string EmployeeIqamaExpiryDt { get; set; }
         public string EmployeeIqamaExpiryDtAr { get; set; }
-        [Required(ErrorMessage = "Passport ID is required.")]
         public string EmployeePassportNum { get; set; }
-        [Required(ErrorMessage = "Passport Expiry Date is required.")]
         public string EmployeePassportExpiryDt { get; set; }
         public string EmployeePassportExpiryDtAr { get; set; }
         [StringLength(1000, ErrorMessage = "Cannot exceed 1000 characters.")]
