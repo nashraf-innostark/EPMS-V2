@@ -146,6 +146,8 @@
     <Compile Include="DomainModels\Meeting.cs" />
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
+    <Compile Include="DomainModels\RFI.cs" />
+    <Compile Include="DomainModels\RFIItem.cs" />
     <Compile Include="DomainModels\Size.cs" />
     <Compile Include="DomainModels\Status.cs" />
     <Compile Include="DomainModels\Vendor.cs" />

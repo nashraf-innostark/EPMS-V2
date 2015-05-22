@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPMSProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Aisle">
           <Key>
             <PropertyRef Name="AisleId" />
@@ -2240,8 +2240,7 @@
             <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2921,28 +2920,6 @@
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Meeting" Relationship="Self.FK_MeetingDocuments_Meeting" FromRole="MeetingDocuments" ToRole="Meeting" />
         </EntityType>
-        <EntityType Name="Menu">
-          <Key>
-            <PropertyRef Name="MenuId" />
-          </Key>
-          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MenuTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MenuTitleA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MenuKey" Type="Int32" Nullable="false" />
-          <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
-          <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
-          <Property Name="ParentItem_MenuId" Type="Int32" />
-          <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <Property Name="MenuTargetController" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MenuFunction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PermissionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MenuImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Menu1" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu" ToRole="Menu1" />
-          <NavigationProperty Name="Menu2" Relationship="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
-          <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
-          <NavigationProperty Name="QuickLaunchItems" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="Menu" ToRole="QuickLaunchItems" />
-        </EntityType>
         <EntityType Name="MenuRight">
           <Key>
             <PropertyRef Name="MenuRightId" />
@@ -2951,7 +2928,7 @@
           <Property Name="Menu_MenuId" Type="Int32" />
           <Property Name="Role_Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetRole" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="MenuRight" ToRole="AspNetRoles" />
-          <NavigationProperty Name="Menu" Relationship="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
+          <NavigationProperty Name="Menu" Relationship="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="MenuRight" ToRole="Menu" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -3079,10 +3056,10 @@
           <Property Name="ParentTask" Type="Int64" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_ProjectTask_Customer" FromRole="ProjectTask" ToRole="Customer" />
           <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
-          <NavigationProperty Name="ProjectTask1" Relationship="Self.FK_ProjectTask_ProjectTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
-          <NavigationProperty Name="ProjectTask2" Relationship="Self.FK_ProjectTask_ProjectTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
+          <NavigationProperty Name="SubTasks" Relationship="Self.FK_ProjectTask_ProjectTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
+          <NavigationProperty Name="ParentProjectTask" Relationship="Self.FK_ProjectTask_ProjectTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
-          <NavigationProperty Name="ProjectTask11" Relationship="Self.PreRequisitTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
+          <NavigationProperty Name="PreRequisitTask" Relationship="Self.PreRequisitTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
           <NavigationProperty Name="ProjectTasks" Relationship="Self.PreRequisitTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
         </EntityType>
         <EntityType Name="QuickLaunchItem">
@@ -3093,7 +3070,7 @@
           <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MenuId" Type="Int32" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Menu" Relationship="Self.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItems" ToRole="Menu" />
+          <NavigationProperty Name="Menu" Relationship="EPMSProjectModel.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItem" ToRole="Menu" />
         </EntityType>
         <EntityType Name="Quotation">
           <Key>
@@ -3836,42 +3813,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
-          <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="Menu1">
-              <PropertyRef Name="ParentItem_MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
-          <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="MenuRight">
-              <PropertyRef Name="Menu_MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuickLaunchItems_Menu">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
-          <End Role="QuickLaunchItems" Type="Self.QuickLaunchItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="QuickLaunchItems">
-              <PropertyRef Name="MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NotificationRecipient_Notification">
           <End Role="Notification" Type="Self.Notification" Multiplicity="1" />
           <End Role="NotificationRecipient" Type="Self.NotificationRecipient" Multiplicity="*" />
@@ -4090,7 +4031,6 @@
           <EntitySet Name="Meetings" EntityType="Self.Meeting" />
           <EntitySet Name="MeetingAttendees" EntityType="Self.MeetingAttendee" />
           <EntitySet Name="MeetingDocuments" EntityType="Self.MeetingDocument" />
-          <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="MenuRights" EntityType="Self.MenuRight" />
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="NotificationRecipients" EntityType="Self.NotificationRecipient" />
@@ -4282,18 +4222,6 @@
             <End Role="Meeting" EntitySet="Meetings" />
             <End Role="MeetingDocuments" EntitySet="MeetingDocuments" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="Self.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="Menu1" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="Self.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="MenuRight" EntitySet="MenuRights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuickLaunchItems_Menu" Association="Self.FK_QuickLaunchItems_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="QuickLaunchItems" EntitySet="QuickLaunchItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_NotificationRecipient_Notification" Association="Self.FK_NotificationRecipient_Notification">
             <End Role="Notification" EntitySet="Notifications" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
@@ -4374,7 +4302,77 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
+          <EntitySet Name="Menus" EntityType="EPMSProjectModel.Menu" />
+          <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu1" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="MenuRight" EntitySet="MenuRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuickLaunchItems_Menu" Association="EPMSProjectModel.FK_QuickLaunchItems_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="QuickLaunchItem" EntitySet="QuickLaunchItems" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MenuTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuTitleA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuKey" Type="Int32" Nullable="false" />
+          <Property Name="IsRootItem" Type="Boolean" Nullable="false" />
+          <Property Name="IsMenuItem" Type="Boolean" Nullable="false" />
+          <Property Name="ParentItem_Menu" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="MenuTargetController" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuFunction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PermissionKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MenuItemClass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ParentItem" Relationship="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="MenuRights" Relationship="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" FromRole="Menu" ToRole="MenuRight" />
+          <NavigationProperty Name="QuickLaunchItems" Relationship="EPMSProjectModel.FK_QuickLaunchItems_Menu" FromRole="Menu" ToRole="QuickLaunchItem" />
+        </EntityType>
+        <Association Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
+          <End Type="EPMSProjectModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.Menu" Role="Menu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="Menu1">
+              <PropertyRef Name="ParentItem_Menu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_MenuRight_dbo_Menu_Menu_MenuId">
+          <End Type="EPMSProjectModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.MenuRight" Role="MenuRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="MenuRight">
+              <PropertyRef Name="Menu_MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuickLaunchItems_Menu">
+          <End Type="EPMSProjectModel.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="EPMSProjectModel.QuickLaunchItem" Role="QuickLaunchItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="QuickLaunchItem">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5010,25 +5008,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="EPMSProjectModel.Menu">
-              <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
-                <ScalarProperty Name="MenuTitleA" ColumnName="MenuTitleA" />
-                <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
-                <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
-                <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
-                <ScalarProperty Name="ParentItem_MenuId" ColumnName="ParentItem_MenuId" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="MenuTargetController" ColumnName="MenuTargetController" />
-                <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
-                <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
-                <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
-                <ScalarProperty Name="MenuItemClass" ColumnName="MenuItemClass" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MenuRights">
             <EntityTypeMapping TypeName="EPMSProjectModel.MenuRight">
               <MappingFragment StoreEntitySet="MenuRight">
@@ -5445,6 +5424,25 @@
               <ScalarProperty Name="TaskId" ColumnName="TaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="EPMSProjectModel.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="MenuItemClass" ColumnName="MenuItemClass" />
+                <ScalarProperty Name="MenuImagePath" ColumnName="MenuImagePath" />
+                <ScalarProperty Name="PermissionKey" ColumnName="PermissionKey" />
+                <ScalarProperty Name="MenuFunction" ColumnName="MenuFunction" />
+                <ScalarProperty Name="MenuTargetController" ColumnName="MenuTargetController" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="ParentItem_Menu" ColumnName="ParentItem_MenuId" />
+                <ScalarProperty Name="IsMenuItem" ColumnName="IsMenuItem" />
+                <ScalarProperty Name="IsRootItem" ColumnName="IsRootItem" />
+                <ScalarProperty Name="MenuKey" ColumnName="MenuKey" />
+                <ScalarProperty Name="MenuTitleA" ColumnName="MenuTitleA" />
+                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
