@@ -306,6 +306,7 @@
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
@@ -1162,6 +1163,7 @@
     <Content Include="Areas\Inventory\Views\InventoryItem\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemVariation\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\RFI\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
