@@ -11,6 +11,7 @@ namespace EPMS.Models.ResponseModels
         }
 
         public IEnumerable<ProjectTask> ProjectTasks { get; set; }
+        public IEnumerable<ProjectTask> AllParentTasks { get; set; }
         public ProjectTask ProjectTask { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<Employee> Employees { get; set; }

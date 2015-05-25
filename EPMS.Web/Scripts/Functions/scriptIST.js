@@ -89,7 +89,6 @@ function errorSaveAppointment(e, status) {
 }
 
 function validateEmail(email) {
-    debugger
     var oEmail = $(email);
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(oEmail.val())) {
@@ -224,7 +223,7 @@ $(document).ready(function () {
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd/mm/yy",
-        yearRange: "1950:2050"
+        yearRange: "1950:2050",
     });
     // Arabic Date Picker
     var calendar = $.calendars.instance('islamic');

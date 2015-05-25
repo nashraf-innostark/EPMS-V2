@@ -214,6 +214,24 @@ namespace EPMS.Web.Resources.PMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while Saving.
+        /// </summary>
+        public static string ErrorSaving {
+            get {
+                return ResourceManager.GetString("ErrorSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Parent Task.
+        /// </summary>
+        public static string IsParent {
+            get {
+                return ResourceManager.GetString("IsParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to My Tasks.
         /// </summary>
         public static string MyTasks {
@@ -282,6 +300,15 @@ namespace EPMS.Web.Resources.PMS {
         public static string PageTitleMyTasks {
             get {
                 return ResourceManager.GetString("PageTitleMyTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Task.
+        /// </summary>
+        public static string ParentTask {
+            get {
+                return ResourceManager.GetString("ParentTask", resourceCulture);
             }
         }
         

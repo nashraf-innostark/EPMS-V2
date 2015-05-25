@@ -35,6 +35,7 @@ namespace EPMS.Models.DomainModels
 
         public virtual InventoryItem InventoryItem { get; set; }
         public virtual ICollection<ItemImage> ItemImages { get; set; }
+        public virtual ICollection<RFIItem> RFIItems { get; set; }
         public virtual ICollection<Color> Colors { get; set; }
         public virtual ICollection<Manufacturer> Manufacturers { get; set; }
         public virtual ICollection<Size> Sizes { get; set; }

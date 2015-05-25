@@ -10,7 +10,7 @@
             sSortDir_0 = "asc";
             iSortCol_0 = 1;
             iDisplayStart = 0;
-            iDisplayLength = 10;
+            iDisplayLength = 4;
         }
 
         //user select page size or number of records to be displayed

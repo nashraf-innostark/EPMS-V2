@@ -39,36 +39,39 @@
 <!--Notifications end-->
 <!-- Page heading ends -->
 
-    <div class="container-fluid">
-        <form class="form-horizontal">
-            @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
-            <div class="container-fluid">
-                <!--Sortable Responsive Media Table begin-->
-                <div class="row-fluid">
-                    <div class="span12">
-                        <table class="table table-striped table-responsive" id="projectTaskTable" style="width: 100% !important;">
-                            <thead class="">
-                                <tr>
-                                    <th></th>
-                                    <th>@EPMS.Web.Resources.PMS.Task.TaskName</th>
-                                    <th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>
-                                    <th>@EPMS.Web.Resources.PMS.Task.StartDate</th>
-                                    <th>@EPMS.Web.Resources.PMS.Task.DeliveryDate</th>
-                                    <th>@EPMS.Web.Resources.PMS.Task.Cost</th>
-                                    <th>@EPMS.Web.Resources.PMS.Task.Progress</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
+<div class="container-fluid">
+    <form class="form-horizontal">
+        @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+        <div class="container-fluid">
+            <!--Sortable Responsive Media Table begin-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-striped table-responsive" id="projectTaskTable" style="width: 100% !important;">
+                        <thead class="">
+                            <tr>
+                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
+                                <th></th>
+                                <th>@EPMS.Web.Resources.PMS.Task.TaskName</th>
+                                <th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>
+                                <th>@EPMS.Web.Resources.PMS.Task.StartDate</th>
+                                <th>@EPMS.Web.Resources.PMS.Task.DeliveryDate</th>
+                                <th>@EPMS.Web.Resources.PMS.Task.Cost</th>
+                                <th>@EPMS.Web.Resources.PMS.Task.Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+</div>
 <script type="text/javascript">
+    var dir = '@direction';
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        var dir = '@direction';
+        var sImageUrl = "http://www.datatables.net/release-datatables/examples/examples_support/";
+        var anOpen = [];
         var oTable = $('#projectTaskTable').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
@@ -76,15 +79,18 @@
             "aoColumns": [
                 {
                     "aTargets": [0],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["TaskId"];
-                    },
-                    "bVisible": false,
+                    "sDefaultContent": "",
+                    "bVisible": true,
                     "bSortable": false
                 },
                 {
-                    "aTargets": [1],
+                    "mDataProp": null,
+                    "sClass": "control center",
+                    "sDefaultContent": '<img src="' + sImageUrl + 'details_open.png' + '">',
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var element;
@@ -104,7 +110,7 @@
                     "bSortable": true
                 },
                 {
-                    "aTargets": [2],
+                    "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         if (dir == "ltr") {
@@ -115,28 +121,28 @@
                     }
                 },
                 {
-                    "aTargets": [3],
+                    "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         return full["StartDate"];
                     }
                 },
                 {
-                    "aTargets": [4],
+                    "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         return full["EndDate"];
                     }
                 },
                 {
-                    "aTargets": [5],
+                    "aTargets": [6],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         return full["TotalCost"];
                     }
                 },
                 {
-                    "aTargets": [6],
+                    "aTargets": [7],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
@@ -148,6 +154,10 @@
             "fnServerParams": function (aoData) {
                 aoData.push({ "name": "search", "value": $('input').val() });
             },
+            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                if (!aData.IsParent)
+                    $('td:eq(1)', nRow).html('');
+            },
             "sAjaxSource": siteUrl + "/PMS/Task/Index",
             "sServerMethod": "POST",
             "oLanguage": {
@@ -156,13 +166,55 @@
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
             },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
+        });
+
+        $('#projectTaskTable tbody').on('click', 'tr td.control > img', function () {
+            if ($(this.parentNode.parentNode).hasClass('details')) {
+                return;
+            }
+            var nTr = this.parentNode.parentNode;
+            var i = $.inArray(nTr, anOpen);
+            var oData = oTable.fnGetData(nTr);
+            if (i === -1) {
+                if (oData.purpose_short != oData.purpose) {
+                    $('div.purposeInner', nTr).html(oData.purpose);
+                    $('div.purpose', nTr).animate({
+                        "height": $('div.purposeInner', nTr).height()
+                    });
+                }
+
+                $('img', this.parentNode.parentNode).attr('src', sImageUrl + "details_close.png");
+                var nDetailsRow = oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
+                nDetailsRow.className += ' ' + nTr.className;
+                $('div.innerDetails', nDetailsRow).slideDown();
+                anOpen.push(nTr);
+                applyDatatable(oTable, nTr);
+            } else {
+                $('img', this.parentNode.parentNode).attr('src', sImageUrl + "details_open.png");
+                if (oData.purpose_short != oData.purpose) {
+                    $('div.purpose', nTr).animate({
+                        "height": 46
+                    });
+                }
+                $('div.innerDetails', $(nTr).next()[0]).slideUp(function () {
+                    if (oData.purpose_short != oData.purpose) {
+                        $('div.purposeInner', nTr).html(oData.purpose_short);
+                    }
+                    oTable.fnClose(nTr);
+                    anOpen.splice(i, 1);
+                });
+            }
+            $("td.details").css("background-color", "#f9f9f9");
+            $("td.details").css("border", "1px solid #C3C3C3");
         });
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });
-
-        //$(".dataTables_processing").hide();
-        //$(".dataTables_length label").text("");
 
         $(".dataTables_filter input").unbind()
             .bind("input", function (e) {
@@ -178,4 +230,138 @@
                 return;
             });
     });
+
+    function applyDatatable(oTable, nTr) {
+        var oData = oTable.fnGetData(nTr);
+        var aData = oData.SubTasks;
+        $('#' + oData.TaskId+ "_Parent").dataTable({
+            "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": false,
+            "bInfo": false,
+            "bFilter": false,
+            "bSort": false,
+            "bLengthChange": false,
+            "iTotalRecords": aData.length,
+            "iTotalDisplayRecords": aData.length,
+            "iDisplayStart": 0,
+            "iDisplayLength": 5,
+            "sEcho": 1,
+            "aoColumns": [
+                {
+                    "sDefaultContent": ""
+                },
+                {
+                    "sDefaultContent": "No Data",
+                    "sWidth": "15%",
+                    "mRender": function (data, type, full) {
+                        var element;
+                        var val;
+                        var taskId;
+                        if (dir == "ltr") {
+                            val = full["TaskNameE"];
+                            taskId = full["TaskId"];
+                            element = '<a href="Create/' + taskId + '">' + val + '</a>';
+                        } else {
+                            val = full["TaskNameA"];
+                            taskId = full["TaskId"];
+                            element = '<a href="Create/' + taskId + '">' + val + '</a>';
+                        }
+                        return element;
+                    }
+                },
+                {
+                    "sDefaultContent": "No Data",
+                    "sWidth": "15%",
+                    "mRender": function (data, type, full) {
+                        if (dir == "ltr") {
+                            return full["ProjectNameE"];
+                        } else {
+                            return full["ProjectNameA"];
+                        }
+                    }
+                },
+                {
+                    "sDefaultContent": "No Data",
+                    "sWidth": "15%",
+                    "mRender": function (data, type, full) {
+                        return full["StartDate"];
+                    }
+                },
+                {
+                    "sDefaultContent": "No Data",
+                    "sWidth": "15%",
+                    "mRender": function (data, type, full) {
+                        return full["EndDate"];
+                    }
+                },
+                {
+                    "sDefaultContent": "No Data",
+                    "sWidth": "15%",
+                    "mRender": function (data, type, full) {
+                        return full["TotalCost"];
+                    }
+                },
+                {
+                    "sDefaultContent": "No Data",
+                    "sWidth": "15%",
+                    "mRender": function (data, type, full) {
+                        var taskProgress = full["TaskProgress"];
+                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
+                        return html;
+                    }
+                }
+            ],
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
+            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                if (!aData.IsParent)
+                    $('td:eq(0)', nRow).html('');
+            },
+            "aaData": aData,
+            "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "<img alt=\"Loading\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            },
+            "fnInitComplete": function () {
+                this.fnAdjustColumnSizing();
+                $('div.dataTables_filter input').focus();
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
+        });
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+    }
+
+    function fnFormatDetails(oTable, nTr) {
+        var oData = oTable.fnGetData(nTr);
+        var sOut =
+            '<div class="innerDetails">' +
+                '<div class="column_details">' +
+                '<table class="table table-striped table-responsive subProjectTaskTable" id="' + oData.TaskId + "_Parent" + '" style="width: 100% !important;">' +
+                '<thead class="">' +
+                '<tr>' +
+                '<th style="width:34px !important">@EPMS.Web.Resources.Shared.Common.Serial</th>' +
+                '<th>@EPMS.Web.Resources.PMS.Task.TaskName</th>' +
+                '<th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>' +
+                '<th>@EPMS.Web.Resources.PMS.Task.StartDate</th>' +
+                '<th>@EPMS.Web.Resources.PMS.Task.DeliveryDate</th>' +
+                '<th>@EPMS.Web.Resources.PMS.Task.Cost</th>' +
+                '<th>@EPMS.Web.Resources.PMS.Task.Progress</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody></tbody>' +
+                '</table>' +
+                '</div>' +
+                '</div>';
+        return sOut;
+    }
 </script>

@@ -151,7 +151,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                 {
                                     if (deduction1[0] != null)
                                     {
-                                        viewModel.Deduction1 = deduction1[0] ?? 0;
+                                        viewModel.Deduction1 = (double) deduction1[0];
                                     }
                                 }
                                 var deduction2 = requests[1].Select(x => x.InstallmentAmount).ToList();
@@ -169,7 +169,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                 {
                                     if (deduction[0] != null)
                                     {
-                                        viewModel.Deduction1 = deduction[0] ?? 0;
+                                        viewModel.Deduction1 = (double) deduction[0];
                                     }
                                 }
                                 break;
@@ -238,7 +238,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                 {
                                     if (deduction1[0] != null)
                                     {
-                                        viewModel.Deduction1 = deduction1[0] ?? 0;
+                                        viewModel.Deduction1 = (double) deduction1[0];
                                     }
                                 }
                                 var deduction2 = requests[1].Select(x => x.InstallmentAmount).ToList();
@@ -246,7 +246,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                 {
                                     if (deduction2[0] != null)
                                     {
-                                        viewModel.Deduction2 = deduction2[0] ?? 0;
+                                        viewModel.Deduction2 = (double) deduction2[0];
                                     }
                                 }
                                 break;
@@ -256,7 +256,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                                 {
                                     if (deduction[0] != null)
                                     {
-                                        viewModel.Deduction1 = deduction[0] ?? 0;
+                                        viewModel.Deduction1 = (double) deduction[0];
                                     }
                                 }
                                 break;

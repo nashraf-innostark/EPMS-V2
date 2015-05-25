@@ -7,10 +7,10 @@ namespace EPMS.Models.DomainModels
     {
         public long EmployeeId { get; set; }
         public string EmployeeFirstNameE { get; set; }
-        public string EmployeeFirstNameA { get; set; }
         public string EmployeeMiddleNameE { get; set; }
-        public string EmployeeMiddleNameA { get; set; }
         public string EmployeeLastNameE { get; set; }
+        public string EmployeeFirstNameA { get; set; }
+        public string EmployeeMiddleNameA { get; set; }
         public string EmployeeLastNameA { get; set; }
         public string EmployeeImagePath { get; set; }
         public long? JobTitleId { get; set; }
@@ -18,13 +18,13 @@ namespace EPMS.Models.DomainModels
         public string EmployeeMobileNum { get; set; }
         public string EmployeeLandlineNum { get; set; }
         public byte? MaritalStatus { get; set; }
-        public DateTime EmployeeDOB { get; set; }
+        public DateTime? EmployeeDOB { get; set; }
         public string EmployeeNationality { get; set; }
         public string EmployeeIqama { get; set; }
         public DateTime? EmployeeIqamaIssueDt { get; set; }
-        public DateTime EmployeeIqamaExpiryDt { get; set; }
+        public DateTime? EmployeeIqamaExpiryDt { get; set; }
         public string EmployeePassportNum { get; set; }
-        public DateTime EmployeePassportExpiryDt { get; set; }
+        public DateTime? EmployeePassportExpiryDt { get; set; }
         public string EmployeeDetailsE { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }
@@ -42,6 +42,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
         public virtual ICollection<TaskEmployee> TaskEmployees { get; set; }
-        public virtual ICollection<Warehouse> Warehouses { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

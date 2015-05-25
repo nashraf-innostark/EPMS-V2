@@ -139,7 +139,8 @@ namespace EPMS.Web.ModelMappers
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
                 OrderDate = Convert.ToDateTime(source.OrderDate.ToString()).ToShortDateString(),
-                OrderStatus = source.OrderStatus
+                OrderStatus = source.OrderStatus,
+                CustomerId = source.CustomerId
             };
         }
     }

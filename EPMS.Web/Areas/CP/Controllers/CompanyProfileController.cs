@@ -77,7 +77,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                     .Select(x => x.CreateForContactList());
             var applicantList =
                 jobApplicantService.GetAll()
-                    .Where(x => !string.IsNullOrEmpty(x.ApplicantMobile))
+                    .Where(x => !string.IsNullOrEmpty(x.MobileNumber))
                     .Select(x => x.CreateForContactList());
             contactList.AddRange(empList);
             contactList.AddRange(customerList);

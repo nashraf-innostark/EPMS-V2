@@ -71,7 +71,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
         }
         public static Notification CreateFromClientToServer(this NotificationResponse notification)
         {
-            return new Notification
+            var notfication = new Notification
             {
                 NotificationId = notification.NotificationId,
                 TitleA = notification.TitleA,
@@ -93,6 +93,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 RecLastUpdatedBy = notification.RecCreatedBy,
                 RecLastUpdatedDate = DateTime.Now
             };
+            return notfication;
         }
         public static EmployeeDDL CreateForEmployeeDDL(this Employee source)
         {

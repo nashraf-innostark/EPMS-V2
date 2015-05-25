@@ -39,5 +39,20 @@ namespace EPMS.Web.ModelMappers
             var request = new InventoryDepartmentRequest {InventoryDepartment = dept};
             return request;
         }
+        public static DomainModels.InventoryDepartment CreateFromClientToServerModel(this WebModels.InventoryDepartment source)
+        {
+            var dept = new DomainModels.InventoryDepartment();
+            dept.DepartmentId = source.DepartmentId;
+            dept.DepartmentNameEn = source.DepartmentNameEn;
+            dept.DepartmentNameAr = source.DepartmentNameAr;
+            dept.ParentId = source.ParentId;
+            dept.DepartmentColor = source.DepartmentColor;
+            dept.DepartmentDesc = source.DepartmentDesc;
+            dept.RecCreatedBy = source.RecCreatedBy;
+            dept.RecCreatedDt = source.RecCreatedDt;
+            dept.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            dept.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            return dept;
+        }
     }
 }

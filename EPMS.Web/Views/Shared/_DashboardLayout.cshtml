@@ -207,28 +207,28 @@
                 else $('.nav-fixed-topright').removeClass('nav-released');
             }
         });
-        $('.user-sub-menu-container').on('click', function () {
-            $(this).toggleClass('active-user-menu');
-        });
-        $('.user-sub-menu .light').on('click', function () {
-            if ($('body').is('.light-version')) return;
-            $('body').addClass('light-version');
-            setTimeout(function () {
-                $.cookie('themeColor', 'light', {
-                    expires: 7,
-                    path: '/'
-                });
-            }, 500);
-        });
-        $('.user-sub-menu .dark').on('click', function () {
-            if ($('body').is('.light-version')) {
-                $('body').removeClass('light-version');
-                $.cookie('themeColor', 'dark', {
-                    expires: 7,
-                    path: '/'
-                });
-            }
-        });
+        //$('.user-sub-menu-container').on('click', function () {
+        //    $(this).toggleClass('active-user-menu');
+        //});
+        //$('.user-sub-menu .light').on('click', function () {
+        //    if ($('body').is('.light-version')) return;
+        //    $('body').addClass('light-version');
+        //    setTimeout(function () {
+        //        $.cookie('themeColor', 'light', {
+        //            expires: 7,
+        //            path: '/'
+        //        });
+        //    }, 500);
+        //});
+        //$('.user-sub-menu .dark').on('click', function () {
+        //    if ($('body').is('.light-version')) {
+        //        $('body').removeClass('light-version');
+        //        $.cookie('themeColor', 'dark', {
+        //            expires: 7,
+        //            path: '/'
+        //        });
+        //    }
+        //});
     });
 
     $(function () {

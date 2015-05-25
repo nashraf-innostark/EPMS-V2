@@ -61,13 +61,19 @@ namespace EPMS.Implementation.Services
         {
             #region Add
 
-            SaveInventoryDepartment(departmentToSave.InventoryDepartment);
+            if (departmentToSave.InventoryDepartment.DepartmentId > 0)
+            {
+                UpdateInventoryDepartment(departmentToSave.InventoryDepartment);
+            }
 
             #endregion
 
             #region Update
 
-            UpdateInventoryDepartment(departmentToSave.InventoryDepartment);
+            else
+            {
+                SaveInventoryDepartment(departmentToSave.InventoryDepartment);
+            }
 
             #endregion
 

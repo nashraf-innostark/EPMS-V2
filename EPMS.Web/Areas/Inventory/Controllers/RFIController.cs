@@ -1,9 +1,30 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using EPMS.Web.ModelMappers;
+using System.Configuration;
+using System.Globalization;
+using System.Web.Mvc;
+using EPMS.Interfaces.IServices;
+using EPMS.Web.Controllers;
+using EPMS.Web.ViewModels.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
-    public class RFIController : Controller
+    [Authorize]
+    //[SiteAuthorize(PermissionKey = "PMS", IsModule = true)]
+    public class RFIController : BaseController
     {
+        private readonly ICustomerService customerService;
+        private readonly IOrdersService ordersService;
+        private readonly IRFIService rfiService;
+
+        public RFIController(ICustomerService customerService,IOrdersService ordersService,IRFIService rfiService)
+        {
+            this.customerService = customerService;
+            this.ordersService = ordersService;
+            this.rfiService = rfiService;
+        }
+
         // GET: Inventory/RFI
         public ActionResult Index()
         {
@@ -19,12 +40,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         // GET: Inventory/RFI/Create
         public ActionResult Create()
         {
-            return View();
+            RFIViewModel rfiViewModel =new RFIViewModel();
+            rfiViewModel.Rfi.RecCreatedByName = Session["FullName"].ToString();
+
+            CheckHasCustomerModule(rfiViewModel);
+            return View(rfiViewModel);
         }
 
         // POST: Inventory/RFI/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(RFIViewModel rfiViewModel)
         {
             try
             {
@@ -37,7 +62,27 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View();
             }
         }
-
+        private void CheckHasCustomerModule(RFIViewModel viewModel)
+        {
+            // check license
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            string LicenseKey = WebBase.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = LicenseKey.Split('|');
+            string[] Modules = splitLicenseKey[4].Split(';');
+            if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
+            {
+                var customers = customerService.GetAll();
+                var orders = ordersService.GetAll();
+                viewModel.Customers = customers.Select(x => x.CreateForDashboard());
+                viewModel.Orders = orders.Select(x => x.CreateForDashboard());
+               
+                ViewBag.HasModule = true;
+            }
+            else
+            {
+                ViewBag.HasModule = false;
+            }
+        }
         // GET: Inventory/RFI/Edit/5
         public ActionResult Edit(int id)
         {

@@ -8,7 +8,6 @@ namespace EPMS.Web.Models
     {
         public long QuotationId { get; set; }
         public string ClientName { get; set; }
-        [Required(ErrorMessage = "Order Number is required.")]
         public long OrderId { get; set; }
         public long CreatedByEmployee { get; set; }
         public string GreetingsEn { get; set; }

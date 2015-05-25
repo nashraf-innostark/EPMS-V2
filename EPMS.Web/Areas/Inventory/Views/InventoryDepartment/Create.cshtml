@@ -1,0 +1,356 @@
+﻿@model EPMS.Web.ViewModels.InventoryDepartment.InventoryDepartmentViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_HelpLayout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+<div class="">
+    <div class="panel">
+        <div class="panel-content filler">
+            <div class="panel-logo"></div>
+            <div class="panel-header">
+                <h1><small>Inventory Department</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i> Add New</button>
+            </div>
+            <div class="panel-search container-fluid">
+                <form class="form-horizontal" action="javascript:;">
+                    <input id="panelSearch" placeholder="Search" type="text" name="panelSearch">
+                    <button class="btn btn-search"></button>
+                </form>
+            </div>
+
+            <div class="sidebarMenuHolder">
+                <div class="JStree">
+                    <div class="Jstree_shadow_top"></div>
+                    <div id="jstree"></div>
+                    <div class="Jstree_shadow_bottom"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-slider">
+            <div class="panel-slider-center">
+                <div class="panel-slider-arrow"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="breadcrumb-container">
+        <ul class="xbreadcrumbs">
+            <li>
+                <a href="dashboard-En.html">
+                    <i class="icon-photon home"></i>
+                </a>
+            </li>
+            <li>
+                <a href="InventoryDepartmentsListEn.html">
+                    Inventory Departments
+                </a>
+            </li>
+
+            <li class="current">
+                <a href="javascript:;">
+                    Inventory Department Addition
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <header>
+        <i class="icon-big-notepad"></i>
+        <h2><small> Inventory Department Addition</small></h2>
+
+
+
+    </header>
+
+    <form class="form-horizontal" id="validation_form">
+        @Html.HiddenFor(model => model.InventoryDepartment.DepartmentId, new { @id = "DepartmentId" })
+        @Html.HiddenFor(model => model.InventoryDepartment.ParentId, new { @id = "ParentId" })
+        <div class="container-fluid">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="nameEn">Department Name</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "nameEn", @class = "" })
+                        @Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameEn, String.Empty, new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="nameAr">Department Name arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameAr, new { @id = "nameAr", @class = "" })
+                        @Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameAr, String.Empty, new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="color">Department Color</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentColor, new { @id = "color", @class = "", Value = "#FFF8BE" })
+                        @*<input type="text" id="color" name="color" value="#FFF8BE" />*@
+                        <div id="colorpicker"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="description">Description </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "description", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div id="SaveNewNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn" onclick=" SaveNewNode(event); ">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div id="UpdateNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn" onclick="SaveNewNode(event);">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="~/RTE/ckeditor.js"></script>
+<script type="text/javascript">
+    var dir = '@direction';
+    var inventoryDepartments = '@Html.Raw(Json.Encode(Model.InventoryDepartments))';
+    var parsed = JSON.parse(inventoryDepartments);
+    $().ready(function () {
+        $('#colorpicker').farbtastic('#color');
+        CKEDITOR.replace('description', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        if (dir == "ltr") {
+            $("#jstree").jstree({
+                "json_data": {
+                    "data": [
+                        {
+                            "data": {
+                                "title": "Departments",
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": "parentNode" },
+                        }
+                    ]
+                },
+                "plugins": ["themes", "json_data", "ui"],
+                "ui": {
+                    "initially_select": ["parentNode"]
+                },
+                "core": {
+                    "initially_open": ["parentNode"]
+                }
+            });
+        } else {
+            $("#jstree").jstree({
+                "json_data": {
+                    "data": [
+                        {
+                            "data": {
+                                "title": "الإدارات",
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": "parentNode" },
+                        }
+                    ]
+                },
+                "plugins": ["themes", "json_data", "ui"],
+                "ui": {
+                    "initially_select": ["parentNode"]
+                },
+                "core": {
+                    "initially_open": ["parentNode"]
+                }
+            });
+        }
+        var position = 'last';
+        var parentNode;
+        var mainParent;
+        var newNode;
+        setTimeout(function () {
+            $.each(parsed, function (key, value) {
+                if (value.ParentId != null) {
+                    $('ul li').each(function() {
+                        if ($(this).attr('id') == value.ParentId) {
+                            parentNode = this;
+                        }
+                    });
+                    if (dir == "ltr") {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameEn,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    } else {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameAr,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    }
+                    var elem1 = $('#jstree').jstree("create_node", parentNode, position, newNode, false, false);
+                    //if (value.MenuType == "Content") {
+                    //    elem1.addClass("jstree-leaf");
+                    //}
+                } else {
+                    mainParent = $('#jstree').jstree('get_selected');
+                    if (dir == "ltr") {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameEn,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    } else {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameAr,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    }
+                    $('#jstree').jstree("create_node", mainParent, position, newNode, false, false);
+                }
+            });
+        }, 1000);
+    });
+    function jsTreeClick(event) {
+        var temp = $(event.target).text();
+        var text = temp.substring(1, temp.length);
+        if (text == "Departments" || text == "") {
+            for (name in CKEDITOR.instances) {
+                CKEDITOR.instances[name].destroy();
+            }
+            $("#DepartmentId").val(0);
+            $("#nameEn").val("");
+            $("#nameAr").val("");
+            $("#color").val("#FFF8BE");
+            $("#description").val("");
+            $("#ParentId").val(0);
+            CKEDITOR.replace('description', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#SaveNewNode").css("display", "none");
+            $("#UpdateNode").css("display", "none");
+            return true;
+        }
+        $.each(parsed, function (key, value) {
+            if (value.DepartmentNameEn == text || value.DepartmentNameAr == text) {
+                for (name in CKEDITOR.instances) {
+                    CKEDITOR.instances[name].destroy();
+                }
+                $("#DepartmentId").val(value.DepartmentId);
+                $("#nameEn").val(value.DepartmentNameEn);
+                $("#nameAr").val(value.DepartmentNameAr);
+                $("#color").val(value.DepartmentColor);
+                $("#description").val(value.DepartmentDesc);
+                $("#ParentId").val(value.ParentId);
+                CKEDITOR.replace('description', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
+            }
+        });
+        $("#SaveNewNode").css("display", "none");
+        $("#UpdateNode").css("display", "block");
+        return true;
+    }
+    function AddNewNode() {
+        //var parent = $('#jstree').jstree('get_selected');
+        //if (parent.hasClass("jstree-leaf")) {
+        //    alert("This is Content Node. Please Select a Parent Node");
+        //    return false;
+        //}
+        for (name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy();
+        }
+        $("#nameEn").val("");
+        $("#nameAr").val("");
+        $("#color").val("#FFF8BE");
+        $("#description").val("");
+        $("#ParentId").val(parseInt($("#DepartmentId").val()));
+        $("#DepartmentId").val(0);
+        CKEDITOR.replace('description', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#UpdateNode").css("display", "none");
+        $("#SaveNewNode").css("display", "block");
+        return true;
+    }
+    function SaveNewNode(event) {
+        var parent = parseInt($('#ParentId').val());
+        if (isNaN(parent)) {
+            parent = 0;
+        }
+        var nodeId = parseInt($("#DepartmentId").val());
+        var titleEn = $("#nameEn").val();
+        var titleAr = $("#nameAr").val();
+        var color = $("#color").val();
+        var description = CKEDITOR.instances['description'].getData();
+        var dataToPost = {
+            parent: parent,
+            nodeId: nodeId,
+            nameEn: titleEn,
+            nameAr: titleAr,
+            color: color,
+            description: description,
+        };
+        var postUrl = $("#siteURL").val() + "/Inventory/InventoryDepartment/SaveInventoryDepartment";
+        $.ajax({
+            type: "POST",
+            datatype: "json",
+            url: postUrl,
+            data: dataToPost,
+            success: function (data) {
+                // Set values
+                successCreatingNode(data);
+            },
+            error: callError
+        });
+    }
+    function successCreatingNode(data) {
+        if (data != null) {
+            if (data == "Department Already Exists") {
+                alert(data);
+            } else {
+                window.location.reload();
+            }
+        }
+        else {
+            alert("Problem in Saving Changes.");
+        }
+    }
+    function callError() {
+        alert("Problem in Saving Changes.");
+    }
+</script>

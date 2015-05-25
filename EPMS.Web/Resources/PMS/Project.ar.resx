@@ -288,4 +288,13 @@
   <data name="ProjectStartDateRequiredMsg" xml:space="preserve">
     <value>حدد تاريخ بدء المشروع.</value>
   </data>
+  <data name="Quotation" xml:space="preserve">
+    <value>اقتباس</value>
+  </data>
+  <data name="CreateFromOrder" xml:space="preserve">
+    <value>خلق من ترتيب</value>
+  </data>
+  <data name="CreateFromQuotation" xml:space="preserve">
+    <value>خلق من الاقتباس</value>
+  </data>
 </root>

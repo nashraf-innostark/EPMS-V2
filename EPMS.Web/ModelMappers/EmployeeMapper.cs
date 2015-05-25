@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Models;
 using Employee = EPMS.Models.DomainModels.Employee;
@@ -12,6 +13,7 @@ namespace EPMS.Web.ModelMappers
     {
         public static Employee CreateFromClientToServer(this Models.Employee source)
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
             string descpEn = "";
             string descpAr = "";
             if (!String.IsNullOrEmpty(source.EmployeeDetailsE) )
@@ -35,15 +37,15 @@ namespace EPMS.Web.ModelMappers
                 EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama ?? string.Empty,
-                EmployeeIqamaExpiryDt = DateTime.ParseExact(source.EmployeeIqamaExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDOB = DateTime.ParseExact(source.EmployeeDOB, "dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaExpiryDt = !string.IsNullOrEmpty(source.EmployeeIqamaExpiryDt) ? DateTime.ParseExact(source.EmployeeIqamaExpiryDt, "dd/MM/yyyy", new CultureInfo("en")) : (DateTime?)null,
+                EmployeeDOB = !string.IsNullOrEmpty(source.EmployeeDOB) ? DateTime.ParseExact(source.EmployeeDOB, "dd/MM/yyyy", new CultureInfo("en")) : (DateTime?)null,
                 EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
                 MaritalStatus = source.MaritalStatus,
                 EmployeeMobileNum = source.EmployeeMobileNum ?? "",
                 JobTitleId = source.JobTitleId,
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
-                EmployeePassportExpiryDt = DateTime.ParseExact(source.EmployeePassportExpiryDt, "dd/MM/yyyy", new CultureInfo("en")),
+                EmployeePassportExpiryDt = !string.IsNullOrEmpty(source.EmployeePassportExpiryDt) ? DateTime.ParseExact(source.EmployeePassportExpiryDt, "dd/MM/yyyy", new CultureInfo("en")) : (DateTime?)null,
                 EmployeeDetailsE = descpEn,
                 EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy,
@@ -54,6 +56,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeJobId = source.EmployeeJobId,
                 IsActivated = source.IsActivated,
             };
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
             return caseType;
         }
         public static Models.Employee CreateFromServerToClient(this Employee source)
@@ -81,16 +84,16 @@ namespace EPMS.Web.ModelMappers
                 EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama,
-                EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDOB = Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt !=null ? Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt !=null ? Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeDOB = source.EmployeeDOB !=null ? Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
                 MaritalStatus = source.MaritalStatus,
                 EmployeeMobileNum = source.EmployeeMobileNum ?? "",
                 JobTitleId = source.JobTitleId,
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
-                EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeePassportExpiryDt = source.EmployeePassportExpiryDt != null ? Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeDetailsE = descpEn,
                 EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy,
@@ -128,16 +131,16 @@ namespace EPMS.Web.ModelMappers
                 EmployeeId = source.EmployeeId,
                 EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama,
-                EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDOB = Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt != null ? Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt != null ? Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeDOB = source.EmployeeDOB != null ? Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
                 MaritalStatus = source.MaritalStatus,
                 EmployeeMobileNum = source.EmployeeMobileNum ?? "",
                 JobTitleId = source.JobTitleId,
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
-                EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeePassportExpiryDt = source.EmployeePassportExpiryDt != null ? Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeDetailsE = descpEn,
                 EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy,
@@ -213,16 +216,16 @@ namespace EPMS.Web.ModelMappers
                 EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = ImageUrl(source.EmployeeImagePath),
                 EmployeeIqama = source.EmployeeIqama,
-                EmployeeIqamaIssueDt = Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
-                EmployeeDOB = Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt != null ? Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt != null ? Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeDOB = source.EmployeeDOB != null ? Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
                 MaritalStatus = source.MaritalStatus,
                 EmployeeMobileNum = source.EmployeeMobileNum ?? "",
                 JobTitleId = source.JobTitleId,
                 EmployeeNationality = source.EmployeeNationality,
                 EmployeePassportNum = source.EmployeePassportNum ?? "",
-                EmployeePassportExpiryDt = Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EmployeePassportExpiryDt = source.EmployeePassportExpiryDt != null ? Convert.ToDateTime(source.EmployeePassportExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeDetailsE = descpEn,
                 EmployeeDetailsA = descpAr,
                 RecCreatedBy = source.RecCreatedBy,

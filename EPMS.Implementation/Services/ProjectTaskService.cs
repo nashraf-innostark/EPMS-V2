@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -57,6 +58,7 @@ namespace EPMS.Implementation.Services
             response.Customers = customerService.GetAll();
             response.Employees = employeeService.GetAll();
             response.Projects = projectService.GetAllProjects();
+            response.AllParentTasks = Repository.GetAllParentTasks();
             if (id > 0)
             {
                 response.ProjectTask = Repository.FindTaskWithPreRequisites(id);
@@ -83,6 +85,11 @@ namespace EPMS.Implementation.Services
             return Repository.FindProjectTaskByProjectId(projectid, taskId);
         }
 
+        public IEnumerable<ProjectTask> FindParentTasksByProjectId(long projectid)
+        {
+            return Repository.FindParentTasksByProjectId(projectid);
+        }
+
         public IEnumerable<ProjectTaskResponse> LoadProjectTasksByEmployeeId(long employeeId, long projectId)
         {
             var tasks= Repository.GetProjectTasksByEmployeeId(employeeId, projectId);
@@ -107,6 +114,29 @@ namespace EPMS.Implementation.Services
         {
             try
             {
+                // update Parent task progress
+                if (!task.IsParent && task.ParentTask != 0 && task.ParentTask != null)
+                {
+                    var parentTask = Repository.Find(Convert.ToInt32(task.ParentTask));
+                    int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress.Split('%')[0]));
+                    int taskWeight = Convert.ToInt32(task.TotalWeight.Split('%')[0]);
+                    var progressToAdd = Convert.ToInt32(task.TaskProgress.Split('%')[0]) * taskWeight;
+                    int parentTaskProgress = (countOtherTasksProgress + (progressToAdd / 100));
+                    if (parentTaskProgress <= 100)
+                    {
+                        parentTask.TaskProgress = parentTaskProgress + "%";
+                        if (parentTaskProgress < 10)
+                        {
+                            parentTask.TaskProgress = "0" + parentTaskProgress + "%";
+                        }
+                        Repository.Update(parentTask);
+                        Repository.SaveChanges();
+                    }
+                }
+                if (task.ParentTask == 0)
+                {
+                    task.ParentTask = null;
+                }
                 Repository.Add(task);
                 if (preReqList.Any())
                 {
@@ -144,6 +174,32 @@ namespace EPMS.Implementation.Services
         {
             try
             {
+                // update Parent task progress
+                if (!task.IsParent && task.ParentTask != 0 && task.ParentTask != null)
+                {
+                    var parentTask = Repository.Find(Convert.ToInt32(task.ParentTask));
+                    //int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32((Convert.ToDouble(projectTask.TaskProgress.Split('%')[0]) / Convert.ToDouble(projectTask.TotalWeight.Split('%')[0]))* 100));
+                    double otherTasksProgress = 0;
+                    foreach (var projectTask in parentTask.SubTasks)
+                    {
+                        if (projectTask.TaskId != task.TaskId)
+                        {
+                            otherTasksProgress += Convert.ToDouble(projectTask.TaskProgress.Split('%')[0]);
+                        }
+                    }
+                    otherTasksProgress = otherTasksProgress + Convert.ToInt32(task.TaskProgress.Split('%')[0]);
+                    int parentTaskProgress = Convert.ToInt32(otherTasksProgress);
+                    if (parentTaskProgress <= 100)
+                    {
+                        parentTask.TaskProgress = parentTaskProgress + "%";
+                        if (parentTaskProgress < 10)
+                        {
+                            parentTask.TaskProgress = "0" + parentTaskProgress + "%";
+                        }
+                        Repository.Update(parentTask);
+                        Repository.SaveChanges();
+                    }
+                }
                 var tasks = Repository.Find(task.TaskId);
                 var projectTaskToUpdate = tasks.CreateFromClientToServer(task);
 
@@ -309,7 +365,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
                 notificationViewModel.NotificationResponse.SubCategoryId = 3; //Task delivery date
                 notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task
-                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(task.EndDate).ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDate = task.EndDateOriginal;
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
                 notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -327,8 +383,15 @@ namespace EPMS.Implementation.Services
 
             notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
             notificationViewModel.NotificationResponse.SubCategoryId = 10; //Task delivery date
-            notificationViewModel.NotificationResponse.ItemId = task.TaskId; 
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            notificationViewModel.NotificationResponse.ItemId = task.TaskId;
+            if (DateTime.ParseExact(notificationViewModel.NotificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")) > DateTime.Now)
+            {
+                notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            }
+            else
+            {
+                notificationViewModel.NotificationResponse.AlertDate = task.EndDateOriginal;
+            }
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
             notificationService.AddUpdateMeetingNotification(notificationViewModel, employeeIds);

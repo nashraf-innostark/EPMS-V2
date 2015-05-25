@@ -110,6 +110,8 @@
     <Compile Include="Common\TaskByColumn.cs" />
     <Compile Include="DomainModels\Aisle.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
+    <Compile Include="DomainModels\ApplicantExperience.cs" />
+    <Compile Include="DomainModels\ApplicantQualification.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
     <Compile Include="DomainModels\AspNetRole.cs" />
     <Compile Include="DomainModels\AspNetUser%27.cs" />
@@ -144,6 +146,8 @@
     <Compile Include="DomainModels\Meeting.cs" />
     <Compile Include="DomainModels\MeetingAttendee.cs" />
     <Compile Include="DomainModels\MeetingDocument.cs" />
+    <Compile Include="DomainModels\RFI.cs" />
+    <Compile Include="DomainModels\RFIItem.cs" />
     <Compile Include="DomainModels\Size.cs" />
     <Compile Include="DomainModels\Status.cs" />
     <Compile Include="DomainModels\Vendor.cs" />

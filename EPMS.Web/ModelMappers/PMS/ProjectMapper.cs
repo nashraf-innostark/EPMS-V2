@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.PMS
@@ -8,6 +9,7 @@ namespace EPMS.Web.ModelMappers.PMS
     {
         public static Project CreateFromClientToServer(this Models.Project source)
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
             string decspE = "";
             string decspA = "";
             if (!String.IsNullOrEmpty(source.DescriptionE))
@@ -66,7 +68,8 @@ namespace EPMS.Web.ModelMappers.PMS
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                QuotationId = source.QuotationId
             };
         }
         public static Models.Project CreateFromServerToClient(this Project source)
@@ -77,6 +80,7 @@ namespace EPMS.Web.ModelMappers.PMS
             project.NameA = source.NameA;
             project.CustomerId = source.CustomerId;
             project.OrderId = source.OrderId;
+            project.QuotationId = source.QuotationId;
             project.SerialNo = source.SerialNo;
             string decspE = "";
             string decspA = "";
@@ -156,6 +160,10 @@ namespace EPMS.Web.ModelMappers.PMS
             project.NameA = source.NameA;
             project.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             project.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            foreach (var projectTask in source.ProjectTasks)
+            {
+                project.ProjectTasksSum += Convert.ToInt32(projectTask.TotalWeight.Split('%')[0]);
+            }
             return project;
         }
     }
