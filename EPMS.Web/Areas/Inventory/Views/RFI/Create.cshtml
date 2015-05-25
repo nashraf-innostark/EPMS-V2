@@ -107,14 +107,6 @@
                 <div class="span9">
                     <div class="controls elrte-wrapper">
                         <textarea id="tiny" rows="2" class="auto-resize"></textarea>
-                        <script>
-                            $('#tiny').elrte({
-                                lang: "en",
-                                styleWithCSS: false,
-                                height: 200,
-                                toolbar: 'tiny'
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
@@ -174,113 +166,7 @@
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
                         <button type="button" class="btn trAdder">@EPMS.Web.Resources.RFI.RFI.Add</button>
-                        <script>
-
-                            $(document).ready(function() {
-
-                                $('.trAdder').on("click", function() {
-
-                                    var html = ' <tr>  <td ><div class="control-group row-fluid"><div class="span1"><label class="control-label serialNumber"  ></label></div></div></td>  <td > <textarea  rows="2" class="auto-resize"></textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button></td><td class="quantity"> <input class="n1" type="text" name="numbers" value=0> </td>  <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
-                                    $('.qouteAdd').append(html);
-                                    activateSerial();
-                                    reActivateDelete();
-                                    //reactivateCount();
-
-                                });
-                                reActivateDelete();
-
-//reactivateCount();
-                                function reActivateDelete() {
-                                    $('.deleteRow').on("click", function() {
-                                        var count = $('.qouteAdd tr').length;
-                                        if (count > 1) {
-                                            $(this).parent().parent().remove();
-                                            /*
-															var x = 0;
-													$('.qouteAdd tr .n3').each(function(){
-
-														 x  = x + parseInt($(this).val());
-
-													});
-														$('#subtotal').val(x);
-														discount();
-														*/
-                                        }
-                                        activateSerial();
-                                    });
-                                }
-
-                                function activateSerial() {
-                                    var count = $('.qouteAdd tr').length;
-                                    var add = 0;
-                                    $('.qouteAdd tr').each(function() {
-                                        add++;
-                                        $(this).find(".serialNumber").text(add);
-
-                                    });
-
-
-                                }
-
-
-                                $("#importEx").on("click", function() {
-
-                                    var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
-                                    var coln = $(excel).find("tr:first td").length;
-                                    var count = 0;
-                                    var x = 0;
-                                    if (coln == 2) {
-                                        $(excel).find("tr").each(function() {
-                                            var y = 0;
-                                            var t1 = "";
-                                            var t2 = 0;
-                                            var t3 = 0;
-                                            var t4 = 0;
-
-
-                                            $(this).find("td").each(function() {
-
-
-                                                if (y == 0) {
-                                                    t1 = $(this).text();
-
-                                                } else if (y == 1) {
-                                                    t2 = parseInt($(this).text());
-                                                } else if (y == 2) {
-                                                    t3 = parseInt($(this).text());
-                                                }
-
-                                                y++;
-                                            });
-
-                                            t4 = t3 * t2;
-                                            var html = ' <tr> <td ><div class="control-group row-fluid"><div class="span1"><label class="control-label serialNumber"></label></div></div></td><td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>	 </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t2 + '"> </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
-
-                                            if (count == 0) {
-                                                $('.qouteAdd').html("");
-                                            }
-
-                                            $('.qouteAdd').append(html);
-                                            reActivateDelete();
-                                            //reactivateCount();
-
-                                            count++;
-                                        });
-                                       
-                                        activateSerial();
-                                    } else {
-
-                                        $.pnotify({
-                                            title: 'Sorry',
-                                            type: 'info',
-                                            text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
-                                        });
-
-                                    }
-
-                                });
-                            });
-                        </script>
+                        
                     </div>
                 </div>
             </div>
@@ -294,7 +180,11 @@
         <!-- end container -->
     }
 
-<div id="itemSearcher" class="modal hide fade treeSelector">
+
+
+@section popups
+{
+    <div id="itemSearcher" class="modal hide fade treeSelector">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Item Search</h3>
@@ -316,11 +206,6 @@
                         </select>
                     </div>
                 </div>
-                <script>
-                    $().ready(function(){
-                        $("#selectBoxFilter").select2();
-                    });
-                </script>
             </div>
 
             <div class="control-group row-fluid">
@@ -361,175 +246,6 @@
     </div>
     <div class="modal-body ">
         <form class="form-horizontal">
-            <script type="text/javascript">
-
-                $(function () {
-                    $("#jstree").jstree({
-                        "json_data" : {
-                            "data" : [
-                                {
-                                    "data" : {
-                                        "title" : "Uniform",
-                                        "attr" : { "href" : "#" }
-                                    },
-                                    "children" : [
-                                        {
-                                            "data" : {
-                                                "title" : "Boys",
-                                                "attr" : { "href" : "#" }
-                                            }
-                                        },
-                                        {
-                                            "data" : {
-                                                "title" : "Girls",
-                                                "attr" : { "href" : "#" }
-                                            }
-                                        }
-                                    ]
-                                },
-                                {
-                                    "data" : {
-                                        "title" : "Labratory",
-                                        "attr" : { "href" : "#" }
-                                    },
-                                    "attr" : { "id" : "node1" },
-                                    "children" : [
-                                        {
-                                            "data" : {
-                                                "title" : "Account Settings",
-                                                "attr" : { "href" : "#" }
-                                            }
-                                        },
-                                        {
-                                            "data" : {
-                                                "title" : "Warnings and Blocks",
-                                                "attr" : { "href" : "#" }
-                                            }
-                                        },
-                                        {
-                                            "data" : {
-                                                "title" : "Physics",
-                                                "attr" : { "href" : "#" }
-                                            },
-                                            "attr" : { "id" : "node2" },
-                                            "children" : [
-                                                {
-                                                    "data" : {
-                                                        "title" : "Glass",
-                                                        "attr" : { "href" : "#" }
-                                                    },
-                                                    "attr" : { "id" : "node3" },
-                                                    "children" : [
-
-                                                        {
-                                                            "data" : {
-                                                                "title" : "Beakers",
-                                                                "attr" : { "href" : "#" }
-                                                            }
-                                                            ,
-                                                            "attr" : { "id" : "node4" },
-                                                            "children" : [
-
-                                                                {
-                                                                    "data" : {
-                                                                        "title" : "Beakers",
-                                                                        "attr" : { "href" : "#" }
-                                                                    }
-
-                                                                    ,
-                                                                    "attr" : { "id" : "node4" },
-                                                                    "children" : [
-
-                                                                        {
-                                                                            "data" : {
-                                                                                "title" : "Sku1",
-                                                                                "attr" : { "href" : "#" }
-                                                                            }
-
-
-
-
-                                                                        },
-                                                                        {
-                                                                            "data" : {
-                                                                                "title" : "Sku2",
-                                                                                "attr" : { "href" : "#" }
-                                                                            }
-                                                                        }
-                                                                    ]
-
-
-
-
-                                                                },
-                                                                {
-                                                                    "data" : {
-                                                                        "title" : "Flasks",
-                                                                        "attr" : { "href" : "#" }
-                                                                    }
-                                                                }
-                                                            ]
-
-
-
-                                                        },
-                                                        {
-                                                            "data" : {
-                                                                "title" : "Flasks",
-                                                                "attr" : { "href" : "#" }
-                                                            }
-                                                        }
-                                                    ]
-
-                                                },
-                                                {
-                                                    "data" : {
-                                                        "title" : "I Forgot My Password",
-                                                        "attr" : { "href" : "#" }
-                                                    }
-                                                },
-                                                {
-                                                    "data" : {
-                                                        "title" : "Can You Send Me a Copy",
-                                                        "attr" : { "href" : "#" }
-                                                    }
-                                                },
-                                                {
-                                                    "data" : {
-                                                        "title" : "How Can I ",
-                                                        "attr" : { "href" : "#" }
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "data" : {
-                                                "title" : "Deactivating, Deleting, Saving",
-                                                "attr" : { "href" : "#" }
-                                            }
-                                        },
-                                        {
-                                            "data" : {
-                                                "title" : "Downloading Your Info",
-                                                "attr" : { "href" : "#" }
-                                            }
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "plugins" : [ "themes", "json_data", "ui" ],
-                        "ui" : {
-                            "initially_select" : [ "node3" ]
-                        },
-                        "core" : {
-                            "initially_open" : [ "node1" , "node2" ]
-                        }
-                    });
-                });
-
-            </script>
-
             <div class="sidebarMenuHolder">
                 <div class="JStree">
                     <div class="Jstree_shadow_top"></div>
@@ -546,8 +262,11 @@
     </div>
 </div>
 
+}
+
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $("#selectBoxFilter").select2();
     // set JobId and Department Name
         $("#Client").on("change", function () {
             $("#OrderNo").empty();
@@ -575,6 +294,293 @@
             $('.select2me').select2({
                 placeholder: "Select",
             });
+        });
+
+        $('.trAdder').on("click", function () {
+
+            var html = ' <tr><td >' +
+                '<div class="control-group row-fluid">' +
+                '<div class="span1">' +
+                '<label class="control-label serialNumber"  ></label>' +
+                '</div>' +
+                '</div>' +
+                '</td>  ' +
+                '<td > <textarea  rows="2" class="auto-resize"></textarea>' +
+                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                '</td>' +
+                '<td class="quantity"> <input class="n1" type="text" name="numbers" value=0> </td>  ' +
+                '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                '</td></tr>';
+            $('.qouteAdd').append(html);
+            activateSerial();
+            reActivateDelete();
+            //reactivateCount();
+
+        });
+        reActivateDelete();
+
+        //reactivateCount();
+        function reActivateDelete() {
+            $('.deleteRow').on("click", function () {
+                var count = $('.qouteAdd tr').length;
+                if (count > 1) {
+                    $(this).parent().parent().remove();
+                    /*
+                                    var x = 0;
+                            $('.qouteAdd tr .n3').each(function(){
+
+                                 x  = x + parseInt($(this).val());
+
+                            });
+                                $('#subtotal').val(x);
+                                discount();
+                                */
+                }
+                activateSerial();
+            });
+        }
+
+        function activateSerial() {
+            var count = $('.qouteAdd tr').length;
+            var add = 0;
+            $('.qouteAdd tr').each(function () {
+                add++;
+                $(this).find(".serialNumber").text(add);
+
+            });
+
+
+        }
+
+
+        $("#importEx").on("click", function () {
+
+            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
+            var coln = $(excel).find("tr:first td").length;
+            var count = 0;
+            var x = 0;
+            if (coln == 2) {
+                $(excel).find("tr").each(function () {
+                    var y = 0;
+                    var t1 = "";
+                    var t2 = 0;
+                    var t3 = 0;
+                    var t4 = 0;
+
+
+                    $(this).find("td").each(function () {
+
+
+                        if (y == 0) {
+                            t1 = $(this).text();
+
+                        } else if (y == 1) {
+                            t2 = parseInt($(this).text());
+                        } else if (y == 2) {
+                            t3 = parseInt($(this).text());
+                        }
+
+                        y++;
+                    });
+
+                    t4 = t3 * t2;
+                    var html = ' <tr> <td ><div class="control-group row-fluid"><div class="span1"><label class="control-label serialNumber"></label></div></div></td><td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>	 </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t2 + '"> </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
+
+                    if (count == 0) {
+                        $('.qouteAdd').html("");
+                    }
+
+                    $('.qouteAdd').append(html);
+                    reActivateDelete();
+                    //reactivateCount();
+
+                    count++;
+                });
+
+                activateSerial();
+            } else {
+
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
+                });
+
+            }
+
+        });
+
     });
+
+    $('#tiny').elrte({
+        lang: "en",
+        styleWithCSS: false,
+        height: 200,
+        toolbar: 'tiny'
+    });
+
+    $(function () {
+        $("#jstree").jstree({
+            "json_data": {
+                "data": [
+                    {
+                        "data": {
+                            "title": "Uniform",
+                            "attr": { "href": "#" }
+                        },
+                        "children": [
+                            {
+                                "data": {
+                                    "title": "Boys",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Girls",
+                                    "attr": { "href": "#" }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "data": {
+                            "title": "Labratory",
+                            "attr": { "href": "#" }
+                        },
+                        "attr": { "id": "node1" },
+                        "children": [
+                            {
+                                "data": {
+                                    "title": "Account Settings",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Warnings and Blocks",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Physics",
+                                    "attr": { "href": "#" }
+                                },
+                                "attr": { "id": "node2" },
+                                "children": [
+                                    {
+                                        "data": {
+                                            "title": "Glass",
+                                            "attr": { "href": "#" }
+                                        },
+                                        "attr": { "id": "node3" },
+                                        "children": [
+
+                                            {
+                                                "data": {
+                                                    "title": "Beakers",
+                                                    "attr": { "href": "#" }
+                                                }
+                                                ,
+                                                "attr": { "id": "node4" },
+                                                "children": [
+
+                                                    {
+                                                        "data": {
+                                                            "title": "Beakers",
+                                                            "attr": { "href": "#" }
+                                                        }
+
+                                                        ,
+                                                        "attr": { "id": "node4" },
+                                                        "children": [
+
+                                                            {
+                                                                "data": {
+                                                                    "title": "Sku1",
+                                                                    "attr": { "href": "#" }
+                                                                }
+
+
+
+
+                                                            },
+                                                            {
+                                                                "data": {
+                                                                    "title": "Sku2",
+                                                                    "attr": { "href": "#" }
+                                                                }
+                                                            }
+                                                        ]
+
+
+
+
+                                                    },
+                                                    {
+                                                        "data": {
+                                                            "title": "Flasks",
+                                                            "attr": { "href": "#" }
+                                                        }
+                                                    }
+                                                ]
+
+
+
+                                            },
+                                            {
+                                                "data": {
+                                                    "title": "Flasks",
+                                                    "attr": { "href": "#" }
+                                                }
+                                            }
+                                        ]
+
+                                    },
+                                    {
+                                        "data": {
+                                            "title": "I Forgot My Password",
+                                            "attr": { "href": "#" }
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "title": "Can You Send Me a Copy",
+                                            "attr": { "href": "#" }
+                                        }
+                                    },
+                                    {
+                                        "data": {
+                                            "title": "How Can I ",
+                                            "attr": { "href": "#" }
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                "data": {
+                                    "title": "Deactivating, Deleting, Saving",
+                                    "attr": { "href": "#" }
+                                }
+                            },
+                            {
+                                "data": {
+                                    "title": "Downloading Your Info",
+                                    "attr": { "href": "#" }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["node3"]
+            },
+            "core": {
+                "initially_open": ["node1", "node2"]
+            }
+        });
     });
 </script>
