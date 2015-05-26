@@ -123,11 +123,6 @@ namespace EPMS.Web.Areas.PMS.Controllers
             }
             //If company has not CUSTOMER MODULE then, dont load Customers and Orders. and hide the html fields
             CheckHasCustomerModule(projectViewModel, customers, orders);
-            //else
-            //{
-            //    return RedirectToAction("Index", "UnauthorizedRequest", new { area = "" });
-            //}
-            //ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
             return View(projectViewModel);
         }
 

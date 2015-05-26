@@ -90,6 +90,7 @@
     <Compile Include="IServices\IProjectTaskService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
+    <Compile Include="IServices\IRFIService.cs" />
     <Compile Include="IServices\ISizeService.cs" />
     <Compile Include="IServices\IStatusService.cs" />
     <Compile Include="IServices\ITaskEmployeeService.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
+    <Compile Include="Repository\IRFIRepository.cs" />
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />

@@ -307,6 +307,7 @@
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
@@ -424,6 +425,8 @@
     <Compile Include="Models\Payroll.cs" />
     <Compile Include="Models\RequestDetail.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\RFI.cs" />
+    <Compile Include="Models\RFIItem.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\SubTaskWeight.cs" />
     <Compile Include="Models\Status.cs" />
@@ -647,6 +650,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Task.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\RFI\RFI.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFI.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\RFI\RFI.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFI.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -722,6 +735,7 @@
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
+    <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
@@ -1767,12 +1781,19 @@
     <Content Include="RTE\skins\moono\readme.md" />
     <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="RTB\userfiles\.htaccess" />
+    <Content Include="Areas\Inventory\Views\web.config" />
+    <Content Include="Areas\Inventory\Views\Vendor\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
+    <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
     <Content Include="Views\Shared\_ApplicantApplyLayout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemVariation\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\RFI\Create.cshtml" />
+    <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -3693,6 +3714,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Vendor.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RFI\RFI.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RFI.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RFI\RFI.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RFI.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.ar.resx" />
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4086,6 +4115,7 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\UsersAdmin\Index.cshtml" />
     <Content Include="Views\UsersAdmin\Edit.cshtml" />
     <Content Include="Views\UsersAdmin\Details.cshtml" />
