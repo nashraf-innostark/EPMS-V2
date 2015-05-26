@@ -55,7 +55,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IColorRepository, ColorRepository>();
             unityContainer.RegisterType<ISizeRepository, SizeRepository>();
             unityContainer.RegisterType<IStatusRepository, StatusRepository>();
-            unityContainer.RegisterType<IItemImageRepository, IItemImageRepository>();
+            unityContainer.RegisterType<IItemImageRepository, ItemImageRepository>();
             unityContainer.RegisterType<IManufacturerRepository, ManufacturerRepository>();
             unityContainer.RegisterType<IWarehouseRepository, WarehouseRepository>();
             unityContainer.RegisterType<IItemVariationRepository, ItemVariationRepository>();

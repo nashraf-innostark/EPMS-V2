@@ -276,16 +276,16 @@
                 </div>
             </div>
         </div><div class="control-group row-fluid">
-                  <div class="span3">
-                      <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Weight</label>
-                  </div>
-                  <div class="span9">
-                      <div class="controls">
-                          @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", id = "Weight", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                          @Html.ValidationMessageFor(m => m.ItemVariation.Weight, "", new { @class = "required" })
-                      </div>
-                  </div>
-              </div>
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Weight</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", id = "Weight", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.Weight, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
@@ -354,13 +354,13 @@
                         <tbody>
                             @foreach (var item in Model.ItemVariation.Warehouses.ToList())
                             {
-                                <tr class="gradeX">
-                                    <td>@item.WarehouseId</td>
-                                    <td>@item.WarehouseNumber</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><a href="#">Delete</a></td>
-                                </tr>
+                            <tr class="gradeX">
+                                <td>@item.WarehouseId</td>
+                                <td>@item.WarehouseNumber</td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#">Delete</a></td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -479,7 +479,7 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Item Color</strong><a href="#ItemImagerModule" data-toggle="modal">Add New Color</a>
+            <strong>Item Images</strong><a href="#ItemImagerModule" data-toggle="modal">Add New Image</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -511,20 +511,457 @@
             </div>
         </div>
         <!--Sortable Responsive Table end-->
-        
-        <!--Size Module-->
-      
-
 
     </div>
-   
+
+}
+
+
+@section popups
+{
+    <!--Size Module-->
+    <div id="sizeModule" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Item Size</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Item Size</label>
+                    </div>
+                    <div class="span4">
+                        <div class="controls">
+                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), "Select Size", new { @class = "select2me sizeDdl", id = "sizeId" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span12">
+                        <label class="control-label txt-center" id="openSize"><a data-toggle="modal">Create New Size</a>
+                        </label>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary">Save New Size</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Size Module ends-->
+    <!--Add New Size to DB-->
+    <div id="sizeAddModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add New Item Size</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldSizea">Size </label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Size.SizeNameEn, new { @dir = "ltr", id = "SizeNameEn", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Size.SizeNameEn, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldaSize">Size in Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Size.SizeNameAr, new { @dir = "ltr", id = "SizeNameAr", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Size.SizeNameAr, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            @*<a href="javascript:;" class="btn btn-primary" id="addSizeToDb">Add New Size</a>*@
+            <button class="btn btn-primary" type="submit" id="addSizeToDb">Add New Size</button>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Add New Size to DB Ends-->
+    @*<!--Warehouse Module Starts-->
+        <div id="wherehouseModule" class="modal hide fade treeSelector">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Warehouse</h3>
+            </div>
+            <div class="modal-body ">
+                <form class="form-horizontal">
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">Warehouse</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                <select>
+                                    <option>War101</option>
+                                    <option>War102</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="inputFielda">Location Tree Selector</label>
+                        </div>
+                        <div class="span9">
+
+                            <label class="control-label " for="inputFielda"><a href="#warehouseTreeSelector" data-toggle="modal">Warehouse Tree Selector</a></label>
+                        </div>
+
+
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="inputFielda">Location </label>
+                        </div>
+                        <div class="span9">
+
+                            <label class="control-label " for="inputFielda">Isle#10 > Section#2 > Shelve#4 > Section in Shelve# 5</label>
+                        </div>
+
+
+                    </div>
+
+                    <div class="control-group row-fluid">
+                        <div class="span12">
+                            <label class="control-label txt-center" for="inputFielda"><a href="#">Create New Warehouse</a></label>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-primary">Add New Warehouse</a>
+                <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+        <!--Warehouse Module Ends-->*@
+
+    <!--Manufacturer Module Starts-->
+    <div id="manufacturModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Manufacturer</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="jobTitle">Manufacturer</label>
+                    </div>
+                    <div class="span4">
+                        <div class="controls">
+                            <div class="controls">
+                                @Html.DropDownListFor(x => x.ItemVariation.Manufacturers, new SelectList(Model.ManufacturersForDdl, "ManufacturerId", "ManufacturerNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl", id = "manufacturerId" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="manufacturerPriceLable">Price</label>
+                    </div>
+                    <div class="span5">
+                        <div class="controls">
+                            <input id="manufacturerPriceLable" type="text" name="inputField">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span12">
+                        @*<button class="btn btn-primary" id="openManufacturer">Create New Manufacturer</button>*@
+                        <label class="control-label txt-center" id="openManufacturer"><a data-toggle="modal">Create New Manufacturer</a></label>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary">Add New Manufacturer</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Manufacturer Module Ends-->
+    <!--Add Manufacturer to DB-->
+    <div id="manufacturModuleAdd" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Manufacturer</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFielda">Manufacturer Name </label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameEn, new { @dir = "ltr", id = "ManufacturerNameEn", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Manufacturer.ManufacturerNameEn, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFielda">Manufacturer Name in Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameAr, new { @dir = "ltr", id = "ManufacturerNameAr", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Manufacturer.ManufacturerNameAr, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" id="addManufacturerToDb">Add New Manufacturer</button>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Add Manufacturer to DB Ends-->
+    <!--Item Status Module Starts-->
+    <div id="itemStatusModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Item Status</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="jobTitle">Item Status</label>
+                    </div>
+                    <div class="span4">
+                        <div class="controls">
+                            <div class="controls">
+                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), "Select Status", new { @class = "select2me statusDdl", id = "statusId" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span12">
+                        <label class="control-label txt-center" id="openStatus"><a data-toggle="modal">Create New Status</a></label>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary">Add New Status</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Item Status Module Ends-->
+    <!--Add Status to DB-->
+    <div id="itemStatusAddModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Item Status Addition</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldaStatus">Item Status </label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Status.StatusNameEn, new { @dir = "ltr", id = "StatusNameEn", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Status.StatusNameEn, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldStatusa">Item Status in Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Status.StatusNameAr, new { @dir = "ltr", id = "StatusNameAr", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Status.StatusNameAr, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-primary" id="addStatusToDb">Add New Item Status</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Add Status to DB Ends-->
+    <!--Add New Color Starts-->
+    <div id="itemColorModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Item Color</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Item Color</label>
+                    </div>
+                    <div class="span4">
+                        <div class="controls">
+                            <div class="controls">
+                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), "Select Color", new { @class = "select2me colorDdl", id = "colorId" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Color</label>
+                    </div>
+                    <div class="span3">
+                        <label class="control-label " id="colorStyle" style="color:#ee2c11;"></label>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span12">
+                        <label class="control-label txt-center" id="openColor"><a data-toggle="modal">Create New Color</a></label>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary">Add New Color</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Add New Color Ends-->
+    <!--Add Color to DB Starts-->
+    <div id="itemColorAddModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Item Color</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldaColor">Color  </label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Color.ColorNameEn, new { @dir = "ltr", id = "ColorNameEn", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Color.ColorNameEn, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldColora">Color in Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.Color.ColorNameAr, new { @dir = "ltr", id = "ColorNameAr", @class = "" })
+                            @Html.ValidationMessageFor(m => m.Color.ColorNameAr, "", new { @class = "required" })
+                        </div>
+                    </div>
+                </div>
+                <!--Color Picker begin-->
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="color">Item Color</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="color" name="color" value="#FFF8BE" />
+                            @*@Html.TextBoxFor(m => m.Color.ColorCode, new { id = "color", @class = "", @value = "FFF8BE", name = "color" })*@
+                            <div id="colorpicker"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--Color Picker end-->
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a class="btn btn-primary" id="addColorToDb">Save New Color</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+
+    <!--Add Color to DB Ends-->
+    <!--Add Item Image Starts-->
+    <div id="ItemImagerModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Add Item Image</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <!--Drag And Drop Upload begin-->
+                <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
+                    <div class="span2">
+                        <label class="control-label" for="inputField">
+                            Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                        </label>
+                    </div>
+                    <div class="span10 row-fluid">
+                        <div class="upload-boxes row-fluid">
+                            <div class="span4" id="upload"></div>
+                            <div class="span8" id="uploaded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--Drag And Drop Upload end-->
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldaOrder">Order</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input id="inputFieldaOrder" type="text" name="inputField">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span12">
+                        <label class="checkbox">
+                            <input type="checkbox" class="uniformCheckbox" value="checkbox1">
+                            Show
+                        </label>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary">Add New Image</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Add Item Image Ends-->
 }
 
 
 <script>
 
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
-
     $(document).ready(function () {
         if (itemVarId == 0 || itemVarId == "") {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
@@ -545,83 +982,251 @@
                 });
             }
         });
+        $('#colorpicker').farbtastic('#color');
+
+        var errors = "";
+        $('#upload').mfupload({
+
+            type: '',   //all types
+            maxsize: 1,
+            post_upload: "./file-uploader.html",
+            folder: "./",
+            ini_text: "Drag your file here or click (max: 1MB)",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+            },
+
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+        //Open Dialogue - Add Size to DB
+        $("#openSize").click(function (event) {
+            $('#sizeAddModule').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        //Add Size to DB
+        $('#addSizeToDb').click(function (e) {
+            e.preventDefault();
+            var siteUrl = $('#siteURL').val();
+            var url = siteUrl + "/Inventory/ItemVariation/SaveSize";
+            var nameEn = $("#SizeNameEn").val();
+            var nameAr = $("#SizeNameAr").val();
+            var dataToPost = {
+                nameEn: nameEn,
+                nameAr: nameAr,
+            };
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: dataToPost,
+                success: function (data) {
+                    var sizeid = data.SizeId;
+                    var snameEn = data.SizeNameEn;
+                    var snameAr = data.SizeNameAr;
+                    var htmlEn = '<option value=' + sizeid + '>' + snameEn + '</option>';
+                    var htmlAr = '<option value=' + sizeid + '>' + snameAr + '</option>';
+                    if ('@direction' == "ltr") {
+                        $('.sizeDdl').append(htmlEn);
+                    } else {
+                        $('.sizeDdl').append(htmlAr);
+                    }
+                    $('#sizeAddModule').modal('hide');
+                    $(".select2me").select2("destroy");
+                    $('.select2me').select2({
+                        placeholder: "Select",
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+        });
+
+        //Open Dialogue - Add Manufacturer to DB
+        $("#openManufacturer").click(function (event) {
+            $('#manufacturModuleAdd').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        //Add Manufacturer to DB
+        $('#addManufacturerToDb').click(function (e) {
+            e.preventDefault();
+            var siteUrl = $('#siteURL').val();
+            var url = siteUrl + "/Inventory/ItemVariation/SaveManufacturer";
+            var nameEn = $("#ManufacturerNameEn").val();
+            var nameAr = $("#ManufacturerNameAr").val();
+            var dataToPost = {
+                nameEn: nameEn,
+                nameAr: nameAr,
+            };
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: dataToPost,
+                success: function (data) {
+                    var manufacturerId = data.ManufacturerId;
+                    var snameEn = data.ManufacturerNameEn;
+                    var snameAr = data.ManufacturerNameAr;
+                    var htmlEn = '<option value=' + manufacturerId + '>' + snameEn + '</option>';
+                    var htmlAr = '<option value=' + manufacturerId + '>' + snameAr + '</option>';
+                    if ('@direction' == "ltr") {
+                        $('.manufacturerDdl').append(htmlEn);
+                    } else {
+                        $('.manufacturerDdl').append(htmlAr);
+                    }
+                    $('#manufacturModuleAdd').modal('hide');
+                    $(".select2me").select2("destroy");
+                    $('.select2me').select2({
+                        placeholder: "Select",
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+        });
+
+        //Open Dialogue - Add Status to DB
+        $("#openStatus").click(function (event) {
+            $('#itemStatusAddModule').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        //Add Status to DB
+        $('#addStatusToDb').click(function (e) {
+            e.preventDefault();
+            var siteUrl = $('#siteURL').val();
+            var url = siteUrl + "/Inventory/ItemVariation/SaveStatus";
+            var nameEn = $("#StatusNameEn").val();
+            var nameAr = $("#StatusNameAr").val();
+            var dataToPost = {
+                nameEn: nameEn,
+                nameAr: nameAr,
+            };
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: dataToPost,
+                success: function (data) {
+                    var statusId = data.StatusId;
+                    var snameEn = data.StatusNameEn;
+                    var snameAr = data.StatusNameAr;
+                    var htmlEn = '<option value=' + statusId + '>' + snameEn + '</option>';
+                    var htmlAr = '<option value=' + statusId + '>' + snameAr + '</option>';
+                    if ('@direction' == "ltr") {
+                        $('.statusDdl').append(htmlEn);
+                    } else {
+                        $('.statusDdl').append(htmlAr);
+                    }
+                    $('#itemStatusAddModule').modal('hide');
+                    $(".select2me").select2("destroy");
+                    $('.select2me').select2({
+                        placeholder: "Select",
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+        });
+
+        //Open Dialogue - Add Color to DB
+        $("#openColor").click(function (event) {
+            $('#itemColorAddModule').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        //Add Color to DB
+        $('#addColorToDb').click(function (e) {
+            e.preventDefault();
+            var siteUrl = $('#siteURL').val();
+            var url = siteUrl + "/Inventory/ItemVariation/SaveColor";
+            var nameEn = $("#ColorNameEn").val();
+            var nameAr = $("#ColorNameAr").val();
+            var code = $("#color").val();
+            var dataToPost = {
+                nameEn: nameEn,
+                nameAr: nameAr,
+                code: code,
+            };
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: dataToPost,
+                success: function (data) {
+                    var colorId = data.ColorId;
+                    var snameEn = data.ColorNameEn;
+                    var snameAr = data.ColorNameAr;
+                    var htmlEn = '<option value=' + colorId + '>' + snameEn + '</option>';
+                    var htmlAr = '<option value=' + colorId + '>' + snameAr + '</option>';
+                    if ('@direction' == "ltr") {
+                        $('.colorDdl').append(htmlEn);
+                    } else {
+                        $('.colorDdl').append(htmlAr);
+                    }
+                    $('#itemColorAddModule').modal('hide');
+                    $(".select2me").select2("destroy");
+                    $('.select2me').select2({
+                        placeholder: "Select",
+                    });
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
+        });
+
+        $(".colorDdl").on("change", function () {
+            debugger;
+            var colorId = $(this).val();
+            if (colorId != "") {
+                $("#ColorId").val(colorId);
+                var coloList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
+                var parsed = JSON.parse(coloList);
+                var colorCode;
+                $.each(parsed, function (key, value) {
+                    if (value.ColorId == colorId) {
+                        colorCode = value.ColorCode;
+                        cnameEn = value.ColorNameEn;
+                        cnameAr = value.ColorNameAr;
+                    }
+                });
+                $('#colorStyle').css("color", colorCode);
+                $('#colorStyle').text = cnameEn;
+            }
+        });
+
     });
 
+
 </script>
-
-
-@section popups
-{
-    
-    <div id="sizeModule" class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Item Size</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">Item Size</label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.ItemVariation.Sizes, "SizeId", "SizeNameEn"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "sizeId" })
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span12">
-                    <label class="control-label txt-center" for="inputFielda"><a href="#sizeAddModule" data-toggle="modal">Create New Size</a></label>
-                </div>
-
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Save New Size</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-    </div>
-</div>
-<!--Size Module ends-->
-<!--Add New Size to DB-->
-<div id="sizeAddModule" class="modal hide fade treeSelector">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Add New Item Size</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="inputFieldSizea">Size </label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input id="inputFieldSizea" type="text" name="inputField">
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="inputFieldaSize">Size in Arabic</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input id="inputFieldaSize" type="text" name="inputField">
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Add New Size</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-    </div>
-</div>
-<!--Add New Size to DB Ends-->
-
-}

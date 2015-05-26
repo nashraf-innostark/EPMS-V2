@@ -39,7 +39,7 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList(),
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
-                Statuses = source.Status.Select(x=>x.CreateFromServerToClent()).ToList(),
+                Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList(),
                 Manufacturers = source.Manufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
                 ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
             };
