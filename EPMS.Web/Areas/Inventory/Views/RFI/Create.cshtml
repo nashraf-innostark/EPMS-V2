@@ -6,7 +6,7 @@
 }
 
 
-    <div class="breadcrumb-container" dir="ltr">
+<div class="breadcrumb-container" dir="ltr">
     <ul class="xbreadcrumbs">
         <li>
             <a href="~/Dashboard/Index">
@@ -24,286 +24,334 @@
     </ul>
 </div>
 
-    <header>
-        <i class="icon-big-notepad"></i>
-        <h2><small>@EPMS.Web.Resources.RFI.RFI.CreatePageHeading</small></h2>
-    </header>
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.RFI.RFI.CreatePageHeading</small></h2>
+</header>
 
-    <!--Notifications begin-->
-    @Html.Partial("_Alert")
-    <!--Notifications end-->
-
-    @using (Html.BeginForm("Create", "RFI", FormMethod.Post, new {@id = "RFIForm", @class = "form-horizontal", role = "form"}))
-    {
-        <div class="container-fluid">
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.Client </label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                        @Html.ValidationMessageFor(m => m.Rfi.CustomerId, String.Empty, new { @class = "required" })
-                    </div>
-                </div>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "RFI", FormMethod.Post, new { @id = "RFIForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.Client </label>
             </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @if (Model.Rfi.CustomerId > 0)
-                        {
-                            @Html.DropDownListFor(m => m.Rfi.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(m => m.Rfi.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
-                        }
-                        @Html.ValidationMessageFor(m => m.Rfi.OrderId, String.Empty, new { @class = "required" })
-                    </div>
-                </div>
-            </div>
-            <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="createdBy">@EPMS.Web.Resources.RFI.RFI.CreatedBy  </label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Rfi.RecCreatedByName, new { @readonly=true, @id = "createdBy" })
-                    </div>
-                </div>
-            </div>
-            <!--Input Field end-->
-            <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="greeting">@EPMS.Web.Resources.RFI.RFI.Usage</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Rfi.UsageE)
-                    </div>
-                    @Html.ValidationMessageFor(m => m.Rfi.UsageE, String.Empty, new { @class = "required" })
-                    
-                </div>
-            </div>
-            <!--Input Field end-->
-            <!--Input Field begin-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="greetinga">@EPMS.Web.Resources.RFI.RFI.UsageArabic</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(model => model.Rfi.UsageA)
-                    </div>
-                    @Html.ValidationMessageFor(m => m.Rfi.UsageA, String.Empty, new { @class = "required" })
-                </div>
-            </div>
-            <!--Input Field end-->
-            <!--WYSIWYG Editor - Minimum Options begin-->
-            <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.RFI.RFI.ExcelImport</label>
-                </div>
-                <div class="span9">
-                    <div class="controls elrte-wrapper">
-                        <textarea id="tiny" rows="2" class="auto-resize"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="button" id="importEx" class="btn">@EPMS.Web.Resources.RFI.RFI.Import</button>
-                </div>
-                <div class="span3 span-inset">
-                    <button type="button" id="itemFromOrder" class="btn">@EPMS.Web.Resources.RFI.RFI.ImportItemsFromOrder</button>
-                </div>
-            </div>
-            <!--WYSIWYG Editor - Minimum Options end-->
-            <!--Basic Responsive Table begin-->
-            <div class="row-fluid" id="ress">
-                <div class="span12">
-                    <table class="table table-striped table-responsive ">
-                        <thead class="">
-                            <tr>
-                                <th>Serial</th>
-                                <th style="width: 85%">Item Details</th>
-                                <th>Quantity</th>
-
-                                <th style="width: 4%">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody class="qouteAdd" id="RFIItemsTableBody">
-                            <tr>
-                                <td style='display:none'><input name='RfiItem.Index' type='hidden' value='0' /></td>
-                                <td>
-                                    <div class="control-group row-fluid">
-                                        <div class="span1">
-                                            <label class="control-label serialNumber">1</label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <textarea rows="2" class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RfiItem[0].ItemDetails"></textarea>
-                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                    <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemDetails" data-valmsg-replace="true"></span>
-                                </td>
-                                <td class="quantity">
-                                    <input class="n1" type="text" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." name="RfiItem[0].ItemQty" value="0">
-                                    <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemQty" data-valmsg-replace="true"></span>
-                                </td>
-
-
-                                <td class="delete">
-                                    <i class="icon-photon minus deleteRow"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="control-group row-fluid">
-                    <div class="span3 span-inset">
-                        <button type="button" class="btn trAdder">@EPMS.Web.Resources.RFI.RFI.Add</button>
-                        
-                    </div>
-                </div>
-            </div>
-            <!--Basic Responsive Table end-->
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+            <div class="span2">
+                <div class="controls">
+                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
+                    @Html.ValidationMessageFor(m => m.Rfi.CustomerId, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @if (Model.Rfi.CustomerId > 0)
+                    {
+                        @Html.DropDownListFor(m => m.Rfi.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.Rfi.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
+                    }
+                    @Html.ValidationMessageFor(m => m.Rfi.OrderId, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="createdBy">@EPMS.Web.Resources.RFI.RFI.CreatedBy  </label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Rfi.RecCreatedByName, new { @readonly = true, @id = "createdBy" })
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="greeting">@EPMS.Web.Resources.RFI.RFI.Usage</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Rfi.UsageE)
+                </div>
+                @Html.ValidationMessageFor(m => m.Rfi.UsageE, String.Empty, new { @class = "required" })
+
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="greetinga">@EPMS.Web.Resources.RFI.RFI.UsageArabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Rfi.UsageA)
+                </div>
+                @Html.ValidationMessageFor(m => m.Rfi.UsageA, String.Empty, new { @class = "required" })
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--WYSIWYG Editor - Minimum Options begin-->
+        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.ExcelImport</label>
+            </div>
+            <div class="span9">
+                <div class="controls elrte-wrapper">
+                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" id="importEx" class="btn">@EPMS.Web.Resources.RFI.RFI.Import</button>
+            </div>
+            <div class="span3 span-inset">
+                <button type="button" id="itemFromOrder" class="btn">@EPMS.Web.Resources.RFI.RFI.ImportItemsFromOrder</button>
+            </div>
+        </div>
+        <!--WYSIWYG Editor - Minimum Options end-->
+        <!--Basic Responsive Table begin-->
+        <div class="row-fluid" id="ress">
+            <div class="span12">
+                <table class="table table-striped table-responsive ">
+                    <thead class="">
+                        <tr>
+                            <th>Serial</th>
+                            <th style="width: 85%">Item Details</th>
+                            <th>Quantity</th>
+
+                            <th style="width: 4%">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="qouteAdd" id="RFIItemsTableBody">
+                        <tr data-id="0">
+                            <td style='display:none'>
+                                <input name='RfiItem.Index' type='hidden' value='0' />
+                                <input name='RfiItem[0].IsItemDescription' id='RfiItem_0_IsItemDescription' type='hidden' />
+                                <input name='RfiItem[0].IsItemSKU' id='RfiItem_0_IsItemSKU' type='hidden' />
+                                <input name='RfiItem[0].ItemVariationId' id='RfiItem_0_ItemVariationId' type='hidden' />
+                            </td>
+                            <td>
+                                <div class="control-group row-fluid">
+                                    <div class="span1">
+                                        <label class="control-label serialNumber">1</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <textarea rows="2" class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RfiItem[0].ItemDetails"></textarea>
+                                <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemDetails" data-valmsg-replace="true"></span>
+                            </td>
+                            <td class="quantity">
+                                <input class="n1" type="text" name="RfiItem[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemQty" data-valmsg-replace="true"></span>
+                            </td>
+
+
+                            <td class="delete">
+                                <i class="icon-photon minus deleteRow"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn trAdder">@EPMS.Web.Resources.RFI.RFI.Add</button>
+
+                </div>
+            </div>
+        </div>
+        <!--Basic Responsive Table end-->
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+            </div>
+        </div>
+    </div>
         <!-- end container -->
-    }
+}
 
 
 
 @section popups
 {
     <div id="itemSearcher" class="modal hide fade treeSelector">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Item Search</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="selectBoxFilter">Select Item</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <select name="selectBoxFilter" id="selectBoxFilter">
-                            <option selected="" value="All">Item1 - sku1</option>
-                            <option value="Beige">Item2 - sku1</option>
-                            <option value="Beige">Item2 - sku2</option>
-                            <option value="Beige">Item2 - sku3</option>
-                            <option value="Beige">Item3 - sku1</option>
-                        </select>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Item Search</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <input id='RfiItemModalIndex' type='hidden' />
+                <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="selectBoxFilter">Select Item</label>
+                    </div>
+                    <div class="span6">
+                        <div class="controls">
+                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "SKUCode"), "", new { @class = "select2me", @id = "RFIItemVariationDropDownList" })
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="control-group row-fluid">
-                <div class="span4">
-                    <label class="control-label" for="selectBoxFilter">Item Tree Selector</label>
+                <div class="control-group row-fluid">
+                    <div class="span4">
+                        <label class="control-label" for="selectBoxFilter">Item Tree Selector</label>
+                    </div>
+                    <div class="span8 span-inset">
+                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemTreeSelector">+</button>
+                    </div>
+
                 </div>
-                <div class="span8 span-inset">
-                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemTreeSelector">+</button>
+                <div class="control-group row-fluid">
+
+                    <div class="span9 ">
+                        <label class="control-label">
+                            <input type="checkbox" id="ItemDescriptionModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">Add Item Description
+                        </label>
+
+                        <label class="control-label">
+                            <input type="checkbox" id="ItemSKUModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">Add Item SKU
+                        </label>
+                    </div>
+
                 </div>
 
-            </div>
-            <div class="control-group row-fluid">
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" id="SaveChanges">Save Changes</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
 
-                <div class="span9 ">
-                    <label class="control-label">
-                        <input type="checkbox" class="uniformCheckbox" value="checkbox1" style="margin: -1px 2px 0px 0px;">Add Item Description
-                    </label>
-
-                    <label class="control-label">
-                        <input type="checkbox" class="uniformCheckbox" value="checkbox1" style="margin: -1px 2px 0px 0px;">Add Item SKU
-                    </label>
+    <div id="itemTreeSelector" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Place in Warehouse Tree</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="sidebarMenuHolder">
+                    <div class="JStree">
+                        <div class="Jstree_shadow_top"></div>
+                        <div id="jstree"></div>
+                        <div class="Jstree_shadow_bottom"></div>
+                    </div>
                 </div>
+            </form>
+        </div>
 
-            </div>
-
-        </form>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary">Select</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Save Changes</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-    </div>
-</div>
-
-<div id="itemTreeSelector" class="modal hide fade treeSelector">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Place in Warehouse Tree</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <div class="sidebarMenuHolder">
-                <div class="JStree">
-                    <div class="Jstree_shadow_top"></div>
-                    <div id="jstree"></div>
-                    <div class="Jstree_shadow_bottom"></div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Select</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-    </div>
-</div>
 
 }
 
 <script>
     $(document).ready(function () {
         $("#selectBoxFilter").select2();
-    // set JobId and Department Name
+        // set JobId and Department Name
         $("#Client").on("change", function () {
             $("#OrderNo").empty();
-        var clientId = $(this).val();
-        if (clientId != "") {
-            $("#OrderNo").append(
-                   $('<option></option>').val(0).html("- Select Order -")
-               );
-            var orders = '@Html.Raw(Json.Encode(Model.Orders))';
-            var parsedOrders = JSON.parse(orders);
+            var clientId = $(this).val();
+            if (clientId != "") {
+                $("#OrderNo").append(
+                       $('<option></option>').val(0).html("- Select Order -")
+                   );
+                var orders = '@Html.Raw(Json.Encode(Model.Orders))';
+                var parsedOrders = JSON.parse(orders);
 
-            $.each(parsedOrders, function (key, value) {
-                if (value.CustomerId == clientId) {
-                    $("#OrderNo").append(
-                    $('<option></option>').val(value.OrderId).html(value.OrderNo)
-                );
-                }
-            });
-        } else {
-            $("#OrderNo").append(
-                   $('<option></option>').val(0).html("none")
-               );
-        }
+                $.each(parsedOrders, function (key, value) {
+                    if (value.CustomerId == clientId) {
+                        $("#OrderNo").append(
+                        $('<option></option>').val(value.OrderId).html(value.OrderNo)
+                    );
+                    }
+                });
+            } else {
+                $("#OrderNo").append(
+                       $('<option></option>').val(0).html("none")
+                   );
+            }
             $(".select2me").select2("destroy");
             $('.select2me').select2({
                 placeholder: "Select",
             });
         });
+        function getModalControlsValues() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSKU = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#RFIItemVariationDropDownList").val();
+
+            //set item's values
+            var index = $("#RfiItemModalIndex").val();
+            $("#RfiItem_" + index + "_IsItemDescription").val(isItemDescription);
+            $("#RfiItem_" + index + "_IsItemSKU").val(isItemSKU);
+            $("#RfiItem_" + index + "_ItemVariationId").val(itemVariationId);
+
+            $('#itemSearcher').modal('toggle');
+        };
+
+        $("#SaveChanges").on("click", function () {
+            getModalControlsValues();
+        });
+
+        $('#itemSearcher').on('show', function () {
+            var index = $(event.target).closest('tr').data('id'); //get the id from tr
+            $("#RfiItemModalIndex").val(index);
+            //get item's values
+            var isItemDescription = $("#RfiItem_" + index + "_IsItemDescription").val();
+            var isItemSKU = $("#RfiItem_" + index + "_IsItemSKU").val();
+            var itemVariationId = $("#RfiItem_" + index + "_ItemVariationId").val();
+
+            //set modal fields according to modal values
+            $("#RFIItemVariationDropDownList").select2("val", itemVariationId); //set the value
+
+            if (isItemDescription != "true") {
+                $('#ItemDescriptionModalChk').attr('checked', false);
+            } else {
+                $('#ItemDescriptionModalChk').attr('checked', true);
+            }
+
+            if (isItemSKU != "true") {
+                $('#ItemSKUModalChk').attr('checked', false);
+            } else {
+                $('#ItemSKUModalChk').attr('checked', true);
+            }
+
+            
+        });
 
         $('.trAdder').on("click", function () {
             var index = $("#RFIItemsTableBody").children("tr").length;
-            var indexCell = "<td style='display:none'><input name='RfiItem.Index' type='hidden' value='" + index + "' /></td>";
+            var indexCell = "<td style='display:none'>" +
+                "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
+                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "_IsItemDescription' type='hidden' />" +
+                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "_IsItemSKU' type='hidden' />" +
+                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "_ItemVariationId' type='hidden' />" +
+                "</td>";
             //RfiItem
-            var html = ' <tr>' +
+            var html = ' <tr data-id=' + index + '>' +
                 indexCell +
                 '<td>' +
                 '<div class="control-group row-fluid">' +
@@ -311,7 +359,7 @@
                 '<label class="control-label serialNumber"  ></label>' +
                 '</div></div>' +
                 '</td>' +
-                '<td> <textarea rows="2"  class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RfiItem[' + index + '].ItemDetails"></textarea>' +
+                '<td> <textarea rows="2"  class="auto-resize" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
                 '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                 '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                 '</td>' +
@@ -321,7 +369,7 @@
                 '</td>' +
                 '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
                 '</td></tr>';
-            
+
             $('.qouteAdd').append(html);
 
             //remove validation
@@ -351,10 +399,7 @@
             $('.qouteAdd tr').each(function () {
                 add++;
                 $(this).find(".serialNumber").text(add);
-
             });
-
-
         }
 
 
@@ -414,7 +459,6 @@
             }
 
         });
-
     });
 
     $('#tiny').elrte({
