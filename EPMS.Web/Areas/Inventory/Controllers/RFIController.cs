@@ -64,7 +64,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                 rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
                 var rfiToBeSaved = rfiViewModel.CreateRFIClientToServer();
-                return RedirectToAction("Create");
+                if(rfiService.SaveRFI(rfiToBeSaved))
+                {
+                    //success
+                }
+                //failed to save
+                return RedirectToAction("Index");
             }
             catch
             {

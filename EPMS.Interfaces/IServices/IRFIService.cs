@@ -9,7 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<RFI> GetAll();
         RFI FindRFIById(long id);
-        bool SaveRFI(RFIServerViewModel rfiServerViewModel);
+        bool SaveRFI(RFI rfi);
         bool AddRFI(RFI rfi);
         bool UpdateRFI(RFI rfi);
         void DeleteRFI(RFI rfi);

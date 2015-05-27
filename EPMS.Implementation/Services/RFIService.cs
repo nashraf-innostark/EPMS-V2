@@ -35,7 +35,7 @@ namespace EPMS.Implementation.Services
         {
             return rfiRepository.Find(id);
         }
-        public bool SaveRFI(RFIServerViewModel rfiServerViewModel)
+        public bool SaveRFI(RFI rfi)
         {
             
             return true;

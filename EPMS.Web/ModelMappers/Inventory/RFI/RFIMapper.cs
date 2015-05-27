@@ -1,4 +1,5 @@
-﻿using EPMS.Web.Models;
+﻿using System.Linq;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RFI;
 namespace EPMS.Web.ModelMappers.Inventory.RFI
 {
@@ -6,7 +7,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
     {
         public static EPMS.Models.DomainModels.RFI CreateRFIClientToServer(this RFIViewModel source)
         {
-            var rfiItem = new EPMS.Models.DomainModels.RFI
+            var rfi = new EPMS.Models.DomainModels.RFI
             {
                 RFIId = source.Rfi.RFIId,
                 OrderId = source.Rfi.OrderId,
@@ -17,9 +18,9 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 RecUpdatedBy = source.Rfi.RecCreatedBy,
                 RecUpdatedDate = source.Rfi.RecUpdatedDate,
 
-
+                RFIItems = source.RfiItem.Select(x=>x.CreateRFIItemClientToServer()).ToList()
             };
-            return null;
+            return rfi;
         }
 
         public static EPMS.Models.DomainModels.RFIItem CreateRFIItemClientToServer(this RFIItem source)
@@ -29,15 +30,17 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 RFIItemId = source.RFIItemId,
                 RFIId = source.RFIId,
                 ItemVariationId = source.ItemVariationId,
+                IsItemDescription = source.IsItemDescription,
+                IsItemSKU = source.IsItemSKU,
+                ItemQty = source.ItemQty,
+                ItemDetails = source.ItemDetails,
                 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecCreatedBy,
-                RecUpdatedDate = source.RecUpdatedDate,
-
-
+                RecUpdatedDate = source.RecUpdatedDate
             };
-            return null;
+            return rfiItem;
         }
     }
 }

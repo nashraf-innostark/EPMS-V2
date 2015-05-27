@@ -24,9 +24,8 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Select(x => new ItemVariationDropDownListItem
             {
-                InventoryItemId = x.InventoryItemId,
                 ItemVariationId = x.ItemVariationId,
-                SKUCode = x.SKUCode
+                ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode
             });
         }
     }
