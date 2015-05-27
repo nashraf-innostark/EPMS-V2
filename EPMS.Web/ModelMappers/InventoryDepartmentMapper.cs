@@ -1,4 +1,6 @@
-﻿using EPMS.Models.RequestModels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using EPMS.Models.RequestModels;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -16,6 +18,9 @@ namespace EPMS.Web.ModelMappers
                 ParentId = source.ParentId,
                 DepartmentColor = source.DepartmentColor,
                 DepartmentDesc = source.DepartmentDesc,
+                ParentDepartmentEn = source.ParentDepartment != null ? source.ParentDepartment.DepartmentNameEn : "",
+                ParentDepartmentAr = source.ParentDepartment != null ? source.ParentDepartment.DepartmentNameAr : "",
+                NoOfSections = source.InventoryDepartments.Any() ? source.InventoryDepartments.Count : 0,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -23,6 +28,47 @@ namespace EPMS.Web.ModelMappers
             };
         }
 
+        public static WebModels.InventoryDepartment CreateFromServerToClientLv(this DomainModels.InventoryDepartment source)
+        {
+            var descp = source.DepartmentDesc;
+            descp = descp.Replace("'", "\"");
+            WebModels.InventoryDepartment retVal = new WebModels.InventoryDepartment();
+            retVal.DepartmentId = source.DepartmentId;
+            retVal.DepartmentNameEn = source.DepartmentNameEn;
+            retVal.DepartmentNameAr = source.DepartmentNameAr;
+            retVal.ParentId = source.ParentId;
+            retVal.DepartmentColor = source.DepartmentColor;
+            retVal.DepartmentDesc = descp;
+            var parent = source.ParentDepartment;
+            while (parent != null && parent.ParentDepartment != null)
+            {
+                parent = parent.ParentDepartment;
+            }
+            retVal.ParentDepartmentEn = parent != null ? parent.DepartmentNameEn : "None";
+            retVal.ParentDepartmentAr = parent != null ? parent.DepartmentNameAr : "None";
+            retVal.NoOfSections = source.InventoryDepartments.Any() ? source.InventoryDepartments.Count : 0;
+            retVal.RecCreatedBy = source.RecCreatedBy;
+            retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            retVal.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            retVal.InventoryDepartments = source.InventoryDepartments.Any() 
+                ? source.InventoryDepartments.Select(x => x.CreateFromServerToClientLv()).ToList() : new List<WebModels.InventoryDepartment>();
+            retVal.ParentSection = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new Models.InventorySections();
+            return retVal;
+        }
+
+        public static WebModels.InventorySections CreateFromServerToClientSections(this DomainModels.InventoryDepartment source)
+        {
+            return new WebModels.InventorySections
+            {
+                DepartmentId = source.DepartmentId,
+                DepartmentNameEn = source.DepartmentNameEn,
+                DepartmentNameAr = source.DepartmentNameAr,
+                ParentId = source.ParentId,
+                DepartmentColor = source.DepartmentColor,
+                ParentSections = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new WebModels.InventorySections()
+            };
+        }
         public static InventoryDepartmentRequest CreateFromClientToServer(this WebModels.InventoryDepartment source)
         {
             var dept = new DomainModels.InventoryDepartment();

@@ -2,16 +2,40 @@
 
 @{
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = "";
-    Layout = "~/Views/Shared/_HelpAdminLayout.cshtml";
+    ViewBag.Title = "Inventory Department's Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 0;
 }
 
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            Inventory System Departments
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>Inventory System Departments</small></h2>
+    @*<h3><small><a href="~/Inventory/InventoryDepartment/Create">Add New</a></small></h3>*@
+</header>
+<!-- Page heading ends -->
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 <div class="panel">
     <div class="panel-content filler">
         <div class="panel-logo"></div>
         <div class="panel-header">
-            <h1><small>Add</small></h1>
-            <button type="submit" class="btn btn-mini"><i class="icon-photon move_alt2"></i> Add New</button>
+            <h1><small>Inventory Department</small></h1>
+            @*<button type="submit" class="btn btn-mini"><i class="icon-photon move_alt2"></i> Add New</button>*@
         </div>
         <div class="panel-search container-fluid">
             <form class="form-horizontal" action="javascript:;">
@@ -33,8 +57,262 @@
         </div>
     </div>
 </div>
+<form class="form-horizontal">
+    <div class="container-fluid">
+        <!--Tabs begin-->
+        <div class="control-group row-fluid span-inset">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a data-toggle="tab" href="#tab-Departments">Departments</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-Sections">Sections</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-Departments" class="tab-pane fade active in">
+                    <h3> <small><a href="~/Inventory/InventoryDepartment/Create" name="Departments">Add New Department</a></small></h3>
+                    <div class="container-fluid">
+                        <table class="table table-striped table-responsive" id="tableSortableResMed">
+                            <thead>
+                                <tr>
+                                    <th class="center"> Serial</th>
+                                    <th class="center"> Name</th>
+                                    <th class="center"> Color</th>
+                                    <th class="center"> Description</th>
+                                    <th class="center"> Number of Sections</th>
+                                    <th class="center"> Number of Sub-Sections</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var departments in Model.Departments)
+                                {
+                                    var id = departments.DepartmentId + "_tableDepartment";
+                                    <tr class="gradeX" id="@id">
+                                        <td class="center">@(i += 1)</td>
+                                        <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>
+                                        <td class="center">@departments.DepartmentColor</td>
+                                        <td class="center @departments.DepartmentId"></td>
+                                        <script>
+                                            var descpE = '@Html.Raw(departments.DepartmentDesc)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = descpE.replace(regex, "");
+                                            $("." + '@departments.DepartmentId').text(result);
+                                        </script>
+                                        <td class="center">@departments.NoOfSections</td>
+                                        <td class="center">-</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="tab-Sections" class="tab-pane fade">
+                    <h3> <small><a href="~/Inventory/InventoryDepartment/Create" name="Section">Add New Section</a></small></h3>
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table class="table table-striped table-responsive" id="tableSortableResMed2">
+                                    <thead>
+                                        <tr>
+                                            <th class="center">Parent Department</th>
+                                            <th class="center">Parent Section</th>
+                                            <th class="center">Name</th>
+                                            <th class="center"> Description</th>
+                                            <th class="center">Number of Sub-Sections</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var departments in Model.Sections.OrderBy(x => x.DepartmentNameEn))
+                                        {
+                                            var id = departments.DepartmentId + "_tableSection";
+                                            <tr class="gradeX" id="@id">
+                                                <td class="center">@departments.ParentDepartmentEn</td>
+                                                <td class="center">
+                                                    @for (int j = departments.ParentNodesSections.Count - 1; j >= 0; j--)
+                                                    {
+                                                        var parentNodesSection = departments.ParentNodesSections[j];
+                                                        if (parentNodesSection.TextEn != "None")
+                                                        {
+                                                            <a href="~/Inventory/InventoryDepartment/Create/@parentNodesSection.Href">@parentNodesSection.TextEn</a>
+                                                            @: >
+                                                            }
+                                                        else
+                                                        {
+                                                            @:None
+                                                            }
+                                                    }
+                                                </td>
+                                                <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>
+                                                <td class="center @departments.DepartmentId"></td>
+                                                <script>
+                                                    var descpE = '@Html.Raw(departments.DepartmentDesc)';
+                                                    var regex = /(<([^>]+)>)/ig;
+                                                    var result = descpE.replace(regex, "");
+                                                    $("." + '@departments.DepartmentId').text(result);
+                                                </script>
+                                                <td class="center">@departments.NoOfSubSections</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end container -->
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
 <script type="text/javascript">
-
-
+    var dataTable;
+    var dir = '@direction';
+    var inventoryDepartments = '@Html.Raw(Json.Encode(Model.InventoryDepartments))';
+    var parsed = JSON.parse(inventoryDepartments);
+    var inventorySections = '@Html.Raw(Json.Encode(Model.Sections))';
+    var parsedSection = JSON.parse(inventorySections);
+    $(document).ready(function () {
+        $('#tableSortableResMed').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+        $('#tableSortableResMed2').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            },
+            "fnDrawCallback": function (oSettings) {
+                subItemsOfSections();
+            }
+        });
+        if (dir == "ltr") {
+            myTree = $("#jstree").jstree({
+                "json_data": {
+                    "data": [
+                        {
+                            "data": {
+                                "title": "Departments",
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": "parentNode" },
+                        }
+                    ]
+                },
+                "plugins": ["themes", "json_data", "ui"],
+                "ui": {
+                    "initially_select": ["parentNode"]
+                },
+                "core": {
+                    "initially_open": ["parentNode"]
+                }
+            });
+        } else {
+            myTree = $("#jstree").jstree({
+                "json_data": {
+                    "data": [
+                        {
+                            "data": {
+                                "title": "الإدارات",
+                                "attr": { "href": "#", "onclick": "" }
+                            },
+                            "attr": { "id": "parentNode" },
+                        }
+                    ]
+                },
+                "plugins": ["themes", "json_data", "ui"],
+                "ui": {
+                    "initially_select": ["parentNode"]
+                },
+                "core": {
+                    "initially_open": ["parentNode"]
+                }
+            });
+        }
+        var position = 'last';
+        var parentNode;
+        var mainParent;
+        var newNode;
+        setTimeout(function () {
+            $.each(parsed, function (key, value) {
+                if (value.ParentId != null) {
+                    $('ul li').each(function () {
+                        if ($(this).attr('id') == value.ParentId) {
+                            parentNode = this;
+                        }
+                    });
+                    if (dir == "ltr") {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameEn,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    } else {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameAr,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    }
+                    var elem1 = $('#jstree').jstree("create_node", parentNode, position, newNode, false, false);
+                    //if (value.MenuType == "Content") {
+                    //    elem1.addClass("jstree-leaf");
+                    //}
+                } else {
+                    mainParent = $('#jstree').jstree('get_selected');
+                    if (dir == "ltr") {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameEn,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    } else {
+                        newNode = {
+                            state: "closed",
+                            data: {
+                                "title": value.DepartmentNameAr,
+                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                            },
+                            "attr": { "id": value.DepartmentId },
+                        };
+                    }
+                    $('#jstree').jstree("create_node", mainParent, position, newNode, false, false);
+                }
+            });
+            $('#jstree').jstree('open_node', '#parentNode');
+            $('.panel, .main-content').toggleClass('retracted');
+        }, 0);
+        setTimeout(function () {
+            subItemsOfSections();
+            subItemsOfDepartments();
+        }, 1);
+        //$(".dataTables_paginate").on("click", "a", function () { alert("clicked"); });
+    });
+    function subItemsOfSections() {
+        $.each(parsedSection, function (key, value) {
+            var deptId = value.DepartmentId;
+            var parent = $('#jstree').find("[id='" + deptId + "']");
+            var childs = $(parent).find("li").length;
+            $("#" + deptId + "_tableSection td:eq( 4 )").text(childs);
+        });
+    }
+    function subItemsOfDepartments() {
+        $.each(parsed, function (key, value) {
+            var deptId = value.DepartmentId;
+            var parent = $('#jstree').find("[id='" + deptId + "']");
+            var childs = $(parent).find("li").length;
+            $("#" + deptId + "_tableDepartment td:eq( 5 )").text(childs);
+        });
+    }
 </script>
