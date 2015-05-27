@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RFI;
 namespace EPMS.Web.ModelMappers.Inventory.RFI
@@ -18,12 +19,12 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 RecUpdatedBy = source.Rfi.RecCreatedBy,
                 RecUpdatedDate = source.Rfi.RecUpdatedDate,
 
-                RFIItems = source.RfiItem.Select(x=>x.CreateRFIItemClientToServer()).ToList()
+                RFIItems = source.RfiItem.Select(x => x.CreateRFIItemClientToServer(source.Rfi.RecCreatedBy, source.Rfi.RecCreatedDate, source.Rfi.RecUpdatedDate)).ToList()
             };
             return rfi;
         }
 
-        public static EPMS.Models.DomainModels.RFIItem CreateRFIItemClientToServer(this RFIItem source)
+        public static EPMS.Models.DomainModels.RFIItem CreateRFIItemClientToServer(this RFIItem source, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
             var rfiItem = new EPMS.Models.DomainModels.RFIItem
             {
@@ -34,11 +35,11 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
-                
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
-                RecUpdatedBy = source.RecCreatedBy,
-                RecUpdatedDate = source.RecUpdatedDate
+
+                RecCreatedBy = createdBy,
+                RecCreatedDate = createdDate,
+                RecUpdatedBy = createdBy,
+                RecUpdatedDate = updatedDate
             };
             return rfiItem;
         }

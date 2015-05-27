@@ -142,6 +142,7 @@
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
+    <Compile Include="Repository\IRFIItemRepository.cs" />
     <Compile Include="Repository\IRFIRepository.cs" />
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />
