@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Web.ViewModels.RFI
 {
@@ -12,5 +13,6 @@ namespace EPMS.Web.ViewModels.RFI
         public IEnumerable<DashboardModels.Order> Orders { get; set; }
         public Models.RFI Rfi { get; set; }
         public IEnumerable<Models.RFIItem> RfiItem { get; set; }
+        public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }
 }

@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EPMS.Web.ModelMappers;
 using System.Configuration;
 using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
+using EPMS.Web.ModelMappers.Inventory.RFI;
 using EPMS.Web.ViewModels.RFI;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -37,11 +40,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/RFI/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
-            RFIViewModel rfiViewModel =new RFIViewModel();
-            rfiViewModel.Rfi.RecCreatedByName = Session["FullName"].ToString();
-
+            var rfiresponse = rfiService.LoadRfiResponseData(id);
+            RFIViewModel rfiViewModel =new RFIViewModel
+            {
+                Rfi = {RecCreatedByName = Session["FullName"].ToString()},
+                ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList
+            };
             CheckHasCustomerModule(rfiViewModel);
             return View(rfiViewModel);
         }
@@ -53,7 +59,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                rfiViewModel.Rfi.RecCreatedBy = User.Identity.GetUserId();
+                rfiViewModel.Rfi.RecCreatedDate = DateTime.Now;
+                rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
+                rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                var rfiToBeSaved = rfiViewModel.CreateRFIClientToServer();
+                if(rfiService.SaveRFI(rfiToBeSaved))
+                {
+                    //success
+                }
+                //failed to save
                 return RedirectToAction("Index");
             }
             catch
