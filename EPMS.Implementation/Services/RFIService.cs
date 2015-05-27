@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Models.RequestModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
@@ -11,6 +12,7 @@ namespace EPMS.Implementation.Services
     {
         private readonly IRFIRepository rfiRepository;
         private readonly IItemVariationRepository itemVariationRepository;
+        private readonly IRFIItemRepository rfiItemRepository;
 
         #region Constructor
 
@@ -19,10 +21,12 @@ namespace EPMS.Implementation.Services
         /// </summary>
         /// <param name="rfiRepository"></param>
         /// <param name="itemVariationRepository"></param>
-        public RFIService(IRFIRepository rfiRepository,IItemVariationRepository itemVariationRepository)
+        /// <param name="rfiItemRepository"></param>
+        public RFIService(IRFIRepository rfiRepository,IItemVariationRepository itemVariationRepository,IRFIItemRepository rfiItemRepository)
         {
             this.rfiRepository = rfiRepository;
             this.itemVariationRepository = itemVariationRepository;
+            this.rfiItemRepository = rfiItemRepository;
         }
 
         #endregion
@@ -37,9 +41,55 @@ namespace EPMS.Implementation.Services
         }
         public bool SaveRFI(RFI rfi)
         {
-            
+            if (rfi.RFIId > 0)
+            {
+                //update
+                UpdateRFI(rfi);
+                RfiItemUpdation(rfi);
+            }
+            else
+            {
+                //save
+                AddRFI(rfi);
+            }
             return true;
         }
+
+        private void RfiItemUpdation(RFI rfi)
+        {
+            var rfiItemsInDb = rfiItemRepository.GetRfiItemsByRfiId(rfi.RFIId).ToList();
+
+            foreach (var rfiItem in rfi.RFIItems)
+            {
+                if (rfiItem.RFIItemId > 0)
+                {
+                    //update
+                    var rfiItemInDb = rfiItemsInDb.Where(x => x.RFIItemId == rfiItem.RFIItemId);
+                    if (rfiItemInDb != null)
+                    {
+                        rfiItemRepository.Update(rfiItem.CreateRfiItem());
+                        rfiItemRepository.SaveChanges();
+                        rfiItemsInDb.Remove(rfiItem);
+                    }
+                }
+                else
+                {
+                    //save
+                    rfiItemRepository.Add(rfiItem);
+                }
+            }
+            DeleteRfiItem(rfiItemsInDb);
+            rfiItemRepository.SaveChanges();
+        }
+
+        private void DeleteRfiItem(IEnumerable<RFIItem> rfiItemsInDb)
+        {
+            foreach (var rfiItem in rfiItemsInDb)
+            {
+                rfiItemRepository.Delete(rfiItem);
+            }
+        }
+
         public bool AddRFI(RFI rfi)
         {
             rfiRepository.Add(rfi);
