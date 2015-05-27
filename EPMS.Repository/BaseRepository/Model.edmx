@@ -2666,8 +2666,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="InventoryDepartment1" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryDepartment1" />
-          <NavigationProperty Name="InventoryDepartment2" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment1" ToRole="InventoryDepartment" />
+          <NavigationProperty Name="InventoryDepartments" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryDepartment1" />
+          <NavigationProperty Name="ParentDepartment" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment1" ToRole="InventoryDepartment" />
         </EntityType>
         <EntityType Name="InventoryItem">
           <Key>

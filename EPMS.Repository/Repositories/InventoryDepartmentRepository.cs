@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -30,6 +31,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.Any(
                     dept =>
                         (dept.DepartmentNameEn == department.DepartmentNameEn || dept.DepartmentNameAr == department.DepartmentNameAr));
+        }
+
+        public IEnumerable<InventoryDepartment> GetAllDepartments()
+        {
+            return DbSet.Include(x => x.ParentDepartment).Include(x=>x.InventoryDepartments).ToList();
         }
     }
 }
