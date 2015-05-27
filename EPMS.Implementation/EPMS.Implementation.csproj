@@ -161,6 +161,7 @@
     <Compile Include="Services\QuickLaunchItemService.cs" />
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
+    <Compile Include="Services\RFIService.cs" />
     <Compile Include="Services\SizeService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />

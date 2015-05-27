@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using EPMS.Web.ViewModels.Customer;
-using Models = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers

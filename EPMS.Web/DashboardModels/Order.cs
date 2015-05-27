@@ -6,5 +6,6 @@
         public string OrderNo { get; set; }
         public string OrderDate { get; set; }
         public int? OrderStatus { get; set; }
+        public long CustomerId { get; set; }
     }
 }
