@@ -35,7 +35,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #region Index
         [SiteAuthorize(PermissionKey = "InventoryDepartmentIndex")]
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var inventoryDepartments = departmentService.GetAll().ToList();
             InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel();
@@ -47,28 +47,59 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     .Select(sec => sec.CreateFromServerToClientLv());
             var sections = MakeSectionSubSections(viewModel.Sections);
             viewModel.Sections = sections;
+            if (id != null)
+            {
+                if (id == 1)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.Inventory.InventoryDepartment.DepartmentSaved,
+                        IsUpdated = true
+                    };
+                }
+                if (id == 2)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.Inventory.InventoryDepartment.SectionSaved,
+                        IsUpdated = true
+                    };
+                }
+                if (id == 3)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.Inventory.InventoryDepartment.RecordUpdated,
+                        IsUpdated = true
+                    };
+                }
+            }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
         #endregion
 
         #region Create
         [SiteAuthorize(PermissionKey = "InventoryDepartmentCreate,InventoryDepartmentDetail")]
-        public ActionResult Create(long? id)
+        public ActionResult Create(string id)
         {
             InventoryDepartmentViewModel departmentViewModel = new InventoryDepartmentViewModel();
             departmentViewModel.InventoryDepartments =
                 departmentService.GetAll().Select(dp => dp.CreateFromServerToClient()).ToList();
             if (id != null)
             {
-                ViewBag.InventoryDepartmentId = id;
-            }
-            if (Request.Form["Departments"] != null)
-            {
-                departmentViewModel.RequestFrom = "Departments";
-            }
-            if (Request.Form["Section"] != null)
-            {
-                departmentViewModel.RequestFrom = "Departments";
+                if (id == "Departments")
+                {
+                    departmentViewModel.RequestFrom = "Departments";
+                }
+                else if (id == "Section")
+                {
+                    departmentViewModel.RequestFrom = "Section";
+                }
+                else
+                {
+                    ViewBag.InventoryDepartmentId = Convert.ToInt64(id);
+                }
             }
             return View(departmentViewModel);
         }
@@ -91,7 +122,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Save Inventory Department
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult SaveInventoryDepartment(int nodeId, int parent, string nameEn, string nameAr, string color, string description)
+        public ActionResult SaveInventoryDepartment(int nodeId, int parent, string nameEn, string nameAr, string color, string description, string requestFrom)
         {
             InventoryDepartment model = new InventoryDepartment();
             try
@@ -123,12 +154,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     var nodeToUpdate = model.CreateFromClientToServerModel();
                     if (departmentService.UpdateDepartment(nodeToUpdate))
                     {
-                        var inventoryDepartments = departmentService.GetAll();
-                        InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel
-                        {
-                            InventoryDepartments = inventoryDepartments.Select(x => x.CreateFromServerToClient()).ToList()
-                        };
-                        return Json(viewModel, JsonRequestBehavior.AllowGet);
+                        const string responseMessage = "Updated";
+                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
@@ -156,12 +183,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     var newNodeToAdd = model.CreateFromClientToServerModel();
                     if (departmentService.AddDepartment(newNodeToAdd))
                     {
-                        var inventoryDepartments = departmentService.GetAll();
-                        InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel
+                        string responseMessage = "";
+                        if (requestFrom == "Departments")
                         {
-                            InventoryDepartments = inventoryDepartments.Select(x => x.CreateFromServerToClient()).ToList()
-                        };
-                        return Json(viewModel, JsonRequestBehavior.AllowGet);
+                            responseMessage = "Departments Saved";
+                        }
+                        if (requestFrom == "Section")
+                        {
+                            responseMessage = "Section Saved";
+                        }
+                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
                     }
                 }
             }

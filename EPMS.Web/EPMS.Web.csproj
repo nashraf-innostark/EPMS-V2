@@ -597,6 +597,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Tasks.ar.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\InventoryDepartment.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryDepartment.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\InventoryItem.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3703,6 +3708,12 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
+    <EmbeddedResource Include="Resources\Inventory\InventoryDepartment.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\InventoryDepartment.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InventoryDepartment.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\InventoryItem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventoryItem.Designer.cs</LastGenOutput>
