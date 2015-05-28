@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.ItemVariation.ItemVariationViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.ItemVariation.ItemVariationViewModel
 
 @{
     ViewBag.Title = Model.ItemVariation.ItemVariationId > 0 ? EPMS.Web.Resources.Inventory.ItemVariation.UpdatePageTitle : EPMS.Web.Resources.Inventory.ItemVariation.CreatePageTitle;
@@ -45,6 +46,7 @@
     <div class="container-fluid">
 
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ItemVariation.Sizes)
         @Html.HiddenFor(m => m.ItemVariation.InventoryItemId)
         @Html.HiddenFor(m => m.ItemVariation.ItemVariationId)
         @Html.HiddenFor(m => m.ItemVariation.RecCreatedBy)
@@ -313,10 +315,11 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="sizeTable">
                         @foreach (var item in Model.ItemVariation.Sizes.ToList())
                         {
-                            <tr class="gradeX">
+                            <tr class="gradeX sizeTableRow">
+                                <input type="hidden" class="sizeIdHidden" value="@item.SizeId" />
                                 @if (direction == "ltr")
                                 {
                                     <td>@item.SizeNameEn</td>
@@ -325,7 +328,11 @@
                                 {
                                     <td>@item.SizeNameAr</td>
                                 }
-                                <td><a href="#">Delete</a></td>
+
+                                <td>
+                                    <i class="icon-photon minus deleteSize"></i>
+                                </td>
+
                             </tr>
                         }
                     </tbody>
@@ -511,6 +518,18 @@
             </div>
         </div>
         <!--Sortable Responsive Table end-->
+        <input type="hidden" id="SizeArrayList" value="" name="SizeArrayList" /> @*This is for posting*@
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">@EPMS.Web.Resources.Inventory.Vendor.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit" onclick="validateJobTitle(event)">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemVariation/Create'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -540,7 +559,8 @@
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span12">
-                        <label class="control-label txt-center" id="openSize"><a data-toggle="modal">Create New Size</a>
+                        <label class="control-label txt-center" id="openSize">
+                            <a data-toggle="modal">Create New Size</a>
                         </label>
                     </div>
 
@@ -548,7 +568,7 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a href="javascript:;" class="btn btn-primary">Save New Size</a>
+            <a href="javascript:;" class="btn btn-primary addSizeToList">Save New Size</a>
             <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
         </div>
     </div>
@@ -954,6 +974,7 @@
             <a href="javascript:;" class="btn btn-primary">Add New Image</a>
             <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
         </div>
+
     </div>
     <!--Add Item Image Ends-->
 }
@@ -974,6 +995,14 @@
             $("#cancel").hide();
             $("#edit").show();
         }
+        $("#edit").click(function (event) {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+            $(".deleteRow").show();
+            event.preventDefault();
+        });
         $('#tableSortableVariationsImg,#tableSortableItemStatus,#tableSortableVariationsManufacturer,#tableSortableVariationsWherehouse,#tableSortableVariationsSize,#tableSortableItemColor').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {
@@ -1205,7 +1234,7 @@
                 }
             });
         });
-
+        //Set Color and Text on Color DDL
         $(".colorDdl").on("change", function () {
             debugger;
             var colorId = $(this).val();
@@ -1226,7 +1255,72 @@
             }
         });
 
+        $('.deleteSize').on("click", function () {
+            var hiddenId = $(this).parent().prev().prev().val();
+            $(this).parent().parent().remove();
+            ManageSizeList(hiddenId, 2);
+        });
+
+        $('.addSizeToList').on("click", function (event) {
+            debugger;
+            var sizeId = $('#sizeId').val();
+            var sizeList = '@Html.Raw(Json.Encode(Model.SizesForDdl))';
+            var parsed = JSON.parse(sizeList);
+            var sizeNameEn;
+            var sizeNameAr;
+            $.each(parsed, function(key, value) {
+                if (value.SizeId == sizeId) {
+                    sizeNameEn = value.SizeNameEn;
+                    sizeNameAr = value.SizeNameAr;
+                    debugger;
+                }
+            });
+            var html = '<tr class="gradeX sizeTableRow">' +
+                '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
+                '<td>' + sizeNameEn + '</td>' +
+                '<td><i class="icon-photon minus deleteSize"></i></td>' +
+                '</tr>';
+            $('.sizeTable').append(html);
+            ManageSizeList(sizeId);
+            $('#sizeModule').modal('hide');
+        });
+
     });
 
 
+    //For manipulating the Lists
+    //For manipulating the Size List
+
+    var SizeResultArray = new Array();
+    $(document).ready(function () {
+        @foreach (var item in @Model.ItemVariation.Sizes)
+        {
+            <text>
+        SizeResultArray.push(@item.SizeId);
+        </text>
+        }
+        RefreshSizeArrayList();
+    });
+    function ManageSizeList(Id, Type) {
+        debugger;
+        if (Type == 2) {
+            //Delete Row Case
+            var index = SizeResultArray.indexOf(parseInt(Id));
+            SizeResultArray.splice(index, 1);
+        } else {
+            //For Add
+            SizeResultArray.push(Id);
+        }
+        RefreshSizeArrayList();
+    }
+    function RefreshSizeArrayList() {
+        //Set the Array List into hidden Variable
+        var strSizes = "";
+        for (var i = 0; i < SizeResultArray.length; i++) {
+            strSizes += SizeResultArray[i] + ",";
+        }
+        if (strSizes.length > 0)
+            strSizes = strSizes.substring(0, strSizes.length - 1);
+        $('#SizeArrayList').val(strSizes);
+    }
 </script>

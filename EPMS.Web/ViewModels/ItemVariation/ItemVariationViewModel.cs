@@ -45,5 +45,7 @@ namespace EPMS.Web.ViewModels.ItemVariation
         public List<Manufacturer> ManufacturersForDdl { get; set; }
         public List<Status> StatusesForDdl { get; set; }
         public List<Warehouse> WarehousesForDdl { get; set; }
+
+        public string SizeArrayList { get; set; }
     }
 }

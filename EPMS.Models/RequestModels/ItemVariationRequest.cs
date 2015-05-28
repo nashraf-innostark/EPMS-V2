@@ -3,7 +3,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.RequestModels
 {
-    class ItemVariationRequest
+    public class ItemVariationRequest
     {
         public ItemVariation ItemVariation { get; set; }
         public IList<Status> Statuses { get; set; }
@@ -11,5 +11,6 @@ namespace EPMS.Models.RequestModels
         public IList<Size> Sizes { get; set; }
         public IList<ItemImage> ItemImages { get; set; }
         public IList<Warehouse> Warehouses { get; set; }
+        public string SizeArrayList { get; set; }
     }
 }

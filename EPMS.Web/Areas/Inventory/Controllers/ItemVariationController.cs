@@ -6,8 +6,10 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.ItemVariation;
 using Microsoft.AspNet.Identity;
 
@@ -61,6 +63,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             //variationViewModel.WarehousesForDdl = warehouseService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
             return View(variationViewModel);
         }
+
+        [HttpPost]
+        public ActionResult Create(ItemVariationViewModel variationViewModel)
+        {
+            ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
+            itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
+            itemVariationService.SaveItemVariation(itemToSave);
+            {
+                TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
+                return RedirectToAction("Create");
+            }
+        }
+
         #endregion
 
         #region JSON
