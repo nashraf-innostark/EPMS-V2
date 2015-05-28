@@ -38,35 +38,39 @@
     @Html.HiddenFor(x => x.Rfi.RecCreatedBy)
     @Html.HiddenFor(x => x.Rfi.RecCreatedDate)
     <div class="container-fluid">
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.Client </label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @(direction == "ltr" ? Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                    @Html.ValidationMessageFor(m => m.Rfi.CustomerId, String.Empty, new { @class = "required" })
+        @if (ViewBag.HasCustomerModule)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.Client </label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
+                        @Html.ValidationMessageFor(m => m.Rfi.CustomerId, String.Empty, new { @class = "required" })
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @if (Model.Rfi.OrderId > 0)
-                    {
-                        @Html.DropDownListFor(m => m.Rfi.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
-                    }
-                    else
-                    {
-                        @Html.DropDownListFor(m => m.Rfi.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
-                    }
-                    @Html.ValidationMessageFor(m => m.Rfi.OrderId, String.Empty, new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
+                </div>
+                <div class="span2">
+                    <div class="controls">
+                        @if (Model.Rfi.OrderId > 0)
+                        {
+                            @Html.DropDownListFor(m => m.Rfi.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
+                        }
+                        else
+                        {
+                            @Html.DropDownListFor(m => m.Rfi.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
+                        }
+                        @Html.ValidationMessageFor(m => m.Rfi.OrderId, String.Empty, new { @class = "required" })
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -168,7 +172,7 @@
                                     </td>
                                     <td class="quantity">
                                         @Html.TextBoxFor(m => m.RfiItem[i].ItemQty, new { @class = "n1", @rows = 2 })
-                                        @Html.ValidationMessageFor(m => m.RfiItem[i].ItemQty)
+                                        @Html.ValidationMessageFor(m => m.RfiItem[i].ItemQty,null, new { @class = "required"})
                                     </td>
 
 
@@ -252,6 +256,7 @@
                         <div class="controls">
                             @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "", new { @class = "select2me", @id = "RFIItemVariationDropDownList" })
                         </div>
+                        <label id="RFIItemVariationDropDownListValidation"></label>
                     </div>
                 </div>
 
@@ -312,53 +317,95 @@
 }
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#selectBoxFilter").select2();
         // set JobId and Department Name
-        $("#Client").on("change", function () {
+        $("#Client").on("change", function() {
             $("#OrderNo").empty();
             var clientId = $(this).val();
             if (clientId != "") {
                 $("#OrderNo").append(
-                       $('<option></option>').val(0).html("- Select Order -")
-                   );
+                    $('<option></option>').val(0).html("- Select Order -")
+                );
                 var orders = '@Html.Raw(Json.Encode(Model.Orders))';
                 var parsedOrders = JSON.parse(orders);
 
-                $.each(parsedOrders, function (key, value) {
+                $.each(parsedOrders, function(key, value) {
                     if (value.CustomerId == clientId) {
                         $("#OrderNo").append(
-                        $('<option></option>').val(value.OrderId).html(value.OrderNo)
-                    );
+                            $('<option></option>').val(value.OrderId).html(value.OrderNo)
+                        );
                     }
                 });
             } else {
                 $("#OrderNo").append(
-                       $('<option></option>').val(0).html("none")
-                   );
+                    $('<option></option>').val(0).html("none")
+                );
             }
             $(".select2me").select2("destroy");
             $('.select2me').select2({
                 placeholder: "Select",
             });
         });
+
+        function validateSelect2DDL(control) {
+            var counter = 0;
+            control = $(control);
+            var selectedId = $(control).val();
+            if (selectedId == null || selectedId == "" || selectedId == 0) {
+                $("#" + control.attr('id') + "Validation").text("Please select a value");
+                $("#" + control.attr('id') + "Validation").addClass("Error");
+                counter++;
+                return false;
+            } else {
+                $("#" + control.attr('id') + "Validation").text("");
+                $("#" + control.attr('id') + "Validation").removeClass("Error");
+            }
+            return true;
+        };
+
         function getModalControlsValues() {
             //get item's values
             var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
-            var isItemSKU = $('#ItemSKUModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
             var itemVariationId = $("#RFIItemVariationDropDownList").val();
 
             //set item's values
             var index = $("#RfiItemModalIndex").val();
             $("#RfiItem_" + index + "__IsItemDescription").val(isItemDescription);
-            $("#RfiItem_" + index + "__IsItemSKU").val(isItemSKU);
+            $("#RfiItem_" + index + "__IsItemSKU").val(isItemSku);
             $("#RfiItem_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function(key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    var textToAppend = "";
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                        } else {
+                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                        }
+                    }
+                    $("#RfiItem_" + index + "__ItemDetails").append(
+                        textToAppend
+                );
+                }
+            });
 
             $('#itemSearcher').modal('toggle');
         };
 
         $("#SaveChanges").on("click", function () {
-            getModalControlsValues();
+            if (validateSelect2DDL("#RFIItemVariationDropDownList")) {
+                getModalControlsValues();
+            }
         });
 
         $('#itemSearcher').on('show', function () {
@@ -378,13 +425,13 @@
                 $('#ItemDescriptionModalChk').attr('checked', true);
             }
 
-            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU =="") {
+            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU == "") {
                 $('#ItemSKUModalChk').attr('checked', false);
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
 
-            
+
         });
 
         $('.trAdder').on("click", function () {
@@ -404,7 +451,7 @@
                 '<label class="control-label serialNumber"  ></label>' +
                 '</div></div>' +
                 '</td>' +
-                '<td> <textarea rows="2"  class="auto-resize" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
+                '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
                 '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                 '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                 '</td>' +
@@ -455,6 +502,7 @@
             var count = 0;
             var x = 0;
             if (coln == 2) {
+                var index = 1;
                 $(excel).find("tr").each(function () {
                     var y = 0;
                     var t1 = "";
@@ -479,8 +527,33 @@
                     });
 
                     t4 = t3 * t2;
-                    var html = ' <tr> <td ><div class="control-group row-fluid"><div class="span1"><label class="control-label serialNumber"></label></div></div></td><td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>	 </td> <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t2 + '"> </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
+                    var indexCell = "<td style='display:none'>" +
+                                    "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
+                                    "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
+                                    "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
+                                    "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' />" +
+                                    "</td>";
+                    //RfiItem
+                     var html = '<tr data-id=' + index + '>' +
+                                indexCell +
+                                '<td>' +
+                                '<div class="control-group row-fluid">' +
+                                '<div class="span1">' +
+                                '<label class="control-label serialNumber"  ></label>' +
+                                '</div></div>' +
+                                '</td>' +
+                                '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                                '</td>' +
+                                '<td class="quantity"> ' +
+                                '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                                '</td>' +
+                                '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                                '</td></tr>';
 
+                    index = index + 1;
                     if (count == 0) {
                         $('.qouteAdd').html("");
                     }

@@ -115,12 +115,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             string[] Modules = splitLicenseKey[4].Split(';');
             if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
             {
-                ViewBag.HasModule = true;
+                ViewBag.HasCustomerModule = true;
                 return true;
             }
             else
             {
-                ViewBag.HasModule = false;
+                ViewBag.HasCustomerModule = false;
                 return false;
             }
         }

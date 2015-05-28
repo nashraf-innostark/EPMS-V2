@@ -11,6 +11,7 @@ namespace EPMS.Web.Models
         [Required(ErrorMessage = "The Item Details field is required")]
         public string ItemDetails { get; set; }
         [Required]
+        [Display(Name = "Item Qty")]
         [Range(1, int.MaxValue, ErrorMessage = "Please enter valid quantity")]
         public long ItemQty { get; set; }
         public bool IsItemDescription { get; set; }
