@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EPMS.Models.DomainModels;
+﻿using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ModelMapers
 {
-    public static class RFIItemMapper
+    public static class RfiItemMapper
     {
         public static RFIItem CreateRfiItem(this RFIItem source)
         {
