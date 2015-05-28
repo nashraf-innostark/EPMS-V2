@@ -100,7 +100,6 @@ namespace EPMS.Implementation.Services
             itemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             itemVariation.RecLastUpdatedDt = DateTime.Now;
             variationRepository.Update(itemVariation);
-            variationRepository.SaveChanges();
         }
         /// <summary>
         /// Save Size List from Client
@@ -121,35 +120,53 @@ namespace EPMS.Implementation.Services
             }
             variationRepository.SaveChanges();
         }
+
         /// <summary>
         /// Update Client List from Client
         /// </summary>
         private void UpdateSizeList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
         {
             List<Size> dbList = itemVariationFromDatabase.Sizes.ToList();
-            string[] clientList = variationToSave.SizeArrayList.Split(',');
 
             //Add New Items from Clientlist to Database
-
-            foreach (string item in clientList)
+            if (variationToSave.SizeArrayList !=null )
             {
-                Size sizeToAdd = sizeRepository.Find(Convert.ToInt64(item));
-                if (dbList.Any(a => a.SizeId == sizeToAdd.SizeId))
-                    continue;
-                if (variationToSave.ItemVariation.Sizes == null)
+                string[] clientList = variationToSave.SizeArrayList.Split(',');
+                foreach (string item in clientList)
                 {
-                    variationToSave.ItemVariation.Sizes = new Collection<Size>();
+                    Size sizeToAdd = sizeRepository.Find(Convert.ToInt64(item));
+                    if (dbList.Any(a => a.SizeId == sizeToAdd.SizeId))
+                        continue;
+                    if (variationToSave.ItemVariation.Sizes == null)
+                    {
+                        variationToSave.ItemVariation.Sizes = new Collection<Size>();
+                    }
+                    variationToSave.ItemVariation.Sizes.Add(sizeToAdd);
                 }
-                variationToSave.ItemVariation.Sizes.Add(sizeToAdd);
+
+                //Remove Items from Database that are not in Clientlist
+
+                foreach (string item in clientList)
+                {
+                    Size sizeToDelete = sizeRepository.Find(Convert.ToInt64(item));
+                    if (clientList.Any(x => sizeToDelete.SizeId == Convert.ToInt64(item)))
+                        continue;
+                    variationToSave.ItemVariation.Sizes.Remove(sizeToDelete);
+                }
             }
+            else
+            {
+                //Remove All Items from Database if Clientlist is Empty
+                foreach (Size size in dbList)
+                {
+                    Size sizeToAdd = sizeRepository.Find(size.SizeId);
+                    variationToSave.ItemVariation.Sizes.Remove(sizeToAdd);
+                }
+            }
+
             variationRepository.SaveChanges();
-
-            //Remove Items from Database that are not in Clientlist
-
-
-            //Remove All Items from Database if Clientlist is Empty
-
         }
+
         #endregion
     }
 }
