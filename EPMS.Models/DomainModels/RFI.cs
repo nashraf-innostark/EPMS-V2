@@ -8,6 +8,8 @@ namespace EPMS.Models.DomainModels
         public long OrderId { get; set; }
         public string UsageE { get; set; }
         public string UsageA { get; set; }
+        public string NotesE { get; set; }
+        public string NotesA { get; set; }
         public string RecCreatedBy { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }

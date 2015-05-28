@@ -15,6 +15,8 @@ namespace EPMS.Web.Models
         [Display(Name = "Usage")]
         public string UsageE { get; set; }
         public string UsageA { get; set; }
+        public string NotesE { get; set; }
+        public string NotesA { get; set; }
         public string RecCreatedByName { get; set; }
         public string RecCreatedBy { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
