@@ -14,6 +14,10 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
+
+                NotesE = source.Rfi.NotesE,
+                NotesA = source.Rfi.NotesA,
+
                 RecCreatedBy = source.Rfi.RecCreatedBy,
                 RecCreatedDate = source.Rfi.RecCreatedDate,
                 RecUpdatedBy = source.Rfi.RecCreatedBy,
@@ -52,6 +56,10 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,
+
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecCreatedBy,

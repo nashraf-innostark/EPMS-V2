@@ -227,19 +227,30 @@
             </div>
         </div>
         <!--Basic Responsive Table end-->
-        
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="greetinga">@EPMS.Web.Resources.RFI.RFI.UsageArabic</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Rfi.UsageA)
+        @if (Model.Rfi.RFIId > 0)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="greetinga">@EPMS.Web.Resources.RFI.RFI.NotesE</label>
                 </div>
-                @Html.ValidationMessageFor(m => m.Rfi.UsageA, String.Empty, new { @class = "required" })
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Rfi.NotesE)
+                    </div>
+                </div>
             </div>
-        </div>
-
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="greetinga">@EPMS.Web.Resources.RFI.RFI.NotesA</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Rfi.NotesA)
+                    </div>
+                </div>
+            </div>
+        }
+       
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
