@@ -306,6 +306,7 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\InvontryWarehouseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
@@ -728,6 +729,7 @@
     <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
     <Compile Include="ViewModels\InventoryItem\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
+    <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseListViewModel.cs" />
     <Compile Include="ViewModels\ItemVariation\ItemVariationViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
@@ -1808,6 +1810,7 @@
     <Content Include="Areas\Inventory\Views\ItemVariation\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\RFI\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Section.cshtml" />
+    <Content Include="Areas\Inventory\Views\InvontryWarehouse\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
