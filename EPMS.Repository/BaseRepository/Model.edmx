@@ -890,6 +890,10 @@
           <Property Name="RFIItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RFIId" Type="bigint" Nullable="false" />
           <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="ItemDetails" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ItemQty" Type="bigint" Nullable="false" />
+          <Property Name="IsItemDescription" Type="bit" Nullable="false" />
+          <Property Name="IsItemSKU" Type="bit" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -2282,45 +2286,6 @@
           <Property Name="AllowanceDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_Allowance_Employee" FromRole="Allowance" ToRole="Employee" />
         </EntityType>
-        <EntityType Name="ApplicantExperience">
-          <Key>
-            <PropertyRef Name="ExperienceId" />
-          </Key>
-          <Property Name="ExperienceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApplicantId" Type="Int64" />
-          <Property Name="JobTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Position" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CompanyName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="TypeOfWork" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="FromDate" Type="DateTime" Precision="3" />
-          <Property Name="ToDate" Type="DateTime" Precision="3" />
-          <Property Name="ReasonToLeave" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobApplicant" Relationship="Self.FK_ApplicantExperience_JobApplicants" FromRole="ApplicantExperience" ToRole="JobApplicants" />
-        </EntityType>
-        <EntityType Name="ApplicantQualification">
-          <Key>
-            <PropertyRef Name="QualificationId" />
-          </Key>
-          <Property Name="QualificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApplicantId" Type="Int64" />
-          <Property Name="Certificate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Field" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="PlaceOfStudy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CollegeSchoolName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="NoOfYears" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CertificateDate" Type="DateTime" Precision="3" />
-          <Property Name="Notes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobApplicant" Relationship="Self.FK_ApplicantQualification_JobApplicants" FromRole="ApplicantQualification" ToRole="JobApplicants" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -2371,12 +2336,12 @@
           <Property Name="ImageName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_AspNetUsers_Customer" FromRole="AspNetUsers" ToRole="Customer" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_AspNetUsers_Employee" FromRole="AspNetUsers" ToRole="Employee" />
           <NavigationProperty Name="NotificationRecipients" Relationship="Self.FK_NotificationRecipient_AspNetUsers" FromRole="AspNetUsers" ToRole="NotificationRecipient" />
           <NavigationProperty Name="RFIs" Relationship="Self.FK_RFI_AspNetUsers" FromRole="AspNetUsers" ToRole="RFI" />
           <NavigationProperty Name="UserPrefrences" Relationship="Self.FK_UserPrefrences_AspNetUsers" FromRole="AspNetUsers" ToRole="UserPrefrences" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Customer" Relationship="EPMSProjectModel.FK_AspNetUsers_Customer" FromRole="AspNetUser" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -2534,28 +2499,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
           <NavigationProperty Name="Department" Relationship="Self.FK_Complaint_Department" FromRole="Complaint" ToRole="Department" />
-        </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerNameE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerNameA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Orders" FromRole="Customer" ToRole="Orders" />
-          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
-          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
-          <NavigationProperty Name="Quotations" Relationship="Self.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
+          <NavigationProperty Name="Customer" Relationship="EPMSProjectModel.FK_Complaint_Customer" FromRole="Complaint" ToRole="Customer" />
         </EntityType>
         <EntityType Name="DashboardWidgetPreference">
           <Key>
@@ -2579,8 +2524,8 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Complaints" Relationship="Self.FK_Complaint_Department" FromRole="Department" ToRole="Complaint" />
-          <NavigationProperty Name="JobApplicants" Relationship="Self.FK_JobApplicants_Department" FromRole="Department" ToRole="JobApplicants" />
           <NavigationProperty Name="JobTitles" Relationship="Self.FK_JobTitle_Department" FromRole="Department" ToRole="JobTitle" />
+          <NavigationProperty Name="JobApplicants" Relationship="EPMSProjectModel.FK_JobApplicants_Department" FromRole="Department" ToRole="JobApplicant" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -2666,8 +2611,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="InventoryDepartment1" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryDepartment1" />
-          <NavigationProperty Name="InventoryDepartment2" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment1" ToRole="InventoryDepartment" />
+          <NavigationProperty Name="InventoryDepartments" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryDepartment1" />
+          <NavigationProperty Name="ParentDepartment" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment1" ToRole="InventoryDepartment" />
         </EntityType>
         <EntityType Name="InventoryItem">
           <Key>
@@ -2739,51 +2684,12 @@
           <Property Name="InventoryItemId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="InventoryItem" Relationship="Self.FK_ItemVariation_InventoryItems" FromRole="ItemVariation" ToRole="InventoryItems" />
           <NavigationProperty Name="ItemImages" Relationship="Self.FK_ItemImage_ItemVariation" FromRole="ItemVariation" ToRole="ItemImage" />
-          <NavigationProperty Name="RFIItems" Relationship="Self.FK_RFIItem_ItemVariation" FromRole="ItemVariation" ToRole="RFIItem" />
           <NavigationProperty Name="Colors" Relationship="Self.ItemColor" FromRole="ItemVariation" ToRole="Color" />
           <NavigationProperty Name="Manufacturers" Relationship="Self.ItemManufacturer" FromRole="ItemVariation" ToRole="Manufacturer" />
           <NavigationProperty Name="Sizes" Relationship="Self.ItemSize" FromRole="ItemVariation" ToRole="Size" />
           <NavigationProperty Name="Status" Relationship="Self.ItemStatus" FromRole="ItemVariation" ToRole="Status" />
           <NavigationProperty Name="Warehouses" Relationship="Self.ItemWarehouse" FromRole="ItemVariation" ToRole="Warehouse" />
-        </EntityType>
-        <EntityType Name="JobApplicant">
-          <Key>
-            <PropertyRef Name="ApplicantId" />
-          </Key>
-          <Property Name="ApplicantId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobOfferedId" Type="Int64" Nullable="false" />
-          <Property Name="ApplicantFirstNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantMiddleNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantFirstNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantMiddleNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantFamilyNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantFamilyNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DepartmentId" Type="Int64" />
-          <Property Name="ApplicantSex" Type="Byte" />
-          <Property Name="ApplicantNationality" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <Property Name="PlaceOfBirth" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="PassportNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="NoOfFamilyMembers" Type="Int32" />
-          <Property Name="LanguagesKnown" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EmployedNow" Type="Boolean" Nullable="false" />
-          <Property Name="GetMonthlyPayment" Type="Boolean" Nullable="false" />
-          <Property Name="GovernmentEmployeeEver" Type="Boolean" Nullable="false" />
-          <Property Name="GovernmentAreaWorked" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GovernmentJobOfficial" Type="Boolean" Nullable="false" />
-          <Property Name="ReasonOfLeaving" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="JobLeavingDate" Type="DateTime" Precision="3" />
-          <Property Name="AcceptAgreement" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ApplicantExperiences" Relationship="Self.FK_ApplicantExperience_JobApplicants" FromRole="JobApplicants" ToRole="ApplicantExperience" />
-          <NavigationProperty Name="ApplicantQualifications" Relationship="Self.FK_ApplicantQualification_JobApplicants" FromRole="JobApplicants" ToRole="ApplicantQualification" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_JobApplicants_Department" FromRole="JobApplicants" ToRole="Department" />
-          <NavigationProperty Name="JobOffered" Relationship="Self.FK_JobApplicants_JobOffered" FromRole="JobApplicants" ToRole="JobOffered" />
+          <NavigationProperty Name="RFIItems" Relationship="EPMSProjectModel.FK_RFIItem_ItemVariation" FromRole="ItemVariation" ToRole="RFIItem" />
         </EntityType>
         <EntityType Name="JobOffered">
           <Key>
@@ -2802,8 +2708,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="JobApplicants" Relationship="Self.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicants" />
           <NavigationProperty Name="JobTitle" Relationship="Self.FK_JobOffered_JobTitle" FromRole="JobOffered" ToRole="JobTitle" />
+          <NavigationProperty Name="JobApplicants" Relationship="EPMSProjectModel.FK_JobApplicants_JobOffered" FromRole="JobOffered" ToRole="JobApplicant" />
         </EntityType>
         <EntityType Name="JobTitle">
           <Key>
@@ -2985,41 +2891,9 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="OrderStatus" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Orders" FromRole="Orders" ToRole="Customer" />
-          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Orders" FromRole="Orders" ToRole="Project" />
           <NavigationProperty Name="RFIs" Relationship="Self.FK_RFI_Orders" FromRole="Orders" ToRole="RFI" />
-        </EntityType>
-        <EntityType Name="Project">
-          <Key>
-            <PropertyRef Name="ProjectId" />
-          </Key>
-          <Property Name="ProjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NameA" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerId" Type="Int64" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="SerialNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesForCustomerE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesForCustomerA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="OtherCost" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="QuotationId" Type="Int64" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Project_Customer" FromRole="Project" ToRole="Customer" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Project_Orders" FromRole="Project" ToRole="Orders" />
-          <NavigationProperty Name="Quotation" Relationship="Self.FK_Project_Quotation" FromRole="Project" ToRole="Quotation" />
-          <NavigationProperty Name="ProjectDocuments" Relationship="Self.FK_ProjectDocuments_Project" FromRole="Project" ToRole="ProjectDocuments" />
-          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTask_Project" FromRole="Project" ToRole="ProjectTask" />
+          <NavigationProperty Name="Customer" Relationship="EPMSProjectModel.FK_Orders_Orders" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Projects" Relationship="EPMSProjectModel.FK_Project_Orders" FromRole="Order" ToRole="Project" />
         </EntityType>
         <EntityType Name="ProjectDocument">
           <Key>
@@ -3028,39 +2902,7 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectId" Type="Int64" Nullable="false" />
           <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Project" Relationship="Self.FK_ProjectDocuments_Project" FromRole="ProjectDocuments" ToRole="Project" />
-        </EntityType>
-        <EntityType Name="ProjectTask">
-          <Key>
-            <PropertyRef Name="TaskId" />
-          </Key>
-          <Property Name="TaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int64" />
-          <Property Name="ProjectId" Type="Int64" Nullable="false" />
-          <Property Name="TaskNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TaskNameA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="TotalCost" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="TotalWeight" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TaskProgress" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsParent" Type="Boolean" Nullable="false" />
-          <Property Name="ParentTask" Type="Int64" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_ProjectTask_Customer" FromRole="ProjectTask" ToRole="Customer" />
-          <NavigationProperty Name="Project" Relationship="Self.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
-          <NavigationProperty Name="SubTasks" Relationship="Self.FK_ProjectTask_ProjectTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
-          <NavigationProperty Name="ParentProjectTask" Relationship="Self.FK_ProjectTask_ProjectTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
-          <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
-          <NavigationProperty Name="PreRequisitTask" Relationship="Self.PreRequisitTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
-          <NavigationProperty Name="ProjectTasks" Relationship="Self.PreRequisitTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
+          <NavigationProperty Name="Project" Relationship="EPMSProjectModel.FK_ProjectDocuments_Project" FromRole="ProjectDocument" ToRole="Project" />
         </EntityType>
         <EntityType Name="QuickLaunchItem">
           <Key>
@@ -3071,36 +2913,6 @@
           <Property Name="MenuId" Type="Int32" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Menu" Relationship="EPMSProjectModel.FK_QuickLaunchItems_Menu" FromRole="QuickLaunchItem" ToRole="Menu" />
-        </EntityType>
-        <EntityType Name="Quotation">
-          <Key>
-            <PropertyRef Name="QuotationId" />
-          </Key>
-          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderId" Type="Int64" />
-          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
-          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="QuotationDiscount" Type="Int16" />
-          <Property Name="FirstInstallement" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
-          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
-          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
-          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
-          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
-          <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Quotation" FromRole="Quotation" ToRole="Project" />
-          <NavigationProperty Name="QuotationItemDetails" Relationship="Self.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -3116,7 +2928,7 @@
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Quotation" Relationship="Self.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
+          <NavigationProperty Name="Quotation" Relationship="EPMSProjectModel.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
         </EntityType>
         <EntityType Name="RequestDetail">
           <Key>
@@ -3155,21 +2967,7 @@
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RFI_AspNetUsers" FromRole="RFI" ToRole="AspNetUsers" />
           <NavigationProperty Name="Order" Relationship="Self.FK_RFI_Orders" FromRole="RFI" ToRole="Orders" />
-          <NavigationProperty Name="RFIItems" Relationship="Self.FK_RFIItem_RFI" FromRole="RFI" ToRole="RFIItem" />
-        </EntityType>
-        <EntityType Name="RFIItem">
-          <Key>
-            <PropertyRef Name="RFIItemId" />
-          </Key>
-          <Property Name="RFIItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RFIId" Type="Int64" Nullable="false" />
-          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemVariation" Relationship="Self.FK_RFIItem_ItemVariation" FromRole="RFIItem" ToRole="ItemVariation" />
-          <NavigationProperty Name="RFI" Relationship="Self.FK_RFIItem_RFI" FromRole="RFIItem" ToRole="RFI" />
+          <NavigationProperty Name="RFIItems" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFI" ToRole="RFIItem" />
         </EntityType>
         <EntityType Name="Section">
           <Key>
@@ -3250,7 +3048,7 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_TaskEmployee_Employee" FromRole="TaskEmployee" ToRole="Employee" />
-          <NavigationProperty Name="ProjectTask" Relationship="Self.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
+          <NavigationProperty Name="ProjectTask" Relationship="EPMSProjectModel.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
         </EntityType>
         <EntityType Name="UserPrefrence">
           <Key>
@@ -3341,30 +3139,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ApplicantExperience_JobApplicants">
-          <End Role="JobApplicants" Type="Self.JobApplicant" Multiplicity="0..1" />
-          <End Role="ApplicantExperience" Type="Self.ApplicantExperience" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobApplicants">
-              <PropertyRef Name="ApplicantId" />
-            </Principal>
-            <Dependent Role="ApplicantExperience">
-              <PropertyRef Name="ApplicantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ApplicantQualification_JobApplicants">
-          <End Role="JobApplicants" Type="Self.JobApplicant" Multiplicity="0..1" />
-          <End Role="ApplicantQualification" Type="Self.ApplicantQualification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobApplicants">
-              <PropertyRef Name="ApplicantId" />
-            </Principal>
-            <Dependent Role="ApplicantQualification">
-              <PropertyRef Name="ApplicantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="0..1" />
           <End Role="MenuRight" Type="Self.MenuRight" Multiplicity="*" />
@@ -3402,18 +3176,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUsers_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="AspNetUsers">
-              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3501,18 +3263,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Complaint_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Complaint">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Complaint_Department">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Complaint" Type="Self.Complaint" Multiplicity="*" />
@@ -3521,66 +3271,6 @@
               <PropertyRef Name="DepartmentId" />
             </Principal>
             <Dependent Role="Complaint">
-              <PropertyRef Name="DepartmentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_Orders">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Project_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectTask_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="ProjectTask">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Quotation_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Quotation" Type="Self.Quotation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Quotation">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobApplicants_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
-          <End Role="JobApplicants" Type="Self.JobApplicant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="JobApplicants">
               <PropertyRef Name="DepartmentId" />
             </Dependent>
           </ReferentialConstraint>
@@ -3741,30 +3431,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RFIItem_ItemVariation">
-          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
-          <End Role="RFIItem" Type="Self.RFIItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemVariation">
-              <PropertyRef Name="ItemVariationId" />
-            </Principal>
-            <Dependent Role="RFIItem">
-              <PropertyRef Name="ItemVariationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobApplicants_JobOffered">
-          <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="1" />
-          <End Role="JobApplicants" Type="Self.JobApplicant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobOffered">
-              <PropertyRef Name="JobOfferedId" />
-            </Principal>
-            <Dependent Role="JobApplicants">
-              <PropertyRef Name="JobOfferedId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_JobOffered_JobTitle">
           <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
           <End Role="JobOffered" Type="Self.JobOffered" Multiplicity="*" />
@@ -3825,18 +3491,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Project_Orders">
-          <End Role="Orders" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RFI_Orders">
           <End Role="Orders" Type="Self.Order" Multiplicity="1" />
           <End Role="RFI" Type="Self.RFI" Multiplicity="*" />
@@ -3846,90 +3500,6 @@
             </Principal>
             <Dependent Role="RFI">
               <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Project_Quotation">
-          <End Role="Quotation" Type="Self.Quotation" Multiplicity="0..1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectDocuments_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="ProjectDocuments" Type="Self.ProjectDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="ProjectDocuments">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectTask_Project">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="ProjectTask">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectTask_ProjectTask">
-          <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="0..1" />
-          <End Role="ProjectTask1" Type="Self.ProjectTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectTask">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="ProjectTask1">
-              <PropertyRef Name="ParentTask" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TaskEmployee_Task">
-          <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="1" />
-          <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectTask">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="TaskEmployee">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuotationItemDetail_Quotation">
-          <End Role="Quotation" Type="Self.Quotation" Multiplicity="1" />
-          <End Role="QuotationItemDetail" Type="Self.QuotationItemDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="QuotationItemDetail">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RFIItem_RFI">
-          <End Role="RFI" Type="Self.RFI" Multiplicity="1" />
-          <End Role="RFIItem" Type="Self.RFIItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RFI">
-              <PropertyRef Name="RFIId" />
-            </Principal>
-            <Dependent Role="RFIItem">
-              <PropertyRef Name="RFIId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3993,15 +3563,9 @@
           <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="*" />
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
         </Association>
-        <Association Name="PreRequisitTask">
-          <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="*" />
-          <End Role="ProjectTask1" Type="Self.ProjectTask" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Aisles" EntityType="Self.Aisle" />
           <EntitySet Name="Allowances" EntityType="Self.Allowance" />
-          <EntitySet Name="ApplicantExperiences" EntityType="Self.ApplicantExperience" />
-          <EntitySet Name="ApplicantQualifications" EntityType="Self.ApplicantQualification" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
@@ -4012,7 +3576,6 @@
           <EntitySet Name="CompanyProfiles" EntityType="Self.CompanyProfile" />
           <EntitySet Name="CompanySocialDetails" EntityType="Self.CompanySocialDetail" />
           <EntitySet Name="Complaints" EntityType="Self.Complaint" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="DashboardWidgetPreferences" EntityType="Self.DashboardWidgetPreference" />
           <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
@@ -4022,7 +3585,6 @@
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItem" />
           <EntitySet Name="ItemImages" EntityType="Self.ItemImage" />
           <EntitySet Name="ItemVariations" EntityType="Self.ItemVariation" />
-          <EntitySet Name="JobApplicants" EntityType="Self.JobApplicant" />
           <EntitySet Name="JobOffereds" EntityType="Self.JobOffered" />
           <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
           <EntitySet Name="JobTitleHistories" EntityType="Self.JobTitleHistory" />
@@ -4035,15 +3597,11 @@
           <EntitySet Name="Notifications" EntityType="Self.Notification" />
           <EntitySet Name="NotificationRecipients" EntityType="Self.NotificationRecipient" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocument" />
-          <EntitySet Name="ProjectTasks" EntityType="Self.ProjectTask" />
           <EntitySet Name="QuickLaunchItems" EntityType="Self.QuickLaunchItem" />
-          <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
           <EntitySet Name="RFIs" EntityType="Self.RFI" />
-          <EntitySet Name="RFIItems" EntityType="Self.RFIItem" />
           <EntitySet Name="Sections" EntityType="Self.Section" />
           <EntitySet Name="Shelves" EntityType="Self.Shelf" />
           <EntitySet Name="ShelfSections" EntityType="Self.ShelfSection" />
@@ -4066,14 +3624,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Allowance" EntitySet="Allowances" />
           </AssociationSet>
-          <AssociationSet Name="FK_ApplicantExperience_JobApplicants" Association="Self.FK_ApplicantExperience_JobApplicants">
-            <End Role="JobApplicants" EntitySet="JobApplicants" />
-            <End Role="ApplicantExperience" EntitySet="ApplicantExperiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ApplicantQualification_JobApplicants" Association="Self.FK_ApplicantQualification_JobApplicants">
-            <End Role="JobApplicants" EntitySet="JobApplicants" />
-            <End Role="ApplicantQualification" EntitySet="ApplicantQualifications" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" Association="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="MenuRight" EntitySet="MenuRights" />
@@ -4085,10 +3635,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_Customer" Association="Self.FK_AspNetUsers_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employees" />
@@ -4118,33 +3664,9 @@
             <End Role="CompanyProfile" EntitySet="CompanyProfiles" />
             <End Role="CompanySocialDetails" EntitySet="CompanySocialDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Complaint_Customer" Association="Self.FK_Complaint_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
           <AssociationSet Name="FK_Complaint_Department" Association="Self.FK_Complaint_Department">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Complaint" EntitySet="Complaints" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Project_Customer" Association="Self.FK_Project_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Project" EntitySet="Projects" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectTask_Customer" Association="Self.FK_ProjectTask_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Quotation_Customer" Association="Self.FK_Quotation_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Quotation" EntitySet="Quotations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobApplicants_Department" Association="Self.FK_JobApplicants_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="JobApplicants" EntitySet="JobApplicants" />
           </AssociationSet>
           <AssociationSet Name="FK_JobTitle_Department" Association="Self.FK_JobTitle_Department">
             <End Role="Department" EntitySet="Departments" />
@@ -4198,14 +3720,6 @@
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="ItemImage" EntitySet="ItemImages" />
           </AssociationSet>
-          <AssociationSet Name="FK_RFIItem_ItemVariation" Association="Self.FK_RFIItem_ItemVariation">
-            <End Role="ItemVariation" EntitySet="ItemVariations" />
-            <End Role="RFIItem" EntitySet="RFIItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="Self.FK_JobApplicants_JobOffered">
-            <End Role="JobOffered" EntitySet="JobOffereds" />
-            <End Role="JobApplicants" EntitySet="JobApplicants" />
-          </AssociationSet>
           <AssociationSet Name="FK_JobOffered_JobTitle" Association="Self.FK_JobOffered_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="JobOffered" EntitySet="JobOffereds" />
@@ -4226,41 +3740,9 @@
             <End Role="Notification" EntitySet="Notifications" />
             <End Role="NotificationRecipient" EntitySet="NotificationRecipients" />
           </AssociationSet>
-          <AssociationSet Name="FK_Project_Orders" Association="Self.FK_Project_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Project" EntitySet="Projects" />
-          </AssociationSet>
           <AssociationSet Name="FK_RFI_Orders" Association="Self.FK_RFI_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="RFI" EntitySet="RFIs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Project_Quotation" Association="Self.FK_Project_Quotation">
-            <End Role="Quotation" EntitySet="Quotations" />
-            <End Role="Project" EntitySet="Projects" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectDocuments_Project" Association="Self.FK_ProjectDocuments_Project">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="ProjectDocuments" EntitySet="ProjectDocuments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectTask_Project" Association="Self.FK_ProjectTask_Project">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectTask_ProjectTask" Association="Self.FK_ProjectTask_ProjectTask">
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-            <End Role="ProjectTask1" EntitySet="ProjectTasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TaskEmployee_Task" Association="Self.FK_TaskEmployee_Task">
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="Self.FK_QuotationItemDetail_Quotation">
-            <End Role="Quotation" EntitySet="Quotations" />
-            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RFIItem_RFI" Association="Self.FK_RFIItem_RFI">
-            <End Role="RFI" EntitySet="RFIs" />
-            <End Role="RFIItem" EntitySet="RFIItems" />
           </AssociationSet>
           <AssociationSet Name="FK_Shelf_Section" Association="Self.FK_Shelf_Section">
             <End Role="Section" EntitySet="Sections" />
@@ -4298,10 +3780,6 @@
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="Warehouse" EntitySet="Warehouses" />
           </AssociationSet>
-          <AssociationSet Name="PreRequisitTask" Association="Self.PreRequisitTask">
-            <End Role="ProjectTask" EntitySet="ProjectTasks" />
-            <End Role="ProjectTask1" EntitySet="ProjectTasks" />
-          </AssociationSet>
           <EntitySet Name="Menus" EntityType="EPMSProjectModel.Menu" />
           <AssociationSet Name="FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" Association="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId">
             <End Role="Menu" EntitySet="Menus" />
@@ -4315,7 +3793,95 @@
             <End Role="Menu" EntitySet="Menus" />
             <End Role="QuickLaunchItem" EntitySet="QuickLaunchItems" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="JobApplicants" EntityType="EPMSProjectModel.JobApplicant" />
+          <AssociationSet Name="FK_JobApplicants_Department" Association="EPMSProjectModel.FK_JobApplicants_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JobApplicants_JobOffered" Association="EPMSProjectModel.FK_JobApplicants_JobOffered">
+            <End Role="JobOffered" EntitySet="JobOffereds" />
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="EPMSProjectModel.Customer" />
+          <EntitySet Name="Projects" EntityType="EPMSProjectModel.Project" />
+          <EntitySet Name="ProjectTasks" EntityType="EPMSProjectModel.ProjectTask" />
+          <EntitySet Name="Quotations" EntityType="EPMSProjectModel.Quotation" />
+          <AssociationSet Name="FK_AspNetUsers_Customer" Association="EPMSProjectModel.FK_AspNetUsers_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Complaint_Customer" Association="EPMSProjectModel.FK_Complaint_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Complaint" EntitySet="Complaints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Orders" Association="EPMSProjectModel.FK_Orders_Orders">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Customer" Association="EPMSProjectModel.FK_Project_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTask_Customer" Association="EPMSProjectModel.FK_ProjectTask_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Quotation_Customer" Association="EPMSProjectModel.FK_Quotation_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Quotation" EntitySet="Quotations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Orders" Association="EPMSProjectModel.FK_Project_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_Quotation" Association="EPMSProjectModel.FK_Project_Quotation">
+            <End Role="Quotation" EntitySet="Quotations" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectDocuments_Project" Association="EPMSProjectModel.FK_ProjectDocuments_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectDocument" EntitySet="ProjectDocuments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTask_Project" Association="EPMSProjectModel.FK_ProjectTask_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTask_ProjectTask" Association="EPMSProjectModel.FK_ProjectTask_ProjectTask">
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+            <End Role="ProjectTask1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TaskEmployee_Task" Association="EPMSProjectModel.FK_TaskEmployee_Task">
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+            <End Role="TaskEmployee" EntitySet="TaskEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="EPMSProjectModel.FK_QuotationItemDetail_Quotation">
+            <End Role="Quotation" EntitySet="Quotations" />
+            <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="PreRequisitTask" Association="EPMSProjectModel.PreRequisitTask">
+            <End Role="ProjectTask" EntitySet="ProjectTasks" />
+            <End Role="ProjectTask1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <EntitySet Name="ApplicantExperiences" EntityType="EPMSProjectModel.ApplicantExperience" />
+          <EntitySet Name="ApplicantQualifications" EntityType="EPMSProjectModel.ApplicantQualification" />
+          <AssociationSet Name="FK_ApplicantExperience_JobApplicants" Association="EPMSProjectModel.FK_ApplicantExperience_JobApplicants">
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
+            <End Role="ApplicantExperience" EntitySet="ApplicantExperiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicantQualification_JobApplicants" Association="EPMSProjectModel.FK_ApplicantQualification_JobApplicants">
+            <End Role="JobApplicant" EntitySet="JobApplicants" />
+            <End Role="ApplicantQualification" EntitySet="ApplicantQualifications" />
+          </AssociationSet>
+          <EntitySet Name="RFIItems" EntityType="EPMSProjectModel.RFIItem" />
+          <AssociationSet Name="FK_RFIItem_ItemVariation" Association="EPMSProjectModel.FK_RFIItem_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="RFIItem" EntitySet="RFIItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFIItem_RFI" Association="EPMSProjectModel.FK_RFIItem_RFI">
+            <End Role="RFI" EntitySet="RFIs" />
+            <End Role="RFIItem" EntitySet="RFIItems" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Menu">
           <Key>
             <PropertyRef Name="MenuId" />
@@ -4373,7 +3939,449 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="JobApplicant">
+          <Key>
+            <PropertyRef Name="ApplicantId" />
+          </Key>
+          <Property Name="ApplicantId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobOfferedId" Type="Int64" Nullable="false" />
+          <Property Name="ApplicantFirstNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantMiddleNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantFirstNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantMiddleNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantFamilyNameE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantFamilyNameA" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int64" />
+          <Property Name="ApplicantSex" Type="Byte" />
+          <Property Name="ApplicantNationality" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="PlaceOfBirth" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PassportNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfFamilyMembers" Type="Int32" />
+          <Property Name="LanguagesKnown" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployedNow" Type="Boolean" Nullable="false" />
+          <Property Name="GetMonthlyPayment" Type="Boolean" Nullable="false" />
+          <Property Name="GovernmentEmployeeEver" Type="Boolean" Nullable="false" />
+          <Property Name="GovernmentAreaWorked" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GovernmentJobOfficial" Type="Boolean" Nullable="false" />
+          <Property Name="ReasonOfLeaving" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobLeavingDate" Type="DateTime" Precision="3" />
+          <Property Name="AcceptAgreement" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="EPMSProjectModel.FK_JobApplicants_Department" FromRole="JobApplicant" ToRole="Department" />
+          <NavigationProperty Name="JobOffered" Relationship="EPMSProjectModel.FK_JobApplicants_JobOffered" FromRole="JobApplicant" ToRole="JobOffered" />
+          <NavigationProperty Name="ApplicantExperiences" Relationship="EPMSProjectModel.FK_ApplicantExperience_JobApplicants" FromRole="JobApplicant" ToRole="ApplicantExperience" />
+          <NavigationProperty Name="ApplicantQualifications" Relationship="EPMSProjectModel.FK_ApplicantQualification_JobApplicants" FromRole="JobApplicant" ToRole="ApplicantQualification" />
+        </EntityType>
+        <Association Name="FK_JobApplicants_Department">
+          <End Type="EPMSProjectModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="JobApplicant">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JobApplicants_JobOffered">
+          <End Type="EPMSProjectModel.JobOffered" Role="JobOffered" Multiplicity="1" />
+          <End Type="EPMSProjectModel.JobApplicant" Role="JobApplicant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobOffered">
+              <PropertyRef Name="JobOfferedId" />
+            </Principal>
+            <Dependent Role="JobApplicant">
+              <PropertyRef Name="JobOfferedId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerNameE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerNameA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="EPMSProjectModel.FK_AspNetUsers_Customer" FromRole="Customer" ToRole="AspNetUser" />
+          <NavigationProperty Name="Complaints" Relationship="EPMSProjectModel.FK_Complaint_Customer" FromRole="Customer" ToRole="Complaint" />
+          <NavigationProperty Name="Orders" Relationship="EPMSProjectModel.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Projects" Relationship="EPMSProjectModel.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
+          <NavigationProperty Name="ProjectTasks" Relationship="EPMSProjectModel.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
+          <NavigationProperty Name="Quotations" Relationship="EPMSProjectModel.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+          </Key>
+          <Property Name="ProjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameE" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="NameA" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="SerialNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesForCustomerE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesForCustomerA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OtherCost" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuotationId" Type="Int64" />
+          <NavigationProperty Name="Customer" Relationship="EPMSProjectModel.FK_Project_Customer" FromRole="Project" ToRole="Customer" />
+          <NavigationProperty Name="Order" Relationship="EPMSProjectModel.FK_Project_Orders" FromRole="Project" ToRole="Order" />
+          <NavigationProperty Name="Quotation" Relationship="EPMSProjectModel.FK_Project_Quotation" FromRole="Project" ToRole="Quotation" />
+          <NavigationProperty Name="ProjectDocuments" Relationship="EPMSProjectModel.FK_ProjectDocuments_Project" FromRole="Project" ToRole="ProjectDocument" />
+          <NavigationProperty Name="ProjectTasks" Relationship="EPMSProjectModel.FK_ProjectTask_Project" FromRole="Project" ToRole="ProjectTask" />
+        </EntityType>
+        <EntityType Name="ProjectTask">
+          <Key>
+            <PropertyRef Name="TaskId" />
+          </Key>
+          <Property Name="TaskId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" />
+          <Property Name="ProjectId" Type="Int64" Nullable="false" />
+          <Property Name="TaskNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TaskNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="TotalCost" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TotalWeight" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TaskProgress" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsParent" Type="Boolean" Nullable="false" />
+          <Property Name="ParentTask" Type="Int64" />
+          <NavigationProperty Name="Customer" Relationship="EPMSProjectModel.FK_ProjectTask_Customer" FromRole="ProjectTask" ToRole="Customer" />
+          <NavigationProperty Name="Project" Relationship="EPMSProjectModel.FK_ProjectTask_Project" FromRole="ProjectTask" ToRole="Project" />
+          <NavigationProperty Name="SubTasks" Relationship="EPMSProjectModel.FK_ProjectTask_ProjectTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
+          <NavigationProperty Name="ParentProjectTask" Relationship="EPMSProjectModel.FK_ProjectTask_ProjectTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
+          <NavigationProperty Name="TaskEmployees" Relationship="EPMSProjectModel.FK_TaskEmployee_Task" FromRole="ProjectTask" ToRole="TaskEmployee" />
+          <NavigationProperty Name="PreRequisitTask" Relationship="EPMSProjectModel.PreRequisitTask" FromRole="ProjectTask" ToRole="ProjectTask1" />
+          <NavigationProperty Name="ProjectTasks" Relationship="EPMSProjectModel.PreRequisitTask" FromRole="ProjectTask1" ToRole="ProjectTask" />
+        </EntityType>
+        <EntityType Name="Quotation">
+          <Key>
+            <PropertyRef Name="QuotationId" />
+          </Key>
+          <Property Name="QuotationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderId" Type="Int64" />
+          <Property Name="CreatedByEmployee" Type="Int64" Nullable="false" />
+          <Property Name="GreetingsEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GreetingsAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuotationDiscount" Type="Int16" />
+          <Property Name="FirstInstallement" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="FirstInsDueAtCompletion" Type="Int16" Nullable="false" />
+          <Property Name="SecondInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="SecondInsDueAtCompletion" Type="Int16" />
+          <Property Name="ThirdInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ThirdInsDueAtCompletion" Type="Int16" />
+          <Property Name="FourthInstallment" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="FourthInsDueAtCompletion" Type="Int16" />
+          <Property Name="NotesEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDt" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="EPMSProjectModel.FK_Quotation_Customer" FromRole="Quotation" ToRole="Customer" />
+          <NavigationProperty Name="Projects" Relationship="EPMSProjectModel.FK_Project_Quotation" FromRole="Quotation" ToRole="Project" />
+          <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSProjectModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
+        </EntityType>
+        <Association Name="FK_AspNetUsers_Customer">
+          <End Type="EPMSProjectModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Complaint_Customer">
+          <End Type="EPMSProjectModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSProjectModel.Complaint" Role="Complaint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Complaint">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Orders">
+          <End Type="EPMSProjectModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSProjectModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Customer">
+          <End Type="EPMSProjectModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTask_Customer">
+          <End Type="EPMSProjectModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="ProjectTask">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Quotation_Customer">
+          <End Type="EPMSProjectModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="EPMSProjectModel.Quotation" Role="Quotation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Quotation">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Orders">
+          <End Type="EPMSProjectModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Project_Quotation">
+          <End Type="EPMSProjectModel.Quotation" Role="Quotation" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotation">
+              <PropertyRef Name="QuotationId" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="QuotationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectDocuments_Project">
+          <End Type="EPMSProjectModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="EPMSProjectModel.ProjectDocument" Role="ProjectDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="ProjectDocument">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTask_Project">
+          <End Type="EPMSProjectModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectId" />
+            </Principal>
+            <Dependent Role="ProjectTask">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTask_ProjectTask">
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTask">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="ProjectTask1">
+              <PropertyRef Name="ParentTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TaskEmployee_Task">
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask" Multiplicity="1" />
+          <End Type="EPMSProjectModel.TaskEmployee" Role="TaskEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTask">
+              <PropertyRef Name="TaskId" />
+            </Principal>
+            <Dependent Role="TaskEmployee">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuotationItemDetail_Quotation">
+          <End Type="EPMSProjectModel.Quotation" Role="Quotation" Multiplicity="1" />
+          <End Type="EPMSProjectModel.QuotationItemDetail" Role="QuotationItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotation">
+              <PropertyRef Name="QuotationId" />
+            </Principal>
+            <Dependent Role="QuotationItemDetail">
+              <PropertyRef Name="QuotationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PreRequisitTask">
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
+          <End Type="EPMSProjectModel.ProjectTask" Role="ProjectTask1" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ApplicantExperience">
+          <Key>
+            <PropertyRef Name="ExperienceId" />
+          </Key>
+          <Property Name="ExperienceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicantId" Type="Int64" />
+          <Property Name="JobTitle" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="TypeOfWork" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FromDate" Type="DateTime" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Precision="3" />
+          <Property Name="ReasonToLeave" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobApplicant" Relationship="EPMSProjectModel.FK_ApplicantExperience_JobApplicants" FromRole="ApplicantExperience" ToRole="JobApplicant" />
+        </EntityType>
+        <EntityType Name="ApplicantQualification">
+          <Key>
+            <PropertyRef Name="QualificationId" />
+          </Key>
+          <Property Name="QualificationId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicantId" Type="Int64" />
+          <Property Name="Certificate" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Field" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceOfStudy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CollegeSchoolName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfYears" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CertificateDate" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobApplicant" Relationship="EPMSProjectModel.FK_ApplicantQualification_JobApplicants" FromRole="ApplicantQualification" ToRole="JobApplicant" />
+        </EntityType>
+        <Association Name="FK_ApplicantExperience_JobApplicants">
+          <End Type="EPMSProjectModel.JobApplicant" Role="JobApplicant" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.ApplicantExperience" Role="ApplicantExperience" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobApplicant">
+              <PropertyRef Name="ApplicantId" />
+            </Principal>
+            <Dependent Role="ApplicantExperience">
+              <PropertyRef Name="ApplicantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicantQualification_JobApplicants">
+          <End Type="EPMSProjectModel.JobApplicant" Role="JobApplicant" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.ApplicantQualification" Role="ApplicantQualification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="JobApplicant">
+              <PropertyRef Name="ApplicantId" />
+            </Principal>
+            <Dependent Role="ApplicantQualification">
+              <PropertyRef Name="ApplicantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RFIItem">
+          <Key>
+            <PropertyRef Name="RFIItemId" />
+          </Key>
+          <Property Name="RFIItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFIId" Type="Int64" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
+          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQty" Type="Int64" Nullable="false" />
+          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
+          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSProjectModel.FK_RFIItem_ItemVariation" FromRole="RFIItem" ToRole="ItemVariation" />
+          <NavigationProperty Name="RFI" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFIItem" ToRole="RFI" />
+        </EntityType>
+        <Association Name="FK_RFIItem_ItemVariation">
+          <End Type="EPMSProjectModel.ItemVariation" Role="ItemVariation" Multiplicity="1" />
+          <End Type="EPMSProjectModel.RFIItem" Role="RFIItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="RFIItem">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFIItem_RFI">
+          <End Type="EPMSProjectModel.RFI" Role="RFI" Multiplicity="1" />
+          <End Type="EPMSProjectModel.RFIItem" Role="RFIItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIId" />
+            </Principal>
+            <Dependent Role="RFIItem">
+              <PropertyRef Name="RFIId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -4413,45 +4421,6 @@
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="AllowanceDate" ColumnName="AllowanceDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ApplicantExperiences">
-            <EntityTypeMapping TypeName="EPMSProjectModel.ApplicantExperience">
-              <MappingFragment StoreEntitySet="ApplicantExperience">
-                <ScalarProperty Name="ExperienceId" ColumnName="ExperienceId" />
-                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
-                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="TypeOfWork" ColumnName="TypeOfWork" />
-                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
-                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
-                <ScalarProperty Name="ReasonToLeave" ColumnName="ReasonToLeave" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ApplicantQualifications">
-            <EntityTypeMapping TypeName="EPMSProjectModel.ApplicantQualification">
-              <MappingFragment StoreEntitySet="ApplicantQualification">
-                <ScalarProperty Name="QualificationId" ColumnName="QualificationId" />
-                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
-                <ScalarProperty Name="Certificate" ColumnName="Certificate" />
-                <ScalarProperty Name="Field" ColumnName="Field" />
-                <ScalarProperty Name="PlaceOfStudy" ColumnName="PlaceOfStudy" />
-                <ScalarProperty Name="CollegeSchoolName" ColumnName="CollegeSchoolName" />
-                <ScalarProperty Name="NoOfYears" ColumnName="NoOfYears" />
-                <ScalarProperty Name="CertificateDate" ColumnName="CertificateDate" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4658,21 +4627,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="EPMSProjectModel.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
-                <ScalarProperty Name="CustomerNameA" ColumnName="CustomerNameA" />
-                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
-                <ScalarProperty Name="CustomerMobile" ColumnName="CustomerMobile" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DashboardWidgetPreferences">
             <EntityTypeMapping TypeName="EPMSProjectModel.DashboardWidgetPreference">
               <MappingFragment StoreEntitySet="DashboardWidgetPreference">
@@ -4840,42 +4794,6 @@
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="InventoryItemId" ColumnName="InventoryItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="JobApplicants">
-            <EntityTypeMapping TypeName="EPMSProjectModel.JobApplicant">
-              <MappingFragment StoreEntitySet="JobApplicants">
-                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
-                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
-                <ScalarProperty Name="ApplicantFirstNameE" ColumnName="ApplicantFirstNameE" />
-                <ScalarProperty Name="ApplicantMiddleNameE" ColumnName="ApplicantMiddleNameE" />
-                <ScalarProperty Name="ApplicantFirstNameA" ColumnName="ApplicantFirstNameA" />
-                <ScalarProperty Name="ApplicantMiddleNameA" ColumnName="ApplicantMiddleNameA" />
-                <ScalarProperty Name="ApplicantFamilyNameE" ColumnName="ApplicantFamilyNameE" />
-                <ScalarProperty Name="ApplicantFamilyNameA" ColumnName="ApplicantFamilyNameA" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="ApplicantSex" ColumnName="ApplicantSex" />
-                <ScalarProperty Name="ApplicantNationality" ColumnName="ApplicantNationality" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
-                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
-                <ScalarProperty Name="NoOfFamilyMembers" ColumnName="NoOfFamilyMembers" />
-                <ScalarProperty Name="LanguagesKnown" ColumnName="LanguagesKnown" />
-                <ScalarProperty Name="EmployedNow" ColumnName="EmployedNow" />
-                <ScalarProperty Name="GetMonthlyPayment" ColumnName="GetMonthlyPayment" />
-                <ScalarProperty Name="GovernmentEmployeeEver" ColumnName="GovernmentEmployeeEver" />
-                <ScalarProperty Name="GovernmentAreaWorked" ColumnName="GovernmentAreaWorked" />
-                <ScalarProperty Name="GovernmentJobOfficial" ColumnName="GovernmentJobOfficial" />
-                <ScalarProperty Name="ReasonOfLeaving" ColumnName="ReasonOfLeaving" />
-                <ScalarProperty Name="JobLeavingDate" ColumnName="JobLeavingDate" />
-                <ScalarProperty Name="AcceptAgreement" ColumnName="AcceptAgreement" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5072,66 +4990,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Projects">
-            <EntityTypeMapping TypeName="EPMSProjectModel.Project">
-              <MappingFragment StoreEntitySet="Project">
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="NameE" ColumnName="NameE" />
-                <ScalarProperty Name="NameA" ColumnName="NameA" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
-                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
-                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
-                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
-                <ScalarProperty Name="NotesForCustomerE" ColumnName="NotesForCustomerE" />
-                <ScalarProperty Name="NotesForCustomerA" ColumnName="NotesForCustomerA" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="OtherCost" ColumnName="OtherCost" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProjectDocuments">
             <EntityTypeMapping TypeName="EPMSProjectModel.ProjectDocument">
               <MappingFragment StoreEntitySet="ProjectDocuments">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProjectTasks">
-            <EntityTypeMapping TypeName="EPMSProjectModel.ProjectTask">
-              <MappingFragment StoreEntitySet="ProjectTask">
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="TaskNameE" ColumnName="TaskNameE" />
-                <ScalarProperty Name="TaskNameA" ColumnName="TaskNameA" />
-                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
-                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
-                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
-                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
-                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
-                <ScalarProperty Name="TaskProgress" ColumnName="TaskProgress" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
-                <ScalarProperty Name="ParentTask" ColumnName="ParentTask" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5142,34 +5006,6 @@
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Quotations">
-            <EntityTypeMapping TypeName="EPMSProjectModel.Quotation">
-              <MappingFragment StoreEntitySet="Quotation">
-                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
-                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
-                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
-                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
-                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
-                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
-                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
-                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
-                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
-                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
-                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
-                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
-                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
-                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
-                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5219,19 +5055,6 @@
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="UsageE" ColumnName="UsageE" />
                 <ScalarProperty Name="UsageA" ColumnName="UsageA" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RFIItems">
-            <EntityTypeMapping TypeName="EPMSProjectModel.RFIItem">
-              <MappingFragment StoreEntitySet="RFIItem">
-                <ScalarProperty Name="RFIItemId" ColumnName="RFIItemId" />
-                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
-                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
@@ -5416,14 +5239,6 @@
               <ScalarProperty Name="WarehouseId" ColumnName="WarehousrId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="PreRequisitTask" TypeName="EPMSProjectModel.PreRequisitTask" StoreEntitySet="PreRequisitTask">
-            <EndProperty Name="ProjectTask">
-              <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
-            </EndProperty>
-            <EndProperty Name="ProjectTask1">
-              <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="EPMSProjectModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
@@ -5440,6 +5255,203 @@
                 <ScalarProperty Name="MenuTitleA" ColumnName="MenuTitleA" />
                 <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
                 <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobApplicants">
+            <EntityTypeMapping TypeName="EPMSProjectModel.JobApplicant">
+              <MappingFragment StoreEntitySet="JobApplicants">
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AcceptAgreement" ColumnName="AcceptAgreement" />
+                <ScalarProperty Name="JobLeavingDate" ColumnName="JobLeavingDate" />
+                <ScalarProperty Name="ReasonOfLeaving" ColumnName="ReasonOfLeaving" />
+                <ScalarProperty Name="GovernmentJobOfficial" ColumnName="GovernmentJobOfficial" />
+                <ScalarProperty Name="GovernmentAreaWorked" ColumnName="GovernmentAreaWorked" />
+                <ScalarProperty Name="GovernmentEmployeeEver" ColumnName="GovernmentEmployeeEver" />
+                <ScalarProperty Name="GetMonthlyPayment" ColumnName="GetMonthlyPayment" />
+                <ScalarProperty Name="EmployedNow" ColumnName="EmployedNow" />
+                <ScalarProperty Name="LanguagesKnown" ColumnName="LanguagesKnown" />
+                <ScalarProperty Name="NoOfFamilyMembers" ColumnName="NoOfFamilyMembers" />
+                <ScalarProperty Name="PassportNumber" ColumnName="PassportNumber" />
+                <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ApplicantNationality" ColumnName="ApplicantNationality" />
+                <ScalarProperty Name="ApplicantSex" ColumnName="ApplicantSex" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ApplicantFamilyNameA" ColumnName="ApplicantFamilyNameA" />
+                <ScalarProperty Name="ApplicantFamilyNameE" ColumnName="ApplicantFamilyNameE" />
+                <ScalarProperty Name="ApplicantMiddleNameA" ColumnName="ApplicantMiddleNameA" />
+                <ScalarProperty Name="ApplicantFirstNameA" ColumnName="ApplicantFirstNameA" />
+                <ScalarProperty Name="ApplicantMiddleNameE" ColumnName="ApplicantMiddleNameE" />
+                <ScalarProperty Name="ApplicantFirstNameE" ColumnName="ApplicantFirstNameE" />
+                <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="EPMSProjectModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="CustomerMobile" ColumnName="CustomerMobile" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="CustomerNameA" ColumnName="CustomerNameA" />
+                <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="EPMSProjectModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="OtherCost" ColumnName="OtherCost" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="NotesForCustomerA" ColumnName="NotesForCustomerA" />
+                <ScalarProperty Name="NotesForCustomerE" ColumnName="NotesForCustomerE" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
+                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="NameA" ColumnName="NameA" />
+                <ScalarProperty Name="NameE" ColumnName="NameE" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTasks">
+            <EntityTypeMapping TypeName="EPMSProjectModel.ProjectTask">
+              <MappingFragment StoreEntitySet="ProjectTask">
+                <ScalarProperty Name="ParentTask" ColumnName="ParentTask" />
+                <ScalarProperty Name="IsParent" ColumnName="IsParent" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="TaskProgress" ColumnName="TaskProgress" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="DescriptionA" ColumnName="DescriptionA" />
+                <ScalarProperty Name="DescriptionE" ColumnName="DescriptionE" />
+                <ScalarProperty Name="TaskNameA" ColumnName="TaskNameA" />
+                <ScalarProperty Name="TaskNameE" ColumnName="TaskNameE" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotations">
+            <EntityTypeMapping TypeName="EPMSProjectModel.Quotation">
+              <MappingFragment StoreEntitySet="Quotation">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecUpdatedDt" ColumnName="RecUpdatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="NotesEn" ColumnName="NotesEn" />
+                <ScalarProperty Name="FourthInsDueAtCompletion" ColumnName="FourthInsDueAtCompletion" />
+                <ScalarProperty Name="FourthInstallment" ColumnName="FourthInstallment" />
+                <ScalarProperty Name="ThirdInsDueAtCompletion" ColumnName="ThirdInsDueAtCompletion" />
+                <ScalarProperty Name="ThirdInstallment" ColumnName="ThirdInstallment" />
+                <ScalarProperty Name="SecondInsDueAtCompletion" ColumnName="SecondInsDueAtCompletion" />
+                <ScalarProperty Name="SecondInstallment" ColumnName="SecondInstallment" />
+                <ScalarProperty Name="FirstInsDueAtCompletion" ColumnName="FirstInsDueAtCompletion" />
+                <ScalarProperty Name="FirstInstallement" ColumnName="FirstInstallement" />
+                <ScalarProperty Name="QuotationDiscount" ColumnName="QuotationDiscount" />
+                <ScalarProperty Name="GreetingsAr" ColumnName="GreetingsAr" />
+                <ScalarProperty Name="GreetingsEn" ColumnName="GreetingsEn" />
+                <ScalarProperty Name="CreatedByEmployee" ColumnName="CreatedByEmployee" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PreRequisitTask" TypeName="EPMSProjectModel.PreRequisitTask" StoreEntitySet="PreRequisitTask">
+            <EndProperty Name="ProjectTask1">
+              <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+            </EndProperty>
+            <EndProperty Name="ProjectTask">
+              <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="ApplicantExperiences">
+            <EntityTypeMapping TypeName="EPMSProjectModel.ApplicantExperience">
+              <MappingFragment StoreEntitySet="ApplicantExperience">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ReasonToLeave" ColumnName="ReasonToLeave" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="TypeOfWork" ColumnName="TypeOfWork" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+                <ScalarProperty Name="ExperienceId" ColumnName="ExperienceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicantQualifications">
+            <EntityTypeMapping TypeName="EPMSProjectModel.ApplicantQualification">
+              <MappingFragment StoreEntitySet="ApplicantQualification">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CertificateDate" ColumnName="CertificateDate" />
+                <ScalarProperty Name="NoOfYears" ColumnName="NoOfYears" />
+                <ScalarProperty Name="CollegeSchoolName" ColumnName="CollegeSchoolName" />
+                <ScalarProperty Name="PlaceOfStudy" ColumnName="PlaceOfStudy" />
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="Certificate" ColumnName="Certificate" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+                <ScalarProperty Name="QualificationId" ColumnName="QualificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RFIItems">
+            <EntityTypeMapping TypeName="EPMSProjectModel.RFIItem">
+              <MappingFragment StoreEntitySet="RFIItem">
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="IsItemSKU" ColumnName="IsItemSKU" />
+                <ScalarProperty Name="IsItemDescription" ColumnName="IsItemDescription" />
+                <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
+                <ScalarProperty Name="RFIItemId" ColumnName="RFIItemId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5464,6 +5476,131 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="6eb35edfac7c42e6b419d3806a9b61ae" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="EPMSProjectModel.Aisle" Width="1.5" PointX="15.75" PointY="49.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Allowance" Width="1.5" PointX="7.5" PointY="42" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.AspNetRole" Width="1.5" PointX="5.25" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="55.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="37.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.AspNetUser" Width="1.5" PointX="7.5" PointY="48.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Color" Width="1.5" PointX="13.5" PointY="58.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.CompanyBankDetail" Width="1.5" PointX="12" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.CompanyDocumentDetail" Width="1.5" PointX="12" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.CompanyProfile" Width="1.5" PointX="9.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.CompanySocialDetail" Width="1.5" PointX="12" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Complaint" Width="1.5" PointX="3" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.DashboardWidgetPreference" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Department" Width="1.5" PointX="0.75" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Employee" Width="1.5" PointX="5.25" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.EmployeeJobHistory" Width="1.5" PointX="10.5" PointY="51.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="59" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.InventoryDepartment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.InventoryItem" Width="1.5" PointX="13.5" PointY="62.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ItemImage" Width="1.5" PointX="18" PointY="57.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ItemVariation" Width="1.5" PointX="15.75" PointY="59.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.JobOffered" Width="1.5" PointX="5.25" PointY="52.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.JobTitle" Width="1.5" PointX="3" PointY="48.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.JobTitleHistory" Width="1.5" PointX="5.25" PointY="57.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.LicenseControlPanel" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Manufacturer" Width="1.5" PointX="18" PointY="60.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Meeting" Width="1.5" PointX="11.25" PointY="67.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.MeetingAttendee" Width="1.5" PointX="13.5" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.MeetingDocument" Width="1.5" PointX="13.5" PointY="68.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.MenuRight" Width="1.5" PointX="7.5" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Notification" Width="1.5" PointX="13.5" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="45.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Order" Width="1.5" PointX="6.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ProjectDocument" Width="1.5" PointX="11.25" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.QuickLaunchItem" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.QuotationItemDetail" Width="1.5" PointX="9" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.RequestDetail" Width="1.5" PointX="9.75" PointY="58.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.RFI" Width="1.5" PointX="15.75" PointY="53.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Section" Width="1.5" PointX="18" PointY="49.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Shelf" Width="1.5" PointX="20.25" PointY="49.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ShelfSection" Width="1.5" PointX="22.5" PointY="49.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Size" Width="1.5" PointX="18" PointY="64.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Status" Width="1.5" PointX="18" PointY="67.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.TaskEmployee" Width="1.5" PointX="13.5" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.UserPrefrence" Width="1.5" PointX="9.75" PointY="64.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Vendor" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.VendorItem" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="13.5" PointY="49.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Menu" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Aisle_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Section_Aisle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Allowance_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_RFI_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_UserPrefrences_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_CompanyBankDetails_CompanyProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_CompanyDocuments_CompanyProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_CompanySocialDetails_CompanyProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Complaint_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_JobTitle_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Employee_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_InventoryDepartment_InventoryDepartment" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ItemVariation_InventoryItems" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ItemImage_ItemVariation" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_JobOffered_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_MeetingAttendees_Meeting" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_MeetingDocuments_Meeting" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_Notification" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_RFI_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Shelf_Section" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ShelfSection_Shelf" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_VendorItems_Vendor" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.ItemColor" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.ItemManufacturer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.ItemSize" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.ItemStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSProjectModel.FK_QuickLaunchItems_Menu" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EPMSProjectModel.JobApplicant" Width="2.75" PointX="10.5" PointY="41.25" />
+        <AssociationConnector Association="EPMSProjectModel.FK_JobApplicants_Department" />
+        <AssociationConnector Association="EPMSProjectModel.FK_JobApplicants_JobOffered" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Customer" Width="1.5" PointX="0.75" PointY="38.25" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Project" Width="1.5" PointX="9" PointY="29.375" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ProjectTask" Width="1.5" PointX="16.25" PointY="32.625" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Quotation" Width="1.5" PointX="3" PointY="38.25" />
+        <AssociationConnector Association="EPMSProjectModel.FK_AspNetUsers_Customer" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Complaint_Customer" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Orders_Orders" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Project_Customer" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ProjectTask_Customer" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Quotation_Customer" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Project_Orders" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Project_Quotation" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ProjectDocuments_Project" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ProjectTask_Project" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ProjectTask_ProjectTask" />
+        <AssociationConnector Association="EPMSProjectModel.FK_TaskEmployee_Task" />
+        <AssociationConnector Association="EPMSProjectModel.FK_QuotationItemDetail_Quotation" />
+        <AssociationConnector Association="EPMSProjectModel.PreRequisitTask" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ApplicantExperience" Width="1.5" PointX="14" PointY="25.25" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ApplicantQualification" Width="1.5" PointX="14" PointY="36.875" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ApplicantExperience_JobApplicants" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ApplicantQualification_JobApplicants" />
+        <EntityTypeShape EntityType="EPMSProjectModel.RFIItem" Width="1.5" PointX="21" PointY="57.375" />
+        <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_ItemVariation" />
+        <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_RFI" />
+        </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>

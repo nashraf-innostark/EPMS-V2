@@ -58,6 +58,11 @@ namespace EPMS.Implementation.Services
             variationRepository.Delete(itemVariation);
             variationRepository.SaveChanges();
         }
+
+        public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList()
+        {
+            return variationRepository.GetItemVariationDropDownList();
+        }
         /// <summary>
         /// Save Item Variation from Client
         /// </summary>

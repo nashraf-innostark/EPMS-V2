@@ -4,6 +4,12 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_HelpLayout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    long deptId = 0;
+    if (ViewBag.InventoryDepartmentId != null)
+    {
+        deptId = Convert.ToInt64(ViewBag.InventoryDepartmentId);
+    }
 }
 <div class="">
     <div class="panel">
@@ -38,12 +44,12 @@
     <div class="breadcrumb-container">
         <ul class="xbreadcrumbs">
             <li>
-                <a href="dashboard-En.html">
+                <a href="~/Dashboard/Index">
                     <i class="icon-photon home"></i>
                 </a>
             </li>
             <li>
-                <a href="InventoryDepartmentsListEn.html">
+                <a href="~/Inventory/InventoryDepartment/Index">
                     Inventory Departments
                 </a>
             </li>
@@ -65,29 +71,31 @@
 
     </header>
 
-    <form class="form-horizontal" id="validation_form">
+    <form class="form-horizontal" id="InventoryDepartmentForm">
         @Html.HiddenFor(model => model.InventoryDepartment.DepartmentId, new { @id = "DepartmentId" })
         @Html.HiddenFor(model => model.InventoryDepartment.ParentId, new { @id = "ParentId" })
         <div class="container-fluid">
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid nameEn-required">
                 <div class="span3">
                     <label class="control-label" for="nameEn">Department Name</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "nameEn", @class = "" })
-                        @Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameEn, String.Empty, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "nameEn", @class = "toBeDiabled" })
+                        <label id="lblNameEn" class="required"></label>
+                        @*@Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameEn, String.Empty, new { @class = "required" })*@
                     </div>
                 </div>
             </div>
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid nameAr-required">
                 <div class="span3">
                     <label class="control-label" for="nameAr">Department Name arabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameAr, new { @id = "nameAr", @class = "" })
-                        @Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameAr, String.Empty, new { @class = "required" })
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameAr, new { @id = "nameAr", @class = "toBeDiabled" })
+                        <label id="lblNameAr" class="required"></label>
+                        @*@Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameAr, String.Empty, new { @class = "required" })*@
                     </div>
                 </div>
             </div>
@@ -97,13 +105,13 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentColor, new { @id = "color", @class = "", Value = "#FFF8BE" })
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentColor, new { @id = "color", @class = "toBeDiabled", Value = "#FFF8BE" })
                         @*<input type="text" id="color" name="color" value="#FFF8BE" />*@
                         <div id="colorpicker"></div>
                     </div>
                 </div>
             </div>
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid" id="CKEditorDescp">
                 <div class="span3">
                     <label class="control-label" for="description">Description </label>
                 </div>
@@ -113,10 +121,27 @@
                     </div>
                 </div>
             </div>
+            <div class="control-group row-fluid" id="Descp">
+                <div class="span3">
+                    <label class="control-label" for="description">Description </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descpEn" class="toBeDiabled" />
+                    </div>
+                </div>
+            </div>
+            <div id="Edit" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn" id="edit">Edit</button>
+                    </div>
+                </div>
+            </div>
             <div id="SaveNewNode" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="button" class="btn" onclick=" SaveNewNode(event); ">Create</button>
+                        <button type="button" class="btn" onclick="SaveNewNode(event); ">Create</button>
                     </div>
                 </div>
             </div>
@@ -134,15 +159,17 @@
 <script src="~/RTE/ckeditor.js"></script>
 <script type="text/javascript">
     var dir = '@direction';
+    var myTree;
     var inventoryDepartments = '@Html.Raw(Json.Encode(Model.InventoryDepartments))';
     var parsed = JSON.parse(inventoryDepartments);
     $().ready(function () {
+        $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
+        $("#colorpicker").addClass('disableList');
+        $("#CKEditorDescp").hide();
+        $("#Descp").show();
         $('#colorpicker').farbtastic('#color');
-        CKEDITOR.replace('description', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-        });
         if (dir == "ltr") {
-            $("#jstree").jstree({
+            myTree = $("#jstree").jstree({
                 "json_data": {
                     "data": [
                         {
@@ -163,7 +190,7 @@
                 }
             });
         } else {
-            $("#jstree").jstree({
+            myTree = $("#jstree").jstree({
                 "json_data": {
                     "data": [
                         {
@@ -191,7 +218,7 @@
         setTimeout(function () {
             $.each(parsed, function (key, value) {
                 if (value.ParentId != null) {
-                    $('ul li').each(function() {
+                    $('ul li').each(function () {
                         if ($(this).attr('id') == value.ParentId) {
                             parentNode = this;
                         }
@@ -215,10 +242,7 @@
                             "attr": { "id": value.DepartmentId },
                         };
                     }
-                    var elem1 = $('#jstree').jstree("create_node", parentNode, position, newNode, false, false);
-                    //if (value.MenuType == "Content") {
-                    //    elem1.addClass("jstree-leaf");
-                    //}
+                    $('#jstree').jstree("create_node", parentNode, position, newNode, false, false);
                 } else {
                     mainParent = $('#jstree').jstree('get_selected');
                     if (dir == "ltr") {
@@ -243,8 +267,67 @@
                     $('#jstree').jstree("create_node", mainParent, position, newNode, false, false);
                 }
             });
-        }, 1000);
+            $('#jstree').jstree('open_node', '#parentNode');
+        }, 0);
+        var dpId = parseInt('@deptId');
+        setTimeout(function () {
+            if (dpId != 0) {
+                $('#jstree').jstree('open_node', '#' + dpId);
+                $('#jstree').jstree('deselect_all');
+                $('#jstree').jstree('select_node', '#' + dpId);
+                $.each(parsed, function (key, value) {
+                    if (value.DepartmentId == dpId) {
+                        for (name in CKEDITOR.instances) {
+                            CKEDITOR.instances[name].destroy();
+                        }
+                        $("#DepartmentId").val(value.DepartmentId);
+                        $("#nameEn").val(value.DepartmentNameEn);
+                        $("#nameAr").val(value.DepartmentNameAr);
+                        $("#color").val(value.DepartmentColor);
+                        $("#description").val(value.DepartmentDesc);
+                        $("#descpEn").val(value.DepartmentDesc);
+                        $("#ParentId").val(value.ParentId);
+                        AddEdit();
+                        var descpE = $("#descpEn").val();
+                        var regex = /(<([^>]+)>)/ig;
+                        var result = descpE.replace(regex, "");
+                        $("#descpEn").val(result);
+                        $('.panel, .main-content').toggleClass('retracted');
+                    }
+                });
+            }
+        }, 0);
     });
+    $("#edit").click(function (event) {
+        $('.' + 'toBeDiabled' + ':input').attr('disabled', false);
+        $("#CKEditorDescp").show();
+        $("#Descp").hide();
+        $("#SaveNewNode").css("display", "none");
+        $("#UpdateNode").css("display", "block");
+        $("#Edit").css("display", "none");
+        $("#colorpicker").removeClass('disableList');
+        CKEDITOR.replace('description', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+    });
+    function AddEdit() {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("InventoryDepartmentCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            $("#SaveNewNode").css("display", "none");
+            $("#UpdateNode").css("display", "none");
+            $("#Edit").css("display", "none");
+        } else {
+            $("#SaveNewNode").css("display", "none");
+            $("#UpdateNode").css("display", "none");
+            $("#Edit").css("display", "block");
+        }
+    }
     function jsTreeClick(event) {
         var temp = $(event.target).text();
         var text = temp.substring(1, temp.length);
@@ -275,14 +358,19 @@
                 $("#nameAr").val(value.DepartmentNameAr);
                 $("#color").val(value.DepartmentColor);
                 $("#description").val(value.DepartmentDesc);
+                $("#descpEn").val(value.DepartmentDesc);
                 $("#ParentId").val(value.ParentId);
-                CKEDITOR.replace('description', {
-                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                });
             }
         });
-        $("#SaveNewNode").css("display", "none");
-        $("#UpdateNode").css("display", "block");
+        AddEdit();
+        var descpE = $("#descpEn").val();
+        var regex = /(<([^>]+)>)/ig;
+        var result = descpE.replace(regex, "");
+        $("#descpEn").val(result);
+        $("#CKEditorDescp").hide();
+        $("#Descp").show();
+        $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
+        $("#colorpicker").addClass('disableList');
         return true;
     }
     function AddNewNode() {
@@ -294,20 +382,43 @@
         for (name in CKEDITOR.instances) {
             CKEDITOR.instances[name].destroy();
         }
+        $('.' + 'toBeDiabled' + ':input').attr('disabled', false);
+        $("#colorpicker").removeClass('disableList');
         $("#nameEn").val("");
         $("#nameAr").val("");
         $("#color").val("#FFF8BE");
         $("#description").val("");
         $("#ParentId").val(parseInt($("#DepartmentId").val()));
         $("#DepartmentId").val(0);
+        $("#CKEditorDescp").show();
+        $("#Descp").hide();
         CKEDITOR.replace('description', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
         $("#UpdateNode").css("display", "none");
         $("#SaveNewNode").css("display", "block");
+        $("#Edit").css("display", "none");
         return true;
     }
     function SaveNewNode(event) {
+        if ($("#nameEn").val() == "" || $("#nameEn").val() == 0) {
+            $("#lblNameEn").text("Department Name (english) is required");
+            $('html,body').animate({
+                scrollTop: $(".nameEn-required").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#lblNameEn").text("");
+        }
+        if ($("#nameAr").val() == "" || $("#nameAr").val() == 0) {
+            $("#lblNameAr").text("Department Name (arabic) is required");
+            $('html,body').animate({
+                scrollTop: $(".nameAr-required").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#lblNameAr").text("");
+        }
         var parent = parseInt($('#ParentId').val());
         if (isNaN(parent)) {
             parent = 0;

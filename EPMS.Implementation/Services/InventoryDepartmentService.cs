@@ -21,7 +21,7 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<InventoryDepartment> GetAll()
         {
-            return departmentRepository.GetAll();
+            return departmentRepository.GetAllDepartments();
         }
 
         public InventoryDepartment FindInventoryDepartmentById(long id)

@@ -170,6 +170,7 @@
     <Compile Include="Repositories\QuickLaunchItemRepository.cs" />
     <Compile Include="Repositories\QuotationItemRepository.cs" />
     <Compile Include="Repositories\QuotationRepository.cs" />
+    <Compile Include="Repositories\RFIItemRepository.cs" />
     <Compile Include="Repositories\RFIRepository.cs" />
     <Compile Include="Repositories\SizeRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
@@ -190,9 +191,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="BaseRepository\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </None>
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />
     <None Include="fonts\glyphicons-halflings-regular.eot" />

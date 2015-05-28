@@ -71,6 +71,7 @@
     <Compile Include="IServices\IInventoryDepartmentService.cs" />
     <Compile Include="IServices\IInventoryItemService.cs" />
     <Compile Include="IServices\IItemImageService.cs" />
+    <Compile Include="IServices\IItemVariationService.cs" />
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
+    <Compile Include="Repository\IRFIItemRepository.cs" />
     <Compile Include="Repository\IRFIRepository.cs" />
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />

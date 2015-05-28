@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="51536fb8660843648fcc2dd0da59b021" Name="Diagram1" ZoomLevel="75">
+      <Diagram DiagramId="51536fb8660843648fcc2dd0da59b021" Name="Diagram1">
         <EntityTypeShape EntityType="EPMSProjectModel.Aisle" Width="1.5" PointX="15.75" PointY="46.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.Allowance" Width="1.5" PointX="7.5" PointY="39.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.ApplicantExperience" Width="1.5" PointX="12.75" PointY="33.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ApplicantQualification" Width="2" PointX="12.75" PointY="50.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ApplicantQualification" Width="1.5" PointX="12.75" PointY="50.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.AspNetRole" Width="1.5" PointX="5.25" PointY="37.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="51.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="36.375" IsExpanded="true" />
@@ -29,7 +29,7 @@
         <EntityTypeShape EntityType="EPMSProjectModel.InventoryItem" Width="1.5" PointX="13.5" PointY="64.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.ItemImage" Width="1.5" PointX="18" PointY="59.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.ItemVariation" Width="1.5" PointX="15.75" PointY="61.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.JobApplicant" Width="2" PointX="10.5" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.JobApplicant" Width="1.5" PointX="10.5" PointY="39.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.JobOffered" Width="1.5" PointX="5.25" PointY="49.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.JobTitle" Width="1.5" PointX="3" PointY="45.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.JobTitleHistory" Width="1.5" PointX="5.25" PointY="54.5" IsExpanded="true" />

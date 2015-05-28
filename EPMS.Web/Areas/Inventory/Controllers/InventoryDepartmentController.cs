@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -8,6 +9,7 @@ using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryDepartment;
 using EPMS.Web.ModelMappers;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -32,26 +34,41 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Public
 
         #region Index
+        [SiteAuthorize(PermissionKey = "InventoryDepartmentIndex")]
         public ActionResult Index()
         {
-            return View(new InventoryDepartmentViewModel
-            {
-                InventoryDepartments = departmentService.GetAll().Select(x => x.CreateFromServerToClient())
-            });
+            var inventoryDepartments = departmentService.GetAll().ToList();
+            InventoryDepartmentViewModel viewModel = new InventoryDepartmentViewModel();
+            viewModel.InventoryDepartments = inventoryDepartments.Select(idp => idp.CreateFromServerToClient());
+            viewModel.Departments =
+                inventoryDepartments.Where(dp => dp.ParentId == null).Select(dp => dp.CreateFromServerToClientLv());
+            viewModel.Sections =
+                inventoryDepartments.Where(sec => sec.ParentDepartment != null && sec.ParentDepartment.ParentId == null)
+                    .Select(sec => sec.CreateFromServerToClientLv());
+            var sections = MakeSectionSubSections(viewModel.Sections);
+            viewModel.Sections = sections;
+            return View(viewModel);
         }
         #endregion
 
         #region Create
-
+        [SiteAuthorize(PermissionKey = "InventoryDepartmentCreate,InventoryDepartmentDetail")]
         public ActionResult Create(long? id)
         {
-            InventoryDepartmentViewModel departmentViewModel = new InventoryDepartmentViewModel
-            {
-                InventoryDepartments = departmentService.GetAll().Select(dp => dp.CreateFromServerToClient()).ToList()
-            };
+            InventoryDepartmentViewModel departmentViewModel = new InventoryDepartmentViewModel();
+            departmentViewModel.InventoryDepartments =
+                departmentService.GetAll().Select(dp => dp.CreateFromServerToClient()).ToList();
             if (id != null)
             {
-                departmentViewModel.InventoryDepartment = departmentService.FindInventoryDepartmentById((long)id).CreateFromServerToClient();
+                ViewBag.InventoryDepartmentId = id;
+            }
+            if (Request.Form["Departments"] != null)
+            {
+                departmentViewModel.RequestFrom = "Departments";
+            }
+            if (Request.Form["Section"] != null)
+            {
+                departmentViewModel.RequestFrom = "Departments";
             }
             return View(departmentViewModel);
         }
@@ -97,6 +114,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     var descp = description.Replace("\n", "");
                     descp = descp.Replace("\t", "");
                     descp = descp.Replace("\r", "");
+                    descp = descp.Replace("\"", "'");
                     model.DepartmentDesc = descp;
                     model.RecCreatedBy = User.Identity.GetUserId();
                     model.RecCreatedDt = DateTime.Now;
@@ -152,6 +170,119 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return Json(exception.Message, JsonRequestBehavior.AllowGet);
             }
             return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Sections SubSections
+
+        IEnumerable<InventoryDepartment> MakeSectionSubSections(IEnumerable<InventoryDepartment> Sections)
+        {
+            List<InventoryDepartment> listOfNodes = new List<InventoryDepartment>();
+            List<InventoryDepartment> listOfChilds = new List<InventoryDepartment>();
+            foreach (var inventoryDepartment in Sections)
+            {
+                if (!inventoryDepartment.InventoryDepartments.Any())
+                {
+                    ParentNodesSection nodes = new ParentNodesSection { TextEn = "None", TextAr = "None", Href = "" };
+                    inventoryDepartment.ParentNodesSections.Add(nodes);
+                    listOfChilds.Add(inventoryDepartment);
+                }
+                else
+                {
+                    ParentNodesSection nodes = new ParentNodesSection { TextEn = "None", TextAr = "None", Href = "" };
+                    inventoryDepartment.ParentNodesSections.Add(nodes);
+                    listOfChilds.Add(inventoryDepartment);
+                    listOfNodes.Add(inventoryDepartment);
+                }
+            }
+            for (int i = 0; i < listOfNodes.Count; i++)
+            {
+                for (int j = 0; j < listOfNodes[i].InventoryDepartments.Count(); j++)
+                {
+                    var childNode = listOfNodes[i].InventoryDepartments[j];
+                    if (!childNode.InventoryDepartments.Any())
+                    {
+                        var parent = childNode.ParentSection;
+                        while (parent.ParentId != null)
+                        {
+                            if (parent.DepartmentNameEn != null)
+                            {
+                                ParentNodesSection node = new ParentNodesSection
+                                {
+                                    TextEn = parent.DepartmentNameEn,
+                                    TextAr = parent.DepartmentNameAr,
+                                    Href = parent.DepartmentId.ToString()
+                                };
+                                childNode.ParentNodesSections.Add(node);
+                            }
+                            parent = parent.ParentSections;
+                        }
+                        listOfChilds.Add(childNode);
+                    }
+                    else
+                    {
+                        //childNode.NoOfSubSections = childNode.ParentSection.ParentSections == null ? 0 : childNode.InventoryDepartments.Count;
+                        var parent = childNode.ParentSection;
+                        while (parent.ParentId != null)
+                        {
+                            if (parent.DepartmentNameEn != null)
+                            {
+                                ParentNodesSection node = new ParentNodesSection
+                                {
+                                    TextEn = parent.DepartmentNameEn,
+                                    TextAr = parent.DepartmentNameAr,
+                                    Href = parent.DepartmentId.ToString()
+                                };
+                                childNode.ParentNodesSections.Add(node);
+                            }
+                            parent = parent.ParentSections;
+                        }
+                        listOfChilds.Add(childNode);
+                        listOfNodes.Add(childNode);
+                    }
+                }
+            }
+
+            return listOfChilds;
+        }
+        #endregion
+
+        #region Count SubNodes
+
+        IList<InventoryDepartment> CountSubNodes(IList<InventoryDepartment> nodes)
+        {
+            IList<InventoryDepartment> retVal = new List<InventoryDepartment>();
+
+            //foreach (var inventoryDepartment in nodes)
+            //{
+            //    inventoryDepartment.Color = "white";
+            //}
+            //IList<InventoryDepartment> listOfSubNodes = new List<InventoryDepartment>();
+            //foreach (var inventoryDepartment in nodes)
+            //{
+            //    var currNode = inventoryDepartment;
+            //    int nodeCount = 0;
+            //    foreach (var department in currNode.InventoryDepartments)
+            //    {
+            //        listOfSubNodes.Add(department);
+            //    }
+            //    while (currNode != null)
+            //    {
+            //        if (currNode.Color != "grey")
+            //        {
+            //            currNode.Color = "gery";
+            //            nodeCount += currNode.InventoryDepartments.Count;
+                        
+            //            currNode = 
+            //        }
+            //        else
+            //        {
+            //            currNode = null;
+            //        }
+            //    }
+            //}
+            return retVal;
         }
 
         #endregion
