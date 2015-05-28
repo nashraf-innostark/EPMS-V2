@@ -120,7 +120,6 @@
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
     <Compile Include="DomainModels\Color.cs" />
-    <Compile Include="DomainModels\IItemVariationService.cs" />
     <Compile Include="DomainModels\InventoryDepartment.cs" />
     <Compile Include="DomainModels\CompanyBankDetail.cs" />
     <Compile Include="DomainModels\CompanyDocumentDetail.cs" />
@@ -244,6 +243,7 @@
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
+    <Compile Include="ResponseModels\ItemVariationResponse.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
@@ -267,7 +267,7 @@
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
-    <Compile Include="ResponseModels\SaveVendorResponse.cs" />
+    <Compile Include="ResponseModels\VendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
   </ItemGroup>
   <ItemGroup>

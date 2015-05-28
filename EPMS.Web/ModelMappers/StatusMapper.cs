@@ -6,7 +6,7 @@ namespace EPMS.Web.ModelMappers
 {
     public static class StatusMapper
     {
-        public static WebModels.Status CreateFromServerToClent(this DomainModels.Status source)
+        public static WebModels.Status CreateFromServerToClient(this DomainModels.Status source)
         {
             return new WebModels.Status
             {

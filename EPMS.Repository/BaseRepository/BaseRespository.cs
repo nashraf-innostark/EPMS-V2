@@ -112,7 +112,15 @@ namespace EPMS.Repository.BaseRepository
         /// </summary>
         public void SaveChanges()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception exp)
+            {
+                string message = exp.Message;
+                throw;
+            }            
         }
         /// <summary>
         /// Delete an entry

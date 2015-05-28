@@ -179,7 +179,7 @@
                             <th style="width:4%">Delete</th>
                         </tr>
                     </thead>
-                    <tbody class="qouteAdd">
+                    <tbody class="qouteAdd" id="vitemdetail">
                         @if (Model.Vendor.VendorItems.Any())
                         {
                             var serial = 0;
@@ -187,6 +187,7 @@
                             {
                                 serial = serial + 1;
                                 <tr>
+                                    <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
                                     <td>
                                         <div class="control-group row-fluid">
                                             <div class="span1">
@@ -209,6 +210,7 @@
                         else
                         {
                             <tr>
+                                <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
                                 <td>
                                     <div class="control-group row-fluid">
                                         <div class="span1">
@@ -414,7 +416,7 @@
                     }
                     y++;
                 });
-                var html = '<tr>' +
+                var html = '<tr>' + '<td style="display:none"><input name="RfiItem.Index" type="hidden" value=' + itemsCount + ' /></td>' +
                     '<td >' +
                     '<div class="control-group row-fluid">' +
                     '<div class="span1">' +
@@ -424,7 +426,7 @@
                     '</div>' +
                     '</td>' +
                     '<td >' +
-                    '<textarea rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails">' + t1 + '</textarea>' +
+                    '<textarea rows="2" class="auto-resize" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails">' + t1 + '</textarea>' +
                     '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                     '</td>' +
                     '<td class="delete">' +
@@ -456,7 +458,9 @@
     });
 
     $('.trAdder').on("click", function (event) {
-        var html = ' <tr>' +
+        var index = $("#vitemdetail").children("tr").length;
+        itemsCount = itemsCount + 1;
+        var html = ' <tr>' + '<td style="display:none"><input name="Vendor.VendorItems.Index" type="hidden" value=' + index + ' /></td>' +
             '<td >' +
             '<div class="control-group row-fluid">' +
             '<div class="span1">' +
@@ -466,7 +470,7 @@
             '</div>' +
             '</td>' +
             '<td >' +
-            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails">' +
+            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + index + '].ItemDetails">' +
             '</textarea>' +
             '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
             '</td>' +
@@ -476,22 +480,31 @@
             '</tr>';
 
         $('.qouteAdd').append(html);
-        itemsCount = itemsCount +1;
         iExcelData = false;
         isUpdate = false;
         activateSerial();
-        //reActivateDelete();
-        event.PreventDefault();
+        reActivateDelete();
+        event.preventDefault();
     });
 
+    function reActivateDelete() {
+        $('.deleteRow').on("click", function () {
+            var count = $('.qouteAdd tr').length;
+            if (count > 1) {
+                $(this).parent().parent().remove();
+            }
+            activateSerial();
+        });
+    }
+
     $('.deleteRow').on("click", function () {
+        debugger;
         var count = $('.qouteAdd tr').length;
         if (count > 1) {
             $(this).parent().parent().remove();
-            itemsCount = itemsCount - 1;
         }
         activateSerial();
-        setControlID();
+        //setControlID();
     });
 
     function activateSerial() {
@@ -507,7 +520,6 @@
     function setControlID() {
         var textVarList = $('.vendorItem');
         var counter = $('.qouteAdd tr').length;
-        debugger
         for (var i = 0; i < textVarList.length; i++) {
             $(textVarList[i]).attr('name', "Vendor.VendorItems[" + i + "].ItemDetails");
         }

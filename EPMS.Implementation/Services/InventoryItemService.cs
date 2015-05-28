@@ -65,13 +65,19 @@ namespace EPMS.Implementation.Services
         {
             #region Add
 
-            SaveInventoryItem(itemToSave.InventoryItem);
+            if (itemToSave.InventoryItem.ItemId > 0)
+            {
+                UpdateInventoryItem(itemToSave.InventoryItem);
+            }
 
             #endregion
 
             #region Update
 
-            UpdateInventoryItem(itemToSave.InventoryItem);
+            else
+            {
+                SaveInventoryItem(itemToSave.InventoryItem);
+            }
 
             #endregion
 
