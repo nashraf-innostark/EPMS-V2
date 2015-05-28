@@ -3,7 +3,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.IServices
 {
-    public interface  IWarehouseService
+    public interface IWarehouseService
     {
         IEnumerable<Warehouse> GetAll();
         Warehouse FindWarehouseById(long id);

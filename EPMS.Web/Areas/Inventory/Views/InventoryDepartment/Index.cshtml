@@ -2,7 +2,7 @@
 
 @{
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = "Inventory Department's Page";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryDepartment.PGTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var i = 0;
 }
@@ -16,15 +16,14 @@
             </a>
         </li>
         <li>
-            Inventory System Departments
+            @EPMS.Web.Resources.Inventory.InventoryDepartment.BCTitleIndex
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Inventory System Departments</small></h2>
-    @*<h3><small><a href="~/Inventory/InventoryDepartment/Create">Add New</a></small></h3>*@
+    <h2><small>@EPMS.Web.Resources.Inventory.InventoryDepartment.BCTitleIndex</small></h2>
 </header>
 <!-- Page heading ends -->
 <!--Notifications begin-->
@@ -34,7 +33,7 @@
     <div class="panel-content filler">
         <div class="panel-logo"></div>
         <div class="panel-header">
-            <h1><small>Inventory Department</small></h1>
+            <h1><small>@EPMS.Web.Resources.Inventory.InventoryDepartment.InventoryDepartmentsJSTreeTitle</small></h1>
             @*<button type="submit" class="btn btn-mini"><i class="icon-photon move_alt2"></i> Add New</button>*@
         </div>
         <div class="panel-search container-fluid">
@@ -62,22 +61,22 @@
         <!--Tabs begin-->
         <div class="control-group row-fluid span-inset">
             <ul class="nav nav-tabs" id="myTab">
-                <li class="active"><a data-toggle="tab" href="#tab-Departments">Departments</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-Sections">Sections</a></li>
+                <li class="active"><a data-toggle="tab" href="#tab-Departments">@EPMS.Web.Resources.Inventory.InventoryDepartment.TabDepartments</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-Sections">@EPMS.Web.Resources.Inventory.InventoryDepartment.TabSections</a></li>
             </ul>
             <div class="tab-content">
                 <div id="tab-Departments" class="tab-pane fade active in">
-                    <h3> <small><a href="~/Inventory/InventoryDepartment/Create" name="Departments">Add New Department</a></small></h3>
+                    <h3> <small><a href="~/Inventory/InventoryDepartment/Create">@EPMS.Web.Resources.Inventory.InventoryDepartment.AddNewDepartment</a></small></h3>
                     <div class="container-fluid">
                         <table class="table table-striped table-responsive" id="tableSortableResMed">
                             <thead>
                                 <tr>
-                                    <th class="center"> Serial</th>
-                                    <th class="center"> Name</th>
-                                    <th class="center"> Color</th>
-                                    <th class="center"> Description</th>
-                                    <th class="center"> Number of Sections</th>
-                                    <th class="center"> Number of Sub-Sections</th>
+                                    <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptSerial</th>
+                                    <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptName</th>
+                                    <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptColor</th>
+                                    <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptDescription</th>
+                                    <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptNumberOfSections</th>
+                                    <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptNumberOfSubSections</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,18 +103,18 @@
                     </div>
                 </div>
                 <div id="tab-Sections" class="tab-pane fade">
-                    <h3> <small><a href="~/Inventory/InventoryDepartment/Create" name="Section">Add New Section</a></small></h3>
+                    <h3> <small><a href="~/Inventory/InventoryDepartment/Section">@EPMS.Web.Resources.Inventory.InventoryDepartment.AddNewSection</a></small></h3>
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span12">
                                 <table class="table table-striped table-responsive" id="tableSortableResMed2">
                                     <thead>
                                         <tr>
-                                            <th class="center">Parent Department</th>
-                                            <th class="center">Parent Section</th>
-                                            <th class="center">Name</th>
-                                            <th class="center"> Description</th>
-                                            <th class="center">Number of Sub-Sections</th>
+                                            <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectParentDepartment</th>
+                                            <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectParentSection</th>
+                                            <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectName</th>
+                                            <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectDescription</th>
+                                            <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.NumberOfSubSections</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -175,6 +174,9 @@
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
+            },
+            "fnDrawCallback": function (oSettings) {
+                subItemsOfDepartments();
             }
         });
         $('#tableSortableResMed2').dataTable({

@@ -60,8 +60,6 @@
         <EntityTypeShape EntityType="EPMSProjectModel.UserPrefrence" Width="1.5" PointX="9.75" PointY="61.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.Vendor" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.VendorItem" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="13.5" PointY="46.625" IsExpanded="true" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Aisle_Warehouse" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_Section_Aisle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_Allowance_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_ApplicantExperience_JobApplicants" ManuallyRouted="false" />
@@ -91,7 +89,6 @@
         <AssociationConnector Association="EPMSProjectModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.FK_InventoryDepartment_InventoryDepartment" ManuallyRouted="false" />
@@ -121,12 +118,15 @@
         <AssociationConnector Association="EPMSProjectModel.ItemManufacturer" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.ItemSize" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.ItemStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSProjectModel.PreRequisitTask" ManuallyRouted="false" />
         <EntityTypeShape EntityType="EPMSProjectModel.Menu" Width="1.75" PointX="0.75" PointY="11" />
         <AssociationConnector Association="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
         <AssociationConnector Association="EPMSProjectModel.FK_QuickLaunchItems_Menu" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="21.75" PointY="51" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Aisle_Warehouse" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
+        <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

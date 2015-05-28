@@ -25,6 +25,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ParentSection = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new Models.InventorySections(),
             };
         }
 
