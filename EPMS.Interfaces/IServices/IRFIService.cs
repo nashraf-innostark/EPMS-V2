@@ -13,6 +13,6 @@ namespace EPMS.Interfaces.IServices
         bool AddRFI(RFI rfi);
         bool UpdateRFI(RFI rfi);
         void DeleteRFI(RFI rfi);
-        RFIResponse LoadRfiResponseData(long? id);
+        RFIResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders);
     }
 }

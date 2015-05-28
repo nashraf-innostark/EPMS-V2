@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RFI;
 using Microsoft.AspNet.Identity;
 
@@ -42,13 +43,31 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         // GET: Inventory/RFI/Create
         public ActionResult Create(long? id)
         {
-            var rfiresponse = rfiService.LoadRfiResponseData(id);
-            RFIViewModel rfiViewModel =new RFIViewModel
+            bool loadCustomersAndOrders = CheckHasCustomerModule();
+            var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders);
+            RFIViewModel rfiViewModel = new RFIViewModel();
+            if (rfiresponse.Rfi != null)
             {
-                Rfi = {RecCreatedByName = Session["FullName"].ToString()},
-                ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList
-            };
-            CheckHasCustomerModule(rfiViewModel);
+                rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
+                rfiViewModel.Rfi.RecCreatedByName = rfiresponse.RecCreatedByName;
+                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient());
+            }
+            else
+            {
+                rfiViewModel.Rfi = new RFI
+                {
+                    RecCreatedByName = Session["FullName"].ToString()
+                };
+            }
+            if (loadCustomersAndOrders)
+            {
+                rfiViewModel.Customers = rfiresponse.Customers.Select(x => x.CreateForDashboard());
+                rfiViewModel.Orders = rfiresponse.Orders.Select(x => x.CreateForDashboard());
+                //set customerId
+                if (rfiViewModel.Rfi.OrderId>0)
+                    rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
+            }
+            rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
             return View(rfiViewModel);
         }
 
@@ -63,7 +82,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rfiViewModel.Rfi.RecCreatedDate = DateTime.Now;
                 rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                 rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
-                var rfiToBeSaved = rfiViewModel.CreateRFIClientToServer();
+                var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
                 if(rfiService.SaveRFI(rfiToBeSaved))
                 {
                     //success
@@ -76,7 +95,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View();
             }
         }
-        private void CheckHasCustomerModule(RFIViewModel viewModel)
+        private bool CheckHasCustomerModule()
         {
             // check license
             var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
@@ -85,16 +104,13 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             string[] Modules = splitLicenseKey[4].Split(';');
             if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
             {
-                var customers = customerService.GetAll();
-                var orders = ordersService.GetAll();
-                viewModel.Customers = customers.Select(x => x.CreateForDashboard());
-                viewModel.Orders = orders.Select(x => x.CreateForDashboard());
-               
                 ViewBag.HasModule = true;
+                return true;
             }
             else
             {
                 ViewBag.HasModule = false;
+                return false;
             }
         }
         // GET: Inventory/RFI/Edit/5
