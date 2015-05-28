@@ -3,9 +3,9 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    int i = 0;
 }
-
-
 
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -19,12 +19,14 @@
         </li>
     </ul>
 </div>
-
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>Inventory Warehouse List</small></h2>
     <h3><small><a href="">Create New Warehouse</a></small></h3>
 </header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 
 <form class="form-horizontal">
     <div class="container-fluid">
@@ -41,30 +43,34 @@
                             <th>Is Full</th>
                             <th>Number of Aisles</th>
                             <th>Number of Sections</th>
-                            <th>Number of shalves</th>
+                            <th>Number of Shalves</th>
                             <th>Number of Sectoins in Shalves</th>
                             <th>Number of Spaces</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td> <a href="InventoryWarehouseView.html">War101</a></td>
-                            <td>
-                                Ali Ramadan
-                            </td>
-                            <td>
-                                2000 Squar Meters
-                            </td>
-                            <td>No</td>
-                            <td>
-                                20
-                            </td>
-                            <td class="center">50</td>
-                            <td class="center">20</td>
-                            <td class="center">20</td>
-                            <td class="center">5</td>
-                        </tr>
+                        @foreach (var warehouse in Model.Warehouses)
+                        {
+                            <tr class="gradeX">
+                                <td>@( i += 1)</td>
+                                <td> <a href="InventoryWarehouseView.html">@warehouse.WarehouseNumber</a></td>
+                                <td>@warehouse.EmployeeNameEn</td>
+                                <td>@warehouse.WarehouseSize</td>
+                                @if (warehouse.IsFull)
+                                {
+                                    <td>Yes</td>
+                                }
+                                else
+                                {
+                                    <td>No</td>
+                                }
+                                <td class="center">@warehouse.NoOfAisles</td>
+                                <td class="center">@warehouse.NoOfSections</td>
+                                <td class="center">@warehouse.NoOfShalves</td>
+                                <td class="center">@warehouse.NoOfSectoinsInShalves</td>
+                                <td class="center">@warehouse.NoOfSpaces</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

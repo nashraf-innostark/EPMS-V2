@@ -212,6 +212,7 @@
     <Compile Include="RequestModels\RFIServerViewModel.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
+    <Compile Include="RequestModels\WarehouseRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

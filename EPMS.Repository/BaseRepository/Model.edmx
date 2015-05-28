@@ -1015,6 +1015,10 @@
           <Property Name="WarehouseNumber" Type="nvarchar" MaxLength="200" />
           <Property Name="WarehouseManager" Type="bigint" />
           <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
+          <Property Name="NoOfAisles" Type="bigint" />
+          <Property Name="NoOfSections" Type="bigint" />
+          <Property Name="NoOfShalves" Type="bigint" />
+          <Property Name="NoOfSectoinsInShalves" Type="bigint" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -4356,6 +4360,10 @@
           <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseManager" Type="Int64" />
           <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfAisles" Type="Int64" />
+          <Property Name="NoOfSections" Type="Int64" />
+          <Property Name="NoOfShalves" Type="Int64" />
+          <Property Name="NoOfSectoinsInShalves" Type="Int64" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -5467,6 +5475,10 @@
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="NoOfSectoinsInShalves" ColumnName="NoOfSectoinsInShalves" />
+                <ScalarProperty Name="NoOfShalves" ColumnName="NoOfShalves" />
+                <ScalarProperty Name="NoOfSections" ColumnName="NoOfSections" />
+                <ScalarProperty Name="NoOfAisles" ColumnName="NoOfAisles" />
                 <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
                 <ScalarProperty Name="WarehouseManager" ColumnName="WarehouseManager" />
                 <ScalarProperty Name="WarehouseNumber" ColumnName="WarehouseNumber" />
