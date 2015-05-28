@@ -137,35 +137,43 @@
                         </tr>
                     </thead>
                     <tbody class="qouteAdd" id="RFIItemsTableBody">
-                        <tr data-id="0">
-                            <td style='display:none'>
-                                <input name='RfiItem.Index' type='hidden' value='0' />
-                                <input name='RfiItem[0].IsItemDescription' id='RfiItem_0_IsItemDescription' type='hidden' />
-                                <input name='RfiItem[0].IsItemSKU' id='RfiItem_0_IsItemSKU' type='hidden' />
-                                <input name='RfiItem[0].ItemVariationId' id='RfiItem_0_ItemVariationId' type='hidden' />
-                            </td>
-                            <td>
-                                <div class="control-group row-fluid">
-                                    <div class="span1">
-                                        <label class="control-label serialNumber">1</label>
+                        @if (Model.Rfi.RFIId > 0)
+                        {
+
+                        }
+                        else
+                        {
+                            <tr data-id="0">
+                                <td style='display:none'>
+                                    <input name='RfiItem.Index' type='hidden' value='0' />
+                                    <input name='RfiItem[0].IsItemDescription' id='RfiItem_0_IsItemDescription' type='hidden' />
+                                    <input name='RfiItem[0].IsItemSKU' id='RfiItem_0_IsItemSKU' type='hidden' />
+                                    <input name='RfiItem[0].ItemVariationId' id='RfiItem_0_ItemVariationId' type='hidden' />
+                                </td>
+                                <td>
+                                    <div class="control-group row-fluid">
+                                        <div class="span1">
+                                            <label class="control-label serialNumber">1</label>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <textarea rows="2" class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RfiItem[0].ItemDetails"></textarea>
-                                <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemDetails" data-valmsg-replace="true"></span>
-                            </td>
-                            <td class="quantity">
-                                <input class="n1" type="text" name="RfiItem[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
-                                <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemQty" data-valmsg-replace="true"></span>
-                            </td>
+                                </td>
+                                <td>
+                                    <textarea rows="2" class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RfiItem[0].ItemDetails"></textarea>
+                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemDetails" data-valmsg-replace="true"></span>
+                                </td>
+                                <td class="quantity">
+                                    <input class="n1" type="text" name="RfiItem[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                    <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemQty" data-valmsg-replace="true"></span>
+                                </td>
 
 
-                            <td class="delete">
-                                <i class="icon-photon minus deleteRow"></i>
-                            </td>
-                        </tr>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow"></i>
+                                </td>
+                            </tr>
+                        }
+                        
                     </tbody>
                 </table>
             </div>
