@@ -14,22 +14,26 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
+
+                NotesE = source.Rfi.NotesE,
+                NotesA = source.Rfi.NotesA,
+
                 RecCreatedBy = source.Rfi.RecCreatedBy,
                 RecCreatedDate = source.Rfi.RecCreatedDate,
                 RecUpdatedBy = source.Rfi.RecCreatedBy,
                 RecUpdatedDate = source.Rfi.RecUpdatedDate,
 
-                RFIItems = source.RfiItem.Select(x => x.CreateRfiItemClientToServer(source.Rfi.RecCreatedBy, source.Rfi.RecCreatedDate, source.Rfi.RecUpdatedDate)).ToList()
+                RFIItems = source.RfiItem.Select(x => x.CreateRfiItemClientToServer(source.Rfi.RFIId, source.Rfi.RecCreatedBy, source.Rfi.RecCreatedDate, source.Rfi.RecUpdatedDate)).ToList()
             };
             return rfi;
         }
 
-        public static EPMS.Models.DomainModels.RFIItem CreateRfiItemClientToServer(this RFIItem source, string createdBy, DateTime createdDate, DateTime updatedDate)
+        public static EPMS.Models.DomainModels.RFIItem CreateRfiItemClientToServer(this RFIItem source,long rfiId, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
             var rfiItem = new EPMS.Models.DomainModels.RFIItem
             {
                 RFIItemId = source.RFIItemId,
-                RFIId = source.RFIId,
+                RFIId = rfiId,
                 ItemVariationId = source.ItemVariationId,
                 IsItemDescription = source.IsItemDescription,
                 IsItemSKU = source.IsItemSKU,
@@ -52,6 +56,10 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,
+
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecCreatedBy,

@@ -882,6 +882,8 @@
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="NotesA" Type="nvarchar(max)" />
+          <Property Name="NotesE" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="RFIItem">
           <Key>
@@ -1013,6 +1015,14 @@
           <Property Name="WarehouseNumber" Type="nvarchar" MaxLength="200" />
           <Property Name="WarehouseManager" Type="bigint" />
           <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
+          <Property Name="NoOfAisles" Type="bigint" />
+          <Property Name="NoOfSections" Type="bigint" />
+          <Property Name="NoOfShalves" Type="bigint" />
+          <Property Name="NoOfSectoinsInShalves" Type="bigint" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
           <Property Name="IsFull" Type="bit" Nullable="false" />
           <Property Name="WarehouseSize" Type="nvarchar" MaxLength="500" />
           <Property Name="NoOfAisles" Type="bigint" />
@@ -1020,10 +1030,6 @@
           <Property Name="NoOfShalves" Type="bigint" />
           <Property Name="NoOfSectoinsInShalves" Type="bigint" />
           <Property Name="NoOfSpaces" Type="bigint" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Aisle_Warehouse">
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
@@ -4277,6 +4283,8 @@
           <NavigationProperty Name="AspNetUser" Relationship="EPMSProjectModel.FK_RFI_AspNetUsers" FromRole="RFI" ToRole="AspNetUser" />
           <NavigationProperty Name="Order" Relationship="EPMSProjectModel.FK_RFI_Orders" FromRole="RFI" ToRole="Order" />
           <NavigationProperty Name="RFIItems" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFI" ToRole="RFIItem" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RFIItem">
           <Key>
@@ -4352,6 +4360,14 @@
           <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseManager" Type="Int64" />
           <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfAisles" Type="Int64" />
+          <Property Name="NoOfSections" Type="Int64" />
+          <Property Name="NoOfShalves" Type="Int64" />
+          <Property Name="NoOfSectoinsInShalves" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsFull" Type="Boolean" Nullable="false" />
           <Property Name="WarehouseSize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="NoOfAisles" Type="Int64" />
@@ -4359,10 +4375,6 @@
           <Property Name="NoOfShalves" Type="Int64" />
           <Property Name="NoOfSectoinsInShalves" Type="Int64" />
           <Property Name="NoOfSpaces" Type="Int64" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Aisles" Relationship="EPMSProjectModel.FK_Aisle_Warehouse" FromRole="Warehouse" ToRole="Aisle" />
           <NavigationProperty Name="Employee" Relationship="EPMSProjectModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
           <NavigationProperty Name="ItemVariations" Relationship="EPMSProjectModel.ItemWarehouse" FromRole="Warehouse" ToRole="ItemVariation" />
@@ -5419,6 +5431,8 @@
           <EntitySetMapping Name="RFIs">
             <EntityTypeMapping TypeName="EPMSProjectModel.RFI">
               <MappingFragment StoreEntitySet="RFI">
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
                 <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
                 <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
@@ -5450,10 +5464,6 @@
           <EntitySetMapping Name="Warehouses">
             <EntityTypeMapping TypeName="EPMSProjectModel.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="NoOfSpaces" ColumnName="NoOfSpaces" />
                 <ScalarProperty Name="NoOfSectoinsInShalves" ColumnName="NoOfSectoinsInShalves" />
                 <ScalarProperty Name="NoOfShalves" ColumnName="NoOfShalves" />
@@ -5461,6 +5471,14 @@
                 <ScalarProperty Name="NoOfAisles" ColumnName="NoOfAisles" />
                 <ScalarProperty Name="WarehouseSize" ColumnName="WarehouseSize" />
                 <ScalarProperty Name="IsFull" ColumnName="IsFull" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="NoOfSectoinsInShalves" ColumnName="NoOfSectoinsInShalves" />
+                <ScalarProperty Name="NoOfShalves" ColumnName="NoOfShalves" />
+                <ScalarProperty Name="NoOfSections" ColumnName="NoOfSections" />
+                <ScalarProperty Name="NoOfAisles" ColumnName="NoOfAisles" />
                 <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
                 <ScalarProperty Name="WarehouseManager" ColumnName="WarehouseManager" />
                 <ScalarProperty Name="WarehouseNumber" ColumnName="WarehouseNumber" />

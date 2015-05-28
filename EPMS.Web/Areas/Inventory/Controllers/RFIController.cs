@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Web.ModelMappers;
 using System.Configuration;
@@ -50,7 +51,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
                 rfiViewModel.Rfi.RecCreatedByName = rfiresponse.RecCreatedByName;
-                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient());
+                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient()).ToList();
             }
             else
             {
@@ -58,6 +59,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     RecCreatedByName = Session["FullName"].ToString()
                 };
+                rfiViewModel.RfiItem = new List<RFIItem>();
             }
             if (loadCustomersAndOrders)
             {
@@ -77,11 +79,20 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                rfiViewModel.Rfi.RecCreatedBy = User.Identity.GetUserId();
-                rfiViewModel.Rfi.RecCreatedDate = DateTime.Now;
-                rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
-                rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                if (rfiViewModel.Rfi.RFIId > 0)
+                {
+                    rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
+                    rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                }
+                else
+                {
+                    rfiViewModel.Rfi.RecCreatedBy = User.Identity.GetUserId();
+                    rfiViewModel.Rfi.RecCreatedDate = DateTime.Now;
+
+                    rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
+                    rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                }
+                
                 var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
                 if(rfiService.SaveRFI(rfiToBeSaved))
                 {
@@ -104,12 +115,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             string[] Modules = splitLicenseKey[4].Split(';');
             if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
             {
-                ViewBag.HasModule = true;
+                ViewBag.HasCustomerModule = true;
                 return true;
             }
             else
             {
-                ViewBag.HasModule = false;
+                ViewBag.HasCustomerModule = false;
                 return false;
             }
         }

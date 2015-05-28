@@ -127,7 +127,7 @@
         <AssociationConnector Association="EPMSProjectModel.FK_Aisle_Warehouse" />
         <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
         <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

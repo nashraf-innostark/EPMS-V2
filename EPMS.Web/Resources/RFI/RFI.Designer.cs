@@ -160,6 +160,24 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes arabic.
+        /// </summary>
+        public static string NotesA {
+            get {
+                return ResourceManager.GetString("NotesA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string NotesE {
+            get {
+                return ResourceManager.GetString("NotesE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OrderName - Order#.
         /// </summary>
         public static string OrderNameOrderNo {
