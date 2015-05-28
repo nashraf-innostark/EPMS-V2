@@ -7,7 +7,7 @@ using EPMS.Web.Controllers;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
-    public class InvontryWarehouseController : BaseController
+    public class InventoryWarehouseController : BaseController
     {
         // GET: Inventory/InvontryWarehouse
         public ActionResult Index()
