@@ -9,6 +9,7 @@ using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryDepartment;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ViewModels.InventorySection;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -119,6 +120,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Inventory Section
+        public ActionResult Section(string id)
+        {
+            InventorySectionViewModel departmentViewModel = new InventorySectionViewModel();
+            departmentViewModel.InventoryDepartments =
+                departmentService.GetAll().Select(dp => dp.CreateFromServerToClient()).ToList();
+            if (id != null)
+            {
+                ViewBag.InventorySectionId = Convert.ToInt64(id);
+            }
+            return View(departmentViewModel);
+        }
+        #endregion
         #region Save Inventory Department
         [HttpPost]
         [ValidateInput(false)]
@@ -183,15 +197,85 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     var newNodeToAdd = model.CreateFromClientToServerModel();
                     if (departmentService.AddDepartment(newNodeToAdd))
                     {
-                        string responseMessage = "";
-                        if (requestFrom == "Departments")
-                        {
-                            responseMessage = "Departments Saved";
-                        }
-                        if (requestFrom == "Section")
-                        {
-                            responseMessage = "Section Saved";
-                        }
+                        const string responseMessage = "Departments Saved";
+                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Save Inventory Section
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult SaveInventorySection(int nodeId, int parent, string nameEn, string nameAr, string description, string requestFrom)
+        {
+            InventoryDepartment model = new InventoryDepartment();
+            try
+            {
+                if (nodeId > 0)
+                {
+                    // Update
+                    model.DepartmentId = nodeId;
+                    if (parent > 0)
+                    {
+                        model.ParentId = parent;
+                    }
+                    else
+                    {
+                        model.ParentId = null;
+                    }
+                    model.DepartmentNameEn = nameEn;
+                    model.DepartmentNameAr = nameAr;
+                    model.DepartmentColor = "";
+                    var descp = description.Replace("\n", "");
+                    descp = descp.Replace("\t", "");
+                    descp = descp.Replace("\r", "");
+                    descp = descp.Replace("\"", "'");
+                    model.DepartmentDesc = descp;
+                    model.RecCreatedBy = User.Identity.GetUserId();
+                    model.RecCreatedDt = DateTime.Now;
+                    model.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.RecLastUpdatedDt = DateTime.Now;
+                    var nodeToUpdate = model.CreateFromClientToServerModel();
+                    if (departmentService.UpdateDepartment(nodeToUpdate))
+                    {
+                        const string responseMessage = "Updated";
+                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    // Add
+                    if (parent > 0)
+                    {
+                        model.ParentId = parent;
+                    }
+                    else
+                    {
+                        model.ParentId = null;
+                    }
+                    model.DepartmentNameEn = nameEn;
+                    model.DepartmentNameAr = nameAr;
+                    model.DepartmentColor = "";
+                    var descp = description.Replace("\n", "");
+                    descp = descp.Replace("\t", "");
+                    descp = descp.Replace("\r", "");
+                    model.DepartmentDesc = descp;
+                    model.RecCreatedBy = User.Identity.GetUserId();
+                    model.RecCreatedDt = DateTime.Now;
+                    model.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.RecLastUpdatedDt = DateTime.Now;
+                    var newNodeToAdd = model.CreateFromClientToServerModel();
+                    if (departmentService.AddDepartment(newNodeToAdd))
+                    {
+                        const string responseMessage = "Section Saved";
                         return Json(responseMessage, JsonRequestBehavior.AllowGet);
                     }
                 }
@@ -304,7 +388,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             //        {
             //            currNode.Color = "gery";
             //            nodeCount += currNode.InventoryDepartments.Count;
-                        
+
             //            currNode = 
             //        }
             //        else

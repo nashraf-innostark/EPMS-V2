@@ -608,6 +608,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryItem.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\InventorySection.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventorySection.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\ItemVariation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -722,6 +727,7 @@
     <Compile Include="ViewModels\Help\HelpViewModel.cs" />
     <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
     <Compile Include="ViewModels\InventoryItem\InventoryItemViewModel.cs" />
+    <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
     <Compile Include="ViewModels\ItemVariation\ItemVariationViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
@@ -1801,6 +1807,7 @@
     <Content Include="Areas\Inventory\Views\InventoryItem\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemVariation\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\RFI\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryDepartment\Section.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3718,6 +3725,11 @@
     <EmbeddedResource Include="Resources\Inventory\InventoryItem.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventoryItem.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\InventorySection.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\InventorySection.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InventorySection.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
