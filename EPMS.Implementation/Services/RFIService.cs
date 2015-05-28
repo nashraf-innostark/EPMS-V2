@@ -13,6 +13,9 @@ namespace EPMS.Implementation.Services
         private readonly IRFIRepository rfiRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IRFIItemRepository rfiItemRepository;
+        private readonly ICustomerRepository customerRepository;
+        private readonly IOrdersRepository ordersRepository;
+        private readonly IAspNetUserRepository aspNetUserRepository;
 
         #region Constructor
 
@@ -22,11 +25,17 @@ namespace EPMS.Implementation.Services
         /// <param name="rfiRepository"></param>
         /// <param name="itemVariationRepository"></param>
         /// <param name="rfiItemRepository"></param>
-        public RFIService(IRFIRepository rfiRepository,IItemVariationRepository itemVariationRepository,IRFIItemRepository rfiItemRepository)
+        /// <param name="customerRepository"></param>
+        /// <param name="ordersRepository"></param>
+        /// <param name="aspNetUserRepository"></param>
+        public RFIService(IRFIRepository rfiRepository,IItemVariationRepository itemVariationRepository,IRFIItemRepository rfiItemRepository,ICustomerRepository customerRepository,IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository)
         {
             this.rfiRepository = rfiRepository;
             this.itemVariationRepository = itemVariationRepository;
             this.rfiItemRepository = rfiItemRepository;
+            this.customerRepository = customerRepository;
+            this.ordersRepository = ordersRepository;
+            this.aspNetUserRepository = aspNetUserRepository;
         }
 
         #endregion
@@ -110,11 +119,27 @@ namespace EPMS.Implementation.Services
             rfiRepository.SaveChanges();
         }
 
-        public RFIResponse LoadRfiResponseData(long? id)
+        public RFIResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
         {
-            RFIResponse rfiResponse=new RFIResponse();
-            rfiResponse.ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList();
-            
+            RFIResponse rfiResponse=new RFIResponse
+            {
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
+            };
+            if (id != null)
+            {
+                var rfi = rfiRepository.Find((long)id);
+                if (rfi != null)
+                {
+                    rfiResponse.Rfi = rfi;
+                    rfiResponse.RecCreatedByName = aspNetUserRepository.Find(rfi.RecCreatedBy).UserName;
+                    rfiResponse.RfiItem = rfi.RFIItems;
+                }
+            }
+            if (loadCustomersAndOrders)
+            {
+                rfiResponse.Customers = customerRepository.GetAll();
+                rfiResponse.Orders = ordersRepository.GetAll();
+            }
             return rfiResponse;
         }
     }

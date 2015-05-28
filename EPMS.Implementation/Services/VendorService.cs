@@ -141,7 +141,6 @@ namespace EPMS.Implementation.Services
                         VendorId = itemsToSave.Vendor.VendorId
                     };
                     vendorItemsRepository.Add(item);
-                    vendorRepository.SaveChanges();
                 }
 
                 //Delete Items
@@ -151,7 +150,6 @@ namespace EPMS.Implementation.Services
                         continue;
                     var itemToDelete = vendorItemsRepository.Find(vendorItem.ItemId);
                     vendorItemsRepository.Delete(itemToDelete);
-                    vendorItemsRepository.SaveChanges();
                 }
             }
             else
@@ -161,9 +159,9 @@ namespace EPMS.Implementation.Services
                 {
                     var itemToDelete = vendorItemsRepository.Find(vendorItem.ItemId);
                     vendorItemsRepository.Delete(itemToDelete);
-                    vendorItemsRepository.SaveChanges();
                 }
             }
+            vendorRepository.SaveChanges();
         }
     }
 }
