@@ -53,8 +53,8 @@ namespace EPMS.Implementation.Services
             if (rfi.RFIId > 0)
             {
                 //update
-                UpdateRFI(rfi);
-                RfiItemUpdation(rfi);
+                if(UpdateRFI(rfi))//if RFI updated, then update the items
+                    RfiItemUpdation(rfi);
             }
             else
             {
@@ -78,17 +78,17 @@ namespace EPMS.Implementation.Services
                     {
                         rfiItemRepository.Update(rfiItem.CreateRfiItem());
                         rfiItemRepository.SaveChanges();
-                        rfiItemsInDb.Remove(rfiItem);
+                        rfiItemsInDb.RemoveAll(x => x.RFIItemId == rfiItem.RFIItemId);
                     }
                 }
                 else
                 {
                     //save
                     rfiItemRepository.Add(rfiItem);
+                    rfiItemRepository.SaveChanges();
                 }
             }
             DeleteRfiItem(rfiItemsInDb);
-            rfiItemRepository.SaveChanges();
         }
 
         private void DeleteRfiItem(IEnumerable<RFIItem> rfiItemsInDb)
@@ -96,6 +96,7 @@ namespace EPMS.Implementation.Services
             foreach (var rfiItem in rfiItemsInDb)
             {
                 rfiItemRepository.Delete(rfiItem);
+                rfiItemRepository.SaveChanges();
             }
         }
 

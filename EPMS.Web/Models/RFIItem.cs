@@ -8,7 +8,7 @@ namespace EPMS.Web.Models
         public long RFIId { get; set; }
         public long ItemVariationId { get; set; }
         public string ItemSKUCode { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The Item Details field is required")]
         public string ItemDetails { get; set; }
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Please enter valid quantity")]
