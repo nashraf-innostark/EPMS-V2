@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
 
 namespace EPMS.Implementation.Services
 {
     public class WarehouseService : IWarehouseService
     {
         private readonly IWarehouseRepository warehouseRepository;
+        private readonly IEmployeeService employeeService;
 
-        public WarehouseService(IWarehouseRepository warehouseRepository)
+        public WarehouseService(IWarehouseRepository warehouseRepository, IEmployeeService employeeService)
         {
             this.warehouseRepository = warehouseRepository;
+            this.employeeService = employeeService;
         }
 
         public IEnumerable<Warehouse> GetAll()
@@ -23,6 +26,18 @@ namespace EPMS.Implementation.Services
         public Warehouse FindWarehouseById(long id)
         {
             return warehouseRepository.Find(id);
+        }
+
+        public WarehouseRequest GetWarehouseRequest(long id)
+        {
+            WarehouseRequest request = new WarehouseRequest();
+            if (id > 0)
+            {
+                request.Warehouse = FindWarehouseById(id);
+            }
+            request.Employees = employeeService.GetAll();
+            request.Warehouses = warehouseRepository.GetAll();
+            return request;
         }
 
         public bool AddWarehouse(Warehouse warehouse)

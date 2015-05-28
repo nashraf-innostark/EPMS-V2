@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Web.Models
 {
     public class Warehouse
     {
@@ -20,9 +19,7 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
-
-        public virtual ICollection<Aisle> Aisles { get; set; }
-        public virtual Employee Employee { get; set; }
-        public virtual ICollection<ItemVariation> ItemVariations { get; set; }
+        public string EmployeeNameEn { get; set; }
+        public string EmployeeNameAr { get; set; }
     }
 }

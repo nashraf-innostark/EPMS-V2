@@ -1015,6 +1015,10 @@
           <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
           <Property Name="IsFull" Type="bit" Nullable="false" />
           <Property Name="WarehouseSize" Type="nvarchar" MaxLength="500" />
+          <Property Name="NoOfAisles" Type="bigint" />
+          <Property Name="NoOfSections" Type="bigint" />
+          <Property Name="NoOfShalves" Type="bigint" />
+          <Property Name="NoOfSectoinsInShalves" Type="bigint" />
           <Property Name="NoOfSpaces" Type="bigint" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
@@ -4350,6 +4354,10 @@
           <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IsFull" Type="Boolean" Nullable="false" />
           <Property Name="WarehouseSize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfAisles" Type="Int64" />
+          <Property Name="NoOfSections" Type="Int64" />
+          <Property Name="NoOfShalves" Type="Int64" />
+          <Property Name="NoOfSectoinsInShalves" Type="Int64" />
           <Property Name="NoOfSpaces" Type="Int64" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
@@ -5447,6 +5455,10 @@
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="NoOfSpaces" ColumnName="NoOfSpaces" />
+                <ScalarProperty Name="NoOfSectoinsInShalves" ColumnName="NoOfSectoinsInShalves" />
+                <ScalarProperty Name="NoOfShalves" ColumnName="NoOfShalves" />
+                <ScalarProperty Name="NoOfSections" ColumnName="NoOfSections" />
+                <ScalarProperty Name="NoOfAisles" ColumnName="NoOfAisles" />
                 <ScalarProperty Name="WarehouseSize" ColumnName="WarehouseSize" />
                 <ScalarProperty Name="IsFull" ColumnName="IsFull" />
                 <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
@@ -5464,7 +5476,7 @@
               <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

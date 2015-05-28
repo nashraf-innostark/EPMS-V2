@@ -123,7 +123,7 @@
         <AssociationConnector Association="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
         <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
         <AssociationConnector Association="EPMSProjectModel.FK_QuickLaunchItems_Menu" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="21.75" PointY="51" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="22" PointY="51.125" />
         <AssociationConnector Association="EPMSProjectModel.FK_Aisle_Warehouse" />
         <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
         <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" />
