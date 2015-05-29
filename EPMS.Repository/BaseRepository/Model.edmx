@@ -438,6 +438,7 @@
           </Key>
           <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
           <Property Name="ManufacturerId" Type="bigint" Nullable="false" />
+          <Property Name="Price" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="ItemSize">
           <Key>
@@ -884,6 +885,7 @@
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesE" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="RFIItem">
           <Key>
@@ -891,7 +893,7 @@
           </Key>
           <Property Name="RFIItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RFIId" Type="bigint" Nullable="false" />
-          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" />
           <Property Name="ItemDetails" Type="nvarchar(max)" Nullable="false" />
           <Property Name="ItemQty" Type="bigint" Nullable="false" />
           <Property Name="IsItemDescription" Type="bit" Nullable="false" />
@@ -1442,18 +1444,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemWarehouse_Warehouse">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="ItemWarehouse" Type="Self.ItemWarehouse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
-            </Principal>
-            <Dependent Role="ItemWarehouse">
-              <PropertyRef Name="WarehousrId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_JobApplicants_Department">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="JobApplicants" Type="Self.JobApplicants" Multiplicity="*" />
@@ -1779,7 +1769,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RFIItem_ItemVariation">
-          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="0..1" />
           <End Role="RFIItem" Type="Self.RFIItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ItemVariation">
@@ -2118,10 +2108,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_ItemWarehouse_ItemVariation" Association="Self.FK_ItemWarehouse_ItemVariation">
             <End Role="ItemVariation" EntitySet="ItemVariation" />
-            <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemWarehouse_Warehouse" Association="Self.FK_ItemWarehouse_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApplicants_Department" Association="Self.FK_JobApplicants_Department">
@@ -2725,7 +2711,7 @@
           <NavigationProperty Name="Sizes" Relationship="Self.ItemSize" FromRole="ItemVariation" ToRole="Size" />
           <NavigationProperty Name="Status" Relationship="Self.ItemStatus" FromRole="ItemVariation" ToRole="Status" />
           <NavigationProperty Name="RFIItems" Relationship="EPMSProjectModel.FK_RFIItem_ItemVariation" FromRole="ItemVariation" ToRole="RFIItem" />
-          <NavigationProperty Name="Warehouses" Relationship="EPMSProjectModel.ItemWarehouse" FromRole="ItemVariation" ToRole="Warehouse" />
+          <NavigationProperty Name="ItemWarehouses" Relationship="EPMSProjectModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemVariation" ToRole="ItemWarehouse" />
         </EntityType>
         <EntityType Name="JobOffered">
           <Key>
@@ -3803,22 +3789,27 @@
             <End Role="ApplicantQualification" EntitySet="ApplicantQualifications" />
           </AssociationSet>
           <EntitySet Name="RFIs" EntityType="EPMSProjectModel.RFI" />
-          <EntitySet Name="RFIItems" EntityType="EPMSProjectModel.RFIItem" />
           <AssociationSet Name="FK_RFI_AspNetUsers" Association="EPMSProjectModel.FK_RFI_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="RFI" EntitySet="RFIs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RFIItem_ItemVariation" Association="EPMSProjectModel.FK_RFIItem_ItemVariation">
-            <End Role="ItemVariation" EntitySet="ItemVariations" />
-            <End Role="RFIItem" EntitySet="RFIItems" />
           </AssociationSet>
           <AssociationSet Name="FK_RFI_Orders" Association="EPMSProjectModel.FK_RFI_Orders">
             <End Role="Order" EntitySet="Orders" />
             <End Role="RFI" EntitySet="RFIs" />
           </AssociationSet>
+          <EntitySet Name="RFIItems" EntityType="EPMSProjectModel.RFIItem" />
+          <AssociationSet Name="FK_RFIItem_ItemVariation" Association="EPMSProjectModel.FK_RFIItem_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="RFIItem" EntitySet="RFIItems" />
+          </AssociationSet>
           <AssociationSet Name="FK_RFIItem_RFI" Association="EPMSProjectModel.FK_RFIItem_RFI">
             <End Role="RFI" EntitySet="RFIs" />
             <End Role="RFIItem" EntitySet="RFIItems" />
+          </AssociationSet>
+          <EntitySet Name="ItemWarehouses" EntityType="EPMSProjectModel.ItemWarehouse" />
+          <AssociationSet Name="FK_ItemWarehouse_ItemVariation" Association="EPMSProjectModel.FK_ItemWarehouse_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouses" />
           </AssociationSet>
           <EntitySet Name="Warehouses" EntityType="EPMSProjectModel.Warehouse" />
           <EntitySet Name="WarehouseDetails" EntityType="EPMSProjectModel.WarehouseDetail" />
@@ -3833,10 +3824,6 @@
           <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail">
             <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
             <End Role="WarehouseDetail1" EntitySet="WarehouseDetails" />
-          </AssociationSet>
-          <AssociationSet Name="ItemWarehouse" Association="EPMSProjectModel.ItemWarehouse">
-            <End Role="ItemVariation" EntitySet="ItemVariations" />
-            <End Role="Warehouse" EntitySet="Warehouses" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Menu">
@@ -4310,27 +4297,10 @@
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSProjectModel.FK_RFI_AspNetUsers" FromRole="RFI" ToRole="AspNetUser" />
           <NavigationProperty Name="Order" Relationship="EPMSProjectModel.FK_RFI_Orders" FromRole="RFI" ToRole="Order" />
-          <NavigationProperty Name="RFIItems" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFI" ToRole="RFIItem" />
           <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="RFIItem">
-          <Key>
-            <PropertyRef Name="RFIItemId" />
-          </Key>
-          <Property Name="RFIItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RFIId" Type="Int64" Nullable="false" />
-          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
-          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQty" Type="Int64" Nullable="false" />
-          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
-          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemVariation" Relationship="EPMSProjectModel.FK_RFIItem_ItemVariation" FromRole="RFIItem" ToRole="ItemVariation" />
-          <NavigationProperty Name="RFI" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFIItem" ToRole="RFI" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="RFIItems" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFI" ToRole="RFIItem" />
         </EntityType>
         <Association Name="FK_RFI_AspNetUsers">
           <End Type="EPMSProjectModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -4341,18 +4311,6 @@
             </Principal>
             <Dependent Role="RFI">
               <PropertyRef Name="RecCreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RFIItem_ItemVariation">
-          <End Type="EPMSProjectModel.ItemVariation" Role="ItemVariation" Multiplicity="1" />
-          <End Type="EPMSProjectModel.RFIItem" Role="RFIItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemVariation">
-              <PropertyRef Name="ItemVariationId" />
-            </Principal>
-            <Dependent Role="RFIItem">
-              <PropertyRef Name="ItemVariationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4368,6 +4326,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="RFIItem">
+          <Key>
+            <PropertyRef Name="RFIItemId" />
+          </Key>
+          <Property Name="RFIItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFIId" Type="Int64" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" />
+          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQty" Type="Int64" Nullable="false" />
+          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
+          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSProjectModel.FK_RFIItem_ItemVariation" FromRole="RFIItem" ToRole="ItemVariation" />
+          <NavigationProperty Name="RFI" Relationship="EPMSProjectModel.FK_RFIItem_RFI" FromRole="RFIItem" ToRole="RFI" />
+        </EntityType>
+        <Association Name="FK_RFIItem_ItemVariation">
+          <End Type="EPMSProjectModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.RFIItem" Role="RFIItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="RFIItem">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RFIItem_RFI">
           <End Type="EPMSProjectModel.RFI" Role="RFI" Multiplicity="1" />
           <End Type="EPMSProjectModel.RFIItem" Role="RFIItem" Multiplicity="*" />
@@ -4377,6 +4365,27 @@
             </Principal>
             <Dependent Role="RFIItem">
               <PropertyRef Name="RFIId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ItemWarehouse">
+          <Key>
+            <PropertyRef Name="WarehousrId" />
+            <PropertyRef Name="ItemVariationId" />
+          </Key>
+          <Property Name="WarehousrId" Type="Int64" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSProjectModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemWarehouse" ToRole="ItemVariation" />
+        </EntityType>
+        <Association Name="FK_ItemWarehouse_ItemVariation">
+          <End Type="EPMSProjectModel.ItemVariation" Role="ItemVariation" Multiplicity="1" />
+          <End Type="EPMSProjectModel.ItemWarehouse" Role="ItemWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemWarehouse">
+              <PropertyRef Name="ItemVariationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4397,7 +4406,6 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="EPMSProjectModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
           <NavigationProperty Name="WarehouseDetails" Relationship="EPMSProjectModel.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
-          <NavigationProperty Name="ItemVariations" Relationship="EPMSProjectModel.ItemWarehouse" FromRole="Warehouse" ToRole="ItemVariation" />
         </EntityType>
         <EntityType Name="WarehouseDetail">
           <Key>
@@ -4452,10 +4460,6 @@
               <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="ItemWarehouse">
-          <End Type="EPMSProjectModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
-          <End Type="EPMSProjectModel.Warehouse" Role="Warehouse" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -5481,6 +5485,7 @@
           <EntitySetMapping Name="RFIs">
             <EntityTypeMapping TypeName="EPMSProjectModel.RFI">
               <MappingFragment StoreEntitySet="RFI">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="NotesE" ColumnName="NotesE" />
                 <ScalarProperty Name="NotesA" ColumnName="NotesA" />
                 <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
@@ -5508,6 +5513,14 @@
                 <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
                 <ScalarProperty Name="RFIId" ColumnName="RFIId" />
                 <ScalarProperty Name="RFIItemId" ColumnName="RFIItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemWarehouses">
+            <EntityTypeMapping TypeName="EPMSProjectModel.ItemWarehouse">
+              <MappingFragment StoreEntitySet="ItemWarehouse">
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="WarehousrId" ColumnName="WarehousrId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5544,14 +5557,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ItemWarehouse" TypeName="EPMSProjectModel.ItemWarehouse" StoreEntitySet="ItemWarehouse">
-            <EndProperty Name="Warehouse">
-              <ScalarProperty Name="WarehouseId" ColumnName="WarehousrId" />
-            </EndProperty>
-            <EndProperty Name="ItemVariation">
-              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
-            </EndProperty>
-          </AssociationSetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -5687,9 +5692,7 @@
         <EntityTypeShape EntityType="EPMSProjectModel.ApplicantQualification" Width="1.5" PointX="14" PointY="36.875" />
         <AssociationConnector Association="EPMSProjectModel.FK_ApplicantExperience_JobApplicants" />
         <AssociationConnector Association="EPMSProjectModel.FK_ApplicantQualification_JobApplicants" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="24" PointY="53" />
         <AssociationConnector Association="EPMSProjectModel.FK_Aisle_Warehouse" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
         <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" />
         <EntityTypeShape EntityType="EPMSProjectModel.RFI" Width="1.5" PointX="15.75" PointY="41.625" />
         <EntityTypeShape EntityType="EPMSProjectModel.RFIItem" Width="1.5" PointX="18" PointY="53.5" />
@@ -5697,6 +5700,13 @@
         <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_ItemVariation" />
         <AssociationConnector Association="EPMSProjectModel.FK_RFI_Orders" />
         <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_RFI" />
+        <EntityTypeShape EntityType="EPMSProjectModel.ItemWarehouse" Width="1.5" PointX="18" PointY="71.25" />
+        <AssociationConnector Association="EPMSProjectModel.FK_ItemWarehouse_ItemVariation" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="2.125" PointX="7.5" PointY="74.125" />
+        <EntityTypeShape EntityType="EPMSProjectModel.WarehouseDetail" Width="3.125" PointX="10" PointY="73.875" />
+        <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
+        <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_Warehouse" />
+        <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" />
         </Diagram>
     </Diagrams>
   </Designer>

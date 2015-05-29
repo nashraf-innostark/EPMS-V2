@@ -342,18 +342,21 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        editor = CKEDITOR.replace('RFINotesE', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
-        });
-        editor = CKEDITOR.replace('RFINotesA', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
-        });
+        if ('@Model.Rfi.RFIId' > 0) {
+            editor = CKEDITOR.replace('RFINotesE', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+            editor = CKEDITOR.replace('RFINotesA', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+            });
+        }
+        
         $("#selectBoxFilter").select2();
         // set JobId and Department Name
         $("#Client").on("change", function() {
@@ -445,7 +448,12 @@
         });
 
         $('#itemSearcher').on('show', function () {
-            var index = $(event.target).closest('tr').data('id'); //get the id from tr
+            //clear DDL required value label
+            $("#RFIItemVariationDropDownListValidation").text("");
+            $("#RFIItemVariationDropDownListValidation").removeClass("Error");
+
+            //get the id from tr
+            var index = $(event.target).closest('tr').data('id'); 
             $("#RfiItemModalIndex").val(index);
             //get item's values
             var isItemDescription = $("#RfiItem_" + index + "__IsItemDescription").val();
@@ -570,24 +578,24 @@
                                     "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' />" +
                                     "</td>";
                     //RfiItem
-                     var html = '<tr data-id=' + index + '>' +
-                                indexCell +
-                                '<td>' +
-                                '<div class="control-group row-fluid">' +
-                                '<div class="span1">' +
-                                '<label class="control-label serialNumber"  ></label>' +
-                                '</div></div>' +
-                                '</td>' +
-                                '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                                '</td>' +
-                                '<td class="quantity"> ' +
-                                '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                                '</td>' +
-                                '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                                '</td></tr>';
+                    var html = '<tr data-id=' + index + '>' +
+                               indexCell +
+                               '<td>' +
+                               '<div class="control-group row-fluid">' +
+                               '<div class="span1">' +
+                               '<label class="control-label serialNumber"  ></label>' +
+                               '</div></div>' +
+                               '</td>' +
+                               '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                               '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                               '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                               '</td>' +
+                               '<td class="quantity"> ' +
+                               '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                               '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                               '</td>' +
+                               '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                               '</td></tr>';
 
                     index = index + 1;
                     if (count == 0) {

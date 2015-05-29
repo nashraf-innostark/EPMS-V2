@@ -4,6 +4,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
+using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
@@ -42,6 +43,12 @@ namespace EPMS.Implementation.Services
         public IEnumerable<RFI> GetAll()
         {
             return rfiRepository.GetAll();
+        }
+
+        public RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest)
+        {
+            var rfis = rfiRepository.LoadAllRfis(rfiSearchRequest);
+            return rfis;
         }
 
         public RFI FindRFIById(long id)
@@ -120,9 +127,9 @@ namespace EPMS.Implementation.Services
             rfiRepository.SaveChanges();
         }
 
-        public RFIResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
+        public RFICreateResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
         {
-            RFIResponse rfiResponse=new RFIResponse
+            RFICreateResponse rfiResponse=new RFICreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
             };

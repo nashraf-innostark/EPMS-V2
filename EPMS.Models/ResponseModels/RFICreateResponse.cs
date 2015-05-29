@@ -3,7 +3,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ResponseModels
 {
-    public class RFIResponse
+    public class RFICreateResponse
     {
         public RFI Rfi { get; set; }
         public string RecCreatedByName { get; set; }
