@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using EPMS.Implementation.Identity;
+using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
 using System.Configuration;
 using System.Globalization;
@@ -9,8 +13,14 @@ using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
 using EPMS.Web.Models;
+using EPMS.Web.ViewModels.Common;
+using EPMS.Web.ViewModels.Request;
 using EPMS.Web.ViewModels.RFI;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using RFI = EPMS.Web.Models.RFI;
+using RFIItem = EPMS.Web.Models.RFIItem;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -30,9 +40,57 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/RFI
+        //[SiteAuthorize(PermissionKey = "RFIIndex")]
         public ActionResult Index()
         {
-            return View();
+            RfiSearchRequest searchRequest = Session["PageMetaData"] as RfiSearchRequest;
+            ViewBag.UserRole = Session["RoleName"].ToString();
+            Session["PageMetaData"] = null;
+
+            RfiListViewModel viewModel = new RfiListViewModel
+            {
+                SearchRequest = searchRequest ?? new RfiSearchRequest()
+            };
+
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Index(RfiSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            RfiListViewModel viewModel = new RfiListViewModel();
+            ViewBag.UserRole = Session["RoleName"].ToString();
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Admin")
+            {
+                searchRequest.Requester = "Admin";
+            }
+            else
+            {
+                searchRequest.Requester = Session["UserID"].ToString();
+            }
+            var requestResponse = rfiService.LoadAllRfis(searchRequest);
+            var data = requestResponse.Rfis.Select(x => x.CreateRfiServerToClient());
+            var employeeRequests = data as IList<RFI> ?? data.ToList();
+            if (employeeRequests.Any())
+            {
+                viewModel.aaData = employeeRequests;
+                viewModel.iTotalRecords = requestResponse.TotalCount;
+                viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
+                viewModel.sEcho = searchRequest.sEcho;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
+            }
+            else
+            {
+                viewModel.aaData = Enumerable.Empty<RFI>();
+                viewModel.iTotalRecords = requestResponse.TotalCount;
+                viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
+                viewModel.sEcho = searchRequest.sEcho;
+                //viewModel.sLimit = searchRequest.iDisplayLength;
+            }
+            // Keep Search Request in Session
+            Session["PageMetaData"] = searchRequest;
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Inventory/RFI/Details/5
@@ -75,6 +133,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // POST: Inventory/RFI/Create
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(RFIViewModel rfiViewModel)
         {
             try

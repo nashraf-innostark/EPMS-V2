@@ -754,6 +754,7 @@
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
+    <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
@@ -1815,6 +1816,7 @@
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Section.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryWarehouse\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryWarehouse\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\RFI\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

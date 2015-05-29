@@ -60,8 +60,12 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
 
+                RecCreatedByName = source.AspNetUser.Employee.EmployeeFirstNameE+" "+source.AspNetUser.Employee.EmployeeFirstNameE,
+                CustomerName = source.Order.Customer.CustomerNameE,
+                RecCreatedDateString = source.RecCreatedDate.ToShortDateString(),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
+                
                 RecUpdatedBy = source.RecCreatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };
