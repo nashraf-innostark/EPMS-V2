@@ -379,6 +379,7 @@
     <Compile Include="ModelMappers\StatusMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="ModelMappers\VendorMapper.cs" />
+    <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
     <Compile Include="ModelMappers\WarehouseMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
@@ -440,6 +441,7 @@
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorItems.cs" />
     <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Models\WarehouseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -22,6 +24,10 @@ namespace EPMS.Implementation.Services
         {
             return warehouseRepository.GetAll();
         }
+        public IEnumerable<Warehouse> GetAllWarehouses()
+        {
+            return warehouseRepository.GetAllWarehouses();
+        }
 
         public Warehouse FindWarehouseById(long id)
         {
@@ -38,6 +44,16 @@ namespace EPMS.Implementation.Services
             request.Employees = employeeService.GetAll();
             request.Warehouses = warehouseRepository.GetAll();
             return request;
+        }
+
+        public string GetLastWarehouseNumber()
+        {
+            var lastOrDefault = warehouseRepository.GetAll().OrderByDescending(x=>x.WarehouseId).FirstOrDefault();
+            if (lastOrDefault != null)
+            {
+                return lastOrDefault.WarehouseNumber;
+            }
+            return "";
         }
 
         public bool AddWarehouse(Warehouse warehouse)
