@@ -6,7 +6,7 @@ namespace EPMS.Web.Models
     {
         public long RFIItemId { get; set; }
         public long RFIId { get; set; }
-        public long ItemVariationId { get; set; }
+        public long? ItemVariationId { get; set; }
         public string ItemSKUCode { get; set; }
         [Required(ErrorMessage = "The Item Details field is required")]
         public string ItemDetails { get; set; }

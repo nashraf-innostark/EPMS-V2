@@ -116,15 +116,17 @@
                     {
                         "aTargets": [5],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
-                            //var requestDetail = full["Status"];
-                            //var status = "";
-                            //if (requestDetail.IsReplied) {
-                            //    status = requestDetail.IsApproved ? "Accepted" : "Declined";
-                            //} else {
-                            //    status = "Pending";
-                            //}
-                            return full["Status"];
+                        "mRender": function (data, type, full) {
+                            var value = "";
+                            if (full["Status"] == 2) {
+                                value = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            } else if (full["Status"] == 3) {
+                                value = '@EPMS.Web.Resources.CMS.Order.Canceled';
+                            }
+                            else if (full["Status"] == 6) {
+                                value = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            return value;
                         },
                         "bSortable": false
                     }
@@ -192,14 +194,16 @@
                         "aTargets": [5],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            //var requestDetail = full["Status"];
-                            //var status = "";
-                            //if (requestDetail.IsReplied) {
-                            //    status = requestDetail.IsApproved ? "Accepted" : "Declined";
-                            //} else {
-                            //    status = "Pending";
-                            //}
-                            return full["Status"];
+                            var value = "";
+                            if (full["Status"] == 2) {
+                                value = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            } else if (full["Status"] == 3) {
+                                value = '@EPMS.Web.Resources.CMS.Order.Canceled';
+                            }
+                            else if (full["Status"] == 6) {
+                                value = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            return value;
                         },
                         "bSortable": false
                     }

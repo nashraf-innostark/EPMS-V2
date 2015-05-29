@@ -14,7 +14,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
-
+                Status = source.Rfi.Status==0?2:source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
 
@@ -34,7 +34,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             {
                 RFIItemId = source.RFIItemId,
                 RFIId = rfiId,
-                ItemVariationId = source.ItemVariationId,
+                ItemVariationId = source.ItemVariationId == 0 ? null : source.ItemVariationId,
                 IsItemDescription = source.IsItemDescription,
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
@@ -59,8 +59,8 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
 
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
-
-                RecCreatedByName = source.AspNetUser.Employee.EmployeeFirstNameE+" "+source.AspNetUser.Employee.EmployeeFirstNameE,
+                Status = source.Status,
+                RecCreatedByName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 RecCreatedDateString = source.RecCreatedDate.ToShortDateString(),
                 RecCreatedBy = source.RecCreatedBy,
