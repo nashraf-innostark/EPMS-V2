@@ -5702,8 +5702,8 @@
         <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_RFI" />
         <EntityTypeShape EntityType="EPMSProjectModel.ItemWarehouse" Width="1.5" PointX="18" PointY="71.25" />
         <AssociationConnector Association="EPMSProjectModel.FK_ItemWarehouse_ItemVariation" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="7.5" PointY="74.125" />
-        <EntityTypeShape EntityType="EPMSProjectModel.WarehouseDetail" Width="3.125" PointX="9.75" PointY="74.125" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="2.125" PointX="7.5" PointY="74.125" />
+        <EntityTypeShape EntityType="EPMSProjectModel.WarehouseDetail" Width="3.125" PointX="10" PointY="73.875" />
         <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
         <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_Warehouse" />
         <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" />
