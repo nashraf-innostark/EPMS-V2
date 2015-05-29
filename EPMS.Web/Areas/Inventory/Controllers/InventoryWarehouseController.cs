@@ -35,7 +35,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "InventoryWarehouseIndex")]
         public ActionResult Index()
         {
-            var warehouses = warehouseService.GetAllWarehouses();
+            var warehouses = warehouseService.GetAll();
             InventoryWarehouseListViewModel viewModel = new InventoryWarehouseListViewModel
             {
                 Warehouses = warehouses.Select(x=>x.CreateFromServerToClient())

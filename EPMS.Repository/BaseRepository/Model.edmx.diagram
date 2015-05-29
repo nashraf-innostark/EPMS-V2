@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="51536fb8660843648fcc2dd0da59b021" Name="Diagram1">
+      <Diagram DiagramId="51536fb8660843648fcc2dd0da59b021" Name="Diagram1" ZoomLevel="114">
         <EntityTypeShape EntityType="EPMSProjectModel.Aisle" Width="1.5" PointX="15.75" PointY="46.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.Allowance" Width="1.5" PointX="7.5" PointY="39.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.ApplicantExperience" Width="1.5" PointX="12.75" PointY="33.875" IsExpanded="true" />
@@ -22,10 +22,10 @@
         <EntityTypeShape EntityType="EPMSProjectModel.Customer" Width="1.5" PointX="0.75" PointY="27" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.DashboardWidgetPreference" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.Department" Width="1.5" PointX="0.75" PointY="32.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Employee" Width="1.5" PointX="5.25" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.Employee" Width="1.75" PointX="5" PointY="40.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.EmployeeJobHistory" Width="1.5" PointX="10.5" PointY="47.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="56.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.InventoryDepartment" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSProjectModel.InventoryDepartment" Width="1.75" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.InventoryItem" Width="1.5" PointX="13.5" PointY="64.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.ItemImage" Width="1.5" PointX="18" PointY="59.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSProjectModel.ItemVariation" Width="1.5" PointX="15.75" PointY="61.25" IsExpanded="true" />
@@ -124,7 +124,7 @@
         <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
         <AssociationConnector Association="EPMSProjectModel.FK_QuickLaunchItems_Menu" />
         <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="21" PointY="52.75" />
-        <EntityTypeShape EntityType="EPMSProjectModel.WarehouseDetail" Width="1.75" PointX="23.25" PointY="52.75" />
+        <EntityTypeShape EntityType="EPMSProjectModel.WarehouseDetail" Width="1.875" PointX="23.25" PointY="52.75" />
         <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
         <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_Warehouse" />
         <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" />

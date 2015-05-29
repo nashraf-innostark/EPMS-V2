@@ -6,6 +6,5 @@ namespace EPMS.Interfaces.Repository
     public interface  IWarehouseRepository : IBaseRepository<Warehouse, long>
     {
         bool WarehouseExists(Warehouse warehouse);
-        IEnumerable<Warehouse> GetAllWarehouses();
     }
 }

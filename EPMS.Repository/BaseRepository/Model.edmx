@@ -1887,14 +1887,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Warehouse_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
             </Principal>
             <Dependent Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
+              <PropertyRef Name="WarehouseManager" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2603,7 +2603,7 @@
           <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendees" />
           <NavigationProperty Name="NotificationRecipients" Relationship="Self.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
-          <NavigationProperty Name="Warehouse" Relationship="EPMSProjectModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouses" Relationship="EPMSProjectModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -4418,14 +4418,14 @@
           <NavigationProperty Name="ParentDetail" Relationship="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail1" ToRole="WarehouseDetail" />
         </EntityType>
         <Association Name="FK_Warehouse_Employee">
-          <End Type="EPMSProjectModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="EPMSProjectModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.Warehouse" Role="Warehouse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
             </Principal>
             <Dependent Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
+              <PropertyRef Name="WarehouseManager" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

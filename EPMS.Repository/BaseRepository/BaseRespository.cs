@@ -103,7 +103,7 @@ namespace EPMS.Repository.BaseRepository
         /// Get All Entites 
         /// </summary>
         /// <returns></returns>
-        public IQueryable<TDomainClass> GetAll()
+        public virtual IQueryable<TDomainClass> GetAll()
         {
             return DbSet;
         }

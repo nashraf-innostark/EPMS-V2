@@ -24,10 +24,6 @@ namespace EPMS.Implementation.Services
         {
             return warehouseRepository.GetAll();
         }
-        public IEnumerable<Warehouse> GetAllWarehouses()
-        {
-            return warehouseRepository.GetAllWarehouses();
-        }
 
         public Warehouse FindWarehouseById(long id)
         {

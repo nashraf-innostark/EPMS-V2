@@ -7,7 +7,6 @@ namespace EPMS.Interfaces.IServices
     public interface IWarehouseService
     {
         IEnumerable<Warehouse> GetAll();
-        IEnumerable<Warehouse> GetAllWarehouses();
         Warehouse FindWarehouseById(long id);
         WarehouseRequest GetWarehouseRequest(long id);
         string GetLastWarehouseNumber();

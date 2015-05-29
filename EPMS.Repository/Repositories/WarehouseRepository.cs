@@ -32,7 +32,7 @@ namespace EPMS.Repository.Repositories
                         (wh.WarehouseNumber == warehouse.WarehouseNumber));
         }
 
-        public IEnumerable<Warehouse> GetAllWarehouses()
+        public override IQueryable<Warehouse> GetAll()
         {
             return DbSet.Include(x => x.Employee);
         }
