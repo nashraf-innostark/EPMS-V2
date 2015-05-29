@@ -333,7 +333,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TaskProgress, new { @id = "TaskProgress", @class = "readonly  toBeDiabled" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TaskProgress, new { @id = "TaskProgress", @class = "readonly  toBeDisabled" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TaskProgress, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -418,6 +418,7 @@
         }
         if (isDetail == true) {
             $('.' + 'toBeDiable' + ':input').attr('disabled', true);
+            $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
             $('#Client').select2('disable');
             $('#ProjectId').select2('disable');
             var descpE = '@Html.Raw(Model.ProjectTask.DescriptionE)';
@@ -472,7 +473,7 @@
             $("#CKEditorNotes").show();
         }
         if ('@Model.ProjectTask.IsParent' == 'True') {
-            $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
+            $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
         }
         // Set project start and end date
         var projId = parseInt($("#ProjectId").val());
@@ -639,11 +640,11 @@
             $('#ParentTaskId').select2('disable');
             //$("#TaskProgress").addClass('disableList');
             //$('#TaskProgress').attr('readonly', true);
-            $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
+            $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
         } else {
             $("#checked").removeClass('disableList');
             $('#ParentTaskId').select2('enable');
-            $('.' + 'toBeDiabled' + ':input').attr('disabled', false);
+            $('.' + 'toBeDisabled' + ':input').attr('disabled', false);
             //$("#TaskProgress").removeClass('disableList');
             //$('#TaskProgress').attr('readonly', false);
         }
