@@ -127,9 +127,9 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 employeeId = (long) Session["EmployeeID"];
             }
-            TaskResponse tasks = TaskService.GetProjectTasksForEmployee(searchRequest, employeeId);
+            TaskResponse tasks = TaskService.GetAllTasks(searchRequest);
             IEnumerable<ProjectTask> projectTaskList =
-                tasks.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList();
+                tasks.ProjectTasks.Where(x=>x.TaskEmployees.Any(y=>y.EmployeeId == employeeId)).Select(z=>z.CreateFromServerToClientLv()).ToList();
             TaskListViewModel viewModel = new TaskListViewModel
             {
                 aaData = projectTaskList,
