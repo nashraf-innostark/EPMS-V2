@@ -168,6 +168,7 @@
     <Compile Include="DomainModels\UserPrefrence.cs" />
     <Compile Include="DomainModels\VendorItem.cs" />
     <Compile Include="DomainModels\Warehouse.cs" />
+    <Compile Include="DomainModels\WarehouseDetail.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>

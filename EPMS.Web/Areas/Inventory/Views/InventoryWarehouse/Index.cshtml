@@ -22,7 +22,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>Inventory Warehouse List</small></h2>
-    <h3><small><a href="">Create New Warehouse</a></small></h3>
+    <h3><small><a href="~/Inventory/InventoryWarehouse/Create">Create New Warehouse</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -53,7 +53,7 @@
                         {
                             <tr class="gradeX">
                                 <td>@( i += 1)</td>
-                                <td> <a href="InventoryWarehouseView.html">@warehouse.WarehouseNumber</a></td>
+                                <td> <a href="~/Inventory/InventoryWarehouse/Create/@warehouse.WarehouseId">@warehouse.WarehouseNumber</a></td>
                                 <td>@warehouse.EmployeeNameEn</td>
                                 <td>@warehouse.WarehouseSize</td>
                                 @if (warehouse.IsFull)
@@ -68,7 +68,7 @@
                                 <td class="center">@warehouse.NoOfSections</td>
                                 <td class="center">@warehouse.NoOfShalves</td>
                                 <td class="center">@warehouse.NoOfSectoinsInShalves</td>
-                                <td class="center">@warehouse.NoOfSpaces</td>
+                                <td class="center">-</td>
                             </tr>
                         }
                     </tbody>

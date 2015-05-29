@@ -492,8 +492,8 @@
             <PropertyRef Name="WarehousrId" />
             <PropertyRef Name="ItemVariationId" />
           </Key>
-          <Property Name="WarehousrId" Nullable="false" Type="bigint" />
-          <Property Name="ItemVariationId" Nullable="false" Type="bigint" />
+          <Property Name="WarehousrId" Type="bigint" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="JobApplicants">
           <Key>
@@ -1015,30 +1015,29 @@
           <Property Name="WarehouseNumber" Type="nvarchar" MaxLength="200" />
           <Property Name="WarehouseManager" Type="bigint" />
           <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
-          <Property Name="NoOfAisles" Type="bigint" />
-          <Property Name="NoOfSections" Type="bigint" />
-          <Property Name="NoOfShalves" Type="bigint" />
-          <Property Name="NoOfSectoinsInShalves" Type="bigint" />
+          <Property Name="IsFull" Type="bit" Nullable="false" />
+          <Property Name="WarehouseSize" Type="nvarchar" MaxLength="500" />
+          <Property Name="ParentId" Type="bigint" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-          <Property Name="IsFull" Type="bit" Nullable="false" />
-          <Property Name="WarehouseSize" Type="nvarchar" MaxLength="500" />
-          <Property Name="NoOfSpaces" Type="bigint" />
         </EntityType>
-        <Association Name="FK_Aisle_Warehouse">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="Aisle" Type="Self.Aisle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
-            </Principal>
-            <Dependent Role="Aisle">
-              <PropertyRef Name="WarehouseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="WarehouseDetail">
+          <Key>
+            <PropertyRef Name="WarehouseDetailId" />
+          </Key>
+          <Property Name="WarehouseDetailId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="NodeLevel" Type="smallint" />
+          <Property Name="NoOfSpace" Type="int" />
+          <Property Name="ParentId" Type="bigint" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
@@ -1432,8 +1431,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ItemWarehouse_ItemVariation">
-          <End Type="Self.ItemVariation" Multiplicity="1" Role="ItemVariation" />
-          <End Type="Self.ItemWarehouse" Multiplicity="*" Role="ItemWarehouse" />
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemWarehouse" Type="Self.ItemWarehouse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ItemVariation">
               <PropertyRef Name="ItemVariationId" />
@@ -1444,8 +1443,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ItemWarehouse_Warehouse">
-          <End Type="Self.Warehouse" Multiplicity="1" Role="Warehouse" />
-          <End Type="Self.ItemWarehouse" Multiplicity="*" Role="ItemWarehouse" />
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="ItemWarehouse" Type="Self.ItemWarehouse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Warehouse">
               <PropertyRef Name="WarehouseId" />
@@ -1899,6 +1898,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WarehouseDetail_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseDetail_WarehouseDetail">
+          <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="0..1" />
+          <End Role="WarehouseDetail1" Type="Self.WarehouseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseDetailId" />
+            </Principal>
+            <Dependent Role="WarehouseDetail1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EPMSProjectModelStoreContainer">
           <EntitySet Name="Aisle" EntityType="Self.Aisle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
@@ -1964,10 +1987,7 @@
           <EntitySet Name="Vendor" EntityType="Self.Vendor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorItems" EntityType="Self.VendorItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Aisle_Warehouse" Association="Self.FK_Aisle_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouse" />
-            <End Role="Aisle" EntitySet="Aisle" />
-          </AssociationSet>
+          <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -2097,12 +2117,12 @@
             <End Role="ItemVariation" EntitySet="ItemVariation" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemWarehouse_ItemVariation" Association="Self.FK_ItemWarehouse_ItemVariation">
-            <End EntitySet="ItemVariation" Role="ItemVariation" />
-            <End EntitySet="ItemWarehouse" Role="ItemWarehouse" />
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemWarehouse_Warehouse" Association="Self.FK_ItemWarehouse_Warehouse">
-            <End EntitySet="Warehouse" Role="Warehouse" />
-            <End EntitySet="ItemWarehouse" Role="ItemWarehouse" />
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApplicants_Department" Association="Self.FK_JobApplicants_Department">
             <End Role="Department" EntitySet="Department" />
@@ -2252,6 +2272,14 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
+          <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="Self.FK_WarehouseDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="Self.FK_WarehouseDetail_WarehouseDetail">
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetail" />
+            <End Role="WarehouseDetail1" EntitySet="WarehouseDetail" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -2269,7 +2297,6 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
-          <NavigationProperty Name="Warehouse" Relationship="EPMSProjectModel.FK_Aisle_Warehouse" FromRole="Aisle" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="Allowance">
           <Key>
@@ -3794,17 +3821,22 @@
             <End Role="RFIItem" EntitySet="RFIItems" />
           </AssociationSet>
           <EntitySet Name="Warehouses" EntityType="EPMSProjectModel.Warehouse" />
-          <AssociationSet Name="FK_Aisle_Warehouse" Association="EPMSProjectModel.FK_Aisle_Warehouse">
-            <End EntitySet="Warehouses" Role="Warehouse" />
-            <End EntitySet="Aisles" Role="Aisle" />
-          </AssociationSet>
+          <EntitySet Name="WarehouseDetails" EntityType="EPMSProjectModel.WarehouseDetail" />
           <AssociationSet Name="FK_Warehouse_Employee" Association="EPMSProjectModel.FK_Warehouse_Employee">
-            <End EntitySet="Employees" Role="Employee" />
-            <End EntitySet="Warehouses" Role="Warehouse" />
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="EPMSProjectModel.FK_WarehouseDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail">
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
+            <End Role="WarehouseDetail1" EntitySet="WarehouseDetails" />
           </AssociationSet>
           <AssociationSet Name="ItemWarehouse" Association="EPMSProjectModel.ItemWarehouse">
-            <End EntitySet="ItemVariations" Role="ItemVariation" />
-            <End EntitySet="Warehouses" Role="Warehouse" />
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Menu">
@@ -4352,40 +4384,42 @@
           <Key>
             <PropertyRef Name="WarehouseId" />
           </Key>
-          <Property Name="WarehouseId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int64" />
-          <Property Name="WarehouseNumber" MaxLength="200" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseManager" Type="Int64" />
-          <Property Name="WarehouseLocation" MaxLength="500" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="NoOfAisles" Type="Int64" />
-          <Property Name="NoOfSections" Type="Int64" />
-          <Property Name="NoOfShalves" Type="Int64" />
-          <Property Name="NoOfSectoinsInShalves" Type="Int64" />
-          <Property Name="RecCreatedBy" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="RecCreatedDt" Nullable="false" Precision="3" Type="DateTime" />
-          <Property Name="RecLastUpdatedBy" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="RecLastUpdatedDt" Nullable="false" Precision="3" Type="DateTime" />
-          <Property Name="IsFull" Nullable="false" Type="Boolean" />
-          <Property Name="WarehouseSize" MaxLength="500" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="NoOfSpaces" Type="Int64" />
-          <NavigationProperty Name="Aisles" Relationship="EPMSProjectModel.FK_Aisle_Warehouse" FromRole="Warehouse" ToRole="Aisle" />
+          <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsFull" Type="Boolean" Nullable="false" />
+          <Property Name="WarehouseSize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="EPMSProjectModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
+          <NavigationProperty Name="WarehouseDetails" Relationship="EPMSProjectModel.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
           <NavigationProperty Name="ItemVariations" Relationship="EPMSProjectModel.ItemWarehouse" FromRole="Warehouse" ToRole="ItemVariation" />
         </EntityType>
-        <Association Name="FK_Aisle_Warehouse">
-          <End Type="EPMSProjectModel.Warehouse" Multiplicity="1" Role="Warehouse" />
-          <End Type="EPMSProjectModel.Aisle" Multiplicity="*" Role="Aisle" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
-            </Principal>
-            <Dependent Role="Aisle">
-              <PropertyRef Name="WarehouseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="WarehouseDetail">
+          <Key>
+            <PropertyRef Name="WarehouseDetailId" />
+          </Key>
+          <Property Name="WarehouseDetailId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NodeLevel" Type="Int16" />
+          <Property Name="NoOfSpace" Type="Int32" />
+          <Property Name="ParentId" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSProjectModel.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
+          <NavigationProperty Name="WarehouseDetails" Relationship="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail" ToRole="WarehouseDetail1" />
+          <NavigationProperty Name="ParentDetail" Relationship="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail1" ToRole="WarehouseDetail" />
+        </EntityType>
         <Association Name="FK_Warehouse_Employee">
-          <End Type="EPMSProjectModel.Employee" Multiplicity="1" Role="Employee" />
-          <End Type="EPMSProjectModel.Warehouse" Multiplicity="0..1" Role="Warehouse" />
+          <End Type="EPMSProjectModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSProjectModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="EmployeeId" />
@@ -4395,9 +4429,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WarehouseDetail_Warehouse">
+          <End Type="EPMSProjectModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSProjectModel.WarehouseDetail" Role="WarehouseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseDetail_WarehouseDetail">
+          <End Type="EPMSProjectModel.WarehouseDetail" Role="WarehouseDetail" Multiplicity="0..1" />
+          <End Type="EPMSProjectModel.WarehouseDetail" Role="WarehouseDetail1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseDetailId" />
+            </Principal>
+            <Dependent Role="WarehouseDetail1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ItemWarehouse">
-          <End Type="EPMSProjectModel.ItemVariation" Multiplicity="*" Role="ItemVariation" />
-          <End Type="EPMSProjectModel.Warehouse" Multiplicity="*" Role="Warehouse" />
+          <End Type="EPMSProjectModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <End Type="EPMSProjectModel.Warehouse" Role="Warehouse" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -5456,21 +5514,33 @@
           <EntitySetMapping Name="Warehouses">
             <EntityTypeMapping TypeName="EPMSProjectModel.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
-                <ScalarProperty Name="NoOfSpaces" ColumnName="NoOfSpaces" />
-                <ScalarProperty Name="WarehouseSize" ColumnName="WarehouseSize" />
-                <ScalarProperty Name="IsFull" ColumnName="IsFull" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="NoOfSectoinsInShalves" ColumnName="NoOfSectoinsInShalves" />
-                <ScalarProperty Name="NoOfShalves" ColumnName="NoOfShalves" />
-                <ScalarProperty Name="NoOfSections" ColumnName="NoOfSections" />
-                <ScalarProperty Name="NoOfAisles" ColumnName="NoOfAisles" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="WarehouseSize" ColumnName="WarehouseSize" />
+                <ScalarProperty Name="IsFull" ColumnName="IsFull" />
                 <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
                 <ScalarProperty Name="WarehouseManager" ColumnName="WarehouseManager" />
                 <ScalarProperty Name="WarehouseNumber" ColumnName="WarehouseNumber" />
                 <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WarehouseDetails">
+            <EntityTypeMapping TypeName="EPMSProjectModel.WarehouseDetail">
+              <MappingFragment StoreEntitySet="WarehouseDetail">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="NoOfSpace" ColumnName="NoOfSpace" />
+                <ScalarProperty Name="NodeLevel" ColumnName="NodeLevel" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="WarehouseDetailId" ColumnName="WarehouseDetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

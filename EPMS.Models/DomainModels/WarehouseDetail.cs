@@ -3,22 +3,21 @@ using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
-    public class Warehouse
+    public class WarehouseDetail
     {
+        public long WarehouseDetailId { get; set; }
         public long WarehouseId { get; set; }
-        public string WarehouseNumber { get; set; }
-        public long? WarehouseManager { get; set; }
-        public string WarehouseLocation { get; set; }
-        public bool IsFull { get; set; }
-        public string WarehouseSize { get; set; }
+        public string Name { get; set; }
+        public short? NodeLevel { get; set; }
+        public int? NoOfSpace { get; set; }
         public long? ParentId { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
 
-        public virtual Employee Employee { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
         public virtual ICollection<WarehouseDetail> WarehouseDetails { get; set; }
-        public virtual ICollection<ItemVariation> ItemVariations { get; set; }
+        public virtual WarehouseDetail ParentDetail { get; set; }
     }
 }
