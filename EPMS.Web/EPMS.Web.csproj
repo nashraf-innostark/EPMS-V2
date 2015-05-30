@@ -387,6 +387,7 @@
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\ApplicantQualification.cs" />
+    <Compile Include="Models\Common\JsTree.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
     <Compile Include="Models\CompanyLicenseInformation.cs" />
@@ -1768,6 +1769,7 @@
     <Content Include="RTE\skins\moono\images\lock.png" />
     <Content Include="RTE\skins\moono\images\refresh.png" />
     <Content Include="RTE\styles.js" />
+    <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
