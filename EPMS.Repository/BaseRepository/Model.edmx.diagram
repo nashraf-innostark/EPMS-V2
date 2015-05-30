@@ -4,132 +4,134 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="51536fb8660843648fcc2dd0da59b021" Name="Diagram1" ZoomLevel="111">
-        <EntityTypeShape EntityType="EPMSProjectModel.Aisle" Width="1.5" PointX="15.75" PointY="46.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Allowance" Width="1.5" PointX="7.5" PointY="39.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ApplicantExperience" Width="1.5" PointX="12.75" PointY="33.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ApplicantQualification" Width="1.5" PointX="12.75" PointY="50.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.AspNetRole" Width="1.5" PointX="5.25" PointY="37.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="51.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="36.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.AspNetUser" Width="1.5" PointX="7.5" PointY="45.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Color" Width="1.5" PointX="13.5" PointY="60.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.CompanyBankDetail" Width="1.5" PointX="16" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.CompanyDocumentDetail" Width="1.5" PointX="16" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.CompanyProfile" Width="1.5" PointX="13.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.CompanySocialDetail" Width="1.5" PointX="16" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Complaint" Width="1.5" PointX="3" PointY="31.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Customer" Width="1.5" PointX="0.75" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.DashboardWidgetPreference" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Department" Width="1.5" PointX="0.75" PointY="32.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Employee" Width="1.75" PointX="5" PointY="40.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.EmployeeJobHistory" Width="1.5" PointX="10.5" PointY="47.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="56.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.InventoryDepartment" Width="1.75" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.InventoryItem" Width="1.5" PointX="13.5" PointY="64.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ItemImage" Width="1.5" PointX="18" PointY="59.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ItemVariation" Width="1.5" PointX="15.75" PointY="61.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.JobApplicant" Width="1.5" PointX="10.5" PointY="39.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.JobOffered" Width="1.5" PointX="5.25" PointY="49.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.JobTitle" Width="1.5" PointX="3" PointY="45.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.JobTitleHistory" Width="1.5" PointX="5.25" PointY="54.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.LicenseControlPanel" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Manufacturer" Width="1.5" PointX="18" PointY="62" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Meeting" Width="1.5" PointX="11.25" PointY="64.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.MeetingAttendee" Width="1.5" PointX="13.5" PointY="43" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.MeetingDocument" Width="1.5" PointX="13.5" PointY="70.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.MenuRight" Width="1.5" PointX="7.5" PointY="19.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Notification" Width="1.5" PointX="13.5" PointY="55.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="43" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Order" Width="1.5" PointX="6.75" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Project" Width="1.5" PointX="9" PointY="24" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ProjectDocument" Width="1.5" PointX="11.25" PointY="31.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ProjectTask" Width="1.5" PointX="11.25" PointY="24" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.QuickLaunchItem" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Quotation" Width="1.5" PointX="6.75" PointY="26.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.QuotationItemDetail" Width="1.5" PointX="9" PointY="31.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.RequestDetail" Width="1.5" PointX="9.75" PointY="55.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.RFI" Width="1.5" PointX="15.75" PointY="50.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.RFIItem" Width="1.5" PointX="18" PointY="50.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Section" Width="1.5" PointX="18" PointY="46.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Shelf" Width="1.5" PointX="20.25" PointY="46.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.ShelfSection" Width="1.5" PointX="22.5" PointY="46.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Size" Width="1.5" PointX="18" PointY="65.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Status" Width="1.5" PointX="18" PointY="68.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.TaskEmployee" Width="1.5" PointX="13.5" PointY="38.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.UserPrefrence" Width="1.5" PointX="9.75" PointY="61.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Vendor" Width="1.5" PointX="5.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSProjectModel.VendorItem" Width="1.5" PointX="8" PointY="2" IsExpanded="true" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Section_Aisle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Allowance_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ApplicantExperience_JobApplicants" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ApplicantQualification_JobApplicants" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_AspNetUsers_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_RFI_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_UserPrefrences_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_CompanyBankDetails_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_CompanyDocuments_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_CompanySocialDetails_CompanyProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Complaint_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Complaint_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Orders_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Project_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ProjectTask_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Quotation_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_JobApplicants_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_JobTitle_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Employee_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_InventoryDepartment_InventoryDepartment" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ItemVariation_InventoryItems" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ItemImage_ItemVariation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_ItemVariation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_JobOffered_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_MeetingAttendees_Meeting" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_MeetingDocuments_Meeting" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_NotificationRecipient_Notification" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Project_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_RFI_Orders" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Project_Quotation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ProjectDocuments_Project" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ProjectTask_Project" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ProjectTask_ProjectTask" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_TaskEmployee_Task" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_RFIItem_RFI" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Shelf_Section" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_ShelfSection_Shelf" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.FK_VendorItems_Vendor" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.AspNetUserRoles" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.ItemColor" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.ItemManufacturer" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.ItemSize" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.ItemStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSProjectModel.PreRequisitTask" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Menu" Width="1.75" PointX="0.75" PointY="11" />
-        <AssociationConnector Association="EPMSProjectModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" />
-        <AssociationConnector Association="EPMSProjectModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" />
-        <AssociationConnector Association="EPMSProjectModel.FK_QuickLaunchItems_Menu" />
-        <EntityTypeShape EntityType="EPMSProjectModel.Warehouse" Width="1.5" PointX="21" PointY="52.75" />
-        <EntityTypeShape EntityType="EPMSProjectModel.WarehouseDetail" Width="1.875" PointX="23.25" PointY="52.75" />
-        <AssociationConnector Association="EPMSProjectModel.FK_Warehouse_Employee" />
-        <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_Warehouse" />
-        <AssociationConnector Association="EPMSProjectModel.FK_WarehouseDetail_WarehouseDetail" />
-        <AssociationConnector Association="EPMSProjectModel.ItemWarehouse" />
-        </Diagram>
+      <Diagram DiagramId="832894b629a5410ca7ee8ef29f4c6f8f" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="2.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="7.5" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="12.75" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.5" PointX="12.75" PointY="52.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.AspNetRole" Width="1.5" PointX="5.25" PointY="37.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUserClaim" Width="1.5" PointX="9.75" PointY="52.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUserLogin" Width="1.5" PointX="9.75" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUser" Width="1.5" PointX="7.5" PointY="46.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Color" Width="1.5" PointX="13.5" PointY="57.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.CompanyBankDetail" Width="1.5" PointX="16" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.CompanyDocumentDetail" Width="1.5" PointX="16" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.CompanyProfile" Width="1.5" PointX="13.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.CompanySocialDetail" Width="1.5" PointX="16" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Complaint" Width="1.5" PointX="3" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Customer" Width="1.5" PointX="0.75" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.DashboardWidgetPreference" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Department" Width="1.5" PointX="0.75" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Employee" Width="1.5" PointX="5.25" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.EmployeeJobHistory" Width="1.5" PointX="10.5" PointY="48.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.EmployeeRequest" Width="1.5" PointX="7.5" PointY="56.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.InventoryDepartment" Width="2" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.InventoryItem" Width="1.5" PointX="13.5" PointY="61" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemImage" Width="1.5" PointX="18" PointY="57.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemManufacturer" Width="1.5" PointX="21" PointY="60.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemVariation" Width="1.75" PointX="15.5" PointY="57.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.JobApplicant" Width="1.5" PointX="10.5" PointY="39.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.JobOffered" Width="1.5" PointX="5.25" PointY="50.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.JobTitle" Width="1.5" PointX="3" PointY="46.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.JobTitleHistory" Width="1.5" PointX="5.25" PointY="55.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.LicenseControlPanel" Width="1.5" PointX="2.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Manufacturer" Width="1.5" PointX="18.75" PointY="70.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Meeting" Width="1.5" PointX="11.25" PointY="65" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.MeetingAttendee" Width="1.5" PointX="13.5" PointY="43.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.MeetingDocument" Width="1.5" PointX="13.5" PointY="67.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Menu" Width="1.75" PointX="0.625" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.MenuRight" Width="1.5" PointX="7.5" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Notification" Width="1.5" PointX="13.5" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.NotificationRecipient" Width="1.5" PointX="15.75" PointY="42.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Order" Width="1.5" PointX="6.75" PointY="22.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Project" Width="1.5" PointX="9" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ProjectDocument" Width="1.5" PointX="11.25" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ProjectTask" Width="1.75" PointX="11" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.QuickLaunchItem" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Quotation" Width="1.5" PointX="6.75" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.QuotationItemDetail" Width="1.5" PointX="9" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.RequestDetail" Width="1.5" PointX="9.75" PointY="56.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.RFI" Width="1.5" PointX="15.75" PointY="51.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.RFIItem" Width="1.75" PointX="19" PointY="52" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Section" Width="1.5" PointX="5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Shelf" Width="1.5" PointX="7.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ShelfSection" Width="1.5" PointX="9.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Size" Width="1.5" PointX="18" PointY="63" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Status" Width="1.5" PointX="18" PointY="66.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.TaskEmployee" Width="1.5" PointX="13.5" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.UserPrefrence" Width="1.5" PointX="9.75" PointY="61.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Vendor" Width="1.5" PointX="7.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.VendorItem" Width="1.5" PointX="10" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Warehouse" Width="1.5" PointX="16.375" PointY="47.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WarehouseDetail" Width="1.75" PointX="18.875" PointY="47.125" IsExpanded="true" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Section_Aisle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Allowance_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ApplicantExperience_JobApplicants" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ApplicantQualification_JobApplicants" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_AspNetUsers_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_AspNetUsers_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_NotificationRecipient_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RFI_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_UserPrefrences_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_CompanyBankDetails_CompanyProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_CompanyDocuments_CompanyProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_CompanySocialDetails_CompanyProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Complaint_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Complaint_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Orders_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Project_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ProjectTask_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Quotation_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_JobApplicants_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_JobTitle_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Employee_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_EmployeeJobHistory_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_EmployeeRequests_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_MeetingAttendees_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_NotificationRecipient_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TaskEmployee_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Warehouse_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_EmployeeJobHistory_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RequestDetails_EmployeeRequests" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_InventoryDepartment_InventoryDepartment" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemVariation_InventoryItems" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemImage_ItemVariation" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemManufacturer_ItemVariation" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemManufacturer_Manufacturer" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RFIItem_ItemVariation" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_JobApplicants_JobOffered" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_JobOffered_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_JobTitleHistory_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_MeetingAttendees_Meeting" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_MeetingDocuments_Meeting" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_dbo_Menu_dbo_Menu_ParentItem_MenuId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_dbo_MenuRight_dbo_Menu_Menu_MenuId" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_QuickLaunchItems_Menu" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_NotificationRecipient_Notification" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Project_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RFI_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Project_Quotation" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ProjectDocuments_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ProjectTask_Project" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ProjectTask_ProjectTask" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TaskEmployee_Task" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RFIItem_RFI" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Shelf_Section" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ShelfSection_Shelf" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_VendorItems_Vendor" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_WarehouseDetail_WarehouseDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.ItemColor" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.ItemSize" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.ItemStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.ItemWarehouse" ManuallyRouted="false" />
+        <AssociationConnector Association="EPMSInventoryModel.PreRequisitTask" ManuallyRouted="false" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

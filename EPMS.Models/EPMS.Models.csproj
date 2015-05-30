@@ -108,6 +108,7 @@
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
+    <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="RequestModels\RfiSearchRequest.cs" />
     <Compile Include="Common\TaskByColumn.cs" />

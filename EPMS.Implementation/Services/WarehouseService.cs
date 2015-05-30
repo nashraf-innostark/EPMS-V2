@@ -58,9 +58,16 @@ namespace EPMS.Implementation.Services
             {
                 throw new ArgumentException("Warehouse already exists");
             }
-            warehouseRepository.Add(warehouse);
-            warehouseRepository.SaveChanges();
-            return true;
+            try
+            {
+                warehouseRepository.Add(warehouse);
+                warehouseRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Updatewarehouse(Warehouse warehouse)
@@ -69,9 +76,16 @@ namespace EPMS.Implementation.Services
             {
                 throw new ArgumentException("Warehouse already exists");
             }
-            warehouseRepository.Update(warehouse);
-            warehouseRepository.SaveChanges();
-            return true;
+            try
+            {
+                warehouseRepository.Update(warehouse);
+                warehouseRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void DeleteWarehouse(Warehouse warehouse)

@@ -7,8 +7,11 @@ using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models;
+using EPMS.Web.Models.Common;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryWarehouse;
 using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -17,13 +20,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Private
 
         private readonly IWarehouseService warehouseService;
+        private readonly IEmployeeService employeeService;
 
         #endregion
 
         #region Constructor
-        public InventoryWarehouseController(IWarehouseService warehouseService)
+        public InventoryWarehouseController(IWarehouseService warehouseService, IEmployeeService employeeService)
         {
             this.warehouseService = warehouseService;
+            this.employeeService = employeeService;
         }
 
         #endregion
@@ -66,6 +71,56 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Create(InventoryWarehouseCreateViewModel model)
+        {
+            try
+            {
+                if (model.Warehouse.WarehouseId > 0)
+                {
+                    // Update
+                    model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.Warehouse.RecLastUpdatedDt = DateTime.Now;
+                    var warehouseToUpdate = model.Warehouse.CreateFromClientToServer();
+                    if (warehouseService.Updatewarehouse(warehouseToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Warehouse Updated Successfully",
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    // Add
+                    model.Warehouse.RecCreatedBy = User.Identity.GetUserId();
+                    model.Warehouse.RecCreatedDt = DateTime.Now;
+                    model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.Warehouse.RecLastUpdatedDt = DateTime.Now;
+                    var warehouseToAdd = model.Warehouse.CreateFromClientToServer();
+                    if (warehouseService.AddWarehouse(warehouseToAdd))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Warehouse Updated Successfully",
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Error");
+            }
+            model.Employees = employeeService.GetAll().Select(x => x.CreateForEmployeeDDL());
+            return View(model);
+        }
+
         #endregion
 
         #region Get Warehouse Number
@@ -98,6 +153,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
+        #region Get Warehouse Number
+        /// <summary>
+        /// Get Warehouse Details
+        /// </summary>
+        [HttpGet]
+        public JsonResult GetWarehouseDetails(long warehouseId)
+        {
+            var warehouse = warehouseService.FindWarehouseById(warehouseId);
+            //JsTree details = warehouse.WarehouseDetails.
+            return Json(warehouse, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        
         #endregion
     }
 }
