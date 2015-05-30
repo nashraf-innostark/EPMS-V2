@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -158,11 +159,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         /// Get Warehouse Details
         /// </summary>
         [HttpGet]
-        public JsonResult GetWarehouseDetails(long warehouseId)
+        public JsonResult GetWarehouseDetails(long id)
         {
-            var warehouse = warehouseService.FindWarehouseById(warehouseId);
-            //JsTree details = warehouse.WarehouseDetails.
-            return Json(warehouse, JsonRequestBehavior.AllowGet);
+            var warehouse = warehouseService.FindWarehouseById(id);
+            IList<JsTree> details = warehouse.WarehouseDetails.Select(x => x.CreateForJsTree()).ToList();
+            return Json(details, JsonRequestBehavior.AllowGet);
         }
         #endregion
         
