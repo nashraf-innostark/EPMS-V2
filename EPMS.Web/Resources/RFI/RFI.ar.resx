@@ -118,75 +118,111 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Add Ar</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Client</value>
+    <value>Client Ar</value>
   </data>
   <data name="CreatedBy" xml:space="preserve">
-    <value>Created By</value>
+    <value>Created By Ar</value>
   </data>
   <data name="CreatePageBreadCrumb" xml:space="preserve">
-    <value>Inventory RFI Create</value>
+    <value>Inventory RFI Create Ar</value>
   </data>
   <data name="CreatePageHeading" xml:space="preserve">
-    <value>Inventory Items Addition</value>
+    <value>Inventory Items Addition Ar</value>
   </data>
   <data name="CreatePageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Create</value>
+    <value>Inventory Warehouse Create Ar</value>
   </data>
   <data name="EditPageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Edit</value>
+    <value>Inventory Warehouse Edit Ar</value>
   </data>
   <data name="ExcelImport" xml:space="preserve">
-    <value>Excel Import</value>
+    <value>Excel Import Ar</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import</value>
+    <value>Import Ar</value>
   </data>
   <data name="ImportItemsFromOrder" xml:space="preserve">
-    <value>Import Items From Order</value>
+    <value>Import Items From Order Ar</value>
   </data>
   <data name="OrderNameOrderNo" xml:space="preserve">
-    <value>OrderName - Order#</value>
+    <value>OrderName - Order# Ar</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>Submit Ar</value>
   </data>
   <data name="Usage" xml:space="preserve">
-    <value>Usage</value>
+    <value>Usage Ar</value>
   </data>
   <data name="UsageArabic" xml:space="preserve">
-    <value>Usage in arabic</value>
+    <value>Usage in arabic Ar</value>
   </data>
   <data name="NotesA" xml:space="preserve">
-    <value>Notes arabic</value>
+    <value>Notes arabic Ar</value>
   </data>
   <data name="NotesE" xml:space="preserve">
-    <value>Notes</value>
+    <value>Notes Ar</value>
   </data>
   <data name="Customer" xml:space="preserve">
-    <value>Customer</value>
+    <value>Customer Ar</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Date Ar</value>
   </data>
   <data name="ListPageHeading" xml:space="preserve">
-    <value>Inventory Request for Item(RFI) List</value>
+    <value>Inventory Request for Item(RFI) List Ar</value>
   </data>
   <data name="ListPageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Request for Item(RFI) List</value>
+    <value>Inventory Warehouse Request for Item(RFI) List Ar</value>
   </data>
   <data name="Requester" xml:space="preserve">
-    <value>Requester</value>
+    <value>Requester Ar</value>
   </data>
   <data name="RfiNo" xml:space="preserve">
-    <value>Request for Item(RFI) Number</value>
+    <value>Request for Item(RFI) Number Ar</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serial</value>
+    <value>Serial Ar</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>Status Ar</value>
+  </data>
+  <data name="AddItemDescription" xml:space="preserve">
+    <value>Add Item Description Ar</value>
+  </data>
+  <data name="AddItemSKU" xml:space="preserve">
+    <value>Add Item SKU Ar</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel Ar</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>DeleteAr</value>
+  </data>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>Item Details Ar</value>
+  </data>
+  <data name="ItemSearch" xml:space="preserve">
+    <value>Item Search Ar</value>
+  </data>
+  <data name="ItemTreeSelector" xml:space="preserve">
+    <value>Item Tree Selector Ar</value>
+  </data>
+  <data name="PlaceInWarehouseTree" xml:space="preserve">
+    <value>Place in Warehouse Tree Ar</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>QuantityAr</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Save Changes Ar</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select Ar</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>Select Item Ar</value>
   </data>
 </root>

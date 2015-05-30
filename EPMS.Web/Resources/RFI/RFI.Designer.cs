@@ -70,6 +70,33 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Item Description.
+        /// </summary>
+        public static string AddItemDescription {
+            get {
+                return ResourceManager.GetString("AddItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Item SKU.
+        /// </summary>
+        public static string AddItemSKU {
+            get {
+                return ResourceManager.GetString("AddItemSKU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client.
         /// </summary>
         public static string Client {
@@ -133,6 +160,15 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Warehouse Edit.
         /// </summary>
         public static string EditPageTitle {
@@ -165,6 +201,33 @@ namespace EPMS.Web.Resources.RFI {
         public static string ImportItemsFromOrder {
             get {
                 return ResourceManager.GetString("ImportItemsFromOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Details.
+        /// </summary>
+        public static string ItemDetails {
+            get {
+                return ResourceManager.GetString("ItemDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Search.
+        /// </summary>
+        public static string ItemSearch {
+            get {
+                return ResourceManager.GetString("ItemSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Tree Selector.
+        /// </summary>
+        public static string ItemTreeSelector {
+            get {
+                return ResourceManager.GetString("ItemTreeSelector", resourceCulture);
             }
         }
         
@@ -223,6 +286,24 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Place in Warehouse Tree.
+        /// </summary>
+        public static string PlaceInWarehouseTree {
+            get {
+                return ResourceManager.GetString("PlaceInWarehouseTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Quantity {
+            get {
+                return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester.
         /// </summary>
         public static string Requester {
@@ -237,6 +318,33 @@ namespace EPMS.Web.Resources.RFI {
         public static string RfiNo {
             get {
                 return ResourceManager.GetString("RfiNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Changes.
+        /// </summary>
+        public static string SaveChanges {
+            get {
+                return ResourceManager.GetString("SaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Item.
+        /// </summary>
+        public static string SelectItem {
+            get {
+                return ResourceManager.GetString("SelectItem", resourceCulture);
             }
         }
         

@@ -43,8 +43,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<RfiRequestByColumn, Func<RFI, object>>
                     {
                         { RfiRequestByColumn.RfiNo, c => c.RFIId},
-                        { RfiRequestByColumn.Requester,  c => c.AspNetUser.Employee.EmployeeFirstNameE },
-                        { RfiRequestByColumn.Customer, c => c.Order.Customer.CustomerNameE},
+                        { RfiRequestByColumn.Requester,  c => c.Order.Customer.CustomerNameE },
                         { RfiRequestByColumn.DateCreated, c => c.RecCreatedDate},
                         { RfiRequestByColumn.Status,  c => c.Status}
                     };
@@ -84,6 +83,11 @@ namespace EPMS.Repository.Repositories
             {
                 rfis = DbSet
                 .Where(query).OrderByDescending(x => x.RecCreatedDate).Skip(fromRow).Take(toRow).ToList();
+            }
+            else if (rfiSearchRequest.iSortCol_0 == 3 && rfiSearchRequest.Requester == "Admin")
+            {
+                rfis = DbSet
+                .Where(query).OrderByDescending(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList();
             }
             else
             {

@@ -35,7 +35,7 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-                <table id="dataTable" class="table table-responsive">
+                <table id="dataTable" class="table table-striped table-responsive">
                     <thead class="cf sorthead">
                         @if (ViewBag.UserRole == "Admin")
                         {
@@ -87,7 +87,9 @@
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
                             return full["RFIId"];
-                        }
+                        },
+                        "bVisible": true,
+                        "bSortable": false
                     },
                     {
                         "aTargets": [2],
@@ -128,7 +130,7 @@
                             }
                             return value;
                         },
-                        "bSortable": false
+                        "bSortable": true
                     }
                 ],
                 "fnServerParams": function(aoData) {
@@ -164,7 +166,9 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             return full["RFIId"];
-                        }
+                        },
+                        "bVisible": true,
+                        "bSortable": false
                     },
                     {
                         "aTargets": [2],
@@ -195,17 +199,17 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             var value = "";
-                            if (full["Status"] == 2) {
+                            if (full["Status"] == 6) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Pending';
                             } else if (full["Status"] == 3) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Canceled';
                             }
-                            else if (full["Status"] == 6) {
+                            else if (full["Status"] == 2) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Accepted';
                             }
                             return value;
                         },
-                        "bSortable": false
+                        "bSortable": true
                     }
                 ],
                 "fnServerParams": function (aoData) {
