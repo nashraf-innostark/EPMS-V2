@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RFI;
@@ -6,6 +7,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
 {
     public static class RfiMapper
     {
+        #region Client to Server
         public static EPMS.Models.DomainModels.RFI CreateRfiClientToServer(this RFIViewModel source)
         {
             var rfi = new EPMS.Models.DomainModels.RFI
@@ -14,7 +16,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
-
+                Status = source.Rfi.Status == 0 ? 2 : source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
 
@@ -28,13 +30,13 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             return rfi;
         }
 
-        public static EPMS.Models.DomainModels.RFIItem CreateRfiItemClientToServer(this RFIItem source,long rfiId, string createdBy, DateTime createdDate, DateTime updatedDate)
+        public static EPMS.Models.DomainModels.RFIItem CreateRfiItemClientToServer(this RFIItem source, long rfiId, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
             var rfiItem = new EPMS.Models.DomainModels.RFIItem
             {
                 RFIItemId = source.RFIItemId,
                 RFIId = rfiId,
-                ItemVariationId = source.ItemVariationId,
+                ItemVariationId = source.ItemVariationId == 0 ? null : source.ItemVariationId,
                 IsItemDescription = source.IsItemDescription,
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
@@ -48,6 +50,9 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             return rfiItem;
         }
 
+        #endregion
+
+        #region Server to Client
         public static Models.RFI CreateRfiServerToClient(this EPMS.Models.DomainModels.RFI source)
         {
             var rfi = new Models.RFI
@@ -59,13 +64,13 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
 
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
-
-                RecCreatedByName = source.AspNetUser.Employee.EmployeeFirstNameE+" "+source.AspNetUser.Employee.EmployeeFirstNameE,
+                Status = source.Status,
+                RecCreatedByName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
-                RecCreatedDateString = source.RecCreatedDate.ToShortDateString(),
+                RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
-                
+
                 RecUpdatedBy = source.RecCreatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };
@@ -91,5 +96,6 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             };
             return rfiItem;
         }
+        #endregion
     }
 }

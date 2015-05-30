@@ -1821,6 +1821,8 @@
     <Content Include="Areas\Inventory\Views\InventoryWarehouse\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryWarehouse\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\RFI\Index.cshtml" />
+    <Content Include="Views\Shared\_ItemsPopUp.cshtml" />
+    <Content Include="Areas\Inventory\Views\RFI\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

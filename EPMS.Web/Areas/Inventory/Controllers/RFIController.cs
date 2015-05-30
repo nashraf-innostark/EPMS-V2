@@ -98,6 +98,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult Details(RFIViewModel rfiViewModel)
+        {
+            return View();
+        }
 
         // GET: Inventory/RFI/Create
         public ActionResult Create(long? id)
@@ -142,6 +148,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                     rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Resources.HR.Request.RequestReplied,
+                        IsUpdated = true
+                    };
                 }
                 else
                 {
@@ -150,6 +162,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                     rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                    TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestCreated, IsSaved = true };
                 }
                 
                 var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
@@ -158,7 +171,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     //success
                 }
                 //failed to save
-                return RedirectToAction("Index");
+                return View(); 
             }
             catch
             {
