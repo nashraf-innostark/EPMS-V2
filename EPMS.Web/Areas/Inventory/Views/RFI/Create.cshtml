@@ -78,7 +78,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Rfi.RecCreatedByName, new { @readonly = true, @id = "createdBy" })
+                    @Html.TextBoxFor(model => model.Rfi.RequesterName, new { @readonly = true, @id = "createdBy" })
                 </div>
             </div>
         </div>
@@ -227,29 +227,26 @@
             </div>
         </div>
         <!--Basic Responsive Table end-->
-        @if (Model.Rfi.RFIId > 0)
-        {
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesE</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(m => m.Rfi.NotesE, new { @id = "RFINotesE" })
-                    </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesE</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Rfi.NotesE, new { @id = "RFINotesE" })
                 </div>
             </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesA</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(m => m.Rfi.NotesA,new {@id="RFINotesA"})
-                    </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Rfi.NotesA, new { @id = "RFINotesA" })
                 </div>
             </div>
-        }
+        </div>
        
         <div class="control-group row-fluid">
             <div class="span3 span-inset">

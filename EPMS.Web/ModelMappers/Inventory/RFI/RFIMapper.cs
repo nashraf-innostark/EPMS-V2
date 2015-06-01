@@ -49,7 +49,25 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             };
             return rfiItem;
         }
+        public static EPMS.Models.DomainModels.RFI CreateRfiDetailsClientToServer(this RFIViewModel source)
+        {
+            var rfi = new EPMS.Models.DomainModels.RFI
+            {
+                RFIId = source.Rfi.RFIId,
+                OrderId = source.Rfi.OrderId,
+                UsageE = source.Rfi.UsageE,
+                UsageA = source.Rfi.UsageA,
+                Status = source.Rfi.Status == 0 ? 6 : source.Rfi.Status,
+                NotesE = source.Rfi.NotesE,
+                NotesA = source.Rfi.NotesA,
 
+                RecCreatedBy = source.Rfi.RecCreatedBy,
+                RecCreatedDate = source.Rfi.RecCreatedDate,
+                RecUpdatedBy = source.Rfi.RecCreatedBy,
+                RecUpdatedDate = source.Rfi.RecUpdatedDate
+            };
+            return rfi;
+        }
         #endregion
 
         #region Server to Client
@@ -65,7 +83,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,
-                RecCreatedByName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
+                RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RecCreatedBy = source.RecCreatedBy,
@@ -83,17 +101,49 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             {
                 RFIItemId = source.RFIItemId,
                 RFIId = source.RFIId,
-                ItemVariationId = source.ItemVariationId,
                 IsItemDescription = source.IsItemDescription,
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
-
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };
+            if (source.ItemVariation != null)
+            {
+                rfiItem.ItemVariationId = source.ItemVariationId;
+                rfiItem.ItemSKUCode = source.ItemVariation.SKUCode;
+            }
+            return rfiItem;
+        }
+        #endregion
+
+        #region Rfi Item Detail Server to Client
+        public static RFIItem CreateRfiItemDetailsServerToClient(this EPMS.Models.DomainModels.RFIItem source)
+        {
+            var rfiItem = new RFIItem
+            {
+                RFIItemId = source.RFIItemId,
+                RFIId = source.RFIId,
+                IsItemDescription = source.IsItemDescription,
+                IsItemSKU = source.IsItemSKU,
+                ItemQty = source.ItemQty,
+                ItemDetails = source.ItemDetails,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate
+            };
+            if (source.ItemVariation != null)
+            {
+                rfiItem.ItemVariationId = source.ItemVariationId;
+                rfiItem.ItemSKUCode = source.ItemVariation.SKUCode;
+                rfiItem.ItemCode = source.ItemVariation.InventoryItem.ItemCode;
+                rfiItem.ItemName = Resources.Shared.Common.TextDirection == "ltr"
+                    ? source.ItemVariation.InventoryItem.ItemNameEn
+                    : source.ItemVariation.InventoryItem.ItemNameAr;
+            }
             return rfiItem;
         }
         #endregion

@@ -106,6 +106,15 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Client Name.
+        /// </summary>
+        public static string ClientName {
+            get {
+                return ResourceManager.GetString("ClientName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created By.
         /// </summary>
         public static string CreatedBy {
@@ -133,7 +142,7 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Warehouse Create.
+        ///   Looks up a localized string similar to Create RFI (Request for Item).
         /// </summary>
         public static string CreatePageTitle {
             get {
@@ -169,11 +178,56 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Request For Item View.
+        /// </summary>
+        public static string DetailsPageBreadCrumb {
+            get {
+                return ResourceManager.GetString("DetailsPageBreadCrumb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for Item (RFI).
+        /// </summary>
+        public static string DetailsPageHeading {
+            get {
+                return ResourceManager.GetString("DetailsPageHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details RFI (Request for Item).
+        /// </summary>
+        public static string DetailsPageTitle {
+            get {
+                return ResourceManager.GetString("DetailsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Warehouse Edit.
         /// </summary>
         public static string EditPageTitle {
             get {
                 return ResourceManager.GetString("EditPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Id.
+        /// </summary>
+        public static string EmployeeId {
+            get {
+                return ResourceManager.GetString("EmployeeId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employee Name.
+        /// </summary>
+        public static string EmployeeName {
+            get {
+                return ResourceManager.GetString("EmployeeName", resourceCulture);
             }
         }
         
@@ -205,11 +259,38 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Manager Name.
+        /// </summary>
+        public static string InventoryManagerName {
+            get {
+                return ResourceManager.GetString("InventoryManagerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Code.
+        /// </summary>
+        public static string ItemCode {
+            get {
+                return ResourceManager.GetString("ItemCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Details.
         /// </summary>
         public static string ItemDetails {
             get {
                 return ResourceManager.GetString("ItemDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name.
+        /// </summary>
+        public static string ItemName {
+            get {
+                return ResourceManager.GetString("ItemName", resourceCulture);
             }
         }
         
@@ -286,6 +367,15 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Order#.
+        /// </summary>
+        public static string OrderNumber {
+            get {
+                return ResourceManager.GetString("OrderNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Place in Warehouse Tree.
         /// </summary>
         public static string PlaceInWarehouseTree {
@@ -304,6 +394,15 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity Needed.
+        /// </summary>
+        public static string QuantityNeeded {
+            get {
+                return ResourceManager.GetString("QuantityNeeded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester.
         /// </summary>
         public static string Requester {
@@ -313,11 +412,65 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requester Name.
+        /// </summary>
+        public static string RequesterName {
+            get {
+                return ResourceManager.GetString("RequesterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request Status.
+        /// </summary>
+        public static string RequestStatus {
+            get {
+                return ResourceManager.GetString("RequestStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for item has been created..
+        /// </summary>
+        public static string RFICreated {
+            get {
+                return ResourceManager.GetString("RFICreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request for Item(RFI) Number.
         /// </summary>
         public static string RfiNo {
             get {
                 return ResourceManager.GetString("RfiNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RFI#.
+        /// </summary>
+        public static string RFINumber {
+            get {
+                return ResourceManager.GetString("RFINumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for item has been replied..
+        /// </summary>
+        public static string RFIReplied {
+            get {
+                return ResourceManager.GetString("RFIReplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for item has been updated..
+        /// </summary>
+        public static string RFIUpdated {
+            get {
+                return ResourceManager.GetString("RFIUpdated", resourceCulture);
             }
         }
         
@@ -354,6 +507,15 @@ namespace EPMS.Web.Resources.RFI {
         public static string Serial {
             get {
                 return ResourceManager.GetString("Serial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SKU Code.
+        /// </summary>
+        public static string SKUCode {
+            get {
+                return ResourceManager.GetString("SKUCode", resourceCulture);
             }
         }
         

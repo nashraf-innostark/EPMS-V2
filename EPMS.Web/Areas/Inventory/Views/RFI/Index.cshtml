@@ -97,7 +97,7 @@
                         "mRender": function (data, type, full) {
                             var val = full["RFIId"];
                             var id = full["RFIId"];
-                            var element = '<a href="Create/' + id + '">' + val + '</a>';
+                            var element = '<a href="Details/' + id + '">' + val + '</a>';
                             return element;
                         }
                     },
@@ -123,7 +123,7 @@
                             if (full["Status"] == 2) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Pending';
                             } else if (full["Status"] == 3) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Canceled';
+                                value = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             else if (full["Status"] == 6) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Accepted';
@@ -176,7 +176,7 @@
                         "mRender": function (data, type, full) {
                             var val = full["RFIId"];
                             var id = full["RFIId"];
-                            var element = '<a href="Create/' + id + '">' + val + '</a>';
+                            var element = '<a href="Details/' + id + '">' + val + '</a>';
                             return element;
                         }
                     },
@@ -202,7 +202,7 @@
                             if (full["Status"] == 6) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Pending';
                             } else if (full["Status"] == 3) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Canceled';
+                                value = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             else if (full["Status"] == 2) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Accepted';

@@ -225,4 +225,58 @@
   <data name="SelectItem" xml:space="preserve">
     <value>Select Item Ar</value>
   </data>
+  <data name="DetailsPageBreadCrumb" xml:space="preserve">
+    <value>Inventory Request For Item View Ar</value>
+  </data>
+  <data name="DetailsPageHeading" xml:space="preserve">
+    <value>Request for Item (RFI) Ar</value>
+  </data>
+  <data name="DetailsPageTitle" xml:space="preserve">
+    <value>Details RFI (Request for Item) Ar</value>
+  </data>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>Employee Id A</value>
+  </data>
+  <data name="InventoryManagerName" xml:space="preserve">
+    <value>Inventory Manager Name A</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code Ar</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name Ar</value>
+  </data>
+  <data name="QuantityNeeded" xml:space="preserve">
+    <value>Quantity Needed Ar</value>
+  </data>
+  <data name="RequesterName" xml:space="preserve">
+    <value>Requester Name A</value>
+  </data>
+  <data name="RequestStatus" xml:space="preserve">
+    <value>Request Status Ar</value>
+  </data>
+  <data name="RFICreated" xml:space="preserve">
+    <value>Request for item has been created. Ar</value>
+  </data>
+  <data name="RFINumber" xml:space="preserve">
+    <value>RFI# A</value>
+  </data>
+  <data name="RFIReplied" xml:space="preserve">
+    <value>Request for item has been replied. Ar</value>
+  </data>
+  <data name="RFIUpdated" xml:space="preserve">
+    <value>Request for item has been updated. Ar</value>
+  </data>
+  <data name="SKUCode" xml:space="preserve">
+    <value>SKU Code Ar</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>Client Name Ar</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Employee Name Ar</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Order# Ar</value>
+  </data>
 </root>

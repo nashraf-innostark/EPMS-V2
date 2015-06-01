@@ -133,7 +133,7 @@
     <value>Inventory Items Addition</value>
   </data>
   <data name="CreatePageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Create</value>
+    <value>Create RFI (Request for Item)</value>
   </data>
   <data name="EditPageTitle" xml:space="preserve">
     <value>Inventory Warehouse Edit</value>
@@ -227,5 +227,59 @@
   </data>
   <data name="SelectItem" xml:space="preserve">
     <value>Select Item</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>Client Name</value>
+  </data>
+  <data name="DetailsPageBreadCrumb" xml:space="preserve">
+    <value>Inventory Request For Item View</value>
+  </data>
+  <data name="DetailsPageHeading" xml:space="preserve">
+    <value>Request for Item (RFI)</value>
+  </data>
+  <data name="DetailsPageTitle" xml:space="preserve">
+    <value>Details RFI (Request for Item)</value>
+  </data>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>Employee Id</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Employee Name</value>
+  </data>
+  <data name="InventoryManagerName" xml:space="preserve">
+    <value>Inventory Manager Name</value>
+  </data>
+  <data name="ItemCode" xml:space="preserve">
+    <value>Item Code</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Order#</value>
+  </data>
+  <data name="QuantityNeeded" xml:space="preserve">
+    <value>Quantity Needed</value>
+  </data>
+  <data name="RequesterName" xml:space="preserve">
+    <value>Requester Name</value>
+  </data>
+  <data name="RequestStatus" xml:space="preserve">
+    <value>Request Status</value>
+  </data>
+  <data name="RFICreated" xml:space="preserve">
+    <value>Request for item has been created.</value>
+  </data>
+  <data name="RFINumber" xml:space="preserve">
+    <value>RFI#</value>
+  </data>
+  <data name="RFIReplied" xml:space="preserve">
+    <value>Request for item has been replied.</value>
+  </data>
+  <data name="RFIUpdated" xml:space="preserve">
+    <value>Request for item has been updated.</value>
+  </data>
+  <data name="SKUCode" xml:space="preserve">
+    <value>SKU Code</value>
   </data>
 </root>

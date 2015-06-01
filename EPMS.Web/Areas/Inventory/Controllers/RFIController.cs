@@ -96,13 +96,65 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         // GET: Inventory/RFI/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var rfiresponse = rfiService.LoadRfiResponseData(id, false);
+            RFIViewModel rfiViewModel = new RFIViewModel();
+            if (rfiresponse.Rfi != null)
+            {
+                rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
+                if (Resources.Shared.Common.TextDirection == "ltr")
+                {
+                    rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameE;
+                    rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameE;
+                    rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameE;
+                }
+                else
+                {
+                    rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameA;
+                    rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameA;
+                    rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameA;
+                }
+                rfiViewModel.Rfi.OrderNo = rfiresponse.OrderNo;
+                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList();
+            }
+            else
+            {
+                rfiViewModel.Rfi = new RFI
+                {
+                    RequesterName = Session["FullName"].ToString()
+                };
+                rfiViewModel.RfiItem = new List<RFIItem>();
+            }
+            rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
+            return View(rfiViewModel);
         }
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Details(RFIViewModel rfiViewModel)
         {
-            return View();
+            try
+            {
+                rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
+                rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.RFI.RFI.RFIReplied,
+                    IsUpdated = true
+                };
+
+                var rfiToBeSaved = rfiViewModel.CreateRfiDetailsClientToServer();
+                if (rfiService.UpdateRFI(rfiToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View(); 
+            }
+            catch (Exception)
+            {
+                return View(); 
+            }
         }
 
         // GET: Inventory/RFI/Create
@@ -114,14 +166,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (rfiresponse.Rfi != null)
             {
                 rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
-                rfiViewModel.Rfi.RecCreatedByName = rfiresponse.RecCreatedByName;
+                rfiViewModel.Rfi.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? rfiresponse.RequesterNameE : rfiresponse.RequesterNameA;
                 rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient()).ToList();
             }
             else
             {
                 rfiViewModel.Rfi = new RFI
                 {
-                    RecCreatedByName = Session["FullName"].ToString()
+                    RequesterName = Session["UserFullName"].ToString()
                 };
                 rfiViewModel.RfiItem = new List<RFIItem>();
             }
@@ -151,7 +203,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.HR.Request.RequestReplied,
+                        Message = Resources.RFI.RFI.RFIUpdated,
                         IsUpdated = true
                     };
                 }
@@ -162,13 +214,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                     rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
-                    TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestCreated, IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = Resources.RFI.RFI.RFICreated, IsSaved = true };
                 }
                 
                 var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
                 if(rfiService.SaveRFI(rfiToBeSaved))
                 {
                     //success
+                    return RedirectToAction("Index");
                 }
                 //failed to save
                 return View(); 
