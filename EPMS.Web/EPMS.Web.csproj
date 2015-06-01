@@ -620,6 +620,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventorySection.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\InventoryWarehouse.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryWarehouse.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\ItemVariation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3749,6 +3754,11 @@
     <EmbeddedResource Include="Resources\Inventory\InventorySection.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventorySection.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\InventoryWarehouse.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\InventoryWarehouse.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InventoryWarehouse.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

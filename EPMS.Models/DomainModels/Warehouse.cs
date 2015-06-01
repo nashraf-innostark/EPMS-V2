@@ -7,6 +7,7 @@ namespace EPMS.Models.DomainModels
     {
         public long WarehouseId { get; set; }
         public string WarehouseNumber { get; set; }
+        public string ManagerName { get; set; }
         public long? WarehouseManager { get; set; }
         public string WarehouseLocation { get; set; }
         public bool IsFull { get; set; }

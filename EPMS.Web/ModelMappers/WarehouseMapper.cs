@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Models.Common;
 
@@ -12,6 +13,7 @@ namespace EPMS.Web.ModelMappers
             {
                 WarehouseId = source.WarehouseId,
                 WarehouseNumber = source.WarehouseNumber,
+                ManagerName = source.ManagerName,
                 WarehouseManager = source.WarehouseManager,
                 WarehouseSize = source.WarehouseSize,
                 IsFull = source.IsFull,
@@ -23,10 +25,12 @@ namespace EPMS.Web.ModelMappers
                 NoOfSections = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 2) : 0,
                 NoOfShalves = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 3) : 0,
                 NoOfSectoinsInShalves = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 4) : 0,
+                NoOfSpaces = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x=>x.NodeLevel == 5) : 0,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
+                WarehouseDetails = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Select(x => x.CreateFromServerToClient()).ToList() : new List<Models.WarehouseDetail>()
             };
         }
         public static Warehouse CreateFromClientToServer(this Models.Warehouse source)
@@ -39,6 +43,7 @@ namespace EPMS.Web.ModelMappers
             {
                 WarehouseId = source.WarehouseId,
                 WarehouseNumber = source.WarehouseNumber,
+                ManagerName = source.ManagerName,
                 WarehouseManager = source.WarehouseManager,
                 WarehouseSize = source.WarehouseSize,
                 IsFull = source.IsFull,

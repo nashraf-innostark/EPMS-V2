@@ -147,6 +147,7 @@ namespace EPMS.Web.Controllers
             IList<MenuRight> userRights =
                 menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
 
+            //string[] userPermissions = userRights.Where(user=>user.Menu.PermissionKey != "HRS").Select(user => user.Menu.PermissionKey).ToArray();
             string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
             Session["UserPermissionSet"] = userPermissions;
             

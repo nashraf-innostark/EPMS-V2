@@ -180,6 +180,7 @@
     <Compile Include="Repositories\UserStore.cs" />
     <Compile Include="Repositories\VendorItemsRepository.cs" />
     <Compile Include="Repositories\VendorRepository.cs" />
+    <Compile Include="Repositories\WarehouseDetailRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>
