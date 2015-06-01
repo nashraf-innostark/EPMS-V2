@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -7,6 +8,8 @@ namespace EPMS.Web.Models
     {
         public long WarehouseId { get; set; }
         public string WarehouseNumber { get; set; }
+        [Required(ErrorMessage = "Warehouse Manager is required")]
+        public string ManagerName { get; set; }
         public long? WarehouseManager { get; set; }
         public string WarehouseLocation { get; set; }
         public bool IsFull { get; set; }

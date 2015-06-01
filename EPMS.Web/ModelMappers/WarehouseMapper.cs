@@ -13,6 +13,7 @@ namespace EPMS.Web.ModelMappers
             {
                 WarehouseId = source.WarehouseId,
                 WarehouseNumber = source.WarehouseNumber,
+                ManagerName = source.ManagerName,
                 WarehouseManager = source.WarehouseManager,
                 WarehouseSize = source.WarehouseSize,
                 IsFull = source.IsFull,
@@ -42,6 +43,7 @@ namespace EPMS.Web.ModelMappers
             {
                 WarehouseId = source.WarehouseId,
                 WarehouseNumber = source.WarehouseNumber,
+                ManagerName = source.ManagerName,
                 WarehouseManager = source.WarehouseManager,
                 WarehouseSize = source.WarehouseSize,
                 IsFull = source.IsFull,

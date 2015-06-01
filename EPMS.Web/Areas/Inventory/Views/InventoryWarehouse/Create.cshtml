@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    string[] userModules = (string[])HttpContext.Current.Session["UserModules"];
     if (Model.Warehouse.WarehouseId > 0)
     {
         if (userPermissionsSet.Contains("InventoryWarehouseCreate"))
@@ -106,18 +107,31 @@
                         <div class="span3">
                             <label class="control-label" for="Manager">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseManager</label>
                         </div>
-                        <div class="span2">
-                            <div class="controls">
-                                @if (direction == "ltr")
-                                {
-                                    @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Manager" })
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Manager" })
-                                }
+                        @if (userModules.Contains("Human Resources System"))
+                        {
+                            <div class="span2">
+                                <div class="controls">
+                                    @if (direction == "ltr")
+                                    {
+                                        @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new {@class = "select2me", @id = "Manager"})
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new {@class = "select2me", @id = "Manager"})
+                                    }
+                                    <label id="managerValidationErrorMsg" class="required"></label>
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <div class="span9">
+                                <div class="controls">
+                                    @Html.TextBoxFor(model => model.Warehouse.ManagerName, new { @class = "toBeDisabled" })
+                                    @Html.ValidationMessageFor(m => m.Warehouse.ManagerName, String.Empty, new { @class = "required" })
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div class="control-group row-fluid" id="CKEditorLocation">
                         <div class="span3">

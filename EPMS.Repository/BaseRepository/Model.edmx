@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Aisle">
           <Key>
             <PropertyRef Name="AisleId" />
@@ -1015,6 +1015,7 @@
           </Key>
           <Property Name="WarehouseId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WarehouseNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="ManagerName" Type="nvarchar" MaxLength="100" />
           <Property Name="WarehouseManager" Type="bigint" />
           <Property Name="WarehouseLocation" Type="nvarchar" MaxLength="500" />
           <Property Name="IsFull" Type="bit" Nullable="false" />
@@ -2283,8 +2284,7 @@
             <End Role="WarehouseDetail1" EntitySet="WarehouseDetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSInventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2665,7 +2665,7 @@
           <NavigationProperty Name="MeetingAttendees" Relationship="Self.FK_MeetingAttendees_Employee" FromRole="Employee" ToRole="MeetingAttendees" />
           <NavigationProperty Name="NotificationRecipients" Relationship="Self.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
-          <NavigationProperty Name="Warehouses" Relationship="Self.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouses" Relationship="EPMSInventoryModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -2798,7 +2798,7 @@
           <NavigationProperty Name="Colors" Relationship="Self.ItemColor" FromRole="ItemVariation" ToRole="Color" />
           <NavigationProperty Name="Sizes" Relationship="Self.ItemSize" FromRole="ItemVariation" ToRole="Size" />
           <NavigationProperty Name="Status" Relationship="Self.ItemStatus" FromRole="ItemVariation" ToRole="Status" />
-          <NavigationProperty Name="Warehouses" Relationship="Self.ItemWarehouse" FromRole="ItemVariation" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouses" Relationship="EPMSInventoryModel.ItemWarehouse" FromRole="ItemVariation" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -3371,25 +3371,6 @@
           <Property Name="VendorId" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Vendor" Relationship="Self.FK_VendorItems_Vendor" FromRole="VendorItems" ToRole="Vendor" />
         </EntityType>
-        <EntityType Name="Warehouse">
-          <Key>
-            <PropertyRef Name="WarehouseId" />
-          </Key>
-          <Property Name="WarehouseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseManager" Type="Int64" />
-          <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="IsFull" Type="Boolean" Nullable="false" />
-          <Property Name="WarehouseSize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ParentId" Type="Int64" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
-          <NavigationProperty Name="WarehouseDetails" Relationship="Self.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
-          <NavigationProperty Name="ItemVariations" Relationship="Self.ItemWarehouse" FromRole="Warehouse" ToRole="ItemVariation" />
-        </EntityType>
         <EntityType Name="WarehouseDetail">
           <Key>
             <PropertyRef Name="WarehouseDetailId" />
@@ -3404,9 +3385,9 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Warehouse" Relationship="Self.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
           <NavigationProperty Name="WarehouseDetails" Relationship="Self.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail" ToRole="WarehouseDetail1" />
           <NavigationProperty Name="ParentDetail" Relationship="Self.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail1" ToRole="WarehouseDetail" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
         </EntityType>
         <Association Name="FK_Section_Aisle">
           <End Role="Aisle" Type="Self.Aisle" Multiplicity="1" />
@@ -3760,18 +3741,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Warehouse_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Warehouse">
-              <PropertyRef Name="WarehouseManager" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmployeeJobHistory_JobTitle">
           <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
           <End Role="EmployeeJobHistory" Type="Self.EmployeeJobHistory" Multiplicity="*" />
@@ -4120,18 +4089,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WarehouseDetail_Warehouse">
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
-          <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseId" />
-            </Principal>
-            <Dependent Role="WarehouseDetail">
-              <PropertyRef Name="WarehouseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WarehouseDetail_WarehouseDetail">
           <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="0..1" />
           <End Role="WarehouseDetail1" Type="Self.WarehouseDetail" Multiplicity="*" />
@@ -4159,10 +4116,6 @@
         <Association Name="ItemStatus">
           <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="*" />
           <End Role="Status" Type="Self.Status" Multiplicity="*" />
-        </Association>
-        <Association Name="ItemWarehouse">
-          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="*" />
-          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="*" />
         </Association>
         <Association Name="PreRequisitTask">
           <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="*" />
@@ -4226,7 +4179,6 @@
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrence" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="VendorItems" EntityType="Self.VendorItem" />
-          <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
           <EntitySet Name="WarehouseDetails" EntityType="Self.WarehouseDetail" />
           <AssociationSet Name="FK_Section_Aisle" Association="Self.FK_Section_Aisle">
             <End Role="Aisle" EntitySet="Aisles" />
@@ -4344,10 +4296,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="TaskEmployee" EntitySet="TaskEmployees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Warehouse_Employee" Association="Self.FK_Warehouse_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Warehouse" EntitySet="Warehouses" />
-          </AssociationSet>
           <AssociationSet Name="FK_EmployeeJobHistory_JobTitle" Association="Self.FK_EmployeeJobHistory_JobTitle">
             <End Role="JobTitle" EntitySet="JobTitles" />
             <End Role="EmployeeJobHistory" EntitySet="EmployeeJobHistories" />
@@ -4464,10 +4412,6 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="VendorItems" EntitySet="VendorItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="Self.FK_WarehouseDetail_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="Self.FK_WarehouseDetail_WarehouseDetail">
             <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
             <End Role="WarehouseDetail1" EntitySet="WarehouseDetails" />
@@ -4488,15 +4432,72 @@
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="Status" EntitySet="Status" />
           </AssociationSet>
-          <AssociationSet Name="ItemWarehouse" Association="Self.ItemWarehouse">
-            <End Role="ItemVariation" EntitySet="ItemVariations" />
-            <End Role="Warehouse" EntitySet="Warehouses" />
-          </AssociationSet>
           <AssociationSet Name="PreRequisitTask" Association="Self.PreRequisitTask">
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
           </AssociationSet>
+          <EntitySet Name="Warehouses" EntityType="EPMSInventoryModel.Warehouse" />
+          <AssociationSet Name="FK_Warehouse_Employee" Association="EPMSInventoryModel.FK_Warehouse_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseDetail_Warehouse" Association="EPMSInventoryModel.FK_WarehouseDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="ItemWarehouse" Association="EPMSInventoryModel.ItemWarehouse">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Warehouse" EntitySet="Warehouses" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseManager" Type="Int64" />
+          <Property Name="WarehouseLocation" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsFull" Type="Boolean" Nullable="false" />
+          <Property Name="WarehouseSize" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="EPMSInventoryModel.FK_Warehouse_Employee" FromRole="Warehouse" ToRole="Employee" />
+          <NavigationProperty Name="WarehouseDetails" Relationship="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
+          <NavigationProperty Name="ItemVariations" Relationship="EPMSInventoryModel.ItemWarehouse" FromRole="Warehouse" ToRole="ItemVariation" />
+        </EntityType>
+        <Association Name="FK_Warehouse_Employee">
+          <End Type="EPMSInventoryModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="WarehouseManager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseDetail_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.WarehouseDetail" Role="WarehouseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ItemWarehouse">
+          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5513,23 +5514,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Warehouses">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Warehouse">
-              <MappingFragment StoreEntitySet="Warehouse">
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="WarehouseNumber" ColumnName="WarehouseNumber" />
-                <ScalarProperty Name="WarehouseManager" ColumnName="WarehouseManager" />
-                <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
-                <ScalarProperty Name="IsFull" ColumnName="IsFull" />
-                <ScalarProperty Name="WarehouseSize" ColumnName="WarehouseSize" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WarehouseDetails">
             <EntityTypeMapping TypeName="EPMSInventoryModel.WarehouseDetail">
               <MappingFragment StoreEntitySet="WarehouseDetail">
@@ -5578,20 +5562,38 @@
               <ScalarProperty Name="StatusId" ColumnName="StatusId" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ItemWarehouse" TypeName="EPMSInventoryModel.ItemWarehouse" StoreEntitySet="ItemWarehouse">
-            <EndProperty Name="ItemVariation">
-              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
-            </EndProperty>
-            <EndProperty Name="Warehouse">
-              <ScalarProperty Name="WarehouseId" ColumnName="WarehousrId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="PreRequisitTask" TypeName="EPMSInventoryModel.PreRequisitTask" StoreEntitySet="PreRequisitTask">
             <EndProperty Name="ProjectTask">
               <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
             </EndProperty>
             <EndProperty Name="ProjectTask1">
               <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="WarehouseSize" ColumnName="WarehouseSize" />
+                <ScalarProperty Name="IsFull" ColumnName="IsFull" />
+                <ScalarProperty Name="WarehouseLocation" ColumnName="WarehouseLocation" />
+                <ScalarProperty Name="WarehouseManager" ColumnName="WarehouseManager" />
+                <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
+                <ScalarProperty Name="WarehouseNumber" ColumnName="WarehouseNumber" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ItemWarehouse" TypeName="EPMSInventoryModel.ItemWarehouse" StoreEntitySet="ItemWarehouse">
+            <EndProperty Name="Warehouse">
+              <ScalarProperty Name="WarehouseId" ColumnName="WarehousrId" />
+            </EndProperty>
+            <EndProperty Name="ItemVariation">
+              <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
