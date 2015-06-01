@@ -10,8 +10,8 @@ namespace EPMS.Web.ModelMappers
             {
                 WarehouseDetailId = source.WarehouseDetailId,
                 WarehouseId = source.WarehouseId,
-                Name = source.Name,
-                NoOfSpace = source.NoOfSpace,
+                NameEn = source.NameEn,
+                NameAr = source.NameAr,
                 NodeLevel = source.NodeLevel,
                 ParentId = source.ParentId,
                 RecCreatedBy = source.RecCreatedBy,
@@ -27,8 +27,8 @@ namespace EPMS.Web.ModelMappers
             {
                 WarehouseDetailId = source.WarehouseDetailId,
                 WarehouseId = source.WarehouseId,
-                Name = source.Name,
-                NoOfSpace = source.NoOfSpace,
+                NameEn = source.NameEn,
+                NameAr = source.NameAr,
                 NodeLevel = source.NodeLevel,
                 ParentId = source.ParentId,
                 RecCreatedBy = source.RecCreatedBy,

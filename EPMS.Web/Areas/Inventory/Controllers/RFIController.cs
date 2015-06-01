@@ -25,26 +25,22 @@ using RFIItem = EPMS.Web.Models.RFIItem;
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "PMS", IsModule = true)]
+    //[SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RFIController : BaseController
     {
-        private readonly ICustomerService customerService;
-        private readonly IOrdersService ordersService;
         private readonly IRFIService rfiService;
 
-        public RFIController(ICustomerService customerService,IOrdersService ordersService,IRFIService rfiService)
+        public RFIController(IRFIService rfiService)
         {
-            this.customerService = customerService;
-            this.ordersService = ordersService;
             this.rfiService = rfiService;
         }
 
         // GET: Inventory/RFI
-        //[SiteAuthorize(PermissionKey = "RFIIndex")]
+        [SiteAuthorize(PermissionKey = "RFIIndex")]
         public ActionResult Index()
         {
             RfiSearchRequest searchRequest = Session["PageMetaData"] as RfiSearchRequest;
-            ViewBag.UserRole = Session["RoleName"].ToString();
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             Session["PageMetaData"] = null;
 
             RfiListViewModel viewModel = new RfiListViewModel
@@ -60,8 +56,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             searchRequest.SearchString = Request["search"];
             RfiListViewModel viewModel = new RfiListViewModel();
-            ViewBag.UserRole = Session["RoleName"].ToString();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Admin")
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Manager")
             {
                 searchRequest.Requester = "Admin";
             }
@@ -94,6 +90,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/RFI/Details/5
+        [SiteAuthorize(PermissionKey = "RFIDetails")]
         public ActionResult Details(int id)
         {
             var rfiresponse = rfiService.LoadRfiResponseData(id, false);
@@ -158,6 +155,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/RFI/Create
+        [SiteAuthorize(PermissionKey = "RFICreate")]
         public ActionResult Create(long? id)
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
@@ -247,49 +245,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 ViewBag.HasCustomerModule = false;
                 return false;
-            }
-        }
-        // GET: Inventory/RFI/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Inventory/RFI/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Inventory/RFI/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Inventory/RFI/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
     }

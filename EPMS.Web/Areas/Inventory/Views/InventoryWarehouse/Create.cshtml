@@ -7,166 +7,271 @@
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
-<div class="breadcrumb-container">
-    <ul class="xbreadcrumbs">
-        <li>
-            <a href="~/Dashboard/Index">
-                <i class="icon-photon home"></i>
-            </a>
-        </li>
-        <li>
-            <a href="InvontryWarehouseList.html">
-                Inventory Warehouse List
-            </a>
-        </li>
-        <li class="current">
-            <a href="javascript:;">
-                Inventory Warehouse Creation
-            </a>
-        </li>
-    </ul>
+<div class="main-content withPanel">
+    <div class="panel">
+        <div class="panel-content filler">
+            <div class="panel-logo"></div>
+            <div class="panel-header">
+                <h1><small>Create Warehouse Tree</small></h1>
+            </div>
+            <div class="panel-search container-fluid">
+                <form class="form-horizontal" action="javascript:;">
+                    <input id="panelSearch" placeholder="Search" type="text" name="panelSearch">
+                    <button class="btn btn-search"></button>
+                </form>
+            </div>
+            <div class="sidebarMenuHolder">
+                <div class="JStree">
+                    <div class="Jstree_shadow_top"></div>
+                    <div id="jstree"></div>
+                    <div class="Jstree_shadow_bottom"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-slider">
+            <div class="panel-slider-center">
+                <div class="panel-slider-arrow"></div>
+            </div>
+        </div>
+    </div>
+    <div class="breadcrumb-container">
+        <ul class="xbreadcrumbs">
+            <li>
+                <a href="~/Dashboard/Index">
+                    <i class="icon-photon home"></i>
+                </a>
+            </li>
+            <li>
+                <a href="~/Inventory/InventoryWarehouse/Index">
+                    Inventory Warehouse List
+                </a>
+            </li>
+            <li class="current">
+                <a href="javascript:;">
+                    Inventory Warehouse Creation
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <header>
+        <i class="icon-big-notepad"></i>
+        <h2><small>Inventory Warehouse Creation</small></h2>
+    </header>
+    <div id="detail">
+        @using (Html.BeginForm("Create", "InventoryWarehouse", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(model => model.Warehouse.WarehouseId)
+            @Html.HiddenFor(model => model.Warehouse.WarehouseNumber)
+            @Html.HiddenFor(model => model.Warehouse.ParentId)
+            @Html.HiddenFor(model => model.Warehouse.IsFull)
+            @Html.HiddenFor(model => model.Warehouse.WarehouseSize)
+            @Html.HiddenFor(model => model.Warehouse.RecCreatedBy)
+            @Html.HiddenFor(model => model.Warehouse.RecCreatedDt)
+            <div class="container-fluid">
+                <div id="Warehouse" style="display: none">
+                    <div class="control-group row-fluid ">
+                        <div class="span3">
+                            <label class="control-label" for="WarehouseNumber">Warehouse Number</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Warehouse.WarehouseNumber, new { id = "WarehouseNumber", @class = "disable" })
+                                @*@Html.ValidationMessageFor(m => m.Warehouse.WarehouseNumber, "", new { @class = "required" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="Manager">Warehouse Manager</label>
+                        </div>
+                        <div class="span2">
+                            <div class="controls">
+                                @if (direction == "ltr")
+                                {
+                                    @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Manager" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Manager" })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid" id="CKEditorLocation">
+                        <div class="span3">
+                            <label class="control-label" for="LocationCK">Warehouse Location</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextAreaFor(model => model.Warehouse.WarehouseLocation, new { @id = "LocationCK", @class = "" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid" id="Location">
+                        <div class="span3">
+                            <label class="control-label" for="LocationText">Warehouse Location</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input type="text" id="LocationText" class="toBeDisabled" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="WarehouseDetails" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">Number of Aisles </label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Warehouse.NoOfAisles, new { id = "", @class = "disable" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label"> Number of Sections</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Warehouse.NoOfSections, new { id = "", @class = "disable" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">Number of Shalves </label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Warehouse.NoOfShalves, new { id = "", @class = "disable" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">Number of Sections on Shalves </label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextBoxFor(m => m.Warehouse.NoOfSectoinsInShalves, new { id = "", @class = "disable" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Edit" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <button type="button" class="btn" id="edit">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnEdit</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="SaveNewNode" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <button type="submit" class="btn" onclick=" SaveNewNode(event); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="UpdateNode" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <button type="submit" class="btn" onclick=" SaveNewNode(event); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end container -->
+        }
+    </div>
+    <div id="addUpdateNode">
+        <div class="container-fluid main-content">
+            <form id="" class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Name</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="nameEn" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Name arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="nameAr" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<header>
-    <i class="icon-big-notepad"></i>
-    <h2><small>Inventory Warehouse Creation</small></h2>
-</header>
-<!--Notifications begin-->
-@Html.Partial("_Alert")
-<!--Notifications end-->
-
-<form class="form-horizontal" id="validation_form">
-    <div class="container-fluid">
-        <div id="Warehouse" style="display: none">
-            <div class="control-group row-fluid ">
-                <div class="span3">
-                    <label class="control-label" for="WarehouseNumber">Warehouse Number</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.Warehouse.WarehouseNumber, new { id = "WarehouseNumber", @class = "disable" })
-                        @*@Html.ValidationMessageFor(m => m.Warehouse.WarehouseNumber, "", new { @class = "required" })*@
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Manager">Warehouse Manager</label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @if (direction == "ltr")
-                        {
-                            @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Manager" })
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Manager" })
-                        }
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid" id="CKEditorLocation">
-                <div class="span3">
-                    <label class="control-label" for="LocationCK">Warehouse Location</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(model => model.Warehouse.WarehouseLocation, new { @id = "LocationCK", @class = "" })
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid" id="Location">
-                <div class="span3">
-                    <label class="control-label" for="LocationText">Warehouse Location</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input type="text" id="LocationText" class="toBeDisabled" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="WarehouseDetails" style="display: none">
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">Number of Aisles </label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.Warehouse.NoOfAisles, new { id = "", @class = "disable" })
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label"> Number of Sections</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.Warehouse.NoOfSections, new { id = "", @class = "disable" })
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">Number of Shalves </label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.Warehouse.NoOfShalves, new { id = "", @class = "disable" })
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">Number of Sections on Shalves </label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextBoxFor(m => m.Warehouse.NoOfSectoinsInShalves, new { id = "", @class = "disable" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="Edit" style="display: none">
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="button" class="btn" id="edit">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnEdit</button>
-                </div>
-            </div>
-        </div>
-        <div id="SaveNewNode" style="display: none">
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="button" class="btn" onclick="SaveNewNode(event); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
-                </div>
-            </div>
-        </div>
-        <div id="UpdateNode" style="display: none">
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="button" class="btn" onclick="SaveNewNode(event);">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
-                </div>
-            </div>
-        </div>
-    </div><!-- end container -->
-</form>
-
 <script src="~/RTE/ckeditor.js"></script>
+<script src="~/Scripts/Functions/jsTreePopulate.js"></script>
 <script>
     var warehouseId;
+    var dir = '@direction';
+    var myTree;
     $().ready(function () {
+        $("#layoutMainContent").removeClass("main-content");
         $('.' + 'disable' + ':input').attr('disabled', true);
         warehouseId = parseInt('@Model.Warehouse.WarehouseId');
+        var parentNodeId = warehouseId + "_Parent";
         AddEdit();
+        $("#addUpdateNode").hide();
         if (warehouseId == 0) {
             $("#Warehouse").show();
             $("#WarehouseDetails").hide();
         } else {
             $("#Warehouse").show();
             $("#WarehouseDetails").show();
+        }
+        var treeInitialData;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": '@Model.Warehouse.WarehouseNumber',
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": parentNodeId },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": '@Model.Warehouse.WarehouseNumber',
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": parentNodeId },
+                }
+            ];
+        }
+        $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": [parentNodeId]
+            },
+            "core": {
+                "initially_open": [parentNodeId]
+            }
+        });
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Inventory/InventoryWarehouse/GetWarehouseDetails";
+        if (warehouseId > 0){
+            populateTree(warehouseId, "jstree", url);
         }
     });
     $("#edit").click(function (event) {
@@ -199,7 +304,7 @@
             $("#SaveNewNode").css("display", "none");
             $("#UpdateNode").css("display", "none");
             $("#Edit").css("display", "none");
-            
+
         } else {
             if (warehouseId > 0) {
                 $('#Manager').select2('disable');
@@ -223,5 +328,58 @@
             $("#Location").show();
         }
     }
-
+    function jsTreeClick(event) {
+        var currNode = event.currentTarget.parentNode.id;
+        var parentId = warehouseId + "_Parent";
+        if (currNode != parentId) {
+            $("#detail").hide();
+            $("#addUpdateNode").show();
+        } else {
+            $("#detail").show();
+            $("#addUpdateNode").hide();
+        }
+        //var temp = $(event.target).text();
+        //var text = temp.substring(1, temp.length);
+        //if (text == "Departments" || text == "") {
+        //    for (name in CKEDITOR.instances) {
+        //        CKEDITOR.instances[name].destroy();
+        //    }
+        //    $("#DepartmentId").val(0);
+        //    $("#nameEn").val("");
+        //    $("#nameAr").val("");
+        //    $("#color").val("#FFF8BE");
+        //    $("#description").val("");
+        //    $("#ParentId").val(0);
+        //    CKEDITOR.replace('description', {
+        //        filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        //    });
+        //    $("#SaveNewNode").css("display", "none");
+        //    $("#UpdateNode").css("display", "none");
+        //    return true;
+        //}
+        //$.each(parsed, function (key, value) {
+        //    if (value.DepartmentNameEn == text || value.DepartmentNameAr == text) {
+        //        for (name in CKEDITOR.instances) {
+        //            CKEDITOR.instances[name].destroy();
+        //        }
+        //        $("#DepartmentId").val(value.DepartmentId);
+        //        $("#nameEn").val(value.DepartmentNameEn);
+        //        $("#nameAr").val(value.DepartmentNameAr);
+        //        $("#color").val(value.DepartmentColor);
+        //        $("#description").val(value.DepartmentDesc);
+        //        $("#descpEn").val(value.DepartmentDesc);
+        //        $("#ParentId").val(value.ParentId);
+        //    }
+        //});
+        //AddEdit();
+        //var descpE = $("#descpEn").val();
+        //var regex = /(<([^>]+)>)/ig;
+        //var result = descpE.replace(regex, "");
+        //$("#descpEn").val(result);
+        //$("#CKEditorDescp").hide();
+        //$("#Descp").show();
+        //$('.' + 'toBeDiabled' + ':input').attr('disabled', true);
+        //$("#colorpicker").addClass('disableList');
+        return true;
+    }
 </script>

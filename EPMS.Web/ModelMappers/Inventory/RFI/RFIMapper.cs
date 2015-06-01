@@ -22,7 +22,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
 
                 RecCreatedBy = source.Rfi.RecCreatedBy,
                 RecCreatedDate = source.Rfi.RecCreatedDate,
-                RecUpdatedBy = source.Rfi.RecCreatedBy,
+                RecUpdatedBy = source.Rfi.RecUpdatedBy,
                 RecUpdatedDate = source.Rfi.RecUpdatedDate,
 
                 RFIItems = source.RfiItem.Select(x => x.CreateRfiItemClientToServer(source.Rfi.RFIId, source.Rfi.RecCreatedBy, source.Rfi.RecCreatedDate, source.Rfi.RecUpdatedDate)).ToList()
@@ -57,13 +57,13 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
-                Status = source.Rfi.Status == 0 ? 6 : source.Rfi.Status,
+                Status = source.Rfi.Status == 0 ? 2 : source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
 
                 RecCreatedBy = source.Rfi.RecCreatedBy,
                 RecCreatedDate = source.Rfi.RecCreatedDate,
-                RecUpdatedBy = source.Rfi.RecCreatedBy,
+                RecUpdatedBy = source.Rfi.RecUpdatedBy,
                 RecUpdatedDate = source.Rfi.RecUpdatedDate
             };
             return rfi;
@@ -89,7 +89,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
 
-                RecUpdatedBy = source.RecCreatedBy,
+                RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };
             return rfi;

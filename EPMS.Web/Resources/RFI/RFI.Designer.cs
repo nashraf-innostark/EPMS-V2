@@ -151,6 +151,15 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create New Request for Item(RFI) Form.
+        /// </summary>
+        public static string CreateRFILink {
+            get {
+                return ResourceManager.GetString("CreateRFILink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer.
         /// </summary>
         public static string Customer {

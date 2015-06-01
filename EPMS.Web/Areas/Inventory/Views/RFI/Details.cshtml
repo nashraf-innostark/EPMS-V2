@@ -64,7 +64,7 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th>@(Session["RoleName"].ToString() == "manager"?EPMS.Web.Resources.RFI.RFI.InventoryManagerName:EPMS.Web.Resources.RFI.RFI.EmployeeName):</th>
+                                            <th>@(Session["RoleName"].ToString().ToLower() == "manager" ? EPMS.Web.Resources.RFI.RFI.InventoryManagerName : EPMS.Web.Resources.RFI.RFI.EmployeeName):</th>
                                             <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                         </tr>
                                         <tr>
@@ -88,7 +88,7 @@
                             <div class="invoice-infos">
                                 <table>
                                     <tbody>
-                                        @if (Session["RoleName"].ToString() == "manager")
+                                        @if (Session["RoleName"].ToString().ToLower() == "manager")
                                         {
                                             <tr>
                                                 <th>@EPMS.Web.Resources.RFI.RFI.Date:</th>
@@ -240,7 +240,7 @@
                 filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
         }
-        if ('@Session["RoleName"].ToString()' != "manager") {
+        if ('@Session["RoleName"].ToString().ToLower()' != "manager") {
             $('.toBeDisabled:input').attr('disabled', true);
             $(".toBeHidden").hide();
         }
