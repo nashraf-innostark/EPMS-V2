@@ -86,8 +86,9 @@ namespace EPMS.Repository.Repositories
             }
             else if (rfiSearchRequest.iSortCol_0 == 3 && rfiSearchRequest.Requester == "Admin")
             {
-                rfis = DbSet
-                .Where(query).OrderByDescending(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList();
+                rfis = rfiSearchRequest.sSortDir_0 == "asc" ? 
+                    DbSet.Where(query).OrderBy(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList():
+                    DbSet.Where(query).OrderByDescending(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList();
             }
             else
             {

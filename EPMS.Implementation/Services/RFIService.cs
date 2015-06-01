@@ -139,7 +139,26 @@ namespace EPMS.Implementation.Services
                 if (rfi != null)
                 {
                     rfiResponse.Rfi = rfi;
-                    rfiResponse.RecCreatedByName = aspNetUserRepository.Find(rfi.RecCreatedBy).UserName;
+                    var employee = aspNetUserRepository.Find(rfi.RecCreatedBy).Employee;
+                    rfiResponse.RequesterNameE = employee!=null?employee.EmployeeFirstNameE+" "+employee.EmployeeMiddleNameE+" "+employee.EmployeeLastNameE:"";
+                    rfiResponse.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
+
+                    if (rfi.Order != null)
+                    {
+                        rfiResponse.OrderNo = rfi.Order.OrderNo;
+                        var customer = rfi.Order.Customer;
+                        rfiResponse.CustomerNameE = customer != null ? customer.CustomerNameE:"";
+                        rfiResponse.CustomerNameA = customer != null ? customer.CustomerNameA : "";
+
+                    }
+
+                    if (rfi.Status != 2)
+                    {
+                        var manager = aspNetUserRepository.Find(rfi.RecUpdatedBy).Employee;
+                        rfiResponse.ManagerNameE = manager != null ? manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " + manager.EmployeeLastNameE : "";
+                        rfiResponse.ManagerNameA = manager != null ? manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " + manager.EmployeeLastNameA : "";
+
+                    }
                     rfiResponse.RfiItem = rfi.RFIItems;
                 }
             }

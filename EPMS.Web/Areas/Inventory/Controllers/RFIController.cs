@@ -25,26 +25,22 @@ using RFIItem = EPMS.Web.Models.RFIItem;
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "PMS", IsModule = true)]
+    //[SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RFIController : BaseController
     {
-        private readonly ICustomerService customerService;
-        private readonly IOrdersService ordersService;
         private readonly IRFIService rfiService;
 
-        public RFIController(ICustomerService customerService,IOrdersService ordersService,IRFIService rfiService)
+        public RFIController(IRFIService rfiService)
         {
-            this.customerService = customerService;
-            this.ordersService = ordersService;
             this.rfiService = rfiService;
         }
 
         // GET: Inventory/RFI
-        //[SiteAuthorize(PermissionKey = "RFIIndex")]
+        [SiteAuthorize(PermissionKey = "RFIIndex")]
         public ActionResult Index()
         {
             RfiSearchRequest searchRequest = Session["PageMetaData"] as RfiSearchRequest;
-            ViewBag.UserRole = Session["RoleName"].ToString();
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             Session["PageMetaData"] = null;
 
             RfiListViewModel viewModel = new RfiListViewModel
@@ -60,8 +56,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             searchRequest.SearchString = Request["search"];
             RfiListViewModel viewModel = new RfiListViewModel();
-            ViewBag.UserRole = Session["RoleName"].ToString();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Admin")
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Manager")
             {
                 searchRequest.Requester = "Admin";
             }
@@ -94,18 +90,72 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/RFI/Details/5
+        [SiteAuthorize(PermissionKey = "RFIDetails")]
         public ActionResult Details(int id)
         {
-            return View();
+            var rfiresponse = rfiService.LoadRfiResponseData(id, false);
+            RFIViewModel rfiViewModel = new RFIViewModel();
+            if (rfiresponse.Rfi != null)
+            {
+                rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
+                if (Resources.Shared.Common.TextDirection == "ltr")
+                {
+                    rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameE;
+                    rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameE;
+                    rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameE;
+                }
+                else
+                {
+                    rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameA;
+                    rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameA;
+                    rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameA;
+                }
+                rfiViewModel.Rfi.OrderNo = rfiresponse.OrderNo;
+                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList();
+            }
+            else
+            {
+                rfiViewModel.Rfi = new RFI
+                {
+                    RequesterName = Session["FullName"].ToString()
+                };
+                rfiViewModel.RfiItem = new List<RFIItem>();
+            }
+            rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
+            return View(rfiViewModel);
         }
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Details(RFIViewModel rfiViewModel)
         {
-            return View();
+            try
+            {
+                rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
+                rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.RFI.RFI.RFIReplied,
+                    IsUpdated = true
+                };
+
+                var rfiToBeSaved = rfiViewModel.CreateRfiDetailsClientToServer();
+                if (rfiService.UpdateRFI(rfiToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View(); 
+            }
+            catch (Exception)
+            {
+                return View(); 
+            }
         }
 
         // GET: Inventory/RFI/Create
+        [SiteAuthorize(PermissionKey = "RFICreate")]
         public ActionResult Create(long? id)
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
@@ -114,14 +164,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (rfiresponse.Rfi != null)
             {
                 rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
-                rfiViewModel.Rfi.RecCreatedByName = rfiresponse.RecCreatedByName;
+                rfiViewModel.Rfi.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? rfiresponse.RequesterNameE : rfiresponse.RequesterNameA;
                 rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient()).ToList();
             }
             else
             {
                 rfiViewModel.Rfi = new RFI
                 {
-                    RecCreatedByName = Session["FullName"].ToString()
+                    RequesterName = Session["UserFullName"].ToString()
                 };
                 rfiViewModel.RfiItem = new List<RFIItem>();
             }
@@ -151,7 +201,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.HR.Request.RequestReplied,
+                        Message = Resources.RFI.RFI.RFIUpdated,
                         IsUpdated = true
                     };
                 }
@@ -162,13 +212,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                     rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
-                    TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestCreated, IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = Resources.RFI.RFI.RFICreated, IsSaved = true };
                 }
                 
                 var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
                 if(rfiService.SaveRFI(rfiToBeSaved))
                 {
                     //success
+                    return RedirectToAction("Index");
                 }
                 //failed to save
                 return View(); 
@@ -194,49 +245,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 ViewBag.HasCustomerModule = false;
                 return false;
-            }
-        }
-        // GET: Inventory/RFI/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Inventory/RFI/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Inventory/RFI/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Inventory/RFI/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
     }

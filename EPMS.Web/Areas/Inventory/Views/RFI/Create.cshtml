@@ -78,7 +78,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Rfi.RecCreatedByName, new { @readonly = true, @id = "createdBy" })
+                    @Html.TextBoxFor(model => model.Rfi.RequesterName, new { @readonly = true, @id = "createdBy" })
                 </div>
             </div>
         </div>
@@ -227,29 +227,26 @@
             </div>
         </div>
         <!--Basic Responsive Table end-->
-        @if (Model.Rfi.RFIId > 0)
-        {
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesE</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(m => m.Rfi.NotesE, new { @id = "RFINotesE" })
-                    </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesE</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Rfi.NotesE, new { @id = "RFINotesE" })
                 </div>
             </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesA</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(m => m.Rfi.NotesA,new {@id="RFINotesA"})
-                    </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesA</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Rfi.NotesA, new { @id = "RFINotesA" })
                 </div>
             </div>
-        }
+        </div>
        
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
@@ -269,20 +266,18 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        if ('@Model.Rfi.RFIId' > 0) {
-            editor = CKEDITOR.replace('RFINotesE', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
-            });
-            editor = CKEDITOR.replace('RFINotesA', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
-            });
-        }
+        editor = CKEDITOR.replace('RFINotesE', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('RFINotesA', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
 
         $("#selectBoxFilter").select2();
         // set JobId and Department Name
