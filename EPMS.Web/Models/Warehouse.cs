@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -21,5 +22,8 @@ namespace EPMS.Web.Models
         public long NoOfSections { get; set; }
         public long NoOfShalves { get; set; }
         public long NoOfSectoinsInShalves { get; set; }
+        public long NoOfSpaces { get; set; }
+
+        public virtual IList<WarehouseDetail> WarehouseDetails { get; set; }
     }
 }

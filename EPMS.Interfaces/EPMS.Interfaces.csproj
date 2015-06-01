@@ -99,6 +99,7 @@
     <Compile Include="IServices\IQuickLaunchItemService.cs" />
     <Compile Include="IServices\IVendorItemsService.cs" />
     <Compile Include="IServices\IVendorService.cs" />
+    <Compile Include="IServices\IWarehouseDetailService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IApplicantExperienceRepository.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Repository\IVendorItemsRepository.cs" />
     <Compile Include="Repository\IVendorRepository.cs" />
     <Compile Include="IServices\IWarehouseService.cs" />
+    <Compile Include="Repository\IWarehouseDetailRepository.cs" />
     <Compile Include="Repository\IWarehouseRepository.cs" />
   </ItemGroup>
   <ItemGroup>

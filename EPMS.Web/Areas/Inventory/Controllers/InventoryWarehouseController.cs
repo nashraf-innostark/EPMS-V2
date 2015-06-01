@@ -21,15 +21,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Private
 
         private readonly IWarehouseService warehouseService;
+        private readonly IWarehouseDetailService detailService;
         private readonly IEmployeeService employeeService;
 
         #endregion
 
         #region Constructor
-        public InventoryWarehouseController(IWarehouseService warehouseService, IEmployeeService employeeService)
+        public InventoryWarehouseController(IWarehouseService warehouseService, IEmployeeService employeeService, IWarehouseDetailService detailService)
         {
             this.warehouseService = warehouseService;
             this.employeeService = employeeService;
+            this.detailService = detailService;
         }
 
         #endregion
@@ -165,6 +167,78 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             IList<JsTree> details = warehouse.WarehouseDetails.Select(x => x.CreateForJsTree()).ToList();
             return Json(details, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Save Inventory Section
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult SaveWarehouseDetails(int parentId, int warehouseId, int nodeId, string nameEn, string nameAr, int nodeLevel, string createdBy, string createdDt)
+        {
+            WarehouseDetail model = new WarehouseDetail();
+            try
+            {
+                if (nodeId > 0)
+                {
+                    // Update
+                    model.WarehouseId = warehouseId;
+                    model.WarehouseDetailId = nodeId;
+                    model.NameEn = nameEn;
+                    model.NameAr = nameAr;
+                    model.NodeLevel = (short?) nodeLevel;
+                    model.RecCreatedBy = createdBy;
+                    model.RecCreatedDt = createdDt;
+                    if (parentId > 0)
+                    {
+                        model.ParentId = parentId;
+                    }
+                    else
+                    {
+                        model.ParentId = null;
+                    }
+                    model.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.RecLastUpdatedDt = DateTime.Now;
+                    var nodeToUpdate = model.CreateFromClientToServer();
+                    if (detailService.UpdateWarehouseDetail(nodeToUpdate))
+                    {
+                        const string responseMessage = "Updated";
+                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    // Add
+                    model.WarehouseId = warehouseId;
+                    model.WarehouseDetailId = nodeId;
+                    model.NameEn = nameEn;
+                    model.NameAr = nameAr;
+                    model.NodeLevel = (short?)nodeLevel;
+                    model.RecCreatedBy = User.Identity.GetUserId();
+                    model.RecCreatedDt = DateTime.Now.ToShortDateString();
+                    model.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.RecLastUpdatedDt = DateTime.Now;
+                    if (parentId > 0)
+                    {
+                        model.ParentId = parentId;
+                    }
+                    else
+                    {
+                        model.ParentId = null;
+                    }
+                    var newNodeToAdd = model.CreateFromClientToServer();
+                    if (detailService.AddWarehouseDetail(newNodeToAdd))
+                    {
+                        const string responseMessage = "Saved";
+                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
         
         #endregion

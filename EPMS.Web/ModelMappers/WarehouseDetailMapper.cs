@@ -1,4 +1,6 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using System.Globalization;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -15,7 +17,7 @@ namespace EPMS.Web.ModelMappers
                 NodeLevel = source.NodeLevel,
                 ParentId = source.ParentId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = Convert.ToDateTime(source.RecCreatedDt).ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };
@@ -32,7 +34,7 @@ namespace EPMS.Web.ModelMappers
                 NodeLevel = source.NodeLevel,
                 ParentId = source.ParentId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

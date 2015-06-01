@@ -11,7 +11,7 @@ namespace EPMS.Web.Models
         public short? NodeLevel { get; set; }
         public long? ParentId { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
     }
