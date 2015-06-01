@@ -107,20 +107,20 @@
                         <div class="span3">
                             <label class="control-label" for="Manager">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseManager</label>
                         </div>
-                        @if (userModules.Contains("Human Resources System"))
+                        @if (userModules.Contains("HRS"))
                         {
                             <div class="span2">
                                 <div class="controls">
                                     @if (direction == "ltr")
                                     {
-                                        @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new {@class = "select2me", @id = "Manager"})
+                                        @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Manager" })
                                     }
                                     else
                                     {
-                                        @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new {@class = "select2me", @id = "Manager"})
+                                        @Html.DropDownListFor(model => model.Warehouse.WarehouseManager, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Manager" })
                                     }
-                                    <label id="managerValidationErrorMsg" class="required"></label>
                                 </div>
+                                <label id="managerValidationErrorMsg" class="required"></label>
                             </div>
                         }
                         else
@@ -207,14 +207,14 @@
                 <div id="SaveNewNode" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
+                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
                         </div>
                     </div>
                 </div>
                 <div id="UpdateNode" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
+                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
                         </div>
                     </div>
                 </div>
@@ -372,6 +372,7 @@
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
     });
+
     function AddEdit() {
         var isDetail;
         var val = '@userPermissionsSet.Contains("InventoryWarehouseCreate")';
@@ -396,12 +397,13 @@
                 $('#Manager').select2('disable');
                 $("#SaveNewNode").css("display", "none");
                 $("#Edit").css("display", "block");
+                $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
             } else {
                 $("#SaveNewNode").css("display", "block");
                 $("#Edit").css("display", "none");
             }
             $("#UpdateNode").css("display", "none");
-            $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
+
         }
         if (warehouseId == 0) {
             $("#CKEditorLocation").show();
@@ -412,6 +414,19 @@
         } else {
             $("#CKEditorLocation").hide();
             $("#Location").show();
+        }
+    }
+    function validateForm(event) {
+        var managerId = $("#Manager").val();
+        if (managerId != undefined) {
+            if (managerId == "" || managerId == 0) {
+                $("#managerValidationErrorMsg").text("Warehouse Manager is required");
+                event.preventDefault();
+                return false;
+            } else {
+                $("#managerValidationErrorMsg").text("");
+                return true;
+            }
         }
     }
     function jsTreeClick(event) {
@@ -441,8 +456,7 @@
                             var $radios = $('input:radio[name=shelfspace]');
                             $radios.filter('[value=Shelf]').prop('checked', true);
                             $("#divShelfOrSpace").addClass('disableList');
-                        }
-                        else if (value.NodeLevel == 5) {
+                        } else if (value.NodeLevel == 5) {
                             var $radios = $('input:radio[name=shelfspace]');
                             $radios.filter('[value=Space]').prop('checked', true);
                             $("#divShelfOrSpace").addClass('disableList');
@@ -525,7 +539,7 @@
         var titleAr = $("#nameAr").val();
         var createFrom = $("input[name=shelfspace]:checked").val();
         var nodeLevel;
-        if (createFrom == "Shelf" ) {
+        if (createFrom == "Shelf") {
             nodeLevel = 3;
         }
         else if (createFrom == "Space") {
