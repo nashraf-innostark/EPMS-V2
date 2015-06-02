@@ -11,12 +11,13 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Inventory.RIF;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.RIF;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "IS", IsModule = true)]
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RIFController : BaseController
     {
         private readonly IRIFService rifService;
@@ -27,7 +28,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/Rif
-        //[SiteAuthorize(PermissionKey = "RIFIndex")]
+        [SiteAuthorize(PermissionKey = "RIFIndex")]
         public ActionResult Index()
         {
             RifSearchRequest searchRequest = Session["PageMetaData"] as RifSearchRequest;
@@ -81,7 +82,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/Rif/Details/5
-        //[SiteAuthorize(PermissionKey = "RIFDetails")]
+        [SiteAuthorize(PermissionKey = "RIFDetails")]
         public ActionResult Details(int id)
         {
             var Rifresponse = rifService.LoadRifResponseData(id, false);

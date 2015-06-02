@@ -125,12 +125,12 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             var value = "";
-                            if (full["Status"] == 2) {
+                            if (full["Status"] == 6) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Pending';
                             } else if (full["Status"] == 3) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
-                            else if (full["Status"] == 6) {
+                            else if (full["Status"] == 2) {
                                 value = '@EPMS.Web.Resources.CMS.Order.Accepted';
                             }
                             return value;
