@@ -152,9 +152,9 @@ namespace EPMS.Implementation.Services
 
                     }
 
-                    if (rfi.Status != 6)
+                    if (rfi.Status != 6 && !string.IsNullOrEmpty(rfi.ManagerId))
                     {
-                        var manager = aspNetUserRepository.Find(rfi.RecUpdatedBy).Employee;
+                        var manager = aspNetUserRepository.Find(rfi.ManagerId).Employee;
                         rfiResponse.ManagerNameE = manager != null ? manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " + manager.EmployeeLastNameE : "";
                         rfiResponse.ManagerNameA = manager != null ? manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " + manager.EmployeeLastNameA : "";
 

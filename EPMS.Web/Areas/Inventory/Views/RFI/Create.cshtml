@@ -35,6 +35,7 @@
 @using (Html.BeginForm("Create", "RFI", FormMethod.Post, new { @id = "RFIForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x=>x.Rfi.RFIId)
+    @Html.HiddenFor(x => x.Rfi.ManagerId)
     @Html.HiddenFor(x => x.Rfi.RecCreatedBy)
     @Html.HiddenFor(x => x.Rfi.RecCreatedDate)
     <div class="container-fluid">

@@ -124,7 +124,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 rifViewModel.Rif.RecUpdatedBy = User.Identity.GetUserId();
                 rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
-
+                rifViewModel.Rif.ManagerId = User.Identity.GetUserId();
                 TempData["message"] = new MessageViewModel
                 {
                     Message = Resources.Inventory.RIF.RIF.RIFReplied,

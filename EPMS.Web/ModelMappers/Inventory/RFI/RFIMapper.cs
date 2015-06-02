@@ -19,7 +19,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 Status = source.Rfi.Status == 0 ?6 : source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
-
+                ManagerId = source.Rfi.ManagerId,
                 RecCreatedBy = source.Rfi.RecCreatedBy,
                 RecCreatedDate = source.Rfi.RecCreatedDate,
                 RecUpdatedBy = source.Rfi.RecUpdatedBy,
@@ -60,7 +60,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 Status = source.Rfi.Status == 0 ? 6 : source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
-
+                ManagerId = source.Rfi.ManagerId,
                 RecCreatedBy = source.Rfi.RecCreatedBy,
                 RecCreatedDate = source.Rfi.RecCreatedDate,
                 RecUpdatedBy = source.Rfi.RecUpdatedBy,
@@ -79,7 +79,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,
-
+                ManagerId = source.ManagerId,
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,

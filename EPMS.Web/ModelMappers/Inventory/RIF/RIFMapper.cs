@@ -20,7 +20,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 Status = source.Rif.Status == 0 ? 6 : source.Rif.Status,
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
-
+                ManagerId = source.Rif.ManagerId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
                 RecCreatedDate = source.Rif.RecCreatedDate,
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
@@ -60,7 +60,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 Status = source.Rif.Status == 0 ? 6 : source.Rif.Status,
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
-
+                ManagerId = source.Rif.ManagerId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
                 RecCreatedDate = source.Rif.RecCreatedDate,
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
@@ -79,7 +79,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 OrderId = source.OrderId,
                 ReasonE = source.ReturningReasonE,
                 ReasonA = source.ReturningReasonA,
-
+                ManagerId = source.ManagerId,
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,
