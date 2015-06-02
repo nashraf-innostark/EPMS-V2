@@ -15,7 +15,7 @@ namespace EPMS.Models.DomainModels
         public System.DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
-
+        public string ManagerId { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Order Order { get; set; }
         public virtual ICollection<RFIItem> RFIItems { get; set; }

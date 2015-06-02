@@ -886,6 +886,7 @@
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesE" Type="nvarchar(max)" />
           <Property Name="Status" Type="int" />
+          <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="RFIItem">
           <Key>
@@ -918,6 +919,7 @@
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesE" Type="nvarchar(max)" />
           <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="RIFItem">
           <Key>
@@ -3335,6 +3337,7 @@
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_RFI_AspNetUsers" FromRole="RFI" ToRole="AspNetUsers" />
           <NavigationProperty Name="Order" Relationship="Self.FK_RFI_Orders" FromRole="RFI" ToRole="Orders" />
           <NavigationProperty Name="RFIItems" Relationship="Self.FK_RFIItem_RFI" FromRole="RFI" ToRole="RFIItem" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RFIItem">
           <Key>
@@ -4635,6 +4638,7 @@
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_RIF_AspNetUsers" FromRole="RIF" ToRole="AspNetUser" />
           <NavigationProperty Name="Order" Relationship="EPMSInventoryModel.FK_RIF_Orders" FromRole="RIF" ToRole="Order" />
           <NavigationProperty Name="RIFItems" Relationship="EPMSInventoryModel.FK_RIFItem_RIF" FromRole="RIF" ToRole="RIFItem" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RIFItem">
           <Key>
@@ -5572,6 +5576,7 @@
           <EntitySetMapping Name="RFIs">
             <EntityTypeMapping TypeName="EPMSInventoryModel.RFI">
               <MappingFragment StoreEntitySet="RFI">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="RFIId" ColumnName="RFIId" />
                 <ScalarProperty Name="OrderId" ColumnName="OrderId" />
                 <ScalarProperty Name="UsageE" ColumnName="UsageE" />
@@ -5803,6 +5808,7 @@
           <EntitySetMapping Name="RIFs">
             <EntityTypeMapping TypeName="EPMSInventoryModel.RIF">
               <MappingFragment StoreEntitySet="RIF">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="NotesE" ColumnName="NotesE" />
                 <ScalarProperty Name="NotesA" ColumnName="NotesA" />
