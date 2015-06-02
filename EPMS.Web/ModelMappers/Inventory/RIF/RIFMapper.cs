@@ -17,7 +17,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 OrderId = source.Rif.OrderId,
                 ReturningReasonE = source.Rif.ReasonE,
                 ReturningReasonA = source.Rif.ReasonA,
-                Status = source.Rif.Status == 0 ? 2 : source.Rif.Status,
+                Status = source.Rif.Status == 0 ? 6 : source.Rif.Status,
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
 
@@ -57,7 +57,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 OrderId = source.Rif.OrderId,
                 ReturningReasonE = source.Rif.ReasonE,
                 ReturningReasonA = source.Rif.ReasonA,
-                Status = source.Rif.Status == 0 ? 2 : source.Rif.Status,
+                Status = source.Rif.Status == 0 ? 6 : source.Rif.Status,
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
 

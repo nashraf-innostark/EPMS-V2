@@ -16,7 +16,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
-                Status = source.Rfi.Status == 0 ? 2 : source.Rfi.Status,
+                Status = source.Rfi.Status == 0 ?6 : source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
 
@@ -57,7 +57,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
-                Status = source.Rfi.Status == 0 ? 2 : source.Rfi.Status,
+                Status = source.Rfi.Status == 0 ? 6 : source.Rfi.Status,
                 NotesE = source.Rfi.NotesE,
                 NotesA = source.Rfi.NotesA,
 

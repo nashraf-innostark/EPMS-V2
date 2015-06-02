@@ -206,7 +206,7 @@
                         <div class="controls">
                             @Html.DropDownListFor(model => model.Rfi.Status, new[]
                             {
-                                //new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
                                 new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
                                 new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
                             }, new { @id = "RFIStatusDDL", @class = "toBeDisabled" })
