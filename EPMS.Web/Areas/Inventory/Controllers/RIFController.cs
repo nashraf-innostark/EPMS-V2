@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using EPMS.Implementation.Identity;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.ModelMappers;
 using System.Configuration;
@@ -11,16 +8,10 @@ using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Inventory.RFI;
-using EPMS.Web.Models;
+using EPMS.Web.ModelMappers.Inventory.RIF;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Request;
-using EPMS.Web.ViewModels.RFI;
-using EPMS.WebBase.Mvc;
+using EPMS.Web.ViewModels.RIF;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using RFI = EPMS.Web.Models.RFI;
-using RFIItem = EPMS.Web.Models.RFIItem;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -28,34 +19,34 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     //[SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RIFController : BaseController
     {
-        private readonly IRFIService rfiService;
+        private readonly IRIFService rifService;
 
-        public RIFController(IRFIService rfiService)
+        public RIFController(IRIFService rifService)
         {
-            this.rfiService = rfiService;
+            this.rifService = rifService;
         }
 
-        // GET: Inventory/RFI
+        // GET: Inventory/Rif
         //[SiteAuthorize(PermissionKey = "RIFIndex")]
         public ActionResult Index()
         {
-            RfiSearchRequest searchRequest = Session["PageMetaData"] as RfiSearchRequest;
+            RifSearchRequest searchRequest = Session["PageMetaData"] as RifSearchRequest;
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             Session["PageMetaData"] = null;
 
-            RfiListViewModel viewModel = new RfiListViewModel
+            RifListViewModel viewModel = new RifListViewModel
             {
-                SearchRequest = searchRequest ?? new RfiSearchRequest()
+                SearchRequest = searchRequest ?? new RifSearchRequest()
             };
 
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult Index(RfiSearchRequest searchRequest)
+        public ActionResult Index(RifSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            RfiListViewModel viewModel = new RfiListViewModel();
+            RifListViewModel viewModel = new RifListViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Manager")
             {
@@ -65,12 +56,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 searchRequest.Requester = Session["UserID"].ToString();
             }
-            var requestResponse = rfiService.LoadAllRfis(searchRequest);
-            var data = requestResponse.Rfis.Select(x => x.CreateRfiServerToClient());
-            var employeeRequests = data as IList<RFI> ?? data.ToList();
-            if (employeeRequests.Any())
+            var requestResponse = rifService.LoadAllRifs(searchRequest);
+            var data = requestResponse.Rifs.Select(x => x.CreateRifServerToClient());
+            var responseData = data as IList<Models.RIF> ?? data.ToList();
+            if (responseData.Any())
             {
-                viewModel.aaData = employeeRequests;
+                viewModel.aaData = responseData;
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -78,7 +69,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<RFI>();
+                viewModel.aaData = Enumerable.Empty<Models.RIF>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -89,58 +80,58 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Inventory/RFI/Details/5
+        // GET: Inventory/Rif/Details/5
         //[SiteAuthorize(PermissionKey = "RIFDetails")]
         public ActionResult Details(int id)
         {
-            var rfiresponse = rfiService.LoadRfiResponseData(id, false);
-            RFIViewModel rfiViewModel = new RFIViewModel();
-            if (rfiresponse.Rfi != null)
+            var Rifresponse = rifService.LoadRifResponseData(id, false);
+            RIFViewModel rifViewModel = new RIFViewModel();
+            if (Rifresponse.Rif != null)
             {
-                rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
+                rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
                 if (Resources.Shared.Common.TextDirection == "ltr")
                 {
-                    rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameE;
-                    rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameE;
-                    rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameE;
+                    rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameE;
+                    rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameE;
+                    rifViewModel.Rif.ManagerName = Rifresponse.ManagerNameE;
                 }
                 else
                 {
-                    rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameA;
-                    rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameA;
-                    rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameA;
+                    rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameA;
+                    rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameA;
+                    rifViewModel.Rif.ManagerName = Rifresponse.ManagerNameA;
                 }
-                rfiViewModel.Rfi.OrderNo = rfiresponse.OrderNo;
-                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList();
+                rifViewModel.Rif.OrderNo = Rifresponse.OrderNo;
+                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemDetailsServerToClient()).ToList();
             }
             else
             {
-                rfiViewModel.Rfi = new RFI
+                rifViewModel.Rif = new Models.RIF
                 {
                     RequesterName = Session["FullName"].ToString()
                 };
-                rfiViewModel.RfiItem = new List<RFIItem>();
+                rifViewModel.RifItem = new List<Models.RIFItem>();
             }
-            rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
-            return View(rfiViewModel);
+            rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            return View(rifViewModel);
         }
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
-        public ActionResult Details(RFIViewModel rfiViewModel)
+        public ActionResult Details(RIFViewModel rifViewModel)
         {
             try
             {
-                rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
-                rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                rifViewModel.Rif.RecUpdatedBy = User.Identity.GetUserId();
+                rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
 
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.RFI.RFI.RFIReplied,
+                    Message = Resources.Inventory.RIF.RIF.RIFReplied,
                     IsUpdated = true
                 };
 
-                var rfiToBeSaved = rfiViewModel.CreateRfiDetailsClientToServer();
-                if (rfiService.UpdateRFI(rfiToBeSaved))
+                var RifToBeSaved = rifViewModel.CreateRifDetailsClientToServer();
+                if (rifService.UpdateRIF(RifToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");
@@ -154,69 +145,69 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
         }
 
-        // GET: Inventory/RFI/Create
+        // GET: Inventory/Rif/Create
         //[SiteAuthorize(PermissionKey = "RIFCreate")]
         public ActionResult Create(long? id)
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
-            var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders);
-            RFIViewModel rfiViewModel = new RFIViewModel();
-            if (rfiresponse.Rfi != null)
+            var Rifresponse = rifService.LoadRifResponseData(id, loadCustomersAndOrders);
+            RIFViewModel rifViewModel = new RIFViewModel();
+            if (Rifresponse.Rif != null)
             {
-                rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
-                rfiViewModel.Rfi.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? rfiresponse.RequesterNameE : rfiresponse.RequesterNameA;
-                rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient()).ToList();
+                rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
+                rifViewModel.Rif.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? Rifresponse.RequesterNameE : Rifresponse.RequesterNameA;
+                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemServerToClient()).ToList();
             }
             else
             {
-                rfiViewModel.Rfi = new RFI
+                rifViewModel.Rif = new Models.RIF
                 {
                     RequesterName = Session["UserFullName"].ToString()
                 };
-                rfiViewModel.RfiItem = new List<RFIItem>();
+                rifViewModel.RifItem = new List<Models.RIFItem>();
             }
             if (loadCustomersAndOrders)
             {
-                rfiViewModel.Customers = rfiresponse.Customers.Select(x => x.CreateForDashboard());
-                rfiViewModel.Orders = rfiresponse.Orders.Select(x => x.CreateForDashboard());
+                rifViewModel.Customers = Rifresponse.Customers.Select(x => x.CreateForDashboard());
+                rifViewModel.Orders = Rifresponse.Orders.Select(x => x.CreateForDashboard());
                 //set customerId
-                if (rfiViewModel.Rfi.OrderId>0)
-                    rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
+                if (rifViewModel.Rif.OrderId>0)
+                    rifViewModel.Rif.CustomerId = rifViewModel.Orders.FirstOrDefault(x => x.OrderId == rifViewModel.Rif.OrderId).CustomerId;
             }
-            rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
-            return View(rfiViewModel);
+            rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            return View(rifViewModel);
         }
 
-        // POST: Inventory/RFI/Create
+        // POST: Inventory/Rif/Create
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
-        public ActionResult Create(RFIViewModel rfiViewModel)
+        public ActionResult Create(RIFViewModel rifViewModel)
         {
             try
             {
-                if (rfiViewModel.Rfi.RFIId > 0)
+                if (rifViewModel.Rif.RIFId > 0)
                 {
-                    rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
-                    rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                    rifViewModel.Rif.RecUpdatedBy = User.Identity.GetUserId();
+                    rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.RFI.RFI.RFIUpdated,
+                        Message = Resources.Inventory.RIF.RIF.RFIUpdated,
                         IsUpdated = true
                     };
                 }
                 else
                 {
-                    rfiViewModel.Rfi.RecCreatedBy = User.Identity.GetUserId();
-                    rfiViewModel.Rfi.RecCreatedDate = DateTime.Now;
+                    rifViewModel.Rif.RecCreatedBy = User.Identity.GetUserId();
+                    rifViewModel.Rif.RecCreatedDate = DateTime.Now;
 
-                    rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
-                    rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
-                    TempData["message"] = new MessageViewModel { Message = Resources.RFI.RFI.RFICreated, IsSaved = true };
+                    rifViewModel.Rif.RecUpdatedBy = User.Identity.GetUserId();
+                    rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
+                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.RIF.RIF.RIFCreated, IsSaved = true };
                 }
                 
-                var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
-                if(rfiService.SaveRFI(rfiToBeSaved))
+                var RifToBeSaved = rifViewModel.CreateRifClientToServer();
+                if(rifService.SaveRIF(RifToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");

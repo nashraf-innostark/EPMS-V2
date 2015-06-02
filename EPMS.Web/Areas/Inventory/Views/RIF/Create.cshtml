@@ -1,6 +1,6 @@
-﻿@model  EPMS.Web.ViewModels.RFI.RFIViewModel
+﻿@model  EPMS.Web.ViewModels.RIF.RIFViewModel
 @{
-    ViewBag.Title = Model.Rfi.RFIId > 0 ? EPMS.Web.Resources.RFI.RFI.EditPageTitle : EPMS.Web.Resources.RFI.RFI.CreatePageTitle;
+    ViewBag.Title = Model.Rif.RIFId > 0 ? EPMS.Web.Resources.Inventory.RIF.RIF.EditPageTitle : EPMS.Web.Resources.Inventory.RIF.RIF.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -14,29 +14,29 @@
             </a>
         </li>
         <li>
-            <a href="~/Inventory/RFI/Index">
-                @EPMS.Web.Resources.RFI.RFI.ListPageBreadCrumb
+            <a href="~/Inventory/RIF/Index">
+                @EPMS.Web.Resources.Inventory.RIF.RIF.ListPageBreadCrumb
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">@EPMS.Web.Resources.RFI.RFI.CreatePageBreadCrumb</a>
+            <a href="javascript:;">@EPMS.Web.Resources.Inventory.RIF.RIF.CreatePageBreadCrumb</a>
         </li>
     </ul>
 </div>
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.RFI.RFI.CreatePageHeading</small></h2>
+    <h2><small>@EPMS.Web.Resources.Inventory.RIF.RIF.CreatePageHeading</small></h2>
 </header>
 
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Create", "RFI", FormMethod.Post, new { @id = "RFIForm", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "RIF", FormMethod.Post, new { @id = "RIFForm", @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(x=>x.Rfi.RFIId)
-    @Html.HiddenFor(x => x.Rfi.RecCreatedBy)
-    @Html.HiddenFor(x => x.Rfi.RecCreatedDate)
+    @Html.HiddenFor(x=>x.Rif.RIFId)
+    @Html.HiddenFor(x => x.Rif.RecCreatedBy)
+    @Html.HiddenFor(x => x.Rif.RecCreatedDate)
     <div class="container-fluid">
         @if (ViewBag.HasCustomerModule)
         {
@@ -46,8 +46,8 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                        @Html.ValidationMessageFor(m => m.Rfi.CustomerId, String.Empty, new { @class = "required" })
+                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Rif.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rif.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
+                        @*@Html.ValidationMessageFor(m => m.Rif.CustomerId, String.Empty, new { @class = "required" })*@
                     </div>
                 </div>
             </div>
@@ -57,15 +57,15 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @if (Model.Rfi.OrderId > 0)
+                        @if (Model.Rif.OrderId > 0)
                         {
-                            @Html.DropDownListFor(m => m.Rfi.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
+                            @Html.DropDownListFor(m => m.Rif.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
                         }
                         else
                         {
-                            @Html.DropDownListFor(m => m.Rfi.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
+                            @Html.DropDownListFor(m => m.Rif.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                         }
-                        @Html.ValidationMessageFor(m => m.Rfi.OrderId, String.Empty, new { @class = "required" })
+                        @*@Html.ValidationMessageFor(m => m.Rif.OrderId, String.Empty, new { @class = "required" })*@
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Rfi.RequesterName, new { @readonly = true, @id = "createdBy" })
+                    @Html.TextBoxFor(model => model.Rif.RequesterName, new { @readonly = true, @id = "createdBy" })
                 </div>
             </div>
         </div>
@@ -86,13 +86,13 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="greeting">@EPMS.Web.Resources.RFI.RFI.Usage</label>
+                <label class="control-label" for="greeting">@EPMS.Web.Resources.Inventory.RIF.RIF.ReturningReason</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Rfi.UsageE)
+                    @Html.TextBoxFor(model => model.Rif.ReasonE)
                 </div>
-                @Html.ValidationMessageFor(m => m.Rfi.UsageE, String.Empty, new { @class = "required" })
+                @Html.ValidationMessageFor(m => m.Rif.ReasonE, String.Empty, new { @class = "required" })
 
             </div>
         </div>
@@ -100,13 +100,13 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="greetinga">@EPMS.Web.Resources.RFI.RFI.UsageArabic</label>
+                <label class="control-label" for="greetinga">@EPMS.Web.Resources.Inventory.RIF.RIF.ReturningReasonArabic</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.Rfi.UsageA)
+                    @Html.TextBoxFor(model => model.Rif.ReasonA)
                 </div>
-                @Html.ValidationMessageFor(m => m.Rfi.UsageA, String.Empty, new { @class = "required" })
+                @Html.ValidationMessageFor(m => m.Rif.ReasonA, String.Empty, new { @class = "required" })
             </div>
         </div>
         <!--Input Field end-->
@@ -143,19 +143,19 @@
                             <th style="width: 4%">@EPMS.Web.Resources.RFI.RFI.Delete</th>
                         </tr>
                     </thead>
-                    <tbody class="qouteAdd" id="RFIItemsTableBody">
-                        @if (Model.RfiItem.Any())
+                    <tbody class="qouteAdd" id="RifItemsTableBody">
+                        @if (Model.RifItem.Any())
                         {
-                            for (int i = 0; i < Model.RfiItem.Count(); i++)
+                            for (int i = 0; i < Model.RifItem.Count(); i++)
                             {
                                 <tr data-id=@i>
                                     <td style='display:none'>
-                                        <input name='RfiItem.Index' type='hidden' value=@i />
+                                        <input name='RifItem.Index' type='hidden' value=@i />
                                         
-                                        @Html.HiddenFor(m => m.RfiItem[i].IsItemDescription)
-                                        @Html.HiddenFor(m => m.RfiItem[i].IsItemSKU)
-                                        @Html.HiddenFor(m => m.RfiItem[i].ItemVariationId)
-                                        @Html.HiddenFor(m => m.RfiItem[i].RFIItemId)
+                                        @Html.HiddenFor(m => m.RifItem[i].IsItemDescription)
+                                        @Html.HiddenFor(m => m.RifItem[i].IsItemSKU)
+                                        @Html.HiddenFor(m => m.RifItem[i].ItemVariationId)
+                                        @Html.HiddenFor(m => m.RifItem[i].RIFItemId)
                                     </td>
                                     <td>
                                         <div class="control-group row-fluid">
@@ -165,14 +165,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.RfiItem[i].ItemDetails, new { @class = "auto-resize",@rows=2 })
+                                        @Html.TextAreaFor(m => m.RifItem[i].ItemDetails, new { @class = "auto-resize",@rows=2 })
                                         
                                         <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                        @Html.ValidationMessageFor(m => m.RfiItem[i].ItemDetails)
+                                        @Html.ValidationMessageFor(m => m.RifItem[i].ItemDetails)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.RfiItem[i].ItemQty, new { @class = "n1", @rows = 2 })
-                                        @Html.ValidationMessageFor(m => m.RfiItem[i].ItemQty,null, new { @class = "required"})
+                                        @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2 })
+                                        @Html.ValidationMessageFor(m => m.RifItem[i].ItemQty,null, new { @class = "required"})
                                     </td>
 
 
@@ -186,10 +186,10 @@
                         {
                             <tr data-id="0">
                                 <td style='display:none'>
-                                    <input name='RfiItem.Index' type='hidden' value='0' />
-                                    <input name='RfiItem[0].IsItemDescription' id='RfiItem_0__IsItemDescription' type='hidden' />
-                                    <input name='RfiItem[0].IsItemSKU' id='RfiItem_0__IsItemSKU' type='hidden' />
-                                    <input name='RfiItem[0].ItemVariationId' id='RfiItem_0__ItemVariationId' type='hidden' />
+                                    <input name='RifItem.Index' type='hidden' value='0' />
+                                    <input name='RifItem[0].IsItemDescription' id='RifItem_0__IsItemDescription' type='hidden' />
+                                    <input name='RifItem[0].IsItemSKU' id='RifItem_0__IsItemSKU' type='hidden' />
+                                    <input name='RifItem[0].ItemVariationId' id='RifItem_0__ItemVariationId' type='hidden' />
                                 </td>
                                 <td>
                                     <div class="control-group row-fluid">
@@ -199,13 +199,13 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <textarea rows="2" id='RfiItem_0__ItemDetails' class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RfiItem[0].ItemDetails"></textarea>
+                                    <textarea rows="2" id='RifItem_0__ItemDetails' class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="RifItem[0].ItemDetails"></textarea>
                                     <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                    <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemDetails" data-valmsg-replace="true"></span>
+                                    <span class="field-validation-valid required" data-valmsg-for="RifItem[0].ItemDetails" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="quantity">
-                                    <input class="n1" type="text" name="RfiItem[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
-                                    <span class="field-validation-valid required" data-valmsg-for="RfiItem[0].ItemQty" data-valmsg-replace="true"></span>
+                                    <input class="n1" type="text" name="RifItem[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                    <span class="field-validation-valid required" data-valmsg-for="RifItem[0].ItemQty" data-valmsg-replace="true"></span>
                                 </td>
 
 
@@ -233,7 +233,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Rfi.NotesE, new { @id = "RFINotesE" })
+                    @Html.TextAreaFor(m => m.Rif.NotesE, new { @id = "RFINotesE" })
                 </div>
             </div>
         </div>
@@ -243,7 +243,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextAreaFor(m => m.Rfi.NotesA, new { @id = "RFINotesA" })
+                    @Html.TextAreaFor(m => m.Rif.NotesA, new { @id = "RFINotesA" })
                 </div>
             </div>
         </div>
@@ -312,14 +312,14 @@
         
 
         $('.trAdder').on("click", function () {
-            var index = $("#RFIItemsTableBody").children("tr").length;
+            var index = $("#RifItemsTableBody").children("tr").length;
             var indexCell = "<td style='display:none'>" +
-                "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
-                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
-                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
-                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' />" +
+                "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
+                "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
+                "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' type='hidden' />" +
+                "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' type='hidden' />" +
                 "</td>";
-            //RfiItem
+            //RifItem
             var html = ' <tr data-id=' + index + '>' +
                 indexCell +
                 '<td>' +
@@ -328,13 +328,13 @@
                 '<label class="control-label serialNumber"  ></label>' +
                 '</div></div>' +
                 '</td>' +
-                '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
+                '<td> <textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
                 '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                 '</td>' +
                 '<td class="quantity"> ' +
-                '<input class="n1" type="text" id="RfiItem_' + index + '_ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value=0>' +
-                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                '<input class="n1" type="text" id="RifItem_' + index + '_ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value=0>' +
+                '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
                 '</td>' +
                 '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
                 '</td></tr>';
@@ -405,12 +405,12 @@
 
                     t4 = t3 * t2;
                     var indexCell = "<td style='display:none'>" +
-                                    "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
-                                    "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
-                                    "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
-                                    "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' />" +
+                                    "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
+                                    "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
+                                    "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' type='hidden' />" +
+                                    "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' type='hidden' />" +
                                     "</td>";
-                    //RfiItem
+                    //RifItem
                     var html = '<tr data-id=' + index + '>' +
                                indexCell +
                                '<td>' +
@@ -419,13 +419,13 @@
                                '<label class="control-label serialNumber"  ></label>' +
                                '</div></div>' +
                                '</td>' +
-                               '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                               '<td> <textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
                                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                               '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                               '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                                '</td>' +
                                '<td class="quantity"> ' +
-                               '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                               '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                               '<input class="n1" type="text" value=' + t2 + ' id="RifItem_' + index + '__ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                               '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
                                '</td>' +
                                '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
                                '</td></tr>';

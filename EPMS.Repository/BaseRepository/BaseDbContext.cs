@@ -123,5 +123,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<RFI> RFI { get; set; }
         public DbSet<RFIItem> RFIItem { get; set; }
         public DbSet<WarehouseDetail> WarehouseDetails { get; set; }
+        public DbSet<RIF> RIF { get; set; }
+        public DbSet<RIFItem> RIFItem { get; set; }
     }
 }
