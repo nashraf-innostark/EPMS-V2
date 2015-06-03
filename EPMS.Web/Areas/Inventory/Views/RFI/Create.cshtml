@@ -310,8 +310,86 @@
             });
         });
 
-        
+        function getModalControlsValues() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationDropDownList").val();
 
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#RfiItem_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#RfiItem_" + index + "__IsItemSKU").val(isItemSku);
+            $("#RfiItem_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#RfiItem_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                        } else {
+                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                        }
+                    }
+                    $("#RfiItem_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+
+            $('#itemSearcher').modal('toggle');
+        };
+
+
+        $("#SaveChanges").on("click", function () {
+            if (validateSelect2Ddl("#ItemVariationDropDownList")) {
+                getModalControlsValues();
+            }
+        });
+
+        //open pop up
+        $('#itemSearcher').on('show', function () {
+            //clear DDL required value label
+            $("#ItemVariationDropDownListValidation").text("");
+            $("#ItemVariationDropDownListValidation").removeClass("Error");
+
+            //get the id from tr that is selected for the item popup
+            var index = $(event.target).closest('tr').data('id');
+            $("#ItemModalIndex").val(index);
+            //get item's values
+            var isItemDescription = $("#RfiItem_" + index + "__IsItemDescription").val();
+            var isItemSKU = $("#RfiItem_" + index + "__IsItemSKU").val();
+            var itemVariationId = $("#RfiItem_" + index + "__ItemVariationId").val();
+
+            //set modal fields according to modal values
+            $("#ItemVariationDropDownList").select2("val", itemVariationId); //set the value
+
+            if (isItemDescription == "false" || isItemDescription == "False" || isItemDescription == "") {
+                $('#ItemDescriptionModalChk').attr('checked', false);
+            } else {
+                $('#ItemDescriptionModalChk').attr('checked', true);
+            }
+
+            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU == "") {
+                $('#ItemSKUModalChk').attr('checked', false);
+            } else {
+                $('#ItemSKUModalChk').attr('checked', true);
+            }
+        });
+
+        //add data in row from popup
         $('.trAdder').on("click", function () {
             var index = $("#RFIItemsTableBody").children("tr").length;
             var indexCell = "<td style='display:none'>" +
@@ -464,6 +542,7 @@
         toolbar: 'tiny'
     });
 
+  
     $(function () {
         $("#jstree").jstree({
             "json_data": {

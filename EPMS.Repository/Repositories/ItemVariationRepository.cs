@@ -28,7 +28,9 @@ namespace EPMS.Repository.Repositories
                 ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
                 SKUCode = x.SKUCode,
                 ItemVariationDescriptionA = x.DescriptionAr,
-                ItemVariationDescriptionE = x.DescriptionEn
+                ItemVariationDescriptionE = x.DescriptionEn,
+                ItemNameA = x.InventoryItem.ItemNameAr,
+                ItemNameE = x.InventoryItem.ItemNameEn
             });
         }
     }
