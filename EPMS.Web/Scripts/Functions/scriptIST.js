@@ -218,13 +218,13 @@ function ajaxLoader() {
     });
 }
 
-function validateSelect2Ddl(control) {
+function validateSelect2Ddl(control, errorMessage) {
     var counter = 0;
     control = $(control);
     var selectedId = $(control).val();
     if (selectedId == null || selectedId == "" || selectedId == 0) {
         //$("#" + control.attr('id') + "Validation").text('@EPMS.Web.Resources.Shared.Common.RequiredDdlField');
-        $("#" + control.attr('id') + "Validation").text('*');
+        $("#" + control.attr('id') + "Validation").text(errorMessage);
         $("#" + control.attr('id') + "Validation").addClass("Error");
         counter++;
         return false;

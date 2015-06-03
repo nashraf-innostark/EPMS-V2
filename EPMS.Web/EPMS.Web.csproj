@@ -361,6 +361,7 @@
     <Compile Include="ModelMappers\Inventory\RFI\RFIMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
     <Compile Include="ModelMappers\ItemImageMapper.cs" />
+    <Compile Include="ModelMappers\ItemReleaseDetailMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseMapper.cs" />
     <Compile Include="ModelMappers\ItemVariationMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
