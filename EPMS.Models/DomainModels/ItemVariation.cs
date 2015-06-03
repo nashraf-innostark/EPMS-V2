@@ -41,5 +41,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<Status> Status { get; set; }
         public virtual ICollection<Warehouse> Warehouses { get; set; }
+        public virtual ICollection<RIFItem> RIFItems { get; set; }
     }
 }

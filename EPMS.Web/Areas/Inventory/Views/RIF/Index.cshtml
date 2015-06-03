@@ -1,6 +1,6 @@
-﻿@model  EPMS.Web.ViewModels.RFI.RfiListViewModel
+﻿@model  EPMS.Web.ViewModels.RIF.RifListViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.RFI.RFI.ListPageTitle;
+    ViewBag.Title = EPMS.Web.Resources.Inventory.RIF.RIF.ListPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
@@ -14,8 +14,8 @@
             </a>
         </li>
         <li class="current">
-            <a href="~/Inventory/RFI/Index">
-                @EPMS.Web.Resources.RFI.RFI.ListPageBreadCrumb
+            <a href="~/Inventory/RIF/Index">
+                @EPMS.Web.Resources.Inventory.RIF.RIF.ListPageBreadCrumb
             </a>
         </li>
     </ul>
@@ -23,10 +23,10 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.RFI.RFI.ListPageHeading</small></h2>
+    <h2><small>@EPMS.Web.Resources.Inventory.RIF.RIF.ListPageHeading</small></h2>
 @if (ViewBag.UserRole == "employee")
 {
-    <h3><small><a href="~/Inventory/RFI/Create">@EPMS.Web.Resources.RFI.RFI.CreateRFILink</a></small></h3>
+    <h3><small><a href="~/Inventory/RIF/Create">@EPMS.Web.Resources.Inventory.RIF.RIF.CreateRFILink</a></small></h3>
 }
     
 </header>
@@ -91,7 +91,7 @@
                         "aTargets": [1],
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
-                            return full["RFIId"];
+                            return full["RIFId"];
                         },
                         "bVisible": true,
                         "bSortable": false
@@ -100,8 +100,8 @@
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var val = full["RFIId"];
-                            var id = full["RFIId"];
+                            var val = full["RIFId"];
+                            var id = full["RIFId"];
                             var element = '<a href="Details/' + id + '">' + val + '</a>';
                             return element;
                         }
@@ -141,7 +141,7 @@
                 "fnServerParams": function(aoData) {
                     aoData.push({ "name": "search", "value": $('input').val() });
                 },
-                "sAjaxSource": siteUrl + "/Inventory/RFI/Index",
+                "sAjaxSource": siteUrl + "/Inventory/RIF/Index",
                 "sServerMethod": "POST",
                 "oLanguage": {
                     "sLoadingRecords": "Please wait - loading records...",
@@ -170,7 +170,7 @@
                         "aTargets": [1],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            return full["RFIId"];
+                            return full["RIFId"];
                         },
                         "bVisible": true,
                         "bSortable": false
@@ -179,8 +179,8 @@
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            var val = full["RFIId"];
-                            var id = full["RFIId"];
+                            var val = full["RIFId"];
+                            var id = full["RIFId"];
                             var element = '<a href="Details/' + id + '">' + val + '</a>';
                             return element;
                         }
@@ -220,7 +220,7 @@
                 "fnServerParams": function (aoData) {
                     aoData.push({ "name": "search", "value": $('input').val() });
                 },
-                "sAjaxSource": siteUrl + "/Inventory/RFI/Index",
+                "sAjaxSource": siteUrl + "/Inventory/RIF/Index",
                 "sServerMethod": "POST",
                 "oLanguage": {
                     "sLoadingRecords": "Please wait - loading records...",

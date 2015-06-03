@@ -107,9 +107,14 @@
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
+    <Compile Include="Common\RifRequestByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
+    <Compile Include="DomainModels\RIF.cs" />
+    <Compile Include="DomainModels\RIFItem.cs" />
+    <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="RequestModels\RifSearchRequest.cs" />
     <Compile Include="RequestModels\RfiSearchRequest.cs" />
     <Compile Include="Common\TaskByColumn.cs" />
     <Compile Include="DomainModels\Aisle.cs" />
@@ -214,7 +219,6 @@
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
-    <Compile Include="RequestModels\RFIServerViewModel.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
     <Compile Include="RequestModels\WarehouseRequest.cs" />
@@ -270,8 +274,10 @@
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
-    <Compile Include="ResponseModels\RfiRequestResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
+    <Compile Include="ResponseModels\RifRequestResponse.cs" />
+    <Compile Include="ResponseModels\RfiRequestResponse.cs" />
+    <Compile Include="ResponseModels\RIFCreateResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />

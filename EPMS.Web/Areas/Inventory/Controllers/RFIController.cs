@@ -67,10 +67,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             var requestResponse = rfiService.LoadAllRfis(searchRequest);
             var data = requestResponse.Rfis.Select(x => x.CreateRfiServerToClient());
-            var employeeRequests = data as IList<RFI> ?? data.ToList();
-            if (employeeRequests.Any())
+            var responseData = data as IList<RFI> ?? data.ToList();
+            if (responseData.Any())
             {
-                viewModel.aaData = employeeRequests;
+                viewModel.aaData = responseData;
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -132,6 +132,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                 rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
+                rfiViewModel.Rfi.ManagerId = User.Identity.GetUserId();
 
                 TempData["message"] = new MessageViewModel
                 {
