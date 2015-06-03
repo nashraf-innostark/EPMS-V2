@@ -267,17 +267,11 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        editor = CKEDITOR.replace('RFINotesE', {
+        CKEDITOR.replace('RFINotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('RFINotesA', {
+        CKEDITOR.replace('RFINotesA', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
 
         $("#selectBoxFilter").select2();
