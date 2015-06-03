@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
+    <Compile Include="Common\TirRequestByColumn.cs" />
+    <Compile Include="Common\PofRequestByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\EmployeeForDropDownList.cs" />
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
+    <Compile Include="Common\DifRequestByColumn.cs" />
     <Compile Include="Common\RifRequestByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
     <Compile Include="DomainModels\DIF.cs" />
@@ -122,6 +125,9 @@
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="RequestModels\TirSearchRequest.cs" />
+    <Compile Include="RequestModels\PofSearchRequest.cs" />
+    <Compile Include="RequestModels\DifSearchRequest.cs" />
     <Compile Include="RequestModels\RifSearchRequest.cs" />
     <Compile Include="RequestModels\RfiSearchRequest.cs" />
     <Compile Include="Common\TaskByColumn.cs" />
@@ -283,6 +289,7 @@
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
+    <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\RifRequestResponse.cs" />
     <Compile Include="ResponseModels\RfiRequestResponse.cs" />
     <Compile Include="ResponseModels\RIFCreateResponse.cs" />

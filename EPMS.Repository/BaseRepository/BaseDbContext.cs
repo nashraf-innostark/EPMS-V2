@@ -127,5 +127,11 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<RIFItem> RIFItem { get; set; }
         public DbSet<ItemRelease> ItemReleases { get; set; }
         public DbSet<ItemReleaseDetail> ItemReleaseDetails { get; set; }
+        public DbSet<DIF> DIF { get; set; }
+        public DbSet<DIFItem> DIFItem { get; set; }
+        public DbSet<POF> POF { get; set; }
+        public DbSet<POFItem> POFItem { get; set; }
+        public DbSet<TIR> TIR { get; set; }
+        public DbSet<TIRItem> TIRItem { get; set; }
     }
 }
