@@ -6,6 +6,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using FaceSharp.Api.Extensions;
 
 namespace EPMS.Implementation.Services
 {
@@ -168,6 +169,13 @@ namespace EPMS.Implementation.Services
                 rfiResponse.Orders = ordersRepository.GetAll();
             }
             return rfiResponse;
+        }
+
+        public IEnumerable<RFI> GetCustomerRfis(long customerId)
+        {
+            //IEnumerable<Order> customerOrders = ordersRepository.GetOrdersByCustomerId(customerId);
+            //IEnumerable<RFI> customerRfis = customerOrders.Select(x => x.RFIs.Select(x=>x.));
+            return null;
         }
     }
 }

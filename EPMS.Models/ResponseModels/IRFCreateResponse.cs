@@ -1,0 +1,11 @@
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
+
+namespace EPMS.Models.ResponseModels
+{
+    public class IRFCreateResponse
+    {
+        public IEnumerable<Customer> Customers { get; set; }
+        public List<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
+    }
+}

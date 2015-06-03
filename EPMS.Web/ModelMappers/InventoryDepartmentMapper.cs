@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.RequestModels;
+using EPMS.Web.Models.Common;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -100,6 +101,17 @@ namespace EPMS.Web.ModelMappers
             dept.RecLastUpdatedBy = source.RecLastUpdatedBy;
             dept.RecLastUpdatedDt = source.RecLastUpdatedDt;
             return dept;
+        }
+
+        public static JsTree CreateForJsTree(this DomainModels.InventoryDepartment source)
+        {
+            return new JsTree
+            {
+                NodeId = source.DepartmentId,
+                NodeTitleEn = source.DepartmentNameEn,
+                NodeTitleAr = source.DepartmentNameAr,
+                ParentId = source.ParentId ?? 0
+            };
         }
     }
 }

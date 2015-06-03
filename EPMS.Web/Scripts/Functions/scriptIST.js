@@ -211,6 +211,12 @@ function GregorianToHijri(englishCalendar,arabicCalendar) {
         $(arabicCalendar).val(newDate);
     }
 }
+function ajaxLoader() {
+    $.blockUI({
+        message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+        css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+    });
+}
 $(document).ready(function () {
     $('.select2me').select2({
         placeholder: "Select"

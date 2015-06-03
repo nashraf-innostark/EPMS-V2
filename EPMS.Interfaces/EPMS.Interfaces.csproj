@@ -71,6 +71,7 @@
     <Compile Include="IServices\IInventoryDepartmentService.cs" />
     <Compile Include="IServices\IInventoryItemService.cs" />
     <Compile Include="IServices\IItemImageService.cs" />
+    <Compile Include="IServices\IItemReleaseFormService.cs" />
     <Compile Include="IServices\IItemVariationService.cs" />
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />

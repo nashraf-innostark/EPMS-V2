@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.Repository
         OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest);
         IEnumerable<Order> GetRecentOrders(string requester, int status);
         IEnumerable<Order> GetOrdersByCustomerId(long customerId);
+        IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId);
         Order GetOrderByOrderId(long orderId);
         Order GetOrderByOrderNumber(string orderNo);
         IEnumerable<Order> GetAllAvailableOrdersDDL(long customerId);

@@ -81,7 +81,7 @@
             <i class="icon-big-notepad"></i>
             <h2><small>@ViewBag.Title</small></h2>
         </header>
-        @using (Html.BeginForm("Create", "InventoryWarehouse", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Create", "InventoryWarehouse", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditWarehouseForm", role = "form", enctype = "multipart/form-data" }))
         {
             @Html.HiddenFor(model => model.Warehouse.WarehouseId)
             @Html.HiddenFor(model => model.Warehouse.WarehouseNumber)

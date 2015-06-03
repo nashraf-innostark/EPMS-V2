@@ -248,6 +248,7 @@
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
+    <Compile Include="ResponseModels\IRFCreateResponse.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
     <Compile Include="ResponseModels\ItemVariationResponse.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />

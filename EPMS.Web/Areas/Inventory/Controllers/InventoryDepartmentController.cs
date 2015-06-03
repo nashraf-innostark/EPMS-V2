@@ -6,6 +6,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.Models;
+using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryDepartment;
 using EPMS.Web.ModelMappers;
@@ -122,6 +123,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View(departmentViewModel);
         }
         #endregion
+
         #region Save Inventory Department
         [HttpPost]
         [ValidateInput(false)]
@@ -389,6 +391,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return retVal;
         }
 
+        #endregion
+
+        #region Get All Departments
+        [HttpGet]
+        public JsonResult GetAllDepartments(long? id)
+        {
+            var departments = departmentService.GetAll();
+            IList<JsTree> details = departments.Select(x => x.CreateForJsTree()).ToList();
+            return Json(details, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #endregion
