@@ -147,6 +147,8 @@
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
+    <Compile Include="Repository\IDIFItemRepository.cs" />
+    <Compile Include="Repository\IDIFRepository.cs" />
     <Compile Include="Repository\IRIFItemRepository.cs" />
     <Compile Include="Repository\IRFIItemRepository.cs" />
     <Compile Include="Repository\IRIFRepository.cs" />
