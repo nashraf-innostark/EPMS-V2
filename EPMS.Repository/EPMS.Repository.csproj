@@ -148,6 +148,7 @@
     <Compile Include="Repositories\InventoryDepartmentRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
     <Compile Include="Repositories\ItemImageRepository.cs" />
+    <Compile Include="Repositories\ItemReleaseRepository.cs" />
     <Compile Include="Repositories\ItemVariationRepository.cs" />
     <Compile Include="Repositories\JobApplicantRepository.cs" />
     <Compile Include="Repositories\JobOfferedRepository.cs" />

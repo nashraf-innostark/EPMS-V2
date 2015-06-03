@@ -156,7 +156,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
-        #region Get Warehouse Number
+        #region Get Warehouse Details
         /// <summary>
         /// Get Warehouse Details
         /// </summary>

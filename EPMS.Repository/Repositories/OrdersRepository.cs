@@ -124,6 +124,12 @@ namespace EPMS.Repository.Repositories
             return orders;
         }
 
+        public IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId)
+        {
+            var orders = DbSet.Where(order => order.CustomerId == customerId).Include(x=>x.RFIs);
+            return orders;
+        }
+
         public IEnumerable<Order> GetRecentOrders(string requester, int status)
         {
             if (requester == "Admin")

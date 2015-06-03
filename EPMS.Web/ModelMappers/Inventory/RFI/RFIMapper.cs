@@ -83,7 +83,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,
-                RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
+                RequesterName = source.AspNetUser.Employee != null ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE : string.Empty,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RecCreatedBy = source.RecCreatedBy,
@@ -145,6 +145,21 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                     : source.ItemVariation.InventoryItem.ItemNameAr;
             }
             return rfiItem;
+        }
+        #endregion
+
+        #region Create For Dropdown List
+        public static Models.RFI CreateRfiServerToClientForDropdown(this EPMS.Models.DomainModels.RFI source)
+        {
+            var rfi = new Models.RFI
+            {
+                RFIId = source.RFIId,
+                OrderId = source.OrderId,
+                //RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
+                CustomerName = source.Order.Customer.CustomerNameE,
+                OrderNumber = source.Order != null ? source.Order.OrderNo : string.Empty
+            };
+            return rfi;
         }
         #endregion
     }

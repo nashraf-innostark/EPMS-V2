@@ -13,6 +13,7 @@ namespace EPMS.Web.Models
         public long OrderId { get; set; }
         [Required]
         [Display(Name = "Usage")]
+        public string OrderNumber { get; set; }
         public string UsageE { get; set; }
         public string UsageA { get; set; }
         public string NotesE { get; set; }

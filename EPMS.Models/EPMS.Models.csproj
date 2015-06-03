@@ -110,6 +110,8 @@
     <Compile Include="Common\RifRequestByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
     <Compile Include="DomainModels\ItemManufacturer.cs" />
+    <Compile Include="DomainModels\ItemRelease.cs" />
+    <Compile Include="DomainModels\ItemReleaseDetail.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
@@ -252,6 +254,7 @@
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
+    <Compile Include="ResponseModels\IRFCreateResponse.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
     <Compile Include="ResponseModels\ItemVariationResponse.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
