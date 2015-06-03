@@ -5,6 +5,7 @@ namespace EPMS.Models.ResponseModels
 {
     public class IRFCreateResponse
     {
+        public ItemRelease ItemRelease { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         public List<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }

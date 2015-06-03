@@ -35,32 +35,33 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Create", "ItemReleaseForm", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "ItemRelease", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="greeting">Item Release From (IRF) Number </label>
+                <label class="control-label" for="FormNumber">Item Release From (IRF) Number </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="greeting" type="text" value="1010202015" readonly="true">
+                    @Html.TextBoxFor(model => model.ItemRelease.FormNumber, new { @id = "FormNumber", @class = "toBeRequired disableOnLoad" })
+                    @Html.ValidationMessageFor(m => m.ItemRelease.FormNumber, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">Requester </label>
+                <label class="control-label" for="Requester">Requester </label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownList("En", new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Requester" })
                     }
                     else
                     {
-                        @Html.DropDownList("Ar", new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Requester" })
                     }
                 </div>
             </div>
@@ -68,17 +69,17 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="MaritalStatus">RFI# </label>
+                <label class="control-label" for="RfiId">RFI# </label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownList("En", new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me", @id = "RfiId" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me", @id = "RfiId" })
                     }
                     else
                     {
-                        @Html.DropDownList("Ar", new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me", @id = "RfiId" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me", @id = "RfiId" })
                     }
                 </div>
             </div>
@@ -86,41 +87,41 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="greeting">Order #</label>
+                <label class="control-label" for="OrderNumber">Order #</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="orderNumber" type="text" value="" readonly="true">
+                    @Html.TextBoxFor(model => model.ItemRelease.OrderNo, new { @id = "OrderNumber", @class = "toBeRequired disableOnLoad" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="createdBy">Created By  </label>
+                <label class="control-label" for="CreatedBy">Created By  </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input id="createdBy" type="text" disabled value="">
+                    @Html.TextBoxFor(model => model.ItemRelease.CreatedBy, new { @id = "CreatedBy", @class = "toBeRequired disableOnLoad" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="createdBy">Delivery Information  </label>
+                <label class="control-label" for="DeliveryInfo">Delivery Information  </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input type="text" disabled value="CK Editor - taken from customer information">
+                    @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfo, new { @id = "DeliveryInfo", @class = "" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="createdBy">Delivery Information arabic </label>
+                <label class="control-label" for="DeliveryInfoArabic">Delivery Information arabic </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input type="text" disabled value="CK Editor - taken from customer information">
+                    @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfoArabic, new { @id = "DeliveryInfoArabic", @class = "" })
                 </div>
             </div>
         </div>
@@ -428,7 +429,7 @@
                 });
                 return true;
             }
-            var url = siteUrl + "/Inventory/ItemReleaseForm/GetCustomerRfis";
+            var url = siteUrl + "/Inventory/ItemRelease/GetCustomerRfis";
             ajaxLoader();
             $.ajax({
                 url: url,
@@ -447,8 +448,12 @@
             });
         });
         $("#RfiId").on("change", function () {
+            var rfiId = parseInt($("#RfiId").val());
+            if (rfiId == 0) {
+                $("#orderNumber").val("");
+            }
             $.each(orderNo, function(key, value) {
-                if (value.rfiId == parseInt($("#RfiId").val())) {
+                if (value.rfiId == rfiId) {
                     $("#orderNumber").val(value.orderNo);
                 }
             });

@@ -64,6 +64,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IWarehouseDetailRepository, WarehouseDetailRepository>();
             unityContainer.RegisterType<IRIFRepository, RIFRepository>();
             unityContainer.RegisterType<IRIFItemRepository, RIFItemRepository>();
+            unityContainer.RegisterType<IItemReleaseRepository, ItemReleaseRepository>();
         }
     }
 }

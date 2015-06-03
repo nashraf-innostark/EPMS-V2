@@ -445,6 +445,7 @@
             <PropertyRef Name="ItemReleaseId" />
           </Key>
           <Property Name="ItemReleaseId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="100" />
           <Property Name="ShipmentDetails" Type="nvarchar(max)" />
           <Property Name="Status" Type="smallint" />
@@ -4659,8 +4660,8 @@
             <End Role="RIF" EntitySet="RIFs" />
             <End Role="RIFItem" EntitySet="RIFItems" />
           </AssociationSet>
-          <EntitySet Name="ItemReleases" EntityType="EPMSInventoryModel.ItemRelease" />
           <EntitySet Name="ItemReleaseDetails" EntityType="EPMSInventoryModel.ItemReleaseDetail" />
+          <EntitySet Name="ItemReleases" EntityType="EPMSInventoryModel.ItemRelease" />
           <AssociationSet Name="FK_ItemRelease_Customer" Association="EPMSInventoryModel.FK_ItemRelease_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="ItemRelease" EntitySet="ItemReleases" />
@@ -4808,27 +4809,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ItemRelease">
-          <Key>
-            <PropertyRef Name="ItemReleaseId" />
-          </Key>
-          <Property Name="ItemReleaseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int16" />
-          <Property Name="RequesterId" Type="Int64" />
-          <Property Name="RFIId" Type="Int64" />
-          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryInfoArabic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="EPMSInventoryModel.FK_ItemRelease_Customer" FromRole="ItemRelease" ToRole="Customer" />
-          <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemRelease_RFI" FromRole="ItemRelease" ToRole="RFI" />
-          <NavigationProperty Name="ItemReleaseDetails" Relationship="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" FromRole="ItemRelease" ToRole="ItemReleaseDetail" />
-        </EntityType>
         <EntityType Name="ItemReleaseDetail">
           <Key>
             <PropertyRef Name="IRFDetailId" />
@@ -4847,6 +4827,28 @@
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ItemRelease" Relationship="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" FromRole="ItemReleaseDetail" ToRole="ItemRelease" />
+        </EntityType>
+        <EntityType Name="ItemRelease">
+          <Key>
+            <PropertyRef Name="ItemReleaseId" />
+          </Key>
+          <Property Name="ItemReleaseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShipmentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RequesterId" Type="Int64" />
+          <Property Name="RFIId" Type="Int64" />
+          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInfoArabic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="EPMSInventoryModel.FK_ItemRelease_Customer" FromRole="ItemRelease" ToRole="Customer" />
+          <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemRelease_RFI" FromRole="ItemRelease" ToRole="RFI" />
+          <NavigationProperty Name="ItemReleaseDetails" Relationship="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" FromRole="ItemRelease" ToRole="ItemReleaseDetail" />
         </EntityType>
         <Association Name="FK_ItemRelease_Customer">
           <End Type="EPMSInventoryModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -6018,25 +6020,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemReleases">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemRelease">
-              <MappingFragment StoreEntitySet="ItemRelease">
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DeliveryInfoArabic" ColumnName="DeliveryInfoArabic" />
-                <ScalarProperty Name="DeliveryInfo" ColumnName="DeliveryInfo" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
-                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ShipmentDetails" ColumnName="ShipmentDetails" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ItemReleaseDetails">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ItemReleaseDetail">
               <MappingFragment StoreEntitySet="ItemReleaseDetail">
@@ -6053,6 +6036,26 @@
                 <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
                 <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
                 <ScalarProperty Name="IRFDetailId" ColumnName="IRFDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemReleases">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemRelease">
+              <MappingFragment StoreEntitySet="ItemRelease">
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DeliveryInfoArabic" ColumnName="DeliveryInfoArabic" />
+                <ScalarProperty Name="DeliveryInfo" ColumnName="DeliveryInfo" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
+                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ShipmentDetails" ColumnName="ShipmentDetails" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6211,8 +6214,8 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItem_ItemVariation" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIF_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItem_RIF" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ItemRelease" Width="1.5" PointX="14.25" PointY="34.375" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseDetail" Width="1.5" PointX="16.5" PointY="34.625" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemRelease" Width="1.5" PointX="14.25" PointY="34.5" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Customer" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_RFI" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" />

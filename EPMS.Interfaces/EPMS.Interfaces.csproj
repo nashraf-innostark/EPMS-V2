@@ -71,7 +71,7 @@
     <Compile Include="IServices\IInventoryDepartmentService.cs" />
     <Compile Include="IServices\IInventoryItemService.cs" />
     <Compile Include="IServices\IItemImageService.cs" />
-    <Compile Include="IServices\IItemReleaseFormService.cs" />
+    <Compile Include="IServices\IItemReleaseService.cs" />
     <Compile Include="IServices\IItemVariationService.cs" />
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="Repository\IInventoryDepartmentRepository.cs" />
     <Compile Include="Repository\IInventoryItemRepository.cs" />
     <Compile Include="Repository\IItemImageRepository.cs" />
+    <Compile Include="Repository\IItemReleaseRepository.cs" />
     <Compile Include="Repository\IItemVariationRepository.cs" />
     <Compile Include="Repository\IJobApplicantRepository.cs" />
     <Compile Include="Repository\IJobOfferedRepository.cs" />

@@ -2,7 +2,7 @@
 
 namespace EPMS.Interfaces.IServices
 {
-    public interface IItemReleaseFormService
+    public interface IItemReleaseService
     {
         IRFCreateResponse GetCreateResponse(long id);
     }

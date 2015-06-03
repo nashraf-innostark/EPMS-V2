@@ -307,7 +307,7 @@
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryWarehouseController.cs" />
-    <Compile Include="Areas\Inventory\Controllers\ItemReleaseFormController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\ItemReleaseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
@@ -361,6 +361,7 @@
     <Compile Include="ModelMappers\Inventory\RFI\RFIMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
     <Compile Include="ModelMappers\ItemImageMapper.cs" />
+    <Compile Include="ModelMappers\ItemReleaseMapper.cs" />
     <Compile Include="ModelMappers\ItemVariationMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
@@ -1859,8 +1860,8 @@
     <Content Include="Areas\Inventory\Views\RFI\Index.cshtml" />
     <Content Include="Views\Shared\_ItemsPopUp.cshtml" />
     <Content Include="Areas\Inventory\Views\RFI\Details.cshtml" />
-    <Content Include="Areas\Inventory\Views\ItemReleaseForm\Index.cshtml" />
-    <Content Include="Areas\Inventory\Views\ItemReleaseForm\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\ItemRelease\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\ItemRelease\Create.cshtml" />
     <Content Include="Views\Shared\_IRFItemsPopUp.cshtml" />
     <Content Include="Areas\Inventory\Views\RIF\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\RIF\Details.cshtml" />

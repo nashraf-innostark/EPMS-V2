@@ -8,25 +8,28 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.IRF;
+using Employee = EPMS.Web.Resources.HR.Employee;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
-    public class ItemReleaseFormController : BaseController
+    public class ItemReleaseController : BaseController
     {
         #region Private
 
-        private readonly IItemReleaseFormService itemReleaseFormService;
+        private readonly IItemReleaseService itemReleaseFormService;
         private readonly IRFIService RfiService;
         private readonly IOrdersService ordersService;
+        private readonly IAspNetUserService userService;
 
         #endregion
 
         #region Constructor
-        public ItemReleaseFormController(IItemReleaseFormService itemReleaseFormService, IRFIService rfiService, IOrdersService ordersService)
+        public ItemReleaseController(IItemReleaseService itemReleaseFormService, IRFIService rfiService, IOrdersService ordersService, IAspNetUserService userService)
         {
             this.itemReleaseFormService = itemReleaseFormService;
             RfiService = rfiService;
             this.ordersService = ordersService;
+            this.userService = userService;
         }
 
         #endregion
@@ -44,7 +47,37 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Create(long? id)
         {
             ItemReleaseFormCreateViewModel viewModel = new ItemReleaseFormCreateViewModel();
-            IRFCreateResponse response = id != null ? itemReleaseFormService.GetCreateResponse((long)id) : itemReleaseFormService.GetCreateResponse(0);
+            IRFCreateResponse response;
+            if (id != null)
+            {
+                response = itemReleaseFormService.GetCreateResponse((long) id);
+                viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
+            }
+            else
+            {
+                response = itemReleaseFormService.GetCreateResponse(0);
+                viewModel.ItemRelease = new ItemRelease();
+                if (Session["RoleName"] != null)
+                {
+                    if (Session["RoleName"].ToString() != "Admin")
+                    {
+                        var employee = userService.FindById(Session["UserID"].ToString()).Employee;
+                        var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+                        if (direction == "ltr")
+                        {
+                            viewModel.ItemRelease.CreatedBy = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
+                        }
+                        else
+                        {
+                            viewModel.ItemRelease.CreatedBy = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
+                        }
+                    }
+                    else
+                    {
+                        viewModel.ItemRelease.CreatedBy = "Admin";
+                    }
+                }
+            }
             //Session["RoleName"];
             viewModel.Customers = response.Customers.Select(x => x.CreateForDashboard()).ToList();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
