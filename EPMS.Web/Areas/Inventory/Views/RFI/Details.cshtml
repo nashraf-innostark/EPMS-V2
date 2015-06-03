@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     var counter = 1;
+    
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
     <div class="breadcrumb-container" dir="ltr">
@@ -216,11 +218,17 @@
 
                 </div>
             </div>
-            <div class="control-group row-fluid toBeHidden">
+            <div id="submitDiv" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
                     <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
                 </div>
             </div>
+            <div id="editDiv" class="control-group row-fluid" style="display: none">
+                <div class="span1 span-inset">
+                    <a href="~/Inventory/RFI/Create/@Model.Rfi.RFIId" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                </div>
+            </div>
+            
             <!--Input Field end-->
         </div>
     }
@@ -241,9 +249,20 @@
                 filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
         }
-        if ('@Session["RoleName"].ToString().ToLower()' != "manager") {
-            $('.toBeDisabled:input').attr('disabled', true);
-            $(".toBeHidden").hide();
-        }
+        CheckPermissions();
     });
+    function CheckPermissions() {
+        var hasEditPermission = '@userPermissionsSet.Contains("RFICreate")' == "True" ? true:false;
+        if (hasEditPermission) {
+            $("#editDiv").show();
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
+
+        var hasDetailsPermission = '@userPermissionsSet.Contains("RIFDetailsUpdation")' == "True" ? true : false;
+        if (hasDetailsPermission) {
+            $("#submitDiv").show();
+        } else {
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
+    }
     </script>
