@@ -408,6 +408,8 @@
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\InventorySections.cs" />
     <Compile Include="Models\ItemImage.cs" />
+    <Compile Include="Models\ItemRelease.cs" />
+    <Compile Include="Models\ItemReleaseDetail.cs" />
     <Compile Include="Models\ItemVariation.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\LicenseControlPanel.cs" />
