@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -69,6 +73,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
             itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
+            itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;
+            itemToSave.StatusArrayList = variationViewModel.StatusArrayList;
+            itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
             itemVariationService.SaveItemVariation(itemToSave);
             {
                 TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
@@ -143,6 +150,48 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         #endregion
+
+        #endregion
+
+        #region Upload Image
+
+        public ActionResult UploadImage()
+        {
+            HttpPostedFileBase image = Request.Files[0];
+            var filename = "";
+            try
+            {
+                //Save File to Folder
+                if ((image != null))
+                {
+                    filename =
+                        (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + image.FileName)
+                            .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ItemImage"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    image.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return
+                    Json(
+                        new
+                        {
+                            response = "Failed to upload. Error: " + exp.Message,
+                            status = (int)HttpStatusCode.BadRequest
+                        }, JsonRequestBehavior.AllowGet);
+            }
+            return
+                Json(
+                    new
+                    {
+                        filename = filename,
+                        size = image.ContentLength / 1024 + "KB",
+                        response = "Successfully uploaded!",
+                        status = (int)HttpStatusCode.OK
+                    }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 
