@@ -45,7 +45,6 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.ItemRelease.FormNumber, new { @id = "FormNumber", @class = "toBeRequired disableOnLoad" })
-                    @Html.ValidationMessageFor(m => m.ItemRelease.FormNumber, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -65,7 +64,6 @@
                     }
                 </div>
             </div>
-
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
@@ -105,23 +103,47 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="DeliveryInfo">Delivery Information  </label>
+        <div id="detailEditor" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="DeliveryInfo">Delivery Information  </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="DeliveryInfoEn" class="disableOnLoad" />
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfo, new { @id = "DeliveryInfo", @class = "" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="DeliveryInfoArabic">Delivery Information arabic </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="DeliveryInfoAr" class="disableOnLoad" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="DeliveryInfoArabic">Delivery Information arabic </label>
+        <div id="CKEditor">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="DeliveryInfo">Delivery Information  </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfo, new { @id = "DeliveryInfo", @class = "" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfoArabic, new { @id = "DeliveryInfoArabic", @class = "" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="DeliveryInfoArabic">Delivery Information arabic </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfoArabic, new { @id = "DeliveryInfoArabic", @class = "" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,8 +177,56 @@
                             <th style="width:4%">Delete</th>
                         </tr>
                     </thead>
-                    <tbody class="qouteAdd">
+                    <tbody id="ItemReleaseDetailsTableBody" class="qouteAdd">
+                        @if (Model.ItemReleaseDetails.Any())
+                        {
+                            for (int i = 0; i < Model.ItemReleaseDetails.Count(); i++)
+                            {
+                                <tr data-id=@i>
+                                    <td style='display:none'>
+                                        <input name='ItemReleaseDetails.Index' type='hidden' value=@i />
+
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].IsItemDescription)
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].IsItemSKU)
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemVariationId)
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].IRFDetailId)
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].PlaceInDepartment)
+                                    </td>
+                                    <td>
+                                        <div class="control-group row-fluid">
+                                            <div class="span1">
+                                                <label class="control-label serialNumber">@(i + 1)</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.ItemReleaseDetails[i].ItemDetails, new { @class = "auto-resize", @rows = 2 })
+                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                        @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].ItemDetails)
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse, new { @class = "auto-resize", @rows = 2 })
+                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector">+</button>
+                                        @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse)
+                                    </td>
+                                    <td class="quantity">
+                                        @Html.TextBoxFor(m => m.ItemReleaseDetails[i].ItemQty, new { @class = "n1" })
+                                        @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].ItemQty, null, new { @class = "required" })
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
+                            }
+                        }
                         <tr>
+                            <td style='display:none'>
+                                <input name='ItemReleaseDetails.Index' type='hidden' value='0' />
+                                <input name='ItemReleaseDetails[0].IsItemDescription' id='ItemReleaseDetails_0__IsItemDescription' type='hidden' />
+                                <input name='ItemReleaseDetails[0].IsItemSKU' id='ItemReleaseDetails_0__IsItemSKU' type='hidden' />
+                                <input name='ItemReleaseDetails[0].ItemVariationId' id='ItemReleaseDetails_0__ItemVariationId' type='hidden' />
+                                <input name='ItemReleaseDetails[0].PlaceInDepartment' id='ItemReleaseDetails_0__PlaceInDepartment' type='hidden' />
+                            </td>
                             <td>
                                 <div class="control-group row-fluid">
                                     <div class="span1">
@@ -165,14 +235,18 @@
                                 </div>
                             </td>
                             <td>
-                                <textarea rows="2" class="auto-resize">item name - item sku - item description</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                <textarea rows="2" id='ItemReleaseDetails_0__ItemDetails' class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="ItemReleaseDetails[0].ItemDetails"></textarea>
+                                <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemDetails" data-valmsg-replace="true"></span>
                             </td>
                             <td>
-                                <textarea rows="2" class="auto-resize">War101 > Aisle 1 > Section 1 > Shalf 2 > Section on Shalf 5 - War102 > Aisle 10 > Section 5 > Shalf 3 > Section on Shalf 5 </textarea>
+                                <textarea rows="2" id='ItemReleaseDetails_0__PlaceInWarehouse' class="auto-resize" data-val="true" data-val-required="The Warehouse field is required." name="ItemReleaseDetails[0].PlaceInWarehouse"></textarea>
                                 <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector">+</button>
+                                <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].PlaceInWarehouse" data-valmsg-replace="true"></span>
                             </td>
                             <td class="quantity">
-                                <input class="n1" type="text" name="numbers" value="0">
+                                <input id='ItemReleaseDetails_0__ItemQty' class="n1" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemQty" data-valmsg-replace="true"></span>
                             </td>
                             <td class="delete">
                                 <i class="icon-photon minus deleteRow"></i>
@@ -189,7 +263,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Submit</button>
+                <button type="submit" class="btn">Submit</button>
             </div>
         </div>
     </div>
@@ -207,71 +281,61 @@
     var orderNo = [];
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
+        $('.' + 'disableOnLoad' + ':input').attr('disabled', true);
         $('.trAdder').on("click", function () {
-            var html = ' <tr>  <td ><div class="control-group row-fluid"><div class="span1"><label class="control-label serialNumber"  ></label></div></div></td>  <td > <textarea  rows="2" class="auto-resize"></textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button></td> <td >  <textarea  rows="2" class="auto-resize" > </textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector" >+</button>	</td><td class="quantity"> <input class="n1" type="text" name="numbers" value=0> </td>  <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
+            var index = $("#ItemReleaseDetailsTableBody").children("tr").length;
+            var html = "<tr>" +
+                            "<td style='display:none'>" +
+                                "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].IsItemDescription' id='ItemReleaseDetails_" + index + "__IsItemDescription' type='hidden' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].IsItemSKU' id='ItemReleaseDetails_" + index + "__IsItemSKU' type='hidden' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].ItemVariationId' id='ItemReleaseDetails_" + index + "__ItemVariationId' type='hidden' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].PlaceInDepartment' id='ItemReleaseDetails_" + index + "__PlaceInDepartment' type='hidden' />" +
+                            "</td>" +
+                            "<td>" +
+                                "<div class=\"control-group row-fluid\">" +
+                                    "<div class=\"span1\">" +
+                                        "<label class=\"control-label serialNumber\">" + index + "</label>" +
+                                    "</div>" +
+                                "</div>" +
+                            "</td>" +
+                            "<td>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\"></textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
+                                "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
+                            "</td>" +
+                            "<td>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\"></textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
+                                "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
+                            "</td>" +
+                            "<td class=\"quantity\">" +
+                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' class='n1' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
+                            "</td>" +
+                            "<td class='delete'>" +
+                                "<i class='icon-photon minus deleteRow'></i>" +
+                            "</td>" +
+                        "</tr>";
             $('.qouteAdd').append(html);
+            //remove validation
+            $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+            //Parse the form again to apply new validations
+            $.validator.unobtrusive.parse("form");
             activateSerial();
             reActivateDelete();
             //reactivateCount();
         });
         reActivateDelete();
         //reactivateCount();
-
-        /*
-        function reactivateCount(){
-
-            $('.quantity .n1').on("blur",function(){
-
-                var n2Val = $(this).parent().parent().find(".n2").val();
-
-                    $(this).parent().parent().find(".n3").val($(this).val()* n2Val);
-                    var x = 0;
-                $('.qouteAdd tr .n3').each(function(){
-
-                     x  = x + parseInt($(this).val());
-
-                });
-                    $('#subtotal').val(x);
-                    discount();
-
-         });
-         $('.unitPrice .n2').on("blur",function(){
-
-                var n2Va2 = $(this).parent().parent().find(".n1").val();
-
-                    $(this).parent().parent().find(".n3").val($(this).val()* n2Va2);
-                    var x = 0;
-                $('.qouteAdd tr .n3').each(function(){
-
-                     x  = x + parseInt($(this).val());
-
-                });
-                    $('#subtotal').val(x);
-                    discount();
-
-         });
-        }
-
-
-        $('#Discount').on("blur",function(){
-            discount();
-
-        });
-
-        function discount(){
-            var subtotal =	parseInt($('#subtotal').val()) ;
-                    var Discount =	parseInt($('#Discount').val()) ;
-                    var grand = subtotal-(subtotal *(Discount/100))
-                        $('#GrandTotal').val(grand);
-        }
-
-        */
         $("#importEx").on("click", function () {
             var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
             var coln = $(excel).find("tr:first td").length;
             var count = 0;
             var x = 0;
             if (coln == 3) {
+                var index = 0;
                 $(excel).find("tr").each(function () {
                     var y = 0;
                     var t1 = "";
@@ -291,23 +355,60 @@
                         y++;
                     });
                     t4 = t3 * t2;
-                    var html = ' <tr> <td ><div class="control-group row-fluid"><div class="span1"><label class="control-label serialNumber"></label></div></div></td><td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button></td> <td >  <textarea  rows="2" class="auto-resize" > ' + t2 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector" >+</button>	</td> <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t3 + '"> </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
+                    var html1 = "<tr>" +
+                            "<td style='display:none'>" +
+                                "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].IsItemDescription' id='ItemReleaseDetails_" + index + "__IsItemDescription' type='hidden' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].IsItemSKU' id='ItemReleaseDetails_" + index + "__IsItemSKU' type='hidden' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].ItemVariationId' id='ItemReleaseDetails_" + index + "__ItemVariationId' type='hidden' />" +
+                                "<input name='ItemReleaseDetails[" + index + "].PlaceInDepartment' id='ItemReleaseDetails_" + index + "__PlaceInDepartment' type='hidden' />" +
+                            "</td>" +
+                            "<td>" +
+                                "<div class=\"control-group row-fluid\">" +
+                                    "<div class=\"span1\">" +
+                                        "<label class=\"control-label serialNumber\">" + index + "</label>" +
+                                    "</div>" +
+                                "</div>" +
+                            "</td>" +
+                            "<td>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + t1 + "</textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
+                                "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
+                            "</td>" +
+                            "<td>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\">" + t2 + "</textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
+                                "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
+                            "</td>" +
+                            "<td class=\"quantity\">" +
+                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + t3 + "\" class='n1' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
+                            "</td>" +
+                            "<td class='delete'>" +
+                                "<i class='icon-photon minus deleteRow'></i>" +
+                            "</td>" +
+                        "</tr>";
+                    var html = ' <tr> ' +
+                        '<td >' +
+                            '<div class="control-group row-fluid">' +
+                                '<div class="span1"><label class="control-label serialNumber"></label>' +
+                                '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button></td>' +
+                        ' <td >  <textarea  rows="2" class="auto-resize" > ' + t2 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector" >+</button>	</td>' +
+                        ' <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t3 + '"> </td>' +
+                        ' <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td>' +
+                        '</tr>';
+                    index = index + 1;
                     if (count == 0) {
                         $('.qouteAdd').html("");
                     }
-                    $('.qouteAdd').append(html);
+                    $('.qouteAdd').append(html1);
                     reActivateDelete();
                     //reactivateCount();
                     count++;
                 });
-                /*
-                        $('.qouteAdd tr .n3').each(function(){
-
-                            x  = x + parseInt($(this).val());
-
-                        });
-                        $('#subtotal').val(x);
-                        */
                 activateSerial();
             }
             else {
@@ -318,100 +419,6 @@
                 });
             }
         });
-        /*
-        $('.installer').on("blur",function(){
-            b = 0;
-
-
-                b =  parseInt($('#Installment1').val());
-                if(b>100){
-                 noteIt();
-                 $(this).val(0);
-                 return;
-                }
-                else
-                {
-                  b = b + parseInt($('#Installment2').val());
-                     if(b>100){
-                     noteIt();
-                     $(this).val(0);
-                     return;
-                    }
-                    else{
-                        b =	b+  parseInt($('#Installment3').val());
-                                if(b>100){
-                         noteIt();
-                         $(this).val(0);
-                         return;
-                        }
-                        else{
-                         b = b+  parseInt($('#Installment4').val());
-                         if(b>100){
-                         noteIt();
-                         $(this).val(0);
-                         return;
-                        }
-                        }
-                    }
-                }
-            function noteIt(){
-            $.pnotify({
-                            title: 'Sorry',
-                            type: 'info',
-                            text: 'The total % of all the due to project should not exceed 100'
-                        });
-
-                        $(this).val(0);
-                        }
-        });
-        $('.dap').on("blur",function(){
-            bb = 0;
-
-
-                bb =  parseInt($('#Dueat').val());
-                if(bb>100){
-                 noteItb();
-                 $(this).val(0);
-                 return;
-                }
-                else
-                {
-                  bb = bb + parseInt($('#Dueat2').val());
-                     if(bb>100){
-                     noteItb();
-                     $(this).val(0);
-                     return;
-                    }
-                    else{
-                        bb =	bb+  parseInt($('#Dueat3').val());
-                                if(bb>100){
-                         noteItb();
-                         $(this).val(0);
-                         return;
-                        }
-                        else{
-                         bb = bb+  parseInt($('#Dueat4').val());
-                         if(bb>100){
-                         noteItb();
-                         $(this).val(0);
-                         return;
-                        }
-                        }
-                    }
-                }
-            function noteItb(){
-            $.pnotify({
-                            title: 'Sorry',
-                            type: 'info',
-                            text: 'The total % of all the installments should not exceed 100'
-                        });
-
-                        $(this).val(0);
-                        }
-
-        });
-
-        */
         $("#selectBoxFilter").select2();
         $("#Requester").on("change", function () {
             var customerId = parseInt($(this).val());
@@ -450,11 +457,11 @@
         $("#RfiId").on("change", function () {
             var rfiId = parseInt($("#RfiId").val());
             if (rfiId == 0) {
-                $("#orderNumber").val("");
+                $("#OrderNumber").val("");
             }
-            $.each(orderNo, function(key, value) {
+            $.each(orderNo, function (key, value) {
                 if (value.rfiId == rfiId) {
-                    $("#orderNumber").val(value.orderNo);
+                    $("#OrderNumber").val(value.orderNo);
                 }
             });
         });
@@ -490,7 +497,6 @@
         $('.qouteAdd tr').each(function () {
             add++;
             $(this).find(".serialNumber").text(add);
-
         });
     }
     function populateRFIDDL(data) {

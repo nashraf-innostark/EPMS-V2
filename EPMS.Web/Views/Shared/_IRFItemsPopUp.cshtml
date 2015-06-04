@@ -14,7 +14,7 @@
                 </div>
                 <div class="span6">
                     <div class="controls">
-                        @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "", new { @class = "select2me", @id = "RFIItemVariationDropDownList" })
+                        @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "Select", new { @class = "select2me", @id = "RFIItemVariationDropDownList" })
                     </div>
                     <label id="RFIItemVariationDropDownListValidation"></label>
                 </div>
@@ -24,7 +24,8 @@
                     <label class="control-label" for="selectBoxFilter">Item Tree Selector</label>
                 </div>
                 <div class="span8 span-inset">
-                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemTreeSelector">+</button>
+                    <button id="treeSelector" type="button" class="btn itemAdder">+</button>
+                    <label id="txtSelectedDepartmentName"></label>
                 </div>
             </div>
             <div class="control-group row-fluid">
@@ -63,13 +64,14 @@
         </form>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Select</a>
+        <a href="javascript:;" class="btn btn-primary" id="selectDepartment">Select</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
     </div>
 </div>
 
 <script type="text/javascript">
     var dir = '@direction';
+
     $(function () {
         var treeInitialData;
         if (dir == "ltr") {
@@ -107,25 +109,26 @@
         });
         var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
         populateTree(0, "jstree", requestUrl);
+        var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
         $("#Add").on("click", function () {
-            if (validateSelect2DDL("#RFIItemVariationDropDownList")) {
-                getModalControlsValues();
+            if (validateSelect2Ddl("#RFIItemVariationDropDownList",errorMessage)) {
+                //getModalControlsValues();
+                return true;
             }
         });
+        $("#selectDepartment").on("click", function () {
+            $("#ItemReleaseDetails_0__PlaceInDepartment").val($('.jstree-clicked').text());
+            $("#txtSelectedDepartmentName").text("Selected :" + $('.jstree-clicked').text());
+            $('#itemTreeSelector').modal('toggle');
+            return true;
+        });
+        $("#treeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
     });
-    function validateSelect2DDL(control) {
-        var counter = 0;
-        control = $(control);
-        var selectedId = $(control).val();
-        if (selectedId == null || selectedId == "" || selectedId == 0) {
-            $("#" + control.attr('id') + "Validation").text('@EPMS.Web.Resources.Shared.Common.RequiredDdlField');
-            $("#" + control.attr('id') + "Validation").addClass("Error");
-            counter++;
-            return false;
-        } else {
-            $("#" + control.attr('id') + "Validation").text("");
-            $("#" + control.attr('id') + "Validation").removeClass("Error");
-        }
+    function jsTreeClick(event) {
         return true;
-    };
+    }
 </script>

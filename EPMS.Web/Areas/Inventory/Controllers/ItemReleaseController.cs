@@ -52,17 +52,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 response = itemReleaseFormService.GetCreateResponse((long) id);
                 viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
+                viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x=>x.CreateFromServerToClient()).ToList();
             }
             else
             {
                 response = itemReleaseFormService.GetCreateResponse(0);
                 viewModel.ItemRelease = new ItemRelease();
+                viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 if (Session["RoleName"] != null)
                 {
                     if (Session["RoleName"].ToString() != "Admin")
                     {
                         var employee = userService.FindById(Session["UserID"].ToString()).Employee;
-                        var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+                        var direction = Resources.Shared.Common.TextDirection;
                         if (direction == "ltr")
                         {
                             viewModel.ItemRelease.CreatedBy = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
@@ -77,12 +79,20 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                         viewModel.ItemRelease.CreatedBy = "Admin";
                     }
                 }
+                viewModel.ItemRelease.FormNumber = "010101";
             }
             //Session["RoleName"];
             viewModel.Customers = response.Customers.Select(x => x.CreateForDashboard()).ToList();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
             return View(viewModel);
         }
+
+        [HttpPost]
+        public ActionResult Create(ItemReleaseFormCreateViewModel viewModel)
+        {
+            return View();
+        }
+
         #endregion
 
         #region Get Customer RFIs

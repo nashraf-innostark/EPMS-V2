@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -6,6 +7,7 @@ namespace EPMS.Web.Models
     {
         public long IRFDetailId { get; set; }
         public long ItemReleaseId { get; set; }
+        [Required(ErrorMessage = "SDF")]
         public string ItemDetails { get; set; }
         public long? ItemVariationId { get; set; }
         public string PlaceInDepartment { get; set; }

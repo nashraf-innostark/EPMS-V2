@@ -26,5 +26,14 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        #region Public
+
+        //public override ItemRelease Find(long id)
+        //{
+        //    return DbSet.Find(id);
+        //}
+
+        #endregion
     }
 }
