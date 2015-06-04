@@ -363,6 +363,7 @@
     <Compile Include="ModelMappers\Inventory\DIF\DIFMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
     <Compile Include="ModelMappers\ItemImageMapper.cs" />
+    <Compile Include="ModelMappers\ItemManufacturerMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseDetailMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseMapper.cs" />
     <Compile Include="ModelMappers\ItemVariationMapper.cs" />
@@ -414,6 +415,7 @@
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\InventorySections.cs" />
     <Compile Include="Models\ItemImage.cs" />
+    <Compile Include="Models\ItemManufacturer.cs" />
     <Compile Include="Models\ItemRelease.cs" />
     <Compile Include="Models\ItemReleaseDetail.cs" />
     <Compile Include="Models\ItemVariation.cs" />

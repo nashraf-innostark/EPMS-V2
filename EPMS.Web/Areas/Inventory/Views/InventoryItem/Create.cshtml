@@ -5,6 +5,7 @@
     ViewBag.Title = Model.InventoryItem.ItemId > 0 ? EPMS.Web.Resources.Inventory.InventoryItem.UpdateTitle : EPMS.Web.Resources.Inventory.InventoryItem.CreateTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -53,6 +54,30 @@
                 <div class="controls">
                     @Html.TextBoxFor(m => m.InventoryItem.ItemCode, new { @dir = "ltr", id = "ItemCode", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.InventoryItem.ItemCode)
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameEn, new { @dir = "ltr", id = "ItemNameEn", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemNameEn)
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemName</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameAr, new { @dir = "ltr", id = "ItemNameAr", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemNameAr)
                 </div>
             </div>
         </div>
@@ -250,6 +275,77 @@
         </div>
 
 
+        <div class="alert alert-info alert-block">
+            <i class="icon-alert icon-alert-info"></i>
+            <strong>Item Variations</strong><a href="#">Create New Item Variation</a>
+        </div>
+
+        <!--Sortable Responsive Table begin-->
+        <div class="row-fluid">
+            <div class="span12">
+                <table class="table table-striped table-responsive" id="tableSortableVariations">
+                    <thead>
+                        <tr>
+                            <th> Serial</th>
+                            <th>Barcode</th>
+                            <th>(SKU)Code - SKU Description</th>
+                            <th>Description</th>
+                            <th>Size</th>
+                            <th>Condition</th>
+                            <th>Color</th>
+                            <th>Unit Price</th>
+                            <th>Avrage Cost</th>
+                            <th>Package Price</th>
+                            <th>On-hand Quantity</th>
+                            <th>Quantity Sold</th>
+                            <th>Quantity Used in Manufacturing</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.InventoryItem.ItemVariations != null)
+                        {
+                            foreach (var item in Model.InventoryItem.ItemVariations.ToList())
+                            {
+                                <tr class="gradeX">
+                                    <td></td>
+                                    <td>@item.ItemBarcode</td>
+                                    @if (direction == "ltr")
+                                    {
+                                        <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionEn</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionAr</a></td>
+                                    }
+                                    @if (direction == "ltr")
+                                    {
+                                        <td>@item.SKUCode - @item.DescriptionEn</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@item.SKUCode - @item.DescriptionAr</td>
+                                    }
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>@item.UnitPrice</td>
+                                    <td></td>
+                                    <td>@item.PackagePrice</td>
+                                    <td>@item.QuantityInHand</td>
+                                    <td>@item.QuantitySold</td>
+                                    <td>@item.QuantityInManufacturing</td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Sortable Responsive Table end-->
+
     </div>
 }
 
@@ -259,7 +355,15 @@
 
     var itemId = parseInt($('#InventoryItem_ItemId').val());
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $('#tableSortableVariations').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
         if (itemId == 0 || itemId == "") {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();

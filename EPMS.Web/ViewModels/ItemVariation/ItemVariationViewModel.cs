@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using EPMS.Models.DomainModels;
+using EPMS.Web.Models;
 using Color = EPMS.Web.Models.Color;
 using ItemImage = EPMS.Web.Models.ItemImage;
 using Manufacturer = EPMS.Web.Models.Manufacturer;
@@ -16,7 +16,7 @@ namespace EPMS.Web.ViewModels.ItemVariation
             {
                 Colors = new List<Color>(),
                 Sizes = new List<Size>(),
-                Manufacturers = new List<Manufacturer>(),
+                Manufacturers = new List<ItemManufacturer>(),
                 Statuses = new List<Status>(),
                 ItemImages = new List<ItemImage>(),
                 //Warehouses = new List<Warehouse>()
@@ -44,5 +44,9 @@ namespace EPMS.Web.ViewModels.ItemVariation
         public List<Warehouse> WarehousesForDdl { get; set; }
 
         public string SizeArrayList { get; set; }
+        public string ManufacturerArrayList { get; set; }
+        public string StatusArrayList { get; set; }
+        public string ColorArrayList { get; set; }
+
     }
 }

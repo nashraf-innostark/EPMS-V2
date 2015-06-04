@@ -1,4 +1,5 @@
-﻿using EPMS.Models.RequestModels;
+﻿using System.Linq;
+using EPMS.Models.RequestModels;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -12,11 +13,14 @@ namespace EPMS.Web.ModelMappers
             return new WebModels.InventoryItem
             {
                 ItemId = source.ItemId,
+                ItemCode = source.ItemCode,
                 ItemNameEn = source.ItemNameEn,
                 ItemNameAr = source.ItemNameAr,
                 ItemImagePath = source.ItemImagePath,
                 ItemDescriptionEn = source.ItemDescriptionEn,
                 ItemDescriptionAr = source.ItemDescriptionAr,
+                DescriptionForQuotationEn = source.DescriptionForQuotationEn,
+                DescriptionForQuotationAr = source.DescriptionForQuotationAr,
                 HazardousEn = source.HazardousEn,
                 HazardousAr = source.HazardousAr,
                 UsageEn = source.UsageEn,
@@ -28,6 +32,8 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ItemVariations = source.ItemVariations.Select(x=>x.CreateFromServerToClient()).ToList(),
+                
             };
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using EPMS.Models.RequestModels;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
@@ -12,6 +13,7 @@ namespace EPMS.Web.ModelMappers
             return new WebModels.ItemVariation
             {
                 ItemVariationId = source.ItemVariationId,
+                InventoryItemId = source.InventoryItemId,
                 ItemBarcode = source.ItemBarcode,
                 SKUCode = source.SKUCode,
                 UnitPrice = source.UnitPrice,
@@ -40,7 +42,7 @@ namespace EPMS.Web.ModelMappers
                 Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList(),
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList(),
-                //Manufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
+                Manufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
                 ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
@@ -50,6 +52,7 @@ namespace EPMS.Web.ModelMappers
             var item = new DomainModels.ItemVariation
             {
                 ItemVariationId = source.ItemVariationId,
+                InventoryItemId = source.InventoryItemId,
                 ItemBarcode = source.ItemBarcode,
                 SKUCode = source.SKUCode,
                 UnitPrice = source.UnitPrice,
@@ -78,7 +81,20 @@ namespace EPMS.Web.ModelMappers
             };
             var request = new ItemVariationRequest();
             request.ItemVariation = item;
+            request.ItemImages = new List<DomainModels.ItemImage>(source.ItemImages.Select(x=>x.CreateFrom()));
             return request;
+        }
+
+        public static DomainModels.ItemImage CreateFrom(this WebModels.ItemImage source)
+        {
+            return new DomainModels.ItemImage
+            {
+                ImageId = source.ImageId,
+                ItemImagePath = source.ItemImagePath,
+                ImageOrder = source.ImageOrder,
+                ShowImage = source.ShowImage,
+                ItemVariationId = source.ItemVariationId
+            };
         }
     }
 }

@@ -33,5 +33,11 @@ namespace EPMS.Repository.Repositories
                 ItemNameE = x.InventoryItem.ItemNameEn
             });
         }
+
+        public IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId)
+        {
+            return
+                DbSet.Where(x => x.InventoryItemId == inventoryItemId);
+        }
     }
 }

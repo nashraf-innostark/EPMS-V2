@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Interfaces.IServices
 {
     public interface IItemVariationService
     {
@@ -12,5 +13,6 @@ namespace EPMS.Models.DomainModels
         bool UpdateVariation(ItemVariation itemVariation);
         void DeleteVartiation(ItemVariation itemVariation);
         ItemVariationResponse SaveItemVariation(ItemVariationRequest variationToSave);
+        IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId);
     }
 }

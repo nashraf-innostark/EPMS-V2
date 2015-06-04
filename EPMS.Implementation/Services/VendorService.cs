@@ -116,8 +116,8 @@ namespace EPMS.Implementation.Services
                         VendorId = itemsToSave.Vendor.VendorId
                     };
                     vendorItemsRepository.Add(item);
-                    vendorItemsRepository.SaveChanges();
                 }
+                vendorItemsRepository.SaveChanges();
             }
         }
 

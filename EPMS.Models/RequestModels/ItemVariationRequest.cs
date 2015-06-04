@@ -9,8 +9,12 @@ namespace EPMS.Models.RequestModels
         public IList<Status> Statuses { get; set; }
         public IList<Color> Colors { get; set; }
         public IList<Size> Sizes { get; set; }
-        public IList<ItemImage> ItemImages { get; set; }
+        public List<ItemImage> ItemImages { get; set; }
+        public List<ItemManufacturer> ItemManufacturers { get; set; } 
         public IList<Warehouse> Warehouses { get; set; }
         public string SizeArrayList { get; set; }
+        public string ManufacturerArrayList { get; set; }
+        public string StatusArrayList { get; set; }
+        public string ColorArrayList { get; set; }
     }
 }
