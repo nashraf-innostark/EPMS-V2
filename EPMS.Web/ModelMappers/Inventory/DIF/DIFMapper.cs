@@ -77,6 +77,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 ManagerId = source.ManagerId,
+                ManagerName = source.ManagerId!=null?Resources.Shared.Common.TextDirection=="ltr"?source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE:source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA:"",
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,
