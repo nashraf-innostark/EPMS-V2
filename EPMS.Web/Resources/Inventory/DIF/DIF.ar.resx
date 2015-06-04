@@ -136,10 +136,10 @@
     <value>Defectiveness in arabic</value>
   </data>
   <data name="DetailsPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) View</value>
+    <value>Inventory Defective Item Form (DIF) View</value>
   </data>
   <data name="DetailsPageHeading" xml:space="preserve">
-    <value>Returned Item Form (RIF)</value>
+    <value>Defective Item Form (DIF)</value>
   </data>
   <data name="DetailsPageTitle" xml:space="preserve">
     <value>Details DIF (Defective Item Form)</value>
@@ -180,6 +180,9 @@
   <data name="ListPageTitle" xml:space="preserve">
     <value>Inventory Defective Item Form (DIF) List</value>
   </data>
+  <data name="Manager" xml:space="preserve">
+    <value>Manager</value>
+  </data>
   <data name="Requester" xml:space="preserve">
     <value>Requester</value>
   </data>
@@ -188,8 +191,5 @@
   </data>
   <data name="RequestStatus" xml:space="preserve">
     <value>Request Status</value>
-  </data>
-  <data name="Manager" xml:space="preserve">
-    <value>Manager Ar</value>
   </data>
 </root>

@@ -115,7 +115,7 @@ namespace EPMS.Web.Resources.Inventory.DIF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Returned Item Form (RIF) View.
+        ///   Looks up a localized string similar to Inventory Defective Item Form (DIF) View.
         /// </summary>
         public static string DetailsPageBreadCrumb {
             get {
@@ -124,7 +124,7 @@ namespace EPMS.Web.Resources.Inventory.DIF {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Returned Item Form (RIF).
+        ///   Looks up a localized string similar to Defective Item Form (DIF).
         /// </summary>
         public static string DetailsPageHeading {
             get {

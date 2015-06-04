@@ -1,6 +1,6 @@
-﻿@model  EPMS.Web.ViewModels.RIF.RIFViewModel
+﻿@model  EPMS.Web.ViewModels.DIF.DIFViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.RIF.RIF.DetailsPageTitle;
+    ViewBag.Title = EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     var counter = 1;
@@ -15,34 +15,33 @@
                 </a>
             </li>
             <li>
-                <a href="~/Inventory/RIF/Index">
-                    @EPMS.Web.Resources.Inventory.RIF.RIF.ListPageBreadCrumb
+                <a href="~/Inventory/DIF/Index">
+                    @EPMS.Web.Resources.Inventory.DIF.DIF.ListPageBreadCrumb
                 </a>
             </li>
             <li class="current">
-                <a href="javascript:;">@EPMS.Web.Resources.Inventory.RIF.RIF.DetailsPageBreadCrumb</a>
+                <a href="javascript:;">@EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageBreadCrumb</a>
             </li>
         </ul>
     </div>
 
     <header>
         <i class="icon-big-notepad"></i>
-        <h2><small>@EPMS.Web.Resources.Inventory.RIF.RIF.DetailsPageHeading</small></h2>
+        <h2><small>@EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageHeading</small></h2>
     </header>
 
     <!--Notifications begin-->
     @Html.Partial("_Alert")
     <!--Notifications end-->
 
-    @using (Html.BeginForm("Details", "RIF", FormMethod.Post, new { @id = "RIFForm", @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("Details", "DIF", FormMethod.Post, new { @id = "DIFForm", @class = "form-horizontal", role = "form" }))
     {
-        @Html.HiddenFor(x => x.Rif.RIFId)
-        @Html.HiddenFor(x => x.Rif.OrderId)
-        @Html.HiddenFor(x => x.Rif.ManagerId)
-        @Html.HiddenFor(x => x.Rif.ReasonE)
-        @Html.HiddenFor(x => x.Rif.ReasonA)
-        @Html.HiddenFor(x => x.Rif.RecCreatedBy)
-        @Html.HiddenFor(x => x.Rif.RecCreatedDate)
+        @Html.HiddenFor(x => x.Dif.Id)
+        @Html.HiddenFor(x => x.Dif.ManagerId)
+        @Html.HiddenFor(x => x.Dif.DefectivenessA)
+        @Html.HiddenFor(x => x.Dif.DefectivenessE)
+        @Html.HiddenFor(x => x.Dif.RecCreatedBy)
+        @Html.HiddenFor(x => x.Dif.RecCreatedDate)
 
         <div class="container-fluid">
 
@@ -50,7 +49,7 @@
             <div class="control-group row-fluid">
 
                 <div class="form-legend centTitle">
-                    @EPMS.Web.Resources.Inventory.RIF.RIF.DetailsPageHeading
+                    @EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageHeading
                 </div>
 
                 <div class="invoice-info">
@@ -74,12 +73,12 @@
                                             <td>@(Session["EmployeeID"]==null?"":Session["EmployeeID"].ToString())</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.RIFNumber:</th>
-                                            <td>@Model.Rif.RIFId</td>
+                                            <th>@EPMS.Web.Resources.Inventory.DIF.DIF.DIFNumber:</th>
+                                            <td>@Model.Dif.Id</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.ReturningReason:</th>
-                                            <td>@(direction == "ltr" ? Model.Rif.ReasonE : Model.Rif.ReasonA)</td>
+                                            <th>@EPMS.Web.Resources.Inventory.DIF.DIF.Defectiveness:</th>
+                                            <td>@(direction == "ltr" ? Model.Dif.DefectivenessE : Model.Dif.DefectivenessA)</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -94,30 +93,22 @@
                                         {
                                             <tr>
                                                 <th>@EPMS.Web.Resources.RFI.RFI.Date:</th>
-                                                <td>@Model.Rif.RecCreatedDate.ToShortDateString()</td>
+                                                <td>@Model.Dif.RecCreatedDate.ToShortDateString()</td>
                                             </tr>
                                             <tr>
                                                 <th>@EPMS.Web.Resources.RFI.RFI.RequesterName:</th>
-                                                <td>@Model.Rif.RequesterName</td>
+                                                <td>@Model.Dif.RequesterName</td>
                                             </tr>
                                         }
                                         else
                                         {
                                             <tr>
                                                 <th>@EPMS.Web.Resources.RFI.RFI.Date:</th>
-                                                <td>@Model.Rif.RecCreatedDate.ToShortDateString()</td>
-                                            </tr>
-                                            <tr>
-                                                <th>@EPMS.Web.Resources.RFI.RFI.ClientName:</th>
-                                                <td>@Model.Rif.CustomerName</td>
-                                            </tr>
-                                            <tr>
-                                                <th>@EPMS.Web.Resources.RFI.RFI.OrderNumber:</th>
-                                                <td>@Model.Rif.OrderNo</td>
+                                                <td>@Model.Dif.RecCreatedDate.ToShortDateString()</td>
                                             </tr>
                                             <tr>
                                                 <th>@EPMS.Web.Resources.RFI.RFI.InventoryManagerName:</th>
-                                                <td>@Model.Rif.ManagerName</td>
+                                                <td>@Model.Dif.ManagerName</td>
                                             </tr>
                                         }
                                     </tbody>
@@ -143,7 +134,7 @@
                             </tr>
                         </thead>
                         <tbody class="qouteAdd">
-                            @foreach (var rfiItem in Model.RifItem.ToList())
+                            @foreach (var rfiItem in Model.DifItem.ToList())
                             {
                                 <tr>
                                     <td>
@@ -183,7 +174,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.Rif.NotesE, new { @id = "RFINotesE", @class = "toBeDisabled" })
+                        @Html.TextAreaFor(m => m.Dif.NotesE, new { @id = "RFINotesE", @class = "toBeDisabled" })
                     </div>
                 </div>
             </div>
@@ -193,7 +184,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.Rif.NotesA, new { @id = "RFINotesA", @class = "toBeDisabled" })
+                        @Html.TextAreaFor(m => m.Dif.NotesA, new { @id = "RFINotesA", @class = "toBeDisabled" })
                     </div>
                 </div>
             </div>
@@ -206,7 +197,7 @@
                     </div>
                     <div class="span2">
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.Rif.Status, new[]
+                            @Html.DropDownListFor(model => model.Dif.Status, new[]
                             {
                                 new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
                                 new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
@@ -224,7 +215,7 @@
             </div>
             <div id="editDiv" class="control-group row-fluid" style="display: none">
                 <div class="span1 span-inset">
-                    <a href="~/Inventory/RIF/Create/@Model.Rif.RIFId" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                    <a href="~/Inventory/DIF/Create/@Model.Dif.Id" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
                 </div>
             </div>
             <!--Input Field end-->
@@ -233,7 +224,7 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function() {
-        if ('@Model.Rif.RIFId' > 0) {
+        if ('@Model.Dif.Id' > 0) {
             editor = CKEDITOR.replace('RFINotesE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
                 filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
@@ -250,13 +241,13 @@
         CheckPermissions();
     });
     function CheckPermissions() {
-        var hasEditPermission = '@userPermissionsSet.Contains("RFICreate")' == "True" ? true : false;
+        var hasEditPermission = '@userPermissionsSet.Contains("DIFCreate")' == "True" ? true : false;
         if (hasEditPermission) {
             $("#editDiv").show();
             $('.toBeDisabled:input').attr('disabled', true);
         }
 
-        var hasDetailsPermission = '@userPermissionsSet.Contains("RIFDetailsUpdation")' == "True" ? true : false;
+        var hasDetailsPermission = '@userPermissionsSet.Contains("DIFDetailsUpdation")' == "True" ? true : false;
         if (hasDetailsPermission) {
             $("#submitDiv").show();
         } else {

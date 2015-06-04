@@ -250,7 +250,7 @@
         CheckPermissions();
     });
     function CheckPermissions() {
-        var hasEditPermission = '@userPermissionsSet.Contains("RFICreate")' == "True" ? true : false;
+        var hasEditPermission = '@userPermissionsSet.Contains("RIFCreate")' == "True" ? true : false;
         if (hasEditPermission) {
             $("#editDiv").show();
             $('.toBeDisabled:input').attr('disabled', true);
