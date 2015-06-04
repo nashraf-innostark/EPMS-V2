@@ -21,13 +21,15 @@ namespace EPMS.Implementation.Services
         private readonly IStatusRepository statusRepository;
         private readonly IColorRepository colorRepository;
         private readonly IItemImageRepository imageRepository;
+        private readonly IItemManufacturerRepository itemManufacturerRepository;
 
         #endregion
 
         #region Constructor
 
         public ItemVariationService(IItemVariationRepository variationRepository, ISizeRepository sizeRepository,
-            IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository, IColorRepository colorRepository, IItemImageRepository imageRepository)
+            IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
+            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -35,6 +37,7 @@ namespace EPMS.Implementation.Services
             this.statusRepository = statusRepository;
             this.colorRepository = colorRepository;
             this.imageRepository = imageRepository;
+            this.itemManufacturerRepository = itemManufacturerRepository;
         }
 
         #endregion
@@ -190,59 +193,26 @@ namespace EPMS.Implementation.Services
         /// <param name="variationToSave"></param>
         private void AddManufacturerList(ItemVariationRequest variationToSave)
         {
-            if (variationToSave.ManufacturerArrayList != null)
+            if (variationToSave.ItemManufacturers != null)
             {
-                string[] manufacturerList = variationToSave.ManufacturerArrayList.Split(',');
-                foreach (string item in manufacturerList)
+                foreach (ItemManufacturer itemManufacturer in variationToSave.ItemManufacturers)
                 {
-                    Manufacturer manufacturerToAdd = manufacturerRepository.Find(Convert.ToInt64(item));
-                    if (manufacturerToAdd == null)
-                        throw new Exception("Manufacturer not found in database");
-                    if (variationToSave.ItemVariation.Manufacturers == null)
+                    ItemManufacturer manufacturer = new ItemManufacturer
                     {
-                        variationToSave.ItemVariation.Manufacturers = new Collection<Manufacturer>();
-                    }
-                    variationToSave.ItemVariation.Manufacturers.Add(manufacturerToAdd);
+                        ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                        Price = itemManufacturer.Price
+                    };
+                    itemManufacturerRepository.Add(manufacturer);
                 }
+                imageRepository.SaveChanges();
             }
         }
 
         /// <summary>
         /// Update Manufacturer List from Client
         /// </summary>
-        /// <param name="variationToSave"></param>
-        /// <param name="itemVariationFromDatabase"></param>
         private void UpdateManufacturerList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
         {
-            List<Manufacturer> dbList = itemVariationFromDatabase.Manufacturers.ToList();
-
-            //Add New Items from Clientlist to Database
-            if (variationToSave.SizeArrayList != null)
-            {
-                string[] clientList = variationToSave.ManufacturerArrayList.Split(',');
-                var result = dbList.Where(p => clientList.All(p2 => Convert.ToInt64(p2) != p.ManufacturerId));
-                foreach (string item in clientList)
-                {
-                    Manufacturer manufacturerToAdd = manufacturerRepository.Find(Convert.ToInt64(item));
-                    if (dbList.Any(a => a.ManufacturerId == manufacturerToAdd.ManufacturerId))
-                        continue;
-                    itemVariationFromDatabase.Manufacturers.Add(manufacturerToAdd);
-                }
-
-                //Remove Items from Database that are not in Clientlist
-                foreach (Manufacturer manufacturer in result.ToList())
-                {
-                    itemVariationFromDatabase.Manufacturers.Remove(manufacturer);
-                }
-            }
-            else
-            {
-                //Remove All Items from Database if Clientlist is Empty
-                foreach (Manufacturer manufacturer in dbList)
-                {
-                    itemVariationFromDatabase.Manufacturers.Remove(manufacturer);
-                }
-            }
         }
 
         /// <summary>

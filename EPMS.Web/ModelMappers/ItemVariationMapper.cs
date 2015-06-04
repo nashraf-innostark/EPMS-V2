@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using EPMS.Models.RequestModels;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
@@ -43,7 +42,7 @@ namespace EPMS.Web.ModelMappers
                 Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList(),
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList(),
-                Manufacturers = source.Manufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
+                Manufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
                 ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }

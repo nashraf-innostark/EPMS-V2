@@ -307,7 +307,9 @@
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryWarehouseController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\ItemReleaseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
@@ -357,7 +359,11 @@
     <Compile Include="ModelMappers\InventoryDepartmentMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RFI\RFIMapper.cs" />
+    <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
     <Compile Include="ModelMappers\ItemImageMapper.cs" />
+    <Compile Include="ModelMappers\ItemManufacturerMapper.cs" />
+    <Compile Include="ModelMappers\ItemReleaseDetailMapper.cs" />
+    <Compile Include="ModelMappers\ItemReleaseMapper.cs" />
     <Compile Include="ModelMappers\ItemVariationMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
@@ -379,12 +385,15 @@
     <Compile Include="ModelMappers\StatusMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="ModelMappers\VendorMapper.cs" />
+    <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
+    <Compile Include="ModelMappers\WarehouseMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantExperience.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\ApplicantQualification.cs" />
+    <Compile Include="Models\Common\JsTree.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
     <Compile Include="Models\CompanyLicenseInformation.cs" />
@@ -402,6 +411,9 @@
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\InventorySections.cs" />
     <Compile Include="Models\ItemImage.cs" />
+    <Compile Include="Models\ItemManufacturer.cs" />
+    <Compile Include="Models\ItemRelease.cs" />
+    <Compile Include="Models\ItemReleaseDetail.cs" />
     <Compile Include="Models\ItemVariation.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\LicenseControlPanel.cs" />
@@ -429,7 +441,9 @@
     <Compile Include="Models\Payroll.cs" />
     <Compile Include="Models\RequestDetail.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\RIF.cs" />
     <Compile Include="Models\RFI.cs" />
+    <Compile Include="Models\RIFItem.cs" />
     <Compile Include="Models\RFIItem.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\SubTaskWeight.cs" />
@@ -438,6 +452,8 @@
     <Compile Include="Models\TaskEmployee.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorItems.cs" />
+    <Compile Include="Models\Warehouse.cs" />
+    <Compile Include="Models\WarehouseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -614,10 +630,35 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventorySection.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\InventoryWarehouse.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventoryWarehouse.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\IRFCreate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IRFCreate.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\IRFIndex.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IRFIndex.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\ItemVariation.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ItemVariation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\RIF\RIF.ar.Designer.cs">
+      <DependentUpon>RIF.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Inventory\RIF\RIF.Designer.cs">
+      <DependentUpon>RIF.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\Inventory\Vendor.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -729,7 +770,10 @@
     <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
     <Compile Include="ViewModels\InventoryItem\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
+    <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseCreateViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseListViewModel.cs" />
+    <Compile Include="ViewModels\IRF\ItemReleaseFormCreateViewModel.cs" />
+    <Compile Include="ViewModels\IRF\ItemReleaseFormListViewModel.cs" />
     <Compile Include="ViewModels\ItemVariation\ItemVariationViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
@@ -751,6 +795,9 @@
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
+    <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
+    <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
+    <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
@@ -1762,6 +1809,7 @@
     <Content Include="RTE\skins\moono\images\lock.png" />
     <Content Include="RTE\skins\moono\images\refresh.png" />
     <Content Include="RTE\styles.js" />
+    <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
@@ -1811,6 +1859,17 @@
     <Content Include="Areas\Inventory\Views\RFI\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Section.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryWarehouse\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryWarehouse\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\RFI\Index.cshtml" />
+    <Content Include="Views\Shared\_ItemsPopUp.cshtml" />
+    <Content Include="Areas\Inventory\Views\RFI\Details.cshtml" />
+    <Content Include="Areas\Inventory\Views\ItemRelease\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\ItemRelease\Create.cshtml" />
+    <Content Include="Views\Shared\_IRFItemsPopUp.cshtml" />
+    <Content Include="Areas\Inventory\Views\RIF\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\RIF\Details.cshtml" />
+    <Content Include="Areas\Inventory\Views\RIF\Index.cshtml" />
+    <Content Include="Views\Shared\_IRFWarehousePopUp.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3734,9 +3793,30 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventorySection.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\InventoryWarehouse.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\InventoryWarehouse.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InventoryWarehouse.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRFCreate.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IRFCreate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRFIndex.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IRFIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ItemVariation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\RIF\RIF.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RIF.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\RIF\RIF.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RIF.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\Vendor.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\Vendor.resx">

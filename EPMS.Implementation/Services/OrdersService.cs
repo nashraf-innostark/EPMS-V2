@@ -84,6 +84,11 @@ namespace EPMS.Implementation.Services
             return ordersRepository.GetOrdersByCustomerId(customerId);
         }
 
+        public IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId)
+        {
+            return ordersRepository.GetOrdersByCustomerId(customerId);
+        }
+
         public Order GetOrderByOrderId(long orderId)
         {
             return ordersRepository.GetOrderByOrderId(orderId);

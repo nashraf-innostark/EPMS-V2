@@ -62,6 +62,10 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IWarehouseService, WarehouseService>();
             unityContainer.RegisterType<IItemVariationService, ItemVariationService>();
             unityContainer.RegisterType<IRFIService, RFIService>();
+            unityContainer.RegisterType<IWarehouseDetailService, WarehouseDetailService>();
+            unityContainer.RegisterType<IItemReleaseService, ItemReleaseService>();
+            unityContainer.RegisterType<IRIFService, RIFService>();
+            unityContainer.RegisterType<IItemManufacturerService, ItemManufacturerService>();
         }
     }
 }

@@ -16,6 +16,6 @@ namespace EPMS.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
 
-        public virtual ICollection<ItemVariation> ItemVariations { get; set; }
+        public virtual ICollection<ItemManufacturer> ItemManufacturers { get; set; }
     }
 }

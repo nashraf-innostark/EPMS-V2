@@ -4,7 +4,9 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
+using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using FaceSharp.Api.Extensions;
 
 namespace EPMS.Implementation.Services
 {
@@ -44,6 +46,12 @@ namespace EPMS.Implementation.Services
             return rfiRepository.GetAll();
         }
 
+        public RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest)
+        {
+            var rfis = rfiRepository.LoadAllRfis(rfiSearchRequest);
+            return rfis;
+        }
+
         public RFI FindRFIById(long id)
         {
             return rfiRepository.Find(id);
@@ -53,8 +61,8 @@ namespace EPMS.Implementation.Services
             if (rfi.RFIId > 0)
             {
                 //update
-                UpdateRFI(rfi);
-                RfiItemUpdation(rfi);
+                if(UpdateRFI(rfi))//if RFI updated, then update the items
+                    RfiItemUpdation(rfi);
             }
             else
             {
@@ -78,17 +86,17 @@ namespace EPMS.Implementation.Services
                     {
                         rfiItemRepository.Update(rfiItem.CreateRfiItem());
                         rfiItemRepository.SaveChanges();
-                        rfiItemsInDb.Remove(rfiItem);
+                        rfiItemsInDb.RemoveAll(x => x.RFIItemId == rfiItem.RFIItemId);
                     }
                 }
                 else
                 {
                     //save
                     rfiItemRepository.Add(rfiItem);
+                    rfiItemRepository.SaveChanges();
                 }
             }
             DeleteRfiItem(rfiItemsInDb);
-            rfiItemRepository.SaveChanges();
         }
 
         private void DeleteRfiItem(IEnumerable<RFIItem> rfiItemsInDb)
@@ -96,6 +104,7 @@ namespace EPMS.Implementation.Services
             foreach (var rfiItem in rfiItemsInDb)
             {
                 rfiItemRepository.Delete(rfiItem);
+                rfiItemRepository.SaveChanges();
             }
         }
 
@@ -119,9 +128,9 @@ namespace EPMS.Implementation.Services
             rfiRepository.SaveChanges();
         }
 
-        public RFIResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
+        public RFICreateResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
         {
-            RFIResponse rfiResponse=new RFIResponse
+            RFICreateResponse rfiResponse=new RFICreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
             };
@@ -131,7 +140,26 @@ namespace EPMS.Implementation.Services
                 if (rfi != null)
                 {
                     rfiResponse.Rfi = rfi;
-                    rfiResponse.RecCreatedByName = aspNetUserRepository.Find(rfi.RecCreatedBy).UserName;
+                    var employee = aspNetUserRepository.Find(rfi.RecCreatedBy).Employee;
+                    rfiResponse.RequesterNameE = employee!=null?employee.EmployeeFirstNameE+" "+employee.EmployeeMiddleNameE+" "+employee.EmployeeLastNameE:"";
+                    rfiResponse.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
+
+                    if (rfi.Order != null)
+                    {
+                        rfiResponse.OrderNo = rfi.Order.OrderNo;
+                        var customer = rfi.Order.Customer;
+                        rfiResponse.CustomerNameE = customer != null ? customer.CustomerNameE:"";
+                        rfiResponse.CustomerNameA = customer != null ? customer.CustomerNameA : "";
+
+                    }
+
+                    if (rfi.Status != 6 && !string.IsNullOrEmpty(rfi.ManagerId))
+                    {
+                        var manager = aspNetUserRepository.Find(rfi.ManagerId).Employee;
+                        rfiResponse.ManagerNameE = manager != null ? manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " + manager.EmployeeLastNameE : "";
+                        rfiResponse.ManagerNameA = manager != null ? manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " + manager.EmployeeLastNameA : "";
+
+                    }
                     rfiResponse.RfiItem = rfi.RFIItems;
                 }
             }
@@ -141,6 +169,13 @@ namespace EPMS.Implementation.Services
                 rfiResponse.Orders = ordersRepository.GetAll();
             }
             return rfiResponse;
+        }
+
+        public IEnumerable<RFI> GetCustomerRfis(long customerId)
+        {
+            //IEnumerable<Order> customerOrders = ordersRepository.GetOrdersByCustomerId(customerId);
+            //IEnumerable<RFI> customerRfis = customerOrders.Select(x => x.RFIs.Select(x=>x.));
+            return null;
         }
     }
 }

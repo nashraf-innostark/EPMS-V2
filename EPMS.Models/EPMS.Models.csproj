@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
+    <Compile Include="Common\TirRequestByColumn.cs" />
+    <Compile Include="Common\PofRequestByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
     <Compile Include="Common\EmployeeForDropDownList.cs" />
     <Compile Include="Common\EmployeeRequestByColumn.cs" />
@@ -107,6 +109,27 @@
     <Compile Include="Common\OrdersByColumn.cs" />
     <Compile Include="Common\PayrollByColumn.cs" />
     <Compile Include="Common\QuotationByColumn.cs" />
+    <Compile Include="Common\DifRequestByColumn.cs" />
+    <Compile Include="Common\RifRequestByColumn.cs" />
+    <Compile Include="Common\RfiRequestByColumn.cs" />
+    <Compile Include="DomainModels\DIF.cs" />
+    <Compile Include="DomainModels\DIFItem.cs" />
+    <Compile Include="DomainModels\ItemManufacturer.cs" />
+    <Compile Include="DomainModels\ItemRelease.cs" />
+    <Compile Include="DomainModels\ItemReleaseDetail.cs" />
+    <Compile Include="DomainModels\ItemWarehouse.cs" />
+    <Compile Include="DomainModels\POF.cs" />
+    <Compile Include="DomainModels\POFItem.cs" />
+    <Compile Include="DomainModels\RIF.cs" />
+    <Compile Include="DomainModels\RIFItem.cs" />
+    <Compile Include="DomainModels\TIR.cs" />
+    <Compile Include="DomainModels\TIRItem.cs" />
+    <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="RequestModels\TirSearchRequest.cs" />
+    <Compile Include="RequestModels\PofSearchRequest.cs" />
+    <Compile Include="RequestModels\DifSearchRequest.cs" />
+    <Compile Include="RequestModels\RifSearchRequest.cs" />
+    <Compile Include="RequestModels\RfiSearchRequest.cs" />
     <Compile Include="Common\TaskByColumn.cs" />
     <Compile Include="DomainModels\Aisle.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
@@ -168,6 +191,7 @@
     <Compile Include="DomainModels\UserPrefrence.cs" />
     <Compile Include="DomainModels\VendorItem.cs" />
     <Compile Include="DomainModels\Warehouse.cs" />
+    <Compile Include="DomainModels\WarehouseDetail.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -209,9 +233,9 @@
     <Compile Include="RequestModels\OrdersSearchRequest.cs" />
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
-    <Compile Include="RequestModels\RFIServerViewModel.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
+    <Compile Include="RequestModels\WarehouseRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +266,7 @@
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
+    <Compile Include="ResponseModels\IRFCreateResponse.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
     <Compile Include="ResponseModels\ItemVariationResponse.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
@@ -263,7 +288,12 @@
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
-    <Compile Include="ResponseModels\RFIResponse.cs" />
+    <Compile Include="ResponseModels\RFICreateResponse.cs" />
+    <Compile Include="ResponseModels\DifRequestResponse.cs" />
+    <Compile Include="ResponseModels\DifCreateResponse.cs" />
+    <Compile Include="ResponseModels\RifRequestResponse.cs" />
+    <Compile Include="ResponseModels\RfiRequestResponse.cs" />
+    <Compile Include="ResponseModels\RIFCreateResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />

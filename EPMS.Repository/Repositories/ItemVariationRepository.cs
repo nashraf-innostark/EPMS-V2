@@ -25,7 +25,12 @@ namespace EPMS.Repository.Repositories
             return DbSet.Select(x => new ItemVariationDropDownListItem
             {
                 ItemVariationId = x.ItemVariationId,
-                ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode
+                ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                SKUCode = x.SKUCode,
+                ItemVariationDescriptionA = x.DescriptionAr,
+                ItemVariationDescriptionE = x.DescriptionEn,
+                ItemNameA = x.InventoryItem.ItemNameAr,
+                ItemNameE = x.InventoryItem.ItemNameEn
             });
         }
 

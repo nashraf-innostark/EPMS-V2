@@ -11,7 +11,7 @@
         deptId = Convert.ToInt64(ViewBag.InventoryDepartmentId);
     }
 }
-<div class="">
+<div class="main-content withPanel">
     <div class="panel">
         <div class="panel-content filler">
             <div class="panel-logo"></div>
@@ -119,7 +119,7 @@
             </div>
             <div class="control-group row-fluid" id="Descp">
                 <div class="span3">
-                    <label class="control-label" for="description">@EPMS.Web.Resources.Inventory.InventoryDepartment.Description </label>
+                    <label class="control-label" for="descpEn">@EPMS.Web.Resources.Inventory.InventoryDepartment.Description </label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -164,49 +164,40 @@
         $("#CKEditorDescp").hide();
         $("#Descp").show();
         $('#colorpicker').farbtastic('#color');
+        var treeInitialData;
         if (dir == "ltr") {
-            myTree = $("#jstree").jstree({
-                "json_data": {
-                    "data": [
-                        {
-                            "data": {
-                                "title": "Departments",
-                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                            },
-                            "attr": { "id": "parentNode" },
-                        }
-                    ]
-                },
-                "plugins": ["themes", "json_data", "ui"],
-                "ui": {
-                    "initially_select": ["parentNode"]
-                },
-                "core": {
-                    "initially_open": ["parentNode"]
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Departments",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
                 }
-            });
+            ];
         } else {
-            myTree = $("#jstree").jstree({
-                "json_data": {
-                    "data": [
-                        {
-                            "data": {
-                                "title": "الإدارات",
-                                "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                            },
-                            "attr": { "id": "parentNode" },
-                        }
-                    ]
-                },
-                "plugins": ["themes", "json_data", "ui"],
-                "ui": {
-                    "initially_select": ["parentNode"]
-                },
-                "core": {
-                    "initially_open": ["parentNode"]
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "الإدارات",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
                 }
-            });
+            ];
         }
+        myTree = $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        });
         var position = 'last';
         var parentNode;
         var mainParent;

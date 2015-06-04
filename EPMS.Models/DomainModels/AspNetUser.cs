@@ -30,5 +30,12 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<RFI> RFIs { get; set; }
         public virtual ICollection<UserPrefrence> UserPrefrences { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<RIF> RIFs { get; set; }
+        public virtual ICollection<DIF> DIFs { get; set; }
+        public virtual ICollection<DIF> DIFManager { get; set; }
+        public virtual ICollection<POF> POFs { get; set; }
+        public virtual ICollection<POF> POFManager { get; set; }
+        public virtual ICollection<TIR> TIRs { get; set; }
+        public virtual ICollection<TIR> TIRManager { get; set; }
     }
 }

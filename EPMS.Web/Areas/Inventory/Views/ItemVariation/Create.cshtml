@@ -382,7 +382,7 @@
         </div>
         <!--Sortable Responsive Table begin-->
 
-        <div class="row-fluid">
+        @*<div class="row-fluid">
             <div class="span12">
                 <table class="table table-striped table-responsive" id="tableSortableVariationsManufacturer">
                     <thead>
@@ -417,7 +417,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div>*@
         <!--Sortable Responsive Table end-->
 
         <div class="alert alert-info alert-block">
@@ -1509,39 +1509,6 @@
         if (strSizes.length > 0)
             strSizes = strSizes.substring(0, strSizes.length - 1);
         $('#SizeArrayList').val(strSizes);
-    }
-
-    //For manipulating the Manufacturer List
-    var ManufacturerResultArray = new Array();
-    $(document).ready(function () {
-        @foreach (var item in @Model.ItemVariation.Manufacturers)
-        {
-            <text>
-        ManufacturerResultArray.push(@item.ManufacturerId);
-        </text>
-        }
-        RefreshManufacturerArrayList();
-    });
-    function ManageManufacturerList(id, type) {
-        if (type == 2) {
-            //Delete Row Case
-            var index = ManufacturerResultArray.indexOf(parseInt(id));
-            ManufacturerResultArray.splice(index, 1);
-        } else {
-            //For Add
-            ManufacturerResultArray.push(id);
-        }
-        RefreshManufacturerArrayList();
-    }
-    function RefreshManufacturerArrayList() {
-        //Set the Array List into hidden Variable
-        var strManufacturers = "";
-        for (var i = 0; i < ManufacturerResultArray.length; i++) {
-            strManufacturers += ManufacturerResultArray[i] + ",";
-        }
-        if (strManufacturers.length > 0)
-            strManufacturers = strManufacturers.substring(0, strManufacturers.length - 1);
-        $('#ManufacturerArrayList').val(strManufacturers);
     }
 
     //For manipulating the Status List
