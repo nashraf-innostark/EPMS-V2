@@ -309,6 +309,7 @@
     <Compile Include="Areas\Inventory\Controllers\InventoryWarehouseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemReleaseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\DIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
@@ -359,6 +360,7 @@
     <Compile Include="ModelMappers\InventoryDepartmentMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RFI\RFIMapper.cs" />
+    <Compile Include="ModelMappers\Inventory\DIF\DIFMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
     <Compile Include="ModelMappers\ItemImageMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseDetailMapper.cs" />
@@ -403,6 +405,8 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DashboardWidgetPreferences.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DIF.cs" />
+    <Compile Include="Models\DIFItem.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeJobHistory.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
@@ -648,6 +652,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ItemVariation.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Inventory\DIF\DIF.ar.Designer.cs">
+      <DependentUpon>DIF.ar.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Inventory\DIF\DIF.Designer.cs">
+      <DependentUpon>DIF.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\Inventory\RIF\RIF.ar.Designer.cs">
       <DependentUpon>RIF.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -793,6 +807,8 @@
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
+    <Compile Include="ViewModels\DIF\DifListViewModel.cs" />
+    <Compile Include="ViewModels\DIF\DIFViewModel.cs" />
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
@@ -1868,6 +1884,9 @@
     <Content Include="Areas\Inventory\Views\RIF\Details.cshtml" />
     <Content Include="Areas\Inventory\Views\RIF\Index.cshtml" />
     <Content Include="Views\Shared\_IRFWarehousePopUp.cshtml" />
+    <Content Include="Areas\Inventory\Views\DIF\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\DIF\Details.cshtml" />
+    <Content Include="Areas\Inventory\Views\DIF\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3807,6 +3826,14 @@
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ItemVariation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\DIF\DIF.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DIF.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\DIF\DIF.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DIF.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\RIF\RIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

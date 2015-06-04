@@ -9,11 +9,11 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<DIF> GetAll();
         DifRequestResponse LoadAllDifs(DifSearchRequest searchRequest);
-        DIF FindRIFById(long id);
-        bool SaveRIF(DIF rif);
-        bool AddRIF(DIF rif);
-        bool UpdateRIF(DIF rif);
-        void DeleteRIF(DIF rif);
+        DIF FindDIFById(long id);
+        bool SaveDIF(DIF rif);
+        bool AddDIF(DIF rif);
+        bool UpdateDIF(DIF rif);
+        void DeleteDIF(DIF rif);
         DifCreateResponse LoadDifResponseData(long? id);
     }
 }
