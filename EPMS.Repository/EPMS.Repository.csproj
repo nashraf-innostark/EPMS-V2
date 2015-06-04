@@ -171,8 +171,10 @@
     <Compile Include="Repositories\QuickLaunchItemRepository.cs" />
     <Compile Include="Repositories\QuotationItemRepository.cs" />
     <Compile Include="Repositories\QuotationRepository.cs" />
+    <Compile Include="Repositories\DIFItemRepository.cs" />
     <Compile Include="Repositories\RIFItemRepository.cs" />
     <Compile Include="Repositories\RFIItemRepository.cs" />
+    <Compile Include="Repositories\DIFRepository.cs" />
     <Compile Include="Repositories\RIFRepository.cs" />
     <Compile Include="Repositories\RFIRepository.cs" />
     <Compile Include="Repositories\SizeRepository.cs" />

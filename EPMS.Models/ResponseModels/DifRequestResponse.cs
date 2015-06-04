@@ -7,9 +7,9 @@ namespace EPMS.Models.ResponseModels
     {
         public DifRequestResponse()
         {
-            Rifs = new List<RIF>();
+            Difs = new List<DIF>();
         }
-        public IEnumerable<RIF> Rifs { get; set; }
+        public IEnumerable<DIF> Difs { get; set; }
 
         /// <summary>
         /// Total Count

@@ -16,7 +16,8 @@ namespace EPMS.Models.DomainModels
         public string NotesE { get; set; }
         public int? Status { get; set; }
         public string ManagerId { get; set; }
-
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUser Manager { get; set; }
         public virtual ICollection<DIFItem> DIFItems { get; set; }
     }
 }

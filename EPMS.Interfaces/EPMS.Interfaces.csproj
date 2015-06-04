@@ -92,6 +92,7 @@
     <Compile Include="IServices\IProjectTaskService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
+    <Compile Include="IServices\IDIFService.cs" />
     <Compile Include="IServices\IRIFService.cs" />
     <Compile Include="IServices\IRFIService.cs" />
     <Compile Include="IServices\ISizeService.cs" />

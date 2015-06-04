@@ -290,6 +290,7 @@
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
+    <Compile Include="ResponseModels\DifCreateResponse.cs" />
     <Compile Include="ResponseModels\RifRequestResponse.cs" />
     <Compile Include="ResponseModels\RfiRequestResponse.cs" />
     <Compile Include="ResponseModels\RIFCreateResponse.cs" />
