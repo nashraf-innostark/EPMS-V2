@@ -329,7 +329,7 @@
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesE" Type="nvarchar(max)" />
-          <Property Name="Status" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="DIFItem">
@@ -810,7 +810,7 @@
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesE" Type="nvarchar(max)" />
-          <Property Name="Status" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="POFItem">
@@ -1121,7 +1121,7 @@
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="NotesA" Type="nvarchar(max)" />
           <Property Name="NotesE" Type="nvarchar(max)" />
-          <Property Name="Status" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="TIRItem">
@@ -5254,7 +5254,7 @@
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DIFItems" Relationship="EPMSInventoryModel.FK_DIFItem_DIF" FromRole="DIF" ToRole="DIFItem" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="DIF" ToRole="AspNetUser" />
@@ -5289,7 +5289,7 @@
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="POFItems" Relationship="EPMSInventoryModel.FK_POFItem_POF" FromRole="POF" ToRole="POFItem" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_POF_CreatedBy" FromRole="POF" ToRole="AspNetUser" />
@@ -5326,7 +5326,7 @@
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TIRItems" Relationship="EPMSInventoryModel.FK_TIRItem_TIR" FromRole="TIR" ToRole="TIRItem" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="TIR" ToRole="AspNetUser" />
