@@ -42,7 +42,7 @@ namespace EPMS.Web.ModelMappers
                 Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList(),
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList(),
-                Manufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
+                ItemManufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
                 ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }

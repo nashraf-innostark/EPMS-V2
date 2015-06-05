@@ -71,12 +71,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [HttpPost]
         public ActionResult Create(ItemVariationViewModel variationViewModel)
         {
-            ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
-            itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
-            itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;
-            itemToSave.StatusArrayList = variationViewModel.StatusArrayList;
-            itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
-            itemVariationService.SaveItemVariation(itemToSave);
+            //ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
+            //itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
+            //itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;
+            //itemToSave.StatusArrayList = variationViewModel.StatusArrayList;
+            //itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
+            //itemVariationService.SaveItemVariation(itemToSave);
             {
                 TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
                 return RedirectToAction("Create");
