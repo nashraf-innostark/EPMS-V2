@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
+    <Compile Include="Common\ItemReleaseByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
     <Compile Include="Common\PofRequestByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
     <Compile Include="RequestModels\DifSearchRequest.cs" />
@@ -267,6 +269,7 @@
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
     <Compile Include="ResponseModels\IRFCreateResponse.cs" />
+    <Compile Include="ResponseModels\ItemReleaseResponse.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
     <Compile Include="ResponseModels\ItemVariationResponse.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />

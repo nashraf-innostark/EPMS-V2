@@ -185,7 +185,7 @@ namespace EPMS.Web.ModelMappers
                 EmployeeJobId = source.EmployeeJobId,
                 EmployeeJobTitleE = source.JobTitle.JobTitleNameE,
                 EmployeeJobTitleA = source.JobTitle.JobTitleNameA,
-                EmployeeIqamaExpiryDt = Convert.ToDateTime(source.EmployeeIqamaExpiryDt.ToString()).ToShortDateString(),
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt != null ? Convert.ToDateTime(source.EmployeeIqamaExpiryDt.ToString()).ToShortDateString() : string.Empty,
                 EmployeeImagePath = ConfigurationManager.AppSettings["EmployeeImage"] + (string.IsNullOrEmpty(source.EmployeeImagePath) ? "profile.jpg" : source.EmployeeImagePath)
             };
         }
