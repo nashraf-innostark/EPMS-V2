@@ -139,6 +139,7 @@
     <Compile Include="Services\InventoryDepartmentService.cs" />
     <Compile Include="Services\InventoryItemService.cs" />
     <Compile Include="Services\ItemImageService.cs" />
+    <Compile Include="Services\ItemManufacturerService.cs" />
     <Compile Include="Services\ItemReleaseService.cs" />
     <Compile Include="Services\ItemVariationService.cs" />
     <Compile Include="Services\JobApplicantService.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Services\QuickLaunchItemService.cs" />
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
+    <Compile Include="Services\DIFService.cs" />
     <Compile Include="Services\RIFService.cs" />
     <Compile Include="Services\RFIService.cs" />
     <Compile Include="Services\SizeService.cs" />

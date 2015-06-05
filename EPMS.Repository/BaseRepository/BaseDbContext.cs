@@ -118,6 +118,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<ItemImage> ItemImages { get; set; }
+        public DbSet<ItemManufacturer> ItemManufacturers { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<ItemVariation> ItemVariations { get; set; }
         public DbSet<RFI> RFI { get; set; }

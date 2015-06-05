@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -30,5 +31,7 @@ namespace EPMS.Web.Models
         public string QuantityInPackage { get; set; }
         public string QuantityInHand { get; set; }
         public string QuantitySold { get; set; }
+
+        public List<ItemVariation> ItemVariations { get; set; }
     }
 }

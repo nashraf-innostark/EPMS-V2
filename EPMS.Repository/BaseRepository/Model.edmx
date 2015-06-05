@@ -2902,11 +2902,11 @@
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="RIFs" Relationship="EPMSInventoryModel.FK_RIF_AspNetUsers" FromRole="AspNetUser" ToRole="RIF" />
           <NavigationProperty Name="DIFs" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="AspNetUser" ToRole="DIF" />
-          <NavigationProperty Name="DIFs1" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="AspNetUser" ToRole="DIF" />
+          <NavigationProperty Name="DIFManager" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="AspNetUser" ToRole="DIF" />
           <NavigationProperty Name="POFs" Relationship="EPMSInventoryModel.FK_POF_CreatedBy" FromRole="AspNetUser" ToRole="POF" />
-          <NavigationProperty Name="POFs1" Relationship="EPMSInventoryModel.FK_POF_Manager" FromRole="AspNetUser" ToRole="POF" />
+          <NavigationProperty Name="POFManager" Relationship="EPMSInventoryModel.FK_POF_Manager" FromRole="AspNetUser" ToRole="POF" />
           <NavigationProperty Name="TIRs" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="AspNetUser" ToRole="TIR" />
-          <NavigationProperty Name="TIRs1" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="AspNetUser" ToRole="TIR" />
+          <NavigationProperty Name="TIRManager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="AspNetUser" ToRole="TIR" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -5201,7 +5201,7 @@
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DIFItems" Relationship="EPMSInventoryModel.FK_DIFItem_DIF" FromRole="DIF" ToRole="DIFItem" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="DIF" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="DIF" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="DIF" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="DIFItem">
           <Key>
@@ -5236,7 +5236,7 @@
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="POFItems" Relationship="EPMSInventoryModel.FK_POFItem_POF" FromRole="POF" ToRole="POFItem" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_POF_CreatedBy" FromRole="POF" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="EPMSInventoryModel.FK_POF_Manager" FromRole="POF" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_POF_Manager" FromRole="POF" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="POFItem">
           <Key>
@@ -5273,7 +5273,7 @@
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TIRItems" Relationship="EPMSInventoryModel.FK_TIRItem_TIR" FromRole="TIR" ToRole="TIRItem" />
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="TIR" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="TIR" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="TIR" ToRole="AspNetUser" />
         </EntityType>
         <EntityType Name="TIRItem">
           <Key>
@@ -6792,7 +6792,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="22.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />

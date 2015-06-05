@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ViewModels.Common;
@@ -14,14 +15,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Private
 
         private readonly IInventoryItemService inventoryItemService;
-        
+        private readonly IItemVariationService itemVariationService;
+
         #endregion
 
         #region Constructor
 
-        public InventoryItemController(IInventoryItemService inventoryItemService)
+        public InventoryItemController(IInventoryItemService inventoryItemService, IItemVariationService itemVariationService)
         {
             this.inventoryItemService = inventoryItemService;
+            this.itemVariationService = itemVariationService;
         }
 
         #endregion

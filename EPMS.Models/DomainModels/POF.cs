@@ -11,9 +11,10 @@ namespace EPMS.Models.DomainModels
         public System.DateTime RecUpdatedDate { get; set; }
         public string NotesA { get; set; }
         public string NotesE { get; set; }
-        public int? Status { get; set; }
+        public int Status { get; set; }
         public string ManagerId { get; set; }
-
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUser Manager { get; set; }
         public virtual ICollection<POFItem> POFItems { get; set; }
     }
 }

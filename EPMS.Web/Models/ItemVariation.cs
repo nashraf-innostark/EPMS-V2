@@ -36,7 +36,9 @@ namespace EPMS.Web.Models
 
         public List<Color> Colors { get; set; }
         public List<Size> Sizes { get; set; }
-        public List<Manufacturer> Manufacturers { get; set; }
+
+
+        public List<ItemManufacturer> Manufacturers { get; set; }
         public List<Status> Statuses { get; set; }
         public List<Warehouse> Warehouses { get; set; }
         public List<ItemImage> ItemImages { get; set; }

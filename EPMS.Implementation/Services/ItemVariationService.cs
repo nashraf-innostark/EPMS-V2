@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
@@ -18,14 +17,29 @@ namespace EPMS.Implementation.Services
         #region Private
         private readonly IItemVariationRepository variationRepository;
         private readonly ISizeRepository sizeRepository;
+        private readonly IManufacturerRepository manufacturerRepository;
+        private readonly IStatusRepository statusRepository;
+        private readonly IColorRepository colorRepository;
+        private readonly IItemImageRepository imageRepository;
+        private readonly IItemManufacturerRepository itemManufacturerRepository;
+
         #endregion
 
         #region Constructor
-        public ItemVariationService(IItemVariationRepository variationRepository, ISizeRepository sizeRepository)
+
+        public ItemVariationService(IItemVariationRepository variationRepository, ISizeRepository sizeRepository,
+            IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
+            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
+            this.manufacturerRepository = manufacturerRepository;
+            this.statusRepository = statusRepository;
+            this.colorRepository = colorRepository;
+            this.imageRepository = imageRepository;
+            this.itemManufacturerRepository = itemManufacturerRepository;
         }
+
         #endregion
 
         #region Public
@@ -63,6 +77,11 @@ namespace EPMS.Implementation.Services
         {
             return variationRepository.GetItemVariationDropDownList();
         }
+
+        public IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId)
+        {
+            return variationRepository.GetVariationsByInventoryItemId(inventoryItemId);
+        }
         /// <summary>
         /// Save Item Variation from Client
         /// </summary>
@@ -73,14 +92,23 @@ namespace EPMS.Implementation.Services
             {
                 UpdateItemVariation(variationToSave.ItemVariation);
                 UpdateSizeList(variationToSave, itemVariationFromDatabase);
+                UpdateManufacturerList(variationToSave, itemVariationFromDatabase);
+                UpdateStatusList(variationToSave, itemVariationFromDatabase);
+                UpdateColorList(variationToSave, itemVariationFromDatabase);
             }
             else
             {
                 AddNewVariation(variationToSave.ItemVariation);
                 AddSizeList(variationToSave);
+                AddManufacturerList(variationToSave);
+                AddStatusList(variationToSave);
+                AddColorList(variationToSave);
+                AddImages(variationToSave);
             }
+            variationRepository.SaveChanges();
             return new ItemVariationResponse();
         }
+
         /// <summary>
         /// Add New Variation from Client
         /// </summary>
@@ -100,56 +128,229 @@ namespace EPMS.Implementation.Services
             itemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             itemVariation.RecLastUpdatedDt = DateTime.Now;
             variationRepository.Update(itemVariation);
-            variationRepository.SaveChanges();
         }
         /// <summary>
         /// Save Size List from Client
         /// </summary>
         private void AddSizeList(ItemVariationRequest variationToSave)
         {
-            string[] sizeList = variationToSave.SizeArrayList.Split(',');
-            foreach (string item in sizeList)
+            if (variationToSave.SizeArrayList != null)
             {
-                Size sizeToAdd = sizeRepository.Find(Convert.ToInt64(item));
-                if(sizeToAdd == null)
-                    throw new Exception("Size not found in database");
-                if (variationToSave.ItemVariation.Sizes == null)
+                string[] sizeList = variationToSave.SizeArrayList.Split(',');
+                foreach (string item in sizeList)
                 {
-                    variationToSave.ItemVariation.Sizes = new Collection<Size>();
+                    Size sizeToAdd = sizeRepository.Find(Convert.ToInt64(item));
+                    if (sizeToAdd == null)
+                        throw new Exception("Size not found in database");
+                    if (variationToSave.ItemVariation.Sizes == null)
+                    {
+                        variationToSave.ItemVariation.Sizes = new Collection<Size>();
+                    }
+                    variationToSave.ItemVariation.Sizes.Add(sizeToAdd);
                 }
-                variationToSave.ItemVariation.Sizes.Add(sizeToAdd);
             }
-            variationRepository.SaveChanges();
         }
+
         /// <summary>
-        /// Update Client List from Client
+        /// Update Size List from Client
         /// </summary>
         private void UpdateSizeList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
         {
             List<Size> dbList = itemVariationFromDatabase.Sizes.ToList();
-            string[] clientList = variationToSave.SizeArrayList.Split(',');
 
             //Add New Items from Clientlist to Database
-
-            foreach (string item in clientList)
+            if (variationToSave.SizeArrayList != null)
             {
-                Size sizeToAdd = sizeRepository.Find(Convert.ToInt64(item));
-                if (dbList.Any(a => a.SizeId == sizeToAdd.SizeId))
-                    continue;
-                if (variationToSave.ItemVariation.Sizes == null)
+                string[] clientList = variationToSave.SizeArrayList.Split(',');
+                var result = dbList.Where(p => clientList.All(p2 => Convert.ToInt64(p2) != p.SizeId));
+                foreach (string item in clientList)
                 {
-                    variationToSave.ItemVariation.Sizes = new Collection<Size>();
+                    Size sizeToAdd = sizeRepository.Find(Convert.ToInt64(item));
+                    if (dbList.Any(a => a.SizeId == sizeToAdd.SizeId))
+                        continue;
+                    itemVariationFromDatabase.Sizes.Add(sizeToAdd);
                 }
-                variationToSave.ItemVariation.Sizes.Add(sizeToAdd);
+
+                //Remove Items from Database that are not in Clientlist
+                foreach (Size size in result.ToList())
+                {
+                    itemVariationFromDatabase.Sizes.Remove(size);
+                }
             }
-            variationRepository.SaveChanges();
-
-            //Remove Items from Database that are not in Clientlist
-
-
-            //Remove All Items from Database if Clientlist is Empty
-
+            else
+            {
+                //Remove All Items from Database if Clientlist is Empty
+                foreach (Size size in dbList)
+                {
+                    itemVariationFromDatabase.Sizes.Remove(size);
+                }
+            }
         }
+
+        /// <summary>
+        /// Add Manufacturer List from Client
+        /// </summary>
+        /// <param name="variationToSave"></param>
+        private void AddManufacturerList(ItemVariationRequest variationToSave)
+        {
+            if (variationToSave.ItemManufacturers != null)
+            {
+                foreach (ItemManufacturer itemManufacturer in variationToSave.ItemManufacturers)
+                {
+                    ItemManufacturer manufacturer = new ItemManufacturer
+                    {
+                        ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                        Price = itemManufacturer.Price
+                    };
+                    itemManufacturerRepository.Add(manufacturer);
+                }
+                imageRepository.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Update Manufacturer List from Client
+        /// </summary>
+        private void UpdateManufacturerList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
+        {
+        }
+
+        /// <summary>
+        /// Add Status List from Client
+        /// </summary>
+        private void AddStatusList(ItemVariationRequest variationToSave)
+        {
+            if (variationToSave.StatusArrayList != null)
+            {
+                string[] statusList = variationToSave.StatusArrayList.Split(',');
+                foreach (string item in statusList)
+                {
+                    Status statusToAdd = statusRepository.Find(Convert.ToInt64(item));
+                    if (statusToAdd == null)
+                        throw new Exception("Status not found in database");
+                    if (variationToSave.ItemVariation.Status == null)
+                    {
+                        variationToSave.ItemVariation.Status = new Collection<Status>();
+                    }
+                    variationToSave.ItemVariation.Status.Add(statusToAdd);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update Status List from Client
+        /// </summary>
+        private void UpdateStatusList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
+        {
+            List<Status> dbList = itemVariationFromDatabase.Status.ToList();
+
+            //Add New Items from Clientlist to Database
+            if (variationToSave.SizeArrayList != null)
+            {
+                string[] clientList = variationToSave.StatusArrayList.Split(',');
+                var result = dbList.Where(p => clientList.All(p2 => Convert.ToInt64(p2) != p.StatusId));
+                foreach (string item in clientList)
+                {
+                    Status statusToAdd = statusRepository.Find(Convert.ToInt64(item));
+                    if (dbList.Any(a => a.StatusId == statusToAdd.StatusId))
+                        continue;
+                    itemVariationFromDatabase.Status.Add(statusToAdd);
+                }
+
+                //Remove Items from Database that are not in Clientlist
+                foreach (Status status in result.ToList())
+                {
+                    itemVariationFromDatabase.Status.Remove(status);
+                }
+            }
+            else
+            {
+                //Remove All Items from Database if Clientlist is Empty
+                foreach (Status status in dbList)
+                {
+                    itemVariationFromDatabase.Status.Remove(status);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add Color List from Client
+        /// </summary>
+        /// <param name="variationToSave"></param>
+        private void AddColorList(ItemVariationRequest variationToSave)
+        {
+            if (variationToSave.ColorArrayList != null)
+            {
+                string[] colorList = variationToSave.ColorArrayList.Split(',');
+                foreach (string item in colorList)
+                {
+                    Color colorToAdd = colorRepository.Find(Convert.ToInt64(item));
+                    if (colorToAdd == null)
+                        throw new Exception("Status not found in database");
+                    if (variationToSave.ItemVariation.Colors == null)
+                    {
+                        variationToSave.ItemVariation.Colors = new Collection<Color>();
+                    }
+                    variationToSave.ItemVariation.Colors.Add(colorToAdd);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update Color list from Client
+        /// </summary>
+        private void UpdateColorList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
+        {
+            List<Color> dbList = itemVariationFromDatabase.Colors.ToList();
+
+            //Add New Items from Clientlist to Database
+            if (variationToSave.SizeArrayList != null)
+            {
+                string[] clientList = variationToSave.ColorArrayList.Split(',');
+                var result = dbList.Where(p => clientList.All(p2 => Convert.ToInt64(p2) != p.ColorId));
+                foreach (string item in clientList)
+                {
+                    Color colorToAdd = colorRepository.Find(Convert.ToInt64(item));
+                    if (dbList.Any(a => a.ColorId == colorToAdd.ColorId))
+                        continue;
+                    itemVariationFromDatabase.Colors.Add(colorToAdd);
+                }
+
+                //Remove Items from Database that are not in Clientlist
+                foreach (Color color in result.ToList())
+                {
+                    itemVariationFromDatabase.Colors.Remove(color);
+                }
+            }
+            else
+            {
+                //Remove All Items from Database if Clientlist is Empty
+                foreach (Color color in dbList)
+                {
+                    itemVariationFromDatabase.Colors.Remove(color);
+                }
+            }
+        }
+
+        private void AddImages(ItemVariationRequest variationToSave)
+        {
+            if (variationToSave.ItemImages != null)
+            {
+                foreach (ItemImage itemImage in variationToSave.ItemImages)
+                {
+                    ItemImage image = new ItemImage
+                    {
+                        ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                        ImageOrder = itemImage.ImageOrder,
+                        ItemImagePath = itemImage.ItemImagePath,
+                        ShowImage = itemImage.ShowImage
+                    };
+                    imageRepository.Add(image);
+                }
+                imageRepository.SaveChanges();
+            }
+        }
+
         #endregion
     }
 }
