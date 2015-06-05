@@ -639,15 +639,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InventoryWarehouse.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Inventory\IRFCreate.Designer.cs">
+    <Compile Include="Resources\Inventory\IRF\AddEdit\IRFCreate.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IRFCreate.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Inventory\IRFIndex.Designer.cs">
+    <Compile Include="Resources\Inventory\IRF\Index\IRFIndex.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IRFIndex.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\IRF\View\IRFView.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IRFView.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Inventory\ItemVariation.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -3819,13 +3824,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventoryWarehouse.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Inventory\IRFCreate.resx">
+    <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFCreate.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Inventory\IRFIndex.resx">
+    <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IRFView.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

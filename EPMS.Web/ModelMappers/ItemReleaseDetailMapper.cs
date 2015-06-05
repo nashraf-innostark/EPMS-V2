@@ -6,7 +6,7 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.ItemReleaseDetail CreateFromServerToClient(this ItemReleaseDetail source)
         {
-            return new Models.ItemReleaseDetail
+            var retVal = new Models.ItemReleaseDetail
             {
                 IRFDetailId = source.IRFDetailId,
                 ItemReleaseId = source.ItemReleaseId,
@@ -22,6 +22,15 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
+            if (source.ItemVariation != null)
+            {
+                retVal.ItemName = Resources.Shared.Common.TextDirection == "ltr"
+                    ? source.ItemVariation.InventoryItem.ItemNameEn
+                    : source.ItemVariation.InventoryItem.ItemNameAr;
+                retVal.ItemCode = source.ItemVariation.InventoryItem.ItemCode;
+                retVal.ItemSKUCode = source.ItemVariation.SKUCode;
+            }
+            return retVal;
         }
         public static ItemReleaseDetail CreateFromClientToServer(this Models.ItemReleaseDetail source)
         {

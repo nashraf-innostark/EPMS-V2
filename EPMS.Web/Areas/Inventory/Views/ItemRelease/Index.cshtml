@@ -1,11 +1,10 @@
 ﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.IRFIndex.PageTitle;
+    ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
-
 
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -15,14 +14,14 @@
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">@EPMS.Web.Resources.Inventory.IRFIndex.Header</a>
+            <a href="javascript:;">@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header</a>
         </li>
     </ul>
 </div>
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.IRFIndex.Header</small></h2>
-    <h3><small><a href="~/Inventory/ItemRelease/Create">@EPMS.Web.Resources.Inventory.IRFIndex.CreateNew</a></small></h3>
+    <h2><small>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header</small></h2>
+    <h3><small><a href="~/Inventory/ItemRelease/Create">@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.CreateNew</a></small></h3>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -39,22 +38,22 @@
                         @if (ViewBag.IsAllowedCompleteLV)
                         {
                             <tr>
-                                <th>Serial</th>
-                                <th>Item Release Form(IRF) Number</th>
-                                <th>Total Qantity Released</th>
-                                <th>Employee Name</th>
-                                <th>Shipment Details</th>
-                                <th>Status</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ItemReleaseFormNumber</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.TotalQuantityReleased</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.EmployeeName</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ShipmentDetails</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Status</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
-                                <th>Serial</th>
-                                <th>Item Release Form(IRF) Number</th>
-                                <th>Total Qantity Released</th>
-                                <th>Shipment Details</th>
-                                <th>Status</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ItemReleaseFormNumber</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.TotalQuantityReleased</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ShipmentDetails</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Status</th>
                             </tr>
                         }
                     </thead>
@@ -124,7 +123,29 @@
                         "aTargets": [5],
                         "sDefaultContent": "No Data",
                         "mRender": function(data, type, full) {
-                            return full["Status"];
+                            var val = "";
+                            if (dir == "ltr") {
+                                if (full["Status"] == 3) {
+                                    val = "Pending";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "Accepted";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "Rejected";
+                                }
+                            } else {
+                                if (full["Status"] == 3) {
+                                    val = "ريثما";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "قبلت";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "مرفوض";
+                                }
+                            }
+                            return val;
                         }
                     }
                 ],
@@ -192,7 +213,29 @@
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
-                            return full["Status"];
+                            var val = "";
+                            if (dir == "ltr") {
+                                if (full["Status"] == 3) {
+                                    val = "Pending";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "Accepted";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "Rejected";
+                                }
+                            } else {
+                                if (full["Status"] == 3) {
+                                    val = "ريثما";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "قبلت";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "مرفوض";
+                                }
+                            }
+                            return val;
                         }
                     }
                 ],

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Inventory {
+namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Inventory {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRFCreate", typeof(IRFCreate).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate", typeof(IRFCreate).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -102,6 +102,15 @@ namespace EPMS.Web.Resources.Inventory {
         public static string DeliveryInfoArabic {
             get {
                 return ResourceManager.GetString("DeliveryInfoArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         

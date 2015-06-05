@@ -12,7 +12,6 @@ namespace EPMS.Models.DomainModels
         public short? Status { get; set; }
         public long? RequesterId { get; set; }
         public long? RFIId { get; set; }
-        public long QuantityReleased { get; set; }
         public string OrderNo { get; set; }
         public string DeliveryInfo { get; set; }
         public string DeliveryInfoArabic { get; set; }
@@ -20,6 +19,10 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
+        public long QuantityReleased { get; set; }
+        public string Notes { get; set; }
+        public string NotesAr { get; set; }
+        public string ManagerId { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual RFI RFI { get; set; }

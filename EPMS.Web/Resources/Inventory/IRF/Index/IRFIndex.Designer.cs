@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Inventory {
+namespace EPMS.Web.Resources.Inventory.IRF.Index {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Inventory {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRFIndex", typeof(IRFIndex).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex", typeof(IRFIndex).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

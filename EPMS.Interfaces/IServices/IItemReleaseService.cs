@@ -13,6 +13,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<ItemRelease> GetAll();
         ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest);
         bool AddItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails);
+        bool UpdateItemReleaseStatus(ItemReleaseStatus releaseStatus);
         bool UpdateItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails);
         void DeleteItemRelease(ItemRelease itemRelease);
     }

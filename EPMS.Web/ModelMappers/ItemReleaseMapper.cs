@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -19,14 +20,35 @@ namespace EPMS.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
+                RequesterNameE = source.Customer.CustomerNameE,
+                RequesterNameA = source.Customer.CustomerNameA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                Notes = source.Notes,
+                NotesAr = source.NotesAr,
+                ManagerId = source.ManagerId
             };
         }
         public static ItemRelease CreateFromClientToServer(this Models.ItemRelease source)
         {
+            var deliveryInfoE = source.DeliveryInfo;
+            deliveryInfoE = deliveryInfoE.Replace("\r", "");
+            deliveryInfoE = deliveryInfoE.Replace("\t", "");
+            deliveryInfoE = deliveryInfoE.Replace("\n", "");
+            var deliveryInfoA = source.DeliveryInfoArabic;
+            deliveryInfoA = deliveryInfoA.Replace("\r", "");
+            deliveryInfoA = deliveryInfoA.Replace("\t", "");
+            deliveryInfoA = deliveryInfoA.Replace("\n", "");
+            var notesE = source.Notes;
+            notesE = notesE.Replace("\r", "");
+            notesE = notesE.Replace("\t", "");
+            notesE = notesE.Replace("\n", "");
+            var notesA = source.NotesAr;
+            notesA = notesA.Replace("\r", "");
+            notesA = notesA.Replace("\t", "");
+            notesA = notesA.Replace("\n", "");
             return new ItemRelease
             {
                 ItemReleaseId = source.ItemReleaseId,
@@ -34,8 +56,8 @@ namespace EPMS.Web.ModelMappers
                 FormNumber = source.FormNumber,
                 OrderNo = source.OrderNo,
                 QuantityReleased = source.QuantityReleased,
-                DeliveryInfo = source.DeliveryInfo,
-                DeliveryInfoArabic = source.DeliveryInfoArabic,
+                DeliveryInfo = deliveryInfoE,
+                DeliveryInfoArabic = deliveryInfoA,
                 RequesterId = source.RequesterId,
                 CreatedBy = source.CreatedBy,
                 ShipmentDetails = source.ShipmentDetails,
@@ -44,6 +66,9 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                ManagerId = source.ManagerId,
+                Notes = notesE,
+                NotesAr = notesA,
             };
         }
     }

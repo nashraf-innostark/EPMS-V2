@@ -1,8 +1,12 @@
-﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseDetailViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.IRF.ItemReleaseDetailViewModel
 
 @{
-    ViewBag.Title = "View Item Release Form (IRF)";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.View.IRFView.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var header = EPMS.Web.Resources.Inventory.IRF.View.IRFView.Header;
+    int i = 0;
 }
 
 <div class="breadcrumb-container">
@@ -14,12 +18,12 @@
         </li>
         <li>
             <a href="~/Inventory/ItemRelease/Index">
-                Inventory Item Release Form List
+                @EPMS.Web.Resources.Inventory.IRF.View.IRFView.BCTitle
             </a>
         </li>
         <li class="current">
             <a href="javascript:;">
-                Inventory Item Release Form View
+                @header
             </a>
         </li>
     </ul>
@@ -27,7 +31,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Item Release Form (IRF) View</small></h2>
+    <h2><small>@header</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -35,9 +39,10 @@
 @using (Html.BeginForm("Detail", "ItemRelease", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
+        @Html.HiddenFor(model => model.ItemRelease.ItemReleaseId)
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
-                Item Release Form (IRF)
+                @EPMS.Web.Resources.Inventory.IRF.View.IRFView.ContainerTitle
             </div>
             <div class="invoice-info">
                 <div class="controls">
@@ -48,22 +53,40 @@
                         <div class="invoice-from">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <th>Employee Name:</th>
-                                        <td>Muhammed Hassan</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Employee Id:</th>
-                                        <td>151524891</td>
-                                    </tr>
-                                    <tr>
-                                        <th>RFI#:</th>
-                                        <td>RFI:0001752188</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Usage:</th>
-                                        <td>customer related</td>
-                                    </tr>
+                                    @if (ViewBag.IsAllowedCompleteView)
+                                    {
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
+                                            <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
+                                            <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
+                                            <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeName</th>
+                                            <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
+                                            <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
+                                            <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Usage</th>
+                                            <td>customer related</td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -72,22 +95,41 @@
                         <div class="invoice-infos">
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <th>Date:</th>
-                                        <td>Aug 06, 2012</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Client Name:</th>
-                                        <td>Mohammed Nasser</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Order#:</th>
-                                        <td>0001752188</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Inventory Manager Name:</th>
-                                        <td>Mohammed Ibrahim</td>
-                                    </tr>
+                                    @if (ViewBag.IsAllowedCompleteView)
+                                    {
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Date</th>
+                                            <td>@Model.ItemRelease.RecCreatedDate.ToShortDateString()</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.RequesterName</th>
+                                            <td>@(direction == "ltr" ? Model.ItemRelease.RequesterNameE : Model.ItemRelease.RequesterNameA)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.OrderNo</th>
+                                            <td>@Model.ItemRelease.OrderNo</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Date</th>
+                                            <td>@Model.ItemRelease.RecCreatedDate.ToShortDateString()</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ClientName</th>
+                                            <td>@(direction == "ltr" ? Model.ItemRelease.RequesterNameE : Model.ItemRelease.RequesterNameA)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.OrderNo</th>
+                                            <td>@Model.ItemRelease.OrderNo</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
+                                            <td></td>
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -95,8 +137,6 @@
                 </div>
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
                 <table class="table table-striped table-responsive ">
@@ -104,134 +144,192 @@
                         @if (ViewBag.IsAllowedCompleteView)
                         {
                             <tr>
-                                <th>Serial</th>
-                                <th>Item Name</th>
-                                <th>Item Code</th>
-                                <th>SKU Code</th>
-                                <th>Quantity Release</th>
-                                <th>Shipment Details</th>
-                                <th>Warhouse</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemName</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemCode</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.SKUCode</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.QuantityRelease</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ShipmentDetails</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Warhouse</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
-                                <th>Serial</th>
-                                <th>Item Name</th>
-                                <th>Item Code</th>
-                                <th>SKU Code</th>
-                                <th>Quantity Released</th>
-                                <th>Shipment Details</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemName</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemCode</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.SKUCode</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.QuantityRelease</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ShipmentDetails</th>
                             </tr>
                         }
                     </thead>
                     <tbody class="qouteAdd">
                         @if (ViewBag.IsAllowedCompleteView)
                         {
-                            <tr>
-
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    1000 ML Beaker
-                                </td>
-                                <td>
-                                    10001
-                                </td>
-                                <td>
-                                    101LabRed3XLNew
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    riyadh
-                                </td>
-                                <td>
-                                    War101 > Aisle 1 > Section 1 > Shalf 2 > Section on Shalf 5
-                                    War102 > Aisle 10 > Section 5 > Shalf 3 > Section on Shalf 5
-                                </td>
-                            </tr>
+                            i = 0;
+                            foreach (var itemReleaseDetail in Model.ItemReleaseDetails)
+                            {
+                                <tr>
+                                    <td>@(i += 1)</td>
+                                    <td>@itemReleaseDetail.ItemName</td>
+                                    <td>@itemReleaseDetail.ItemCode</td>
+                                    <td>@itemReleaseDetail.ItemSKUCode</td>
+                                    <td>@itemReleaseDetail.ItemQty</td>
+                                    <td class="@itemReleaseDetail.IRFDetailId"></td>
+                                    <script>
+                                        if ('@direction' == "ltr") {
+                                            var info = '@Html.Raw(Model.ItemRelease.DeliveryInfo)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = info.replace(regex, "");
+                                            $("."+'@itemReleaseDetail.IRFDetailId').text(result);
+                                        } else {
+                                            var info = '@Html.Raw(Model.ItemRelease.DeliveryInfoArabic)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = info.replace(regex, "");
+                                            $("." + '@itemReleaseDetail.IRFDetailId').text(result);
+                                        }
+                                    </script>
+                                    <td>@itemReleaseDetail.PlaceInWarehouse</td>
+                                </tr>
+                            }
                         }
                         else
                         {
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    1000 ML Beaker
-                                </td>
-
-                                <td>
-                                    10001
-                                </td>
-
-                                <td>
-                                    101LabRed3XLNew
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    riyadh
-                                </td>
-                            </tr>
+                            i = 0;
+                            foreach (var itemReleaseDetail in Model.ItemReleaseDetails)
+                            {
+                                <tr>
+                                    <td>@(i += 1)</td>
+                                    <td>@itemReleaseDetail.ItemName</td>
+                                    <td>@itemReleaseDetail.ItemCode</td>
+                                    <td>@itemReleaseDetail.ItemSKUCode</td>
+                                    <td>@itemReleaseDetail.ItemQty</td>
+                                    <td class="@itemReleaseDetail.IRFDetailId"></td>
+                                    <script>
+                                        if ('@direction' == "ltr") {
+                                            var info = '@Html.Raw(Model.ItemRelease.DeliveryInfo)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = info.replace(regex, "");
+                                            $("." + '@itemReleaseDetail.IRFDetailId').text(result);
+                                        } else {
+                                            var info = '@Html.Raw(Model.ItemRelease.DeliveryInfoArabic)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = info.replace(regex, "");
+                                            $("." + '@itemReleaseDetail.IRFDetailId').text(result);
+                                        }
+                                    </script>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-        <!--Basic Responsive Table end-->
-        <!--Input Field begin-->
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="ExtraInformation">Notes</label>
+        <div id="CKNotes" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.ItemRelease.Notes, new { @id = "NotesEn", @class = "" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    <input id="ExtraInformation" type="text" name="CLK Editor" />
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.ItemRelease.NotesAr, new { @id = "NotesAr", @class = "" })
+                    </div>
                 </div>
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="ExtraInformation">Notes in Arabic</label>
+        <div id="Notes" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesE" class="toBeDisable" />
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    <input id="ExtraInformation" type="text" name="CLK Editor" />
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesA" class="toBeDisable" />
+                    </div>
                 </div>
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="jobTitle">Request Status</label>
+                    <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.RequestStatus</label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
-                        <select>
-                            <option>Accept</option>
-                            <option>Not Accepted</option>
-                        </select>
-                    </div>
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.ItemRelease.Status, new[] { new SelectListItem { Text = "Pending", Value = "3" }, new SelectListItem { Text = "Accepted", Value = "1" }, new SelectListItem { Text = "Rejected", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.ItemRelease.Status, new[] { new SelectListItem { Text = "ريثما", Value = "3" }, new SelectListItem { Text = "قبلت", Value = "1" }, new SelectListItem { Text = "مرفوض", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                        </div>
+                    }
                 </div>
-
             </div>
         </div>
-        <!--Input Field end-->
-        <div class="control-group row-fluid">
+        <div id="SubmitIrf" class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Submit</button>
+                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
             </div>
-
         </div>
-
+        <div id="EditIrf" class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.ItemRelease.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+            </div>
+        </div>
     </div>
 }
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function() {
+        if ('@ViewBag.IsAllowedCompleteView' != "True") {
+            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.disableDdl').select2('disable');
+            var noteEn = '@Html.Raw(Model.ItemRelease.Notes)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = noteEn.replace(regex, "");
+            $("#notesE").val(result);
+            var noteAr = '@Html.Raw(Model.ItemRelease.NotesAr)';
+            regex = /(<([^>]+)>)/ig;
+            result = noteAr.replace(regex, "");
+            $("#notesA").val(result);
+            $("#Notes").show();
+            $("#EditIrf").hide();
+            $("#SubmitIrf").hide();
+        } else {
+            CKEDITOR.replace('NotesEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('NotesAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#CKNotes").show();
+        }
+    });
+</script>

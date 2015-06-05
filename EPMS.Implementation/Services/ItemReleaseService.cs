@@ -88,6 +88,24 @@ namespace EPMS.Implementation.Services
             }
         }
 
+        public bool UpdateItemReleaseStatus(ItemReleaseStatus releaseStatus)
+        {
+            try
+            {
+                var itemRelease = itemReleaseRepository.Find(releaseStatus.ItemReleaseId);
+                itemRelease.Notes = releaseStatus.Notes;
+                itemRelease.NotesAr = releaseStatus.NotesAr;
+                itemRelease.Status = releaseStatus.Status;
+                itemReleaseRepository.Update(itemRelease);
+                itemReleaseRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool UpdateItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> clientItems)
         {
             try

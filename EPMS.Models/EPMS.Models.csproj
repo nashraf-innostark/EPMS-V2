@@ -118,6 +118,7 @@
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemRelease.cs" />
     <Compile Include="DomainModels\ItemReleaseDetail.cs" />
+    <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\POF.cs" />
     <Compile Include="DomainModels\POFItem.cs" />

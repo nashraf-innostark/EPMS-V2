@@ -45,5 +45,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<DIFItem> DIFItems { get; set; }
         public virtual ICollection<POFItem> POFItems { get; set; }
         public virtual ICollection<TIRItem> TIRItems { get; set; }
+        public virtual ICollection<ItemReleaseDetail> ItemReleaseDetails { get; set; }
+        public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
     }
 }

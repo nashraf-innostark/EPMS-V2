@@ -19,5 +19,6 @@ namespace EPMS.Models.DomainModels
         public DateTime RecUpdatedDate { get; set; }
 
         public virtual ItemRelease ItemRelease { get; set; }
+        public virtual ItemVariation ItemVariation { get; set; }
     }
 }

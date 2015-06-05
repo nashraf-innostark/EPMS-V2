@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.IRF;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
+using ItemRelease = EPMS.Web.Models.ItemRelease;
+using ItemReleaseDetail = EPMS.Web.Models.ItemReleaseDetail;
+using RFI = EPMS.Web.Models.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -81,7 +84,48 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseDetailViewModel viewModel = new ItemReleaseDetailViewModel();
+            if (id != null)
+            {
+                var itemRelease = itemReleaseService.FindItemReleaseById((long) id);
+                if (itemRelease != null)
+                {
+                    viewModel.ItemRelease = itemRelease.CreateFromServerToClient();
+                    viewModel.ItemReleaseDetails =
+                        itemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient());
+                }
+            }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult Detail(ItemReleaseDetailViewModel viewModel)
+        {
+            var notesE = viewModel.ItemRelease.Notes;
+            notesE = notesE.Replace("\r", "");
+            notesE = notesE.Replace("\t", "");
+            notesE = notesE.Replace("\n", "");
+            var notesA = viewModel.ItemRelease.NotesAr;
+            notesA = notesA.Replace("\r", "");
+            notesA = notesA.Replace("\t", "");
+            notesA = notesA.Replace("\n", "");
+            ItemReleaseStatus status = new ItemReleaseStatus
+            {
+                ItemReleaseId = viewModel.ItemRelease.ItemReleaseId,
+                Status = viewModel.ItemRelease.Status ?? 1,
+                Notes = notesE,
+                NotesAr = notesA
+            };
+            if (itemReleaseService.UpdateItemReleaseStatus(status))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = "Updated",
+                    IsUpdated = true
+                };
+                return RedirectToAction("Detail", new { id = viewModel.ItemRelease.ItemReleaseId});
+            }
             return View(viewModel);
         }
 
