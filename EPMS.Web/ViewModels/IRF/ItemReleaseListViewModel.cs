@@ -3,7 +3,7 @@ using EPMS.Models.RequestModels;
 
 namespace EPMS.Web.ViewModels.IRF
 {
-    public class ItemReleaseFormListViewModel
+    public class ItemReleaseListViewModel
     {
         public IEnumerable<Models.ItemRelease> aaData { get; set; }
         public ItemReleaseSearchRequest SearchRequest { get; set; }

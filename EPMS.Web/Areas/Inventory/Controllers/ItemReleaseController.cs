@@ -13,7 +13,6 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.IRF;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Employee = EPMS.Web.Resources.HR.Employee;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -40,12 +39,13 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Public
-        // GET: Inventory/IRF
+        // GET List View: Inventory/IRF
         [SiteAuthorize(PermissionKey = "ItemReleaseIndex")]
         public ActionResult Index()
         {
-            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            ItemReleaseFormListViewModel viewModel = new ItemReleaseFormListViewModel
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFCompleteListView");
+            ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel
             {
                 SearchRequest = new ItemReleaseSearchRequest()
             };
@@ -59,11 +59,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index(ItemReleaseSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            searchRequest.Requester = Session["RoleName"].ToString().ToLower();
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFCompleteListView");
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
             IEnumerable<Models.ItemRelease> itemReleaseList =
                 response.ItemReleases.Select(x => x.CreateFromServerToClient());
-            ItemReleaseFormListViewModel viewModel = new ItemReleaseFormListViewModel()
+            ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel()
             {
                 aaData = itemReleaseList,
                 iTotalRecords = Convert.ToInt32(response.TotalRecords),
@@ -73,13 +74,24 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
+        // GET Details: Inventory/IRF
+        [SiteAuthorize(PermissionKey = "ItemReleaseView")]
+        public ActionResult Detail(long? id)
+        {
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("IRFViewComplete");
+            ItemReleaseDetailViewModel viewModel = new ItemReleaseDetailViewModel();
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+
         /// <summary>
         /// GET: Inventory/IRF
         /// </summary>
         [SiteAuthorize(PermissionKey = "ItemReleaseCreate,ItemReleaseDetail")]
         public ActionResult Create(long? id)
         {
-            ItemReleaseFormCreateViewModel viewModel = new ItemReleaseFormCreateViewModel();
+            ItemReleaseCreateViewModel viewModel = new ItemReleaseCreateViewModel();
             IRFCreateResponse response;
             if (id != null)
             {
@@ -124,7 +136,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         // POST: Inventory/ItemRelease/Create
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
-        public ActionResult Create(ItemReleaseFormCreateViewModel viewModel)
+        public ActionResult Create(ItemReleaseCreateViewModel viewModel)
         {
             if (viewModel.ItemRelease.ItemReleaseId > 0)
             {
@@ -132,8 +144,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
                 viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
                 var itemReleaseToUpdate = viewModel.ItemRelease.CreateFromClientToServer();
+                itemReleaseToUpdate.QuantityReleased = 0;
                 foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)
                 {
+                    itemReleaseToUpdate.QuantityReleased += itemReleaseDetail.ItemQty;
                     if (itemReleaseDetail.IRFDetailId > 0)
                     {
                         itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
@@ -166,8 +180,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
                 viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
                 var itemReleaseToAdd = viewModel.ItemRelease.CreateFromClientToServer();
+                itemReleaseToAdd.QuantityReleased = 0;
                 foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)
                 {
+                    itemReleaseToAdd.QuantityReleased += itemReleaseDetail.ItemQty;
                     itemReleaseDetail.RecCreatedBy = User.Identity.GetUserId();
                     itemReleaseDetail.RecCreatedDate = DateTime.Now;
                     itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();

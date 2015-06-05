@@ -4,7 +4,7 @@ namespace EPMS.Models.RequestModels
 {
     public class ItemReleaseSearchRequest : GetPagedListRequest
     {
-        public string Requester { get; set; }
+        public bool CompleteAccess { get; set; }
         public ItemReleaseByColumn EmployeeByColumn
         {
             get

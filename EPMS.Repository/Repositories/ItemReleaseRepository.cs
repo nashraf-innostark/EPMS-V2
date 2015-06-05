@@ -44,7 +44,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<ItemReleaseByColumn, Func<ItemRelease, object>>
                     {
                         { ItemReleaseByColumn.ItemReleaseFormNumber,  c => c.FormNumber},
-                        //{ ItemReleaseByColumn.Quantity, c => c.},
+                        { ItemReleaseByColumn.Quantity, c => c.QuantityReleased},
                         { ItemReleaseByColumn.EmployeeName, c => c.CreatedBy},
                         { ItemReleaseByColumn.ShipmentDetails, c => c.DeliveryInfo},
                         { ItemReleaseByColumn.Status, c => c.Status}
@@ -68,11 +68,18 @@ namespace EPMS.Repository.Repositories
             {
                 searchRequest.iSortCol_0 = 1;
             }
+            if (!searchRequest.CompleteAccess)
+            {
+                if (searchRequest.iSortCol_0 > 2)
+                {
+                    searchRequest.iSortCol_0 += 1;
+                }
+            }
             Expression<Func<ItemRelease, bool>> queery;
             int status;
             if (int.TryParse(searchRequest.SearchString, out status))
             {
-                if (searchRequest.Requester == "manager" || searchRequest.Requester == "admin")
+                if (searchRequest.CompleteAccess)
                 {
                     queery =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.FormNumber.Contains(searchRequest.SearchString) ||
@@ -88,7 +95,7 @@ namespace EPMS.Repository.Repositories
             }
             else
             {
-                if (searchRequest.Requester == "manager" || searchRequest.Requester == "admin")
+                if (searchRequest.CompleteAccess)
                 {
                     queery =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.FormNumber.Contains(searchRequest.SearchString) ||

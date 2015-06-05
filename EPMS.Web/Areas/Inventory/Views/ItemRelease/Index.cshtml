@@ -1,4 +1,4 @@
-﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseFormListViewModel
+﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseListViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.Inventory.IRFIndex.PageTitle;
@@ -36,7 +36,7 @@
             <div class="span12">
                 <table class="table table-striped table-responsive" id="ItemReleaseTable">
                     <thead class="cf sorthead">
-                        @if (ViewBag.UserRole == "manager" || ViewBag.UserRole == "admin")
+                        @if (ViewBag.IsAllowedCompleteLV)
                         {
                             <tr>
                                 <th>Serial</th>
@@ -70,7 +70,7 @@
     var dir = '@direction';
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        if ('@ViewBag.UserRole' == "manager" || '@ViewBag.UserRole' == "admin") {
+        if ('@ViewBag.IsAllowedCompleteLV' == 'True') {
             oTable = $('#ItemReleaseTable').dataTable({
                 "sPaginationType": "bootstrap",
                 "bProcessing": true,
@@ -91,14 +91,15 @@
                             var irfId;
                             val = full["FormNumber"];
                             irfId = full["ItemReleaseId"];
-                            element = '<a href="Create/' + irfId + '">' + val + '</a>';
+                            element = '<a href="Detail/' + irfId + '">' + val + '</a>';
                             return element;
                         }
                     },
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
+                            return full["QuantityReleased"];
                         }
                     },
                     {
@@ -165,7 +166,7 @@
                             var irfId;
                             val = full["FormNumber"];
                             irfId = full["ItemReleaseId"];
-                            element = '<a href="Create/' + irfId + '">' + val + '</a>';
+                            element = '<a href="Detail/' + irfId + '">' + val + '</a>';
                             return element;
                         }
                     },
@@ -173,6 +174,7 @@
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
+                            return full["QuantityReleased"];
                         }
                     },
                     {

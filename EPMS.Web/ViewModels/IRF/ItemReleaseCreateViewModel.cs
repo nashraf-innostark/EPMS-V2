@@ -5,9 +5,9 @@ using ItemReleaseDetail = EPMS.Models.DomainModels.ItemReleaseDetail;
 
 namespace EPMS.Web.ViewModels.IRF
 {
-    public class ItemReleaseFormCreateViewModel
+    public class ItemReleaseCreateViewModel
     {
-        public ItemReleaseFormCreateViewModel()
+        public ItemReleaseCreateViewModel()
         {
             Rfis = new List<Models.RFI>();
             ItemVariationDropDownList = new List<ItemVariationDropDownListItem>();

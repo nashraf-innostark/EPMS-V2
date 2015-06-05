@@ -786,8 +786,9 @@
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseCreateViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseListViewModel.cs" />
-    <Compile Include="ViewModels\IRF\ItemReleaseFormCreateViewModel.cs" />
-    <Compile Include="ViewModels\IRF\ItemReleaseFormListViewModel.cs" />
+    <Compile Include="ViewModels\IRF\ItemReleaseDetailViewModel.cs" />
+    <Compile Include="ViewModels\IRF\ItemReleaseCreateViewModel.cs" />
+    <Compile Include="ViewModels\IRF\ItemReleaseListViewModel.cs" />
     <Compile Include="ViewModels\ItemVariation\ItemVariationViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantListViewModel.cs" />
     <Compile Include="ViewModels\JobApplicant\JobApplicantViewModel.cs">
@@ -1889,6 +1890,7 @@
     <Content Include="Areas\Inventory\Views\DIF\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\DIF\Details.cshtml" />
     <Content Include="Areas\Inventory\Views\DIF\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\ItemRelease\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
