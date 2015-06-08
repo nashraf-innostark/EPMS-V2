@@ -217,22 +217,25 @@
 
                 </div>
             </div>
-            <div id="submitDiv" class="control-group row-fluid" style="display: none">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
-                </div>
-            </div>
-            <div id="editDiv" class="control-group row-fluid" style="display: none">
-                <div class="span1 span-inset">
-                    <a href="~/Inventory/RIF/Create/@Model.Rif.RIFId" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
-                </div>
-            </div>
+@if (string.IsNullOrEmpty(Model.Rif.ManagerId))
+{
+    <div id="submitDiv" class="control-group row-fluid" style="display: none">
+        <div class="span3 span-inset">
+            <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+        </div>
+    </div>
+    <div id="editDiv" class="control-group row-fluid" style="display: none">
+        <div class="span1 span-inset">
+            <a href="~/Inventory/RIF/Create/@Model.Rif.RIFId" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+        </div>
+    </div>
+}
             <!--Input Field end-->
         </div>
     }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         if ('@Model.Rif.RIFId' > 0) {
             editor = CKEDITOR.replace('RFINotesE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
@@ -247,8 +250,17 @@
                 filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
         }
+        EnableDisableFields();
         CheckPermissions();
     });
+    function EnableDisableFields() {
+        if ('@string.IsNullOrEmpty(Model.Rif.ManagerId)' == 'True') {
+            $('.toBeDisabled:input').attr('disabled', false);
+        } else {
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
+    }
+
     function CheckPermissions() {
         var hasEditPermission = '@userPermissionsSet.Contains("RIFCreate")' == "True" ? true : false;
         if (hasEditPermission) {
