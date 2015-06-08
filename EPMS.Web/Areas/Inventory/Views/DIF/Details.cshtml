@@ -208,16 +208,19 @@
 
                 </div>
             </div>
-            <div id="submitDiv" class="control-group row-fluid" style="display: none">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+            @if (string.IsNullOrEmpty(Model.Dif.ManagerId))
+            {
+                <div id="submitDiv" class="control-group row-fluid" style="display: none">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                    </div>
                 </div>
-            </div>
-            <div id="editDiv" class="control-group row-fluid" style="display: none">
-                <div class="span1 span-inset">
-                    <a href="~/Inventory/DIF/Create/@Model.Dif.Id" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                <div id="editDiv" class="control-group row-fluid" style="display: none">
+                    <div class="span1 span-inset">
+                        <a href="~/Inventory/DIF/Create/@Model.Dif.Id" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                    </div>
                 </div>
-            </div>
+            }
             <!--Input Field end-->
         </div>
     }
@@ -238,8 +241,17 @@
                 filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
         }
+        EnableDisableFields();
         CheckPermissions();
     });
+    function EnableDisableFields() {
+        if ('@string.IsNullOrEmpty(Model.Dif.ManagerId)' == 'True') {
+            $('.toBeDisabled:input').attr('disabled', false);
+        } else {
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
+    }
+
     function CheckPermissions() {
         var hasEditPermission = '@userPermissionsSet.Contains("DIFCreate")' == "True" ? true : false;
         if (hasEditPermission) {
