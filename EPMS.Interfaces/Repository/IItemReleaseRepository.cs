@@ -1,9 +1,11 @@
 ﻿using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.Repository
 {
     public interface IItemReleaseRepository : IBaseRepository<ItemRelease, long>
     {
-        //ItemRelease Find(long id);
+        ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest);
     }
 }

@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
 using EPMS.Web.Models;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.IRF;
+using EPMS.WebBase.Mvc;
+using Microsoft.AspNet.Identity;
 using Employee = EPMS.Web.Resources.HR.Employee;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -16,7 +21,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     {
         #region Private
 
-        private readonly IItemReleaseService itemReleaseFormService;
+        private readonly IItemReleaseService itemReleaseService;
         private readonly IRFIService RfiService;
         private readonly IOrdersService ordersService;
         private readonly IAspNetUserService userService;
@@ -24,9 +29,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Constructor
-        public ItemReleaseController(IItemReleaseService itemReleaseFormService, IRFIService rfiService, IOrdersService ordersService, IAspNetUserService userService)
+        public ItemReleaseController(IItemReleaseService itemReleaseService, IRFIService rfiService, IOrdersService ordersService, IAspNetUserService userService)
         {
-            this.itemReleaseFormService = itemReleaseFormService;
+            this.itemReleaseService = itemReleaseService;
             RfiService = rfiService;
             this.ordersService = ordersService;
             this.userService = userService;
@@ -36,27 +41,56 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #region Public
         // GET: Inventory/IRF
+        [SiteAuthorize(PermissionKey = "ItemReleaseIndex")]
         public ActionResult Index()
         {
-            ItemReleaseFormListViewModel viewModel = new ItemReleaseFormListViewModel();
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            ItemReleaseFormListViewModel viewModel = new ItemReleaseFormListViewModel
+            {
+                SearchRequest = new ItemReleaseSearchRequest()
+            };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
         /// <summary>
-        /// 
+        /// For data table DB paging
         /// </summary>
+        [HttpPost]
+        public ActionResult Index(ItemReleaseSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            searchRequest.Requester = Session["RoleName"].ToString().ToLower();
+            ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
+            IEnumerable<Models.ItemRelease> itemReleaseList =
+                response.ItemReleases.Select(x => x.CreateFromServerToClient());
+            ItemReleaseFormListViewModel viewModel = new ItemReleaseFormListViewModel()
+            {
+                aaData = itemReleaseList,
+                iTotalRecords = Convert.ToInt32(response.TotalRecords),
+                iTotalDisplayRecords = Convert.ToInt32(response.TotalDisplayRecords),
+                sEcho = searchRequest.sEcho
+            };
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// GET: Inventory/IRF
+        /// </summary>
+        [SiteAuthorize(PermissionKey = "ItemReleaseCreate,ItemReleaseDetail")]
         public ActionResult Create(long? id)
         {
             ItemReleaseFormCreateViewModel viewModel = new ItemReleaseFormCreateViewModel();
             IRFCreateResponse response;
             if (id != null)
             {
-                response = itemReleaseFormService.GetCreateResponse((long) id);
+                response = itemReleaseService.GetCreateResponse((long) id);
                 viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
                 viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x=>x.CreateFromServerToClient()).ToList();
+                viewModel.Rfis = response.Rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
             }
             else
             {
-                response = itemReleaseFormService.GetCreateResponse(0);
+                response = itemReleaseService.GetCreateResponse(0);
                 viewModel.ItemRelease = new ItemRelease();
                 viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 if (Session["RoleName"] != null)
@@ -82,14 +116,74 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.FormNumber = "010101";
             }
             //Session["RoleName"];
-            viewModel.Customers = response.Customers.Select(x => x.CreateForDashboard()).ToList();
+            viewModel.Customers = response.Customers.Select(x => x.CreateFromServerToClient()).ToList();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
             return View(viewModel);
         }
 
+        // POST: Inventory/ItemRelease/Create
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(ItemReleaseFormCreateViewModel viewModel)
         {
+            if (viewModel.ItemRelease.ItemReleaseId > 0)
+            {
+                // Update
+                viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
+                var itemReleaseToUpdate = viewModel.ItemRelease.CreateFromClientToServer();
+                foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)
+                {
+                    if (itemReleaseDetail.IRFDetailId > 0)
+                    {
+                        itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
+                        itemReleaseDetail.RecUpdatedDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        itemReleaseDetail.RecCreatedBy = User.Identity.GetUserId();
+                        itemReleaseDetail.RecCreatedDate = DateTime.Now;
+                        itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
+                        itemReleaseDetail.RecUpdatedDate = DateTime.Now;
+                    }
+                }
+                var itemReleaseDetailsToUpdate = viewModel.ItemReleaseDetails.Select(x => x.CreateFromClientToServer()).ToList();
+                if (itemReleaseService.UpdateItemRelease(itemReleaseToUpdate, itemReleaseDetailsToUpdate))
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = "Updated",
+                        IsUpdated = true
+                    };
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                // Add
+                viewModel.ItemRelease.RecCreatedBy = User.Identity.GetUserId();
+                viewModel.ItemRelease.RecCreatedDate = DateTime.Now;
+                viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
+                var itemReleaseToAdd = viewModel.ItemRelease.CreateFromClientToServer();
+                foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)
+                {
+                    itemReleaseDetail.RecCreatedBy = User.Identity.GetUserId();
+                    itemReleaseDetail.RecCreatedDate = DateTime.Now;
+                    itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
+                    itemReleaseDetail.RecUpdatedDate = DateTime.Now;
+                }
+                var itemReleaseDetailsToAdd = viewModel.ItemReleaseDetails.Select(x=>x.CreateFromClientToServer()).ToList();
+                if (itemReleaseService.AddItemRelease(itemReleaseToAdd,itemReleaseDetailsToAdd))
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = "Added",
+                        IsUpdated = true
+                    };
+                    return RedirectToAction("Index");
+                }
+            }
             return View();
         }
 

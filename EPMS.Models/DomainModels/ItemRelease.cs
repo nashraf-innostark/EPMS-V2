@@ -12,6 +12,7 @@ namespace EPMS.Models.DomainModels
         public short? Status { get; set; }
         public long? RequesterId { get; set; }
         public long? RFIId { get; set; }
+        public long QuantityReleased { get; set; }
         public string OrderNo { get; set; }
         public string DeliveryInfo { get; set; }
         public string DeliveryInfoArabic { get; set; }
