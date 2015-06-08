@@ -223,6 +223,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Release Form has been successfully Updated..
+        /// </summary>
+        public static string RecordUpdated {
+            get {
+                return ResourceManager.GetString("RecordUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester Name : .
         /// </summary>
         public static string RequesterName {

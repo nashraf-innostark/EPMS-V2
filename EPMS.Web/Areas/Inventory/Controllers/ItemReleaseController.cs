@@ -78,7 +78,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET Details: Inventory/IRF
-        [SiteAuthorize(PermissionKey = "ItemReleaseView")]
+        [SiteAuthorize(PermissionKey = "ItemReleaseDetail")]
         public ActionResult Detail(long? id)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
@@ -121,7 +121,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = "Updated",
+                    Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Detail", new { id = viewModel.ItemRelease.ItemReleaseId});
@@ -210,7 +210,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "Updated",
+                        Message = Resources.Inventory.IRF.AddEdit.IRFCreate.RecordUpdated,
                         IsUpdated = true
                     };
                     return RedirectToAction("Index");
@@ -238,7 +238,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "Added",
+                        Message = Resources.Inventory.IRF.AddEdit.IRFCreate.RecordAdded,
                         IsUpdated = true
                     };
                     return RedirectToAction("Index");

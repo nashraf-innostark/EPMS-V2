@@ -169,6 +169,8 @@
     <Compile Include="Services\SizeService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />
+    <Compile Include="Services\TIRItemService.cs" />
+    <Compile Include="Services\TIRService.cs" />
     <Compile Include="Services\UserPrefrencesService.cs" />
     <Compile Include="Services\VendorItemsService.cs" />
     <Compile Include="Services\VendorService.cs" />

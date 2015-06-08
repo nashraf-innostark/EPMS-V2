@@ -182,6 +182,8 @@
     <Compile Include="Repositories\SizeRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\TaskEmployeeRepository.cs" />
+    <Compile Include="Repositories\TIRItemRepository.cs" />
+    <Compile Include="Repositories\TIRRepository.cs" />
     <Compile Include="Repositories\UserPrefrencesRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />

@@ -205,6 +205,24 @@ namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Release Form has successfully Added..
+        /// </summary>
+        public static string RecordAdded {
+            get {
+                return ResourceManager.GetString("RecordAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Release Form has successfully Updated..
+        /// </summary>
+        public static string RecordUpdated {
+            get {
+                return ResourceManager.GetString("RecordUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester.
         /// </summary>
         public static string Requester {

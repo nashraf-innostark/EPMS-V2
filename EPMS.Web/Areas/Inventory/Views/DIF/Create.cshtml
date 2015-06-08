@@ -384,7 +384,6 @@
 
 
         $("#importEx").on("click", function () {
-
             var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
             var coln = $(excel).find("tr:first td").length;
             var count = 0;
@@ -397,23 +396,16 @@
                     var t2 = 0;
                     var t3 = 0;
                     var t4 = 0;
-
-
                     $(this).find("td").each(function () {
-
-
                         if (y == 0) {
                             t1 = $(this).text();
-
                         } else if (y == 1) {
                             t2 = parseInt($(this).text());
                         } else if (y == 2) {
                             t3 = parseInt($(this).text());
                         }
-
                         y++;
                     });
-
                     t4 = t3 * t2;
                     var indexCell = "<td style='display:none'>" +
                                     "<input name='DifItem.Index' type='hidden' value='" + index + "' />" +

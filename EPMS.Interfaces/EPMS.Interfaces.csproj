@@ -99,6 +99,8 @@
     <Compile Include="IServices\ISizeService.cs" />
     <Compile Include="IServices\IStatusService.cs" />
     <Compile Include="IServices\ITaskEmployeeService.cs" />
+    <Compile Include="IServices\ITIRItemService.cs" />
+    <Compile Include="IServices\ITIRService.cs" />
     <Compile Include="IServices\IUserPrefrencesService.cs" />
     <Compile Include="IServices\IQuickLaunchItemService.cs" />
     <Compile Include="IServices\IVendorItemsService.cs" />
@@ -160,6 +162,8 @@
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />
+    <Compile Include="Repository\ITIRItemRepository.cs" />
+    <Compile Include="Repository\ITIRRepository.cs" />
     <Compile Include="Repository\IUserPrefrencesRepository.cs" />
     <Compile Include="Repository\IVendorItemsRepository.cs" />
     <Compile Include="Repository\IVendorRepository.cs" />

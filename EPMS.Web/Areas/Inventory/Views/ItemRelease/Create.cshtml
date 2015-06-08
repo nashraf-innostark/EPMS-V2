@@ -298,6 +298,7 @@
     var siteUrl;
     var orderNo = [];
     var dir = '@direction';
+    var status = '@Model.ItemRelease.Status';
     var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
@@ -322,7 +323,9 @@
             $("#CKEditor").hide();
             $("#CKEditor").hide();
             $("#SubmitRecord").hide();
-            $("#EditRecord").show();
+            if (status != 2) {
+                $("#EditRecord").show();
+            }
             //
         }
         $('.trAdder').on("click", function () {
@@ -431,7 +434,7 @@
             //clear DDL required value label
             $("#RFIItemVariationDropDownListValidation").text("");
             $("#RFIItemVariationDropDownListValidation").removeClass("Error");
-
+            
             //get the id from tr that is selected for the item popup
             var index = $(event.target).closest('tr').data('id');
             $("#ItemModalIndex").val(index);
@@ -439,6 +442,8 @@
             var isItemDescription = $("#ItemReleaseDetails_" + index + "__IsItemDescription").val();
             var isItemSKU = $("#ItemReleaseDetails_" + index + "__IsItemSKU").val();
             var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+            // clear selected department label text
+            $("#txtSelectedDepartmentName").text("");
 
             //set modal fields according to modal values
             $("#RFIItemVariationDropDownList").select2("val", itemVariationId); //set the value
@@ -454,6 +459,7 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
+            $("#txtSelectedDepartmentName").text("Selected :" + $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val());
         });
         //reactivateCount();
         $("#importEx").on("click", function () {
@@ -595,35 +601,40 @@
             });
         });
     });
-    function AddEdit() {
-        var isDetail;
-        var val = '@userPermissionsSet.Contains("ItemReleaseCreate")';
-        if (val == 'True') {
-            isDetail = false;
-        } else {
-            isDetail = true;
-        }
-        if (isDetail) {
 
-        } else {
-            $('.btnDisable').removeClass('disableList');
-            $('.disableDdl').select2('enable');
-            $('.' + 'toBeDisable' + ':input').attr('readonly', false);
-            CKEDITOR.replace('DeliveryInfoEn', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            CKEDITOR.replace('DeliveryInfoAr', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            //$("#detailEditor").hide();
-            //$("#CKEditor").show();
-            $("#EditRecord").hide();
-            $("#SubmitRecord").show();
+    function AddEdit() {
+        if (status != 2) {
+            var isDetail;
+            var val = '@userPermissionsSet.Contains("ItemReleaseCreate")';
+            if (val == 'True') {
+                isDetail = false;
+            } else {
+                isDetail = true;
+            }
+            if (isDetail) {
+
+            } else {
+                $('.btnDisable').removeClass('disableList');
+                $('.disableDdl').select2('enable');
+                $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+                CKEDITOR.replace('DeliveryInfoEn', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
+                CKEDITOR.replace('DeliveryInfoAr', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
+                //$("#detailEditor").hide();
+                //$("#CKEditor").show();
+                $("#EditRecord").hide();
+                $("#SubmitRecord").show();
+            }
         }
     }
 
-    $("#edit").on('click', function() {
-        AddEdit();
+    $("#edit").on('click', function () {
+        if (status != 2) {
+            AddEdit();
+        }
     });
     $('#tiny').elrte({
         lang: "en",

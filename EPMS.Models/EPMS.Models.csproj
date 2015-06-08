@@ -238,6 +238,7 @@
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
+    <Compile Include="RequestModels\TransferItemSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
     <Compile Include="RequestModels\WarehouseRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
@@ -302,6 +303,8 @@
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
+    <Compile Include="ResponseModels\TIRCreateResponse.cs" />
+    <Compile Include="ResponseModels\TIRListResponse.cs" />
     <Compile Include="ResponseModels\VendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
   </ItemGroup>

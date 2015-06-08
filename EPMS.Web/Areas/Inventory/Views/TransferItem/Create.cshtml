@@ -1,0 +1,427 @@
+﻿@model EPMS.Web.ViewModels.TIR.TransferItemCreateViewModel
+
+@{
+    ViewBag.Title = "Inventory Transfer Item Request (TIR) Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Inventory/TransferItem/Index">
+                Inventory Transfer Item Request (TIR) List
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>Inventory Transfer Item Request (TIR)</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "TransferItem", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.Tir.Id)
+    @Html.HiddenFor(model => model.Tir.ManagerId)
+    @Html.HiddenFor(model => model.Tir.RecCreatedBy)
+    @Html.HiddenFor(model => model.Tir.RecCreatedDate)
+    @Html.HiddenFor(model => model.Tir.NotesE)
+    @Html.HiddenFor(model => model.Tir.NotesA)
+    @Html.HiddenFor(model => model.Tir.Status)
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Created By</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Tir.RequesterName, new { @id = "", @class ="disableOnLoad" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TransferReasonEn">Transfer Reason</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Tir.DefectivenessE, new { @id = "TransferReasonEn", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Tir.DefectivenessE, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="TransferReasonAr">Transfer Reason in arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Tir.DefectivenessA, new { @id = "TransferReasonAr", @class = "" })
+                    @Html.ValidationMessageFor(m => m.Tir.DefectivenessA, String.Empty, new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">Excel Import</label>
+            </div>
+            <div class="span9">
+                <div class="controls elrte-wrapper">
+                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" id="importEx" class="btn">Import</button>
+            </div>
+            <div class="span3 span-inset">
+                <button type="button" id="itemFromOrder" class="btn">Import Items From Order</button>
+            </div>
+
+        </div>
+        <div class="row-fluid" id="ress">
+            <div class="span12">
+                <table class="table table-striped table-responsive ">
+                    <thead class="">
+                        <tr>
+                            <th>Serial</th>
+                            <th style="width:85%">Item Details</th>
+                            <th>Transfer Quantity</th>
+                            <th style="width:4%">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="qouteAdd" id="TirItemsTableBody">
+                        @if (Model.TirItems.Any())
+                        {
+                            for (int i = 0; i < Model.TirItems.Count(); i++)
+                            {
+                                <tr data-id=@i>
+                                    <td style='display:none'>
+                                        <input name='TirItems.Index' type='hidden' value=@i />
+
+                                        @Html.HiddenFor(m => m.TirItems[i].IsItemDescription)
+                                        @Html.HiddenFor(m => m.TirItems[i].IsItemSKU)
+                                        @Html.HiddenFor(m => m.TirItems[i].ItemVariationId)
+                                        @Html.HiddenFor(m => m.TirItems[i].ItemId)
+                                    </td>
+                                    <td>
+                                        <div class="control-group row-fluid">
+                                            <div class="span1">
+                                                <label class="control-label serialNumber">@(i + 1)</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.TirItems[i].ItemDetails, new { @class = "auto-resize", @rows = 2 })
+                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                        @Html.ValidationMessageFor(m => m.TirItems[i].ItemDetails)
+                                    </td>
+                                    <td class="quantity">
+                                        @Html.TextBoxFor(m => m.TirItems[i].ItemQty, new { @class = "n1", @rows = 2 })
+                                        @Html.ValidationMessageFor(m => m.TirItems[i].ItemQty, null, new { @class = "required" })
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr data-id="0">
+                                <td style='display:none'>
+                                    <input name='TirItems.Index' type='hidden' value='0' />
+                                    <input name='TirItems[0].IsItemDescription' id='TirItems_0__IsItemDescription' type='hidden' />
+                                    <input name='TirItems[0].IsItemSKU' id='TirItems_0__IsItemSKU' type='hidden' />
+                                    <input name='TirItems[0].ItemVariationId' id='TirItems_0__ItemVariationId' type='hidden' />
+                                </td>
+                                <td>
+                                    <div class="control-group row-fluid">
+                                        <div class="span1">
+                                            <label class="control-label serialNumber">1</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <textarea rows="2" id='TirItems_0__ItemDetails' class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="TirItems[0].ItemDetails"></textarea>
+                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    <span class="field-validation-valid required" data-valmsg-for="TirItems[0].ItemDetails" data-valmsg-replace="true"></span>
+                                </td>
+                                <td class="quantity">
+                                    <input class="n1" id='TirItems_0__ItemQty' type="text" name="TirItems[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                    <span class="field-validation-valid required" data-valmsg-for="TirItems[0].ItemQty" data-valmsg-replace="true"></span>
+                                </td>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow"></i>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn trAdder">Add</button>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section popups
+{
+    @Html.Partial("_ItemsPopUp")
+}
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+        //add data in row from popup
+        $('.trAdder').on("click", function () {
+            var index = $("#TirItemsTableBody").children("tr").length;
+            var indexCell = "<td style='display:none'>" +
+                "<input name='TirItems.Index' type='hidden' value='" + index + "' />" +
+                "<input name='TirItems[" + index + "].IsItemDescription' id='TirItems_" + index + "__IsItemDescription' type='hidden' />" +
+                "<input name='TirItems[" + index + "].IsItemSKU' id='TirItems_" + index + "__IsItemSKU' type='hidden' />" +
+                "<input name='TirItems[" + index + "].ItemVariationId' id='TirItems_" + index + "__ItemVariationId' type='hidden' />" +
+                "</td>";
+            //DifItem
+            var html = ' <tr data-id=' + index + '>' +
+                indexCell +
+                '<td>' +
+                '<div class="control-group row-fluid">' +
+                '<div class="span1">' +
+                '<label class="control-label serialNumber"  ></label>' +
+                '</div></div>' +
+                '</td>' +
+                '<td> <textarea rows="2"  class="auto-resize"  id="TirItems_' + index + '__ItemDetails" name="TirItems[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
+                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                '</td>' +
+                '<td class="quantity"> ' +
+                '<input class="n1" type="text" id="TirItems_' + index + '_ItemQty" name="TirItems[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value=0>' +
+                '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                '</td>' +
+                '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                '</td></tr>';
+
+            $('.qouteAdd').append(html);
+
+            //remove validation
+            $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+            //Parse the form again to apply new validations
+            $.validator.unobtrusive.parse("form");
+
+            activateSerial();
+            reActivateDelete();
+        });
+        //open pop up
+        $('#itemSearcher').on('show', function () {
+            //clear DDL required value label
+            $("#ItemVariationDropDownListValidation").text("");
+            $("#ItemVariationDropDownListValidation").removeClass("Error");
+
+            //get the id from tr that is selected for the item popup
+            var index = $(event.target).closest('tr').data('id');
+            $("#ItemModalIndex").val(index);
+            //get item's values
+            var isItemDescription = $("#TirItems_" + index + "__IsItemDescription").val();
+            var isItemSKU = $("#TirItems_" + index + "__IsItemSKU").val();
+            var itemVariationId = $("#TirItems_" + index + "__ItemVariationId").val();
+            // clear selected department label text
+            $("#txtSelectedDepartmentName").text("");
+
+            //set modal fields according to modal values
+            $("#ItemVariationDropDownList").select2("val", itemVariationId); //set the value
+
+            if (isItemDescription == "false" || isItemDescription == "False" || isItemDescription == "") {
+                $('#ItemDescriptionModalChk').attr('checked', false);
+            } else {
+                $('#ItemDescriptionModalChk').attr('checked', true);
+            }
+
+            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU == "") {
+                $('#ItemSKUModalChk').attr('checked', false);
+            } else {
+                $('#ItemSKUModalChk').attr('checked', true);
+            }
+            //$("#txtSelectedDepartmentName").text("Selected :" + $("#TirItems_" + index + "__PlaceInDepartment").val());
+        });
+        function getModalControlsValues() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationDropDownList").val();
+
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#TirItems_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#TirItems_" + index + "__IsItemSKU").val(isItemSku);
+            $("#TirItems_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#TirItems_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                        } else {
+                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                        }
+                    }
+                    $("#TirItems_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+            $('#itemSearcher').modal('toggle');
+        };
+        $("#SaveChanges").on("click", function () {
+            if (validateSelect2Ddl("#ItemVariationDropDownList")) {
+                getModalControlsValues();
+            }
+        });
+        $("#importEx").on("click", function () {
+            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
+            var coln = $(excel).find("tr:first td").length;
+            var count = 0;
+            var x = 0;
+            if (coln == 2) {
+                var index = 0;
+                $(excel).find("tr").each(function () {
+                    var y = 0;
+                    var t1 = "";
+                    var t2 = 0;
+                    var t3 = 0;
+                    var t4 = 0;
+                    $(this).find("td").each(function () {
+                        if (y == 0) {
+                            t1 = $(this).text();
+                        } else if (y == 1) {
+                            t2 = parseInt($(this).text());
+                        } else if (y == 2) {
+                            t3 = parseInt($(this).text());
+                        }
+                        y++;
+                    });
+                    t4 = t3 * t2;
+                    var indexCell = "<td style='display:none'>" +
+                                    "<input name='TirItems.Index' type='hidden' value='" + index + "' />" +
+                                    "<input name='TirItems[" + index + "].IsItemDescription' id='TirItems_" + index + "__IsItemDescription' type='hidden' />" +
+                                    "<input name='TirItems[" + index + "].IsItemSKU' id='TirItems_" + index + "__IsItemSKU' type='hidden' />" +
+                                    "<input name='TirItems[" + index + "].ItemVariationId' id='TirItems_" + index + "__ItemVariationId' type='hidden' />" +
+                                    "</td>";
+                    //TirItem
+                    var html = '<tr data-id=' + index + '>' +
+                               indexCell +
+                               '<td>' +
+                               '<div class="control-group row-fluid">' +
+                               '<div class="span1">' +
+                               '<label class="control-label serialNumber"  ></label>' +
+                               '</div></div>' +
+                               '</td>' +
+                               '<td> <textarea rows="2"  class="auto-resize"  id="TirItems_' + index + '__ItemDetails" name="TirItems[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                               '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                               '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                               '</td>' +
+                               '<td class="quantity"> ' +
+                               '<input class="n1" type="text" value=' + t2 + ' id="TirItems_' + index + '__ItemQty" name="TirItems[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                               '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                               '</td>' +
+                               '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                               '</td></tr>';
+
+                    index = index + 1;
+                    if (count == 0) {
+                        $('.qouteAdd').html("");
+                    }
+                    $('.qouteAdd').append(html);
+                    reActivateDelete();
+                    count++;
+                });
+                activateSerial();
+            } else {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
+                });
+            }
+        });
+        $("#btnTreeSelector").click(function (event) {
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        function reActivateDelete() {
+            $('.deleteRow').on("click", function () {
+                var count = $('.qouteAdd tr').length;
+                if (count > 1) {
+                    $(this).parent().parent().remove();
+                }
+                activateSerial();
+            });
+        }
+        function activateSerial() {
+            var count = $('.qouteAdd tr').length;
+            var add = 0;
+            $('.qouteAdd tr').each(function () {
+                add++;
+                $(this).find(".serialNumber").text(add);
+            });
+        }
+    });
+    $('#tiny').elrte({
+        lang: "en",
+        styleWithCSS: false,
+        height: 200,
+        toolbar: 'tiny'
+    });
+    $('.deleteRow').on("click", function () {
+        var count = $('.qouteAdd tr').length;
+        if (count > 1) {
+            $(this).parent().parent().remove();
+        }
+        activateSerial();
+    });
+    function activateSerial() {
+        var count = $('.qouteAdd tr').length;
+        var add = 0;
+        $('.qouteAdd tr').each(function () {
+            add++;
+            $(this).find(".serialNumber").text(add);
+        });
+    }
+</script>

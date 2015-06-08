@@ -312,6 +312,7 @@
     <Compile Include="Areas\Inventory\Controllers\DIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\TransferItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\VendorController.cs" />
     <Compile Include="Areas\Inventory\InventoryAreaRegistration.cs" />
     <Compile Include="Areas\Meeting\Controllers\MeetingController.cs" />
@@ -385,6 +386,8 @@
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\SizeMapper.cs" />
     <Compile Include="ModelMappers\StatusMapper.cs" />
+    <Compile Include="ModelMappers\TransferItemMapper.cs" />
+    <Compile Include="ModelMappers\TransferItemsMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
@@ -454,6 +457,8 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\SystemUser.cs" />
     <Compile Include="Models\TaskEmployee.cs" />
+    <Compile Include="Models\TIR.cs" />
+    <Compile Include="Models\TIRItem.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorItems.cs" />
     <Compile Include="Models\Warehouse.cs" />
@@ -825,6 +830,8 @@
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
+    <Compile Include="ViewModels\TIR\TransferItemCreateViewModel.cs" />
+    <Compile Include="ViewModels\TIR\TransferItemListViewModel.cs" />
     <Compile Include="ViewModels\Vendor\VendorViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -1896,6 +1903,8 @@
     <Content Include="Areas\Inventory\Views\DIF\Details.cshtml" />
     <Content Include="Areas\Inventory\Views\DIF\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemRelease\Detail.cshtml" />
+    <Content Include="Areas\Inventory\Views\TransferItem\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\TransferItem\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
