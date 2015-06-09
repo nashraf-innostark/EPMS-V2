@@ -3,8 +3,14 @@
 @{
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    string[] userModules = (string[])HttpContext.Current.Session["UserModules"];
-    ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
+    if (Model.ItemRelease.ItemReleaseId > 0)
+    {
+        ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitleEdit;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,7 +36,14 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Header</small></h2>
+    @if (Model.ItemRelease.ItemReleaseId > 0)
+    {
+        <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.HeaderEdit</small></h2>
+    }
+    else
+    {
+        <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Header</small></h2>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -434,7 +447,7 @@
             //clear DDL required value label
             $("#RFIItemVariationDropDownListValidation").text("");
             $("#RFIItemVariationDropDownListValidation").removeClass("Error");
-            
+
             //get the id from tr that is selected for the item popup
             var index = $(event.target).closest('tr').data('id');
             $("#ItemModalIndex").val(index);

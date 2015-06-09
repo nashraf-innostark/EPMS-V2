@@ -169,6 +169,15 @@ namespace EPMS.Web.Resources.Inventory.TIR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) Edit.
+        /// </summary>
+        public static string PageTitleEdit {
+            get {
+                return ResourceManager.GetString("PageTitleEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transfer Item Request has been successfully Updated..
         /// </summary>
         public static string RecordAdded {

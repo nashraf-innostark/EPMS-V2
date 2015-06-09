@@ -1,7 +1,14 @@
 ﻿@model EPMS.Web.ViewModels.TIR.TransferItemCreateViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRCreate.PageTitle;
+    if (Model.Tir.Id > 0)
+    {
+        ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRCreate.PageTitleEdit;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRCreate.PageTitle;
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
@@ -41,8 +48,6 @@
     @Html.HiddenFor(model => model.Tir.ManagerId)
     @Html.HiddenFor(model => model.Tir.RecCreatedBy)
     @Html.HiddenFor(model => model.Tir.RecCreatedDate)
-    @Html.HiddenFor(model => model.Tir.NotesE)
-    @Html.HiddenFor(model => model.Tir.NotesA)
     @Html.HiddenFor(model => model.Tir.Status)
     <div class="container-fluid">
         <div class="control-group row-fluid">
@@ -182,6 +187,53 @@
                     <button type="button" class="btn trAdder btnDisable">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnAdd</button>
                 </div>
             </div>
+            @if (Model.Tir.Id > 0)
+            {
+                <div id="Notes">
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="NotesE">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Notes</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input type="text" id="NotesE" class="toBeDisable" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="NotesA">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                <input type="text" id="NotesA" class="toBeDisable" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="CKNotes" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="NotesEn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Notes</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextAreaFor(model => model.Tir.NotesE, new { @id = "NotesEn", @class = "" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
+                        </div>
+                        <div class="span9">
+                            <div class="controls">
+                                @Html.TextAreaFor(model => model.Tir.NotesA, new { @id = "NotesAr", @class = "" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div id="EditRecord" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
                     <button id="edit" type="button" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnEdit</button>
@@ -210,6 +262,14 @@
             $('.btnDisable').addClass('disableList');
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             // CK Editor to simple textbox
+            var notesE = '@Html.Raw(Model.Tir.NotesE)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = notesE.replace(regex, "");
+            $("#NotesE").val(result);
+            var notesA = '@Html.Raw(Model.Tir.NotesA)';
+            regex = /(<([^>]+)>)/ig;
+            result = notesA.replace(regex, "");
+            $("#NotesA").val(result);
             $("#SubmitRecord").hide();
             if (status != 2 && '@userPermissionsSet.Contains("TIRCreate")' == 'True') {
                 $("#EditRecord").show();
@@ -462,6 +522,14 @@
             } else {
                 $('.btnDisable').removeClass('disableList');
                 $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+                $("#Notes").hide();
+                $("#CKNotes").show();
+                CKEDITOR.replace('NotesEn', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
+                CKEDITOR.replace('NotesAr', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
                 $("#EditRecord").hide();
                 $("#SubmitRecord").show();
             }

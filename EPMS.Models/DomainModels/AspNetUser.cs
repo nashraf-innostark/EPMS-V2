@@ -37,5 +37,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<POF> POFManager { get; set; }
         public virtual ICollection<TIR> TIRs { get; set; }
         public virtual ICollection<TIR> TIRManager { get; set; }
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual ICollection<PurchaseOrder> PurchaseOrderManager { get; set; }
     }
 }

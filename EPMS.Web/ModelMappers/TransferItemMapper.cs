@@ -31,14 +31,28 @@ namespace EPMS.Web.ModelMappers
         }
         public static TIR CreateFromClientToServer(this Models.TIR source)
         {
+            var notesE = source.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
             return new TIR
             {
                 Id = source.Id,
                 FormNumber = source.FormNumber,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
-                NotesE = source.NotesE,
-                NotesA = source.NotesA,
+                NotesE = notesE,
+                NotesA = notesA,
                 ManagerId = source.ManagerId,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
@@ -49,14 +63,28 @@ namespace EPMS.Web.ModelMappers
         }
         public static TIR CreateFromClientToServer(this TransferItemCreateViewModel source)
         {
+            var notesE = source.Tir.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.Tir.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
             return new TIR
             {
                 Id = source.Tir.Id,
                 FormNumber = source.Tir.FormNumber,
                 DefectivenessE = source.Tir.DefectivenessE,
                 DefectivenessA = source.Tir.DefectivenessA,
-                NotesE = source.Tir.NotesE,
-                NotesA = source.Tir.NotesA,
+                NotesE = notesE,
+                NotesA = notesA,
                 ManagerId = source.Tir.ManagerId,
                 Status = source.Tir.Status,
                 RecCreatedBy = source.Tir.RecCreatedBy,

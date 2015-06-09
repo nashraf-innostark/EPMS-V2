@@ -310,6 +310,7 @@
     <Compile Include="Areas\Inventory\Controllers\ItemReleaseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Inventory\Controllers\DIFController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\PurchaseOrderController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
     <Compile Include="Areas\Inventory\Controllers\TransferItemController.cs" />
@@ -434,6 +435,8 @@
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsForDDL.cs" />
     <Compile Include="Models\ProjectTask.cs" />
+    <Compile Include="Models\PurchaseOrder.cs" />
+    <Compile Include="Models\PurchaseOrderItem.cs" />
     <Compile Include="Models\QuickLaunchMenuItems.cs" />
     <Compile Include="Models\QuickLaunchItems.cs" />
     <Compile Include="Models\QuickLaunchUserItems.cs" />
@@ -829,6 +832,7 @@
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderListViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
@@ -1921,6 +1925,7 @@
     <Content Include="Areas\Inventory\Views\TransferItem\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\TransferItem\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\TransferItem\Detail.cshtml" />
+    <Content Include="Areas\Inventory\Views\PurchaseOrder\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

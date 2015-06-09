@@ -133,6 +133,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory IRF Edit Form.
+        /// </summary>
+        public static string HeaderEdit {
+            get {
+                return ResourceManager.GetString("HeaderEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string Import {
@@ -192,6 +201,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
         public static string PageTitle {
             get {
                 return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory IRF Edit.
+        /// </summary>
+        public static string PageTitleEdit {
+            get {
+                return ResourceManager.GetString("PageTitleEdit", resourceCulture);
             }
         }
         

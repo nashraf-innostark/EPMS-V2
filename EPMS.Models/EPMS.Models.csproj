@@ -122,6 +122,8 @@
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\POF.cs" />
     <Compile Include="DomainModels\POFItem.cs" />
+    <Compile Include="DomainModels\PurchaseOrder.cs" />
+    <Compile Include="DomainModels\PurchaseOrderItem.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
     <Compile Include="DomainModels\TIR.cs" />
