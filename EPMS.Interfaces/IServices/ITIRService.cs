@@ -7,7 +7,7 @@ namespace EPMS.Interfaces.IServices
     public interface ITIRService
     {
         TIRCreateResponse LoadTirResponseData(long? id);
-        TIRListResponse GetAllTirs(ItemReleaseSearchRequest searchRequest);
+        TIRListResponse GetAllTirs(TransferItemSearchRequest searchRequest);
         bool SaveDIF(TIR tir);
         bool AddTIR(TIR tir);
         bool UpdateTIR(TIR tir);

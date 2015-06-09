@@ -105,10 +105,10 @@ namespace EPMS.Repository.Repositories
 
             IEnumerable<ItemRelease> releases = searchRequest.sSortDir_0 == "asc" ?
             DbSet
-            .Where(queery).OrderBy(itemReleaseClause[searchRequest.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList()
+            .Where(queery).OrderBy(itemReleaseClause[searchRequest.ItemReleaseByColumn]).Skip(fromRow).Take(toRow).ToList()
                                        :
                                        DbSet
-                                       .Where(queery).OrderByDescending(itemReleaseClause[searchRequest.EmployeeByColumn]).Skip(fromRow).Take(toRow).ToList();
+                                       .Where(queery).OrderByDescending(itemReleaseClause[searchRequest.ItemReleaseByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new ItemReleaseResponse { ItemReleases = releases, TotalDisplayRecords = DbSet.Count(queery), TotalRecords = DbSet.Count(queery) };
         }
 

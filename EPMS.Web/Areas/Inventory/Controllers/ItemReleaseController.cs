@@ -219,6 +219,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             else
             {
                 // Add
+                viewModel.ItemRelease.Status = 3;
                 viewModel.ItemRelease.RecCreatedBy = User.Identity.GetUserId();
                 viewModel.ItemRelease.RecCreatedDate = DateTime.Now;
                 viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();

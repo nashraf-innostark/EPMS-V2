@@ -43,13 +43,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         /// For data table DB paging
         /// </summary>
         [HttpPost]
-        public ActionResult Index(ItemReleaseSearchRequest searchRequest)
+        public ActionResult Index(TransferItemSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFCompleteListView");
+            searchRequest.CompleteAccess = userPermissionsSet.Contains("TIRCompleteListView");
+            searchRequest.Direction = Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
-            IEnumerable<Models.TIRItem> transferItemList =
+            IEnumerable<Models.TIR> transferItemList =
                 response.TirItems.Select(x => x.CreateFromServerToClient());
             TransferItemListViewModel viewModel = new TransferItemListViewModel
             {
@@ -103,6 +104,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
                 else
                 {
+                    viewModel.Tir.Status = 3;
                     viewModel.Tir.RecCreatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecCreatedDate = DateTime.Now;
 

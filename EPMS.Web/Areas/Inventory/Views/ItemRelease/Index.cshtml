@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -21,7 +22,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header</small></h2>
-    <h3><small><a href="~/Inventory/ItemRelease/Create">@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.CreateNew</a></small></h3>
+    @if (userPermissionsSet.Contains("ItemReleaseCreate"))
+    {
+        <h3><small><a href="~/Inventory/ItemRelease/Create">@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.CreateNew</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")

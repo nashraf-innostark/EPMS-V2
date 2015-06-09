@@ -20,5 +20,6 @@ namespace EPMS.Web.Models
         public string ManagerId { get; set; }
         public string RequesterName { get; set; }
         public string ManagerName { get; set; }
+        public string Date { get; set; }
     }
 }

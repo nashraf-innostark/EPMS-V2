@@ -52,7 +52,7 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
-        public TIRListResponse GetAllTirs(ItemReleaseSearchRequest searchRequest)
+        public TIRListResponse GetAllTirs(TransferItemSearchRequest searchRequest)
         {
             return repository.GetAllTirs(searchRequest);
         }

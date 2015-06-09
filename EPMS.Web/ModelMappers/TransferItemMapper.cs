@@ -8,6 +8,7 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.TIR CreateFromServerToClient(this TIR source)
         {
+            var direction = Resources.Shared.Common.TextDirection;
             return new Models.TIR
             {
                 Id = source.Id,
@@ -21,6 +22,10 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                Date = source.RecCreatedDate.ToShortDateString(),
+                RequesterName = direction == "ltr" ?
+                source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA,
             };
         }
         public static TIR CreateFromClientToServer(this Models.TIR source)

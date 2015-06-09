@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryWarehouse.PGTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
 }
 
@@ -22,7 +23,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3><small><a href="~/Inventory/InventoryWarehouse/Create">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseCreate</a></small></h3>
+    @if (userPermissionsSet.Contains("InventoryWarehouseCreate"))
+    {
+        <h3><small><a href="~/Inventory/InventoryWarehouse/Create">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseCreate</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
