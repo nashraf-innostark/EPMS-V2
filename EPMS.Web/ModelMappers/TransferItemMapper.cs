@@ -12,6 +12,7 @@ namespace EPMS.Web.ModelMappers
             return new Models.TIR
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 NotesE = source.NotesE,
@@ -33,6 +34,7 @@ namespace EPMS.Web.ModelMappers
             return new TIR
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 NotesE = source.NotesE,
@@ -50,6 +52,7 @@ namespace EPMS.Web.ModelMappers
             return new TIR
             {
                 Id = source.Tir.Id,
+                FormNumber = source.Tir.FormNumber,
                 DefectivenessE = source.Tir.DefectivenessE,
                 DefectivenessA = source.Tir.DefectivenessA,
                 NotesE = source.Tir.NotesE,

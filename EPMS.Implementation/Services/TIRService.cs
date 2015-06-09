@@ -57,6 +57,29 @@ namespace EPMS.Implementation.Services
             return repository.GetAllTirs(searchRequest);
         }
 
+        public TIR Find(long id)
+        {
+            return repository.Find(id);
+        }
+
+        public bool UpdateTirStatus(TransferItemStatus status)
+        {
+            try
+            {
+                var tir = repository.Find(status.Id);
+                tir.NotesE = status.NotesEn;
+                tir.NotesA = status.NotesAr;
+                tir.Status = status.Status;
+                repository.Update(tir);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public bool SaveDIF(TIR tir)
         {
             if (tir.Id > 0)
@@ -68,7 +91,7 @@ namespace EPMS.Implementation.Services
             else
             {
                 //save
-                AddTIR(tir);
+                return AddTIR(tir);
             }
             return true;
         }

@@ -103,13 +103,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Detail(ItemReleaseDetailViewModel viewModel)
         {
             var notesE = viewModel.ItemRelease.Notes;
-            notesE = notesE.Replace("\r", "");
-            notesE = notesE.Replace("\t", "");
-            notesE = notesE.Replace("\n", "");
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
             var notesA = viewModel.ItemRelease.NotesAr;
-            notesA = notesA.Replace("\r", "");
-            notesA = notesA.Replace("\t", "");
-            notesA = notesA.Replace("\n", "");
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
             ItemReleaseStatus status = new ItemReleaseStatus
             {
                 ItemReleaseId = viewModel.ItemRelease.ItemReleaseId,
@@ -224,6 +230,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.RecCreatedDate = DateTime.Now;
                 viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
                 viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
+                viewModel.ItemRelease.ManagerId = User.Identity.GetUserId();
                 var itemReleaseToAdd = viewModel.ItemRelease.CreateFromClientToServer();
                 itemReleaseToAdd.QuantityReleased = 0;
                 foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)

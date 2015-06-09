@@ -6,6 +6,7 @@ namespace EPMS.Web.Models
     public class TIR
     {
         public long Id { get; set; }
+        public string FormNumber { get; set; }
         [Required(ErrorMessage = "Transfer Reason is required")]
         public string DefectivenessE { get; set; }
         [Required(ErrorMessage = "Transfer Reason arabic is required")]

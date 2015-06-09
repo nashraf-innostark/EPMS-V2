@@ -126,6 +126,7 @@
     <Compile Include="DomainModels\RIFItem.cs" />
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
+    <Compile Include="DomainModels\TransferItemStatus.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />

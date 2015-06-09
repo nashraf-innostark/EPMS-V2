@@ -323,7 +323,7 @@
             $("#CKEditor").hide();
             $("#CKEditor").hide();
             $("#SubmitRecord").hide();
-            if (status != 2) {
+            if (status != 2 && '@userPermissionsSet.Contains("ItemReleaseCreate")' == 'True') {
                 $("#EditRecord").show();
             }
             //

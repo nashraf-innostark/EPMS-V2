@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
@@ -17,12 +18,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     public class TransferItemController : BaseController
     {
         private readonly ITIRService tirService;
+        private readonly IItemVariationService itemVariationService;
 
         #region Construcor
-        public TransferItemController(ITIRService tirService)
+        public TransferItemController(ITIRService tirService, IItemVariationService itemVariationService)
         {
             this.tirService = tirService;
+            this.itemVariationService = itemVariationService;
         }
+
         #endregion
 
         // GET: Inventory/TransferItem
@@ -62,8 +66,61 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
+        [SiteAuthorize(PermissionKey = "TIRDetail")]
+        public ActionResult Detail(long? id)
+        {
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("IRFViewComplete");
+            TransferItemCreateViewModel viewModel = new TransferItemCreateViewModel();
+            if (id != null)
+            {
+                var tir = tirService.Find((long) id);
+                viewModel.Tir = tir.CreateFromServerToClient();
+                viewModel.TirItems = tir.TIRItems.Select(x => x.CreateFromServerToClient()).ToList();
+            }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)] //this is due to CK Editor
+        public ActionResult Detail(TransferItemCreateViewModel viewModel)
+        {
+            var notesE = viewModel.Tir.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = viewModel.Tir.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            TransferItemStatus itemStatus = new TransferItemStatus
+            {
+                Id = viewModel.Tir.Id,
+                NotesEn = notesE,
+                NotesAr = notesA,
+                Status = viewModel.Tir.Status
+            };
+            if (tirService.UpdateTirStatus(itemStatus))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.Inventory.TIR.TIRDetail.RecordUpdated,
+                    IsUpdated = true
+                };
+                return RedirectToAction("Detail", new { id = viewModel.Tir.Id});
+            }
+            return View(viewModel);
+        }
+
         // GET: Inventory/Dif/Create
-        //[SiteAuthorize(PermissionKey = "")]
+        [SiteAuthorize(PermissionKey = "TIRCreate,TIRDetail")]
         public ActionResult Create(long? id)
         {
             var tirResponse = tirService.LoadTirResponseData(id);
@@ -77,6 +134,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 viewModel.Tir = new Models.TIR
                 {
+                    FormNumber = "101010",
                     RequesterName = Session["UserFullName"].ToString()
                 };
                 viewModel.TirItems = new List<Models.TIRItem>();
@@ -98,7 +156,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "TIR Updated",
+                        Message = Resources.Inventory.TIR.TIRCreate.RecordUpdated,
                         IsUpdated = true
                     };
                 }
@@ -110,9 +168,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     viewModel.Tir.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecUpdatedDate = DateTime.Now;
+                    viewModel.Tir.ManagerId = User.Identity.GetUserId();
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "TIR Created",
+                        Message = Resources.Inventory.TIR.TIRCreate.RecordAdded,
                         IsSaved = true
                     };
                 }

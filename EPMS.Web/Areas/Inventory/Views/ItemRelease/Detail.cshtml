@@ -46,7 +46,7 @@
             </div>
             <div class="invoice-info">
                 <div class="controls">
-                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> Print</a>
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Print</a>
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span6">
@@ -280,13 +280,13 @@
                     @if (direction == "ltr")
                     {
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.ItemRelease.Status, new[] { new SelectListItem { Text = "Pending", Value = "3" }, new SelectListItem { Text = "Accepted", Value = "1" }, new SelectListItem { Text = "Rejected", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                            @Html.DropDownListFor(model => model.ItemRelease.Status, new[] { new SelectListItem { Text = "Pending", Value = "3" }, new SelectListItem { Text = "Accept", Value = "1" }, new SelectListItem { Text = "Reject", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
                         </div>
                     }
                     else
                     {
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.ItemRelease.Status, new[] { new SelectListItem { Text = "ريثما", Value = "3" }, new SelectListItem { Text = "قبلت", Value = "1" }, new SelectListItem { Text = "مرفوض", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                            @Html.DropDownListFor(model => model.ItemRelease.Status, new[] { new SelectListItem { Text = "ريثما", Value = "3" }, new SelectListItem { Text = "استعرض", Value = "1" }, new SelectListItem { Text = "رفض", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
                         </div>
                     }
                 </div>

@@ -7,7 +7,7 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.TIRItem CreateFromServerToClient(this TIRItem source)
         {
-            return new Models.TIRItem
+            var retVal = new Models.TIRItem
             {
                 ItemId = source.ItemId,
                 ItemDetails = source.ItemDetails,
@@ -21,6 +21,15 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
+            if (source.ItemVariation != null)
+            {
+                retVal.ItemName = Resources.Shared.Common.TextDirection == "ltr"
+                    ? source.ItemVariation.InventoryItem.ItemNameEn
+                    : source.ItemVariation.InventoryItem.ItemNameAr;
+                retVal.ItemCode = source.ItemVariation.InventoryItem.ItemCode;
+                retVal.ItemSKUCode = source.ItemVariation.SKUCode;
+            }
+            return retVal;
         }
         public static TIRItem CreateFromClientToServer(this Models.TIRItem source)
         {

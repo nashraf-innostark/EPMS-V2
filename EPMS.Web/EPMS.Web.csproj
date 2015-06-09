@@ -684,6 +684,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Inventory\TIR\TIRCreate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TIRCreate.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\TIR\TIRDetail.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TIRDetail.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Inventory\TIR\TIRIndex.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TIRIndex.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\Vendor.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1905,6 +1920,7 @@
     <Content Include="Areas\Inventory\Views\ItemRelease\Detail.cshtml" />
     <Content Include="Areas\Inventory\Views\TransferItem\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\TransferItem\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\TransferItem\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3836,6 +3852,7 @@
     <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFCreate.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3864,6 +3881,18 @@
     <EmbeddedResource Include="Resources\Inventory\RIF\RIF.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RIF.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TIRCreate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TIRDetail.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TIRIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\Vendor.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\Vendor.resx">

@@ -1,9 +1,10 @@
 ﻿@model EPMS.Web.ViewModels.TIR.TransferItemCreateViewModel
 
 @{
-    ViewBag.Title = "Inventory Transfer Item Request (TIR) Create";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRCreate.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -15,7 +16,7 @@
         </li>
         <li>
             <a href="~/Inventory/TransferItem/Index">
-                Inventory Transfer Item Request (TIR) List
+                @EPMS.Web.Resources.Inventory.TIR.TIRCreate.BCTitle
             </a>
         </li>
         <li class="current">
@@ -28,7 +29,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Inventory Transfer Item Request (TIR)</small></h2>
+    <h2><small>@EPMS.Web.Resources.Inventory.TIR.TIRCreate.Header</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -36,6 +37,7 @@
 @using (Html.BeginForm("Create", "TransferItem", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.Tir.Id)
+    @Html.HiddenFor(model => model.Tir.FormNumber)
     @Html.HiddenFor(model => model.Tir.ManagerId)
     @Html.HiddenFor(model => model.Tir.RecCreatedBy)
     @Html.HiddenFor(model => model.Tir.RecCreatedDate)
@@ -45,7 +47,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Created By</label>
+                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.CreatedBy</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -55,29 +57,29 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TransferReasonEn">Transfer Reason</label>
+                <label class="control-label" for="TransferReasonEn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferReason</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Tir.DefectivenessE, new { @id = "TransferReasonEn", @class = "" })
+                    @Html.TextBoxFor(m => m.Tir.DefectivenessE, new { @id = "TransferReasonEn", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.Tir.DefectivenessE, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TransferReasonAr">Transfer Reason in arabic</label>
+                <label class="control-label" for="TransferReasonAr">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferReasonAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Tir.DefectivenessA, new { @id = "TransferReasonAr", @class = "" })
+                    @Html.TextBoxFor(m => m.Tir.DefectivenessA, new { @id = "TransferReasonAr", @class = "toBeDisable" })
                     @Html.ValidationMessageFor(m => m.Tir.DefectivenessA, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
         <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Excel Import</label>
+                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.ExcelImport</label>
             </div>
             <div class="span9">
                 <div class="controls elrte-wrapper">
@@ -87,10 +89,10 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" id="importEx" class="btn">Import</button>
+                <button type="button" id="importEx" class="btn btnDisable">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnImport</button>
             </div>
             <div class="span3 span-inset">
-                <button type="button" id="itemFromOrder" class="btn">Import Items From Order</button>
+                <button type="button" id="itemFromOrder" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnImportFromOrder</button>
             </div>
 
         </div>
@@ -99,10 +101,10 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>Serial</th>
-                            <th style="width:85%">Item Details</th>
-                            <th>Transfer Quantity</th>
-                            <th style="width:4%">Delete</th>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRCreate.Serial</th>
+                            <th style="width:85%">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.ItemDetails</th>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferQuantity</th>
+                            <th style="width:4%">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd" id="TirItemsTableBody">
@@ -127,12 +129,12 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.TirItems[i].ItemDetails, new { @class = "auto-resize", @rows = 2 })
-                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                        @Html.TextAreaFor(m => m.TirItems[i].ItemDetails, new { @class = "auto-resize toBeDisable", @rows = 2 })
+                                        <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher">+</button>
                                         @Html.ValidationMessageFor(m => m.TirItems[i].ItemDetails)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.TirItems[i].ItemQty, new { @class = "n1", @rows = 2 })
+                                        @Html.TextBoxFor(m => m.TirItems[i].ItemQty, new { @class = "n1 toBeDisable", @rows = 2 })
                                         @Html.ValidationMessageFor(m => m.TirItems[i].ItemQty, null, new { @class = "required" })
                                     </td>
                                     <td class="delete">
@@ -158,12 +160,12 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <textarea rows="2" id='TirItems_0__ItemDetails' class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="TirItems[0].ItemDetails"></textarea>
-                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    <textarea rows="2" id='TirItems_0__ItemDetails' class="auto-resize toBeDisable" data-val="true" data-val-required="The Item Details field is required." name="TirItems[0].ItemDetails"></textarea>
+                                    <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher">+</button>
                                     <span class="field-validation-valid required" data-valmsg-for="TirItems[0].ItemDetails" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="quantity">
-                                    <input class="n1" id='TirItems_0__ItemQty' type="text" name="TirItems[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                    <input class="n1 toBeDisable" id='TirItems_0__ItemQty' type="text" name="TirItems[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
                                     <span class="field-validation-valid required" data-valmsg-for="TirItems[0].ItemQty" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="delete">
@@ -177,12 +179,17 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder">Add</button>
+                    <button type="button" class="btn trAdder btnDisable">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnAdd</button>
                 </div>
             </div>
-            <div class="control-group row-fluid">
+            <div id="EditRecord" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">Submit</button>
+                    <button id="edit" type="button" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnEdit</button>
+                </div>
+            </div>
+            <div id="SubmitRecord" class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnSubmit</button>
                 </div>
             </div>
         </div>
@@ -197,6 +204,18 @@
 <script>
     $(document).ready(function () {
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+        var itemId = parseInt('@Model.Tir.Id');
+        if (itemId > 0) {
+            // disable on load section
+            $('.btnDisable').addClass('disableList');
+            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            // CK Editor to simple textbox
+            $("#SubmitRecord").hide();
+            if (status != 2 && '@userPermissionsSet.Contains("TIRCreate")' == 'True') {
+                $("#EditRecord").show();
+            }
+            //
+        }
         //add data in row from popup
         $('.trAdder').on("click", function () {
             var index = $("#TirItemsTableBody").children("tr").length;
@@ -216,7 +235,7 @@
                 '</div></div>' +
                 '</td>' +
                 '<td> <textarea rows="2"  class="auto-resize"  id="TirItems_' + index + '__ItemDetails" name="TirItems[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
-                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                '<button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                 '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                 '</td>' +
                 '<td class="quantity"> ' +
@@ -354,7 +373,7 @@
                                '</div></div>' +
                                '</td>' +
                                '<td> <textarea rows="2"  class="auto-resize"  id="TirItems_' + index + '__ItemDetails" name="TirItems[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                               '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                               '<button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                                '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                                '</td>' +
                                '<td class="quantity"> ' +
@@ -403,6 +422,11 @@
             });
         }
     });
+    $("#edit").on('click', function () {
+        if (status != 2) {
+            AddEdit();
+        }
+    });
     $('#tiny').elrte({
         lang: "en",
         styleWithCSS: false,
@@ -423,5 +447,24 @@
             add++;
             $(this).find(".serialNumber").text(add);
         });
+    }
+    function AddEdit() {
+        if (status != 2) {
+            var isDetail;
+            var val = '@userPermissionsSet.Contains("TIRCreate")';
+            if (val == 'True') {
+                isDetail = false;
+            } else {
+                isDetail = true;
+            }
+            if (isDetail) {
+
+            } else {
+                $('.btnDisable').removeClass('disableList');
+                $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+                $("#EditRecord").hide();
+                $("#SubmitRecord").show();
+            }
+        }
     }
 </script>

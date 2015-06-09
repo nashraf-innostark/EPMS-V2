@@ -5,6 +5,7 @@ namespace EPMS.Models.DomainModels
     public class TIR
     {
         public long Id { get; set; }
+        public string FormNumber { get; set; }
         public string DefectivenessE { get; set; }
         public string DefectivenessA { get; set; }
         public string RecCreatedBy { get; set; }

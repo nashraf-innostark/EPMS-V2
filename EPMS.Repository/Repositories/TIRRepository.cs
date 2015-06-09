@@ -82,7 +82,7 @@ namespace EPMS.Repository.Repositories
                     {
                         var date = Convert.ToDateTime(searchRequest.SearchString);
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
@@ -91,7 +91,7 @@ namespace EPMS.Repository.Repositories
                     else
                     {
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
@@ -104,7 +104,7 @@ namespace EPMS.Repository.Repositories
                     {
                         var date = Convert.ToDateTime(searchRequest.SearchString);
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
@@ -113,7 +113,7 @@ namespace EPMS.Repository.Repositories
                     else
                     {
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
@@ -125,11 +125,11 @@ namespace EPMS.Repository.Repositories
             {
                 if (searchRequest.CompleteAccess)
                 {
-                    if (searchRequest.iSortCol_0 == 3)
+                    if (searchRequest.iSortCol_0 == 3 && searchRequest.SearchString != "")
                     {
                         var date = Convert.ToDateTime(searchRequest.SearchString);
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
@@ -138,7 +138,7 @@ namespace EPMS.Repository.Repositories
                     else
                     {
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)));
@@ -146,11 +146,11 @@ namespace EPMS.Repository.Repositories
                 }
                 else
                 {
-                    if (searchRequest.iSortCol_0 == 3)
+                    if (searchRequest.iSortCol_0 == 3 && searchRequest.SearchString != "")
                     {
                         var date = Convert.ToDateTime(searchRequest.SearchString);
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
@@ -159,7 +159,7 @@ namespace EPMS.Repository.Repositories
                     else
                     {
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.Id.Equals(searchRequest.SearchString) ||
+                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)));

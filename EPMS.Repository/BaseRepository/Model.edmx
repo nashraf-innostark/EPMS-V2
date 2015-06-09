@@ -1118,6 +1118,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DefectivenessE" Type="nvarchar(max)" />
           <Property Name="DefectivenessA" Type="nvarchar(max)" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -2927,7 +2928,7 @@
           <NavigationProperty Name="POFManager" Relationship="EPMSInventoryModel.FK_POF_Manager" FromRole="AspNetUser" ToRole="POF" />
           <NavigationProperty Name="TIRs" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="AspNetUser" ToRole="TIR" />
           <NavigationProperty Name="TIRManager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="AspNetUser" ToRole="TIR" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Color">
           <Key>
             <PropertyRef Name="ColorId" />
@@ -4983,7 +4984,6 @@
           <EntitySet Name="DIFItems" EntityType="EPMSInventoryModel.DIFItem" />
           <EntitySet Name="POFs" EntityType="EPMSInventoryModel.POF" />
           <EntitySet Name="POFItems" EntityType="EPMSInventoryModel.POFItem" />
-          <EntitySet Name="TIRs" EntityType="EPMSInventoryModel.TIR" />
           <EntitySet Name="TIRItems" EntityType="EPMSInventoryModel.TIRItem" />
           <AssociationSet Name="FK_DIFItem_DIF" Association="EPMSInventoryModel.FK_DIFItem_DIF">
             <End Role="DIF" EntitySet="DIFs" />
@@ -5005,10 +5005,6 @@
             <End Role="POF" EntitySet="POFs" />
             <End Role="POFItem" EntitySet="POFItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_TIRItem_TIR" Association="EPMSInventoryModel.FK_TIRItem_TIR">
-            <End Role="TIR" EntitySet="TIRs" />
-            <End Role="TIRItem" EntitySet="TIRItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_DIF_CreatedBy" Association="EPMSInventoryModel.FK_DIF_CreatedBy">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="DIF" EntitySet="DIFs" />
@@ -5024,14 +5020,6 @@
           <AssociationSet Name="FK_POF_Manager" Association="EPMSInventoryModel.FK_POF_Manager">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="POF" EntitySet="POFs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TIR_CreatedBy" Association="EPMSInventoryModel.FK_TIR_CreatedBy">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="TIR" EntitySet="TIRs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TIR_Manager" Association="EPMSInventoryModel.FK_TIR_Manager">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="TIR" EntitySet="TIRs" />
           </AssociationSet>
           <EntitySet Name="ItemReleases" EntityType="EPMSInventoryModel.ItemRelease" />
           <EntitySet Name="ItemReleaseDetails" EntityType="EPMSInventoryModel.ItemReleaseDetail" />
@@ -5059,6 +5047,19 @@
           <AssociationSet Name="FK_ItemWarehouse_Warehouse" Association="EPMSInventoryModel.FK_ItemWarehouse_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="ItemWarehouse" EntitySet="ItemWarehouses" />
+          </AssociationSet>
+          <EntitySet Name="TIRs" EntityType="EPMSInventoryModel.TIR" />
+          <AssociationSet Name="FK_TIR_CreatedBy" Association="EPMSInventoryModel.FK_TIR_CreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TIR" EntitySet="TIRs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIR_Manager" Association="EPMSInventoryModel.FK_TIR_Manager">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="TIR" EntitySet="TIRs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRItem_TIR" Association="EPMSInventoryModel.FK_TIRItem_TIR">
+            <End Role="TIR" EntitySet="TIRs" />
+            <End Role="TIRItem" EntitySet="TIRItems" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
@@ -5263,25 +5264,6 @@
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_POFItem_ItemVariation" FromRole="POFItem" ToRole="ItemVariation" />
           <NavigationProperty Name="POF" Relationship="EPMSInventoryModel.FK_POFItem_POF" FromRole="POFItem" ToRole="POF" />
         </EntityType>
-        <EntityType Name="TIR">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DefectivenessE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DefectivenessA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TIRItems" Relationship="EPMSInventoryModel.FK_TIRItem_TIR" FromRole="TIR" ToRole="TIRItem" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="TIR" ToRole="AspNetUser" />
-          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="TIR" ToRole="AspNetUser" />
-        </EntityType>
         <EntityType Name="TIRItem">
           <Key>
             <PropertyRef Name="ItemId" />
@@ -5360,18 +5342,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TIRItem_TIR">
-          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.TIRItem" Role="TIRItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TIR">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TIRItem">
-              <PropertyRef Name="TIRId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DIF_CreatedBy">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="*" />
@@ -5416,30 +5386,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="POF">
-              <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TIR_CreatedBy">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TIR">
-              <PropertyRef Name="RecCreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TIR_Manager">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TIR">
               <PropertyRef Name="ManagerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -5570,6 +5516,62 @@
             </Principal>
             <Dependent Role="ItemWarehouse">
               <PropertyRef Name="WarehousrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TIR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DefectivenessE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DefectivenessA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="TIR" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="TIR" ToRole="AspNetUser" />
+          <NavigationProperty Name="TIRItems" Relationship="EPMSInventoryModel.FK_TIRItem_TIR" FromRole="TIR" ToRole="TIRItem" />
+        </EntityType>
+        <Association Name="FK_TIR_CreatedBy">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TIR">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIR_Manager">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TIR">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRItem_TIR">
+          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.TIRItem" Role="TIRItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TIRItem">
+              <PropertyRef Name="TIRId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6765,23 +6767,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TIRs">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.TIR">
-              <MappingFragment StoreEntitySet="TIR">
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
-                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DefectivenessA" ColumnName="DefectivenessA" />
-                <ScalarProperty Name="DefectivenessE" ColumnName="DefectivenessE" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TIRItems">
             <EntityTypeMapping TypeName="EPMSInventoryModel.TIRItem">
               <MappingFragment StoreEntitySet="TIRItem">
@@ -6848,6 +6833,24 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
                 <ScalarProperty Name="WarehousrId" ColumnName="WarehousrId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIRs">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.TIR">
+              <MappingFragment StoreEntitySet="TIR">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DefectivenessA" ColumnName="DefectivenessA" />
+                <ScalarProperty Name="DefectivenessE" ColumnName="DefectivenessE" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7009,20 +7012,16 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.DIFItem" Width="1.5" PointX="16.25" PointY="20.625" />
         <EntityTypeShape EntityType="EPMSInventoryModel.POF" Width="1.5" PointX="16" PointY="46" />
         <EntityTypeShape EntityType="EPMSInventoryModel.POFItem" Width="1.5" PointX="18.25" PointY="28.625" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.TIR" Width="1.5" PointX="15" PointY="0.75" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TIRItem" Width="1.5" PointX="17.25" PointY="10.625" />
         <AssociationConnector Association="EPMSInventoryModel.FK_DIFItem_DIF" />
         <AssociationConnector Association="EPMSInventoryModel.FK_DIFItem_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_POFItem_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRItem_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_POFItem_POF" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_TIRItem_TIR" />
         <AssociationConnector Association="EPMSInventoryModel.FK_DIF_CreatedBy" />
         <AssociationConnector Association="EPMSInventoryModel.FK_DIF_Manager" />
         <AssociationConnector Association="EPMSInventoryModel.FK_POF_CreatedBy" />
         <AssociationConnector Association="EPMSInventoryModel.FK_POF_Manager" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_TIR_CreatedBy" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_TIR_Manager" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemRelease" Width="1.5" PointX="14.25" PointY="35" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseDetail" Width="1.5" PointX="20.5" PointY="28.125" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Customer" />
@@ -7032,6 +7031,10 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemWarehouse" Width="1.5" PointX="15.5" PointY="17.25" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.TIR" Width="1.5" PointX="6" PointY="61.25" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIR_CreatedBy" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIR_Manager" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIRItem_TIR" />
       </Diagram>
     </Diagrams>
   </Designer>

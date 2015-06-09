@@ -117,32 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BCTitle" xml:space="preserve">
-    <value>Inventory Item Release Form (IRF) List</value>
+  <data name="BCTitleIndex" xml:space="preserve">
+    <value>Inventory Transfer Item Request (TIR) List</value>
   </data>
-  <data name="ContainerTitle" xml:space="preserve">
-    <value>Item Release Form (IRF)</value>
+  <data name="BCTitleView" xml:space="preserve">
+    <value>Inventory Transfer Item Request (TIR) View</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date : </value>
+    <value>Date: </value>
   </data>
-  <data name="EditIRF" xml:space="preserve">
-    <value>Edit IRF</value>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit TIR</value>
   </data>
   <data name="EmployeeId" xml:space="preserve">
-    <value>Employee Id : </value>
+    <value>Employee Id: </value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Employee Name: </value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Inventory Item Release Form (IRF) View</value>
-  </data>
-  <data name="InventoryManagerName" xml:space="preserve">
-    <value>Inventory Manager Name : </value>
-  </data>
-  <data name="IRF" xml:space="preserve">
-    <value>IRF : </value>
-  </data>
-  <data name="IRFNo" xml:space="preserve">
-    <value>IRF# : </value>
+    <value>Transfer Item Request (TIR)</value>
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>Item Code</value>
@@ -150,23 +144,23 @@
   <data name="ItemName" xml:space="preserve">
     <value>Item Name</value>
   </data>
+  <data name="ManagerName" xml:space="preserve">
+    <value>Inventory Manager Name: </value>
+  </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
   <data name="NotesAr" xml:space="preserve">
     <value>Notes in Arabic</value>
   </data>
-  <data name="OrderNo" xml:space="preserve">
-    <value>Order# : </value>
-  </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>View Item Release Form (IRF)</value>
+    <value>Create Transfer Item Request (TIR)</value>
   </data>
-  <data name="QuantityRelease" xml:space="preserve">
-    <value>Quantity Release</value>
+  <data name="Print" xml:space="preserve">
+    <value>Print</value>
   </data>
   <data name="RequesterName" xml:space="preserve">
-    <value>Requester Name : </value>
+    <value>Requester Name: </value>
   </data>
   <data name="RequestStatus" xml:space="preserve">
     <value>Request Status</value>
@@ -174,31 +168,25 @@
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
   </data>
-  <data name="ShipmentDetails" xml:space="preserve">
-    <value>Shipment Details</value>
-  </data>
   <data name="SKUCode" xml:space="preserve">
     <value>SKU Code</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
-  <data name="Usage" xml:space="preserve">
-    <value>Usage : </value>
+  <data name="TIRNo" xml:space="preserve">
+    <value>TIR#:</value>
   </data>
-  <data name="Warhouse" xml:space="preserve">
-    <value>Warhouse</value>
+  <data name="Title" xml:space="preserve">
+    <value>Transfer Item Request (TIR)</value>
   </data>
-  <data name="EmployeeName" xml:space="preserve">
-    <value>Employee Name : </value>
+  <data name="TransferQuantity" xml:space="preserve">
+    <value>Transfer Quantity</value>
   </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>Client Name : </value>
+  <data name="TransferReason" xml:space="preserve">
+    <value>Transfer Reason:</value>
   </data>
   <data name="RecordUpdated" xml:space="preserve">
-    <value>Item Release Form has been successfully Updated.</value>
-  </data>
-  <data name="Print" xml:space="preserve">
-    <value>Print</value>
+    <value>Transfer Item Status has been successfully Updated.</value>
   </data>
 </root>

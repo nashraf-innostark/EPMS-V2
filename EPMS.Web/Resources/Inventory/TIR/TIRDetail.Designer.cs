@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Inventory.IRF.View {
+namespace EPMS.Web.Resources.Inventory.TIR {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class IRFView {
+    public class TIRDetail {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal IRFView() {
+        internal TIRDetail() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRF.View.IRFView", typeof(IRFView).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.TIR.TIRDetail", typeof(TIRDetail).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,34 +61,25 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Item Release Form (IRF) List.
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) List.
         /// </summary>
-        public static string BCTitle {
+        public static string BCTitleIndex {
             get {
-                return ResourceManager.GetString("BCTitle", resourceCulture);
+                return ResourceManager.GetString("BCTitleIndex", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Client Name : .
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) View.
         /// </summary>
-        public static string ClientName {
+        public static string BCTitleView {
             get {
-                return ResourceManager.GetString("ClientName", resourceCulture);
+                return ResourceManager.GetString("BCTitleView", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form (IRF).
-        /// </summary>
-        public static string ContainerTitle {
-            get {
-                return ResourceManager.GetString("ContainerTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Date : .
+        ///   Looks up a localized string similar to Date: .
         /// </summary>
         public static string Date {
             get {
@@ -97,16 +88,16 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit IRF.
+        ///   Looks up a localized string similar to Edit TIR.
         /// </summary>
-        public static string EditIRF {
+        public static string Edit {
             get {
-                return ResourceManager.GetString("EditIRF", resourceCulture);
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Id : .
+        ///   Looks up a localized string similar to Employee Id: .
         /// </summary>
         public static string EmployeeId {
             get {
@@ -115,7 +106,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Name : .
+        ///   Looks up a localized string similar to Employee Name: .
         /// </summary>
         public static string EmployeeName {
             get {
@@ -124,38 +115,11 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Item Release Form (IRF) View.
+        ///   Looks up a localized string similar to Transfer Item Request (TIR).
         /// </summary>
         public static string Header {
             get {
                 return ResourceManager.GetString("Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inventory Manager Name : .
-        /// </summary>
-        public static string InventoryManagerName {
-            get {
-                return ResourceManager.GetString("InventoryManagerName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IRF : .
-        /// </summary>
-        public static string IRF {
-            get {
-                return ResourceManager.GetString("IRF", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IRF# : .
-        /// </summary>
-        public static string IRFNo {
-            get {
-                return ResourceManager.GetString("IRFNo", resourceCulture);
             }
         }
         
@@ -178,6 +142,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Manager Name: .
+        /// </summary>
+        public static string ManagerName {
+            get {
+                return ResourceManager.GetString("ManagerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Notes.
         /// </summary>
         public static string Notes {
@@ -196,16 +169,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Order# : .
-        /// </summary>
-        public static string OrderNo {
-            get {
-                return ResourceManager.GetString("OrderNo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View Item Release Form (IRF).
+        ///   Looks up a localized string similar to Create Transfer Item Request (TIR).
         /// </summary>
         public static string PageTitle {
             get {
@@ -223,16 +187,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantity Release.
-        /// </summary>
-        public static string QuantityRelease {
-            get {
-                return ResourceManager.GetString("QuantityRelease", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Item Release Form has been successfully Updated..
+        ///   Looks up a localized string similar to Transfer Item Status has been successfully Updated..
         /// </summary>
         public static string RecordUpdated {
             get {
@@ -241,7 +196,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requester Name : .
+        ///   Looks up a localized string similar to Requester Name: .
         /// </summary>
         public static string RequesterName {
             get {
@@ -268,15 +223,6 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shipment Details.
-        /// </summary>
-        public static string ShipmentDetails {
-            get {
-                return ResourceManager.GetString("ShipmentDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to SKU Code.
         /// </summary>
         public static string SKUCode {
@@ -295,20 +241,38 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usage : .
+        ///   Looks up a localized string similar to TIR#:.
         /// </summary>
-        public static string Usage {
+        public static string TIRNo {
             get {
-                return ResourceManager.GetString("Usage", resourceCulture);
+                return ResourceManager.GetString("TIRNo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warhouse.
+        ///   Looks up a localized string similar to Transfer Item Request (TIR).
         /// </summary>
-        public static string Warhouse {
+        public static string Title {
             get {
-                return ResourceManager.GetString("Warhouse", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Quantity.
+        /// </summary>
+        public static string TransferQuantity {
+            get {
+                return ResourceManager.GetString("TransferQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Reason:.
+        /// </summary>
+        public static string TransferReason {
+            get {
+                return ResourceManager.GetString("TransferReason", resourceCulture);
             }
         }
     }
