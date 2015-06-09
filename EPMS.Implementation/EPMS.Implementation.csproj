@@ -160,6 +160,7 @@
     <Compile Include="Services\ProjectDocumentService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ProjectTaskService.cs" />
+    <Compile Include="Services\PurchaseOrderService.cs" />
     <Compile Include="Services\QuickLaunchItemService.cs" />
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />

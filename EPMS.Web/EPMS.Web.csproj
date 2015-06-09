@@ -832,6 +832,7 @@
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderCreateViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderListViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
@@ -1926,6 +1927,7 @@
     <Content Include="Areas\Inventory\Views\TransferItem\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\TransferItem\Detail.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\PurchaseOrder\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

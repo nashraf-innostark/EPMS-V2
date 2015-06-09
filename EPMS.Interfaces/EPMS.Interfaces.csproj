@@ -91,6 +91,7 @@
     <Compile Include="IServices\IProjectDocumentService.cs" />
     <Compile Include="IServices\IProjectService.cs" />
     <Compile Include="IServices\IProjectTaskService.cs" />
+    <Compile Include="IServices\IPurchaseOrderService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
     <Compile Include="IServices\IDIFService.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
     <Compile Include="Repository\IProjectTaskRepository.cs" />
+    <Compile Include="Repository\IPurchaseOrderRepository.cs" />
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
