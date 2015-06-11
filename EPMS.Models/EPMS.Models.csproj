@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
+    <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
     <Compile Include="Common\PofRequestByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
+    <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
     <Compile Include="RequestModels\DifSearchRequest.cs" />
@@ -297,6 +299,7 @@
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
+    <Compile Include="ResponseModels\PurchaseOrderListResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />

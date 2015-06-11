@@ -14,6 +14,7 @@ namespace EPMS.Web.Models
         public string ItemName { get; set; }
         public string ItemCode { get; set; }
         public string ItemSKUCode { get; set; }
+        public string PlaceInDepartment { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }

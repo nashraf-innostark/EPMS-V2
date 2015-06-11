@@ -8,10 +8,10 @@ namespace EPMS.Web.ViewModels.PurchaseOrder
         public PurchaseOrderCreateViewModel()
         {
             Order = new Models.PurchaseOrder();
-            Items = new List<Models.PurchaseOrderItem>();
+            PoItems = new List<Models.PurchaseOrderItem>();
         }
         public Models.PurchaseOrder Order { get; set; }
-        public IList<Models.PurchaseOrderItem> Items { get; set; }
+        public IList<Models.PurchaseOrderItem> PoItems { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }
 }

@@ -8,8 +8,8 @@ namespace EPMS.Models.DomainModels
         public long ItemVariationId { get; set; }
         public string ItemBarcode { get; set; }
         public string SKUCode { get; set; }
-        public Nullable<double> UnitPrice { get; set; }
-        public Nullable<double> PackagePrice { get; set; }
+        public double? UnitPrice { get; set; }
+        public double? PackagePrice { get; set; }
         public bool PriceCalculation { get; set; }
         public string DescriptionEn { get; set; }
         public string DescriptionAr { get; set; }
@@ -28,9 +28,9 @@ namespace EPMS.Models.DomainModels
         public string AdditionalInfoEn { get; set; }
         public string AdditionalInfoAr { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDt { get; set; }
+        public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public System.DateTime RecLastUpdatedDt { get; set; }
+        public DateTime RecLastUpdatedDt { get; set; }
         public long InventoryItemId { get; set; }
 
         public virtual InventoryItem InventoryItem { get; set; }
@@ -47,5 +47,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<TIRItem> TIRItems { get; set; }
         public virtual ICollection<ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
+        public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; }
     }
 }

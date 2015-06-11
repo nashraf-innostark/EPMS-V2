@@ -313,6 +313,7 @@
     var dir = '@direction';
     var status = '@Model.ItemRelease.Status';
     var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
+    var textTillParent = "";
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
@@ -420,6 +421,19 @@
             "core": {
                 "initially_open": ["parentNode"]
             }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked          
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
         });
         var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
         populateTree(0, "jstree", requestUrl);
@@ -432,8 +446,8 @@
         });
         $("#selectDepartment").on("click", function () {
             var index = parseInt($("#ItemModalIndex").val());
-            $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val($('.jstree-clicked').text());
-            $("#txtSelectedDepartmentName").text("Selected :" + $('.jstree-clicked').text());
+            $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
             $('#itemTreeSelector').modal('toggle');
             return true;
         });
@@ -455,6 +469,7 @@
             var isItemDescription = $("#ItemReleaseDetails_" + index + "__IsItemDescription").val();
             var isItemSKU = $("#ItemReleaseDetails_" + index + "__IsItemSKU").val();
             var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+            var placeInDepartment = $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val();
             // clear selected department label text
             $("#txtSelectedDepartmentName").text("");
 
@@ -472,7 +487,7 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
-            $("#txtSelectedDepartmentName").text("Selected :" + $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val());
+            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         //reactivateCount();
         $("#importEx").on("click", function () {

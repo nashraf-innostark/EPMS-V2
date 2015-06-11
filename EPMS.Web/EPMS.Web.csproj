@@ -382,6 +382,8 @@
     <Compile Include="ModelMappers\PMS\ProjectMapper.cs" />
     <Compile Include="ModelMappers\PMS\ProjectTaskMapper.cs" />
     <Compile Include="ModelMappers\PMS\TaskEmployeeMapper.cs" />
+    <Compile Include="ModelMappers\PurchaseItemsMapper.cs" />
+    <Compile Include="ModelMappers\PurchaseOrderMapper.cs" />
     <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />

@@ -121,7 +121,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 ItemReleaseId = viewModel.ItemRelease.ItemReleaseId,
                 Status = viewModel.ItemRelease.Status ?? 1,
                 Notes = notesE,
-                NotesAr = notesA
+                NotesAr = notesA,
+                ManagerId = User.Identity.GetUserId()
             };
             if (itemReleaseService.UpdateItemReleaseStatus(status))
             {
@@ -230,7 +231,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.RecCreatedDate = DateTime.Now;
                 viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
                 viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
-                viewModel.ItemRelease.ManagerId = User.Identity.GetUserId();
                 var itemReleaseToAdd = viewModel.ItemRelease.CreateFromClientToServer();
                 itemReleaseToAdd.QuantityReleased = 0;
                 foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)

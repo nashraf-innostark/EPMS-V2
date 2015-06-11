@@ -87,6 +87,7 @@
     <Compile Include="IServices\INotificationService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
+    <Compile Include="IServices\IPoItemService.cs" />
     <Compile Include="IServices\IPreRequisitTaskService.cs" />
     <Compile Include="IServices\IProjectDocumentService.cs" />
     <Compile Include="IServices\IProjectService.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Repository\INotificationRecipientRepository.cs" />
     <Compile Include="Repository\INotificationRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IPoItemRepository.cs" />
     <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />

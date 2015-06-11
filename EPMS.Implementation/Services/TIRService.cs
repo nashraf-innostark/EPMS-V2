@@ -70,6 +70,7 @@ namespace EPMS.Implementation.Services
                 tir.NotesE = status.NotesEn;
                 tir.NotesA = status.NotesAr;
                 tir.Status = status.Status;
+                tir.ManagerId = status.ManagerId;
                 repository.Update(tir);
                 repository.SaveChanges();
                 return true;
@@ -80,7 +81,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public bool SaveDIF(TIR tir)
+        public bool SavePO(TIR tir)
         {
             if (tir.Id > 0)
             {

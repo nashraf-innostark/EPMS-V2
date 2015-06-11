@@ -69,6 +69,8 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IItemManufacturerService, ItemManufacturerService>();
             unityContainer.RegisterType<ITIRService, TIRService>();
             unityContainer.RegisterType<ITIRItemService, TIRItemService>();
+            unityContainer.RegisterType<IPurchaseOrderService, PurchaseOrderService>();
+            unityContainer.RegisterType<IPoItemService, PoItemService>();
         }
     }
 }

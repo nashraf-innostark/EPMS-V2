@@ -10,7 +10,7 @@ namespace EPMS.Interfaces.IServices
         TIRListResponse GetAllTirs(TransferItemSearchRequest searchRequest);
         TIR Find(long id);
         bool UpdateTirStatus(TransferItemStatus status);
-        bool SaveDIF(TIR tir);
+        bool SavePO(TIR tir);
         bool AddTIR(TIR tir);
         bool UpdateTIR(TIR tir);
         void DeleteTIR(TIR tir);

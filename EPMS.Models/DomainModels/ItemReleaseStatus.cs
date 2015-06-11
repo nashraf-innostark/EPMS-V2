@@ -6,5 +6,6 @@
         public string Notes { get; set; }
         public string NotesAr { get; set; }
         public short Status { get; set; }
+        public string ManagerId { get; set; }
     }
 }

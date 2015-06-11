@@ -40,6 +40,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
+                PlaceInDepartment = source.PlaceInDepartment,
 
                 RecCreatedBy = createdBy,
                 RecCreatedDate = createdDate,
@@ -102,6 +103,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
+                PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -127,6 +129,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
+                PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,

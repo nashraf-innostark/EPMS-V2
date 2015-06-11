@@ -96,6 +96,7 @@ namespace EPMS.Implementation.Services
                 itemRelease.Notes = releaseStatus.Notes;
                 itemRelease.NotesAr = releaseStatus.NotesAr;
                 itemRelease.Status = releaseStatus.Status;
+                itemRelease.ManagerId = releaseStatus.ManagerId;
                 itemReleaseRepository.Update(itemRelease);
                 itemReleaseRepository.SaveChanges();
                 return true;
@@ -122,6 +123,12 @@ namespace EPMS.Implementation.Services
                         detailRepository.Add(itemReleaseDetail);
                         detailRepository.SaveChanges();
                         //itemToSave.ItemReleaseDetails.Add(itemReleaseDetail);
+                    }
+                    if (itemReleaseDetail.IRFDetailId > 0)
+                    {
+                        itemReleaseDetail.ItemReleaseId = itemRelease.ItemReleaseId;
+                        detailRepository.Update(itemReleaseDetail);
+                        detailRepository.SaveChanges();
                     }
                 }
                 foreach (var itemReleaseDetail in dbItems)

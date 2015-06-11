@@ -6,5 +6,6 @@
         public string NotesEn { get; set; }
         public string NotesAr { get; set; }
         public int Status { get; set; }
+        public string ManagerId { get; set; }
     }
 }

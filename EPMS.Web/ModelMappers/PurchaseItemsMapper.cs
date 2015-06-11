@@ -3,11 +3,11 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
-    public static class TransferItemsMapper
+    public static class PurchaseItemsMapper
     {
-        public static Models.TIRItem CreateFromServerToClient(this TIRItem source)
+        public static Models.PurchaseOrderItem CreateFromServerToClient(this PurchaseOrderItem source)
         {
-            var retVal = new Models.TIRItem
+            var retVal = new Models.PurchaseOrderItem
             {
                 ItemId = source.ItemId,
                 ItemDetails = source.ItemDetails,
@@ -15,7 +15,7 @@ namespace EPMS.Web.ModelMappers
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemVariationId = source.ItemVariationId,
-                TIRId = source.TIRId,
+                PurchaseOrderId = source.PurchaseOrderId,
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -32,9 +32,9 @@ namespace EPMS.Web.ModelMappers
             }
             return retVal;
         }
-        public static TIRItem CreateFromClientToServer(this Models.TIRItem source)
+        public static PurchaseOrderItem CreateFromClientToServer(this Models.PurchaseOrderItem source)
         {
-            return new TIRItem
+            return new PurchaseOrderItem
             {
                 ItemId = source.ItemId,
                 ItemDetails = source.ItemDetails,
@@ -42,7 +42,7 @@ namespace EPMS.Web.ModelMappers
                 IsItemSKU = source.IsItemSKU,
                 ItemQty = source.ItemQty,
                 ItemVariationId = source.ItemVariationId,
-                TIRId = source.TIRId,
+                PurchaseOrderId = source.PurchaseOrderId,
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -50,9 +50,9 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedDate = source.RecUpdatedDate,
             };
         }
-        public static TIRItem CreateFromClientToServer(this Models.TIRItem source, long tirId, string createdBy, DateTime createdDate, DateTime updatedDate)
+        public static PurchaseOrderItem CreateFromClientToServer(this Models.PurchaseOrderItem source, long poId, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
-            return new TIRItem
+            return new PurchaseOrderItem
             {
                 ItemId = source.ItemId,
                 ItemDetails = source.ItemDetails,
@@ -61,8 +61,8 @@ namespace EPMS.Web.ModelMappers
                 ItemQty = source.ItemQty,
                 ItemVariationId = source.ItemVariationId,
                 PlaceInDepartment = source.PlaceInDepartment,
-                
-                TIRId = tirId,
+
+                PurchaseOrderId = poId,
 
                 RecCreatedBy = createdBy,
                 RecCreatedDate = createdDate,

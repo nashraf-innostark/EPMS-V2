@@ -125,6 +125,7 @@
                                         @Html.HiddenFor(m => m.TirItems[i].IsItemSKU)
                                         @Html.HiddenFor(m => m.TirItems[i].ItemVariationId)
                                         @Html.HiddenFor(m => m.TirItems[i].ItemId)
+                                        @Html.HiddenFor(m => m.TirItems[i].PlaceInDepartment)
                                     </td>
                                     <td>
                                         <div class="control-group row-fluid">
@@ -156,6 +157,7 @@
                                     <input name='TirItems[0].IsItemDescription' id='TirItems_0__IsItemDescription' type='hidden' />
                                     <input name='TirItems[0].IsItemSKU' id='TirItems_0__IsItemSKU' type='hidden' />
                                     <input name='TirItems[0].ItemVariationId' id='TirItems_0__ItemVariationId' type='hidden' />
+                                    <input name='TirItems[0].PlaceInDepartment' id='TirItems_0__PlaceInDepartment' type='hidden' />
                                 </td>
                                 <td>
                                     <div class="control-group row-fluid">
@@ -254,7 +256,13 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
+    var status;
+    var siteUrl;
+    var textTillParent = "";
+    var dir = '@direction';
     $(document).ready(function () {
+        status = '@Model.Tir.Status';
+        siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
         var itemId = parseInt('@Model.Tir.Id');
         if (itemId > 0) {
@@ -284,6 +292,7 @@
                 "<input name='TirItems[" + index + "].IsItemDescription' id='TirItems_" + index + "__IsItemDescription' type='hidden' />" +
                 "<input name='TirItems[" + index + "].IsItemSKU' id='TirItems_" + index + "__IsItemSKU' type='hidden' />" +
                 "<input name='TirItems[" + index + "].ItemVariationId' id='TirItems_" + index + "__ItemVariationId' type='hidden' />" +
+                "<input name='TirItems[" + index + "].PlaceInDepartment' id='TirItems_" + index + "__PlaceInDepartment' type='hidden' />" +
                 "</td>";
             //DifItem
             var html = ' <tr data-id=' + index + '>' +
@@ -316,6 +325,68 @@
             activateSerial();
             reActivateDelete();
         });
+        var treeInitialData;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Departments",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "الإدارات",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        }
+        $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked          
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
+        });
+        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
+        populateTree(0, "jstree", requestUrl);
+
+        $("#btnTreeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        $("#selectDepartment").on("click", function () {
+            var index = parseInt($("#ItemModalIndex").val());
+            $("#TirItems_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            $('#itemTreeSelector').modal('toggle');
+            return true;
+        });
         //open pop up
         $('#itemSearcher').on('show', function () {
             //clear DDL required value label
@@ -329,6 +400,7 @@
             var isItemDescription = $("#TirItems_" + index + "__IsItemDescription").val();
             var isItemSKU = $("#TirItems_" + index + "__IsItemSKU").val();
             var itemVariationId = $("#TirItems_" + index + "__ItemVariationId").val();
+            var placeInDepartment = $("#TirItems_" + index + "__PlaceInDepartment").val();
             // clear selected department label text
             $("#txtSelectedDepartmentName").text("");
 
@@ -346,7 +418,7 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
-            //$("#txtSelectedDepartmentName").text("Selected :" + $("#TirItems_" + index + "__PlaceInDepartment").val());
+            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         function getModalControlsValues() {
             //get item's values
@@ -418,30 +490,31 @@
                     });
                     t4 = t3 * t2;
                     var indexCell = "<td style='display:none'>" +
-                                    "<input name='TirItems.Index' type='hidden' value='" + index + "' />" +
-                                    "<input name='TirItems[" + index + "].IsItemDescription' id='TirItems_" + index + "__IsItemDescription' type='hidden' />" +
-                                    "<input name='TirItems[" + index + "].IsItemSKU' id='TirItems_" + index + "__IsItemSKU' type='hidden' />" +
-                                    "<input name='TirItems[" + index + "].ItemVariationId' id='TirItems_" + index + "__ItemVariationId' type='hidden' />" +
-                                    "</td>";
+                        "<input name='TirItems.Index' type='hidden' value='" + index + "' />" +
+                        "<input name='TirItems[" + index + "].IsItemDescription' id='TirItems_" + index + "__IsItemDescription' type='hidden' />" +
+                        "<input name='TirItems[" + index + "].IsItemSKU' id='TirItems_" + index + "__IsItemSKU' type='hidden' />" +
+                        "<input name='TirItems[" + index + "].ItemVariationId' id='TirItems_" + index + "__ItemVariationId' type='hidden' />" +
+                        "<input name='TirItems[" + index + "].PlaceInDepartment' id='TirItems_" + index + "__PlaceInDepartment' type='hidden' />" +
+                        "</td>";
                     //TirItem
                     var html = '<tr data-id=' + index + '>' +
-                               indexCell +
-                               '<td>' +
-                               '<div class="control-group row-fluid">' +
-                               '<div class="span1">' +
-                               '<label class="control-label serialNumber"  ></label>' +
-                               '</div></div>' +
-                               '</td>' +
-                               '<td> <textarea rows="2"  class="auto-resize"  id="TirItems_' + index + '__ItemDetails" name="TirItems[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                               '<button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                               '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                               '</td>' +
-                               '<td class="quantity"> ' +
-                               '<input class="n1" type="text" value=' + t2 + ' id="TirItems_' + index + '__ItemQty" name="TirItems[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                               '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                               '</td>' +
-                               '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                               '</td></tr>';
+                        indexCell +
+                        '<td>' +
+                        '<div class="control-group row-fluid">' +
+                        '<div class="span1">' +
+                        '<label class="control-label serialNumber"  ></label>' +
+                        '</div></div>' +
+                        '</td>' +
+                        '<td> <textarea rows="2"  class="auto-resize"  id="TirItems_' + index + '__ItemDetails" name="TirItems[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                        '<button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                        '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                        '</td>' +
+                        '<td class="quantity"> ' +
+                        '<input class="n1" type="text" value=' + t2 + ' id="TirItems_' + index + '__ItemQty" name="TirItems[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                        '<span class="field-validation-valid required" data-valmsg-for="TirItems[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                        '</td>' +
+                        '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                        '</td></tr>';
 
                     index = index + 1;
                     if (count == 0) {
@@ -534,5 +607,8 @@
                 $("#SubmitRecord").show();
             }
         }
+    }
+    function jsTreeClick(event) {
+        return true;
     }
 </script>

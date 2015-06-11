@@ -15,6 +15,7 @@ namespace EPMS.Models.ModelMapers
                 ItemQty = source.ItemQty,
                 IsItemDescription = source.IsItemDescription,
                 IsItemSKU = source.IsItemSKU,
+                PlaceInDepartment = source.PlaceInDepartment,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

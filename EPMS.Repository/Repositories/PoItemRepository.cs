@@ -6,20 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    public class PurchaseOrderRepository : BaseRepository<PurchaseOrder>, IPurchaseOrderRepository
+    public class PoItemRepository : BaseRepository<PurchaseOrderItem>, IPoItemRepository
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public PurchaseOrderRepository(IUnityContainer container)
+        public PoItemRepository(IUnityContainer container)
             : base(container)
         {
         }
@@ -27,16 +25,16 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<PurchaseOrder> DbSet
+        protected override IDbSet<PurchaseOrderItem> DbSet
         {
-            get { return db.PurchaseOrders; }
+            get { return db.PurchaseOrderItems; }
         }
 
         #endregion
 
-        public PurchaseOrderListResponse GetAllPoS(PurchaseOrderSearchRequest searchRequest)
+        public IEnumerable<PurchaseOrderItem> GetPoItemsByPoId(long id)
         {
-            return null;
+            return DbSet.Where(x => x.PurchaseOrderId == id).ToList();
         }
     }
 }

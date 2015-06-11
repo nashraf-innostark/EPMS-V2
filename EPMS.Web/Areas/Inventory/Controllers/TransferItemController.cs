@@ -34,7 +34,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index()
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("TIRCompleteListView");
+            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("TIRDetailUpdate");
             TransferItemListViewModel viewModel = new TransferItemListViewModel
             {
                 SearchRequest = new TransferItemSearchRequest()
@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             searchRequest.SearchString = Request["search"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.CompleteAccess = userPermissionsSet.Contains("TIRCompleteListView");
+            searchRequest.CompleteAccess = userPermissionsSet.Contains("TIRDetailUpdate");
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
             IEnumerable<Models.TIR> transferItemList =
@@ -70,7 +70,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Detail(long? id)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("IRFViewComplete");
+            ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("TIRDetailUpdate");
             TransferItemCreateViewModel viewModel = new TransferItemCreateViewModel();
             if (id != null)
             {
@@ -105,7 +105,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 Id = viewModel.Tir.Id,
                 NotesEn = notesE,
                 NotesAr = notesA,
-                Status = viewModel.Tir.Status
+                Status = viewModel.Tir.Status,
+                ManagerId = User.Identity.GetUserId()
             };
             if (tirService.UpdateTirStatus(itemStatus))
             {
@@ -151,6 +152,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 if (viewModel.Tir.Id > 0)
                 {
+                    // Update
                     viewModel.Tir.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecUpdatedDate = DateTime.Now;
 
@@ -162,13 +164,13 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
                 else
                 {
+                    // Add
                     viewModel.Tir.Status = 3;
                     viewModel.Tir.RecCreatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecCreatedDate = DateTime.Now;
 
                     viewModel.Tir.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecUpdatedDate = DateTime.Now;
-                    viewModel.Tir.ManagerId = User.Identity.GetUserId();
                     TempData["message"] = new MessageViewModel
                     {
                         Message = Resources.Inventory.TIR.TIRCreate.RecordAdded,
@@ -177,7 +179,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
 
                 var tirToBeSaved = viewModel.CreateFromClientToServer();
-                if (tirService.SaveDIF(tirToBeSaved))
+                if (tirService.SavePO(tirToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");
