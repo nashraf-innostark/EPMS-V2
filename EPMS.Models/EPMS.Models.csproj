@@ -271,12 +271,14 @@
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\ContactListResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
+    <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
     <Compile Include="ResponseModels\IRFCreateResponse.cs" />
+    <Compile Include="ResponseModels\IrfHistoryResponse.cs" />
     <Compile Include="ResponseModels\ItemReleaseResponse.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
     <Compile Include="ResponseModels\ItemVariationResponse.cs" />
@@ -304,6 +306,8 @@
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />
+    <Compile Include="ResponseModels\RfiHistoryResponse.cs" />
+    <Compile Include="ResponseModels\RifHistoryResponse.cs" />
     <Compile Include="ResponseModels\RifRequestResponse.cs" />
     <Compile Include="ResponseModels\RfiRequestResponse.cs" />
     <Compile Include="ResponseModels\RIFCreateResponse.cs" />
@@ -311,6 +315,7 @@
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
     <Compile Include="ResponseModels\TIRCreateResponse.cs" />
+    <Compile Include="ResponseModels\TirHistoryResponse.cs" />
     <Compile Include="ResponseModels\TIRListResponse.cs" />
     <Compile Include="ResponseModels\VendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />

@@ -95,5 +95,10 @@ namespace EPMS.Repository.Repositories
             }
             return new DifRequestResponse { Difs = queryData, TotalCount = DbSet.Count(query) };
         }
+
+        public IEnumerable<DIF> GetDifHistoryData()
+        {
+            return DbSet.Where(x => x.Status == 3 || x.Status == 2).ToList();
+        }
     }
 }

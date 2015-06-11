@@ -8,10 +8,13 @@ using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.TIR;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
+using TIR = EPMS.Web.Models.TIR;
+using TIRItem = EPMS.Web.Models.TIRItem;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -66,7 +69,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
-        [SiteAuthorize(PermissionKey = "TIRDetail")]
+        [SiteAuthorize(PermissionKey = "TIRDetailUpdate,TIRDetail")]
         public ActionResult Detail(long? id)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
@@ -153,6 +156,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 if (viewModel.Tir.Id > 0)
                 {
                     // Update
+                    viewModel.Tir.Status = 3;
                     viewModel.Tir.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecUpdatedDate = DateTime.Now;
 
@@ -196,6 +200,25 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 return View(viewModel);
             }
+        }
+        [SiteAuthorize(PermissionKey = "TIRHistory")]
+        public ActionResult History()
+        {
+            TirHistoryResponse response = tirService.GetTirHistoryData();
+            TirHistoryViewModel viewModel = new TirHistoryViewModel
+            {
+                Tirs = response.Tirs != null ? response.Tirs.Select(x=>x.CreateFromServerToClient()).ToList() : new List<TIR>(),
+                RecentTir = response.RecentTir != null ? response.RecentTir.CreateFromServerToClient() : new TIR(),
+                TirItems = response.TirItems.Any() ? response.TirItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<TIRItem>()
+            };
+            if (response.RecentTir != null)
+            {
+                viewModel.RecentTir.RequesterName = response.RequesterNameEn;
+                viewModel.RecentTir.RequesterNameAr = response.RequesterNameAr;
+                viewModel.RecentTir.ManagerName = response.ManagerNameEn;
+                viewModel.RecentTir.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
         }
     }
 }

@@ -45,6 +45,42 @@ namespace EPMS.Implementation.Services
             return difs;
         }
 
+        public DifHistoryResponse GetDifHistoryData()
+        {
+            var difs = repository.GetDifHistoryData();
+            var difList = difs as IList<DIF> ?? difs.ToList();
+            if (!difList.Any())
+            {
+                return new DifHistoryResponse
+                {
+                    Difs = null,
+                    DifItems = new List<DIFItem>(),
+                    RecentDif = null
+                };
+            }
+            DifHistoryResponse response = new DifHistoryResponse { Difs = difList };
+            var difItems = difList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.DIFItems).FirstOrDefault();
+            response.DifItems = difItems;
+            response.RecentDif = difList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (response.RecentDif != null)
+            {
+                if (!string.IsNullOrEmpty(response.RecentDif.ManagerId))
+                {
+                    var manager = aspNetUserRepository.Find(response.RecentDif.ManagerId).Employee;
+                    response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
+                                           manager.EmployeeLastNameE;
+                    response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
+                                           manager.EmployeeLastNameA;
+                }
+                var employee = response.RecentDif.AspNetUser.Employee;
+                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                       employee.EmployeeLastNameE;
+                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                       employee.EmployeeLastNameA;
+            }
+            return response;
+        }
+
         public DIF FindDIFById(long id)
         {
             return repository.Find(id);

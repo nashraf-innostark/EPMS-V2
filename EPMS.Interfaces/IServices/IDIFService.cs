@@ -9,6 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<DIF> GetAll();
         DifRequestResponse LoadAllDifs(DifSearchRequest searchRequest);
+        DifHistoryResponse GetDifHistoryData();
         DIF FindDIFById(long id);
         bool SaveDIF(DIF rif);
         bool AddDIF(DIF rif);

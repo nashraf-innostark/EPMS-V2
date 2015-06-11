@@ -78,7 +78,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET Details: Inventory/IRF
-        [SiteAuthorize(PermissionKey = "ItemReleaseDetail")]
+        [SiteAuthorize(PermissionKey = "IRFViewComplete,ItemReleaseDetail")]
         public ActionResult Detail(long? id)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
@@ -86,7 +86,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             ItemReleaseDetailViewModel viewModel = new ItemReleaseDetailViewModel();
             if (id != null)
             {
-                var itemRelease = itemReleaseService.FindItemReleaseById((long) id);
+                var itemRelease = itemReleaseService.FindItemReleaseById((long)id);
                 if (itemRelease != null)
                 {
                     viewModel.ItemRelease = itemRelease.CreateFromServerToClient();
@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
                     IsUpdated = true
                 };
-                return RedirectToAction("Detail", new { id = viewModel.ItemRelease.ItemReleaseId});
+                return RedirectToAction("Detail", new { id = viewModel.ItemRelease.ItemReleaseId });
             }
             return View(viewModel);
         }
@@ -146,9 +146,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             IRFCreateResponse response;
             if (id != null)
             {
-                response = itemReleaseService.GetCreateResponse((long) id);
+                response = itemReleaseService.GetCreateResponse((long)id);
                 viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
-                viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x=>x.CreateFromServerToClient()).ToList();
+                viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient()).ToList();
                 viewModel.Rfis = response.Rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
             }
             else
@@ -196,6 +196,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
                 var itemReleaseToUpdate = viewModel.ItemRelease.CreateFromClientToServer();
                 itemReleaseToUpdate.QuantityReleased = 0;
+                itemReleaseToUpdate.Status = 3;
                 foreach (var itemReleaseDetail in viewModel.ItemReleaseDetails)
                 {
                     itemReleaseToUpdate.QuantityReleased += itemReleaseDetail.ItemQty;
@@ -241,8 +242,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
                     itemReleaseDetail.RecUpdatedDate = DateTime.Now;
                 }
-                var itemReleaseDetailsToAdd = viewModel.ItemReleaseDetails.Select(x=>x.CreateFromClientToServer()).ToList();
-                if (itemReleaseService.AddItemRelease(itemReleaseToAdd,itemReleaseDetailsToAdd))
+                var itemReleaseDetailsToAdd = viewModel.ItemReleaseDetails.Select(x => x.CreateFromClientToServer()).ToList();
+                if (itemReleaseService.AddItemRelease(itemReleaseToAdd, itemReleaseDetailsToAdd))
                 {
                     TempData["message"] = new MessageViewModel
                     {
@@ -253,6 +254,25 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
             }
             return View();
+        }
+        [SiteAuthorize(PermissionKey = "IRFHistory")]
+        public ActionResult History()
+        {
+            IrfHistoryResponse response = itemReleaseService.GetIrfHistoryData();
+            IrfHistoryViewModel viewModel = new IrfHistoryViewModel
+            {
+                Irfs = response.Irfs != null ? response.Irfs.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemRelease>(),
+                RecentIrf = response.RecentIrf != null ? response.RecentIrf.CreateFromServerToClient() : new ItemRelease(),
+                IrfItems = response.IrfItems.Any() ? response.IrfItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemReleaseDetail>()
+            };
+            if (response.RecentIrf != null)
+            {
+                viewModel.RecentIrf.RequesterName = response.RequesterNameEn;
+                viewModel.RecentIrf.RequesterNameAr = response.RequesterNameAr;
+                viewModel.RecentIrf.ManagerName = response.ManagerNameEn;
+                viewModel.RecentIrf.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
         }
 
         #endregion
@@ -275,6 +295,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
             }
             return Json(customerRfis, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Get ItemWarehouse
+
+        public JsonResult GetItemWarehouse(long itemVariationId)
+        {
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

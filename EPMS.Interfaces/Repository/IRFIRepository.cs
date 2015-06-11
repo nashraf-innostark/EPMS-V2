@@ -8,5 +8,6 @@ namespace EPMS.Interfaces.Repository
     public interface IRFIRepository : IBaseRepository<RFI, long>
     {
         RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest);
+        IEnumerable<RFI> GetRfiHistoryData();
     }
 }

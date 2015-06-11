@@ -9,6 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<RIF> GetAll();
         RifRequestResponse LoadAllRifs(RifSearchRequest searchRequest);
+        RifHistoryResponse GetRifHistoryData();
         RIF FindRIFById(long id);
         bool SaveRIF(RIF rif);
         bool AddRIF(RIF rif);

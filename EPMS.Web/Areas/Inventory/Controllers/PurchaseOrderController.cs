@@ -99,6 +99,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 if (viewModel.Order.PurchaseOrderId > 0)
                 {
+                    // Update
+                    viewModel.Order.Status = 3;
                     viewModel.Order.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Order.RecUpdatedDate = DateTime.Now;
 
@@ -110,6 +112,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
                 else
                 {
+                    // Add
                     viewModel.Order.Status = 3;
                     viewModel.Order.RecCreatedBy = User.Identity.GetUserId();
                     viewModel.Order.RecCreatedDate = DateTime.Now;

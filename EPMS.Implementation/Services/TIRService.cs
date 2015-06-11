@@ -57,6 +57,42 @@ namespace EPMS.Implementation.Services
             return repository.GetAllTirs(searchRequest);
         }
 
+        public TirHistoryResponse GetTirHistoryData()
+        {
+            var tirs = repository.GetTirHistoryData();
+            var tirList = tirs as IList<TIR> ?? tirs.ToList();
+            if (!tirList.Any())
+            {
+                return new TirHistoryResponse
+                {
+                    Tirs = null,
+                    TirItems = new List<TIRItem>(),
+                    RecentTir = null
+                };
+            }
+            TirHistoryResponse response = new TirHistoryResponse { Tirs = tirList };
+            var tirItems = tirList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.TIRItems).FirstOrDefault();
+            response.TirItems = tirItems;
+            response.RecentTir = tirList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (response.RecentTir != null)
+            {
+                if (!string.IsNullOrEmpty(response.RecentTir.ManagerId))
+                {
+                    var manager = aspNetUserRepository.Find(response.RecentTir.ManagerId).Employee;
+                    response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
+                                           manager.EmployeeLastNameE;
+                    response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
+                                           manager.EmployeeLastNameA;
+                }
+                var employee = response.RecentTir.AspNetUser.Employee;
+                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                       employee.EmployeeLastNameE;
+                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                       employee.EmployeeLastNameA;
+            }
+            return response;
+        }
+
         public TIR Find(long id)
         {
             return repository.Find(id);

@@ -16,14 +16,16 @@ namespace EPMS.Implementation.Services
         private readonly IItemReleaseRepository itemReleaseRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IItemReleaseDetailRepository detailRepository;
+        private readonly IAspNetUserRepository aspNetUserRepository;
 
-        public ItemReleaseService(ICustomerRepository customerRepository, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository)
+        public ItemReleaseService(ICustomerRepository customerRepository, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository)
         {
             this.customerRepository = customerRepository;
             this.itemVariationRepository = itemVariationRepository;
             this.itemReleaseRepository = itemReleaseRepository;
             this.ordersRepository = ordersRepository;
             this.detailRepository = detailRepository;
+            this.aspNetUserRepository = aspNetUserRepository;
         }
 
         public IRFCreateResponse GetCreateResponse(long id)
@@ -62,6 +64,42 @@ namespace EPMS.Implementation.Services
         public IEnumerable<ItemRelease> GetAll()
         {
             return itemReleaseRepository.GetAll();
+        }
+
+        public IrfHistoryResponse GetIrfHistoryData()
+        {
+            var irfs = itemReleaseRepository.GetIrfHistoryData();
+            var irfList = irfs as IList<ItemRelease> ?? irfs.ToList();
+            if (!irfList.Any())
+            {
+                return new IrfHistoryResponse
+                {
+                    Irfs = null,
+                    IrfItems = new List<ItemReleaseDetail>(),
+                    RecentIrf = null
+                };
+            }
+            IrfHistoryResponse response = new IrfHistoryResponse { Irfs = irfList };
+            var irfItems = irfList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.ItemReleaseDetails).FirstOrDefault();
+            response.IrfItems = irfItems;
+            response.RecentIrf = irfList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (response.RecentIrf != null)
+            {
+                if (!string.IsNullOrEmpty(response.RecentIrf.ManagerId))
+                {
+                    var manager = aspNetUserRepository.Find(response.RecentIrf.ManagerId).Employee;
+                    response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
+                                           manager.EmployeeLastNameE;
+                    response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
+                                           manager.EmployeeLastNameA;
+                }
+                var employee = aspNetUserRepository.Find(response.RecentIrf.RecCreatedBy).Employee;
+                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                       employee.EmployeeLastNameE;
+                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                       employee.EmployeeLastNameA;
+            }
+            return response;
         }
 
         public ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest)

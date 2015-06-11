@@ -10,7 +10,7 @@ using FaceSharp.Api.Extensions;
 
 namespace EPMS.Implementation.Services
 {
-    public class RFIService:IRFIService
+    public class RFIService : IRFIService
     {
         private readonly IRFIRepository rfiRepository;
         private readonly IItemVariationRepository itemVariationRepository;
@@ -30,7 +30,7 @@ namespace EPMS.Implementation.Services
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RFIService(IRFIRepository rfiRepository,IItemVariationRepository itemVariationRepository,IRFIItemRepository rfiItemRepository,ICustomerRepository customerRepository,IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository)
+        public RFIService(IRFIRepository rfiRepository, IItemVariationRepository itemVariationRepository, IRFIItemRepository rfiItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository)
         {
             this.rfiRepository = rfiRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -52,6 +52,45 @@ namespace EPMS.Implementation.Services
             return rfis;
         }
 
+        public RfiHistoryResponse GetRfiHistoryData()
+        {
+            var rfis = rfiRepository.GetRfiHistoryData();
+            
+            if (rfis == null)
+            {
+                return new RfiHistoryResponse
+                {
+                    Rfis = null,
+                    RfiItems = new List<RFIItem>(),
+                    RecentRfi = null
+                };
+            }
+            RfiHistoryResponse response = new RfiHistoryResponse();
+            var rfiList = rfis as IList<RFI> ?? rfis.ToList();
+            response.Rfis = rfiList;
+            var rfiItems = rfiList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RFIItems).FirstOrDefault();
+            response.RfiItems = rfiItems;
+            response.RecentRfi = rfiList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+
+            if (response.RecentRfi != null)
+            {
+                if (!string.IsNullOrEmpty(response.RecentRfi.ManagerId))
+                {
+                    var manager = aspNetUserRepository.Find(response.RecentRfi.ManagerId).Employee;
+                    response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
+                                           manager.EmployeeLastNameE;
+                    response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
+                                           manager.EmployeeLastNameA;
+                }
+                var employee = response.RecentRfi.AspNetUser.Employee;
+                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                       employee.EmployeeLastNameE;
+                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                       employee.EmployeeLastNameA;
+            }
+            return response;
+        }
+
         public RFI FindRFIById(long id)
         {
             return rfiRepository.Find(id);
@@ -61,7 +100,7 @@ namespace EPMS.Implementation.Services
             if (rfi.RFIId > 0)
             {
                 //update
-                if(UpdateRFI(rfi))//if RFI updated, then update the items
+                if (UpdateRFI(rfi))//if RFI updated, then update the items
                     RfiItemUpdation(rfi);
             }
             else
@@ -130,7 +169,7 @@ namespace EPMS.Implementation.Services
 
         public RFICreateResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
         {
-            RFICreateResponse rfiResponse=new RFICreateResponse
+            RFICreateResponse rfiResponse = new RFICreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
             };
@@ -141,14 +180,14 @@ namespace EPMS.Implementation.Services
                 {
                     rfiResponse.Rfi = rfi;
                     var employee = aspNetUserRepository.Find(rfi.RecCreatedBy).Employee;
-                    rfiResponse.RequesterNameE = employee!=null?employee.EmployeeFirstNameE+" "+employee.EmployeeMiddleNameE+" "+employee.EmployeeLastNameE:"";
+                    rfiResponse.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
                     rfiResponse.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
 
                     if (rfi.Order != null)
                     {
                         rfiResponse.OrderNo = rfi.Order.OrderNo;
                         var customer = rfi.Order.Customer;
-                        rfiResponse.CustomerNameE = customer != null ? customer.CustomerNameE:"";
+                        rfiResponse.CustomerNameE = customer != null ? customer.CustomerNameE : "";
                         rfiResponse.CustomerNameA = customer != null ? customer.CustomerNameA : "";
 
                     }

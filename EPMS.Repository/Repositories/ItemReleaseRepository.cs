@@ -112,6 +112,11 @@ namespace EPMS.Repository.Repositories
             return new ItemReleaseResponse { ItemReleases = releases, TotalDisplayRecords = DbSet.Count(queery), TotalRecords = DbSet.Count(queery) };
         }
 
+        public IEnumerable<ItemRelease> GetIrfHistoryData()
+        {
+            return DbSet.Where(x => x.Status == 1 || x.Status == 2).ToList();
+        }
+
         #endregion
     }
 }

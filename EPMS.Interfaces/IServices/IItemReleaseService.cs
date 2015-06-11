@@ -11,6 +11,7 @@ namespace EPMS.Interfaces.IServices
         IRFCreateResponse GetCreateResponse(long id);
         ItemRelease FindItemReleaseById(long id);
         IEnumerable<ItemRelease> GetAll();
+        IrfHistoryResponse GetIrfHistoryData();
         ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest);
         bool AddItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails);
         bool UpdateItemReleaseStatus(ItemReleaseStatus releaseStatus);

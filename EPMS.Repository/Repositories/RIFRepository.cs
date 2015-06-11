@@ -101,5 +101,10 @@ namespace EPMS.Repository.Repositories
             }
             return new RifRequestResponse { Rifs = queryData, TotalCount = DbSet.Count(query) };
         }
+
+        public IEnumerable<RIF> GetRifHistoryData()
+        {
+            return DbSet.Where(x => x.Status == 3 || x.Status == 2).ToList();
+        }
     }
 }

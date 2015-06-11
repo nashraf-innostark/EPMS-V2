@@ -6,8 +6,10 @@ using System.Configuration;
 using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Inventory.DIF;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.DIF;
 using EPMS.WebBase.Mvc;
@@ -211,6 +213,25 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 return View();
             }
+        }
+        [SiteAuthorize(PermissionKey = "DIFHistory")]
+        public ActionResult History()
+        {
+            DifHistoryResponse response = rifService.GetDifHistoryData();
+            DifHistoryViewModel viewModel = new DifHistoryViewModel
+            {
+                Difs = response.Difs != null ? response.Difs.Select(x => x.CreateDifServerToClient()).ToList() : new List<DIF>(),
+                RecentDif = response.RecentDif != null ? response.RecentDif.CreateDifServerToClient() : new DIF(),
+                DifItems = response.DifItems.Any() ? response.DifItems.Select(x => x.CreateDifItemDetailsServerToClient()).ToList() : new List<DIFItem>()
+            };
+            if (response.RecentDif != null)
+            {
+                viewModel.RecentDif.RequesterName = response.RequesterNameEn;
+                viewModel.RecentDif.RequesterNameAr = response.RequesterNameAr;
+                viewModel.RecentDif.ManagerName = response.ManagerNameEn;
+                viewModel.RecentDif.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
         }
     }
 }
