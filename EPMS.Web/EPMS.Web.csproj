@@ -425,6 +425,7 @@
     <Compile Include="Models\ItemRelease.cs" />
     <Compile Include="Models\ItemReleaseDetail.cs" />
     <Compile Include="Models\ItemVariation.cs" />
+    <Compile Include="Models\ItemWarehouse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
     <Compile Include="Models\LicenseControlPanel.cs" />
     <Compile Include="Models\Manufacturer.cs" />
