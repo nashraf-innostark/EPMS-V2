@@ -12,8 +12,10 @@ namespace EPMS.Implementation.Services
     public class DIFService:IDIFService
     {
         private readonly IDIFRepository repository;
+        private readonly IDIFHistoryRepository historyRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IDIFItemRepository itemRepository;
+        private readonly IDIFItemHistoryRepository itemHistoryRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
 
         #region Constructor
@@ -25,12 +27,14 @@ namespace EPMS.Implementation.Services
         /// <param name="itemVariationRepository"></param>
         /// <param name="itemRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public DIFService(IDIFRepository repository, IItemVariationRepository itemVariationRepository, IDIFItemRepository itemRepository,IAspNetUserRepository aspNetUserRepository)
+        public DIFService(IDIFRepository repository, IItemVariationRepository itemVariationRepository, IDIFItemRepository itemRepository,IAspNetUserRepository aspNetUserRepository, IDIFHistoryRepository historyRepository, IDIFItemHistoryRepository itemHistoryRepository)
         {
             this.repository = repository;
             this.itemVariationRepository = itemVariationRepository;
             this.itemRepository = itemRepository;
             this.aspNetUserRepository = aspNetUserRepository;
+            this.historyRepository = historyRepository;
+            this.itemHistoryRepository = itemHistoryRepository;
         }
 
         #endregion
@@ -146,6 +150,13 @@ namespace EPMS.Implementation.Services
 
         public bool UpdateDIF(DIF dif)
         {
+            var previous = repository.Find(dif.Id);
+            if (previous.Status != dif.Status)
+            {
+                var difToAdd = dif.CreateFromDifToDifHistory(previous.DIFItems);
+                historyRepository.Add(difToAdd);
+                historyRepository.SaveChanges();
+            }
             repository.Update(dif);
             repository.SaveChanges();
             return true;

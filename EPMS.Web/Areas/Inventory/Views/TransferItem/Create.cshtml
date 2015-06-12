@@ -56,7 +56,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Tir.RequesterName, new { @id = "", @class ="disableOnLoad" })
+                    @Html.TextBoxFor(m => m.Tir.RequesterName, new { @id = "", @class = "disableOnLoad" })
                 </div>
             </div>
         </div>
@@ -256,12 +256,10 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    var status;
     var siteUrl;
     var textTillParent = "";
     var dir = '@direction';
     $(document).ready(function () {
-        status = '@Model.Tir.Status';
         siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
         var itemId = parseInt('@Model.Tir.Id');
@@ -279,7 +277,7 @@
             result = notesA.replace(regex, "");
             $("#NotesA").val(result);
             $("#SubmitRecord").hide();
-            if (status != 2 && '@userPermissionsSet.Contains("TIRCreate")' == 'True') {
+            if ('@userPermissionsSet.Contains("TIRCreate")' == 'True') {
                 $("#EditRecord").show();
             }
             //
@@ -359,7 +357,7 @@
                 "initially_open": ["parentNode"]
             }
         }).bind("select_node.jstree", function (event, data) {
-            //`data.rslt.obj` is the jquery extended node that was clicked          
+            //`data.rslt.obj` is the jquery extended node that was clicked
             if (data.inst._get_parent(data.rslt.obj) != -1) {
                 var parents = [];
                 textTillParent = "";
@@ -556,9 +554,7 @@
         }
     });
     $("#edit").on('click', function () {
-        if (status != 2) {
-            AddEdit();
-        }
+        AddEdit();
     });
     $('#tiny').elrte({
         lang: "en",
@@ -582,30 +578,28 @@
         });
     }
     function AddEdit() {
-        if (status != 2) {
-            var isDetail;
-            var val = '@userPermissionsSet.Contains("TIRCreate")';
-            if (val == 'True') {
-                isDetail = false;
-            } else {
-                isDetail = true;
-            }
-            if (isDetail) {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("TIRCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail) {
 
-            } else {
-                $('.btnDisable').removeClass('disableList');
-                $('.' + 'toBeDisable' + ':input').attr('readonly', false);
-                $("#Notes").hide();
-                $("#CKNotes").show();
-                CKEDITOR.replace('NotesEn', {
-                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                });
-                CKEDITOR.replace('NotesAr', {
-                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                });
-                $("#EditRecord").hide();
-                $("#SubmitRecord").show();
-            }
+        } else {
+            $('.btnDisable').removeClass('disableList');
+            $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+            $("#Notes").hide();
+            $("#CKNotes").show();
+            CKEDITOR.replace('NotesEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('NotesAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#EditRecord").hide();
+            $("#SubmitRecord").show();
         }
     }
     function jsTreeClick(event) {

@@ -233,15 +233,18 @@
                 </div>
             </div>
         </div>
-        <div id="SubmitTir" class="control-group row-fluid" style="display: none">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Submit</button>
+        @if (!string.IsNullOrEmpty(Model.RecentTir.ManagerId))
+        {
+            <div id="SubmitTir" class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Submit</button>
+                </div>
             </div>
-        </div>
-        <div id="EditTir" class="control-group row-fluid" style="display: none">
-            <div class="span3 span-inset">
-                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.RecentTir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
+            <div id="EditTir" class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.RecentTir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
+                </div>
             </div>
-        </div>
+        }
     </div>
 }

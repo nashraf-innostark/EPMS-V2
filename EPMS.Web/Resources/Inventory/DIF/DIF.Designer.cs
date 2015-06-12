@@ -97,6 +97,15 @@ namespace EPMS.Web.Resources.Inventory.DIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Defectiveness.
         /// </summary>
         public static string Defectiveness {
@@ -232,6 +241,24 @@ namespace EPMS.Web.Resources.Inventory.DIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Defective Item Form (DIF) History.
+        /// </summary>
+        public static string HistoryDifTableTitle {
+            get {
+                return ResourceManager.GetString("HistoryDifTableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Defective Item Form (DIF).
+        /// </summary>
+        public static string HistoryPageTitle {
+            get {
+                return ResourceManager.GetString("HistoryPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Manager Name.
         /// </summary>
         public static string InventoryManagerName {
@@ -300,6 +327,24 @@ namespace EPMS.Web.Resources.Inventory.DIF {
         public static string RequestStatus {
             get {
                 return ResourceManager.GetString("RequestStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial.
+        /// </summary>
+        public static string Serial {
+            get {
+                return ResourceManager.GetString("Serial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
     }

@@ -133,6 +133,24 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Release From (IRF).
+        /// </summary>
+        public static string HistoryHeader {
+            get {
+                return ResourceManager.GetString("HistoryHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Release From (IRF) History.
+        /// </summary>
+        public static string HistoryTableHeader {
+            get {
+                return ResourceManager.GetString("HistoryTableHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Manager Name : .
         /// </summary>
         public static string InventoryManagerName {
@@ -147,6 +165,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         public static string IRF {
             get {
                 return ResourceManager.GetString("IRF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Release From (IRF) Number.
+        /// </summary>
+        public static string IRFFormNo {
+            get {
+                return ResourceManager.GetString("IRFFormNo", resourceCulture);
             }
         }
         
@@ -241,6 +268,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requester.
+        /// </summary>
+        public static string Requester {
+            get {
+                return ResourceManager.GetString("Requester", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester Name : .
         /// </summary>
         public static string RequesterName {
@@ -286,11 +322,56 @@ namespace EPMS.Web.Resources.Inventory.IRF.View {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accepted.
+        /// </summary>
+        public static string StatusAccepted {
+            get {
+                return ResourceManager.GetString("StatusAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string StatusPending {
+            get {
+                return ResourceManager.GetString("StatusPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rejected.
+        /// </summary>
+        public static string StatusRejected {
+            get {
+                return ResourceManager.GetString("StatusRejected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string TableHeaderDate {
+            get {
+                return ResourceManager.GetString("TableHeaderDate", resourceCulture);
             }
         }
         

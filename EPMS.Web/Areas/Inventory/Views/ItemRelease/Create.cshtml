@@ -311,7 +311,6 @@
     var siteUrl;
     var orderNo = [];
     var dir = '@direction';
-    var status = '@Model.ItemRelease.Status';
     var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
     var textTillParent = "";
     $(document).ready(function () {
@@ -337,7 +336,7 @@
             $("#CKEditor").hide();
             $("#CKEditor").hide();
             $("#SubmitRecord").hide();
-            if (status != 2 && '@userPermissionsSet.Contains("ItemReleaseCreate")' == 'True') {
+            if ('@userPermissionsSet.Contains("ItemReleaseCreate")' == 'True') {
                 $("#EditRecord").show();
             }
             //
@@ -422,7 +421,7 @@
                 "initially_open": ["parentNode"]
             }
         }).bind("select_node.jstree", function (event, data) {
-            //`data.rslt.obj` is the jquery extended node that was clicked          
+            //`data.rslt.obj` is the jquery extended node that was clicked
             if (data.inst._get_parent(data.rslt.obj) != -1) {
                 var parents = [];
                 textTillParent = "";
@@ -652,38 +651,34 @@
     });
 
     function AddEdit() {
-        if (status != 2) {
-            var isDetail;
-            var val = '@userPermissionsSet.Contains("ItemReleaseCreate")';
-            if (val == 'True') {
-                isDetail = false;
-            } else {
-                isDetail = true;
-            }
-            if (isDetail) {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("ItemReleaseCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail) {
 
-            } else {
-                $('.btnDisable').removeClass('disableList');
-                $('.disableDdl').select2('enable');
-                $('.' + 'toBeDisable' + ':input').attr('readonly', false);
-                CKEDITOR.replace('DeliveryInfoEn', {
-                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                });
-                CKEDITOR.replace('DeliveryInfoAr', {
-                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                });
-                //$("#detailEditor").hide();
-                //$("#CKEditor").show();
-                $("#EditRecord").hide();
-                $("#SubmitRecord").show();
-            }
+        } else {
+            $('.btnDisable').removeClass('disableList');
+            $('.disableDdl').select2('enable');
+            $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+            CKEDITOR.replace('DeliveryInfoEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('DeliveryInfoAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            //$("#detailEditor").hide();
+            //$("#CKEditor").show();
+            $("#EditRecord").hide();
+            $("#SubmitRecord").show();
         }
     }
 
     $("#edit").on('click', function () {
-        if (status != 2) {
-            AddEdit();
-        }
+        AddEdit();
     });
     $('#tiny').elrte({
         lang: "en",

@@ -201,4 +201,31 @@
   <data name="Print" xml:space="preserve">
     <value>Print</value>
   </data>
+  <data name="HistoryHeader" xml:space="preserve">
+    <value>Item Release From (IRF)</value>
+  </data>
+  <data name="HistoryTableHeader" xml:space="preserve">
+    <value>Item Release From (IRF) History</value>
+  </data>
+  <data name="IRFFormNo" xml:space="preserve">
+    <value>Item Release From (IRF) Number</value>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>Requester</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="StatusAccepted" xml:space="preserve">
+    <value>Accepted</value>
+  </data>
+  <data name="StatusPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="StatusRejected" xml:space="preserve">
+    <value>Rejected</value>
+  </data>
+  <data name="TableHeaderDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
 </root>

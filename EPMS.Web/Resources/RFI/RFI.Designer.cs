@@ -250,6 +250,24 @@ namespace EPMS.Web.Resources.RFI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to History RFI (Request for Item).
+        /// </summary>
+        public static string HistoryPageTitle {
+            get {
+                return ResourceManager.GetString("HistoryPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for Item (RIF) History.
+        /// </summary>
+        public static string HistoryTableTitle {
+            get {
+                return ResourceManager.GetString("HistoryTableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Import.
         /// </summary>
         public static string Import {

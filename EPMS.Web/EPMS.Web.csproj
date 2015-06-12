@@ -3926,6 +3926,7 @@
     <EmbeddedResource Include="Resources\RFI\RFI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RFI.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.ar.resx" />
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.resx">

@@ -115,7 +115,9 @@
     <Compile Include="Common\RifRequestByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
     <Compile Include="DomainModels\DIF.cs" />
+    <Compile Include="DomainModels\DIFHistory.cs" />
     <Compile Include="DomainModels\DIFItem.cs" />
+    <Compile Include="DomainModels\DIFItemHistory.cs" />
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemRelease.cs" />
     <Compile Include="DomainModels\ItemReleaseDetail.cs" />
@@ -130,6 +132,8 @@
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
     <Compile Include="DomainModels\TransferItemStatus.cs" />
+    <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
+    <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />

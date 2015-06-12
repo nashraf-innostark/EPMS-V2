@@ -123,6 +123,8 @@
     <Compile Include="Repository\ICustomerRepository.cs" />
     <Compile Include="Repository\IDashboardWidgetPreferencesRepository.cs" />
     <Compile Include="Repository\IDepartmentRepository.cs" />
+    <Compile Include="Repository\IDIFHistoryRepository.cs" />
+    <Compile Include="Repository\IDIFItemHistoryRepository.cs" />
     <Compile Include="Repository\IEmployeeJobHistoryRepository.cs" />
     <Compile Include="Repository\IEmployeeRepository.cs" />
     <Compile Include="Repository\IEmployeeRequestDetailRepository.cs" />

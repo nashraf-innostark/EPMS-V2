@@ -97,6 +97,15 @@ namespace EPMS.Web.Resources.Inventory.RIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Returned Item Form (RIF) View.
         /// </summary>
         public static string DetailsPageBreadCrumb {
@@ -147,6 +156,24 @@ namespace EPMS.Web.Resources.Inventory.RIF {
         public static string EditPageTitle {
             get {
                 return ResourceManager.GetString("EditPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to History Returned Item Form (RIF).
+        /// </summary>
+        public static string HistoryPageTitle {
+            get {
+                return ResourceManager.GetString("HistoryPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Returned Item Form (RIF) History.
+        /// </summary>
+        public static string HistoryTableTitle {
+            get {
+                return ResourceManager.GetString("HistoryTableTitle", resourceCulture);
             }
         }
         
@@ -282,6 +309,24 @@ namespace EPMS.Web.Resources.Inventory.RIF {
         public static string RIFReplied {
             get {
                 return ResourceManager.GetString("RIFReplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial.
+        /// </summary>
+        public static string Serial {
+            get {
+                return ResourceManager.GetString("Serial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
     }
