@@ -148,6 +148,7 @@
     <Compile Include="Repositories\InventoryDepartmentRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
     <Compile Include="Repositories\ItemImageRepository.cs" />
+    <Compile Include="Repositories\ItemReleaseDetailRepository.cs" />
     <Compile Include="Repositories\ItemManufacturerRepository.cs" />
     <Compile Include="Repositories\ItemReleaseRepository.cs" />
     <Compile Include="Repositories\ItemVariationRepository.cs" />
@@ -165,10 +166,12 @@
     <Compile Include="Repositories\NotificationRecipientRepository.cs" />
     <Compile Include="Repositories\NotificationRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Repositories\PoItemRepository.cs" />
     <Compile Include="Repositories\PreRequisitTaskRepository.cs" />
     <Compile Include="Repositories\ProjectDocumentRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\ProjectTaskRepository.cs" />
+    <Compile Include="Repositories\PurchaseOrderRepository.cs" />
     <Compile Include="Repositories\QuickLaunchItemRepository.cs" />
     <Compile Include="Repositories\QuotationItemRepository.cs" />
     <Compile Include="Repositories\QuotationRepository.cs" />
@@ -181,6 +184,8 @@
     <Compile Include="Repositories\SizeRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\TaskEmployeeRepository.cs" />
+    <Compile Include="Repositories\TIRItemRepository.cs" />
+    <Compile Include="Repositories\TIRRepository.cs" />
     <Compile Include="Repositories\UserPrefrencesRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />
     <Compile Include="Repositories\UserStore.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.ModelMappers;
 using System.Configuration;
 using System.Globalization;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Inventory.RIF;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.RIF;
 using EPMS.WebBase.Mvc;
@@ -220,6 +222,25 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 return View();
             }
+        }
+        [SiteAuthorize(PermissionKey = "RIFHistory")]
+        public ActionResult History()
+        {
+            RifHistoryResponse response = rifService.GetRifHistoryData();
+            RifHistoryViewModel viewModel = new RifHistoryViewModel
+            {
+                Rifs = response.Rifs != null ? response.Rifs.Select(x => x.CreateRifServerToClient()).ToList() : new List<RIF>(),
+                RecentRif = response.RecentRif != null ? response.RecentRif.CreateRifServerToClient() : new RIF(),
+                RifItems = response.RifItems.Any() ? response.RifItems.Select(x => x.CreateRifItemDetailsServerToClient()).ToList() : new List<RIFItem>()
+            };
+            if (response.RecentRif != null)
+            {
+                viewModel.RecentRif.RequesterName = response.RequesterNameEn;
+                viewModel.RecentRif.RequesterNameAr = response.RequesterNameAr;
+                viewModel.RecentRif.ManagerName = response.ManagerNameEn;
+                viewModel.RecentRif.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
         }
         private bool CheckHasCustomerModule()
         {

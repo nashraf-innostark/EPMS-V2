@@ -9,6 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<RFI> GetAll();
         RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest);
+        RfiHistoryResponse GetRfiHistoryData();
         RFI FindRFIById(long id);
         bool SaveRFI(RFI rfi);
         bool AddRFI(RFI rfi);

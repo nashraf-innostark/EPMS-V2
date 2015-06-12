@@ -9,7 +9,7 @@ using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
-    public class RIFService:IRIFService
+    public class RIFService : IRIFService
     {
         private readonly IRIFRepository rifRepository;
         private readonly IItemVariationRepository itemVariationRepository;
@@ -51,6 +51,44 @@ namespace EPMS.Implementation.Services
             return rifs;
         }
 
+        public RifHistoryResponse GetRifHistoryData()
+        {
+            var rifs = rifRepository.GetRifHistoryData();
+            
+            var rifList = rifs as IList<RIF> ?? rifs.ToList();
+            if (!rifList.Any())
+            {
+                return new RifHistoryResponse
+                {
+                    Rifs = null,
+                    RifItems = new List<RIFItem>(),
+                    RecentRif = null
+                };
+            }
+
+            RifHistoryResponse response = new RifHistoryResponse {Rifs = rifList};
+            var rifItems = rifList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RIFItems).FirstOrDefault();
+            response.RifItems = rifItems;
+            response.RecentRif = rifList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (response.RecentRif != null)
+            {
+                if (!string.IsNullOrEmpty(response.RecentRif.ManagerId))
+                {
+                    var manager = aspNetUserRepository.Find(response.RecentRif.ManagerId).Employee;
+                    response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
+                                           manager.EmployeeLastNameE;
+                    response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
+                                           manager.EmployeeLastNameA;
+                }
+                var employee = response.RecentRif.AspNetUser.Employee;
+                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                       employee.EmployeeLastNameE;
+                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                       employee.EmployeeLastNameA;
+            }
+            return response;
+        }
+
         public RIF FindRIFById(long id)
         {
             return rifRepository.Find(id);
@@ -60,7 +98,7 @@ namespace EPMS.Implementation.Services
             if (rfi.RIFId > 0)
             {
                 //update
-                if(UpdateRIF(rfi))//if RFI updated, then update the items
+                if (UpdateRIF(rfi))//if RFI updated, then update the items
                     RifItemUpdation(rfi);
             }
             else
@@ -129,7 +167,7 @@ namespace EPMS.Implementation.Services
 
         public RifCreateResponse LoadRifResponseData(long? id, bool loadCustomersAndOrders)
         {
-            RifCreateResponse rifResponse=new RifCreateResponse
+            RifCreateResponse rifResponse = new RifCreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
             };

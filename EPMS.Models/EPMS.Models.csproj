@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
+    <Compile Include="Common\ItemReleaseByColumn.cs" />
+    <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
     <Compile Include="Common\PofRequestByColumn.cs" />
     <Compile Include="Common\EmployeeByColumn.cs" />
@@ -117,14 +119,21 @@
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemRelease.cs" />
     <Compile Include="DomainModels\ItemReleaseDetail.cs" />
+    <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\POF.cs" />
     <Compile Include="DomainModels\POFItem.cs" />
+    <Compile Include="DomainModels\PurchaseOrder.cs" />
+    <Compile Include="DomainModels\PurchaseOrderItem.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
+    <Compile Include="DomainModels\TransferItemStatus.cs" />
+    <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
+    <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
     <Compile Include="RequestModels\DifSearchRequest.cs" />
@@ -234,6 +243,7 @@
     <Compile Include="RequestModels\PayrollSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationSearchRequest.cs" />
     <Compile Include="RequestModels\TaskSearchRequest.cs" />
+    <Compile Include="RequestModels\TransferItemSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
     <Compile Include="RequestModels\WarehouseRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
@@ -261,12 +271,15 @@
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\ContactListResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
+    <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
     <Compile Include="ResponseModels\IRFCreateResponse.cs" />
+    <Compile Include="ResponseModels\IrfHistoryResponse.cs" />
+    <Compile Include="ResponseModels\ItemReleaseResponse.cs" />
     <Compile Include="ResponseModels\ItemVariationDropDownListItem.cs" />
     <Compile Include="ResponseModels\ItemVariationResponse.cs" />
     <Compile Include="ResponseModels\JobApplicantResponse.cs" />
@@ -284,19 +297,26 @@
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
+    <Compile Include="ResponseModels\POCreateResponse.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />
+    <Compile Include="ResponseModels\PurchaseOrderListResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />
+    <Compile Include="ResponseModels\RfiHistoryResponse.cs" />
+    <Compile Include="ResponseModels\RifHistoryResponse.cs" />
     <Compile Include="ResponseModels\RifRequestResponse.cs" />
     <Compile Include="ResponseModels\RfiRequestResponse.cs" />
     <Compile Include="ResponseModels\RIFCreateResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
+    <Compile Include="ResponseModels\TIRCreateResponse.cs" />
+    <Compile Include="ResponseModels\TirHistoryResponse.cs" />
+    <Compile Include="ResponseModels\TIRListResponse.cs" />
     <Compile Include="ResponseModels\VendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
   </ItemGroup>

@@ -5,6 +5,7 @@ using System.Web;
 using EPMS.Implementation.Identity;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.ModelMappers;
 using System.Configuration;
 using System.Globalization;
@@ -230,6 +231,27 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View();
             }
         }
+
+        [SiteAuthorize(PermissionKey = "RFIHistory")]
+        public ActionResult History()
+        {
+            RfiHistoryResponse response = rfiService.GetRfiHistoryData();
+            RFIHistoryViewModel viewModel = new RFIHistoryViewModel
+            {
+                Rfis = response.Rfis.Select(x=>x.CreateRfiServerToClient()).ToList(),
+                RfiItems = response.RfiItems.Select(x=>x.CreateRfiItemDetailsServerToClient()).ToList(),
+                RecentRfi = response.RecentRfi.CreateRfiServerToClient(),
+            };
+            if (viewModel.RecentRfi != null)
+            {
+                viewModel.RecentRfi.RequesterName = response.RequesterNameEn;
+                viewModel.RecentRfi.RequesterNameAr = response.RequesterNameAr;
+                viewModel.RecentRfi.ManagerName = response.ManagerNameEn;
+                viewModel.RecentRfi.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
+        }
+
         private bool CheckHasCustomerModule()
         {
             // check license

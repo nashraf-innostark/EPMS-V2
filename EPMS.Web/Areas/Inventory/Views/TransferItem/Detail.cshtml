@@ -1,0 +1,204 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.TIR.TransferItemCreateViewModel
+
+@{
+    ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRDetail.PageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    int i = 0;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Inventory/TransferItem/Index">
+                @EPMS.Web.Resources.Inventory.TIR.TIRDetail.BCTitleIndex
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">
+                @EPMS.Web.Resources.Inventory.TIR.TIRDetail.BCTitleView
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Header</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Detail", "TransferItem", FormMethod.Post, new {@class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data"}))
+{
+    <div class="container-fluid">
+        @Html.HiddenFor(model => model.Tir.Id)
+        <div class="control-group row-fluid">
+            <div class="form-legend centTitle">
+                @EPMS.Web.Resources.Inventory.TIR.TIRDetail.Title
+            </div>
+            <div class="invoice-info">
+                <div class="controls">
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Print</a>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span6">
+                        <div class="invoice-from">
+                            <table>
+                                <tbody>
+                                    @if (ViewBag.IsAllowedCompleteView)
+                                    {
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.ManagerName</th>
+                                            <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.EmployeeName</th>
+                                            <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.EmployeeId</th>
+                                        <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.TIRNo</th>
+                                        <td>@Model.Tir.FormNumber</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.TransferReason</th>
+                                        <td>@(direction == "ltr" ? Model.Tir.DefectivenessE : Model.Tir.DefectivenessA)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="invoice-infos">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Date</th>
+                                        <td>@Model.Tir.RecCreatedDate.ToShortDateString()</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequesterName</th>
+                                        <td>@Model.Tir.RequesterName</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid" id="ress">
+            <div class="span12">
+                <table class="table table-striped table-responsive ">
+                    <thead class="">
+                        <tr>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Serial</th>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.ItemName</th>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.ItemCode</th>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.SKUCode</th>
+                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.TransferQuantity</th>
+                        </tr>
+                    </thead>
+                    <tbody class="qouteAdd">
+                        @foreach (var tirItem in Model.TirItems.ToList())
+                        {
+                            <tr>
+                                <td>
+                                    @(i += 1)
+                                </td>
+                                <td>
+                                    @tirItem.ItemName
+                                </td>
+                                <td>
+                                    @tirItem.ItemCode
+                                </td>
+                                <td>
+                                    @tirItem.ItemSKUCode
+                                </td>
+                                <td>
+                                    @tirItem.ItemQty
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NotesEn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Tir.NotesE, new { @id = "NotesEn", @class = "toBeDisable" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Tir.NotesA, new { @id = "NotesAr", @class = "toBeDisable" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequestStatus</label>
+                </div>
+                <div class="span2">
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Tir.Status, new[] { new SelectListItem { Text = "Pending", Value = "3" }, new SelectListItem { Text = "Accept", Value = "1" }, new SelectListItem { Text = "Reject", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Tir.Status, new[] { new SelectListItem { Text = "ريثما", Value = "3" }, new SelectListItem { Text = "استعرض", Value = "1" }, new SelectListItem { Text = "رفض", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div id="SubmitTir" class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Submit</button>
+            </div>
+        </div>
+        <div id="EditTir" class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.Tir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function() {
+        if ('@ViewBag.IsAllowedCompleteView' != "True") {
+            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.disableDdl').select2('disable');
+            $("#SubmitTir").hide();
+            $("#EditTir").hide();
+        }
+    });
+</script>

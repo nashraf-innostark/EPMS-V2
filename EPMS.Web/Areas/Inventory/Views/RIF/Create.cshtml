@@ -157,6 +157,7 @@
                                         @Html.HiddenFor(m => m.RifItem[i].IsItemSKU)
                                         @Html.HiddenFor(m => m.RifItem[i].ItemVariationId)
                                         @Html.HiddenFor(m => m.RifItem[i].RIFItemId)
+                                        @Html.HiddenFor(m => m.RifItem[i].PlaceInDepartment)
                                     </td>
                                     <td>
                                         <div class="control-group row-fluid">
@@ -191,6 +192,7 @@
                                     <input name='RifItem[0].IsItemDescription' id='RifItem_0__IsItemDescription' type='hidden' />
                                     <input name='RifItem[0].IsItemSKU' id='RifItem_0__IsItemSKU' type='hidden' />
                                     <input name='RifItem[0].ItemVariationId' id='RifItem_0__ItemVariationId' type='hidden' />
+                                    <input name='RifItem[0].PlaceInDepartment' id='RifItem_0__PlaceInDepartment' type='hidden' />
                                 </td>
                                 <td>
                                     <div class="control-group row-fluid">
@@ -266,7 +268,11 @@
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
+    var siteUrl;
+    var textTillParent = "";
+    var dir = '@direction';
     $(document).ready(function () {
+        siteUrl = $("#siteURL").val();
         CKEDITOR.replace('RFINotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
@@ -345,12 +351,73 @@
 
             $('#itemSearcher').modal('toggle');
         };
+        var treeInitialData;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Departments",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "الإدارات",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        }
+        $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked          
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
+        });
+        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
+        populateTree(0, "jstree", requestUrl);
 
+        $("#btnTreeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
 
         $("#SaveChanges").on("click", function () {
-            if (validateSelect2Ddl("#ItemVariationDropDownList")) {
+            if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
                 getModalControlsValues();
             }
+        });
+        $("#selectDepartment").on("click", function () {
+            var index = parseInt($("#ItemModalIndex").val());
+            $("#RifItem_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            $('#itemTreeSelector').modal('toggle');
+            return true;
         });
 
         //open pop up
@@ -366,6 +433,7 @@
             var isItemDescription = $("#RifItem_" + index + "__IsItemDescription").val();
             var isItemSKU = $("#RifItem_" + index + "__IsItemSKU").val();
             var itemVariationId = $("#RifItem_" + index + "__ItemVariationId").val();
+            var placeInDepartment = $("#RifItem_" + index + "__PlaceInDepartment").val();
 
             //set modal fields according to modal values
             $("#ItemVariationDropDownList").select2("val", itemVariationId); //set the value
@@ -381,6 +449,7 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
+            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         //add data in row from popup
         $('.trAdder').on("click", function () {
@@ -390,6 +459,7 @@
                 "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
                 "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' type='hidden' />" +
                 "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' type='hidden' />" +
+                "<input name='RifItem[" + index + "].PlaceInDepartment' id='RifItem_" + index + "__PlaceInDepartment' type='hidden' />" +
                 "</td>";
             //RifItem
             var html = ' <tr data-id=' + index + '>' +
@@ -477,30 +547,31 @@
 
                     t4 = t3 * t2;
                     var indexCell = "<td style='display:none'>" +
-                                    "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
-                                    "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
-                                    "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' type='hidden' />" +
-                                    "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' type='hidden' />" +
-                                    "</td>";
+                        "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
+                        "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
+                        "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' type='hidden' />" +
+                        "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' type='hidden' />" +
+                        "<input name='RifItem[" + index + "].PlaceInDepartment' id='RifItem_" + index + "__PlaceInDepartment' type='hidden' />" +
+                        "</td>";
                     //RifItem
                     var html = '<tr data-id=' + index + '>' +
-                               indexCell +
-                               '<td>' +
-                               '<div class="control-group row-fluid">' +
-                               '<div class="span1">' +
-                               '<label class="control-label serialNumber"  ></label>' +
-                               '</div></div>' +
-                               '</td>' +
-                               '<td> <textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                               '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                               '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                               '</td>' +
-                               '<td class="quantity"> ' +
-                               '<input class="n1" type="text" value=' + t2 + ' id="RifItem_' + index + '__ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                               '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                               '</td>' +
-                               '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                               '</td></tr>';
+                        indexCell +
+                        '<td>' +
+                        '<div class="control-group row-fluid">' +
+                        '<div class="span1">' +
+                        '<label class="control-label serialNumber"  ></label>' +
+                        '</div></div>' +
+                        '</td>' +
+                        '<td> <textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                        '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                        '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                        '</td>' +
+                        '<td class="quantity"> ' +
+                        '<input class="n1" type="text" value=' + t2 + ' id="RifItem_' + index + '__ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                        '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                        '</td>' +
+                        '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                        '</td></tr>';
 
                     index = index + 1;
                     if (count == 0) {
@@ -534,169 +605,7 @@
         height: 200,
         toolbar: 'tiny'
     });
-
-    $(function () {
-        $("#jstree").jstree({
-            "json_data": {
-                "data": [
-                    {
-                        "data": {
-                            "title": "Uniform",
-                            "attr": { "href": "#" }
-                        },
-                        "children": [
-                            {
-                                "data": {
-                                    "title": "Boys",
-                                    "attr": { "href": "#" }
-                                }
-                            },
-                            {
-                                "data": {
-                                    "title": "Girls",
-                                    "attr": { "href": "#" }
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "data": {
-                            "title": "Labratory",
-                            "attr": { "href": "#" }
-                        },
-                        "attr": { "id": "node1" },
-                        "children": [
-                            {
-                                "data": {
-                                    "title": "Account Settings",
-                                    "attr": { "href": "#" }
-                                }
-                            },
-                            {
-                                "data": {
-                                    "title": "Warnings and Blocks",
-                                    "attr": { "href": "#" }
-                                }
-                            },
-                            {
-                                "data": {
-                                    "title": "Physics",
-                                    "attr": { "href": "#" }
-                                },
-                                "attr": { "id": "node2" },
-                                "children": [
-                                    {
-                                        "data": {
-                                            "title": "Glass",
-                                            "attr": { "href": "#" }
-                                        },
-                                        "attr": { "id": "node3" },
-                                        "children": [
-
-                                            {
-                                                "data": {
-                                                    "title": "Beakers",
-                                                    "attr": { "href": "#" }
-                                                }
-                                                ,
-                                                "attr": { "id": "node4" },
-                                                "children": [
-
-                                                    {
-                                                        "data": {
-                                                            "title": "Beakers",
-                                                            "attr": { "href": "#" }
-                                                        }
-
-                                                        ,
-                                                        "attr": { "id": "node4" },
-                                                        "children": [
-
-                                                            {
-                                                                "data": {
-                                                                    "title": "Sku1",
-                                                                    "attr": { "href": "#" }
-                                                                }
-
-
-
-
-                                                            },
-                                                            {
-                                                                "data": {
-                                                                    "title": "Sku2",
-                                                                    "attr": { "href": "#" }
-                                                                }
-                                                            }
-                                                        ]
-
-
-
-
-                                                    },
-                                                    {
-                                                        "data": {
-                                                            "title": "Flasks",
-                                                            "attr": { "href": "#" }
-                                                        }
-                                                    }
-                                                ]
-
-
-
-                                            },
-                                            {
-                                                "data": {
-                                                    "title": "Flasks",
-                                                    "attr": { "href": "#" }
-                                                }
-                                            }
-                                        ]
-
-                                    },
-                                    {
-                                        "data": {
-                                            "title": "I Forgot My Password",
-                                            "attr": { "href": "#" }
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "title": "Can You Send Me a Copy",
-                                            "attr": { "href": "#" }
-                                        }
-                                    },
-                                    {
-                                        "data": {
-                                            "title": "How Can I ",
-                                            "attr": { "href": "#" }
-                                        }
-                                    }
-                                ]
-                            },
-                            {
-                                "data": {
-                                    "title": "Deactivating, Deleting, Saving",
-                                    "attr": { "href": "#" }
-                                }
-                            },
-                            {
-                                "data": {
-                                    "title": "Downloading Your Info",
-                                    "attr": { "href": "#" }
-                                }
-                            }
-                        ]
-                    }
-                ]
-            },
-            "plugins": ["themes", "json_data", "ui"],
-            "ui": {
-                "initially_select": ["node3"]
-            },
-            "core": {
-                "initially_open": ["node1", "node2"]
-            }
-        });
-    });
+    function jsTreeClick(event) {
+        return true;
+    }
 </script>

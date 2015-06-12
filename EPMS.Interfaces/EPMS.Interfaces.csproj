@@ -87,10 +87,12 @@
     <Compile Include="IServices\INotificationService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
+    <Compile Include="IServices\IPoItemService.cs" />
     <Compile Include="IServices\IPreRequisitTaskService.cs" />
     <Compile Include="IServices\IProjectDocumentService.cs" />
     <Compile Include="IServices\IProjectService.cs" />
     <Compile Include="IServices\IProjectTaskService.cs" />
+    <Compile Include="IServices\IPurchaseOrderService.cs" />
     <Compile Include="IServices\IQuotationItemService.cs" />
     <Compile Include="IServices\IQuotationService.cs" />
     <Compile Include="IServices\IDIFService.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="IServices\ISizeService.cs" />
     <Compile Include="IServices\IStatusService.cs" />
     <Compile Include="IServices\ITaskEmployeeService.cs" />
+    <Compile Include="IServices\ITIRItemService.cs" />
+    <Compile Include="IServices\ITIRService.cs" />
     <Compile Include="IServices\IUserPrefrencesService.cs" />
     <Compile Include="IServices\IQuickLaunchItemService.cs" />
     <Compile Include="IServices\IVendorItemsService.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="Repository\IInventoryDepartmentRepository.cs" />
     <Compile Include="Repository\IInventoryItemRepository.cs" />
     <Compile Include="Repository\IItemImageRepository.cs" />
+    <Compile Include="Repository\IItemReleaseDetailRepository.cs" />
     <Compile Include="Repository\IItemManufacturerRepository.cs" />
     <Compile Include="Repository\IItemReleaseRepository.cs" />
     <Compile Include="Repository\IItemVariationRepository.cs" />
@@ -143,10 +148,12 @@
     <Compile Include="Repository\INotificationRecipientRepository.cs" />
     <Compile Include="Repository\INotificationRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IPoItemRepository.cs" />
     <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />
     <Compile Include="Repository\IProjectTaskRepository.cs" />
+    <Compile Include="Repository\IPurchaseOrderRepository.cs" />
     <Compile Include="Repository\IQuickLaunchItemRepository.cs" />
     <Compile Include="Repository\IQuotationItemRepository.cs" />
     <Compile Include="Repository\IQuotationRepository.cs" />
@@ -159,6 +166,8 @@
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />
+    <Compile Include="Repository\ITIRItemRepository.cs" />
+    <Compile Include="Repository\ITIRRepository.cs" />
     <Compile Include="Repository\IUserPrefrencesRepository.cs" />
     <Compile Include="Repository\IVendorItemsRepository.cs" />
     <Compile Include="Repository\IVendorRepository.cs" />

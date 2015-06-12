@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Inventory {
+namespace EPMS.Web.Resources.Inventory.TIR {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace EPMS.Web.Resources.Inventory {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class IRFCreate {
+    public class TIRCreate {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal IRFCreate() {
+        internal TIRCreate() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Inventory {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRFCreate", typeof(IRFCreate).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.TIR.TIRCreate", typeof(TIRCreate).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,56 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) List.
+        /// </summary>
+        public static string BCTitle {
+            get {
+                return ResourceManager.GetString("BCTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
-        public static string Add {
+        public static string BtnAdd {
             get {
-                return ResourceManager.GetString("Add", resourceCulture);
+                return ResourceManager.GetString("BtnAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string BtnEdit {
+            get {
+                return ResourceManager.GetString("BtnEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string BtnImport {
+            get {
+                return ResourceManager.GetString("BtnImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Items From Order.
+        /// </summary>
+        public static string BtnImportFromOrder {
+            get {
+                return ResourceManager.GetString("BtnImportFromOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string BtnSubmit {
+            get {
+                return ResourceManager.GetString("BtnSubmit", resourceCulture);
             }
         }
         
@@ -88,24 +133,6 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delivery Information.
-        /// </summary>
-        public static string DeliveryInfo {
-            get {
-                return ResourceManager.GetString("DeliveryInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delivery Information arabic.
-        /// </summary>
-        public static string DeliveryInfoArabic {
-            get {
-                return ResourceManager.GetString("DeliveryInfoArabic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Excel Import.
         /// </summary>
         public static string ExcelImport {
@@ -115,38 +142,11 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory IRF Create Form.
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR).
         /// </summary>
         public static string Header {
             get {
                 return ResourceManager.GetString("Header", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import.
-        /// </summary>
-        public static string Import {
-            get {
-                return ResourceManager.GetString("Import", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Import From Order.
-        /// </summary>
-        public static string ImportFromOrder {
-            get {
-                return ResourceManager.GetString("ImportFromOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inventory IRF Edit.
-        /// </summary>
-        public static string InventoryIRFEdit {
-            get {
-                return ResourceManager.GetString("InventoryIRFEdit", resourceCulture);
             }
         }
         
@@ -160,25 +160,7 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form (IRF) Number.
-        /// </summary>
-        public static string ItemReleaseFormNumber {
-            get {
-                return ResourceManager.GetString("ItemReleaseFormNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Order #.
-        /// </summary>
-        public static string Order {
-            get {
-                return ResourceManager.GetString("Order", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Inventory IRF Create.
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) Create.
         /// </summary>
         public static string PageTitle {
             get {
@@ -187,29 +169,29 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quantity.
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) Edit.
         /// </summary>
-        public static string Quantity {
+        public static string PageTitleEdit {
             get {
-                return ResourceManager.GetString("Quantity", resourceCulture);
+                return ResourceManager.GetString("PageTitleEdit", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requester.
+        ///   Looks up a localized string similar to Transfer Item Request has been successfully Updated..
         /// </summary>
-        public static string Requester {
+        public static string RecordAdded {
             get {
-                return ResourceManager.GetString("Requester", resourceCulture);
+                return ResourceManager.GetString("RecordAdded", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RFI #.
+        ///   Looks up a localized string similar to Transfer Item Request has been successfully Updated..
         /// </summary>
-        public static string RFI {
+        public static string RecordUpdated {
             get {
-                return ResourceManager.GetString("RFI", resourceCulture);
+                return ResourceManager.GetString("RecordUpdated", resourceCulture);
             }
         }
         
@@ -223,20 +205,29 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Submit.
+        ///   Looks up a localized string similar to Transfer Quantity.
         /// </summary>
-        public static string Submit {
+        public static string TransferQuantity {
             get {
-                return ResourceManager.GetString("Submit", resourceCulture);
+                return ResourceManager.GetString("TransferQuantity", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warehouse.
+        ///   Looks up a localized string similar to Transfer Reason.
         /// </summary>
-        public static string Warehouse {
+        public static string TransferReason {
             get {
-                return ResourceManager.GetString("Warehouse", resourceCulture);
+                return ResourceManager.GetString("TransferReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transfer Reason in arabic.
+        /// </summary>
+        public static string TransferReasonAr {
+            get {
+                return ResourceManager.GetString("TransferReasonAr", resourceCulture);
             }
         }
     }

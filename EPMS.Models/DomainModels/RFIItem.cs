@@ -11,6 +11,7 @@ namespace EPMS.Models.DomainModels
         public long ItemQty { get; set; }
         public bool IsItemDescription { get; set; }
         public bool IsItemSKU { get; set; }
+        public string PlaceInDepartment { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }

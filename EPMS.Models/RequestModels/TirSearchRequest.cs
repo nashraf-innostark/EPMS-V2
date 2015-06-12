@@ -4,7 +4,10 @@ namespace EPMS.Models.RequestModels
 {
     public class TirSearchRequest : GetPagedListRequest
     {
+        public bool CompleteAccess { get; set; }
+        public string Direction { get; set; }
         public string Requester { get; set; }
+
         public TirRequestByColumn RequestByColumn
         {
             get

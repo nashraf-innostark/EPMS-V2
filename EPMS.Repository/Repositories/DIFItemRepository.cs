@@ -8,30 +8,30 @@ using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    //public class RIFItemRepository:BaseRepository<RIFItem>,IRIFItemRepository
-    //{
-    //     #region Constructor
-    //    /// <summary>
-    //    /// Constructor
-    //    /// </summary>
-    //    public RIFItemRepository(IUnityContainer container)
-    //        : base(container)
-    //    {
-    //    }
+    public class DIFItemRepository : BaseRepository<DIFItem>, IDIFItemRepository
+    {
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public DIFItemRepository(IUnityContainer container)
+            : base(container)
+        {
+        }
 
-    //    /// <summary>
-    //    /// Primary database set
-    //    /// </summary>
-    //    protected override IDbSet<RIFItem> DbSet
-    //    {
-    //        get { return db.RIFItem; }
-    //    }
+        /// <summary>
+        /// Primary database set
+        /// </summary>
+        protected override IDbSet<DIFItem> DbSet
+        {
+            get { return db.DIFItem; }
+        }
 
-    //    #endregion
-
-    //    public IEnumerable<RIFItem> GetRifItemsByRifId(long rfiId)
-    //    {
-    //        return DbSet.Where(x => x.RIFId == rfiId);
-    //    }
-    //}
+        #endregion
+        
+        public IEnumerable<DIFItem> GetDifItemsById(long rfiId)
+        {
+            return DbSet.Where(x => x.DIFId == rfiId);
+        }
+    }
 }

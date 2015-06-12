@@ -5,6 +5,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IDIFItemRepository:IBaseRepository<DIFItem,long>
     {
-        IEnumerable<DIFItem> GetRfiItemsByRfiId(long rfiId);
+        IEnumerable<DIFItem> GetDifItemsById(long rfiId);
     }
 }

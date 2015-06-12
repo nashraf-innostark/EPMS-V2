@@ -18,5 +18,15 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
+        public long QuantityReleased { get; set; }
+        public string Notes { get; set; }
+        public string NotesAr { get; set; }
+        public string ManagerId { get; set; }
+        public string RequesterNameE { get; set; }
+        public string RequesterNameA { get; set; }
+        public string ManagerName { get; set; }
+        public string ManagerNameAr { get; set; }
+        public string RequesterName { get; set; }
+        public string RequesterNameAr { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Inventory {
+namespace EPMS.Web.Resources.Inventory.TIR {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace EPMS.Web.Resources.Inventory {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class IRFIndex {
+    public class TIRIndex {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal IRFIndex() {
+        internal TIRIndex() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Inventory {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.IRFIndex", typeof(IRFIndex).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.TIR.TIRIndex", typeof(TIRIndex).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create New Item Release Form (IRF).
+        ///   Looks up a localized string similar to Create Transfer Item Request (TIR).
         /// </summary>
         public static string CreateNew {
             get {
@@ -70,38 +70,47 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Name.
+        ///   Looks up a localized string similar to Customer.
         /// </summary>
-        public static string EmployeeName {
+        public static string Customer {
             get {
-                return ResourceManager.GetString("EmployeeName", resourceCulture);
+                return ResourceManager.GetString("Customer", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Item Release Form (IRF) List.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
-        public static string Header {
+        public static string Date {
             get {
-                return ResourceManager.GetString("Header", resourceCulture);
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form (IRF) Number.
+        ///   Looks up a localized string similar to Transfer Item Request (TIR) Number.
         /// </summary>
-        public static string ItemReleaseFormNumber {
+        public static string FormNumber {
             get {
-                return ResourceManager.GetString("ItemReleaseFormNumber", resourceCulture);
+                return ResourceManager.GetString("FormNumber", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Warehouse Item Release Form (IRF) List.
+        ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR) List.
         /// </summary>
         public static string PageTitle {
             get {
                 return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requester.
+        /// </summary>
+        public static string Requester {
+            get {
+                return ResourceManager.GetString("Requester", resourceCulture);
             }
         }
         
@@ -115,29 +124,11 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shipment Details.
-        /// </summary>
-        public static string ShipmentDetails {
-            get {
-                return ResourceManager.GetString("ShipmentDetails", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total Quantity Released.
-        /// </summary>
-        public static string TotalQuantityReleased {
-            get {
-                return ResourceManager.GetString("TotalQuantityReleased", resourceCulture);
             }
         }
     }

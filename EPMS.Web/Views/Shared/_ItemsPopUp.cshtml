@@ -26,7 +26,8 @@
                     <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.ItemTreeSelector</label>
                 </div>
                 <div class="span8 span-inset">
-                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemTreeSelector">+</button>
+                    <button type="button" id="btnTreeSelector" class="btn itemAdder">+</button>
+                    <label id="txtSelectedDepartmentName"></label>
                 </div>
 
             </div>
@@ -70,7 +71,7 @@
     </div>
 
     <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">@EPMS.Web.Resources.RFI.RFI.Select</a>
+        <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.Web.Resources.RFI.RFI.Select</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
     </div>
 </div>

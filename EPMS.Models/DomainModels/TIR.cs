@@ -5,6 +5,7 @@ namespace EPMS.Models.DomainModels
     public class TIR
     {
         public long Id { get; set; }
+        public string FormNumber { get; set; }
         public string DefectivenessE { get; set; }
         public string DefectivenessA { get; set; }
         public string RecCreatedBy { get; set; }
@@ -13,7 +14,7 @@ namespace EPMS.Models.DomainModels
         public System.DateTime RecUpdatedDate { get; set; }
         public string NotesA { get; set; }
         public string NotesE { get; set; }
-        public int? Status { get; set; }
+        public int Status { get; set; }
         public string ManagerId { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser Manager { get; set; }

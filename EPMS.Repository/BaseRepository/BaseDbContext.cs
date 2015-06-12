@@ -134,5 +134,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<POFItem> POFItem { get; set; }
         public DbSet<TIR> TIR { get; set; }
         public DbSet<TIRItem> TIRItem { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
     }
 }

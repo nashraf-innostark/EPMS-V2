@@ -21,7 +21,9 @@ namespace EPMS.Web.Models
         public int Status { get; set; }
         public string CustomerName { get; set; }
         public string RequesterName { get; set; }
+        public string RequesterNameAr { get; set; }
         public string ManagerName { get; set; }
+        public string ManagerNameAr { get; set; }
         public string OrderNo { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecCreatedDateString { get; set; }

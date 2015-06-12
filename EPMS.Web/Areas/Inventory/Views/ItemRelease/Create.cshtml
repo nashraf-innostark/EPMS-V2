@@ -1,10 +1,16 @@
-﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseFormCreateViewModel
+﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseCreateViewModel
 
 @{
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    string[] userModules = (string[])HttpContext.Current.Session["UserModules"];
-    ViewBag.Title = EPMS.Web.Resources.Inventory.IRFCreate.PageTitle;
+    if (Model.ItemRelease.ItemReleaseId > 0)
+    {
+        ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitleEdit;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,8 +22,8 @@
             </a>
         </li>
         <li>
-            <a href="~/Inventory/ItemReleaseForm/Index">
-                @EPMS.Web.Resources.Inventory.IRFIndex.Header
+            <a href="~/Inventory/ItemRelease/Index">
+                @EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header
             </a>
         </li>
         <li class="current">
@@ -30,54 +36,69 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.IRFCreate.Header</small></h2>
+    @if (Model.ItemRelease.ItemReleaseId > 0)
+    {
+        <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.HeaderEdit</small></h2>
+    }
+    else
+    {
+        <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Header</small></h2>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
 @using (Html.BeginForm("Create", "ItemRelease", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
 {
+    @Html.HiddenFor(model => model.ItemRelease.ItemReleaseId)
+    @Html.HiddenFor(model => model.ItemRelease.Status)
+    @Html.HiddenFor(model => model.ItemRelease.QuantityReleased)
+    @Html.HiddenFor(model => model.ItemRelease.Notes)
+    @Html.HiddenFor(model => model.ItemRelease.NotesAr)
+    @Html.HiddenFor(model => model.ItemRelease.ManagerId)
+    @Html.HiddenFor(model => model.ItemRelease.RecCreatedBy)
+    @Html.HiddenFor(model => model.ItemRelease.RecCreatedDate)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="FormNumber">Item Release From (IRF) Number </label>
+                <label class="control-label" for="FormNumber">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemReleaseFormNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ItemRelease.FormNumber, new { @id = "FormNumber", @class = "toBeRequired disableOnLoad" })
+                    @Html.TextBoxFor(model => model.ItemRelease.FormNumber, new { @id = "FormNumber", @class = "disableOnLoad" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Requester">Requester </label>
+                <label class="control-label" for="Requester">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Requester</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="RfiId">RFI# </label>
+                <label class="control-label" for="RfiId">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RFI</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me", @id = "RfiId" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me", @id = "RfiId" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
                     }
                 </div>
             </div>
@@ -85,84 +106,84 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="OrderNumber">Order #</label>
+                <label class="control-label" for="OrderNumber">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Order</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ItemRelease.OrderNo, new { @id = "OrderNumber", @class = "toBeRequired disableOnLoad" })
+                    @Html.TextBoxFor(model => model.ItemRelease.OrderNo, new { @id = "OrderNumber", @class = "disableOnLoad" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="CreatedBy">Created By  </label>
+                <label class="control-label" for="CreatedBy">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.CreatedBy</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ItemRelease.CreatedBy, new { @id = "CreatedBy", @class = "toBeRequired disableOnLoad" })
+                    @Html.TextBoxFor(model => model.ItemRelease.CreatedBy, new { @id = "CreatedBy", @class = "disableOnLoad" })
                 </div>
             </div>
         </div>
-        <div id="detailEditor" style="display: none">
+        <div id="detailEditor">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfo">Delivery Information  </label>
+                    <label class="control-label" for="DeliveryInfo">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfo</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input type="text" id="DeliveryInfoEn" class="disableOnLoad" />
+                        <input type="text" id="DeliveryInfoE" class="disableOnLoad" />
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfoArabic">Delivery Information arabic </label>
+                    <label class="control-label" for="DeliveryInfoArabic">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfoArabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input type="text" id="DeliveryInfoAr" class="disableOnLoad" />
+                        <input type="text" id="DeliveryInfoA" class="disableOnLoad" />
                     </div>
                 </div>
             </div>
         </div>
-        <div id="CKEditor">
+        <div id="CKEditor" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfo">Delivery Information  </label>
+                    <label class="control-label" for="DeliveryInfo">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfo</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfo, new { @id = "DeliveryInfo", @class = "" })
+                        @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfo, new { @id = "DeliveryInfoEn", @class = "" })
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfoArabic">Delivery Information arabic </label>
+                    <label class="control-label" for="DeliveryInfoAr">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfoArabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfoArabic, new { @id = "DeliveryInfoArabic", @class = "" })
+                        @Html.TextAreaFor(model => model.ItemRelease.DeliveryInfoArabic, new { @id = "DeliveryInfoAr", @class = "" })
                     </div>
                 </div>
             </div>
         </div>
         <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Excel Import</label>
+                <label class="control-label">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ExcelImport</label>
             </div>
             <div class="span9">
                 <div class="controls elrte-wrapper">
-                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
+                    <textarea id="tiny" rows="2" class="auto-resize toBeDisable"></textarea>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" id="importEx" class="btn">Import</button>
+                <button type="button" id="importEx" class="btn btnDisable">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Import</button>
             </div>
             <div class="span3 span-inset">
-                <button type="button" id="itemFromOrder" class="btn">Import Items From Order</button>
+                <button type="button" id="itemFromOrder" class="btn">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ImportFromOrder</button>
             </div>
         </div>
         <div class="row-fluid" id="ress">
@@ -170,11 +191,11 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>Serial</th>
-                            <th style="width:50%">Item Details</th>
-                            <th>Warhouse</th>
-                            <th>Quantity</th>
-                            <th style="width:4%">Delete</th>
+                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Serial</th>
+                            <th style="width:50%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
+                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
+                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
+                            <th style="width:4%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
                         </tr>
                     </thead>
                     <tbody id="ItemReleaseDetailsTableBody" class="qouteAdd">
@@ -183,7 +204,7 @@
                             for (int i = 0; i < Model.ItemReleaseDetails.Count(); i++)
                             {
                                 <tr data-id=@i>
-                                    <td style='display:none'>
+                                    <td style='display: none'>
                                         <input name='ItemReleaseDetails.Index' type='hidden' value=@i />
 
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].IsItemDescription)
@@ -191,6 +212,8 @@
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemVariationId)
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].IRFDetailId)
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].PlaceInDepartment)
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].RecCreatedBy)
+                                        @Html.HiddenFor(m => m.ItemReleaseDetails[i].RecCreatedDate)
                                     </td>
                                     <td>
                                         <div class="control-group row-fluid">
@@ -200,70 +223,78 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.ItemReleaseDetails[i].ItemDetails, new { @class = "auto-resize", @rows = 2 })
-                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                        @Html.TextAreaFor(m => m.ItemReleaseDetails[i].ItemDetails, new { @class = "auto-resize toBeDisable", @rows = 2 })
+                                        <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher">+</button>
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].ItemDetails)
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse, new { @class = "auto-resize", @rows = 2 })
-                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector">+</button>
+                                        @Html.TextAreaFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse, new { @class = "auto-resize toBeDisable", @rows = 2 })
+                                        <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#warhouseSelector">+</button>
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.ItemReleaseDetails[i].ItemQty, new { @class = "n1" })
+                                        @Html.TextBoxFor(m => m.ItemReleaseDetails[i].ItemQty, new { @class = "n1 toBeDisable" })
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].ItemQty, null, new { @class = "required" })
                                     </td>
                                     <td class="delete">
-                                        <i class="icon-photon minus deleteRow"></i>
+                                        <i class="icon-photon minus deleteRow btnDisable"></i>
                                     </td>
                                 </tr>
                             }
                         }
-                        <tr>
-                            <td style='display:none'>
-                                <input name='ItemReleaseDetails.Index' type='hidden' value='0' />
-                                <input name='ItemReleaseDetails[0].IsItemDescription' id='ItemReleaseDetails_0__IsItemDescription' type='hidden' />
-                                <input name='ItemReleaseDetails[0].IsItemSKU' id='ItemReleaseDetails_0__IsItemSKU' type='hidden' />
-                                <input name='ItemReleaseDetails[0].ItemVariationId' id='ItemReleaseDetails_0__ItemVariationId' type='hidden' />
-                                <input name='ItemReleaseDetails[0].PlaceInDepartment' id='ItemReleaseDetails_0__PlaceInDepartment' type='hidden' />
-                            </td>
-                            <td>
-                                <div class="control-group row-fluid">
-                                    <div class="span1">
-                                        <label class="control-label serialNumber">1</label>
+                        else
+                        {
+                            <tr data-id="0">
+                                <td style='display:none'>
+                                    <input name='ItemReleaseDetails.Index' type='hidden' value='0' />
+                                    <input name='ItemReleaseDetails[0].IsItemDescription' id='ItemReleaseDetails_0__IsItemDescription' type='hidden' />
+                                    <input name='ItemReleaseDetails[0].IsItemSKU' id='ItemReleaseDetails_0__IsItemSKU' type='hidden' />
+                                    <input name='ItemReleaseDetails[0].ItemVariationId' id='ItemReleaseDetails_0__ItemVariationId' type='hidden' />
+                                    <input name='ItemReleaseDetails[0].PlaceInDepartment' id='ItemReleaseDetails_0__PlaceInDepartment' type='hidden' />
+                                </td>
+                                <td>
+                                    <div class="control-group row-fluid">
+                                        <div class="span1">
+                                            <label class="control-label serialNumber">1</label>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <textarea rows="2" id='ItemReleaseDetails_0__ItemDetails' class="auto-resize" data-val="true" data-val-required="The Item Details field is required." name="ItemReleaseDetails[0].ItemDetails"></textarea>
-                                <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemDetails" data-valmsg-replace="true"></span>
-                            </td>
-                            <td>
-                                <textarea rows="2" id='ItemReleaseDetails_0__PlaceInWarehouse' class="auto-resize" data-val="true" data-val-required="The Warehouse field is required." name="ItemReleaseDetails[0].PlaceInWarehouse"></textarea>
-                                <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector">+</button>
-                                <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].PlaceInWarehouse" data-valmsg-replace="true"></span>
-                            </td>
-                            <td class="quantity">
-                                <input id='ItemReleaseDetails_0__ItemQty' class="n1" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
-                                <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemQty" data-valmsg-replace="true"></span>
-                            </td>
-                            <td class="delete">
-                                <i class="icon-photon minus deleteRow"></i>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <textarea rows="3" id='ItemReleaseDetails_0__ItemDetails' class="auto-resize toBeDisable" data-val="true" data-val-required="The Item Details field is required." name="ItemReleaseDetails[0].ItemDetails"></textarea>
+                                    <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemDetails" data-valmsg-replace="true"></span>
+                                </td>
+                                <td>
+                                    <textarea rows="2" id='ItemReleaseDetails_0__PlaceInWarehouse' class="auto-resize toBeDisable" data-val="true" data-val-required="The Warehouse field is required." name="ItemReleaseDetails[0].PlaceInWarehouse"></textarea>
+                                    <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#warhouseSelector">+</button>
+                                    <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].PlaceInWarehouse" data-valmsg-replace="true"></span>
+                                </td>
+                                <td class="quantity">
+                                    <input id='ItemReleaseDetails_0__ItemQty' class="n1 toBeDisable" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                    <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemQty" data-valmsg-replace="true"></span>
+                                </td>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow btnDisable"></i>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder">Add</button>
+                    <button type="button" class="btn trAdder btnDisable">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Add</button>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        <div id="EditRecord" class="control-group row-fluid" style="display: none">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">Submit</button>
+                <button id="edit" type="button" class="btn">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Edit</button>
+            </div>
+        </div>
+        <div id="SubmitRecord" class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Submit</button>
             </div>
         </div>
     </div>
@@ -275,16 +306,45 @@
     @*@Html.Partial("_ItemsPopUp")*@
     @Html.Partial("_IRFWarehousePopUp")
 }
-
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     var siteUrl;
     var orderNo = [];
+    var dir = '@direction';
+    var status = '@Model.ItemRelease.Status';
+    var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
+    var textTillParent = "";
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
-        $('.' + 'disableOnLoad' + ':input').attr('disabled', true);
+        $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+        var itemId = parseInt('@Model.ItemRelease.ItemReleaseId');
+        if (itemId > 0) {
+            // disable on load section
+            $('.disableDdl').select2('disable');
+            $('.btnDisable').addClass('disableList');
+            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            // CK Editor to simple textbox
+            var deliveryInfoEn = $("#DeliveryInfoEn").val();
+            var regex = /(<([^>]+)>)/ig;
+            var result = deliveryInfoEn.replace(regex, "");
+            $("#DeliveryInfoE").val(result);
+
+            var deliveryInfoAr = $("#DeliveryInfoAr").val();
+            regex = /(<([^>]+)>)/ig;
+            result = deliveryInfoAr.replace(regex, "");
+            $("#DeliveryInfoA").val(result);
+            $("#detailEditor").show();
+            $("#CKEditor").hide();
+            $("#CKEditor").hide();
+            $("#SubmitRecord").hide();
+            if (status != 2 && '@userPermissionsSet.Contains("ItemReleaseCreate")' == 'True') {
+                $("#EditRecord").show();
+            }
+            //
+        }
         $('.trAdder').on("click", function () {
             var index = $("#ItemReleaseDetailsTableBody").children("tr").length;
-            var html = "<tr>" +
+            var html = "<tr data-id=" + index + ">" +
                             "<td style='display:none'>" +
                                 "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
                                 "<input name='ItemReleaseDetails[" + index + "].IsItemDescription' id='ItemReleaseDetails_" + index + "__IsItemDescription' type='hidden' />" +
@@ -300,21 +360,21 @@
                                 "</div>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\"></textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
+                                "<textarea rows=\"3\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\"></textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\"></textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\"></textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td class=\"quantity\">" +
-                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' class='n1' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' class='n1 toBeDisable' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
                             "</td>" +
                             "<td class='delete'>" +
-                                "<i class='icon-photon minus deleteRow'></i>" +
+                                "<i class='icon-photon minus deleteRow btnDisable'></i>" +
                             "</td>" +
                         "</tr>";
             $('.qouteAdd').append(html);
@@ -328,6 +388,128 @@
             //reactivateCount();
         });
         reActivateDelete();
+        var treeInitialData;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Departments",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "الإدارات",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        }
+        $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked          
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
+        });
+        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
+        populateTree(0, "jstree", requestUrl);
+
+        $("#Add").on("click", function () {
+            if (validateSelect2Ddl("#RFIItemVariationDropDownList", errorMessage)) {
+                getModalControlsValues();
+            }
+            // get warehouse
+            //var itemVariationId = $("#RFIItemVariationDropDownList").val();
+            //var requestUrlForWarehouse = siteUrl + "/Inventory/ItemRelease/GetItemWarehouse";
+            //if (itemVariationId > 0) {
+            //    // busy indicator
+            //    ajaxLoader();
+            //    $.ajax({
+            //        url: requestUrlForWarehouse,
+            //        type: 'GET',
+            //        dataType: "json",
+            //        data: {
+            //            itemVariationId: itemVariationId
+            //        },
+            //        success: function (dataFromServer) {
+            //            $.unblockUI();
+            //        },
+            //        error: function (e) {
+            //            $.unblockUI();
+            //            alert('Error=' + e.toString());
+            //        }
+            //    });
+            //}
+        });
+        $("#selectDepartment").on("click", function () {
+            var index = parseInt($("#ItemModalIndex").val());
+            $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            $('#itemTreeSelector').modal('toggle');
+            return true;
+        });
+        $("#treeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        //open pop up
+        $('#itemSearcher').on('show', function () {
+            //clear DDL required value label
+            $("#RFIItemVariationDropDownListValidation").text("");
+            $("#RFIItemVariationDropDownListValidation").removeClass("Error");
+
+            //get the id from tr that is selected for the item popup
+            var index = $(event.target).closest('tr').data('id');
+            $("#ItemModalIndex").val(index);
+            //get item's values
+            var isItemDescription = $("#ItemReleaseDetails_" + index + "__IsItemDescription").val();
+            var isItemSKU = $("#ItemReleaseDetails_" + index + "__IsItemSKU").val();
+            var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+            var placeInDepartment = $("#ItemReleaseDetails_" + index + "__PlaceInDepartment").val();
+            // clear selected department label text
+            $("#txtSelectedDepartmentName").text("");
+
+            //set modal fields according to modal values
+            $("#RFIItemVariationDropDownList").select2("val", itemVariationId); //set the value
+
+            if (isItemDescription == "false" || isItemDescription == "False" || isItemDescription == "") {
+                $('#ItemDescriptionModalChk').attr('checked', false);
+            } else {
+                $('#ItemDescriptionModalChk').attr('checked', true);
+            }
+
+            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU == "") {
+                $('#ItemSKUModalChk').attr('checked', false);
+            } else {
+                $('#ItemSKUModalChk').attr('checked', true);
+            }
+            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
+        });
         //reactivateCount();
         $("#importEx").on("click", function () {
             var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
@@ -355,7 +537,7 @@
                         y++;
                     });
                     t4 = t3 * t2;
-                    var html1 = "<tr>" +
+                    var html1 = "<tr data-id=" + index + ">" +
                             "<td style='display:none'>" +
                                 "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
                                 "<input name='ItemReleaseDetails[" + index + "].IsItemDescription' id='ItemReleaseDetails_" + index + "__IsItemDescription' type='hidden' />" +
@@ -371,35 +553,23 @@
                                 "</div>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + t1 + "</textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
+                                "<textarea rows=\"3\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + t1 + "</textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\">" + t2 + "</textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\">" + t2 + "</textarea>" +
+                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td class=\"quantity\">" +
-                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + t3 + "\" class='n1' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + t3 + "\" class='n1 toBeDisable' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
                             "</td>" +
                             "<td class='delete'>" +
-                                "<i class='icon-photon minus deleteRow'></i>" +
+                                "<i class='icon-photon minus deleteRow btnDisable'></i>" +
                             "</td>" +
                         "</tr>";
-                    var html = ' <tr> ' +
-                        '<td >' +
-                            '<div class="control-group row-fluid">' +
-                                '<div class="span1"><label class="control-label serialNumber"></label>' +
-                                '</div>' +
-                            '</div>' +
-                        '</td>' +
-                        '<td > <textarea rows="2" class="auto-resize" >' + t1 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button></td>' +
-                        ' <td >  <textarea  rows="2" class="auto-resize" > ' + t2 + '</textarea><button type="button" class="btn itemAdder" data-toggle="modal" data-target="#warhouseSelector" >+</button>	</td>' +
-                        ' <td class="quantity"> <input class="n1" type="text" name="numbers" value="' + t3 + '"> </td>' +
-                        ' <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td>' +
-                        '</tr>';
                     index = index + 1;
                     if (count == 0) {
                         $('.qouteAdd').html("");
@@ -434,8 +604,22 @@
                 $('.select2me').select2({
                     //placeholder: "Select",
                 });
+                $("#DeliveryInfoE").val("");
+                $("#DeliveryInfoA").val("");
+                CKEDITOR.instances['DeliveryInfoEn'].setData("");
+                CKEDITOR.instances['DeliveryInfoAr'].setData("");
                 return true;
             }
+            var jobsList = '@Html.Raw(Json.Encode(Model.Customers))';
+            var parsed = JSON.parse(jobsList);
+            $.each(parsed, function (key, value) {
+                if (value.CustomerId == customerId) {
+                    $("#DeliveryInfoE").val(value.CustomerAddress);
+                    $("#DeliveryInfoA").val(value.CustomerAddress);
+                    CKEDITOR.instances['DeliveryInfoEn'].setData(value.CustomerAddress);
+                    CKEDITOR.instances['DeliveryInfoAr'].setData(value.CustomerAddress);
+                }
+            });
             var url = siteUrl + "/Inventory/ItemRelease/GetCustomerRfis";
             ajaxLoader();
             $.ajax({
@@ -466,12 +650,88 @@
             });
         });
     });
+
+    function AddEdit() {
+        if (status != 2) {
+            var isDetail;
+            var val = '@userPermissionsSet.Contains("ItemReleaseCreate")';
+            if (val == 'True') {
+                isDetail = false;
+            } else {
+                isDetail = true;
+            }
+            if (isDetail) {
+
+            } else {
+                $('.btnDisable').removeClass('disableList');
+                $('.disableDdl').select2('enable');
+                $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+                CKEDITOR.replace('DeliveryInfoEn', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
+                CKEDITOR.replace('DeliveryInfoAr', {
+                    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                });
+                //$("#detailEditor").hide();
+                //$("#CKEditor").show();
+                $("#EditRecord").hide();
+                $("#SubmitRecord").show();
+            }
+        }
+    }
+
+    $("#edit").on('click', function () {
+        if (status != 2) {
+            AddEdit();
+        }
+    });
     $('#tiny').elrte({
         lang: "en",
         styleWithCSS: false,
         height: 200,
         toolbar: 'tiny'
     });
+    function getModalControlsValues() {
+        //get item's values
+        var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+        var isItemSku = $('#ItemSKUModalChk').is(':checked');
+        var itemVariationId = $("#RFIItemVariationDropDownList").val();
+
+        //set item's values
+        var index = $("#ItemModalIndex").val();
+        $("#ItemReleaseDetails_" + index + "__IsItemDescription").val(isItemDescription);
+        $("#ItemReleaseDetails_" + index + "__IsItemSKU").val(isItemSku);
+        $("#ItemReleaseDetails_" + index + "__ItemVariationId").val(itemVariationId);
+
+        //set item sku and description in details text area
+        var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+        var parsedRfiItems = JSON.parse(rfiItems);
+
+        $.each(parsedRfiItems, function (key, value) {
+            if (value.ItemVariationId == itemVariationId) {
+                $("#RifItem_" + index + "__ItemDetails").val("");
+                var textToAppend = "";
+                if ('@direction' == "ltr") {
+                    textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                } else {
+                    textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                }
+                if (isItemSku) {
+                    textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                }
+                if (isItemDescription) {
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                    } else {
+                        textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                    }
+                }
+                $("#ItemReleaseDetails_" + index + "__ItemDetails").val(textToAppend);
+            }
+        });
+
+        $('#itemSearcher').modal('toggle');
+    };
     function reActivateDelete() {
         $('.deleteRow').on("click", function () {
             var count = $('.qouteAdd tr').length;
@@ -526,5 +786,8 @@
             //placeholder: "Select",
         });
         $.unblockUI();
+    }
+    function jsTreeClick(event) {
+        return true;
     }
 </script>

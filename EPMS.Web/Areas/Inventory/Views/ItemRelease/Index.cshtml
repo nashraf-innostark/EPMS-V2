@@ -1,10 +1,11 @@
-﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseFormListViewModel
+﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.IRFIndex.PageTitle;
+    ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
-
 
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -14,34 +15,51 @@
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">@EPMS.Web.Resources.Inventory.IRFIndex.Header</a>
+            <a href="javascript:;">@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header</a>
         </li>
     </ul>
 </div>
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.IRFIndex.Header</small></h2>
-    <h3><small><a href="~/Inventory/ItemReleaseForm/Create">@EPMS.Web.Resources.Inventory.IRFIndex.CreateNew</a></small></h3>
+    <h2><small>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header</small></h2>
+    @if (userPermissionsSet.Contains("ItemReleaseCreate"))
+    {
+        <h3><small><a href="~/Inventory/ItemRelease/Create">@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.CreateNew</a></small></h3>
+    }
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
 
 <form class="form-horizontal">
+    @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
     <div class="container-fluid">
         <!--Sortable Responsive Media Table begin-->
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableResMed">
+                <table class="table table-striped table-responsive" id="ItemReleaseTable">
                     <thead class="cf sorthead">
-                        <tr>
-                            <th>Serial</th>
-                            <th>Item Release Form(IRF) Number</th>
-                            <th>Total Qantity Released</th>
-                            <th>Employee Name</th>
-                            <th>Shipment Details</th>
-                            <th>Status</th>
-                        </tr>
+                        @if (ViewBag.IsAllowedCompleteLV)
+                        {
+                            <tr>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ItemReleaseFormNumber</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.TotalQuantityReleased</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.EmployeeName</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ShipmentDetails</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Status</th>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ItemReleaseFormNumber</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.TotalQuantityReleased</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.ShipmentDetails</th>
+                                <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Status</th>
+                            </tr>
+                        }
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -51,14 +69,222 @@
 </form>
 
 <script>
+    var oTable;
+    var dir = '@direction';
     $(document).ready(function () {
-        $('#tableSortableResMed').dataTable({
-            "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
-                });
-            }
+        var siteUrl = $('#siteURL').val();
+        if ('@ViewBag.IsAllowedCompleteLV' == 'True') {
+            oTable = $('#ItemReleaseTable').dataTable({
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "",
+                        "bVisible": true,
+                        "bSortable": false
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var element;
+                            var val;
+                            var irfId;
+                            val = full["FormNumber"];
+                            irfId = full["ItemReleaseId"];
+                            element = '<a href="Detail/' + irfId + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            return full["QuantityReleased"];
+                        }
+                    },
+                    {
+                        "aTargets": [3],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            return full["CreatedBy"];
+                        }
+                    },
+                    {
+                        "aTargets": [4],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            if (dir == "ltr") {
+                                return full["DeliveryInfo"];
+                            } else {
+                                return full["DeliveryInfoArabic"];
+                            }
+                        }
+                    },
+                    {
+                        "aTargets": [5],
+                        "sDefaultContent": "No Data",
+                        "mRender": function(data, type, full) {
+                            var val = "";
+                            if (dir == "ltr") {
+                                if (full["Status"] == 3) {
+                                    val = "Pending";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "Accepted";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "Rejected";
+                                }
+                            } else {
+                                if (full["Status"] == 3) {
+                                    val = "ريثما";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "قبلت";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "مرفوض";
+                                }
+                            }
+                            return val;
+                        }
+                    }
+                ],
+                "fnServerParams": function(aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "sAjaxSource": siteUrl + "/Inventory/ItemRelease/Index",
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    "sProcessing": "Fetching record(s)",
+                    //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+                "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+                    var oSettings = oTable.fnSettings();
+                    $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                    return nRow;
+                },
+            });
+        } else {
+            oTable = $('#ItemReleaseTable').dataTable({
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "",
+                        "bVisible": true,
+                        "bSortable": false
+                    },
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var element;
+                            var val;
+                            var irfId;
+                            val = full["FormNumber"];
+                            irfId = full["ItemReleaseId"];
+                            element = '<a href="Detail/' + irfId + '">' + val + '</a>';
+                            return element;
+                        }
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            return full["QuantityReleased"];
+                        }
+                    },
+                    {
+                        "aTargets": [3],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            if (dir == "ltr") {
+                                return full["DeliveryInfo"];
+                            } else {
+                                return full["DeliveryInfoArabic"];
+                            }
+                        }
+                    },
+                    {
+                        "aTargets": [4],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var val = "";
+                            if (dir == "ltr") {
+                                if (full["Status"] == 3) {
+                                    val = "Pending";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "Accepted";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "Rejected";
+                                }
+                            } else {
+                                if (full["Status"] == 3) {
+                                    val = "ريثما";
+                                }
+                                else if (full["Status"] == 1) {
+                                    val = "قبلت";
+                                }
+                                else if (full["Status"] == 2) {
+                                    val = "مرفوض";
+                                }
+                            }
+                            return val;
+                        }
+                    }
+                ],
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "sAjaxSource": siteUrl + "/Inventory/ItemRelease/Index",
+                "sServerMethod": "POST",
+                "oLanguage": {
+                    "sProcessing": "Fetching record(s)",
+                    //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    var oSettings = oTable.fnSettings();
+                    $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                    return nRow;
+                },
+            });
+        }
+        oTable.on('order.dt search.dt', function () {
+            t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).fnDraw();
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
         });
+
+        //$(".dataTables_processing").hide();
+        //$(".dataTables_length label").text("");
+
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
     });
 </script>

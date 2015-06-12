@@ -43,7 +43,7 @@ namespace EPMS.Repository.Repositories
             new Dictionary<DifRequestByColumn, Func<DIF, object>>
                     {
                         { DifRequestByColumn.DifNo, c => c.Id},
-                        //{ DifRequestByColumn.Requester,  c => c. },
+                        { DifRequestByColumn.Requester,  c => c.AspNetUser.Employee.EmployeeFirstNameE },
                         { DifRequestByColumn.DateCreated, c => c.RecCreatedDate},
                         { DifRequestByColumn.Status,  c => c.Status}
                     };
@@ -58,8 +58,6 @@ namespace EPMS.Repository.Repositories
             {
                 query =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
-                    //(s.RFIId.Equals(Convert.ToInt64(rfiSearchRequest.SearchString))) ||
-                    //(s.RecCreatedDate.ToShortDateString().Contains(rfiSearchRequest.SearchString))||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
@@ -72,8 +70,6 @@ namespace EPMS.Repository.Repositories
                 var employeeId = searchRequest.Requester;
                 query =
                 s => (((string.IsNullOrEmpty(searchRequest.SearchString))
-                    //(s.RFIId.Equals(Convert.ToInt64(rfiSearchRequest.SearchString))) ||
-                    //(s.RecCreatedDate.ToShortDateString().Contains(rfiSearchRequest.SearchString))||
                     ) && (s.RecCreatedBy.Equals(employeeId)));
             }
 
@@ -98,6 +94,11 @@ namespace EPMS.Repository.Repositories
                 .Where(query).OrderByDescending(requestClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
             }
             return new DifRequestResponse { Difs = queryData, TotalCount = DbSet.Count(query) };
+        }
+
+        public IEnumerable<DIF> GetDifHistoryData()
+        {
+            return DbSet.Where(x => x.Status == 3 || x.Status == 2).ToList();
         }
     }
 }

@@ -2,9 +2,9 @@
 {
     public enum TirRequestByColumn
     {
-        TirNo = 2,
-        Requester = 3,
-        DateCreated = 4,
-        Status = 5
+        TirNo = 1,
+        Requester = 2,
+        DateCreated = 3,
+        Status = 4
     }
 }
