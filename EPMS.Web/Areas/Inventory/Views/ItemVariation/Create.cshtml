@@ -341,39 +341,52 @@
             </div>
         </div>
         <!--Sortable Responsive Table end-->
-        @*<div class="alert alert-info alert-block">
-                <i class="icon-alert icon-alert-info"></i>
-                <strong>Warehouse</strong><a href="#wherehouseModule" data-toggle="modal">Add Warehouse</a>
-            </div>*@
+
+        <div class="alert alert-info alert-block">
+            <i class="icon-alert icon-alert-info"></i>
+            <strong>Warehouse</strong><a href="#wherehouseModule" data-toggle="modal">Add Warehouse</a>
+        </div>
 
         <!--Sortable Responsive Table begin-->
-        @*<div class="row-fluid">
-                <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableSortableVariationsWherehouse">
-                        <thead>
-                            <tr>
-                                <th> Serial</th>
-                                <th>Warehouse Number</th>
-                                <th>Quantity in Warehouse</th>
-                                <th>Place in Warehouse</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.ItemVariation.Warehouses.ToList())
+        <div class="row-fluid">
+            <div class="span12">
+                <table class="table table-striped table-responsive" id="tableSortableVariationsWherehouse">
+                    <thead>
+                        <tr>
+                            <th> Serial</th>
+                            <th>Warehouse Number</th>
+                            <th>Quantity in Warehouse</th>
+                            <th>Place in Warehouse</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="warehouseDetails">
+                        @if (Model.ItemVariation.Warehouses.Any())
+                        {
+
+                            var serial = 0;
+                            for (int i = 0; i < Model.ItemVariation.Warehouses.Count(); i++)
                             {
-                            <tr class="gradeX">
-                                <td>@item.WarehouseId</td>
-                                <td>@item.WarehouseNumber</td>
-                                <td></td>
-                                <td></td>
-                                <td><a href="#">Delete</a></td>
-                            </tr>
+                                serial = serial + 1;
+
+                                <tr data-id="@i">
+                                    @Html.TextBoxFor(model => model.ItemVariation.Warehouses[i].WarehouseId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
+                                    <td style='display:none'><input name='ItemVariation.Warehouses.Index' type='hidden' value='@i' /></td>
+                                    <td>
+                                        <label class="control-label serialNumber">@serial</label>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        @*@Html.TextBoxFor(model => model.ItemVariation.Warehouses[i].Price, new { @class = "auto-resize ImageOrder" })*@
+                                    </td>
+                                    <td><i class="icon-photon minus deleteImage"></i></td>
+                                </tr>
                             }
-                        </tbody>
-                    </table>
-                </div>
-            </div>*@
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <!--Sortable Responsive Table end-->
 
         <div class="alert alert-info alert-block">
@@ -395,30 +408,26 @@
 
                         </tr>
                     </thead>
-                    <tbody class="manufacturerTable">
+                    <tbody class="manufacturerTable" id="manufacturerDetails">
                         @if (Model.ItemVariation.ItemManufacturers.Any())
                         {
+
                             var serial = 0;
                             for (int i = 0; i < Model.ItemVariation.ItemManufacturers.Count(); i++)
                             {
-                                @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId)
                                 serial = serial + 1;
-                                <tr data-id="@i">
-                                    <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
 
+                                <tr data-id="@i">
+                                    @Html.TextBoxFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
+                                    <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
-                                        <label>@serial</label>
+                                        <label class="control-label serialNumber">@serial</label>
                                     </td>
+                                    <td></td>
                                     <td>
-                                        <label id="manufacturerName"></label>
+                                        @Html.TextBoxFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize ImageOrder" })
                                     </td>
-                                    <td>
-                                        <input name='ItemVariation.ItemManufacturers[i].Price' value="@Model.ItemVariation.ItemManufacturers[i].Price" />
-                                        @*<label>@Model.ItemVariation.ItemManufacturers[i].Price</label>*@
-                                    </td>
-                                    <td>
-                                        <i class="icon-photon minus deleteStatus"></i>
-                                    </td>
+                                    <td><i class="icon-photon minus deleteImage"></i></td>
                                 </tr>
                             }
                         }
@@ -1388,30 +1397,40 @@
         //Add Manufacturer from Dropdown to List
         $('.addManufacturerToList').on("click", function (event) {
             debugger;
-            var index = $("#manufacturerTable").children("tr").length;
-            if ($("#manufacturerTable").children("tr").children("td").html() == "No data available in table") {
+            var index = $("#manufacturerDetails").children("tr").length;
+            if ($("#manufacturerDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
             }
+            itemsCount = itemsCount + 1;
+            var price = $('#manufacturerPriceLable').val();
             var manufacturerId = $('#manufacturerId').val();
             var manufacturerList = '@Html.Raw(Json.Encode(Model.ManufacturersForDdl))';
             var parsed = JSON.parse(manufacturerList);
-            var manufacturerNameEn;
-            var manufacturerNameAr;
+            var manufacturerNameEn, manufacturerNameAr;
             $.each(parsed, function (key, value) {
                 if (value.ManufacturerId == manufacturerId) {
                     manufacturerNameEn = value.ManufacturerNameEn;
                     manufacturerNameAr = value.ManufacturerNameAr;
                 }
             });
-            var html = '<tr class="gradeX manufacturerTableRow">' +
-                '<input type="hidden" class="manufacturerIdHidden" value=' + manufacturerId + '/>+' +
-                '<td>' + manufacturerId + '</td>' +
-                '<td>' + manufacturerNameEn + '</td>' + '<td>' + '</td>' +
-                '<td><i class="icon-photon minus deleteManufacturer"></i></td>' +
+            var html = ' <tr data-id=' + index + '>' +
+                '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
+                '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
+                '<td style="display:none"><input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" /></td>' +
+                '<td>' + itemsCount +
+                '</td>' +
+                '<td><input  rows="2" class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price"></div></td>' +
+                '<td>' +
+                '<div class="span2"><div class="controls"><input  rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '"></div></div>' +
+                '</td>' +
+                '<td>' +
+                '<i class="icon-photon minus deleteStatus"></i>' +
+                '</td>' +
                 '</tr>';
-            $('.manufacturerTable').append(html);
-            $('#manufacturModule').modal('hide');
+            $('#manufacturerDetails').append(html);
+            $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').val(manufacturerNameEn);
             event.preventDefault();
+            $('#manufacturModule').modal('hide');
         });
 
         //Delete Manufacturer from the List

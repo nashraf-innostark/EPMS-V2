@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Repository.BaseRepository;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -16,6 +18,12 @@ namespace EPMS.Repository.Repositories
         protected override IDbSet<ItemManufacturer> DbSet
         {
             get { return db.ItemManufacturers; }
+        }
+
+        public IEnumerable<ItemManufacturer> GetItemsByVariationId(long variationId)
+        {
+            return
+                DbSet.Where(x => x.ManufacturerId == variationId);
         }
     }
 }

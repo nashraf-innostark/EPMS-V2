@@ -92,7 +92,7 @@ namespace EPMS.Implementation.Services
             {
                 UpdateItemVariation(variationToSave.ItemVariation);
                 UpdateSizeList(variationToSave, itemVariationFromDatabase);
-                UpdateManufacturerList(variationToSave, itemVariationFromDatabase);
+                UpdateManufacturerList(variationToSave);
                 UpdateStatusList(variationToSave, itemVariationFromDatabase);
                 UpdateColorList(variationToSave, itemVariationFromDatabase);
             }
@@ -200,7 +200,8 @@ namespace EPMS.Implementation.Services
                     ItemManufacturer manufacturer = new ItemManufacturer
                     {
                         ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
-                        Price = itemManufacturer.Price
+                        Price = itemManufacturer.Price,
+                        ManufacturerId = itemManufacturer.ManufacturerId
                     };
                     itemManufacturerRepository.Add(manufacturer);
                 }
@@ -211,8 +212,48 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Update Manufacturer List from Client
         /// </summary>
-        private void UpdateManufacturerList(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
+        private void UpdateManufacturerList(ItemVariationRequest variationToSave)
         {
+            IEnumerable<ItemManufacturer> dbList =
+                itemManufacturerRepository.GetItemsByVariationId(variationToSave.ItemVariation.ItemVariationId).ToList();
+            IEnumerable<ItemManufacturer> clientList = variationToSave.ItemManufacturers;
+            //If Client List contains Entries
+            if (clientList != null)
+            {
+                //Add New Items
+                foreach (ItemManufacturer itemManufacturer in clientList)
+                {
+                    //Add New Items from Client list
+                    if (dbList.Any(a => a.ManufacturerId == itemManufacturer.ManufacturerId))
+                        continue;
+                    ItemManufacturer itemToAdd = new ItemManufacturer
+                    {
+                        ItemVariationId = itemManufacturer.ItemVariationId,
+                        ManufacturerId = itemManufacturer.ManufacturerId,
+                        Price = itemManufacturer.Price,
+                    };
+                    itemManufacturerRepository.Add(itemToAdd);
+
+                    //Delete Items from DB List which are not in Client List
+                    foreach (ItemManufacturer manufacturerItem in dbList)
+                    {
+                        if (clientList.Any(x => x.ManufacturerId == manufacturerItem.ManufacturerId))
+                            continue;
+                        var itemToDelete = itemManufacturerRepository.Find(manufacturerItem.ManufacturerId);
+                        itemManufacturerRepository.Delete(itemToDelete);
+                    }
+                }
+            }
+            else
+            {
+                //Delete All Items if List from Client is Empty
+                foreach (ItemManufacturer manufacturerItem in dbList)
+                {
+                    var itemToDelete = itemManufacturerRepository.Find(manufacturerItem.ManufacturerId);
+                    itemManufacturerRepository.Delete(itemToDelete);
+                }
+            }
+            itemManufacturerRepository.SaveChanges();
         }
 
         /// <summary>

@@ -10,5 +10,7 @@ namespace EPMS.Web.Models
         public long ItemVariationId { get; set; }
         public long ManufacturerId { get; set; }
         public string Price { get; set; }
+        public string ManufacturerNameEn { get; set; }
+        public string ManufacturerNameAr { get; set; }
     }
 }
