@@ -11,7 +11,9 @@ namespace EPMS.Web.ModelMappers
             {
                 ItemVariationId = source.ItemVariationId,
                 ManufacturerId = source.ManufacturerId,
-                Price = source.Price
+                Price = source.Price,
+                ManufacturerNameEn = source.Manufacturer.ManufacturerNameEn,
+                ManufacturerNameAr = source.Manufacturer.ManufacturerNameAr,
             };
         }
     }

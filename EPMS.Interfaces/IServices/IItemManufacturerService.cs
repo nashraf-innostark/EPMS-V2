@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.IServices
         bool AddItemManufacturer(ItemManufacturer itemanufacturer);
         bool UpdateItemManufacturer(ItemManufacturer itemManufacturer);
         void DeleteItemManufacturer(ItemManufacturer itemManufacturer);
+        IEnumerable<ItemManufacturer> GetItemsByVariationId(long variationId);
     }
 }

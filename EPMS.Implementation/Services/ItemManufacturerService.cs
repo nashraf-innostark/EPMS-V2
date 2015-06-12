@@ -48,6 +48,12 @@ namespace EPMS.Implementation.Services
             manufacturerRepository.Delete(itemManufacturer);
             manufacturerRepository.SaveChanges();
         }
+
+        public IEnumerable<ItemManufacturer> GetItemsByVariationId(long variationId)
+        {
+            return manufacturerRepository.GetItemsByVariationId(variationId);
+        }
+
         #endregion
     }
 }

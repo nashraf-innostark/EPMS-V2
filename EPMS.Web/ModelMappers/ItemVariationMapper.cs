@@ -42,7 +42,7 @@ namespace EPMS.Web.ModelMappers
                 Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList(),
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList(),
-                Manufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
+                ItemManufacturers = source.ItemManufacturers.Select(x=>x.CreateFromServerToClient()).ToList(),
                 ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
@@ -82,9 +82,11 @@ namespace EPMS.Web.ModelMappers
             var request = new ItemVariationRequest();
             request.ItemVariation = item;
             request.ItemImages = new List<DomainModels.ItemImage>(source.ItemImages.Select(x=>x.CreateFrom()));
+            request.ItemManufacturers = new List<DomainModels.ItemManufacturer>(source.ItemManufacturers.Select(x => x.CreateFrom()));
             return request;
         }
 
+        //For manipulating Item Images
         public static DomainModels.ItemImage CreateFrom(this WebModels.ItemImage source)
         {
             return new DomainModels.ItemImage
@@ -94,6 +96,17 @@ namespace EPMS.Web.ModelMappers
                 ImageOrder = source.ImageOrder,
                 ShowImage = source.ShowImage,
                 ItemVariationId = source.ItemVariationId
+            };
+        }
+
+        //For manipulating Item Manufacturer
+        public static DomainModels.ItemManufacturer CreateFrom(this WebModels.ItemManufacturer source)
+        {
+            return new DomainModels.ItemManufacturer
+            {
+                ItemVariationId = source.ItemVariationId,
+                ManufacturerId = source.ManufacturerId,
+                Price = source.Price,
             };
         }
     }
