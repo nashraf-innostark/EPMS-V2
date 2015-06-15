@@ -211,12 +211,12 @@
             $("#AlertEndDateA").val(ConvertDates($("#AlertEndDateE").val(), "gregorian", "islamic"));
         }
         $("#emp").on("change", function () {
-            var employOrNot = $("#emp option:selected").text();
+            var employOrNot = $("#emp option:selected").val();
             NotificationContact(employOrNot);
         });
         $(".uniformCheckbox").uniform();
         AlertDateType("#dateTypeDDl");
-        NotificationContact($("#emp option:selected").text());
+        NotificationContact($("#emp option:selected").val());
     });
     function BusyIndicator() {
         var siteUrl = $('#siteURL').val();
@@ -247,7 +247,7 @@
         }
     };
     function NotificationContact(employOrNot) {
-        if (employOrNot == "Not Employee") {
+        if (employOrNot == "") {
             $("#mobile").removeAttr('readonly');
             $("#mailAlert").removeAttr('readonly');
 
