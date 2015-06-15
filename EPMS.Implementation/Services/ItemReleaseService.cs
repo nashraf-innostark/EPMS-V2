@@ -59,9 +59,18 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
-        public ItemRelease FindItemReleaseById(long id)
+        public ItemRelease FindItemReleaseById(long id, string from)
         {
-            return itemReleaseRepository.Find(id);
+            ItemRelease retVal = null;
+            if (from == "History")
+            {
+                retVal = releaseHistoryRepository.Find(id).CreateFromIrfHistoryToIrf();
+            }
+            else
+            {
+                retVal = itemReleaseRepository.Find(id);
+            }
+            return retVal;
         }
 
         public IEnumerable<ItemRelease> GetAll()
@@ -69,9 +78,13 @@ namespace EPMS.Implementation.Services
             return itemReleaseRepository.GetAll();
         }
 
-        public IrfHistoryResponse GetIrfHistoryData()
+        public IrfHistoryResponse GetIrfHistoryData(long? parentId)
         {
-            var irfs = releaseHistoryRepository.GetIrfHistoryData();
+            if (parentId == null)
+            {
+                return new IrfHistoryResponse();
+            }
+            var irfs = releaseHistoryRepository.GetIrfHistoryData((long)parentId);
             var irfList = irfs as IList<ItemReleaseHistory> ?? irfs.ToList();
             if (!irfList.Any())
             {
@@ -136,10 +149,10 @@ namespace EPMS.Implementation.Services
                 var itemRelease = itemReleaseRepository.Find(releaseStatus.ItemReleaseId);
                 itemRelease.Notes = releaseStatus.Notes;
                 itemRelease.NotesAr = releaseStatus.NotesAr;
-                itemRelease.Status = releaseStatus.Status;
                 itemRelease.ManagerId = releaseStatus.ManagerId;
                 if (itemRelease.Status != releaseStatus.Status)
                 {
+                    itemRelease.Status = releaseStatus.Status;
                     var historyToAdd = itemRelease.CreateFromIrfToIrfHistory();
                     releaseHistoryRepository.Add(historyToAdd);
                     releaseHistoryRepository.SaveChanges();

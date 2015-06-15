@@ -54,10 +54,13 @@ namespace EPMS.Implementation.Services
             return rfis;
         }
 
-        public RfiHistoryResponse GetRfiHistoryData()
+        public RfiHistoryResponse GetRfiHistoryData(long? parentId)
         {
-            var rfis = historyRepository.GetRfiHistoryData();
-            
+            if (parentId == null)
+            {
+                return new RfiHistoryResponse();
+            }
+            var rfis = historyRepository.GetRfiHistoryData((long)parentId);
             if (rfis == null)
             {
                 return new RfiHistoryResponse
@@ -180,7 +183,7 @@ namespace EPMS.Implementation.Services
             rfiRepository.SaveChanges();
         }
 
-        public RFICreateResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders)
+        public RFICreateResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders, string from)
         {
             RFICreateResponse rfiResponse = new RFICreateResponse
             {
@@ -188,7 +191,16 @@ namespace EPMS.Implementation.Services
             };
             if (id != null)
             {
-                var rfi = rfiRepository.Find((long)id);
+                RFI rfi = null;
+                if (from == "History")
+                {
+                    rfi = historyRepository.Find((long)id).CreateFromRfiHistoryToRfiBase();
+                }
+                else
+                {
+                    rfi = rfiRepository.Find((long)id);
+                }
+                
                 if (rfi != null)
                 {
                     rfiResponse.Rfi = rfi;

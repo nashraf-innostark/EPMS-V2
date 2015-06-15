@@ -173,7 +173,7 @@ namespace EPMS.Implementation.Services
             repository.SaveChanges();
         }
 
-        public DifCreateResponse LoadDifResponseData(long? id)
+        public DifCreateResponse LoadDifResponseData(long? id, string from)
         {
             DifCreateResponse response=new DifCreateResponse
             {
@@ -181,7 +181,15 @@ namespace EPMS.Implementation.Services
             };
             if (id == null) return response;
 
-            var dif = repository.Find((long)id);
+            DIF dif = null;
+            if (from == "History")
+            {
+                dif = historyRepository.Find((long)id).CreateFromDifHistoryToDif();
+            }
+            else
+            {
+                dif = repository.Find((long)id);
+            }
             if (dif == null) return response;
 
             response.Dif = dif;

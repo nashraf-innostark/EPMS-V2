@@ -5,6 +5,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IItemReleaseHistoryRepository : IBaseRepository<ItemReleaseHistory, long>
     {
-        IEnumerable<ItemReleaseHistory> GetIrfHistoryData();
+        IEnumerable<ItemReleaseHistory> GetIrfHistoryData(long parentId);
     }
 }

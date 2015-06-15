@@ -92,9 +92,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET: Inventory/RFI/Details/5
         [SiteAuthorize(PermissionKey = "RFIDetails")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string from)
         {
-            var rfiresponse = rfiService.LoadRfiResponseData(id, false);
+            var rfiresponse = rfiService.LoadRfiResponseData(id, false, from);
             RFIViewModel rfiViewModel = new RFIViewModel();
             if (rfiresponse.Rfi != null)
             {
@@ -161,7 +161,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Create(long? id)
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
-            var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders);
+            var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders, "");
             RFIViewModel rfiViewModel = new RFIViewModel();
             if (rfiresponse.Rfi != null)
             {
@@ -233,9 +233,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         [SiteAuthorize(PermissionKey = "RFIHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            RfiHistoryResponse response = rfiService.GetRfiHistoryData();
+            RfiHistoryResponse response = rfiService.GetRfiHistoryData(id);
             RFIHistoryViewModel viewModel = new RFIHistoryViewModel();
             viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<RFI>();
             viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<RFIItem>();

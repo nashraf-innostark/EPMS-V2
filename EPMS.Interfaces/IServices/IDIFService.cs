@@ -15,6 +15,6 @@ namespace EPMS.Interfaces.IServices
         bool AddDIF(DIF rif);
         bool UpdateDIF(DIF rif);
         void DeleteDIF(DIF rif);
-        DifCreateResponse LoadDifResponseData(long? id);
+        DifCreateResponse LoadDifResponseData(long? id, string from);
     }
 }

@@ -84,9 +84,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET: Inventory/Dif/Details/5
         [SiteAuthorize(PermissionKey = "DIFDetails")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string from)
         {
-            var Difresponse = rifService.LoadDifResponseData(id);
+            var Difresponse = rifService.LoadDifResponseData(id,from);
             DIFViewModel rifViewModel = new DIFViewModel();
             if (Difresponse.Dif != null)
             {
@@ -148,7 +148,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "DIFCreate")]
         public ActionResult Create(long? id)
         {
-            var Difresponse = rifService.LoadDifResponseData(id);
+            var Difresponse = rifService.LoadDifResponseData(id,"");
             DIFViewModel rifViewModel = new DIFViewModel();
             if (Difresponse.Dif != null)
             {

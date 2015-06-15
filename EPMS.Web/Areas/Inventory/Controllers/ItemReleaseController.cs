@@ -79,14 +79,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET Details: Inventory/IRF
         [SiteAuthorize(PermissionKey = "IRFViewComplete,ItemReleaseDetail")]
-        public ActionResult Detail(long? id)
+        public ActionResult Detail(long? id, string from)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseDetailViewModel viewModel = new ItemReleaseDetailViewModel();
             if (id != null)
             {
-                var itemRelease = itemReleaseService.FindItemReleaseById((long)id);
+                var itemRelease = itemReleaseService.FindItemReleaseById((long)id,from);
                 if (itemRelease != null)
                 {
                     viewModel.ItemRelease = itemRelease.CreateFromServerToClient();
@@ -256,9 +256,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View();
         }
         [SiteAuthorize(PermissionKey = "IRFHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            IrfHistoryResponse response = itemReleaseService.GetIrfHistoryData();
+            IrfHistoryResponse response = itemReleaseService.GetIrfHistoryData(id);
             IrfHistoryViewModel viewModel = new IrfHistoryViewModel
             {
                 Irfs = response.Irfs != null ? response.Irfs.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemRelease>(),
