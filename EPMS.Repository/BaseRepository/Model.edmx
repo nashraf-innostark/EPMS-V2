@@ -480,6 +480,20 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="ItemBarcode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="BarcodeValue" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BarcodePattern" Type="nvarchar" MaxLength="100" />
+          <Property Name="Quantity" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ItemColor">
           <Key>
             <PropertyRef Name="ColorId" />
@@ -1730,6 +1744,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemBarcode_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ItemBarcode" Type="Self.ItemBarcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemBarcode">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemBarcode_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="ItemBarcode" Type="Self.ItemBarcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemBarcode">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ItemColor_Color">
           <End Role="Color" Type="Self.Color" Multiplicity="1" />
           <End Role="ItemColor" Type="Self.ItemColor" Multiplicity="*" />
@@ -2730,6 +2768,7 @@
           <EntitySet Name="EmployeeRequests" EntityType="Self.EmployeeRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryDepartment" EntityType="Self.InventoryDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemBarcode" EntityType="Self.ItemBarcode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemColor" EntityType="Self.ItemColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemImage" EntityType="Self.ItemImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemManufacturer" EntityType="Self.ItemManufacturer" Schema="dbo" store:Type="Tables" />
@@ -2905,6 +2944,14 @@
           <AssociationSet Name="FK_InventoryDepartment_InventoryDepartment" Association="Self.FK_InventoryDepartment_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
             <End Role="InventoryDepartment1" EntitySet="InventoryDepartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemBarcode_AspNetUsers" Association="Self.FK_ItemBarcode_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ItemBarcode" EntitySet="ItemBarcode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemBarcode_ItemVariation" Association="Self.FK_ItemBarcode_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="ItemBarcode" EntitySet="ItemBarcode" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemColor_Color" Association="Self.FK_ItemColor_Color">
             <End Role="Color" EntitySet="Color" />
@@ -3381,6 +3428,7 @@
           <NavigationProperty Name="DIFHistoryManager" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="AspNetUser" ToRole="DIFHistory" />
           <NavigationProperty Name="ItemReleaseHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_AspNetUsers" FromRole="AspNetUser" ToRole="ItemReleaseHistory" />
           <NavigationProperty Name="RFIHistories" Relationship="EPMSInventoryModel.FK_RFIHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RFIHistory" />
+          <NavigationProperty Name="ItemBarcodes" Relationship="EPMSInventoryModel.FK_ItemBarcode_AspNetUsers" FromRole="AspNetUser" ToRole="ItemBarcode" />
           </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -3771,6 +3819,7 @@
           <NavigationProperty Name="ItemReleaseDetailHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemVariation" FromRole="ItemVariation" ToRole="ItemReleaseDetailHistory" />
           <NavigationProperty Name="ItemWarehouses" Relationship="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemVariation" ToRole="ItemWarehouse" />
           <NavigationProperty Name="RFIItemHistories" Relationship="EPMSInventoryModel.FK_RFIItemHistory_ItemVariation" FromRole="ItemVariation" ToRole="RFIItemHistory" />
+          <NavigationProperty Name="ItemBarcodes" Relationship="EPMSInventoryModel.FK_ItemBarcode_ItemVariation" FromRole="ItemVariation" ToRole="ItemBarcode" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -5559,6 +5608,15 @@
             <End Role="RFIHistory" EntitySet="RFIHistories" />
             <End Role="RFIItemHistory" EntitySet="RFIItemHistories" />
           </AssociationSet>
+          <EntitySet Name="ItemBarcodes" EntityType="EPMSInventoryModel.ItemBarcode" />
+          <AssociationSet Name="FK_ItemBarcode_AspNetUsers" Association="EPMSInventoryModel.FK_ItemBarcode_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemBarcode" EntitySet="ItemBarcodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemBarcode_ItemVariation" Association="EPMSInventoryModel.FK_ItemBarcode_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="ItemBarcode" EntitySet="ItemBarcodes" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -6500,6 +6558,46 @@
             </Principal>
             <Dependent Role="RFIItemHistory">
               <PropertyRef Name="RFIId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ItemBarcode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
+          <Property Name="BarcodeValue" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BarcodePattern" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_ItemBarcode_AspNetUsers" FromRole="ItemBarcode" ToRole="AspNetUser" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_ItemBarcode_ItemVariation" FromRole="ItemBarcode" ToRole="ItemVariation" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ItemBarcode_AspNetUsers">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemBarcode" Role="ItemBarcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemBarcode">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemBarcode_ItemVariation">
+          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemBarcode" Role="ItemBarcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="ItemBarcode">
+              <PropertyRef Name="ItemVariationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7940,6 +8038,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ItemBarcodes">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemBarcode">
+              <MappingFragment StoreEntitySet="ItemBarcode">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="BarcodePattern" ColumnName="BarcodePattern" />
+                <ScalarProperty Name="BarcodeValue" ColumnName="BarcodeValue" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -8147,6 +8260,9 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_RFI" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIHistory_Orders" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItemHistory_RFIHistory" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemBarcode" Width="1.5" PointX="8.25" PointY="17.25" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemBarcode_AspNetUsers" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemBarcode_ItemVariation" />
         </Diagram>
     </Diagrams>
   </Designer>

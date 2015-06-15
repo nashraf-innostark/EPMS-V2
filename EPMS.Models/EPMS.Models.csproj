@@ -118,6 +118,7 @@
     <Compile Include="DomainModels\DIFHistory.cs" />
     <Compile Include="DomainModels\DIFItem.cs" />
     <Compile Include="DomainModels\DIFItemHistory.cs" />
+    <Compile Include="DomainModels\ItemBarcode.cs" />
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemRelease.cs" />
     <Compile Include="DomainModels\ItemReleaseDetail.cs" />

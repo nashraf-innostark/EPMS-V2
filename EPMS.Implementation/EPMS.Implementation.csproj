@@ -138,6 +138,7 @@
     <Compile Include="Services\EmployeeService.cs" />
     <Compile Include="Services\InventoryDepartmentService.cs" />
     <Compile Include="Services\InventoryItemService.cs" />
+    <Compile Include="Services\ItemBarcodeService.cs" />
     <Compile Include="Services\ItemImageService.cs" />
     <Compile Include="Services\ItemManufacturerService.cs" />
     <Compile Include="Services\ItemReleaseService.cs" />

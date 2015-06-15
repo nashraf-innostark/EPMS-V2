@@ -51,5 +51,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<DIFItemHistory> DIFItemHistories { get; set; }
         public virtual ICollection<ItemReleaseDetailHistory> ItemReleaseDetailHistories { get; set; }
         public virtual ICollection<RFIItemHistory> RFIItemHistories { get; set; }
+        public virtual ICollection<ItemBarcode> ItemBarcodes { get; set; }
     }
 }
