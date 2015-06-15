@@ -5,6 +5,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IDIFHistoryRepository : IBaseRepository<DIFHistory, long>
     {
-        IEnumerable<DIFHistory> GetDifHistoryData();
+        IEnumerable<DIFHistory> GetDifHistoryData(long parentId);
     }
 }

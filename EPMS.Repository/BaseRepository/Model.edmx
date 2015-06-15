@@ -3378,7 +3378,7 @@
           <NavigationProperty Name="PurchaseOrderManager" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers1" FromRole="AspNetUser" ToRole="PurchaseOrder" />
           <NavigationProperty Name="ItemReleases" Relationship="EPMSInventoryModel.FK_ItemRelease_AspNetUsers" FromRole="AspNetUser" ToRole="ItemRelease" />
           <NavigationProperty Name="DIFHistories" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="AspNetUser" ToRole="DIFHistory" />
-          <NavigationProperty Name="DIFHistories1" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="AspNetUser" ToRole="DIFHistory" />
+          <NavigationProperty Name="DIFHistoryManager" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="AspNetUser" ToRole="DIFHistory" />
           <NavigationProperty Name="ItemReleaseHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_AspNetUsers" FromRole="AspNetUser" ToRole="ItemReleaseHistory" />
           <NavigationProperty Name="RFIHistories" Relationship="EPMSInventoryModel.FK_RFIHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RFIHistory" />
           </EntityType>
@@ -6330,8 +6330,8 @@
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ParentId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="DIFHistory" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="DIFHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="CreatedBy" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="DIFHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="DIFHistory" ToRole="AspNetUser" />
           <NavigationProperty Name="DIFItemHistories" Relationship="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" FromRole="DIFHistory" ToRole="DIFItemHistory" />
         </EntityType>
         <EntityType Name="ItemReleaseHistory">
@@ -6357,7 +6357,7 @@
           <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="ParentId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_AspNetUsers" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_AspNetUsers" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
           <NavigationProperty Name="Customer" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Customer" FromRole="ItemReleaseHistory" ToRole="Customer" />
           <NavigationProperty Name="ItemReleaseDetailHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory" FromRole="ItemReleaseHistory" ToRole="ItemReleaseDetailHistory" />
           <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_RFI" FromRole="ItemReleaseHistory" ToRole="RFI" />
@@ -7962,7 +7962,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="83">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="22.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
@@ -7970,7 +7970,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.AspNetRole" Width="1.5" PointX="0.875" PointY="27" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUserClaim" Width="1.5" PointX="6" PointY="30.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUserLogin" Width="1.5" PointX="6" PointY="43.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUser" Width="1.625" PointX="2.875" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.AspNetUser" Width="1.875" PointX="2.625" PointY="29.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Color" Width="1.5" PointX="0.75" PointY="16.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.CompanyBankDetail" Width="1.5" PointX="20" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.CompanyDocumentDetail" Width="1.5" PointX="20" PointY="12" IsExpanded="true" />
@@ -8135,7 +8135,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.RFIItemHistory" Width="1.5" PointX="23.5" PointY="28.625" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItemHistory_ItemVariation" />
         <EntityTypeShape EntityType="EPMSInventoryModel.DIFHistory" Width="1.5" PointX="5.25" PointY="70.75" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseHistory" Width="1.5" PointX="19.25" PointY="39.25" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseHistory" Width="1.875" PointX="19.25" PointY="39.25" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RFIHistory" Width="1.5" PointX="17.25" PointY="34.25" />
         <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_CreatedBy" />
         <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_Manager" />

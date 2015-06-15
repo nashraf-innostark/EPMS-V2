@@ -49,9 +49,13 @@ namespace EPMS.Implementation.Services
             return difs;
         }
 
-        public DifHistoryResponse GetDifHistoryData()
+        public DifHistoryResponse GetDifHistoryData(long? parentId)
         {
-            var difs = historyRepository.GetDifHistoryData();
+            if (parentId == null)
+            {
+                return new DifHistoryResponse();
+            }
+            var difs = historyRepository.GetDifHistoryData((long)parentId);
             var difList = difs as IList<DIFHistory> ?? difs.ToList();
             if (!difList.Any())
             {

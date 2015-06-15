@@ -28,9 +28,9 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
-        public IEnumerable<DIFHistory> GetDifHistoryData()
+        public IEnumerable<DIFHistory> GetDifHistoryData(long parentId)
         {
-            return DbSet.Where(x => x.Status == 3 || x.Status == 2).ToList();
+            return DbSet.Where(x => (x.Status == 3 || x.Status == 2) && x.ParentId == parentId).ToList();
         }
     }
 }

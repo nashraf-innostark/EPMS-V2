@@ -11,6 +11,7 @@ namespace EPMS.Models.ModelMapers
             var rif = new DIFHistory
             {
                 Id = source.Id,
+                ParentId = source.Id,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 Status = source.Status == 0 ? 6 : source.Status,
@@ -23,7 +24,7 @@ namespace EPMS.Models.ModelMapers
                 RecUpdatedDate = source.RecUpdatedDate,
                 CreatedBy = source.AspNetUser,
                 Manager = source.Manager,
-                DIFItemHistories = itemHistory.Select(x=>x.CreateFromDifItemToDifItemHistory()).ToList()
+                DIFItemHistories = itemHistory.Select(x=>x.CreateFromDifItemToDifItemHistory()).ToList(),
             };
             return rif;
         }
@@ -31,7 +32,7 @@ namespace EPMS.Models.ModelMapers
         {
             var rif = new DIF
             {
-                Id = source.Id,
+                Id = source.ParentId,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 Status = source.Status == 0 ? 6 : source.Status,

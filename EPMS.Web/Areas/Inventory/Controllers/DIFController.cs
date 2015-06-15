@@ -215,9 +215,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
         }
         [SiteAuthorize(PermissionKey = "DIFHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            DifHistoryResponse response = rifService.GetDifHistoryData();
+            DifHistoryResponse response = rifService.GetDifHistoryData(id);
             DifHistoryViewModel viewModel = new DifHistoryViewModel
             {
                 Difs = response.Difs != null ? response.Difs.Select(x => x.CreateDifServerToClient()).ToList() : new List<DIF>(),
