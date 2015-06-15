@@ -37,7 +37,6 @@ namespace EPMS.Web.Models
         public string EmployeeDOB { get; set; }
         public string EmpDateOfBirthArabic { get; set; }
         public string EmployeeNationality { get; set; }
-        [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 to 20.")]
         public string EmployeeIqama { get; set; }
         public string EmployeeIqamaIssueDt { get; set; }
         public string EmployeeIqamaIssueDtAr { get; set; }

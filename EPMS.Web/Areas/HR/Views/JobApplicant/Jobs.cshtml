@@ -42,7 +42,7 @@
                     </div>
                     <ul class="jobsOffred">
                         <li>
-                            <span>Department</span>
+                            <span>@EPMS.Web.Resources.HR.JobApplicant.Department</span>
                             <div>
                                 @if (direction == "ltr")
                                 {
@@ -57,7 +57,7 @@
                         @if (item.NoOfPosts != null)
                         {
                             <li>
-                                <span>Available Vacancies</span>
+                                <span>@EPMS.Web.Resources.HR.JobApplicant.AvailableVacancies</span>
                                 <div>
                                     @item.NoOfPosts
                                 </div>
@@ -66,7 +66,7 @@
                         @if (item.ShowBasicSalary)
                         {
                             <li>
-                                <span>Basic Salary</span>
+                                <span>@EPMS.Web.Resources.HR.JobTitle.BasicSalary</span>
                                 <div>
                                     @item.BasicSalary
                                 </div>
@@ -75,7 +75,7 @@
 
 
                         <li>
-                            <span>Job Description</span>
+                            <span>@EPMS.Web.Resources.HR.JobApplicant.JobDescription</span>
                             <div class="jobDesc">
                                 @if (direction == "ltr")
                                 {
@@ -87,14 +87,14 @@
                                 }
                             </div>
                         </li>
+                        
                     </ul>
 
                     <div class="control-group row-fluid" style="clear:both;">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn" onclick="location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobApplicant/Apply/@item.JobOfferedId'">Apply</button>
+                            <button type="button" class="btn" onclick="location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobApplicant/Apply/@item.JobOfferedId'">@EPMS.Web.Resources.HR.JobApplicant.Apply</button>
                         </div>
                     </div>
-
                 </div>
 
             </div>

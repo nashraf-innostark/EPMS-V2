@@ -79,6 +79,24 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply.
+        /// </summary>
+        public static string Apply {
+            get {
+                return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Vacancies.
+        /// </summary>
+        public static string AvailableVacancies {
+            get {
+                return ResourceManager.GetString("AvailableVacancies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birth Date.
         /// </summary>
         public static string BirthDate {
@@ -291,6 +309,15 @@ namespace EPMS.Web.Resources.HR {
         public static string GovtJobLeavingDateH {
             get {
                 return ResourceManager.GetString("GovtJobLeavingDateH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Description.
+        /// </summary>
+        public static string JobDescription {
+            get {
+                return ResourceManager.GetString("JobDescription", resourceCulture);
             }
         }
         

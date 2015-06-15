@@ -36,23 +36,27 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         private void SendInvitation(MeetingViewModel meetingViewModel, SaveMeetingResponse response)
         {
             IEnumerable<string> emEmails = response.EmployeeEmails;
-            string empemails = emEmails.Aggregate("", (current, item) => current + "," + item);
-            string emails = empemails.Substring(1, empemails.Length - 1);
-            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail1))
+            if (response.EmployeeEmails.Any())
             {
-                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail1;
+                string empemails = emEmails.Aggregate("", (current, item) => current + "," + item);
+                string emails = empemails.Substring(1, empemails.Length - 1);
+                if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail1))
+                {
+                    emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail1;
+                }
+                if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail2))
+                {
+                    emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail2;
+                }
+                if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail3))
+                {
+                    emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail3;
+                }
+                string emailSubject = "Meeting Invitation";
+                string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName +
+                                   " on " + meetingViewModel.Meeting.Date;
+                Utility.SendEmailAsync(emails, emailSubject, emailBody);
             }
-            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail2))
-            {
-                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail2;
-            }
-            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail3))
-            {
-                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail3;
-            }
-            string emailSubject = "Meeting Invitation";
-            string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName + " on " + meetingViewModel.Meeting.Date;
-            Utility.SendEmailAsync(emails, emailSubject, emailBody);
         }
         #endregion
 

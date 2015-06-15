@@ -121,10 +121,13 @@
     <value>Add New Job</value>
   </data>
   <data name="BasicSalaray" xml:space="preserve">
-    <value>Basic Salaray</value>
+    <value>الراتب الاساسي</value>
   </data>
   <data name="CancelButton" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>أغلق</value>
   </data>
   <data name="CreateJob" xml:space="preserve">
     <value>Create Job Offered</value>
@@ -139,19 +142,22 @@
     <value>All Jobs Offered</value>
   </data>
   <data name="IsOpen" xml:space="preserve">
-    <value>Status</value>
+    <value>الوضع</value>
   </data>
   <data name="JobDescription" xml:space="preserve">
-    <value>Job Description</value>
+    <value>تفاصيل الوظيفة</value>
   </data>
   <data name="JobTitle" xml:space="preserve">
-    <value>Job Title</value>
+    <value>اسم الوظيفي</value>
   </data>
   <data name="Label" xml:space="preserve">
     <value>Jobs Offered List</value>
   </data>
   <data name="NoOfPosts" xml:space="preserve">
-    <value>No Of Posts</value>
+    <value>عدد المشاركات</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>مفتوحة</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
