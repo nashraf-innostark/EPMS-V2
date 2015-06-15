@@ -18,6 +18,7 @@ namespace EPMS.Implementation.Services
         private readonly ICustomerRepository customerRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IRFIHistoryRepository historyRepository;
 
         #region Constructor
 
@@ -30,7 +31,7 @@ namespace EPMS.Implementation.Services
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RFIService(IRFIRepository rfiRepository, IItemVariationRepository itemVariationRepository, IRFIItemRepository rfiItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository)
+        public RFIService(IRFIRepository rfiRepository, IItemVariationRepository itemVariationRepository, IRFIItemRepository rfiItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRFIHistoryRepository historyRepository)
         {
             this.rfiRepository = rfiRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -38,6 +39,7 @@ namespace EPMS.Implementation.Services
             this.customerRepository = customerRepository;
             this.ordersRepository = ordersRepository;
             this.aspNetUserRepository = aspNetUserRepository;
+            this.historyRepository = historyRepository;
         }
 
         #endregion
@@ -54,7 +56,7 @@ namespace EPMS.Implementation.Services
 
         public RfiHistoryResponse GetRfiHistoryData()
         {
-            var rfis = rfiRepository.GetRfiHistoryData();
+            var rfis = historyRepository.GetRfiHistoryData();
             
             if (rfis == null)
             {
@@ -66,11 +68,12 @@ namespace EPMS.Implementation.Services
                 };
             }
             RfiHistoryResponse response = new RfiHistoryResponse();
-            var rfiList = rfis as IList<RFI> ?? rfis.ToList();
-            response.Rfis = rfiList;
-            var rfiItems = rfiList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RFIItems).FirstOrDefault();
-            response.RfiItems = rfiItems;
-            response.RecentRfi = rfiList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            var rfiList = rfis as IList<RFIHistory> ?? rfis.ToList();
+            response.Rfis = rfiList.Select(x=>x.CreateFromRfiHistoryToRfi());
+            var rfiItems = rfiList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RFIItemHistories).FirstOrDefault();
+            if (rfiItems != null) response.RfiItems = rfiItems.Select(x=>x.CreateRfiItemHistoryToRfiItem());
+            var recentRfi= rfiList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            response.RecentRfi = recentRfi != null ? recentRfi.CreateFromRfiHistoryToRfi() : new RFI();
 
             if (response.RecentRfi != null)
             {
@@ -82,11 +85,14 @@ namespace EPMS.Implementation.Services
                     response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
                                            manager.EmployeeLastNameA;
                 }
-                var employee = response.RecentRfi.AspNetUser.Employee;
-                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
-                                       employee.EmployeeLastNameE;
-                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
-                                       employee.EmployeeLastNameA;
+                if (response.RecentRfi.AspNetUser != null)
+                {
+                    var employee = response.RecentRfi.AspNetUser.Employee;
+                    response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                           employee.EmployeeLastNameE;
+                    response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                           employee.EmployeeLastNameA;
+                }
             }
             return response;
         }
@@ -156,6 +162,13 @@ namespace EPMS.Implementation.Services
 
         public bool UpdateRFI(RFI rfi)
         {
+            var previous = rfiRepository.Find(rfi.RFIId);
+            if (previous.Status != rfi.Status)
+            {
+                var rfiHistoryToAdd = rfi.CreateFromRfiToRfiHistory(previous.RFIItems);
+                historyRepository.Add(rfiHistoryToAdd);
+                historyRepository.SaveChanges();
+            }
             rfiRepository.Update(rfi);
             rfiRepository.SaveChanges();
             return true;

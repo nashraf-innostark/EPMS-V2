@@ -2,47 +2,47 @@
 
 namespace EPMS.Models.ModelMapers
 {
-    public static class DIFItemHistoryMapper
+    public static class IRFItemHistoryMapper
     {
-        public static DIFItemHistory CreateFromDifItemToDifItemHistory(this DIFItem source)
+        public static ItemReleaseDetailHistory CreateFromIrfDetailToIrfDetailHistory(this ItemReleaseDetail source)
         {
-            var rifItem = new DIFItemHistory
+            return new ItemReleaseDetailHistory
             {
-                ItemId = source.ItemId,
-                DIFId = source.DIFId,
-                IsItemDescription = source.IsItemDescription,
-                IsItemSKU = source.IsItemSKU,
-                ItemQty = source.ItemQty,
+                IRFDetailId = source.IRFDetailId,
+                ItemReleaseId = source.ItemReleaseId,
                 ItemDetails = source.ItemDetails,
-                PlaceInDepartment = source.PlaceInDepartment,
+                IsItemDescription = source.IsItemDescription,
+                IsItemSKU = source.IsItemDescription,
                 ItemVariationId = source.ItemVariationId,
+                ItemQty = source.ItemQty,
+                PlaceInDepartment = source.PlaceInDepartment,
+                PlaceInWarehouse = source.PlaceInWarehouse,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 ItemVariation = source.ItemVariation,
             };
-            return rifItem;
         }
-        public static DIFItem CreateFromDifItemHistoryToDifItem(this DIFItemHistory source)
+        public static ItemReleaseDetail CreateFromIrfDetailHistoryToIrfDetail(this ItemReleaseDetailHistory source)
         {
-            var rifItem = new DIFItem
+            return new ItemReleaseDetail
             {
-                ItemId = source.ItemId,
-                DIFId = source.DIFId,
-                IsItemDescription = source.IsItemDescription,
-                IsItemSKU = source.IsItemSKU,
-                ItemQty = source.ItemQty,
+                IRFDetailId = source.IRFDetailId,
+                ItemReleaseId = source.ItemReleaseId,
                 ItemDetails = source.ItemDetails,
-                PlaceInDepartment = source.PlaceInDepartment,
+                IsItemDescription = source.IsItemDescription,
+                IsItemSKU = source.IsItemDescription,
                 ItemVariationId = source.ItemVariationId,
+                ItemQty = source.ItemQty,
+                PlaceInDepartment = source.PlaceInDepartment,
+                PlaceInWarehouse = source.PlaceInWarehouse,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 ItemVariation = source.ItemVariation,
             };
-            return rifItem;
         }
     }
 }

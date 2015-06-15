@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using EPMS.Models.DomainModels;
 
-namespace EPMS.Web.ModelMappers
+namespace EPMS.Models.ModelMapers
 {
-    public static class ItemReleaseMapper
+    public static class IRFHistoryMapper
     {
-        public static Models.ItemRelease CreateFromServerToClient(this ItemRelease source)
+        public static ItemReleaseHistory CreateFromIrfToIrfHistory(this ItemRelease source)
         {
-            return new Models.ItemRelease
+            return new ItemReleaseHistory
             {
                 ItemReleaseId = source.ItemReleaseId,
                 RFIId = source.RFIId,
@@ -20,41 +24,21 @@ namespace EPMS.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
-                RequesterNameE = source.Customer.CustomerNameE,
-                RequesterNameA = source.Customer.CustomerNameA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
-                ManagerId = source.ManagerId
+                ManagerId = source.ManagerId,
+                Customer = source.Customer,
+                RFI = source.RFI,
+                Manager = source.Manager,
+                ItemReleaseDetailHistories = source.ItemReleaseDetails.Select(x=>x.CreateFromIrfDetailToIrfDetailHistory()).ToList(),
             };
         }
-        public static ItemRelease CreateFromClientToServer(this Models.ItemRelease source)
+        public static ItemRelease CreateFromIrfHistoryToIrf(this ItemReleaseHistory source)
         {
-            var deliveryInfoE = source.DeliveryInfo;
-            deliveryInfoE = deliveryInfoE.Replace("\r", "");
-            deliveryInfoE = deliveryInfoE.Replace("\t", "");
-            deliveryInfoE = deliveryInfoE.Replace("\n", "");
-            var deliveryInfoA = source.DeliveryInfoArabic;
-            deliveryInfoA = deliveryInfoA.Replace("\r", "");
-            deliveryInfoA = deliveryInfoA.Replace("\t", "");
-            deliveryInfoA = deliveryInfoA.Replace("\n", "");
-            var notesE = source.Notes;
-            if (!string.IsNullOrEmpty(notesE))
-            {
-                notesE = notesE.Replace("\r", "");
-                notesE = notesE.Replace("\t", "");
-                notesE = notesE.Replace("\n", "");
-            }
-            var notesA = source.NotesAr;
-            if (!string.IsNullOrEmpty(notesA))
-            {
-                notesA = notesA.Replace("\r", "");
-                notesA = notesA.Replace("\t", "");
-                notesA = notesA.Replace("\n", "");
-            }
             return new ItemRelease
             {
                 ItemReleaseId = source.ItemReleaseId,
@@ -62,8 +46,8 @@ namespace EPMS.Web.ModelMappers
                 FormNumber = source.FormNumber,
                 OrderNo = source.OrderNo,
                 QuantityReleased = source.QuantityReleased,
-                DeliveryInfo = deliveryInfoE,
-                DeliveryInfoArabic = deliveryInfoA,
+                DeliveryInfo = source.DeliveryInfo,
+                DeliveryInfoArabic = source.DeliveryInfoArabic,
                 RequesterId = source.RequesterId,
                 CreatedBy = source.CreatedBy,
                 ShipmentDetails = source.ShipmentDetails,
@@ -72,9 +56,13 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                Notes = source.Notes,
+                NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,
-                Notes = notesE,
-                NotesAr = notesA,
+                Customer = source.Customer,
+                RFI = source.RFI,
+                Manager = source.Manager,
+                ItemReleaseDetails = source.ItemReleaseDetailHistories.Select(x => x.CreateFromIrfDetailHistoryToIrfDetail()).ToList(),
             };
         }
     }

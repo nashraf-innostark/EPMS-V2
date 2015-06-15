@@ -134,6 +134,7 @@
     <Compile Include="Repository\IItemImageRepository.cs" />
     <Compile Include="Repository\IItemReleaseDetailRepository.cs" />
     <Compile Include="Repository\IItemManufacturerRepository.cs" />
+    <Compile Include="Repository\IItemReleaseHistoryRepository.cs" />
     <Compile Include="Repository\IItemReleaseRepository.cs" />
     <Compile Include="Repository\IItemVariationRepository.cs" />
     <Compile Include="Repository\IJobApplicantRepository.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Repository\IQuotationRepository.cs" />
     <Compile Include="Repository\IDIFItemRepository.cs" />
     <Compile Include="Repository\IDIFRepository.cs" />
+    <Compile Include="Repository\IRFIHistoryRepository.cs" />
     <Compile Include="Repository\IRIFItemRepository.cs" />
     <Compile Include="Repository\IRFIItemRepository.cs" />
     <Compile Include="Repository\IRIFRepository.cs" />

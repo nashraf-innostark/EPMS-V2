@@ -8,13 +8,13 @@ using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    public class DIFHistoryRepository : BaseRepository<DIFHistory>, IDIFHistoryRepository
+    public class RFIHistoryRepository : BaseRepository<RFIHistory>, IRFIHistoryRepository
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public DIFHistoryRepository(IUnityContainer container)
+        public RFIHistoryRepository(IUnityContainer container)
             : base(container)
         {
         }
@@ -22,13 +22,13 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<DIFHistory> DbSet
+        protected override IDbSet<RFIHistory> DbSet
         {
-            get { return db.DifHistories; }
+            get { return db.RfiHistories; }
         }
 
         #endregion
-        public IEnumerable<DIFHistory> GetDifHistoryData()
+        public IEnumerable<RFIHistory> GetRfiHistoryData()
         {
             return DbSet.Where(x => x.Status == 3 || x.Status == 2).ToList();
         }

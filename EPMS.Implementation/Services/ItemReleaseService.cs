@@ -4,6 +4,7 @@ using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
@@ -17,8 +18,9 @@ namespace EPMS.Implementation.Services
         private readonly IOrdersRepository ordersRepository;
         private readonly IItemReleaseDetailRepository detailRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
 
-        public ItemReleaseService(ICustomerRepository customerRepository, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository)
+        public ItemReleaseService(ICustomerRepository customerRepository, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository)
         {
             this.customerRepository = customerRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -26,6 +28,7 @@ namespace EPMS.Implementation.Services
             this.ordersRepository = ordersRepository;
             this.detailRepository = detailRepository;
             this.aspNetUserRepository = aspNetUserRepository;
+            this.releaseHistoryRepository = releaseHistoryRepository;
         }
 
         public IRFCreateResponse GetCreateResponse(long id)
@@ -68,8 +71,8 @@ namespace EPMS.Implementation.Services
 
         public IrfHistoryResponse GetIrfHistoryData()
         {
-            var irfs = itemReleaseRepository.GetIrfHistoryData();
-            var irfList = irfs as IList<ItemRelease> ?? irfs.ToList();
+            var irfs = releaseHistoryRepository.GetIrfHistoryData();
+            var irfList = irfs as IList<ItemReleaseHistory> ?? irfs.ToList();
             if (!irfList.Any())
             {
                 return new IrfHistoryResponse
@@ -79,15 +82,15 @@ namespace EPMS.Implementation.Services
                     RecentIrf = null
                 };
             }
-            IrfHistoryResponse response = new IrfHistoryResponse { Irfs = irfList };
-            var irfItems = irfList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.ItemReleaseDetails).FirstOrDefault();
-            response.IrfItems = irfItems;
-            response.RecentIrf = irfList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            IrfHistoryResponse response = new IrfHistoryResponse { Irfs = irfList.Select(x=>x.CreateFromIrfHistoryToIrf()) };
+            var irfItems = irfList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.ItemReleaseDetailHistories).FirstOrDefault();
+            if (irfItems != null) response.IrfItems = irfItems.Select(x=>x.CreateFromIrfDetailHistoryToIrfDetail());
+            response.RecentIrf = irfList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault().CreateFromIrfHistoryToIrf();
             if (response.RecentIrf != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentIrf.ManagerId))
                 {
-                    var manager = aspNetUserRepository.Find(response.RecentIrf.ManagerId).Employee;
+                    var manager = response.RecentIrf.Manager.Employee;
                     response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
                                            manager.EmployeeLastNameE;
                     response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
@@ -135,6 +138,12 @@ namespace EPMS.Implementation.Services
                 itemRelease.NotesAr = releaseStatus.NotesAr;
                 itemRelease.Status = releaseStatus.Status;
                 itemRelease.ManagerId = releaseStatus.ManagerId;
+                if (itemRelease.Status != releaseStatus.Status)
+                {
+                    var historyToAdd = itemRelease.CreateFromIrfToIrfHistory();
+                    releaseHistoryRepository.Add(historyToAdd);
+                    releaseHistoryRepository.SaveChanges();
+                }
                 itemReleaseRepository.Update(itemRelease);
                 itemReleaseRepository.SaveChanges();
                 return true;

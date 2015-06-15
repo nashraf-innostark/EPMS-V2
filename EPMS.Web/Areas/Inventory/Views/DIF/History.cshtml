@@ -186,7 +186,7 @@
                                         }
                                     </td>
                                 </tr>
-                                counter2 = counter2 + 1;
+                                        counter2 = counter2 + 1;
                             }
                         }
                     </tbody>
@@ -250,3 +250,14 @@
         <!--Input Field end-->
     </div>
 }
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace('RFINotesE', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('RFINotesA', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+    });
+</script>

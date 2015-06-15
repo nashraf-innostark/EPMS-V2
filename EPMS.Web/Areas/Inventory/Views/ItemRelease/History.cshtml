@@ -171,7 +171,7 @@
                                         <a href="Detail/@itemRelease.ItemReleaseId">@itemRelease.FormNumber</a>
                                     </td>
                                     <td>
-                                        @itemRelease.RequesterName
+                                        @(direction == "ltr" ? itemRelease.RequesterNameE : itemRelease.RequesterNameA)
                                     </td>
                                     <td>
                                         @itemRelease.RecCreatedDate.ToShortDateString()

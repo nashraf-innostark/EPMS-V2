@@ -138,5 +138,8 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public DbSet<DIFHistory> DifHistories { get; set; }
         public DbSet<DIFItemHistory> DifItemHistories { get; set; }
+        public DbSet<ItemReleaseHistory> ReleaseHistories { get; set; }
+        public DbSet<ItemReleaseDetailHistory> ReleaseDetailHistories { get; set; }
+        public DbSet<RFIHistory> RfiHistories { get; set; }
     }
 }

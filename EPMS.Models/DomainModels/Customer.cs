@@ -21,5 +21,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
         public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<ItemRelease> ItemReleases { get; set; }
+        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistories { get; set; }
     }
 }

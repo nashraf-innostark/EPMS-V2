@@ -121,12 +121,16 @@
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemRelease.cs" />
     <Compile Include="DomainModels\ItemReleaseDetail.cs" />
+    <Compile Include="DomainModels\ItemReleaseDetailHistory.cs" />
+    <Compile Include="DomainModels\ItemReleaseHistory.cs" />
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\POF.cs" />
     <Compile Include="DomainModels\POFItem.cs" />
     <Compile Include="DomainModels\PurchaseOrder.cs" />
     <Compile Include="DomainModels\PurchaseOrderItem.cs" />
+    <Compile Include="DomainModels\RFIHistory.cs" />
+    <Compile Include="DomainModels\RFIItemHistory.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
     <Compile Include="DomainModels\TIR.cs" />
@@ -135,6 +139,10 @@
     <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
+    <Compile Include="ModelMapers\IRFHistoryMapper.cs" />
+    <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
+    <Compile Include="ModelMapers\RFIHistoryMapper.cs" />
+    <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />

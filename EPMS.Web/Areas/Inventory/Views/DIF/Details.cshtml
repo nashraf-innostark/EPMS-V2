@@ -207,7 +207,7 @@
 
             </div>
         </div>
-        @if (string.IsNullOrEmpty(Model.Dif.ManagerId))
+        @if (Model.Dif.Status != 2)
         {
             <div id="submitDiv" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
@@ -229,22 +229,16 @@
         if ('@Model.Dif.Id' > 0) {
             editor = CKEDITOR.replace('RFINotesE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
             editor = CKEDITOR.replace('RFINotesA', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
         }
         EnableDisableFields();
         CheckPermissions();
     });
     function EnableDisableFields() {
-        if ('@string.IsNullOrEmpty(Model.Dif.ManagerId)' == 'True') {
+        if ('@Model.Dif.Status' != '2') {
             $('.toBeDisabled:input').attr('disabled', false);
         } else {
             $('.toBeDisabled:input').attr('disabled', true);

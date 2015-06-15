@@ -23,5 +23,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<RFI> RFIs { get; set; }
         public virtual ICollection<RIF> RIFs { get; set; }
+        public virtual ICollection<RFIHistory> RFIHistories { get; set; }
     }
 }

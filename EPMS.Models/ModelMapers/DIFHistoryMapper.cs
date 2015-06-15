@@ -21,7 +21,29 @@ namespace EPMS.Models.ModelMapers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                CreatedBy = source.AspNetUser,
+                Manager = source.Manager,
                 DIFItemHistories = itemHistory.Select(x=>x.CreateFromDifItemToDifItemHistory()).ToList()
+            };
+            return rif;
+        }
+        public static DIF CreateFromDifHistoryToDif(this DIFHistory source)
+        {
+            var rif = new DIF
+            {
+                Id = source.Id,
+                DefectivenessE = source.DefectivenessE,
+                DefectivenessA = source.DefectivenessA,
+                Status = source.Status == 0 ? 6 : source.Status,
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
+                ManagerId = source.ManagerId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+                AspNetUser = source.CreatedBy,
+                Manager = source.Manager
             };
             return rif;
         }

@@ -41,5 +41,8 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<PurchaseOrder> PurchaseOrderManager { get; set; }
         public virtual ICollection<DIFHistory> DIFHistory { get; set; }
         public virtual ICollection<DIFHistory> DIFHistoryManager { get; set; }
+        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistories { get; set; }
+        public virtual ICollection<ItemRelease> ItemReleases { get; set; }
+        public virtual ICollection<RFIHistory> RFIHistories { get; set; }
     }
 }

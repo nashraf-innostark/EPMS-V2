@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
-    public class ItemRelease
+    public class ItemReleaseHistory
     {
         public long ItemReleaseId { get; set; }
         public string FormNumber { get; set; }
@@ -23,10 +23,11 @@ namespace EPMS.Models.DomainModels
         public string Notes { get; set; }
         public string NotesAr { get; set; }
         public string ManagerId { get; set; }
+        public long ParentId { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual RFI RFI { get; set; }
-        public virtual ICollection<ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public virtual AspNetUser Manager { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual ICollection<ItemReleaseDetailHistory> ItemReleaseDetailHistories { get; set; }
+        public virtual RFI RFI { get; set; }
     }
 }

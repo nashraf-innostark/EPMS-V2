@@ -8,6 +8,6 @@ namespace EPMS.Interfaces.Repository
     public interface IDIFRepository : IBaseRepository<DIF, long>
     {
         DifRequestResponse LoadAllDifs(DifSearchRequest searchRequest);
-        IEnumerable<DIF> GetDifHistoryData();
+        DIF Find(long id);
     }
 }

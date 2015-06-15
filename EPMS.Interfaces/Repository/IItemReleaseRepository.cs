@@ -8,6 +8,5 @@ namespace EPMS.Interfaces.Repository
     public interface IItemReleaseRepository : IBaseRepository<ItemRelease, long>
     {
         ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest);
-        IEnumerable<ItemRelease> GetIrfHistoryData();
     }
 }

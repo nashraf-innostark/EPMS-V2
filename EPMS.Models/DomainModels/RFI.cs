@@ -20,5 +20,6 @@ namespace EPMS.Models.DomainModels
         public virtual Order Order { get; set; }
         public virtual ICollection<RFIItem> RFIItems { get; set; }
         public virtual ICollection<ItemRelease> ItemReleases { get; set; }
+        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistories { get; set; }
     }
 }

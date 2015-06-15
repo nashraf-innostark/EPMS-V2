@@ -51,8 +51,8 @@ namespace EPMS.Implementation.Services
 
         public DifHistoryResponse GetDifHistoryData()
         {
-            var difs = repository.GetDifHistoryData();
-            var difList = difs as IList<DIF> ?? difs.ToList();
+            var difs = historyRepository.GetDifHistoryData();
+            var difList = difs as IList<DIFHistory> ?? difs.ToList();
             if (!difList.Any())
             {
                 return new DifHistoryResponse
@@ -62,10 +62,10 @@ namespace EPMS.Implementation.Services
                     RecentDif = null
                 };
             }
-            DifHistoryResponse response = new DifHistoryResponse { Difs = difList };
-            var difItems = difList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.DIFItems).FirstOrDefault();
-            response.DifItems = difItems;
-            response.RecentDif = difList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            DifHistoryResponse response = new DifHistoryResponse { Difs = difList.Select(x=>x.CreateFromDifHistoryToDif()) };
+            var difItems = difList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.DIFItemHistories).FirstOrDefault();
+            response.DifItems = difItems.Select(x=>x.CreateFromDifItemHistoryToDifItem());
+            response.RecentDif = difList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault().CreateFromDifHistoryToDif();
             if (response.RecentDif != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentDif.ManagerId))
@@ -153,8 +153,9 @@ namespace EPMS.Implementation.Services
             var previous = repository.Find(dif.Id);
             if (previous.Status != dif.Status)
             {
-                var difToAdd = dif.CreateFromDifToDifHistory(previous.DIFItems);
-                historyRepository.Add(difToAdd);
+                var difHistoryToAdd = dif.CreateFromDifToDifHistory(previous.DIFItems);
+                difHistoryToAdd.ManagerId = dif.ManagerId;
+                historyRepository.Add(difHistoryToAdd);
                 historyRepository.SaveChanges();
             }
             repository.Update(dif);

@@ -148,11 +148,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch (Exception)
             {
-                return View(); 
+                return View();
             }
         }
 
@@ -182,7 +182,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rfiViewModel.Customers = rfiresponse.Customers.Select(x => x.CreateForDashboard());
                 rfiViewModel.Orders = rfiresponse.Orders.Select(x => x.CreateForDashboard());
                 //set customerId
-                if (rfiViewModel.Rfi.OrderId>0)
+                if (rfiViewModel.Rfi.OrderId > 0)
                     rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
             }
             rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
@@ -216,15 +216,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
                     TempData["message"] = new MessageViewModel { Message = Resources.RFI.RFI.RFICreated, IsSaved = true };
                 }
-                
+
                 var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
-                if(rfiService.SaveRFI(rfiToBeSaved))
+                if (rfiService.SaveRFI(rfiToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch
             {
@@ -236,12 +236,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult History()
         {
             RfiHistoryResponse response = rfiService.GetRfiHistoryData();
-            RFIHistoryViewModel viewModel = new RFIHistoryViewModel
-            {
-                Rfis = response.Rfis.Select(x=>x.CreateRfiServerToClient()).ToList(),
-                RfiItems = response.RfiItems.Select(x=>x.CreateRfiItemDetailsServerToClient()).ToList(),
-                RecentRfi = response.RecentRfi.CreateRfiServerToClient(),
-            };
+            RFIHistoryViewModel viewModel = new RFIHistoryViewModel();
+            viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<RFI>();
+            viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<RFIItem>();
+            viewModel.RecentRfi = (response.RecentRfi != null && response.RecentRfi.RFIId > 0) ? response.RecentRfi.CreateRfiServerToClient() : new RFI();
+            
             if (viewModel.RecentRfi != null)
             {
                 viewModel.RecentRfi.RequesterName = response.RequesterNameEn;
