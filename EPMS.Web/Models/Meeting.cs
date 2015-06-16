@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using DataAnnotationsExtensions;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.Models
@@ -33,10 +34,13 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string AttendeeName1 { get; set; }
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string AttendeeEmail1 { get; set; }
         public string AttendeeName2 { get; set; }
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string AttendeeEmail2 { get; set; }
         public string AttendeeName3 { get; set; }
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string AttendeeEmail3 { get; set; }
         /// <summary>
         /// Meeting Attendees

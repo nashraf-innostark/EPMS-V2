@@ -23,7 +23,9 @@ namespace EPMS.Web.Models
         public string DepartmentNameA { get; set; }
 
         public string JobTitleDescE { get; set; }
+        public string JobTitleDescShortE { get; set; }
         public string JobTitleDescA { get; set; }
+        public string JobTitleDescShortA { get; set; }
         public double? BasicSalary { get; set; }
         public string JobTitleNameE { get; set; }
         public string JobTitleNameA { get; set; }
