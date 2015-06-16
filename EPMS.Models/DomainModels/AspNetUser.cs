@@ -39,11 +39,14 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<TIR> TIRManager { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrderManager { get; set; }
+        public virtual ICollection<ItemRelease> ItemReleases { get; set; }
         public virtual ICollection<DIFHistory> DIFHistories { get; set; }
         public virtual ICollection<DIFHistory> DIFHistoryManager { get; set; }
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistories { get; set; }
-        public virtual ICollection<ItemRelease> ItemReleases { get; set; }
         public virtual ICollection<RFIHistory> RFIHistories { get; set; }
         public virtual ICollection<ItemBarcode> ItemBarcodes { get; set; }
+        public virtual ICollection<RIFHistory> RIFHistories { get; set; }
+        public virtual ICollection<TIRHistory> TIRHistories { get; set; }
+        public virtual ICollection<TIRHistory> TIRHistories1 { get; set; }
     }
 }
