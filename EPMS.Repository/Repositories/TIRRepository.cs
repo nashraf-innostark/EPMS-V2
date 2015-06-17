@@ -188,10 +188,5 @@ namespace EPMS.Repository.Repositories
             }
             return new TIRListResponse { TirItems = tirs, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
-
-        public IEnumerable<TIR> GetTirHistoryData()
-        {
-            return DbSet.Where(x => x.Status == 1 || x.Status == 2).ToList();
-        }
     }
 }

@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
                     IsUpdated = true
                 };
-                return RedirectToAction("Detail", new { id = viewModel.ItemRelease.ItemReleaseId });
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }
@@ -271,6 +271,44 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentIrf.RequesterNameAr = response.RequesterNameAr;
                 viewModel.RecentIrf.ManagerName = response.ManagerNameEn;
                 viewModel.RecentIrf.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
+        }
+        // POST: Inventory/ItemRelease/History
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(IrfHistoryViewModel viewModel)
+        {
+            var notesE = viewModel.RecentIrf.Notes;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = viewModel.RecentIrf.NotesAr;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            ItemReleaseStatus status = new ItemReleaseStatus
+            {
+                ItemReleaseId = viewModel.RecentIrf.ItemReleaseId,
+                Status = viewModel.RecentIrf.Status ?? 1,
+                Notes = notesE,
+                NotesAr = notesA,
+                ManagerId = User.Identity.GetUserId()
+            };
+            if (itemReleaseService.UpdateItemReleaseStatus(status))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
+                    IsUpdated = true
+                };
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }

@@ -8,6 +8,5 @@ namespace EPMS.Interfaces.Repository
     public interface ITIRRepository : IBaseRepository<TIR, long>
     {
         TIRListResponse GetAllTirs(TransferItemSearchRequest searchRequest);
-        IEnumerable<TIR> GetTirHistoryData();
     }
 }

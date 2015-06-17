@@ -85,9 +85,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET: Inventory/Rif/Details/5
         [SiteAuthorize(PermissionKey = "RIFDetails")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string from)
         {
-            var Rifresponse = rifService.LoadRifResponseData(id, false);
+            var Rifresponse = rifService.LoadRifResponseData(id, false, from);
             RIFViewModel rifViewModel = new RIFViewModel();
             if (Rifresponse.Rif != null)
             {
@@ -149,11 +149,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         // GET: Inventory/Rif/Create
-        //[SiteAuthorize(PermissionKey = "RIFCreate")]
+        [SiteAuthorize(PermissionKey = "RIFCreate")]
         public ActionResult Create(long? id)
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
-            var Rifresponse = rifService.LoadRifResponseData(id, loadCustomersAndOrders);
+            var Rifresponse = rifService.LoadRifResponseData(id, loadCustomersAndOrders, "");
             RIFViewModel rifViewModel = new RIFViewModel();
             if (Rifresponse.Rif != null)
             {
@@ -224,9 +224,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
         }
         [SiteAuthorize(PermissionKey = "RIFHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            RifHistoryResponse response = rifService.GetRifHistoryData();
+            RifHistoryResponse response = rifService.GetRifHistoryData(id);
             RifHistoryViewModel viewModel = new RifHistoryViewModel
             {
                 Rifs = response.Rifs != null ? response.Rifs.Select(x => x.CreateRifServerToClient()).ToList() : new List<RIF>(),
@@ -241,6 +241,35 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentRif.ManagerNameAr = response.ManagerNameAr;
             }
             return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(RifHistoryViewModel viewModel)
+        {
+            try
+            {
+                viewModel.RecentRif.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecentRif.RecUpdatedDate = DateTime.Now;
+                viewModel.RecentRif.ManagerId = User.Identity.GetUserId();
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.Inventory.RIF.RIF.RIFReplied,
+                    IsUpdated = true
+                };
+
+                var rifToBeSaved = viewModel.RecentRif.CreateRifDetailsClientToServer();
+                if (rifService.UpdateRIF(rifToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
         private bool CheckHasCustomerModule()
         {

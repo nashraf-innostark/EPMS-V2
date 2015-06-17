@@ -250,6 +250,36 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(RFIHistoryViewModel viewModel)
+        {
+            try
+            {
+                viewModel.RecentRfi.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecentRfi.RecUpdatedDate = DateTime.Now;
+                viewModel.RecentRfi.ManagerId = User.Identity.GetUserId();
+
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.RFI.RFI.RFIReplied,
+                    IsUpdated = true
+                };
+
+                var rfiToBeSaved = viewModel.RecentRfi.CreateRfiDetailsClientToServer();
+                if (rfiService.UpdateRFI(rfiToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
 
         private bool CheckHasCustomerModule()
         {

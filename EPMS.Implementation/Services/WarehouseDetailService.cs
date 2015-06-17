@@ -20,7 +20,7 @@ namespace EPMS.Implementation.Services
             return detailRepository.GetAll();
         }
 
-        public WarehouseDetail FindWarehouseDetailId(long id)
+        public WarehouseDetail FindWarehouseDetailById(long id)
         {
             return detailRepository.Find(id);
         }

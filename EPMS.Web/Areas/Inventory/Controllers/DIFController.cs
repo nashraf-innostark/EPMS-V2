@@ -233,5 +233,35 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+        // POST: Inventory/Dif/History
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(DifHistoryViewModel viewModel)
+        {
+            try
+            {
+                viewModel.RecentDif.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecentDif.RecUpdatedDate = DateTime.Now;
+                viewModel.RecentDif.ManagerId = User.Identity.GetUserId();
+                TempData["message"] = new MessageViewModel
+                {
+                    //Message = Resources.Inventory.DIF.DIF.DIFReplied,
+                    IsUpdated = true
+                };
+
+                var difToBeSaved = viewModel.RecentDif.CreateDifDetailsClientToServer();
+                if (rifService.UpdateDIF(difToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
     }
 }

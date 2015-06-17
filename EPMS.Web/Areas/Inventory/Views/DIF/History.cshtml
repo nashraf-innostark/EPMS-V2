@@ -35,9 +35,16 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Details", "DIF", FormMethod.Post, new { @id = "DIFForm", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("History", "DIF", FormMethod.Post, new { @id = "DIFForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
+        @Html.HiddenFor(x => x.RecentDif.Id)
+        @Html.HiddenFor(x => x.RecentDif.DefectivenessE)
+        @Html.HiddenFor(x => x.RecentDif.DefectivenessA)
+        @Html.HiddenFor(x => x.RecentDif.RecCreatedBy)
+        @Html.HiddenFor(x => x.RecentDif.RecCreatedDate)
+        @Html.HiddenFor(x => x.RecentDif.ManagerId)
+
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
                 @EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageHeading
@@ -223,29 +230,32 @@
                 <div class="span2">
                     <div class="controls">
                         @Html.DropDownListFor(model => model.RecentDif.Status, new[]
-                            {
-                                new SelectListItem { Text = "--Select--", Value = "" },
-                                new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
-                            }, new { @id = "RFIStatusDDL", @class = "toBeDisabled" })
+                        {
+                            new SelectListItem { Text = "--Select--", Value = "" },
+                            new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                            new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                            new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                        }, new { @id = "RFIStatusDDL", @class = "toBeDisabled" })
                     </div>
                 </div>
 
             </div>
         </div>
-        @if (!string.IsNullOrEmpty(Model.RecentDif.ManagerId))
+        @if (Model.RecentDif.Status != 2)
         {
-            <div id="submitDiv" class="control-group row-fluid" style="display: none">
+            <div id="submitDiv" class="control-group row-fluid">
                 <div class="span3 span-inset">
                     <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
                 </div>
             </div>
-            <div id="editDiv" class="control-group row-fluid" style="display: none">
-                <div class="span1 span-inset">
-                    <a href="~/Inventory/DIF/Create/@Model.RecentDif.Id" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+            if (userPermissionsSet.Contains("DIFCreate"))
+            {
+                <div id="editDiv" class="control-group row-fluid">
+                    <div class="span1 span-inset">
+                        <a href="~/Inventory/DIF/Create/@Model.RecentDif.Id" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                    </div>
                 </div>
-            </div>
+            }
         }
         <!--Input Field end-->
     </div>
@@ -253,6 +263,11 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
+        if ('@Model.RecentDif.Status' != '2') {
+            $('.toBeDisabled:input').attr('disabled', false);
+        } else {
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
         CKEDITOR.replace('RFINotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });

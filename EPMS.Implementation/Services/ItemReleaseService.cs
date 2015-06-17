@@ -61,16 +61,16 @@ namespace EPMS.Implementation.Services
 
         public ItemRelease FindItemReleaseById(long id, string from)
         {
-            ItemRelease retVal = null;
+            ItemRelease irf = null;
             if (from == "History")
             {
-                retVal = releaseHistoryRepository.Find(id).CreateFromIrfHistoryToIrf();
+                irf = releaseHistoryRepository.Find(id).CreateFromIrfHistoryToIrf();
             }
             else
             {
-                retVal = itemReleaseRepository.Find(id);
+                irf = itemReleaseRepository.Find(id);
             }
-            return retVal;
+            return irf;
         }
 
         public IEnumerable<ItemRelease> GetAll()
@@ -95,10 +95,12 @@ namespace EPMS.Implementation.Services
                     RecentIrf = null
                 };
             }
-            IrfHistoryResponse response = new IrfHistoryResponse { Irfs = irfList.Select(x=>x.CreateFromIrfHistoryToIrf()) };
-            var irfItems = irfList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.ItemReleaseDetailHistories).FirstOrDefault();
-            if (irfItems != null) response.IrfItems = irfItems.Select(x=>x.CreateFromIrfDetailHistoryToIrfDetail());
-            response.RecentIrf = irfList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault().CreateFromIrfHistoryToIrf();
+            IrfHistoryResponse response = new IrfHistoryResponse
+            {
+                Irfs = irfList.Select(x => x.CreateFromIrfHistoryToIrf()),
+                RecentIrf = itemReleaseRepository.Find((long) parentId)
+            };
+            response.IrfItems = response.RecentIrf.ItemReleaseDetails;
             if (response.RecentIrf != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentIrf.ManagerId))
@@ -150,7 +152,7 @@ namespace EPMS.Implementation.Services
                 itemRelease.Notes = releaseStatus.Notes;
                 itemRelease.NotesAr = releaseStatus.NotesAr;
                 itemRelease.ManagerId = releaseStatus.ManagerId;
-                if (itemRelease.Status != releaseStatus.Status)
+                if (itemRelease.Status != releaseStatus.Status && releaseStatus.Status != 1)
                 {
                     itemRelease.Status = releaseStatus.Status;
                     var historyToAdd = itemRelease.CreateFromIrfToIrfHistory();

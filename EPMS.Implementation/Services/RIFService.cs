@@ -12,6 +12,7 @@ namespace EPMS.Implementation.Services
     public class RIFService : IRIFService
     {
         private readonly IRIFRepository rifRepository;
+        private readonly IRIFHistoryRepository historyRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IRIFItemRepository rifItemRepository;
         private readonly ICustomerRepository customerRepository;
@@ -29,7 +30,7 @@ namespace EPMS.Implementation.Services
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository)
+        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository)
         {
             this.rifRepository = rifRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -37,6 +38,7 @@ namespace EPMS.Implementation.Services
             this.customerRepository = customerRepository;
             this.ordersRepository = ordersRepository;
             this.aspNetUserRepository = aspNetUserRepository;
+            this.historyRepository = historyRepository;
         }
 
         #endregion
@@ -51,11 +53,15 @@ namespace EPMS.Implementation.Services
             return rifs;
         }
 
-        public RifHistoryResponse GetRifHistoryData()
+        public RifHistoryResponse GetRifHistoryData(long? parentId)
         {
-            var rifs = rifRepository.GetRifHistoryData();
+            if (parentId == null)
+            {
+                return new RifHistoryResponse();
+            }
+            var rifs = historyRepository.GetRifHistoryData((long)parentId);
             
-            var rifList = rifs as IList<RIF> ?? rifs.ToList();
+            var rifList = rifs as IList<RIFHistory> ?? rifs.ToList();
             if (!rifList.Any())
             {
                 return new RifHistoryResponse
@@ -66,10 +72,12 @@ namespace EPMS.Implementation.Services
                 };
             }
 
-            RifHistoryResponse response = new RifHistoryResponse {Rifs = rifList};
-            var rifItems = rifList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RIFItems).FirstOrDefault();
-            response.RifItems = rifItems;
-            response.RecentRif = rifList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            RifHistoryResponse response = new RifHistoryResponse
+            {
+                Rifs = rifList.Select(x => x.CreateFromRifHistoryToRif()),
+                RecentRif = rifRepository.Find((long) parentId)
+            };
+            response.RifItems = response.RecentRif.RIFItems;
             if (response.RecentRif != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentRif.ManagerId))
@@ -80,11 +88,14 @@ namespace EPMS.Implementation.Services
                     response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
                                            manager.EmployeeLastNameA;
                 }
-                var employee = response.RecentRif.AspNetUser.Employee;
-                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
-                                       employee.EmployeeLastNameE;
-                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
-                                       employee.EmployeeLastNameA;
+                if (response.RecentRif.AspNetUser != null)
+                {
+                    var employee = response.RecentRif.AspNetUser.Employee;
+                    response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                           employee.EmployeeLastNameE;
+                    response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                           employee.EmployeeLastNameA;
+                }
             }
             return response;
         }
@@ -152,9 +163,16 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
-        public bool UpdateRIF(RIF rfi)
+        public bool UpdateRIF(RIF rif)
         {
-            rifRepository.Update(rfi);
+            var previousRif = rifRepository.Find(rif.RIFId);
+            if (previousRif.Status != rif.Status && rif.Status != 2)
+            {
+                var rifHistoryToAdd = rif.CreateFromRifToRifHistory(previousRif.Order,previousRif.RIFItems);
+                historyRepository.Add(rifHistoryToAdd);
+                historyRepository.SaveChanges();
+            }
+            rifRepository.Update(rif);
             rifRepository.SaveChanges();
             return true;
         }
@@ -165,7 +183,7 @@ namespace EPMS.Implementation.Services
             rifRepository.SaveChanges();
         }
 
-        public RifCreateResponse LoadRifResponseData(long? id, bool loadCustomersAndOrders)
+        public RifCreateResponse LoadRifResponseData(long? id, bool loadCustomersAndOrders, string from)
         {
             RifCreateResponse rifResponse = new RifCreateResponse
             {
@@ -173,7 +191,15 @@ namespace EPMS.Implementation.Services
             };
             if (id != null)
             {
-                var rif = rifRepository.Find((long)id);
+                RIF rif;
+                if (from == "History")
+                {
+                    rif = historyRepository.Find((long)id).CreateFromRifHistoryToRifWithItems();
+                }
+                else
+                {
+                    rif = rifRepository.Find((long)id);
+                }
                 if (rif != null)
                 {
                     rifResponse.Rif = rif;

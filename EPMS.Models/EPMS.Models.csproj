@@ -148,7 +148,11 @@
     <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />
+    <Compile Include="ModelMapers\RifHistoryMapper.cs" />
+    <Compile Include="ModelMapers\RifItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
+    <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />

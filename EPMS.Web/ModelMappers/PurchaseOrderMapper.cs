@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.ViewModels.PurchaseOrder;
 
@@ -24,6 +26,7 @@ namespace EPMS.Web.ModelMappers
                 RequesterName = direction == "ltr" ?
                 source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE
                 : source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA,
+                RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
             };
         }
         public static PurchaseOrder CreateFromClientToServer(this Models.PurchaseOrder source)

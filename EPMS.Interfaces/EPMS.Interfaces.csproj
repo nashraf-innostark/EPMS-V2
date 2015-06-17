@@ -165,6 +165,7 @@
     <Compile Include="Repository\IDIFItemRepository.cs" />
     <Compile Include="Repository\IDIFRepository.cs" />
     <Compile Include="Repository\IRFIHistoryRepository.cs" />
+    <Compile Include="Repository\IRIFHistoryRepository.cs" />
     <Compile Include="Repository\IRIFItemRepository.cs" />
     <Compile Include="Repository\IRFIItemRepository.cs" />
     <Compile Include="Repository\IRIFRepository.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />
+    <Compile Include="Repository\ITIRHistoryRepository.cs" />
     <Compile Include="Repository\ITIRItemRepository.cs" />
     <Compile Include="Repository\ITIRRepository.cs" />
     <Compile Include="Repository\IUserPrefrencesRepository.cs" />

@@ -216,7 +216,7 @@
 
             </div>
         </div>
-        @if (string.IsNullOrEmpty(Model.Rif.ManagerId))
+        @if (Model.Rif.Status != 2)
         {
             <div id="submitDiv" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
@@ -253,7 +253,7 @@
         CheckPermissions();
     });
     function EnableDisableFields() {
-        if ('@string.IsNullOrEmpty(Model.Rif.ManagerId)' == 'True') {
+        if ('@Model.Rif.Status' != '2') {
             $('.toBeDisabled:input').attr('disabled', false);
         } else {
             $('.toBeDisabled:input').attr('disabled', true);

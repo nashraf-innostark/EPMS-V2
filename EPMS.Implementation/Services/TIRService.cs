@@ -4,6 +4,7 @@ using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
@@ -12,6 +13,7 @@ namespace EPMS.Implementation.Services
     public class TIRService : ITIRService
     {
         private readonly ITIRRepository repository;
+        private readonly ITIRHistoryRepository historyRepository;
         private readonly ITIRItemRepository itemRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
@@ -23,12 +25,13 @@ namespace EPMS.Implementation.Services
         /// </summary>
         /// <param name="itemVariationRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public TIRService(IItemVariationRepository itemVariationRepository, IAspNetUserRepository aspNetUserRepository, ITIRRepository repository, ITIRItemRepository itemRepository)
+        public TIRService(IItemVariationRepository itemVariationRepository, IAspNetUserRepository aspNetUserRepository, ITIRRepository repository, ITIRItemRepository itemRepository, ITIRHistoryRepository historyRepository)
         {
             this.itemVariationRepository = itemVariationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.repository = repository;
             this.itemRepository = itemRepository;
+            this.historyRepository = historyRepository;
         }
 
         #endregion
@@ -57,10 +60,14 @@ namespace EPMS.Implementation.Services
             return repository.GetAllTirs(searchRequest);
         }
 
-        public TirHistoryResponse GetTirHistoryData()
+        public TirHistoryResponse GetTirHistoryData(long? id)
         {
-            var tirs = repository.GetTirHistoryData();
-            var tirList = tirs as IList<TIR> ?? tirs.ToList();
+            if (id == null)
+            {
+                return new TirHistoryResponse();
+            }
+            var tirs = historyRepository.GetTirHistoryData((long)id);
+            var tirList = tirs as IList<TIRHistory> ?? tirs.ToList();
             if (!tirList.Any())
             {
                 return new TirHistoryResponse
@@ -70,10 +77,12 @@ namespace EPMS.Implementation.Services
                     RecentTir = null
                 };
             }
-            TirHistoryResponse response = new TirHistoryResponse { Tirs = tirList };
-            var tirItems = tirList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.TIRItems).FirstOrDefault();
-            response.TirItems = tirItems;
-            response.RecentTir = tirList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            TirHistoryResponse response = new TirHistoryResponse
+            {
+                Tirs = tirList.Select(x => x.CreateFromTirHistoryToTir()),
+                RecentTir = repository.Find((long) id)
+            };
+            response.TirItems = response.RecentTir.TIRItems;
             if (response.RecentTir != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentTir.ManagerId))
@@ -84,18 +93,30 @@ namespace EPMS.Implementation.Services
                     response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
                                            manager.EmployeeLastNameA;
                 }
-                var employee = response.RecentTir.AspNetUser.Employee;
-                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
-                                       employee.EmployeeLastNameE;
-                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
-                                       employee.EmployeeLastNameA;
+                if (response.RecentTir.AspNetUser.Employee != null)
+                {
+                    var employee = response.RecentTir.AspNetUser.Employee;
+                    response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                           employee.EmployeeLastNameE;
+                    response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                           employee.EmployeeLastNameA;
+                }
             }
             return response;
         }
 
-        public TIR Find(long id)
+        public TIR FindTirById(long id, string from)
         {
-            return repository.Find(id);
+            TIR tir;
+            if (from == "History")
+            {
+                tir = historyRepository.Find(id).CreateFromTirHistoryToTir();
+            }
+            else
+            {
+                tir = repository.Find(id);
+            }
+            return tir;
         }
 
         public bool UpdateTirStatus(TransferItemStatus status)
@@ -105,8 +126,14 @@ namespace EPMS.Implementation.Services
                 var tir = repository.Find(status.Id);
                 tir.NotesE = status.NotesEn;
                 tir.NotesA = status.NotesAr;
-                tir.Status = status.Status;
                 tir.ManagerId = status.ManagerId;
+                if (tir.Status != status.Status && status.Status != 1)
+                {
+                    tir.Status = status.Status;
+                    var tirHistoryToAdd = tir.CreateFromTirToTirHistory();
+                    historyRepository.Add(tirHistoryToAdd);
+                    historyRepository.SaveChanges();
+                }
                 repository.Update(tir);
                 repository.SaveChanges();
                 return true;

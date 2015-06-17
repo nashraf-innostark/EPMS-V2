@@ -8,6 +8,5 @@ namespace EPMS.Interfaces.Repository
     public interface IRIFRepository : IBaseRepository<RIF, long>
     {
         RifRequestResponse LoadAllRifs(RifSearchRequest rifSearchRequest);
-        IEnumerable<RIF> GetRifHistoryData();
     }
 }

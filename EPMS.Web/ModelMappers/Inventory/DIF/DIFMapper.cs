@@ -67,6 +67,24 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
             };
             return rif;
         }
+        public static EPMS.Models.DomainModels.DIF CreateDifDetailsClientToServer(this Models.DIF source)
+        {
+            var rif = new EPMS.Models.DomainModels.DIF
+            {
+                Id = source.Id,
+                DefectivenessE = source.DefectivenessE,
+                DefectivenessA = source.DefectivenessA,
+                Status = source.Status == 0 ? 6 : source.Status,
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
+                ManagerId = source.ManagerId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+            };
+            return rif;
+        }
         #endregion
 
         #region Server to Client

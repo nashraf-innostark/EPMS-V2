@@ -70,13 +70,13 @@ namespace EPMS.Implementation.Services
                     RecentRfi = null
                 };
             }
-            RfiHistoryResponse response = new RfiHistoryResponse();
             var rfiList = rfis as IList<RFIHistory> ?? rfis.ToList();
-            response.Rfis = rfiList.Select(x=>x.CreateFromRfiHistoryToRfi());
-            var rfiItems = rfiList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RFIItemHistories).FirstOrDefault();
-            if (rfiItems != null) response.RfiItems = rfiItems.Select(x=>x.CreateRfiItemHistoryToRfiItem());
-            var recentRfi= rfiList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
-            response.RecentRfi = recentRfi != null ? recentRfi.CreateFromRfiHistoryToRfi() : new RFI();
+            RfiHistoryResponse response = new RfiHistoryResponse
+            {
+                Rfis = rfiList.Select(x => x.CreateFromRfiHistoryToRfi()),
+                RecentRfi = rfiRepository.Find((long)parentId)
+            };
+            response.RfiItems = response.RecentRfi.RFIItems;
 
             if (response.RecentRfi != null)
             {
@@ -166,7 +166,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateRFI(RFI rfi)
         {
             var previous = rfiRepository.Find(rfi.RFIId);
-            if (previous.Status != rfi.Status)
+            if (previous.Status != rfi.Status && rfi.Status != 2)
             {
                 var rfiHistoryToAdd = rfi.CreateFromRfiToRfiHistory(previous.RFIItems);
                 historyRepository.Add(rfiHistoryToAdd);
@@ -191,7 +191,7 @@ namespace EPMS.Implementation.Services
             };
             if (id != null)
             {
-                RFI rfi = null;
+                RFI rfi;
                 if (from == "History")
                 {
                     rfi = historyRepository.Find((long)id).CreateFromRfiHistoryToRfiBase();

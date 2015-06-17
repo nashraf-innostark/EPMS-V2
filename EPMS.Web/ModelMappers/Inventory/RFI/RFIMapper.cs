@@ -69,6 +69,25 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             };
             return rfi;
         }
+        public static EPMS.Models.DomainModels.RFI CreateRfiDetailsClientToServer(this Models.RFI source)
+        {
+            var rfi = new EPMS.Models.DomainModels.RFI
+            {
+                RFIId = source.RFIId,
+                OrderId = source.OrderId,
+                UsageE = source.UsageE,
+                UsageA = source.UsageA,
+                Status = source.Status == 0 ? 6 : source.Status,
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
+                ManagerId = source.ManagerId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+            };
+            return rfi;
+        }
         #endregion
 
         #region Server to Client
