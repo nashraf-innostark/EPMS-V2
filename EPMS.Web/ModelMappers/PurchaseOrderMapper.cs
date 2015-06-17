@@ -11,7 +11,7 @@ namespace EPMS.Web.ModelMappers
         public static Models.PurchaseOrder CreateFromServerToClient(this PurchaseOrder source)
         {
             var direction = Resources.Shared.Common.TextDirection;
-            return new Models.PurchaseOrder
+            var purchaseOrder = new Models.PurchaseOrder
             {
                 PurchaseOrderId = source.PurchaseOrderId,
                 FormNumber = source.FormNumber,
@@ -23,11 +23,18 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
-                RequesterName = direction == "ltr" ?
-                source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE
-                : source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
+                RequesterName = direction == "ltr" ?
+                source.Manager.Employee.EmployeeFirstNameE + " " + source.Manager.Employee.EmployeeMiddleNameE + " " + source.Manager.Employee.EmployeeLastNameE : 
+                source.Manager.Employee.EmployeeFirstNameA + " " + source.Manager.Employee.EmployeeMiddleNameA + " " + source.Manager.Employee.EmployeeLastNameA
             };
+            if (source.AspNetUser != null)
+            {
+                purchaseOrder.ManagerName = direction == "ltr" ?
+                source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA;
+            }
+            return purchaseOrder;
         }
         public static PurchaseOrder CreateFromClientToServer(this Models.PurchaseOrder source)
         {

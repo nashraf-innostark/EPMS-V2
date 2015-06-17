@@ -57,7 +57,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.CompleteAccess = userPermissionsSet.Contains("TIRDetailUpdate");
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
-            IEnumerable<Models.TIR> transferItemList =
+            IEnumerable<TIR> transferItemList =
                 response.TirItems.Select(x => x.CreateFromServerToClient());
             TransferItemListViewModel viewModel = new TransferItemListViewModel
             {

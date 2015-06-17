@@ -47,7 +47,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index()
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFCompleteListView");
+            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel
             {
                 SearchRequest = new ItemReleaseSearchRequest()
@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             searchRequest.SearchString = Request["search"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFCompleteListView");
+            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
             IEnumerable<Models.ItemRelease> itemReleaseList =
                 response.ItemReleases.Select(x => x.CreateFromServerToClient());
