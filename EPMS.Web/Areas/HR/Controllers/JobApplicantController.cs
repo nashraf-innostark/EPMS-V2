@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             JobApplicantViewModel viewModel = new JobApplicantViewModel
             {
-                JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFrom())
+                JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFromServerToClientForJobs())
             };
             ViewBag.ApplyMessage = TempData["Messages"];
             ViewBag.MessageVM = null;

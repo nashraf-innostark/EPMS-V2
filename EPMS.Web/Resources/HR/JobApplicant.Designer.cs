@@ -322,6 +322,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jobs offered.
+        /// </summary>
+        public static string JobsOffered {
+            get {
+                return ResourceManager.GetString("JobsOffered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Job Title.
         /// </summary>
         public static string JobTitle {

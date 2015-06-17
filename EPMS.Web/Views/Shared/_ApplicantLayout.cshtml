@@ -1,5 +1,8 @@
 ﻿@using System.Configuration
 ﻿@using System.Configuration
+@{
+    var url = Session["CompWebsiteUrl"];
+}
 <!DOCTYPE html>
 
 <html>
@@ -133,6 +136,11 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <a href="http://@url" target="_blank">
+                    <i class="icon-photon target"></i>
+                </a>
             </li>
         </ul>
     </div>

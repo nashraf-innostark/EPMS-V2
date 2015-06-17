@@ -36,21 +36,22 @@ namespace EPMS.Models.DomainModels
         public virtual InventoryItem InventoryItem { get; set; }
         public virtual ICollection<ItemImage> ItemImages { get; set; }
         public virtual ICollection<ItemManufacturer> ItemManufacturers { get; set; }
-        public virtual ICollection<RFIItem> RFIItems { get; set; }
         public virtual ICollection<Color> Colors { get; set; }
         public virtual ICollection<Size> Sizes { get; set; }
         public virtual ICollection<Status> Status { get; set; }
-        public virtual ICollection<Warehouse> Warehouses { get; set; }
-        public virtual ICollection<RIFItem> RIFItems { get; set; }
-        public virtual ICollection<DIFItem> DIFItems { get; set; }
         public virtual ICollection<POFItem> POFItems { get; set; }
-        public virtual ICollection<TIRItem> TIRItems { get; set; }
         public virtual ICollection<ItemReleaseDetail> ItemReleaseDetails { get; set; }
-        public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
+        public virtual ICollection<DIFItem> DIFItems { get; set; }
         public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        public virtual ICollection<RFIItem> RFIItems { get; set; }
+        public virtual ICollection<RIFItem> RIFItems { get; set; }
+        public virtual ICollection<TIRItem> TIRItems { get; set; }
         public virtual ICollection<DIFItemHistory> DIFItemHistories { get; set; }
         public virtual ICollection<ItemReleaseDetailHistory> ItemReleaseDetailHistories { get; set; }
+        public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
         public virtual ICollection<RFIItemHistory> RFIItemHistories { get; set; }
         public virtual ICollection<ItemBarcode> ItemBarcodes { get; set; }
+        public virtual ICollection<RIFItemHistory> RIFItemHistories { get; set; }
+        public virtual ICollection<TIRItemHistory> TIRItemHistories { get; set; }
     }
 }

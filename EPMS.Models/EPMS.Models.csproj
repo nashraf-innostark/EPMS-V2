@@ -133,9 +133,13 @@
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
     <Compile Include="DomainModels\RIF.cs" />
+    <Compile Include="DomainModels\RIFHistory.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
+    <Compile Include="DomainModels\RIFItemHistory.cs" />
     <Compile Include="DomainModels\TIR.cs" />
+    <Compile Include="DomainModels\TIRHistory.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
+    <Compile Include="DomainModels\TIRItemHistory.cs" />
     <Compile Include="DomainModels\TransferItemStatus.cs" />
     <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
