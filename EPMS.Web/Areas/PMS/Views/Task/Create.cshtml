@@ -505,6 +505,7 @@
             if (!verifyTaskProgress(this))
                 return false;
         });
+        //$.mask.definitions['#'] = '[0-1]';
         $('#TaskProgress').mask("99%");
         $('#TotalWeight').mask("99%");
         $('#TotalWeight').on("blur", function () {

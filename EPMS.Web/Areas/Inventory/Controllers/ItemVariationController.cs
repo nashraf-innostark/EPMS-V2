@@ -64,7 +64,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             variationViewModel.SizesForDdl = sizeService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.ManufacturersForDdl = manufacturerService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.StatusesForDdl = statusService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            //variationViewModel.WarehousesForDdl = warehouseService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.WarehousesForDdl = warehouseService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
             return View(variationViewModel);
         }
 
