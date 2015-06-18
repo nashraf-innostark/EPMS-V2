@@ -35,11 +35,11 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.DescriptionA = descpAr;
             projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
-            projectTask.TotalCost = source.TotalCost ?? 0;
-            projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgressText = source.TaskProgress;
-            var progress = (Convert.ToDouble(source.TaskProgress.Split('%')[0]) / Convert.ToDouble(source.TotalWeight.Split('%')[0])) * 100;
-            projectTask.TaskProgress = progress + "%";
+            projectTask.TotalCost = source.TotalCost;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
+            projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
+            var progress = (source.TaskProgress / source.TotalWeight) * 100;
+            projectTask.TaskProgress = String.Format("{0:###.##}", progress);
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -115,11 +115,11 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.DescriptionA = descpAr;
             projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
-            projectTask.TotalCost = source.TotalCost ?? 0;
-            projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgressText = source.TaskProgress;
-            var progress = (Convert.ToDouble(source.TaskProgress.Split('%')[0]) / Convert.ToDouble(source.TotalWeight.Split('%')[0])) * 100;
-            projectTask.TaskProgress = progress + "%";
+            projectTask.TotalCost = source.TotalCost;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
+            projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
+            var progress = (source.TaskProgress / source.TotalWeight) * 100;
+            projectTask.TaskProgress = String.Format("{0:###.##}", progress);
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -195,9 +195,9 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.DescriptionA = descpAr;
             projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
-            projectTask.TotalCost = source.TotalCost ?? 0;
-            projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgress = source.TaskProgress;
+            projectTask.TotalCost = source.TotalCost;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
+            projectTask.TaskProgress = String.Format("{0:###.##}", source.TaskProgress);
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -245,6 +245,7 @@ namespace EPMS.Web.ModelMappers.PMS
                 projectTask.EmployeesAssigned = projectTask.EmployeesAssigned.Substring(0, projectTask.EmployeesAssigned.Length - 3);
             }
             projectTask.SubTasks = source.SubTasks.Any() ? source.SubTasks.Select(t => t.CreateFromServerToClientCreate()).ToList() : new List<Models.ProjectTask>();
+            projectTask.PrevTasksWeightSum = source.Project != null ? (source.Project.ProjectTasks.Sum(x => x.TotalWeight)-source.TotalWeight) ?? 0 : 0;
             return projectTask;
         }
 
@@ -276,8 +277,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.StartDate = source.StartDate == null ? (DateTime?)null : DateTime.ParseExact(source.StartDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = source.EndDate == null ? (DateTime?)null : DateTime.ParseExact(source.EndDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.TotalCost = source.TotalCost;
-            projectTask.TotalWeight = source.TotalWeight;
-            projectTask.TaskProgress = source.TaskProgress;
+            projectTask.TotalWeight = Convert.ToDecimal(source.TotalWeight);
+            projectTask.TaskProgress = Convert.ToDecimal(source.TaskProgress);
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -308,7 +309,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.CustomerId = source.CustomerId;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
-            projectTask.TotalWeight = source.TotalWeight;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
             projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             return projectTask;
@@ -335,7 +336,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.ProjectNameA = source.Project.NameA;
             projectTask.TaskNameE = source.TaskNameE;
             projectTask.TaskNameA = source.TaskNameA;
-            projectTask.TotalWeight = source.TotalWeight;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
             projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             foreach (var subTask in source.SubTasks)
@@ -343,7 +344,7 @@ namespace EPMS.Web.ModelMappers.PMS
                 SubTaskWeight model = new SubTaskWeight
                 {
                     TaskId = subTask.TaskId,
-                    TaskWeight = Convert.ToInt32(subTask.TotalWeight.Split('%')[0])
+                    TaskWeight = Convert.ToInt32(String.Format("{0:###.##}", subTask.TotalWeight))
                 };
                 projectTask.SubTasksWeight.Add(model);
             }

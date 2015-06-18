@@ -15,11 +15,11 @@ namespace EPMS.Models.DomainModels
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string EndDateOriginal { get; set; }
-        public decimal? TotalCost { get; set; }
-        public string TotalWeight { get; set; }
+        public decimal TotalCost { get; set; }
+        public decimal? TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
-        public string TaskProgress { get; set; }
+        public decimal? TaskProgress { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }

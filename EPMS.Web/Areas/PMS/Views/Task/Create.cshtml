@@ -407,7 +407,7 @@
 <script>
     $(document).ready(function () {
         // this is tak weight saved. need in case user update task weight then we have to minus this weight from sum of project tasks weight
-        var taskWeight = parseInt('@Model.ProjectTask.TotalWeight');
+        var taskWeight = parseFloat('@Model.ProjectTask.TotalWeight');
         // diable fields if permission not contain TaskCreate
         var isDetail;
         var val = '@userPermissionsSet.Contains("CreateTask")';
@@ -506,8 +506,8 @@
             if (!verifyTaskProgress(this))
                 return false;
         });
-        $('#TaskProgress').mask("99%");
-        $('#TotalWeight').mask("99%");
+        //$('#TaskProgress').mask("99%");
+        //$('#TotalWeight').mask("99%");
         $('#TotalWeight').on("blur", function () {
             if (!verifyTaskWeight(this))
                 return false;
@@ -869,8 +869,8 @@
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
                 if (data[i].TaskId != parseInt($("#ProjectTask_TaskId").val()) && data[i].ParentTask == null) {
-                    var temp = data[i].TotalWeight.split('%');
-                    projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(temp[0]);
+                    
+                    projectPrevTaskWeight = parseInt(projectPrevTaskWeight) + parseInt(data[i].TotalWeight);
                     $("#dualMulti").append(
                         $('<option></option>').val(data[i].TaskId).html(data[i].TaskNameE)
                     );
@@ -950,27 +950,27 @@
         $.unblockUI();
     }
     function verifyTaskProgress(elem) {
-        var currVal = parseInt($(elem).val().split('%')[0]);
-        if (currVal > parseInt($('#TotalWeight').val().split('%')[0]) || isNaN(currVal)) {
-            notify();
-            return false;
-        }
-        function notify() {
-            $.pnotify({
-                title: 'Sorry',
-                type: 'info',
-                text: 'This task progress should not exceed task weight and must be number.'
-            });
-            $('#TaskProgress').val("");
-            return;
+        var currVal = parseInt($(elem).val());
+        if (currVal > 0) {
+            if (currVal > parseInt($('#TotalWeight').val()) || isNaN(currVal)) {
+                notify();
+                return false;
+            }
+            function notify() {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'This task progress should not exceed task weight and must be number.'
+                });
+                $('#TaskProgress').val("");
+                return;
+            }
         }
         return true;
     }
     function verifyTaskWeight(elem) {
         var prevVal = parseInt($("#prevTasksWeight").val());
-        var temp = $(elem).val();
-        var tempVal = temp.split('%');
-        var currVal = parseInt(tempVal[0]);
+        var currVal = parseInt($(elem).val());
         if (currVal > 0) {
             if (($('#ProjectId').val() != "" || $('#ProjectId').val() != 0) && ($('#ParentTaskId').val() == "" || $('#ParentTaskId').val() == 0)) {
                 if ((prevVal + currVal) > 100 || isNaN(currVal)) {
@@ -985,7 +985,7 @@
                         projectTasksWeightSum = value.ProjectTasksSum;
                     }
                 });
-                if ((projectTasksWeightSum + currVal - taskWeight) > 100) {
+                if ((projectTasksWeightSum + currVal - parseFloat('@Model.ProjectTask.TotalWeight')) > 100) {
                     notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
                     return false;
                 }
@@ -997,7 +997,7 @@
                 var parsed = JSON.parse(parentTasksList);
                 $.each(parsed, function (key, value) {
                     if (value.TaskId == $('#ParentTaskId').val()) {
-                        parentWeight = parseInt(value.TotalWeight.split('%')[0]);
+                        parentWeight = parseInt(value.TotalWeight);
                         $.each(value.SubTasksWeight, function (key1, value1) {
                             if (value1.TaskId != $('#TaskId').val()) {
                                 parentSubTasksWeight += value1.TaskWeight;

@@ -140,13 +140,13 @@ namespace EPMS.Web.ModelMappers.PMS
             }
             foreach (var projectTask in source.ProjectTasks)
             {
-                double taskWeight = 0;
-                if (projectTask.TotalWeight != "")
+                decimal taskWeight = 0;
+                if (projectTask.TotalWeight > 0)
                 {
-                    var taskTotalWeight = projectTask.TotalWeight.Split('%');
-                    taskWeight = Convert.ToInt32(taskTotalWeight[0]);
-                    var tempTaskWeight = projectTask.TaskProgress.Split('%');
-                    taskWeight = (Convert.ToInt32(tempTaskWeight[0]) * taskWeight);
+                    var taskTotalWeight = projectTask.TotalWeight;
+                    taskWeight = Convert.ToDecimal(taskTotalWeight);
+                    var tempTaskWeight = projectTask.TaskProgress;
+                    taskWeight = (Convert.ToDecimal(tempTaskWeight) * taskWeight);
                 }
                 project.ProgressTotal += Convert.ToDouble(taskWeight/100);
             }
@@ -162,7 +162,7 @@ namespace EPMS.Web.ModelMappers.PMS
             project.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             foreach (var projectTask in source.ProjectTasks)
             {
-                project.ProjectTasksSum += Convert.ToInt32(projectTask.TotalWeight.Split('%')[0]);
+                project.ProjectTasksSum += Convert.ToInt32(projectTask.TotalWeight);
             }
             return project;
         }

@@ -298,23 +298,23 @@
           <Property Name="EmployeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeFirstNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmployeeMiddleNameE" Type="nvarchar" MaxLength="100" />
-          <Property Name="EmployeeLastNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeLastNameE" Type="nvarchar" MaxLength="100" />
           <Property Name="EmployeeFirstNameA" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmployeeMiddleNameA" Type="nvarchar" MaxLength="100" />
-          <Property Name="EmployeeLastNameA" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeLastNameA" Type="nvarchar" MaxLength="100" />
           <Property Name="EmployeeImagePath" Type="nvarchar" MaxLength="400" />
           <Property Name="JobTitleId" Type="bigint" />
           <Property Name="EmployeeJobId" Type="nvarchar" MaxLength="200" />
           <Property Name="EmployeeMobileNum" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="EmployeeLandlineNum" Type="nvarchar" MaxLength="200" />
+          <Property Name="EmployeeLandlineNum" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="MaritalStatus" Type="tinyint" />
-          <Property Name="EmployeeDOB" Type="datetime" />
+          <Property Name="EmployeeDOB" Type="date" Nullable="false" />
           <Property Name="EmployeeNationality" Type="nvarchar" MaxLength="20" />
-          <Property Name="EmployeeIqama" Type="nvarchar" MaxLength="200" />
-          <Property Name="EmployeeIqamaIssueDt" Type="datetime" />
-          <Property Name="EmployeeIqamaExpiryDt" Type="datetime" />
-          <Property Name="EmployeePassportNum" Type="nvarchar" MaxLength="200" />
-          <Property Name="EmployeePassportExpiryDt" Type="datetime" />
+          <Property Name="EmployeeIqama" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="EmployeeIqamaIssueDt" Type="date" />
+          <Property Name="EmployeeIqamaExpiryDt" Type="date" Nullable="false" />
+          <Property Name="EmployeePassportNum" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="EmployeePassportExpiryDt" Type="date" Nullable="false" />
           <Property Name="EmployeeDetailsE" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecCreatedDt" Type="datetime" />
@@ -626,11 +626,11 @@
           <Property Name="DescriptionA" Type="nvarchar(max)" />
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
-          <Property Name="TotalCost" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="TotalWeight" Type="nvarchar" MaxLength="5" />
+          <Property Name="TotalCost" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TotalWeight" Type="decimal" Precision="5" Scale="2" />
           <Property Name="NotesE" Type="nvarchar(max)" />
           <Property Name="NotesA" Type="nvarchar(max)" />
-          <Property Name="TaskProgress" Type="nvarchar" MaxLength="5" />
+          <Property Name="TaskProgress" Type="decimal" Precision="5" Scale="2" />
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
@@ -2942,23 +2942,23 @@
           <Property Name="EmployeeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeFirstNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeMiddleNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLastNameE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLastNameE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeFirstNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeMiddleNameA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLastNameA" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLastNameA" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="JobTitleId" Type="Int64" />
           <Property Name="EmployeeJobId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeMobileNum" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeLandlineNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLandlineNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MaritalStatus" Type="Byte" />
-          <Property Name="EmployeeDOB" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeDOB" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="EmployeeNationality" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeIqama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeIqamaIssueDt" Type="DateTime" Precision="3" />
-          <Property Name="EmployeeIqamaExpiryDt" Type="DateTime" Precision="3" />
-          <Property Name="EmployeePassportNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeePassportExpiryDt" Type="DateTime" Precision="3" />
+          <Property Name="EmployeeIqama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeIqamaIssueDt" Type="DateTime" Precision="0" />
+          <Property Name="EmployeeIqamaExpiryDt" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="EmployeePassportNum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeePassportExpiryDt" Type="DateTime" Precision="0" Nullable="false" />
           <Property Name="EmployeeDetailsE" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
@@ -3085,11 +3085,11 @@
           <Property Name="DescriptionA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="TotalCost" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="TotalWeight" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TotalCost" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="TotalWeight" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TaskProgress" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TaskProgress" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
@@ -4030,7 +4030,7 @@
         <AssociationConnector Association="EPMSModel.FK_MeetingAttendees_Employee" />
         <AssociationConnector Association="EPMSModel.FK_NotificationRecipient_Employee" />
         <AssociationConnector Association="EPMSModel.FK_TaskEmployee_Employee" />
-        <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.5" PointX="18.5" PointY="24.375" />
+        <EntityTypeShape EntityType="EPMSModel.ProjectTask" Width="1.75" PointX="18.5" PointY="24.375" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Customer" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_Project" />
         <AssociationConnector Association="EPMSModel.FK_ProjectTask_ProjectTask" />
