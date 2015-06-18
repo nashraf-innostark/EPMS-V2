@@ -17,6 +17,7 @@ namespace EPMS.Web.ViewModels.IRF
         public List<Models.ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public List<Models.Customer> Customers { get; set; }
         public List<Models.RFI> Rfis { get; set; }
+        public List<ItemWarehouse> ItemWarehouses { get; set; }
         //public List<Models.RFIItem> RfiItem { get; set; }
         public List<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }

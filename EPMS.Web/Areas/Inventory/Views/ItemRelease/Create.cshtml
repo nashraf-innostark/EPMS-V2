@@ -260,7 +260,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <textarea rows="3" id='ItemReleaseDetails_0__ItemDetails' class="auto-resize toBeDisable" data-val="true" data-val-required="The Item Details field is required." name="ItemReleaseDetails[0].ItemDetails"></textarea>
+                                    <textarea rows="2" id='ItemReleaseDetails_0__ItemDetails' class="auto-resize toBeDisable" data-val="true" data-val-required="The Item Details field is required." name="ItemReleaseDetails[0].ItemDetails"></textarea>
                                     <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#itemSearcher">+</button>
                                     <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemDetails" data-valmsg-replace="true"></span>
                                 </td>
@@ -442,16 +442,22 @@
                 getModalControlsValues();
             }
             // get warehouse
+            var warehouse = "";
             var itemVariationId = $("#RFIItemVariationDropDownList").val();
-            var jobsList = '@Html.Raw(Json.Encode(Model.i.JobTitleDeptList))';
-            var parsed = JSON.parse(jobsList);
+            var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
+            var parsedWarehouses = JSON.parse(itemWarehouses);
 
-            $.each(parsed, function (key, value) {
+            $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
-                    $("#DepartmentName").val(value.DeptNameE);
-                    $("#BasicSalary").val(value.BasicSalary);
+                    warehouse = warehouse + value.PlaceInWarehouse + " - ";
+                    var html = '<option value="' + value.WarehouseNo + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
+                    $("#simpleMultiWarehouse").append(html);
                 }
             });
+            var index = parseInt($("#ItemModalIndex").val());
+            $("#ItemReleaseDetails_" + index + "__PlaceInWarehouse").val(warehouse);
+            
+            return true;
         });
         $("#selectDepartment").on("click", function () {
             var index = parseInt($("#ItemModalIndex").val());
@@ -639,12 +645,24 @@
         });
         $(".addWar").click(function () {
             dropAllWar();
-            $("#simpleMulti option:selected").each(function () {
+            $("#simpleMultiWarehouse option:selected").each(function () {
                 var name = $(this).val();
-                var html = '<div class="control-group row-fluid warhouses"><div class="span3"><label class="control-label" for="createdBy">' + name + ' </label></div><div class="span7"> <div class="controls"><input  type="text" for="numbers" value="0" ></div></div><div class="span1 span-inset"><button type="button" class="btn dropWar">-</button></div></div>'
+                var html =
+                    '<div class="control-group row-fluid warhouses">' +
+                        '<div class="span3">' +
+                            '<label class="control-label" for="createdBy">' + name + ' </label>' +
+                        '</div>' +
+                        '<div class="span7"> ' +
+                            '<div class="controls">' +
+                                '<input  type="text" for="numbers" value="0" >' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="span1 span-inset">' +
+                            '<button type="button" class="btn dropWar">-</button>' +
+                        '</div>' +
+                    '</div>';
                 $('.warhouseSelection').append(html);
                 dropWarhouse();
-
             });
         });
         function dropWarhouse() {
@@ -654,7 +672,6 @@
         }
         function dropAllWar() {
             $(".warhouses").remove();
-
         }
     });
 

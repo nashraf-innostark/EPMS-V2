@@ -242,7 +242,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
                     if (projectTaskToAdd.IsParent)
                     {
-                        projectTaskToAdd.TaskProgress = "00%";
+                        projectTaskToAdd.TaskProgress = "0.00";
                     }
                     if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks,
                         viewModel.AssignedEmployees))
