@@ -37,7 +37,7 @@ namespace EPMS.Implementation.Services
             {
                 Customers = customerRepository.GetAll(),
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList(),
-                ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease()
+                ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
             IList<RFI> customerRfis = new List<RFI>();
             if (response.ItemRelease.RequesterId != null)
@@ -56,6 +56,15 @@ namespace EPMS.Implementation.Services
                 }
             }
             response.Rfis = customerRfis;
+            var itemVariations = itemVariationRepository.GetAll();
+            response.ItemWarehouses = new List<ItemWarehouse>();
+            foreach (var itemVariation in itemVariations)
+            {
+                foreach (var itemWarehouse in itemVariation.ItemWarehouses)
+                {
+                    response.ItemWarehouses.Add(itemWarehouse);
+                }
+            }
             return response;
         }
 

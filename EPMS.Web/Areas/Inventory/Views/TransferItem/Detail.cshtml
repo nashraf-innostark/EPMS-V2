@@ -5,6 +5,7 @@
     ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRDetail.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
 }
 
@@ -205,12 +206,15 @@
                     <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Submit</button>
                 </div>
             </div>
+            if (userPermissionsSet.Contains("TIRCreate"))
+            {
+                <div id="EditTir" class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.Tir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
+                    </div>
+                </div>
+            }
         }
-        <div id="EditTir" class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.Tir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
-            </div>
-        </div>
     </div>
 }
 

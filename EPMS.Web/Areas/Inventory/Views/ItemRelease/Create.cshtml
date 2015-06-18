@@ -442,27 +442,16 @@
                 getModalControlsValues();
             }
             // get warehouse
-            //var itemVariationId = $("#RFIItemVariationDropDownList").val();
-            //var requestUrlForWarehouse = siteUrl + "/Inventory/ItemRelease/GetItemWarehouse";
-            //if (itemVariationId > 0) {
-            //    // busy indicator
-            //    ajaxLoader();
-            //    $.ajax({
-            //        url: requestUrlForWarehouse,
-            //        type: 'GET',
-            //        dataType: "json",
-            //        data: {
-            //            itemVariationId: itemVariationId
-            //        },
-            //        success: function (dataFromServer) {
-            //            $.unblockUI();
-            //        },
-            //        error: function (e) {
-            //            $.unblockUI();
-            //            alert('Error=' + e.toString());
-            //        }
-            //    });
-            //}
+            var itemVariationId = $("#RFIItemVariationDropDownList").val();
+            var jobsList = '@Html.Raw(Json.Encode(Model.i.JobTitleDeptList))';
+            var parsed = JSON.parse(jobsList);
+
+            $.each(parsed, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#DepartmentName").val(value.DeptNameE);
+                    $("#BasicSalary").val(value.BasicSalary);
+                }
+            });
         });
         $("#selectDepartment").on("click", function () {
             var index = parseInt($("#ItemModalIndex").val());

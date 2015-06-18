@@ -9,6 +9,7 @@ namespace EPMS.Models.ResponseModels
         public IEnumerable<ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<RFI> Rfis { get; set; }
+        public List<ItemWarehouse> ItemWarehouses { get; set; }
         public List<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }
 }
