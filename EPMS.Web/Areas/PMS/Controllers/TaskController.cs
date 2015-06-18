@@ -239,11 +239,11 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     // Add case
                     viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
                     viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
-                    if (viewModel.ProjectTask.IsParent)
-                    {
-                        viewModel.ProjectTask.TaskProgress = "00%";
-                    }
                     var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
+                    if (projectTaskToAdd.IsParent)
+                    {
+                        projectTaskToAdd.TaskProgress = "00%";
+                    }
                     if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks,
                         viewModel.AssignedEmployees))
                     {
