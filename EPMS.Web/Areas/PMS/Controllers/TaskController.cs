@@ -127,9 +127,9 @@ namespace EPMS.Web.Areas.PMS.Controllers
             {
                 employeeId = (long) Session["EmployeeID"];
             }
-            TaskResponse tasks = TaskService.GetProjectTasksForEmployee(searchRequest, employeeId);
+            TaskResponse tasks = TaskService.GetAllTasks(searchRequest);
             IEnumerable<ProjectTask> projectTaskList =
-                tasks.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList();
+                tasks.ProjectTasks.Where(x=>x.TaskEmployees.Any(y=>y.EmployeeId == employeeId)).Select(z=>z.CreateFromServerToClientLv()).ToList();
             TaskListViewModel viewModel = new TaskListViewModel
             {
                 aaData = projectTaskList,
@@ -239,6 +239,10 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     // Add case
                     viewModel.ProjectTask.RecCreatedBy = User.Identity.GetUserId();
                     viewModel.ProjectTask.RecCreatedDt = DateTime.Now;
+                    if (viewModel.ProjectTask.IsParent)
+                    {
+                        viewModel.ProjectTask.TaskProgress = "0";
+                    }
                     var projectTaskToAdd = viewModel.ProjectTask.CreateFromClientToServer();
                     if (TaskService.AddProjectTask(projectTaskToAdd, viewModel.RequisitTasks,
                         viewModel.AssignedEmployees))

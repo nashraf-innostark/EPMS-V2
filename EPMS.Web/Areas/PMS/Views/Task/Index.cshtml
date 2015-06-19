@@ -146,7 +146,8 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
-                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
+                        var taskProgressText = full["TaskProgressText"];
+                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgressText + "</div> </div>";
                         return html;
                     }
                 }
@@ -307,7 +308,8 @@
                     "sWidth": "15%",
                     "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
-                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
+                        var taskProgressText = full["TaskProgressText"];
+                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgressText + "</div> </div>";
                         return html;
                     }
                 }

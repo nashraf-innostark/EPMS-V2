@@ -213,6 +213,9 @@
   <data name="Nationality" xml:space="preserve">
     <value>Nationality</value>
   </data>
+  <data name="NO" xml:space="preserve">
+    <value>NO</value>
+  </data>
   <data name="NoOfFamilyMembers" xml:space="preserve">
     <value>Number of Family Members</value>
   </data>
@@ -263,5 +266,8 @@
   </data>
   <data name="TypeOfWork" xml:space="preserve">
     <value>Type of Work</value>
+  </data>
+  <data name="YES" xml:space="preserve">
+    <value>YES</value>
   </data>
 </root>
