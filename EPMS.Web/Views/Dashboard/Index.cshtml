@@ -690,7 +690,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA) </a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue" style="width: 45%;">...@EPMS.Web.Resources.Dashboard.Dashboard.Project-@(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</a>
                                                 }
                                             }
                                             else
@@ -746,7 +746,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <span title="@Model.Project.Project.NameA" class="pText" style="margin-right: 33%; direction: ltr">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</span>
+                                                        <span title="@Model.Project.Project.NameA" class="pText" style="display: block; width: 100%; direction: ltr">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</span>
                                                     }
                                                     <div class="progress progress-info" style="clear: both;">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: @Model.Project.Project.ProgressTotal;">@Model.Project.Project.ProgressTotal%</div>
