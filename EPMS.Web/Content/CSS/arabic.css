@@ -309,3 +309,6 @@ body td, body th { text-align:right; }
  
   margin-top: 4px;
 }
+.span-inset .switch {
+  direction: ltr;
+}
