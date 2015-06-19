@@ -972,7 +972,7 @@
         var prevVal = parseInt($("#prevTasksWeight").val());
         var currVal = parseInt($(elem).val());
         if (currVal > 0) {
-            if (parseInt($('#ProjectId').val()) != 0 && parseInt($('#ParentTaskId').val()) == 0) {
+            if (parseInt($('#ProjectId').val()) != 0 && (parseInt($('#ParentTaskId').val()) == 0 || $('#ParentTaskId').val() == 0)) {
                 if ((prevVal + currVal) > 100 || isNaN(currVal)) {
                     notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
                     return false;
