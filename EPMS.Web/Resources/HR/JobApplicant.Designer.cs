@@ -349,6 +349,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NO.
+        /// </summary>
+        public static string NO {
+            get {
+                return ResourceManager.GetString("NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Family Members.
         /// </summary>
         public static string NoOfFamilyMembers {
@@ -498,6 +507,15 @@ namespace EPMS.Web.Resources.HR {
         public static string TypeOfWork {
             get {
                 return ResourceManager.GetString("TypeOfWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YES.
+        /// </summary>
+        public static string YES {
+            get {
+                return ResourceManager.GetString("YES", resourceCulture);
             }
         }
     }

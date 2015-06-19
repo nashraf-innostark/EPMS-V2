@@ -213,6 +213,9 @@
   <data name="Nationality" xml:space="preserve">
     <value>الجنسية</value>
   </data>
+  <data name="NO" xml:space="preserve">
+    <value>لا</value>
+  </data>
   <data name="NoOfFamilyMembers" xml:space="preserve">
     <value>عدد افراد الاسرة</value>
   </data>
@@ -263,5 +266,8 @@
   </data>
   <data name="TypeOfWork" xml:space="preserve">
     <value>نوع العمل</value>
+  </data>
+  <data name="YES" xml:space="preserve">
+    <value>نعم</value>
   </data>
 </root>
