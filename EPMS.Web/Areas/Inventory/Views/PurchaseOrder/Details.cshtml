@@ -144,10 +144,17 @@
                                             <td>@itemReleaseDetail.ItemName</td>
                                             <td>@itemReleaseDetail.ItemCode</td>
                                             <td>@itemReleaseDetail.ItemSKUCode</td>
-                                            <td></td>
-                                            <td>@itemReleaseDetail.ItemQty</td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>
+                                                <select class="tableDbM" name="selectBoxFilter2" id="selectBoxFilter2">
+                                                    <option selected="" value="All">Masar</option>
+                                                    <option value="Beige">Wasail</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="n1 tableDbM" type="text" name="numbers" value="@itemReleaseDetail.ItemQty">
+                                            </td>
+                                            <td>@itemReleaseDetail.UnitPrice</td>
+                                            <td>@(itemReleaseDetail.ItemQty * itemReleaseDetail.UnitPrice)</td>
                                         </tr>
                                     }
                                 }

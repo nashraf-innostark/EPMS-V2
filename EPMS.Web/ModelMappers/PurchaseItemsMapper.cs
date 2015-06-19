@@ -29,6 +29,7 @@ namespace EPMS.Web.ModelMappers
                     : source.ItemVariation.InventoryItem.ItemNameAr;
                 retVal.ItemCode = source.ItemVariation.InventoryItem.ItemCode;
                 retVal.ItemSKUCode = source.ItemVariation.SKUCode;
+                retVal.UnitPrice = source.ItemVariation.UnitPrice ?? 0;
             }
             return retVal;
         }
