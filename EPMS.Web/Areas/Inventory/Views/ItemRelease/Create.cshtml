@@ -450,7 +450,7 @@
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
                     warehouse = warehouse + value.PlaceInWarehouse + " - ";
-                    var html = '<option value="' + value.WarehouseNo + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
+                    var html = '<option value="' + value.WarehousrId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
                     $("#simpleMultiWarehouse").append(html);
                 }
             });
@@ -503,6 +503,10 @@
                 $('#ItemSKUModalChk').attr('checked', true);
             }
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
+        });
+        $('#warhouseSelector').on('show', function () {
+            var index = $(event.target).closest('tr').data('id');
+            $("#WarehouseModalIndex").val(index);
         });
         //reactivateCount();
         $("#importEx").on("click", function () {
