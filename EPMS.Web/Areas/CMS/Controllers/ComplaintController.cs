@@ -107,6 +107,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "ComplaintCreate")]
         public ActionResult Create(ComplaintViewModel viewModel)
         {
             try

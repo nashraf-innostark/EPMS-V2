@@ -133,6 +133,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
 
         [HttpPost]
         [ValidateInput(false)] //this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "MeetingCreate")]
         public ActionResult Create(MeetingViewModel meetingViewModel)
         {
             MeetingRequest toBeSaveMeeting = meetingViewModel.Meeting.CreateFrom();

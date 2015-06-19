@@ -70,8 +70,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return RedirectToAction("Index", "Dashboard", new {area = ""});
             
         }
+        
         [HttpPost]
-
+        [SiteAuthorize(PermissionKey = "CustomerProfile")]
         public ActionResult Details(CustomerViewModel customerViewModel)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(customerViewModel.User.Id);

@@ -123,6 +123,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(QuotationCreateViewModel viewModel)
         {
             // Update case

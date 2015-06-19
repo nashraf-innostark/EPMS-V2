@@ -16,11 +16,15 @@ namespace EPMS.Web.Controllers
         // GET: Culture
         public ActionResult Set(string id)
         {
+            if (Session["UserID"] == null)
+            {
+                return RedirectToAction("LogOff", "Account");
+            }
             if (id == "AR")
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
                 System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
-                
+
                 if(userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "ar"))
                     Session["Culture"] = "ar";
             }
