@@ -282,7 +282,7 @@
                                     <td>@item.EmployeesAssigned</td>
                                     <td>
                                         <div class="progress progress-info">
-                                            <div class="bar" style="width: @item.TaskProgress">@item.TaskProgress</div>
+                                            <div class="bar" style="width: @Convert.ToInt32(item.TaskProgress)%">@item.TaskProgressText</div>
                                         </div>
                                     </td>
                                 </tr>
