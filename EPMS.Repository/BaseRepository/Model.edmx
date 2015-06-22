@@ -879,6 +879,7 @@
           <Property Name="AlertDate" Type="datetime" Nullable="false" />
           <Property Name="SystemGenerated" Type="bit" Nullable="false" />
           <Property Name="ForAdmin" Type="bit" />
+          <Property Name="ForRole" Type="int" />
           <Property Name="AlertAppearDate" Type="datetime" Nullable="false" />
           <Property Name="IsEmailSent" Type="bit" Nullable="false" />
           <Property Name="IsSMSsent" Type="bit" Nullable="false" />
@@ -4376,6 +4377,7 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="NotificationRecipients" Relationship="Self.FK_NotificationRecipient_Notification" FromRole="Notification" ToRole="NotificationRecipient" />
+          <Property Name="ForRole" Type="Int32" />
         </EntityType>
         <EntityType Name="NotificationRecipient">
           <Key>
@@ -7944,6 +7946,7 @@
           <EntitySetMapping Name="Notifications">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Notification">
               <MappingFragment StoreEntitySet="Notification">
+                <ScalarProperty Name="ForRole" ColumnName="ForRole" />
                 <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
                 <ScalarProperty Name="TitleE" ColumnName="TitleE" />
                 <ScalarProperty Name="TitleA" ColumnName="TitleA" />
