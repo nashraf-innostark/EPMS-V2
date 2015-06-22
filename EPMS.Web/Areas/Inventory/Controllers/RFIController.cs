@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using EPMS.Implementation.Identity;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.ModelMappers;
@@ -13,13 +10,10 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Request;
 using EPMS.Web.ViewModels.RFI;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using RFI = EPMS.Web.Models.RFI;
 using RFIItem = EPMS.Web.Models.RFIItem;
 
