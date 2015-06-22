@@ -16,6 +16,7 @@ namespace EPMS.Models.DomainModels
         public DateTime AlertDate { get; set; }
         public bool SystemGenerated { get; set; }
         public bool? ForAdmin { get; set; }
+        public int? ForRole { get; set; }
         public DateTime AlertAppearDate { get; set; }
         public bool IsEmailSent { get; set; }
         public bool IsSMSsent { get; set; }
