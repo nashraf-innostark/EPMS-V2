@@ -7,8 +7,10 @@ namespace EPMS.Models.ResponseModels
     {
         public ItemRelease ItemRelease { get; set; }
         public IEnumerable<ItemReleaseDetail> ItemReleaseDetails { get; set; }
+        public IEnumerable<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<RFI> Rfis { get; set; }
+        public List<ItemWarehouse> ItemWarehouses { get; set; }
         public List<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }
 }

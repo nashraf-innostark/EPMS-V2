@@ -53,5 +53,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<ItemBarcode> ItemBarcodes { get; set; }
         public virtual ICollection<RIFItemHistory> RIFItemHistories { get; set; }
         public virtual ICollection<TIRItemHistory> TIRItemHistories { get; set; }
+        public virtual ICollection<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
+        public virtual ICollection<ItemReleaseQuantityHistory> ItemReleaseQuantityHistories { get; set; }
     }
 }

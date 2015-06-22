@@ -71,12 +71,28 @@ namespace EPMS.Implementation.Services
 
             response.Order = po;
             response.OrderItems = po.PurchaseOrderItems;
-
-            var employee = aspNetUserRepository.Find(po.RecCreatedBy).Employee;
-            response.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
-            response.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
+            if (!string.IsNullOrEmpty(po.RecCreatedBy))
+            {
+                var employee = aspNetUserRepository.Find(po.RecCreatedBy).Employee;
+                response.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
+                response.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
+            }
             
             return response;
+        }
+
+        public PurchaseOrder FindPoById(long id, string from)
+        {
+            PurchaseOrder purchaseOrder = new PurchaseOrder();
+            if (from == "History")
+            {
+                
+            }
+            else
+            {
+                purchaseOrder = repository.Find(id);
+            }
+            return purchaseOrder;
         }
 
         public PurchaseOrderListResponse GetAllPoS(PurchaseOrderSearchRequest searchRequest)

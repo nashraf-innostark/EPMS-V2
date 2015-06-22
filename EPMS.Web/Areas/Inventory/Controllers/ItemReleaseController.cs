@@ -15,6 +15,7 @@ using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using ItemRelease = EPMS.Web.Models.ItemRelease;
 using ItemReleaseDetail = EPMS.Web.Models.ItemReleaseDetail;
+using ItemReleaseQuantity = EPMS.Web.Models.ItemReleaseQuantity;
 using RFI = EPMS.Web.Models.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -65,7 +66,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
-            IEnumerable<Models.ItemRelease> itemReleaseList =
+            IEnumerable<ItemRelease> itemReleaseList =
                 response.ItemReleases.Select(x => x.CreateFromServerToClient());
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel()
             {
@@ -150,11 +151,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
                 viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient()).ToList();
                 viewModel.Rfis = response.Rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
+                viewModel.ItemWarehouses = response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
             }
             else
             {
                 response = itemReleaseService.GetCreateResponse(0);
-                viewModel.ItemRelease = new ItemRelease();
+                viewModel.ItemWarehouses = response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
+                viewModel.ItemRelease = new ItemRelease
+                {
+                    ItemReleaseQuantities = new List<ItemReleaseQuantity>()
+                };
                 viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 if (Session["RoleName"] != null)
                 {
@@ -253,7 +259,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View();
+            return View(viewModel);
         }
         [SiteAuthorize(PermissionKey = "IRFHistory")]
         public ActionResult History(long? id)

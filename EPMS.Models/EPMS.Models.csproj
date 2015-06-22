@@ -124,6 +124,8 @@
     <Compile Include="DomainModels\ItemReleaseDetail.cs" />
     <Compile Include="DomainModels\ItemReleaseDetailHistory.cs" />
     <Compile Include="DomainModels\ItemReleaseHistory.cs" />
+    <Compile Include="DomainModels\ItemReleaseQuantity.cs" />
+    <Compile Include="DomainModels\ItemReleaseQuantityHistory.cs" />
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\POF.cs" />

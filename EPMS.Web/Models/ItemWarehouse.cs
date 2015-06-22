@@ -6,5 +6,6 @@
         public long ItemVariationId { get; set; }
         public long? Quantity { get; set; }
         public string PlaceInWarehouse { get; set; }
+        public string WarehouseNo { get; set; }
     }
 }

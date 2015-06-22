@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -66,6 +67,61 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         /// <summary>
+        /// GET: Inventory/PurchaseOrder
+        /// </summary>
+        [SiteAuthorize(PermissionKey = "PODetailsUpdation,PODetails")]
+        public ActionResult Details(long? id, string from)
+        {
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            ViewBag.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
+            PurchaseOrderDetailsViewModel viewModel = new PurchaseOrderDetailsViewModel();
+            if (id != null)
+            {
+                var purchaseOrder = orderService.FindPoById((long)id, from);
+                viewModel.PurchaseOrder = purchaseOrder.CreateFromServerToClient();
+                viewModel.OrderItems = purchaseOrder.PurchaseOrderItems.Select(x => x.CreateFromServerToClient()).ToList();
+            }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)] //this is due to CK Editor
+        public ActionResult Details(PurchaseOrderDetailsViewModel viewModel)
+        {
+            var notesE = viewModel.PurchaseOrder.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            viewModel.PurchaseOrder.NotesE = notesE;
+            var notesA = viewModel.PurchaseOrder.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            viewModel.PurchaseOrder.NotesA = notesA;
+            viewModel.PurchaseOrder.ManagerId = User.Identity.GetUserId();
+            viewModel.PurchaseOrder.RecUpdatedBy = User.Identity.GetUserId();
+            viewModel.PurchaseOrder.RecUpdatedDate = DateTime.Now;
+            var purchaseOrderToUpdate = viewModel.PurchaseOrder.CreateFromClientToServer();
+            if (orderService.UpdatePO(purchaseOrderToUpdate))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = "PO Status Updated",
+                    IsUpdated = true
+                };
+                return RedirectToAction("Index");
+            }
+            return View(viewModel);
+        }
+
+        /// <summary>
         /// Create: Inventory/PurchaseOrder
         /// </summary>
         [SiteAuthorize(PermissionKey = "POCreate,PODetails")]
@@ -104,7 +160,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     viewModel.Order.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Order.RecUpdatedDate = DateTime.Now;
 
-                    viewModel.Order.ManagerId = User.Identity.GetUserId();
                     TempData["message"] = new MessageViewModel
                     {
                         Message = "PO Updated",
