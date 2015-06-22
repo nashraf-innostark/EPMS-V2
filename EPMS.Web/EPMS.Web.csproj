@@ -368,6 +368,7 @@
     <Compile Include="ModelMappers\ItemManufacturerMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseDetailMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseMapper.cs" />
+    <Compile Include="ModelMappers\ItemReleaseQuantityMapper.cs" />
     <Compile Include="ModelMappers\ItemVariationMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="Models\ItemManufacturer.cs" />
     <Compile Include="Models\ItemRelease.cs" />
     <Compile Include="Models\ItemReleaseDetail.cs" />
+    <Compile Include="Models\ItemReleaseQuantity.cs" />
     <Compile Include="Models\ItemVariation.cs" />
     <Compile Include="Models\ItemWarehouse.cs" />
     <Compile Include="Models\JobApplicant.cs" />
@@ -838,6 +840,7 @@
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderCreateViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderListViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
@@ -1941,6 +1944,7 @@
     <Content Include="Areas\Inventory\Views\DIF\History.cshtml" />
     <Content Include="Areas\Inventory\Views\TransferItem\History.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemRelease\History.cshtml" />
+    <Content Include="Areas\Inventory\Views\PurchaseOrder\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

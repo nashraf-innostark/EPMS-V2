@@ -22,5 +22,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<WarehouseDetail> WarehouseDetails { get; set; }
         public virtual ICollection<ItemVariation> ItemVariations { get; set; }
         public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
+        public virtual ICollection<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
+        public virtual ICollection<ItemReleaseQuantityHistory> ItemReleaseQuantityHistories { get; set; }
     }
 }

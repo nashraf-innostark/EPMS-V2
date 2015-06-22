@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -28,5 +29,7 @@ namespace EPMS.Web.Models
         public string ManagerNameAr { get; set; }
         public string RequesterName { get; set; }
         public string RequesterNameAr { get; set; }
+
+        public virtual IList<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
     }
 }

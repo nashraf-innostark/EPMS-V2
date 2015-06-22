@@ -144,5 +144,10 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<ItemBarcode> ItemBarcode { get; set; }
 
         public DbSet<ItemWarehouse> ItemWarehouses { get; set; }
+        public DbSet<RIFHistory> RifHistories { get; set; }
+        public DbSet<RIFItemHistory> RifItemHistories { get; set; }
+        public DbSet<TIRHistory> TirHistories { get; set; }
+        public DbSet<TIRItemHistory> TirItemHistories { get; set; }
+        public DbSet<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
     }
 }

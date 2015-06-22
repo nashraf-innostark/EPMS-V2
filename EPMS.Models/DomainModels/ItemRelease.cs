@@ -28,5 +28,6 @@ namespace EPMS.Models.DomainModels
         public virtual RFI RFI { get; set; }
         public virtual ICollection<ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public virtual AspNetUser Manager { get; set; }
+        public virtual ICollection<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
     }
 }

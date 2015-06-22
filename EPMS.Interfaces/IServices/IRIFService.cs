@@ -9,12 +9,12 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<RIF> GetAll();
         RifRequestResponse LoadAllRifs(RifSearchRequest searchRequest);
-        RifHistoryResponse GetRifHistoryData();
+        RifHistoryResponse GetRifHistoryData(long? parentId);
         RIF FindRIFById(long id);
         bool SaveRIF(RIF rif);
         bool AddRIF(RIF rif);
         bool UpdateRIF(RIF rif);
         void DeleteRIF(RIF rif);
-        RifCreateResponse LoadRifResponseData(long? id, bool loadCustomersAndOrders);
+        RifCreateResponse LoadRifResponseData(long? id, bool loadCustomersAndOrders, string from);
     }
 }

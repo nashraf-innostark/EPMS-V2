@@ -12,7 +12,7 @@ namespace EPMS.Interfaces.IServices
         /// <summary>
         /// Find WarehouseDetail By Id
         /// </summary>
-        WarehouseDetail FindWarehouseDetailId(long id);
+        WarehouseDetail FindWarehouseDetailById(long id);
         /// <summary>
         /// Add WarehouseDetail
         /// </summary>

@@ -5,6 +5,7 @@
     ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRDetail.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
 }
 
@@ -35,7 +36,7 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Detail", "TransferItem", FormMethod.Post, new {@class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data"}))
+@using (Html.BeginForm("Detail", "TransferItem", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         @Html.HiddenFor(model => model.Tir.Id)
@@ -138,23 +139,47 @@
                 </table>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="NotesEn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Notes</label>
+        <div id="CKNotes" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Tir.NotesE, new { @id = "NotesEn", @class = "" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Tir.NotesE, new { @id = "NotesEn", @class = "toBeDisable" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.Tir.NotesA, new { @id = "NotesAr", @class = "" })
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
+        <div id="Notes" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesE" class="toBeDisable" />
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.Tir.NotesA, new { @id = "NotesAr", @class = "toBeDisable" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesA" class="toBeDisable" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -164,41 +189,61 @@
                     <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequestStatus</label>
                 </div>
                 <div class="span2">
-                    @if (direction == "ltr")
-                    {
-                        <div class="controls">
-                            @Html.DropDownListFor(model => model.Tir.Status, new[] { new SelectListItem { Text = "Pending", Value = "3" }, new SelectListItem { Text = "Accept", Value = "1" }, new SelectListItem { Text = "Reject", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="controls">
-                            @Html.DropDownListFor(model => model.Tir.Status, new[] { new SelectListItem { Text = "ريثما", Value = "3" }, new SelectListItem { Text = "استعرض", Value = "1" }, new SelectListItem { Text = "رفض", Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
-                        </div>
-                    }
+                    <div class="controls">
+                        @Html.DropDownListFor(model => model.Tir.Status, new[] {
+                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" },
+                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" },
+                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } },
+                           new { @id = "Status", @class = "select2me disableDdl" })
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="SubmitTir" class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Submit</button>
+        @if (Model.Tir.Status != 1)
+        {
+            <div id="SubmitTir" class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Submit</button>
+                </div>
             </div>
-        </div>
-        <div id="EditTir" class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.Tir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
-            </div>
-        </div>
+            if (userPermissionsSet.Contains("TIRCreate"))
+            {
+                <div id="EditTir" class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.Tir.Id" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Edit</a>
+                    </div>
+                </div>
+            }
+        }
     </div>
 }
 
+<script src="~/RTE/ckeditor.js"></script>
 <script>
-    $(document).ready(function() {
-        if ('@ViewBag.IsAllowedCompleteView' != "True") {
+    $(document).ready(function () {
+
+        if ('@ViewBag.IsAllowedCompleteView' != "True" || '@Model.Tir.Status' == '1') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
             $("#EditTir").hide();
+            var noteEn = '@Html.Raw(Model.Tir.NotesE)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = noteEn.replace(regex, "");
+            $("#notesE").val(result);
+            var noteAr = '@Html.Raw(Model.Tir.NotesA)';
+            regex = /(<([^>]+)>)/ig;
+            result = noteAr.replace(regex, "");
+            $("#notesA").val(result);
+            $("#Notes").show();
+        } else {
+            CKEDITOR.replace('NotesEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('NotesAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#CKNotes").show();
         }
     });
 </script>

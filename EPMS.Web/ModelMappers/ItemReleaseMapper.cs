@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
@@ -28,7 +29,8 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedDate = source.RecUpdatedDate,
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
-                ManagerId = source.ManagerId
+                ManagerId = source.ManagerId,
+                ItemReleaseQuantities = source.ItemReleaseQuantities.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
         public static ItemRelease CreateFromClientToServer(this Models.ItemRelease source)

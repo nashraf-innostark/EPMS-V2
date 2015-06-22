@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -6,12 +8,14 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 using FaceSharp.Api.Extensions;
 
 namespace EPMS.Implementation.Services
 {
     public class RFIService : IRFIService
     {
+        private readonly INotificationService notificationService;
         private readonly IRFIRepository rfiRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IRFIItemRepository rfiItemRepository;
@@ -25,14 +29,16 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="notificationService"></param>
         /// <param name="rfiRepository"></param>
         /// <param name="itemVariationRepository"></param>
         /// <param name="rfiItemRepository"></param>
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RFIService(IRFIRepository rfiRepository, IItemVariationRepository itemVariationRepository, IRFIItemRepository rfiItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRFIHistoryRepository historyRepository)
+        public RFIService(INotificationService notificationService,IRFIRepository rfiRepository, IItemVariationRepository itemVariationRepository, IRFIItemRepository rfiItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRFIHistoryRepository historyRepository)
         {
+            this.notificationService = notificationService;
             this.rfiRepository = rfiRepository;
             this.itemVariationRepository = itemVariationRepository;
             this.rfiItemRepository = rfiItemRepository;
@@ -70,13 +76,13 @@ namespace EPMS.Implementation.Services
                     RecentRfi = null
                 };
             }
-            RfiHistoryResponse response = new RfiHistoryResponse();
             var rfiList = rfis as IList<RFIHistory> ?? rfis.ToList();
-            response.Rfis = rfiList.Select(x=>x.CreateFromRfiHistoryToRfi());
-            var rfiItems = rfiList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.RFIItemHistories).FirstOrDefault();
-            if (rfiItems != null) response.RfiItems = rfiItems.Select(x=>x.CreateRfiItemHistoryToRfiItem());
-            var recentRfi= rfiList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
-            response.RecentRfi = recentRfi != null ? recentRfi.CreateFromRfiHistoryToRfi() : new RFI();
+            RfiHistoryResponse response = new RfiHistoryResponse
+            {
+                Rfis = rfiList.Select(x => x.CreateFromRfiHistoryToRfi()),
+                RecentRfi = rfiRepository.Find((long)parentId)
+            };
+            response.RfiItems = response.RecentRfi.RFIItems;
 
             if (response.RecentRfi != null)
             {
@@ -117,6 +123,9 @@ namespace EPMS.Implementation.Services
                 //save
                 AddRFI(rfi);
             }
+            //Send Notification
+            SendNotification(rfi);
+            ;
             return true;
         }
 
@@ -166,7 +175,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateRFI(RFI rfi)
         {
             var previous = rfiRepository.Find(rfi.RFIId);
-            if (previous.Status != rfi.Status)
+            if (previous.Status != rfi.Status && rfi.Status != 2)
             {
                 var rfiHistoryToAdd = rfi.CreateFromRfiToRfiHistory(previous.RFIItems);
                 historyRepository.Add(rfiHistoryToAdd);
@@ -191,7 +200,7 @@ namespace EPMS.Implementation.Services
             };
             if (id != null)
             {
-                RFI rfi = null;
+                RFI rfi;
                 if (from == "History")
                 {
                     rfi = historyRepository.Find((long)id).CreateFromRfiHistoryToRfiBase();
@@ -240,6 +249,30 @@ namespace EPMS.Implementation.Services
             //IEnumerable<Order> customerOrders = ordersRepository.GetOrdersByCustomerId(customerId);
             //IEnumerable<RFI> customerRfis = customerOrders.Select(x => x.RFIs.Select(x=>x.));
             return null;
+        }
+
+        private void SendNotification(RFI rfi)
+        {
+            //NotificationViewModel notificationViewModel = new NotificationViewModel();
+
+            //#region Request Approved
+            //notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["EmployeeRequestE"];
+            //notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["EmployeeRequestA"];
+            //notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["EmployeeRequestAlertBefore"]); //Days
+
+            //notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
+            //notificationViewModel.NotificationResponse.SubCategoryId = 0;
+            //notificationViewModel.NotificationResponse.ItemId = rfi.RFIId;
+            //notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString();
+            //notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            //notificationViewModel.NotificationResponse.SystemGenerated = true;
+            //notificationViewModel.NotificationResponse.ForAdmin = false;
+
+            //notificationViewModel.NotificationResponse.UserId = requestDetail.EmployeeRequest.Employee.AspNetUsers.FirstOrDefault().Id;
+            //notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.Employee.EmployeeId;
+            //notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            //#endregion
         }
     }
 }

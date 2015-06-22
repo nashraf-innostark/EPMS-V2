@@ -149,6 +149,7 @@
     <Compile Include="Repositories\EmployeeRequestRepository.cs" />
     <Compile Include="Repositories\InventoryDepartmentRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
+    <Compile Include="Repositories\ItemReleaseQuantityRepository.cs" />
     <Compile Include="Repositories\ItemBarcodeRepository.cs" />
     <Compile Include="Repositories\ItemImageRepository.cs" />
     <Compile Include="Repositories\ItemReleaseDetailRepository.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Repositories\QuotationRepository.cs" />
     <Compile Include="Repositories\DIFItemRepository.cs" />
     <Compile Include="Repositories\RFIHistoryRepository.cs" />
+    <Compile Include="Repositories\RIFHistoryRepository.cs" />
     <Compile Include="Repositories\RIFItemRepository.cs" />
     <Compile Include="Repositories\RFIItemRepository.cs" />
     <Compile Include="Repositories\DIFRepository.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Repositories\SizeRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\TaskEmployeeRepository.cs" />
+    <Compile Include="Repositories\TIRHistoryRepository.cs" />
     <Compile Include="Repositories\TIRItemRepository.cs" />
     <Compile Include="Repositories\TIRRepository.cs" />
     <Compile Include="Repositories\UserPrefrencesRepository.cs" />
