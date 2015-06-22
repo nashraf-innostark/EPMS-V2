@@ -31,9 +31,9 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
-        public IEnumerable<ItemReleaseHistory> GetIrfHistoryData()
+        public IEnumerable<ItemReleaseHistory> GetIrfHistoryData(long parentId)
         {
-            return DbSet.Where(x => x.Status == 1 || x.Status == 2).ToList();
+            return DbSet.Where(x => (x.Status == 1 || x.Status == 2) && x.ParentId == parentId).ToList();
         }
     }
 }

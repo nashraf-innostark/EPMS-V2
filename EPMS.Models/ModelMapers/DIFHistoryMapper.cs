@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -19,9 +20,9 @@ namespace EPMS.Models.ModelMapers
                 NotesA = source.NotesA,
                 ManagerId = source.ManagerId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.Now,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate,
+                RecUpdatedDate = DateTime.Now,
                 CreatedBy = source.AspNetUser,
                 Manager = source.Manager,
                 DIFItemHistories = itemHistory.Select(x=>x.CreateFromDifItemToDifItemHistory()).ToList(),
@@ -32,7 +33,7 @@ namespace EPMS.Models.ModelMapers
         {
             var rif = new DIF
             {
-                Id = source.ParentId,
+                Id = source.Id,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 Status = source.Status == 0 ? 6 : source.Status,
@@ -44,7 +45,8 @@ namespace EPMS.Models.ModelMapers
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 AspNetUser = source.CreatedBy,
-                Manager = source.Manager
+                Manager = source.Manager,
+                DIFItems = source.DIFItemHistories.Select(x=>x.CreateFromDifItemHistoryToDifItem()).ToList()
             };
             return rif;
         }

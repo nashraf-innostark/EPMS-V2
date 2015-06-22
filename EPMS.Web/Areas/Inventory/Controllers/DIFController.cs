@@ -84,9 +84,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET: Inventory/Dif/Details/5
         [SiteAuthorize(PermissionKey = "DIFDetails")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string from)
         {
-            var Difresponse = rifService.LoadDifResponseData(id);
+            var Difresponse = rifService.LoadDifResponseData(id,from);
             DIFViewModel rifViewModel = new DIFViewModel();
             if (Difresponse.Dif != null)
             {
@@ -148,7 +148,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "DIFCreate")]
         public ActionResult Create(long? id)
         {
-            var Difresponse = rifService.LoadDifResponseData(id);
+            var Difresponse = rifService.LoadDifResponseData(id,"");
             DIFViewModel rifViewModel = new DIFViewModel();
             if (Difresponse.Dif != null)
             {
@@ -232,6 +232,36 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentDif.ManagerNameAr = response.ManagerNameAr;
             }
             return View(viewModel);
+        }
+        // POST: Inventory/Dif/History
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(DifHistoryViewModel viewModel)
+        {
+            try
+            {
+                viewModel.RecentDif.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecentDif.RecUpdatedDate = DateTime.Now;
+                viewModel.RecentDif.ManagerId = User.Identity.GetUserId();
+                TempData["message"] = new MessageViewModel
+                {
+                    //Message = Resources.Inventory.DIF.DIF.DIFReplied,
+                    IsUpdated = true
+                };
+
+                var difToBeSaved = viewModel.RecentDif.CreateDifDetailsClientToServer();
+                if (rifService.UpdateDIF(difToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
     }
 }

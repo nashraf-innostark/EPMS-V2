@@ -648,6 +648,25 @@
                 }
             });
         });
+        $(".addWar").click(function () {
+            dropAllWar();
+            $("#simpleMulti option:selected").each(function () {
+                var name = $(this).val();
+                var html = '<div class="control-group row-fluid warhouses"><div class="span3"><label class="control-label" for="createdBy">' + name + ' </label></div><div class="span7"> <div class="controls"><input  type="text" for="numbers" value="0" ></div></div><div class="span1 span-inset"><button type="button" class="btn dropWar">-</button></div></div>'
+                $('.warhouseSelection').append(html);
+                dropWarhouse();
+
+            });
+        });
+        function dropWarhouse() {
+            $(".dropWar").click(function () {
+                $(this).parents().eq(1).remove();
+            });
+        }
+        function dropAllWar() {
+            $(".warhouses").remove();
+
+        }
     });
 
     function AddEdit() {

@@ -19,7 +19,7 @@ namespace EPMS.Web.ViewModels.ItemVariation
                 ItemManufacturers = new List<ItemManufacturer>(),
                 Statuses = new List<Status>(),
                 ItemImages = new List<ItemImage>(),
-                //Warehouses = new List<Warehouse>()
+                ItemWarehouses = new List<ItemWarehouse>()
             };
             ColorsForDdl = new List<Color>();
             SizesForDdl = new List<Size>();

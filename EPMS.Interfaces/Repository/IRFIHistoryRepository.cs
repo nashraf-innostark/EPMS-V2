@@ -5,6 +5,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IRFIHistoryRepository : IBaseRepository<RFIHistory, long>
     {
-        IEnumerable<RFIHistory> GetRfiHistoryData();
+        IEnumerable<RFIHistory> GetRfiHistoryData(long parentId);
     }
 }

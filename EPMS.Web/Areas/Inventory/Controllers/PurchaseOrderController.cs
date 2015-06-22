@@ -104,6 +104,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     viewModel.Order.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Order.RecUpdatedDate = DateTime.Now;
 
+                    viewModel.Order.ManagerId = User.Identity.GetUserId();
                     TempData["message"] = new MessageViewModel
                     {
                         Message = "PO Updated",
@@ -119,7 +120,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     viewModel.Order.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Order.RecUpdatedDate = DateTime.Now;
-                    viewModel.Order.ManagerId = User.Identity.GetUserId();
                     TempData["message"] = new MessageViewModel
                     {
                         Message = "PO Added",

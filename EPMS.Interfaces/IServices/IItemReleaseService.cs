@@ -9,9 +9,9 @@ namespace EPMS.Interfaces.IServices
     public interface IItemReleaseService
     {
         IRFCreateResponse GetCreateResponse(long id);
-        ItemRelease FindItemReleaseById(long id);
+        ItemRelease FindItemReleaseById(long id, string from);
         IEnumerable<ItemRelease> GetAll();
-        IrfHistoryResponse GetIrfHistoryData();
+        IrfHistoryResponse GetIrfHistoryData(long? parentId);
         ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest);
         bool AddItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails);
         bool UpdateItemReleaseStatus(ItemReleaseStatus releaseStatus);

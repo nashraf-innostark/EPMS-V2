@@ -168,7 +168,7 @@
                                         @counter2
                                     </td>
                                     <td>
-                                        <a href="Detail/@itemRelease.ItemReleaseId">@itemRelease.FormNumber</a>
+                                        <a href="~/Inventory/ItemRelease/Detail/@itemRelease.ItemReleaseId?from=History">@itemRelease.FormNumber</a>
                                     </td>
                                     <td>
                                         @(direction == "ltr" ? itemRelease.RequesterNameE : itemRelease.RequesterNameA)
@@ -250,30 +250,37 @@
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.DropDownListFor(model => model.RecentIrf.Status, new[] { new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" }, new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" }, new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } }, new { @id = "Status", @class = "select2me disableDdl" })
+                        @Html.DropDownListFor(model => model.RecentIrf.Status, new[] {
+                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" },
+                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" },
+                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } },
+                           new { @id = "Status", @class = "select2me disableDdl" })
                     </div>
                 </div>
             </div>
         </div>
-        @if (!string.IsNullOrEmpty(Model.RecentIrf.ManagerId))
+        @if (Model.RecentIrf.Status != 1)
         {
             <div id="SubmitIrf" class="control-group row-fluid">
                 <div class="span3 span-inset">
                     <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
                 </div>
             </div>
-            <div id="EditIrf" class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.RecentIrf.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+            if (userPermissionsSet.Contains("ItemReleaseCreate"))
+            {
+                <div id="EditIrf" class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.RecentIrf.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+                    </div>
                 </div>
-            </div>
+            }
         }
     </div>
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-        if ('@ViewBag.IsAllowedCompleteView' != "True") {
+        if ('@Model.RecentIrf.Status' == '1') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             var noteEn = '@Html.Raw(Model.RecentIrf.Notes)';

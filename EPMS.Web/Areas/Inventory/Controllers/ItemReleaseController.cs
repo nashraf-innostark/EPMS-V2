@@ -47,7 +47,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index()
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFCompleteListView");
+            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel
             {
                 SearchRequest = new ItemReleaseSearchRequest()
@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             searchRequest.SearchString = Request["search"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFCompleteListView");
+            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
             IEnumerable<Models.ItemRelease> itemReleaseList =
                 response.ItemReleases.Select(x => x.CreateFromServerToClient());
@@ -79,14 +79,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET Details: Inventory/IRF
         [SiteAuthorize(PermissionKey = "IRFViewComplete,ItemReleaseDetail")]
-        public ActionResult Detail(long? id)
+        public ActionResult Detail(long? id, string from)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseDetailViewModel viewModel = new ItemReleaseDetailViewModel();
             if (id != null)
             {
-                var itemRelease = itemReleaseService.FindItemReleaseById((long)id);
+                var itemRelease = itemReleaseService.FindItemReleaseById((long)id,from);
                 if (itemRelease != null)
                 {
                     viewModel.ItemRelease = itemRelease.CreateFromServerToClient();
@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
                     IsUpdated = true
                 };
-                return RedirectToAction("Detail", new { id = viewModel.ItemRelease.ItemReleaseId });
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }
@@ -256,9 +256,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View();
         }
         [SiteAuthorize(PermissionKey = "IRFHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            IrfHistoryResponse response = itemReleaseService.GetIrfHistoryData();
+            IrfHistoryResponse response = itemReleaseService.GetIrfHistoryData(id);
             IrfHistoryViewModel viewModel = new IrfHistoryViewModel
             {
                 Irfs = response.Irfs != null ? response.Irfs.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemRelease>(),
@@ -271,6 +271,44 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentIrf.RequesterNameAr = response.RequesterNameAr;
                 viewModel.RecentIrf.ManagerName = response.ManagerNameEn;
                 viewModel.RecentIrf.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
+        }
+        // POST: Inventory/ItemRelease/History
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(IrfHistoryViewModel viewModel)
+        {
+            var notesE = viewModel.RecentIrf.Notes;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = viewModel.RecentIrf.NotesAr;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            ItemReleaseStatus status = new ItemReleaseStatus
+            {
+                ItemReleaseId = viewModel.RecentIrf.ItemReleaseId,
+                Status = viewModel.RecentIrf.Status ?? 1,
+                Notes = notesE,
+                NotesAr = notesA,
+                ManagerId = User.Identity.GetUserId()
+            };
+            if (itemReleaseService.UpdateItemReleaseStatus(status))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
+                    IsUpdated = true
+                };
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }

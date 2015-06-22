@@ -14,6 +14,7 @@ namespace EPMS.Models.ModelMapers
             return new ItemReleaseHistory
             {
                 ItemReleaseId = source.ItemReleaseId,
+                ParentId = source.ItemReleaseId,
                 RFIId = source.RFIId,
                 FormNumber = source.FormNumber,
                 OrderNo = source.OrderNo,
@@ -25,9 +26,9 @@ namespace EPMS.Models.ModelMapers
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.Now,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate,
+                RecUpdatedDate = DateTime.Now,
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,

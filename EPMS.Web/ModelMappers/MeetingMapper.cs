@@ -107,7 +107,7 @@ namespace EPMS.Web.ModelMappers
             meeting.TopicNameAr = source.TopicNameAr;
             meeting.RelatedProject = source.RelatedProject;
             if (source.Date != null)
-                meeting.Date = Convert.ToDateTime(source.Date);
+                meeting.Date = DateTime.ParseExact(source.Date, "dd/MM/yyyy", new CultureInfo("en"));
             meeting.Agenda = source.Agenda;
             meeting.AgendaAr = source.AgendaAr;
             meeting.Discussion = source.Discussion;

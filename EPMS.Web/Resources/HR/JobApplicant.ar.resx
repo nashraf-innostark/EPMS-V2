@@ -123,6 +123,12 @@
   <data name="Agreement" xml:space="preserve">
     <value>اقرار</value>
   </data>
+  <data name="Apply" xml:space="preserve">
+    <value>تطبيق</value>
+  </data>
+  <data name="AvailableVacancies" xml:space="preserve">
+    <value>وظائف متاحة</value>
+  </data>
   <data name="BirthDate" xml:space="preserve">
     <value>تاريخ الميلاد</value>
   </data>
@@ -142,7 +148,7 @@
     <value>جهة التي عملت بها</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>قسم</value>
+    <value>ادارة</value>
   </data>
   <data name="Disclaimer" xml:space="preserve">
     <value>اقر انا الموضح اسمه في اول النموذج بانني على حسن سيرة و سلوك و ان المعلومات المدونة في جميع الفقرات السابقة في هذه النموذج صحيحة و غير مزورة و في حالة ثبوت عكي ذلك فانيي اتحمل جميع ما تفرضه علي النظام والاوامر و التعليمات النافذة بما في ذلك الغقبات المنصوص عليها في نظام مكافحة التزوير</value>
@@ -194,6 +200,12 @@
   </data>
   <data name="GovtJobLeavingDateH" xml:space="preserve">
     <value>تاريخ الانفكاك المقالات</value>
+  </data>
+  <data name="JobDescription" xml:space="preserve">
+    <value>تفاصيل الوظيفة</value>
+  </data>
+  <data name="JobsOffered" xml:space="preserve">
+    <value>الوظائف المعروضة</value>
   </data>
   <data name="JobTitle" xml:space="preserve">
     <value>اسم الوظيفي</value>

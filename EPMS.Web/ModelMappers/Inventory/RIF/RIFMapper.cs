@@ -69,6 +69,25 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             };
             return rif;
         }
+        public static EPMS.Models.DomainModels.RIF CreateRifDetailsClientToServer(this Models.RIF source)
+        {
+            var rif = new EPMS.Models.DomainModels.RIF
+            {
+                RIFId = source.RIFId,
+                OrderId = source.OrderId,
+                ReturningReasonE = source.ReasonE,
+                ReturningReasonA = source.ReasonA,
+                Status = source.Status == 0 ? 6 : source.Status,
+                NotesE = source.NotesE,
+                NotesA = source.NotesA,
+                ManagerId = source.ManagerId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+            };
+            return rif;
+        }
         #endregion
 
         #region Server to Client

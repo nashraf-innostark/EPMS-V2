@@ -585,10 +585,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>JobOffered.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\HR\JobOfferedAr.Designer.cs">
+    <Compile Include="Resources\HR\JobOffered.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>JobOfferedAr.resx</DependentUpon>
+      <DependentUpon>JobOffered.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HR\JobTitle.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -4051,6 +4051,7 @@
     <EmbeddedResource Include="Resources\HR\JobApplicant.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>JobApplicant.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobApplicant.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4061,9 +4062,9 @@
       <LastGenOutput>JobOffered.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HR\JobOfferedAr.resx">
+    <EmbeddedResource Include="Resources\HR\JobOffered.ar.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>JobOfferedAr.Designer.cs</LastGenOutput>
+      <LastGenOutput>JobOffered.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HR\JobTitle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

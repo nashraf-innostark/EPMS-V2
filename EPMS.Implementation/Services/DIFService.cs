@@ -66,10 +66,13 @@ namespace EPMS.Implementation.Services
                     RecentDif = null
                 };
             }
-            DifHistoryResponse response = new DifHistoryResponse { Difs = difList.Select(x=>x.CreateFromDifHistoryToDif()) };
-            var difItems = difList.OrderByDescending(x => x.RecCreatedDate).Select(x => x.DIFItemHistories).FirstOrDefault();
-            response.DifItems = difItems.Select(x=>x.CreateFromDifItemHistoryToDifItem());
-            response.RecentDif = difList.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault().CreateFromDifHistoryToDif();
+            DifHistoryResponse response = new DifHistoryResponse
+            {
+                Difs = difList.Select(x => x.CreateFromDifHistoryToDif()),
+                RecentDif = repository.Find((long) parentId)
+            };
+            response.DifItems = response.RecentDif.DIFItems;
+            //response.DifItems = difItems.Select(x => x.CreateFromDifItemHistoryToDifItem());
             if (response.RecentDif != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentDif.ManagerId))
@@ -80,11 +83,14 @@ namespace EPMS.Implementation.Services
                     response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
                                            manager.EmployeeLastNameA;
                 }
-                var employee = response.RecentDif.AspNetUser.Employee;
-                response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
-                                       employee.EmployeeLastNameE;
-                response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
-                                       employee.EmployeeLastNameA;
+                if (response.RecentDif.AspNetUser.Employee != null)
+                {
+                    var employee = response.RecentDif.AspNetUser.Employee;
+                    response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                           employee.EmployeeLastNameE;
+                    response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                           employee.EmployeeLastNameA;
+                }
             }
             return response;
         }
@@ -155,7 +161,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateDIF(DIF dif)
         {
             var previous = repository.Find(dif.Id);
-            if (previous.Status != dif.Status)
+            if (previous.Status != dif.Status && dif.Status != 2)
             {
                 var difHistoryToAdd = dif.CreateFromDifToDifHistory(previous.DIFItems);
                 difHistoryToAdd.ManagerId = dif.ManagerId;
@@ -173,7 +179,7 @@ namespace EPMS.Implementation.Services
             repository.SaveChanges();
         }
 
-        public DifCreateResponse LoadDifResponseData(long? id)
+        public DifCreateResponse LoadDifResponseData(long? id, string from)
         {
             DifCreateResponse response=new DifCreateResponse
             {
@@ -181,7 +187,15 @@ namespace EPMS.Implementation.Services
             };
             if (id == null) return response;
 
-            var dif = repository.Find((long)id);
+            DIF dif = null;
+            if (from == "History")
+            {
+                dif = historyRepository.Find((long)id).CreateFromDifHistoryToDif();
+            }
+            else
+            {
+                dif = repository.Find((long)id);
+            }
             if (dif == null) return response;
 
             response.Dif = dif;

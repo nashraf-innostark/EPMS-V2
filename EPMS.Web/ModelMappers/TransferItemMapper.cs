@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.ViewModels.TIR;
 
@@ -23,7 +25,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
-                Date = source.RecCreatedDate.ToShortDateString(),
+                RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
             };
             if (source.AspNetUser != null)
             {

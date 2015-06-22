@@ -197,7 +197,7 @@
             var regex = /(<([^>]+)>)/ig;
             var result = descpE.replace(regex, "");
             $("#descpEn").val(result);
-            var descpA = '@Html.Raw(Model.JobTitle.JobTitleDescE)';
+            var descpA = '@Html.Raw(Model.JobTitle.JobTitleDescA)';
             regex = /(<([^>]+)>)/ig;
             result = descpA.replace(regex, "");
             $("#descpAr").val(result);

@@ -77,6 +77,8 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IDIFItemHistoryRepository, DIFItemHistoryRepository>();
             unityContainer.RegisterType<IItemReleaseHistoryRepository, ItemReleaseHistoryRepository>();
             unityContainer.RegisterType<IRFIHistoryRepository, RFIHistoryRepository>();
+            unityContainer.RegisterType<IRIFHistoryRepository, RIFHistoryRepository>();
+            unityContainer.RegisterType<ITIRHistoryRepository, TIRHistoryRepository>();
         }
     }
 }

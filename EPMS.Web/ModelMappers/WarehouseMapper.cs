@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Models.Common;
 
@@ -64,6 +65,17 @@ namespace EPMS.Web.ModelMappers
                 ParentId = source.ParentId ?? 0,
                 NodeTitleEn = source.NameEn,
                 NodeTitleAr = source.NameAr,
+            };
+        }
+
+        public static Models.ItemWarehouse CreateForItemWarehouse(this ItemWarehouse source)
+        {
+            return new Models.ItemWarehouse
+            {
+                ItemVariationId = source.ItemVariationId,
+                PlaceInWarehouse = source.PlaceInWarehouse,
+                Quantity = source.Quantity,
+                WarehousrId = source.WarehousrId
             };
         }
     }

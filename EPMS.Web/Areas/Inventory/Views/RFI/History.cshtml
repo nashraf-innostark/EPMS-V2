@@ -38,6 +38,13 @@
 @using (Html.BeginForm("History", "RFI", FormMethod.Post, new { @id = "RFIForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
+        @Html.HiddenFor(x => x.RecentRfi.RFIId)
+        @Html.HiddenFor(x => x.RecentRfi.OrderId)
+        @Html.HiddenFor(x => x.RecentRfi.UsageE)
+        @Html.HiddenFor(x => x.RecentRfi.UsageA)
+        @Html.HiddenFor(x => x.RecentRfi.RecCreatedBy)
+        @Html.HiddenFor(x => x.RecentRfi.RecCreatedDate)
+        @Html.HiddenFor(x => x.RecentRfi.ManagerId)
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
                 @EPMS.Web.Resources.RFI.RFI.DetailsPageHeading
@@ -166,7 +173,7 @@
                                         @counter2
                                     </td>
                                     <td>
-                                        <a href="Details/@rfiItem.RFIId">@rfiItem.RFIId</a>
+                                        <a href="~/Inventory/RFI/Details/@rfiItem.RFIId?from=History">@rfiItem.RFIId</a>
                                     </td>
 
                                     <td>
@@ -233,30 +240,50 @@
                 <div class="span2">
                     <div class="controls">
                         @Html.DropDownListFor(model => model.RecentRfi.Status, new[]
-                            {
-                                new SelectListItem { Text = "--Select--", Value = "" },
-                                new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
-                            }, new { @id = "RFIStatusDDL", @class = "toBeDisabled" })
+                        {
+                            new SelectListItem { Text = "--Select--", Value = "" },
+                            new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                            new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                            new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                        }, new { @id = "RFIStatusDDL", @class = "toBeDisabled" })
                     </div>
                 </div>
 
             </div>
         </div>
-        @if (!string.IsNullOrEmpty(Model.RecentRfi.ManagerId))
+        @if (Model.RecentRfi.Status != 2)
         {
-            <div id="submitDiv" class="control-group row-fluid" style="display: none">
+            <div id="submitDiv" class="control-group row-fluid">
                 <div class="span3 span-inset">
                     <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
                 </div>
             </div>
-            <div id="editDiv" class="control-group row-fluid" style="display: none">
-                <div class="span1 span-inset">
-                    <a href="~/Inventory/RFI/Create/@Model.RecentRfi.RFIId" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+            if (userPermissionsSet.Contains("RFICreate"))
+            {
+                <div id="editDiv" class="control-group row-fluid">
+                    <div class="span1 span-inset">
+                        <a href="~/Inventory/RFI/Create/@Model.RecentRfi.RFIId" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                    </div>
                 </div>
-            </div>
+            }
         }
         <!--Input Field end-->
     </div>
 }
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        if ('@Model.RecentRfi.Status' != '2') {
+            $('.toBeDisabled:input').attr('disabled', false);
+        } else {
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
+        CKEDITOR.replace('RFINotesE', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('RFINotesA', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+    });
+</script>

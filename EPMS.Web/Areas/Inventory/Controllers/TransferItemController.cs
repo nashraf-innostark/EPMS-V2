@@ -57,7 +57,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.CompleteAccess = userPermissionsSet.Contains("TIRDetailUpdate");
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
-            IEnumerable<Models.TIR> transferItemList =
+            IEnumerable<TIR> transferItemList =
                 response.TirItems.Select(x => x.CreateFromServerToClient());
             TransferItemListViewModel viewModel = new TransferItemListViewModel
             {
@@ -70,14 +70,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         [SiteAuthorize(PermissionKey = "TIRDetailUpdate,TIRDetail")]
-        public ActionResult Detail(long? id)
+        public ActionResult Detail(long? id, string from)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             ViewBag.IsAllowedCompleteView = userPermissionsSet.Contains("TIRDetailUpdate");
             TransferItemCreateViewModel viewModel = new TransferItemCreateViewModel();
             if (id != null)
             {
-                var tir = tirService.Find((long) id);
+                var tir = tirService.FindTirById((long) id,from);
                 viewModel.Tir = tir.CreateFromServerToClient();
                 viewModel.TirItems = tir.TIRItems.Select(x => x.CreateFromServerToClient()).ToList();
             }
@@ -202,9 +202,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
         }
         [SiteAuthorize(PermissionKey = "TIRHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            TirHistoryResponse response = tirService.GetTirHistoryData();
+            TirHistoryResponse response = tirService.GetTirHistoryData(id);
             TirHistoryViewModel viewModel = new TirHistoryViewModel
             {
                 Tirs = response.Tirs != null ? response.Tirs.Select(x=>x.CreateFromServerToClient()).ToList() : new List<TIR>(),
@@ -217,6 +217,43 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentTir.RequesterNameAr = response.RequesterNameAr;
                 viewModel.RecentTir.ManagerName = response.ManagerNameEn;
                 viewModel.RecentTir.ManagerNameAr = response.ManagerNameAr;
+            }
+            return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateInput(false)] //this is due to CK Editor
+        public ActionResult History(TirHistoryViewModel viewModel)
+        {
+            var notesE = viewModel.RecentTir.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = viewModel.RecentTir.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            TransferItemStatus itemStatus = new TransferItemStatus
+            {
+                Id = viewModel.RecentTir.Id,
+                NotesEn = notesE,
+                NotesAr = notesA,
+                Status = viewModel.RecentTir.Status,
+                ManagerId = User.Identity.GetUserId()
+            };
+            if (tirService.UpdateTirStatus(itemStatus))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.Inventory.TIR.TIRDetail.RecordUpdated,
+                    IsUpdated = true
+                };
+                return RedirectToAction("Index");
             }
             return View(viewModel);
         }

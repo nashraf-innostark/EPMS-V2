@@ -88,6 +88,15 @@ namespace EPMS.Web.Resources.HR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create Job Offered.
         /// </summary>
         public static string CreateJob {
@@ -165,6 +174,15 @@ namespace EPMS.Web.Resources.HR {
         public static string NoOfPosts {
             get {
                 return ResourceManager.GetString("NoOfPosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string Open {
+            get {
+                return ResourceManager.GetString("Open", resourceCulture);
             }
         }
         

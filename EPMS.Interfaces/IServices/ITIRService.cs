@@ -8,8 +8,8 @@ namespace EPMS.Interfaces.IServices
     {
         TIRCreateResponse LoadTirResponseData(long? id);
         TIRListResponse GetAllTirs(TransferItemSearchRequest searchRequest);
-        TirHistoryResponse GetTirHistoryData();
-        TIR Find(long id);
+        TirHistoryResponse GetTirHistoryData(long? id);
+        TIR FindTirById(long id, string from);
         bool UpdateTirStatus(TransferItemStatus status);
         bool SavePO(TIR tir);
         bool AddTIR(TIR tir);

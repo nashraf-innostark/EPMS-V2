@@ -86,9 +86,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         // GET: Inventory/RFI/Details/5
         [SiteAuthorize(PermissionKey = "RFIDetails")]
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, string from)
         {
-            var rfiresponse = rfiService.LoadRfiResponseData(id, false);
+            var rfiresponse = rfiService.LoadRfiResponseData(id, false, from);
             RFIViewModel rfiViewModel = new RFIViewModel();
             if (rfiresponse.Rfi != null)
             {
@@ -155,7 +155,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Create(long? id)
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
-            var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders);
+            var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders, "");
             RFIViewModel rfiViewModel = new RFIViewModel();
             if (rfiresponse.Rfi != null)
             {
@@ -227,9 +227,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         [SiteAuthorize(PermissionKey = "RFIHistory")]
-        public ActionResult History()
+        public ActionResult History(long? id)
         {
-            RfiHistoryResponse response = rfiService.GetRfiHistoryData();
+            RfiHistoryResponse response = rfiService.GetRfiHistoryData(id);
             RFIHistoryViewModel viewModel = new RFIHistoryViewModel();
             viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<RFI>();
             viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<RFIItem>();
@@ -243,6 +243,36 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentRfi.ManagerNameAr = response.ManagerNameAr;
             }
             return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
+        public ActionResult History(RFIHistoryViewModel viewModel)
+        {
+            try
+            {
+                viewModel.RecentRfi.RecUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecentRfi.RecUpdatedDate = DateTime.Now;
+                viewModel.RecentRfi.ManagerId = User.Identity.GetUserId();
+
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.RFI.RFI.RFIReplied,
+                    IsUpdated = true
+                };
+
+                var rfiToBeSaved = viewModel.RecentRfi.CreateRfiDetailsClientToServer();
+                if (rfiService.UpdateRFI(rfiToBeSaved))
+                {
+                    //success
+                    return RedirectToAction("Index");
+                }
+                //failed to save
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
 
         private bool CheckHasCustomerModule()

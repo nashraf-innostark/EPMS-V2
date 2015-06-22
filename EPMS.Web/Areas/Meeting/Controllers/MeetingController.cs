@@ -36,26 +36,46 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         private void SendInvitation(MeetingViewModel meetingViewModel, SaveMeetingResponse response)
         {
             IEnumerable<string> emEmails = response.EmployeeEmails;
-            string empemails = emEmails.Aggregate("", (current, item) => current + "," + item);
-            string emails = empemails.Substring(1, empemails.Length - 1);
-            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail1))
+            if (response.EmployeeEmails.Any() || IfAttendesOtherThanEmployee(meetingViewModel))
             {
-                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail1;
+                string empemails = emEmails.Aggregate("", (current, item) => current + "," + item);
+                string emails = "";
+                if (!string.IsNullOrEmpty(empemails))
+                {
+                    emails = empemails.Substring(1, empemails.Length - 1);
+                }
+                if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail1))
+                {
+                    emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail1;
+                }
+                if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail2))
+                {
+                    emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail2;
+                }
+                if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail3))
+                {
+                    emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail3;
+                }
+                string emailSubject = "Meeting Invitation";
+                string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName +
+                                   " on " + meetingViewModel.Meeting.Date;
+                Utility.SendEmailAsync(emails, emailSubject, emailBody);
             }
-            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail2))
-            {
-                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail2;
-            }
-            if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail3))
-            {
-                emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail3;
-            }
-            string emailSubject = "Meeting Invitation";
-            string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName + " on " + meetingViewModel.Meeting.Date;
-            Utility.SendEmailAsync(emails, emailSubject, emailBody);
         }
         #endregion
 
+        #endregion
+
+        #region Check If Attendes Other Than Employee
+
+        private bool IfAttendesOtherThanEmployee(MeetingViewModel viewModel)
+        {
+            if (!string.IsNullOrEmpty(viewModel.Meeting.AttendeeEmail1) || !string.IsNullOrEmpty(viewModel.Meeting.AttendeeEmail2) || !string.IsNullOrEmpty(viewModel.Meeting.AttendeeEmail3))
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
 
         #region Constructor
@@ -138,7 +158,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             MeetingRequest toBeSaveMeeting = meetingViewModel.Meeting.CreateFrom();
             SaveMeetingResponse response = meetingService.SaveMeeting(toBeSaveMeeting);
             {
-                TempData["message"] = new MessageViewModel {Message = "Added", IsSaved = true};
+                TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
                 meetingViewModel.Meeting.MeetingId = toBeSaveMeeting.Meeting.MeetingId;
                 //SaveMeetingDocuments(meetingViewModel);
                 if (Request.Form["SendInvitation"] != null)

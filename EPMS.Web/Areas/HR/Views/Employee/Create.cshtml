@@ -159,11 +159,9 @@
                         @Html.DropDownListFor(model => model.EmployeeViewModel.Employee.JobTitleId, new SelectList(Model.EmployeeViewModel.JobTitleDeptList, "JobId", "JobTitleA"), "--Select--", new { @class = "select2me setDeptJobId", @id = "JobTitle" })
                     </div>
                 }
-
+                <label id="jobTitleValidation" style="margin-right:12px"></label>
             </div>
-            <div class="span3" style="margin-left: 40px; margin-top: 20px;">
-                <label id="jobTitleValidation"></label>
-            </div>
+            
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
@@ -1196,7 +1194,11 @@
         var counter = 0;
         var jobTitle = $("#JobTitle").val();
         if (jobTitle == null || jobTitle == "" || jobTitle == 0 || jobTitle == undefined) {
-            $("#jobTitleValidation").text("Please Select Job Title");
+            if ('@direction' == "ltr") {
+                $("#jobTitleValidation").text("Please Select Job Title");
+            } else {
+                $("#jobTitleValidation").text("الرجاء اختيار المسمى الوظيفي");
+            }
             $("#jobTitleValidation").addClass("Error");
             counter++;
         } else {

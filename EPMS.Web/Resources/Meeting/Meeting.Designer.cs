@@ -275,5 +275,14 @@ namespace EPMS.Web.Resources.Meeting {
                 return ResourceManager.GetString("TopicNameAr", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter a valid Email Address.
+        /// </summary>
+        public static string ValidEmailMsg {
+            get {
+                return ResourceManager.GetString("ValidEmailMsg", resourceCulture);
+            }
+        }
     }
 }

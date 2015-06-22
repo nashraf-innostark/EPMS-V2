@@ -18,11 +18,11 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecLastUpdatedDt { get; set; }
         public int? OrderStatus { get; set; }
 
-        public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<RFI> RFIs { get; set; }
         public virtual ICollection<RIF> RIFs { get; set; }
         public virtual ICollection<RFIHistory> RFIHistories { get; set; }
+        public virtual ICollection<RIFHistory> RIFHistories { get; set; }
     }
 }
