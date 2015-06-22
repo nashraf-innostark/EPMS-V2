@@ -30,7 +30,6 @@ namespace EPMS.Web.ModelMappers
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,
-                ItemReleaseQuantities = source.ItemReleaseQuantities.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
         public static ItemRelease CreateFromClientToServer(this Models.ItemRelease source)

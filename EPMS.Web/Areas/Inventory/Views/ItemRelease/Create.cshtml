@@ -230,7 +230,7 @@
                                     </td>
                                     <td>
                                         @Html.TextAreaFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse, new { @class = "auto-resize toBeDisable", @rows = 2 })
-                                        <button type="button" class="btn itemAdder btnDisable" data-toggle="modal" data-target="#warhouseSelector">+</button>
+                                        <button type="button" class="btn itemAdder btnDisable" data-id=@i data-toggle="modal" data-target="#warhouseSelector">+</button>
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse)
                                     </td>
                                     <td class="quantity">
@@ -507,8 +507,18 @@
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         $('#warhouseSelector').on('show', function () {
-            var index = $(event.target).closest('div').data('id');
-            $("#WarehouseModalIndex").val(index);
+            $("#simpleMultiWarehouse").empty();
+            // get warehouse
+            var warehouse = "";
+            var index = $(event.target).closest('tr').data('id');
+            var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+            $.each(parsedWarehouses, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    warehouse = warehouse + value.PlaceInWarehouse + " - ";
+                    var html = '<option value="' + value.WarehousrId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
+                    $("#simpleMultiWarehouse").append(html);
+                }
+            });
         });
         //reactivateCount();
         $("#importEx").on("click", function () {

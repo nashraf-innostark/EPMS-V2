@@ -9,7 +9,7 @@ namespace EPMS.Web.ModelMappers
             return new Models.ItemReleaseQuantity
             {
                 ItemReleaseQuantityId = source.ItemReleaseQuantityId,
-                ItemReleaseId = source.ItemReleaseId,
+                IRFDetailId = source.IRFDetailId,
                 ItemVariationId = source.ItemVariationId,
                 WarehouseId = source.WarehouseId,
                 Quantity = source.Quantity,
