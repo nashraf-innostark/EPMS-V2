@@ -12,6 +12,7 @@
         ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
 <div class="breadcrumb-container">
@@ -313,6 +314,8 @@
     var dir = '@direction';
     var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
     var textTillParent = "";
+    var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
+    var parsedWarehouses = JSON.parse(itemWarehouses);
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
@@ -441,12 +444,11 @@
             if (validateSelect2Ddl("#RFIItemVariationDropDownList", errorMessage)) {
                 getModalControlsValues();
             }
+
+            $("#simpleMultiWarehouse").empty();
             // get warehouse
             var warehouse = "";
             var itemVariationId = $("#RFIItemVariationDropDownList").val();
-            var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
-            var parsedWarehouses = JSON.parse(itemWarehouses);
-
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
                     warehouse = warehouse + value.PlaceInWarehouse + " - ";
@@ -471,7 +473,7 @@
             event.preventDefault();
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
-        //open pop up
+        //open item pop up
         $('#itemSearcher').on('show', function () {
             //clear DDL required value label
             $("#RFIItemVariationDropDownListValidation").text("");
@@ -505,7 +507,7 @@
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         $('#warhouseSelector').on('show', function () {
-            var index = $(event.target).closest('tr').data('id');
+            var index = $(event.target).closest('div').data('id');
             $("#WarehouseModalIndex").val(index);
         });
         //reactivateCount();
@@ -608,8 +610,8 @@
                 CKEDITOR.instances['DeliveryInfoAr'].setData("");
                 return true;
             }
-            var jobsList = '@Html.Raw(Json.Encode(Model.Customers))';
-            var parsed = JSON.parse(jobsList);
+            var customersList = '@Html.Raw(Json.Encode(Model.Customers))';
+            var parsed = JSON.parse(customersList);
             $.each(parsed, function (key, value) {
                 if (value.CustomerId == customerId) {
                     $("#DeliveryInfoE").val(value.CustomerAddress);
@@ -650,15 +652,21 @@
         $(".addWar").click(function () {
             dropAllWar();
             $("#simpleMultiWarehouse option:selected").each(function () {
-                var name = $(this).val();
+                var warId = $(this).val();
+                var warName;
+                $.each(parsedWarehouses, function (key, value) {
+                    if (value.WarehousrId == warId) {
+                        warName = value.WarehouseNo;
+                    }
+                });
                 var html =
                     '<div class="control-group row-fluid warhouses">' +
                         '<div class="span3">' +
-                            '<label class="control-label" for="createdBy">' + name + ' </label>' +
+                            '<label class="control-label" for="createdBy">' + warName + ' </label>' +
                         '</div>' +
                         '<div class="span7"> ' +
                             '<div class="controls">' +
-                                '<input  type="text" for="numbers" value="0" >' +
+                                '<input  type="text" for="numbers" value="0" name="ItemRelease.ItemReleaseQuantities['+ 1 +'].Quantity">' +
                             '</div>' +
                         '</div>' +
                         '<div class="span1 span-inset">' +

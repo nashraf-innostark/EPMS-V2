@@ -170,6 +170,7 @@
     <Compile Include="Repository\IRFIItemRepository.cs" />
     <Compile Include="Repository\IRIFRepository.cs" />
     <Compile Include="Repository\IRFIRepository.cs" />
+    <Compile Include="Repository\IItemReleaseQuantityRepository.cs" />
     <Compile Include="Repository\ISizeRepository.cs" />
     <Compile Include="Repository\IStatusRepository.cs" />
     <Compile Include="Repository\ITaskEmployeeRepository.cs" />

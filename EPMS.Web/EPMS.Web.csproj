@@ -368,6 +368,7 @@
     <Compile Include="ModelMappers\ItemManufacturerMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseDetailMapper.cs" />
     <Compile Include="ModelMappers\ItemReleaseMapper.cs" />
+    <Compile Include="ModelMappers\ItemReleaseQuantityMapper.cs" />
     <Compile Include="ModelMappers\ItemVariationMapper.cs" />
     <Compile Include="ModelMappers\JobApplicantMapper.cs" />
     <Compile Include="ModelMappers\JobDeptMapper.cs" />
@@ -424,6 +425,7 @@
     <Compile Include="Models\ItemManufacturer.cs" />
     <Compile Include="Models\ItemRelease.cs" />
     <Compile Include="Models\ItemReleaseDetail.cs" />
+    <Compile Include="Models\ItemReleaseQuantity.cs" />
     <Compile Include="Models\ItemVariation.cs" />
     <Compile Include="Models\ItemWarehouse.cs" />
     <Compile Include="Models\JobApplicant.cs" />

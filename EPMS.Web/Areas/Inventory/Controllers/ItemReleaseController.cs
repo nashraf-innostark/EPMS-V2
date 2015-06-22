@@ -15,6 +15,7 @@ using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using ItemRelease = EPMS.Web.Models.ItemRelease;
 using ItemReleaseDetail = EPMS.Web.Models.ItemReleaseDetail;
+using ItemReleaseQuantity = EPMS.Web.Models.ItemReleaseQuantity;
 using RFI = EPMS.Web.Models.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -156,7 +157,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 response = itemReleaseService.GetCreateResponse(0);
                 viewModel.ItemWarehouses = response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
-                viewModel.ItemRelease = new ItemRelease();
+                viewModel.ItemRelease = new ItemRelease
+                {
+                    ItemReleaseQuantities = new List<ItemReleaseQuantity>()
+                };
                 viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 if (Session["RoleName"] != null)
                 {
@@ -255,7 +259,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View();
+            return View(viewModel);
         }
         [SiteAuthorize(PermissionKey = "IRFHistory")]
         public ActionResult History(long? id)
