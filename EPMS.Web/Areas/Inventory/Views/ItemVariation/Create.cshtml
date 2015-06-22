@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using System.Configuration
 @model EPMS.Web.ViewModels.ItemVariation.ItemVariationViewModel
 
 @{
@@ -17,12 +18,12 @@
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Index">
-                @EPMS.Web.Resources.Inventory.Vendor.Label
+                Inventory Item Li
             </a>
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Create">
-                @EPMS.Web.Resources.Inventory.Vendor.CreatePageTitle
+                Create Inventory Item
             </a>
         </li>
         <li class="current">
@@ -353,15 +354,16 @@
                 <table class="table table-striped table-responsive" id="tableSortableVariationsWherehouse">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th> Serial</th>
+                            <td style='display:none'></td>
+                            <th>Serial</th>
                             <th>Warehouse Number</th>
                             <th>Quantity in Warehouse</th>
                             <th>Place in Warehouse</th>
                             <th>Delete</th>
+
                         </tr>
                     </thead>
-                    <tbody id="warehouseDetails">
+                    <tbody class="manufacturerTable" id="warehouseDetails">
                         @if (Model.ItemVariation.ItemWarehouses.Any())
                         {
 
@@ -370,18 +372,20 @@
                             {
                                 serial = serial + 1;
 
-                                <tr data-id="@i">
-                                    @Html.TextBoxFor(model => model.ItemVariation.ItemWarehouses[i].WarehousrId, new { @class = "auto-resize warehouseId", @hidden = "true", @id = "warehouseId" })
-                                    <td style='display:none'><input name='ItemVariation.Warehouses.Index' type='hidden' value='@i' /></td>
+                                <tr class="gradeX" data-id="@i">
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
+                                    <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
                                     </td>
                                     <td></td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity" })
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse", @id = "PlaceInWarehouse" })
+                                        @Html.LabelFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse" })
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity", @id = "QuantityInWarehouse" })
+                                        @Html.LabelFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity" })
                                     </td>
                                     <td><i class="icon-photon minus deleteImage"></i></td>
                                 </tr>
@@ -421,15 +425,16 @@
                             {
                                 serial = serial + 1;
 
-                                <tr data-id="@i">
-                                    @Html.TextBoxFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
+                                <tr class="gradeX" data-id="@i">
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
                                     <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
                                     </td>
                                     <td></td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize ImageOrder" })
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
+                                        @Html.LabelFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
                                     </td>
                                     <td><i class="icon-photon minus deleteImage"></i></td>
                                 </tr>
@@ -673,62 +678,91 @@
     </div>
     <!--Add New Size to DB Ends-->
     <!--Warehouse Module Starts-->
-        <div id="wherehouseModule" class="modal hide fade treeSelector">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>Warehouse</h3>
-            </div>
-            <div class="modal-body ">
-                <form class="form-horizontal">
-                    <div class="control-group row-fluid">
-                        <div class="span3">
-                            <label class="control-label">Warehouse</label>
-                        </div>
-                        <div class="span4">
-                            <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me sizeDdl", id = "warehouseId" })
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="control-group row-fluid">
-                        <div class="span3">
-                            <label class="control-label" for="inputFielda">Location Tree Selector</label>
-                        </div>
-                        <div class="span9">
-
-                            <label class="control-label " for="inputFielda"><a href="#warehouseTreeSelector" data-toggle="modal">Warehouse Tree Selector</a></label>
-                        </div>
-
-
-                    </div>
-                    <div class="control-group row-fluid">
-                        <div class="span3">
-                            <label class="control-label" for="inputFielda">Location </label>
-                        </div>
-                        <div class="span9">
-
-                            <label class="control-label " for="inputFielda">Isle#10 > Section#2 > Shelve#4 > Section in Shelve# 5</label>
-                        </div>
-
-
-                    </div>
-
-                    <div class="control-group row-fluid">
-                        <div class="span12">
-                            <label class="control-label txt-center" for="inputFielda"><a href="#">Create New Warehouse</a></label>
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <a href="javascript:;" class="btn btn-primary">Add New Warehouse</a>
-                <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-            </div>
+    <div id="wherehouseModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Warehouse</h3>
         </div>
-        <!--Warehouse Module Ends-->
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Warehouse</label>
+                    </div>
+                    <div class="span4">
+                        <div class="controls">
+                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me sizeDdl", id = "warehouseDropdown" })
+                        </div>
+                    </div>
 
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFielda">Location Tree Selector</label>
+                    </div>
+                    <div class="span9">
+                        <label class="control-label warehouseTree"><a data-toggle="modal">Warehouse Tree Selector</a></label>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label">Location </label>
+                    </div>
+                    <div class="span9">
+                        <label class="control-label " id="textTillParent"></label>
+                    </div>
+                </div>
+                
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldaOrder">Quantity</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input id="inputFieldQuantity" type="text" name="inputField" class="quantity">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span12">
+                        <label class="control-label txt-center" for="inputFielda"><a href="#">Create New Warehouse</a></label>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary addWarehouseFromPopup">Add New Warehouse</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Warehouse Module Ends-->
+    <!--Warehouse Tree Starts-->
+    <div id="warehouseTreeSelector" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Warehousee</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="sidebarMenuHolder">
+                    <div class="JStree">
+                        <div class="Jstree_shadow_top"></div>
+                        <div id="jstree"></div>
+                        <div class="Jstree_shadow_bottom"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" id="selectNode">Select</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+    <!--Warehouse Tree Ends-->
     <!--Manufacturer Module Starts-->
     <div id="manufacturModule" class="modal hide fade treeSelector">
         <div class="modal-header">
@@ -1039,6 +1073,9 @@
 
 
 <script>
+    var siteUrl = $("#siteURL").val();
+    var textTillParent = "";
+    var dir = '@direction';
     var itemsCount;
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
     $(document).ready(function () {
@@ -1502,6 +1539,119 @@
             ManageColorList(hiddenId, 2);
         });
 
+        $(".warehouseTree").click(function (event) {
+            $('#warehouseTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+
+        //Warehouse Tree
+        $("#warehouseDropdown").on("change", function () {
+            var treeInitialData;
+            if (dir == "ltr") {
+                treeInitialData = [
+                    {
+                        "data": {
+                            "title": "Details",
+                            "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                        },
+                        "attr": { "id": "parentNode" },
+                    }
+                ];
+            } else {
+                treeInitialData = [
+                    {
+                        "data": {
+                            "title": "Details",
+                            "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                        },
+                        "attr": { "id": "parentNode" },
+                    }
+                ];
+            }
+            $("#jstree").jstree({
+                "json_data": {
+                    "data": treeInitialData
+                },
+                "plugins": ["themes", "json_data", "ui"],
+                "ui": {
+                    "initially_select": ["parentNode"]
+                },
+                "core": {
+                    "initially_open": ["parentNode"]
+                }
+            }).bind("select_node.jstree", function (event, data) {
+                //`data.rslt.obj` is the jquery extended node that was clicked
+                if (data.inst._get_parent(data.rslt.obj) != -1) {
+                    var parents = [];
+                    textTillParent = "";
+                    data.rslt.obj.parents("li").each(function () {
+                        parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                    });
+                    $.each(parents, function (key, value) {
+                        textTillParent = value.description + " >" + textTillParent;
+                    });
+                    textTillParent = textTillParent + $(".jstree-clicked").text();
+                }
+            });
+            var requesturl = "/Inventory/ItemVariation/GetWarehouseDetails";
+            var warehouseId = $('#warehouseDropdown').val();
+            populateTree(warehouseId, "jstree", requesturl);
+        });
+
+        $("#selectNode").on("click", function () {
+            $('#textTillParent').text("Selected: " + textTillParent);
+            $('#warehouseTreeSelector').modal('toggle');
+            return true;
+        });
+
+        //Add Warehouse from Popup to List
+        $('.addWarehouseFromPopup').on("click", function (event) {
+            debugger;
+            var index = $("#warehouseDetails").children("tr").length;
+            if ($("#warehouseDetails").children("tr").children("td").html() == "No data available in table") {
+                index = index - 1;
+            }
+            itemsCount = itemsCount + 1;
+            var locationInWarehouse = $('#textTillParent').text();
+            var quantity = $('#inputFieldQuantity').val();
+            var warehouseId = $('#warehouseDropdown').val();
+            var warehouseList = '@Html.Raw(Json.Encode(Model.WarehousesForDdl))';
+            var parsed = JSON.parse(warehouseList);
+            var warehouseNumber;
+            $.each(parsed, function (key, value) {
+                if (value.WarehouseId == warehouseId) {
+                    warehouseNumber = value.WarehouseNumber;
+                }
+            });
+            var html = ' <tr data-id=' + index + '>' +
+                '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
+                '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
+                '<td style="display:none"><input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" /></td>' +
+                '<td>' + itemsCount +
+                '</td>' +
+                '<td>' +
+                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" type="hidden" class = "auto-resize Number">' +
+                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
+                '</td>' +
+                '<td>' +
+                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Price" type="hidden" value = "' + quantity + '">' +
+                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
+                '<td>' +
+                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" type="hidden" value = "' + locationInWarehouse + '">' +
+                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
+                '</td>' +
+                '<td>' +
+                '<i class="icon-photon minus deleteStatus"></i>' +
+                '</td>' +
+                '</tr>';
+            $('#warehouseDetails').append(html);
+            $('#ItemVariation_ItemWarehouses' + index + '__WarehouseNumber').text(warehouseNumber);
+            $('#ItemVariation_ItemWarehouses' + index + '__Quantity').text(quantity);
+            $('#ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse').text(locationInWarehouse);
+            event.preventDefault();
+            $('#wherehouseModule').modal('hide');
+        });
 
     });
 
@@ -1528,7 +1678,7 @@
             SizeResultArray.push(id);
         }
         RefreshSizeArrayList();
-    }
+    }   
     function RefreshSizeArrayList() {
         //Set the Array List into hidden Variable
         var strSizes = "";
@@ -1604,5 +1754,9 @@
         if (strColors.length > 0)
             strColors = strColors.substring(0, strColors.length - 1);
         $('#ColorArrayList').val(strColors);
+    }
+
+    function jsTreeClick(event) {
+        return true;
     }
 </script>

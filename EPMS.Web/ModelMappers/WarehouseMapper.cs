@@ -75,7 +75,7 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 Quantity = source.Quantity,
-                WarehousrId = source.WarehousrId
+                WarehouseId = source.WarehousrId
             };
         }
     }

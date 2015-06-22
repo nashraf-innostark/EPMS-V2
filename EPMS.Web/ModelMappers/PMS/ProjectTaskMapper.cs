@@ -196,7 +196,7 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.EndDate = source.EndDate == null ? (DateTime?)null : DateTime.ParseExact(source.EndDate, "dd/MM/yyyy", new CultureInfo("en"));
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = source.TotalWeight;
-            source.TaskProgress = projectTask.TaskProgress ?? 0.ToString();
+            source.TaskProgress = projectTask.TaskProgress;
             //projectTask.TaskProgress = source.TaskProgress;
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))

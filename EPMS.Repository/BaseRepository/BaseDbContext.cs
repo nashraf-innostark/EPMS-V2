@@ -142,5 +142,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<ItemReleaseDetailHistory> ReleaseDetailHistories { get; set; }
         public DbSet<RFIHistory> RfiHistories { get; set; }
         public DbSet<ItemBarcode> ItemBarcode { get; set; }
+
+        public DbSet<ItemWarehouse> ItemWarehouses { get; set; }
     }
 }
