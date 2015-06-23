@@ -12,7 +12,7 @@
         ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+
 }
 
 <div class="breadcrumb-container">
@@ -49,7 +49,7 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Create", "ItemRelease", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "ItemRelease", FormMethod.Post, new { @class = "form-horizontal AddEditItemReleaseForm", @id = "AddEditItemReleaseForm", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.ItemRelease.ItemReleaseId)
     @Html.HiddenFor(model => model.ItemRelease.Status)
@@ -215,6 +215,16 @@
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].PlaceInDepartment)
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].RecCreatedBy)
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].RecCreatedDate)
+                                        @for (var q = 0; q < Model.ItemReleaseDetails[i].ItemReleaseQuantities.Count; q++)
+                                        {
+                                            <div class="control-group row-fluid formWarhouses_' + index + '" style="display:none">
+                                                @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].ItemReleaseQuantityId)
+                                                @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].IRFDetailId)
+                                                @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].ItemVariationId)
+                                                @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].Quantity)
+                                                @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].WarehouseId)
+                                            </div>
+                                        }
                                     </td>
                                     <td>
                                         <div class="control-group row-fluid">
@@ -234,7 +244,7 @@
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].PlaceInWarehouse)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.ItemReleaseDetails[i].ItemQty, new { @class = "n1 toBeDisable" })
+                                        @Html.TextBoxFor(m => m.ItemReleaseDetails[i].ItemQty, new { @class = "n1 disableOnLoad" })
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].ItemQty, null, new { @class = "required" })
                                     </td>
                                     <td class="delete">
@@ -271,7 +281,7 @@
                                     <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].PlaceInWarehouse" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="quantity">
-                                    <input id='ItemReleaseDetails_0__ItemQty' class="n1 toBeDisable" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
+                                    <input id='ItemReleaseDetails_0__ItemQty' class="n1 disableOnLoad" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
                                     <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemQty" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="delete">
@@ -316,6 +326,9 @@
     var textTillParent = "";
     var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
     var parsedWarehouses = JSON.parse(itemWarehouses);
+    var releaseDetails = '@Html.Raw(Json.Encode(Model.ItemReleaseDetails))';
+    var parsedQuantities = JSON.parse(releaseDetails);
+
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
@@ -362,7 +375,7 @@
                                 "</div>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"3\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\"></textarea>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\"></textarea>" +
                                 "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
@@ -372,7 +385,7 @@
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td class=\"quantity\">" +
-                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' class='n1 toBeDisable' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' readonly='true' class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
                             "</td>" +
                             "<td class='delete'>" +
@@ -445,7 +458,7 @@
                 getModalControlsValues();
             }
 
-            $("#simpleMultiWarehouse").empty();
+            $("#MultiWarehouse").empty();
             // get warehouse
             var warehouse = "";
             var itemVariationId = $("#RFIItemVariationDropDownList").val();
@@ -453,12 +466,12 @@
                 if (value.ItemVariationId == itemVariationId) {
                     warehouse = warehouse + value.PlaceInWarehouse + " - ";
                     var html = '<option value="' + value.WarehousrId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
-                    $("#simpleMultiWarehouse").append(html);
+                    $("#MultiWarehouse").append(html);
                 }
             });
             var index = parseInt($("#ItemModalIndex").val());
             $("#ItemReleaseDetails_" + index + "__PlaceInWarehouse").val(warehouse);
-            
+
             return true;
         });
         $("#selectDepartment").on("click", function () {
@@ -507,18 +520,85 @@
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         $('#warhouseSelector').on('show', function () {
-            $("#simpleMultiWarehouse").empty();
+            $("#MultiWarehouse").empty();
+            dropAllWar();
             // get warehouse
             var warehouse = "";
             var index = $(event.target).closest('tr').data('id');
-            var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+            $("#WarehouseModalIndex").val(index);
+            dropAllFormWar(index);
+            var itemVariationId = parseInt($("#ItemReleaseDetails_" + index + "__ItemVariationId").val());
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
                     warehouse = warehouse + value.PlaceInWarehouse + " - ";
                     var html = '<option value="' + value.WarehousrId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
-                    $("#simpleMultiWarehouse").append(html);
+                    $("#MultiWarehouse").append(html);
                 }
             });
+            var itemDetailId = $("#ItemReleaseDetails_" + index + "__IRFDetailId").val();
+            if (itemDetailId > 0) {
+                var quantities;
+                $.each(parsedQuantities, function (key, value) {
+                    if (value.ItemVariationId == itemVariationId) {
+                        quantities = value.ItemReleaseQuantities;
+                    }
+                });
+                $("#WarehouseCount").val(0);
+                for (var i = 0; i < quantities.length; i++) {
+                    var hiddenFields =
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + i + '" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemReleaseQuantityId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemReleaseQuantityId" value="' + quantities[i].ItemReleaseQuantityId + '" type="hidden" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].WarehouseId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__WarehouseId" value="' + quantities[i].WarehouseId + '" type="hidden" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" value="' + quantities[i].IRFDetailId + '" type="hidden" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" value="' + quantities[i].ItemVariationId + '" type="hidden" />';
+                    var popUpvalues =
+                        '<div class="control-group row-fluid warhouses">' + hiddenFields +
+                            '<div class="span3">' +
+                                '<label class="control-label" for="createdBy">' + quantities[i].Warehouse.WarehouseNumber + ' </label>' +
+                            '</div>' +
+                            '<div class="span7"> ' +
+                                '<div class="controls">' +
+                                    '<input  type="text" for="numbers" value="' + quantities[i].Quantity + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Quantity" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__Quantity">' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="span1 span-inset">' +
+                                '<button type="button" class="btn dropWar">-</button>' +
+                            '</div>' +
+                        '</div>';
+
+                    $('.warhouseSelection').append(popUpvalues);
+                    var count = parseInt($("#WarehouseCount").val());
+                    count = count + 1;
+                    $("#WarehouseCount").val(count);
+                    dropWarhouse();
+                }
+            }
+        });
+        $('#warhouseSelector').on('hide', function () {
+            var warehouseCount = parseInt($("#WarehouseCount").val());
+            var index = parseInt($("#WarehouseModalIndex").val());
+            var quantityReleased = 0;
+            for (var i = 0; i < warehouseCount; i++) {
+                var currQty = parseInt($("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val());
+                if (!isNaN(currQty)) {
+                    quantityReleased = quantityReleased + currQty;
+                } var hiddenFields =
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + i + '" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemReleaseQuantityId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemReleaseQuantityId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__ItemReleaseQuantityId").val() + '" type="hidden" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].WarehouseId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__WarehouseId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__WarehouseId").val() + '" type="hidden" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__IRFDetailId").val() + '" type="hidden" />' +
+                            '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__ItemVariationId").val() + '" type="hidden" />';
+                var mainFormValues =
+                        '<div class="control-group row-fluid formWarhouses_' + index + '" style="display:none">' + hiddenFields +
+                            '<input  type="text" for="numbers" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val() + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Quantity" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__Quantity">' +
+                        '</div>';
+                $('.AddEditItemReleaseForm').append(mainFormValues);
+            }
+            $("#ItemReleaseDetails_" + index + "__ItemQty").val(quantityReleased);
+        });
+        $("#AddWArehouse").on("click", function () {
+            $('#warhouseSelector').modal('toggle');
+            return true;
         });
         //reactivateCount();
         $("#importEx").on("click", function () {
@@ -563,7 +643,7 @@
                                 "</div>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"3\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + t1 + "</textarea>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + t1 + "</textarea>" +
                                 "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
@@ -573,7 +653,7 @@
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td class=\"quantity\">" +
-                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + t3 + "\" class='n1 toBeDisable' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + t3 + "\" class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
                             "</td>" +
                             "<td class='delete'>" +
@@ -626,8 +706,8 @@
                 if (value.CustomerId == customerId) {
                     $("#DeliveryInfoE").val(value.CustomerAddress);
                     $("#DeliveryInfoA").val(value.CustomerAddress);
-                    CKEDITOR.instances['DeliveryInfoEn'].setData(value.CustomerAddress);
-                    CKEDITOR.instances['DeliveryInfoAr'].setData(value.CustomerAddress);
+                    //CKEDITOR.instances['DeliveryInfoEn'].setData(value.CustomerAddress);
+                    //CKEDITOR.instances['DeliveryInfoAr'].setData(value.CustomerAddress);
                 }
             });
             var url = siteUrl + "/Inventory/ItemRelease/GetCustomerRfis";
@@ -661,28 +741,42 @@
         });
         $(".addWar").click(function () {
             dropAllWar();
-            $("#simpleMultiWarehouse option:selected").each(function () {
-                var warId = $(this).val();
-                var warName;
+            $("#WarehouseCount").val(0);
+            var index = $("#WarehouseModalIndex").val();
+            var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+            var i = 0;
+            $("#MultiWarehouse option:selected").each(function () {
+                var warId = parseInt($(this).val());
+                var war;
                 $.each(parsedWarehouses, function (key, value) {
-                    if (value.WarehousrId == warId) {
-                        warName = value.WarehouseNo;
+                    if (value.WarehousrId == warId && value.ItemVariationId == itemVariationId) {
+                        war = value;
+                        return;
                     }
                 });
+
                 var html =
-                    '<div class="control-group row-fluid warhouses">' +
-                        '<div class="span3">' +
-                            '<label class="control-label" for="createdBy">' + warName + ' </label>' +
+                '<div class="control-group row-fluid warhouses">' +
+                '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + index + '" />' +
+                '<input value="' + war.WarehousrId + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].WarehouseId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__WarehouseId" type="hidden" />' +
+                '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" type="hidden" />' +
+                '<input value="' + war.ItemVariationId + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" type="hidden" />' +
+                    '<div class="span3">' +
+                        '<label class="control-label" for="createdBy">' + war.WarehouseNo + ' </label>' +
+                    '</div>' +
+                    '<div class="span7"> ' +
+                        '<div class="controls">' +
+                            '<input  type="text" for="numbers" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Quantity" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__Quantity">' +
                         '</div>' +
-                        '<div class="span7"> ' +
-                            '<div class="controls">' +
-                                '<input  type="text" for="numbers" value="0" name="ItemRelease.ItemReleaseQuantities['+ 1 +'].Quantity">' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="span1 span-inset">' +
-                            '<button type="button" class="btn dropWar">-</button>' +
-                        '</div>' +
-                    '</div>';
+                    '</div>' +
+                    '<div class="span1 span-inset">' +
+                        '<button type="button" class="btn dropWar">-</button>' +
+                    '</div>' +
+                '</div>';
+                i = i + 1;
+                var count = parseInt($("#WarehouseCount").val());
+                count = count + 1;
+                $("#WarehouseCount").val(count);
                 $('.warhouseSelection').append(html);
                 dropWarhouse();
             });
@@ -690,10 +784,15 @@
         function dropWarhouse() {
             $(".dropWar").click(function () {
                 $(this).parents().eq(1).remove();
+                var index = $("#WarehouseModalIndex").val();
+                $(".formWarhouses_" + index).remove();
             });
         }
         function dropAllWar() {
             $(".warhouses").remove();
+        }
+        function dropAllFormWar(index) {
+            $(".formWarhouses_" + index).remove();
         }
     });
 

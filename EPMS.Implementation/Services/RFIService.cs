@@ -67,15 +67,7 @@ namespace EPMS.Implementation.Services
                 return new RfiHistoryResponse();
             }
             var rfis = historyRepository.GetRfiHistoryData((long)parentId);
-            if (rfis == null)
-            {
-                return new RfiHistoryResponse
-                {
-                    Rfis = null,
-                    RfiItems = new List<RFIItem>(),
-                    RecentRfi = null
-                };
-            }
+            
             var rfiList = rfis as IList<RFIHistory> ?? rfis.ToList();
             RfiHistoryResponse response = new RfiHistoryResponse
             {

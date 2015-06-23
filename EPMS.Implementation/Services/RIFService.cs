@@ -60,17 +60,7 @@ namespace EPMS.Implementation.Services
                 return new RifHistoryResponse();
             }
             var rifs = historyRepository.GetRifHistoryData((long)parentId);
-            
             var rifList = rifs as IList<RIFHistory> ?? rifs.ToList();
-            if (!rifList.Any())
-            {
-                return new RifHistoryResponse
-                {
-                    Rifs = null,
-                    RifItems = new List<RIFItem>(),
-                    RecentRif = null
-                };
-            }
 
             RifHistoryResponse response = new RifHistoryResponse
             {
