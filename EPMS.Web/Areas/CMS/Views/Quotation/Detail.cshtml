@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.Quotation.QuotationDetailViewModel
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Quotation.QuotationDetailViewModel
 @{
     ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.Quot;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -310,16 +311,28 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="placeOrder()">@EPMS.Web.Resources.CMS.Quotation.BtnPlaceOrder</button>
+        @if (Model.Quotation.OrderId > 0)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick=" placeOrder()">@EPMS.Web.Resources.CMS.Quotation.BtnPlaceOrder</button>
+                </div>
             </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="cancelOrder()">@EPMS.Web.Resources.CMS.Quotation.BtnCancelOrder</button>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick=" cancelOrder()">@EPMS.Web.Resources.CMS.Quotation.BtnCancelOrder</button>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/CMS/Quotation/Index'" type="reset">@EPMS.Web.Resources.CMS.Quotation.Back</button>
+                </div>
+            </div>
+        }
+        
     </div>
 }
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>

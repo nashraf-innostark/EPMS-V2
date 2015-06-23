@@ -103,103 +103,140 @@
     <script src="~/Scripts/Functions/scriptIST.js"></script>
     <script src="~/Scripts/moment.min.js"></script>
 </head>
-<body class="body-login">
-    <!-- Page content starts -->
-    <div class="container-fluid dashboard dashboard-widget-group">
-        <div class="row-fluid">
-            <div id="photon_widgets" class="span12 ui-sortable">
-                @RenderBody()
+    <body class="body-login">
+        
+        <div class="nav-fixed-topright" style="">
+            <ul class="nav nav-user-menu">
+                <li class="user-sub-menu-container">
+                    <a href="javascript:;">
+                        @if (Session["Culture"] == null || Session["Culture"].ToString() == "en")
+                        {
+                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.EN</i>
+                        }
+                        else
+                        {
+                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.AR</i>
+                        }
+                    </a>
+                    <ul class="nav user-sub-menu">
+                        <li class="">
+                            <a href="~/Culture/Set/EN">
+                                <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.EN
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="~/Culture/Set/AR">
+                                <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.AR
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="~/Notification/Index">
+                        <i class="icon-photon comment_alt2_stroke"></i>
+                        <div class="notification-count">@(Convert.ToInt32(ViewBag.Notifications))</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Page content starts -->
+        <div class="container-fluid dashboard dashboard-widget-group">
+            <div class="row-fluid">
+                <div id="photon_widgets" class="span12 ui-sortable">
+                    @RenderBody()
+                </div>
             </div>
         </div>
-    </div>
-    <div class="dashboard-watermark"></div>
-    <div class="scroll-top-wrapper ">
-        <span class="scroll-top-inner">
-            <span class="arrow_up"></span>
-        </span>
-    </div>
+        <div class="dashboard-watermark"></div>
+        <div class="scroll-top-wrapper ">
+            <span class="scroll-top-inner">
+                <span class="arrow_up"></span>
+            </span>
+        </div>
 
-    @if (ViewBag.MessageVM != null)
-    {
-        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-        <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
-    }
-    <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
-
-    <script>
-        $(function () {
-            setTimeout(function () {
-                $('.nav-fixed-topright').removeAttr('style');
-            }, 300);
-
-            $(window).scroll(function () {
-                if ($('.breadcrumb-container').length) {
-                    var scrollState = $(window).scrollTop();
-                    if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
-                    else $('.nav-fixed-topright').removeClass('nav-released');
-                }
-            });
-            $('.user-sub-menu-container').on('click', function () {
-                $(this).toggleClass('active-user-menu');
-            });
-            $('.user-sub-menu .light').on('click', function () {
-                if ($('body').is('.light-version')) return;
-                $('body').addClass('light-version');
-                setTimeout(function () {
-                    $.cookie('themeColor', 'light', {
-                        expires: 7,
-                        path: '/'
-                    });
-                }, 500);
-            });
-            $('.user-sub-menu .dark').on('click', function () {
-                if ($('body').is('.light-version')) {
-                    $('body').removeClass('light-version');
-                    $.cookie('themeColor', 'dark', {
-                        expires: 7,
-                        path: '/'
-                    });
-                }
-            });
-        });
-
-        $(function () {
-
-            $(document).on('scroll', function () {
-
-                if ($(window).scrollTop() > 100) {
-                    $('.scroll-top-wrapper').addClass('show');
-                } else {
-                    $('.scroll-top-wrapper').removeClass('show');
-                }
-            });
-
-
-            $(document).on('scroll', function () {
-
-                if ($(window).scrollTop() > 100) {
-                    $('.scroll-top-wrapper').addClass('show');
-                } else {
-                    $('.scroll-top-wrapper').removeClass('show');
-                }
-            });
-
-            $('.scroll-top-wrapper').on('click', scrollToTop);
-
-
-        });
-
-        function scrollToTop() {
-            verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
-            element = $('body');
-            offset = element.offset();
-            offsetTop = offset.top;
-            $('html, body').animate({ scrollTop: offsetTop }, 500, 'linear');
+        @if (ViewBag.MessageVM != null)
+        {
+            <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+            <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+            <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+            <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+            <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
         }
-    </script>
+        <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
 
-</body>
+        <script>
+            $(function () {
+                setTimeout(function () {
+                    $('.nav-fixed-topright').removeAttr('style');
+                }, 300);
+
+                $(window).scroll(function () {
+                    if ($('.breadcrumb-container').length) {
+                        var scrollState = $(window).scrollTop();
+                        if (scrollState > 0) $('.nav-fixed-topright').addClass('nav-released');
+                        else $('.nav-fixed-topright').removeClass('nav-released');
+                    }
+                });
+                $('.user-sub-menu-container').on('click', function () {
+                    $(this).toggleClass('active-user-menu');
+                });
+                $('.user-sub-menu .light').on('click', function () {
+                    if ($('body').is('.light-version')) return;
+                    $('body').addClass('light-version');
+                    setTimeout(function () {
+                        $.cookie('themeColor', 'light', {
+                            expires: 7,
+                            path: '/'
+                        });
+                    }, 500);
+                });
+                $('.user-sub-menu .dark').on('click', function () {
+                    if ($('body').is('.light-version')) {
+                        $('body').removeClass('light-version');
+                        $.cookie('themeColor', 'dark', {
+                            expires: 7,
+                            path: '/'
+                        });
+                    }
+                });
+            });
+
+            $(function () {
+
+                $(document).on('scroll', function () {
+
+                    if ($(window).scrollTop() > 100) {
+                        $('.scroll-top-wrapper').addClass('show');
+                    } else {
+                        $('.scroll-top-wrapper').removeClass('show');
+                    }
+                });
+
+
+                $(document).on('scroll', function () {
+
+                    if ($(window).scrollTop() > 100) {
+                        $('.scroll-top-wrapper').addClass('show');
+                    } else {
+                        $('.scroll-top-wrapper').removeClass('show');
+                    }
+                });
+
+                $('.scroll-top-wrapper').on('click', scrollToTop);
+
+
+            });
+
+            function scrollToTop() {
+                verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+                element = $('body');
+                offset = element.offset();
+                offsetTop = offset.top;
+                $('html, body').animate({ scrollTop: offsetTop }, 500, 'linear');
+            }
+        </script>
+
+    </body>
 </html>

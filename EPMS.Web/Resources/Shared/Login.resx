@@ -117,145 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActDeActInWords" xml:space="preserve">
-    <value>تفعيل / تعطيل الكتابة</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>اضافة</value>
-  </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>اسم العميل</value>
-  </data>
-  <data name="CreatedBy" xml:space="preserve">
-    <value>اسم الموظف</value>
-  </data>
-  <data name="CreateNew" xml:space="preserve">
-    <value>انشاء عرض سعر جديد</value>
-  </data>
-  <data name="CreateQoute" xml:space="preserve">
-    <value>انشاء عرش السعر و ارسال للعميل</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>حذف</value>
-  </data>
-  <data name="Discount" xml:space="preserve">
-    <value>خصم%</value>
-  </data>
-  <data name="DueAt" xml:space="preserve">
-    <value>تدفع عند انتهاء</value>
-  </data>
-  <data name="ExcelImport" xml:space="preserve">
-    <value>استيراد من ملف اكسل</value>
-  </data>
-  <data name="FirstInstallment" xml:space="preserve">
-    <value>دفعة الاولى</value>
-  </data>
-  <data name="FourthInstallment" xml:space="preserve">
-    <value>الدفعة الرابعة</value>
-  </data>
-  <data name="GrandTotal" xml:space="preserve">
-    <value>المجموع الكلي</value>
-  </data>
-  <data name="Greetings" xml:space="preserve">
-    <value>تحية بالانجليزي</value>
-  </data>
-  <data name="GreetingsAr" xml:space="preserve">
-    <value>تحية بالعربي</value>
-  </data>
-  <data name="Import" xml:space="preserve">
-    <value>استيراد</value>
-  </data>
-  <data name="InstallmentPlan" xml:space="preserve">
-    <value>خطة الدفع</value>
-  </data>
-  <data name="InWords" xml:space="preserve">
-    <value>السعر كتابة</value>
-  </data>
-  <data name="ItemDetails" xml:space="preserve">
-    <value>تفاصيل</value>
-  </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات بالانجليزي</value>
-  </data>
-  <data name="NotesAr" xml:space="preserve">
-    <value>ملاحظات بالعربي</value>
-  </data>
-  <data name="OrderNameNo" xml:space="preserve">
-    <value>اسم الطلب- رقم الطلب</value>
-  </data>
-  <data name="PTIndex" xml:space="preserve">
-    <value>صفحة الموظفين</value>
-  </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>عدد</value>
-  </data>
-  <data name="Quot" xml:space="preserve">
-    <value>عرض سعر</value>
-  </data>
-  <data name="QuotList" xml:space="preserve">
-    <value>قائمة الموظفين</value>
-  </data>
-  <data name="SecondInstallment" xml:space="preserve">
-    <value>الدفعة الثانية</value>
-  </data>
-  <data name="Subtotal" xml:space="preserve">
-    <value>مجموع</value>
-  </data>
-  <data name="ThirdInstallment" xml:space="preserve">
-    <value>الدفعة الثالثة</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>المجموع</value>
-  </data>
-  <data name="UnitPrice" xml:space="preserve">
-    <value>سعر الافرادي</value>
-  </data>
-  <data name="AddMessage" xml:space="preserve">
-    <value>تمت إضافة الاقتباس بنجاح</value>
-  </data>
-  <data name="ErrorMessage" xml:space="preserve">
-    <value>مشكلة في إنقاذ الاقتباس</value>
-  </data>
-  <data name="UpdateMessage" xml:space="preserve">
-    <value>تم تحديث الاقتباس بنجاح</value>
-  </data>
-  <data name="QuotDetail" xml:space="preserve">
-    <value>عرض سعر</value>
-  </data>
-  <data name="UpdateQuotation" xml:space="preserve">
-    <value>تحديث الاقتباس</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>التاريخ</value>
-  </data>
   <data name="Email" xml:space="preserve">
-    <value>البريد الالكتروني</value>
+    <value>Email</value>
   </data>
-  <data name="EmpName" xml:space="preserve">
-    <value>اسم الموظف</value>
+  <data name="Forgot" xml:space="preserve">
+    <value>Forgot Your Password?</value>
   </data>
-  <data name="Phone" xml:space="preserve">
-    <value>الجوال</value>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Login With Your Desert Stars Account</value>
   </data>
-  <data name="Print" xml:space="preserve">
-    <value>اطبع</value>
+  <data name="NotAMember" xml:space="preserve">
+    <value>Not a Member?</value>
   </data>
-  <data name="QuotationNo" xml:space="preserve">
-    <value>رقم عرض السعر #</value>
+  <data name="Or" xml:space="preserve">
+    <value>Or</value>
   </data>
-  <data name="StreetAddress" xml:space="preserve">
-    <value>عنوان الشارع المدينة</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="Website" xml:space="preserve">
-    <value>الموقع الالكتروني</value>
+  <data name="Signin" xml:space="preserve">
+    <value>Login</value>
   </data>
-  <data name="BtnCancelOrder" xml:space="preserve">
-    <value>إلغاء النظام</value>
+  <data name="Signup" xml:space="preserve">
+    <value>Sign Up »</value>
   </data>
-  <data name="BtnPlaceOrder" xml:space="preserve">
-    <value>ترتيب مكان</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>رجوع</value>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome to Desert Starts</value>
   </data>
 </root>

@@ -162,7 +162,7 @@ namespace EPMS.Web.ModelMappers.PMS
             project.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             foreach (var projectTask in source.ProjectTasks)
             {
-                project.ProjectTasksSum += Convert.ToInt32(projectTask.TotalWeight);
+                project.ProjectTasksSum += projectTask.TotalWeight !=0 ? Convert.ToInt32(projectTask.TotalWeight) : 0;
             }
             return project;
         }
