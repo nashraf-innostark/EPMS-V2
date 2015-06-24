@@ -64,7 +64,13 @@ namespace IdentitySample.Controllers
         private void SetCultureInfo(string userId)
         {
             var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
-            CultureInfo info = userPrefrences != null
+
+            //check last saved culture and newley if changed from login page
+            if (Session["Culture"] != null && Session["Culture"].ToString() != userPrefrences.Culture.ToString())
+            {
+                userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
+            }
+           CultureInfo info = userPrefrences != null
                 ? new CultureInfo(userPrefrences.Culture)
                 : new CultureInfo("en");
             Session["Culture"] = info.Name;
@@ -178,11 +184,16 @@ namespace IdentitySample.Controllers
             {
                 ViewBag.ReturnUrl = returnUrl;
                 var successNote = TempData["Note"];
-                if (successNote != "")
+                if (successNote!=null)
                 {
                     ViewBag.SuccessMessage = successNote;
                 }
                 ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+                if (Session["Culture"] != null && Session["Culture"] == "ar")
+                {
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
+                    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
+                }
                 return View();
             }
             else

@@ -119,16 +119,17 @@ namespace EPMS.Implementation.Services
                 {
                     var parentTask = Repository.Find(Convert.ToInt32(task.ParentTask));
                     int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress));
-                    int taskWeight = Convert.ToInt32(task.TotalWeight);
-                    var progressToAdd = Convert.ToInt32(task.TaskProgress) * taskWeight;
-                    int parentTaskProgress = (countOtherTasksProgress + (progressToAdd / 100));
+                    //int taskWeight = Convert.ToInt32(task.TotalWeight);
+                    //var progressToAdd = Convert.ToInt32(task.TaskProgress) * taskWeight;
+                    var progressToAdd = Convert.ToInt32(task.TaskProgress);
+                    int parentTaskProgress = (countOtherTasksProgress + (progressToAdd));
                     if (parentTaskProgress <= 100)
                     {
                         parentTask.TaskProgress = parentTaskProgress;
-                        if (parentTaskProgress < 10)
-                        {
-                            parentTask.TaskProgress = parentTaskProgress;
-                        }
+                        //if (parentTaskProgress < 10)
+                        //{
+                        //    parentTask.TaskProgress = parentTaskProgress;
+                        //}
                         Repository.Update(parentTask);
                         Repository.SaveChanges();
                     }

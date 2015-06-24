@@ -120,23 +120,16 @@
                     </a>
                     <ul class="nav user-sub-menu">
                         <li class="">
-                            <a href="~/Culture/Set/EN">
+                            <a href="~/Culture/Set?id=EN&login=true">
                                 <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.EN
                             </a>
                         </li>
                         <li class="">
-                            <a href="~/Culture/Set/AR">
+                            <a href="~/Culture/Set?id=AR&login=true">
                                 <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.AR
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <li>
-                    <a href="~/Notification/Index">
-                        <i class="icon-photon comment_alt2_stroke"></i>
-                        <div class="notification-count">@(Convert.ToInt32(ViewBag.Notifications))</div>
-                    </a>
                 </li>
             </ul>
         </div>
@@ -156,14 +149,7 @@
             </span>
         </div>
 
-        @if (ViewBag.MessageVM != null)
-        {
-            <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-            <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-            <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-            <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-            <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
-        }
+       
         <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
 
         <script>

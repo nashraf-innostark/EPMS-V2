@@ -140,15 +140,12 @@ namespace EPMS.Web.ModelMappers.PMS
             }
             foreach (var projectTask in source.ProjectTasks)
             {
-                decimal taskWeight = 0;
-                if (projectTask.TotalWeight > 0)
+                decimal progress = 0;
+                if (projectTask.TotalWeight > 0 && projectTask.ParentTask==null)
                 {
-                    var taskTotalWeight = projectTask.TotalWeight;
-                    taskWeight = Convert.ToDecimal(taskTotalWeight);
-                    var tempTaskWeight = projectTask.TaskProgress;
-                    taskWeight = (Convert.ToDecimal(tempTaskWeight) * taskWeight);
+                    progress = (decimal) projectTask.TaskProgress;
                 }
-                project.ProgressTotal += Convert.ToDouble(taskWeight/100);
+                project.ProgressTotal += Convert.ToDouble(progress);
             }
             return project;
         }
