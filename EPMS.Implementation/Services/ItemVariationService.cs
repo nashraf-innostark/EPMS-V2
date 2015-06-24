@@ -493,7 +493,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = 7//Inventory Manager
+                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["InventoryManager"])//Inventory Manager
                 }
             };
 

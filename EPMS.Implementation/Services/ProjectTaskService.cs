@@ -361,6 +361,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["TaskDeliveryAlertBefore"]); //Days
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
                 notificationViewModel.NotificationResponse.ForAdmin = true;
+                notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
 
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Other
                 notificationViewModel.NotificationResponse.SubCategoryId = 3; //Project task Delivery

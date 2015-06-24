@@ -203,7 +203,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = 7 //inventory manager
+                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["InventoryManager"]) //inventory manager
                 }
             };
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -336,7 +336,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = 8 //warehouse manager
+                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["WarehouseManager"]) //warehouse manager
                 }
             };
 
@@ -362,7 +362,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = 2, //Employee,
+                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Employee"]), //Employee,
                     EmployeeId = Convert.ToInt64(itemRelease.RequesterId)
                 }
             };
