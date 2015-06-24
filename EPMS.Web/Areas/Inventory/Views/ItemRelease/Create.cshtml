@@ -217,7 +217,7 @@
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].RecCreatedDate)
                                         @for (var q = 0; q < Model.ItemReleaseDetails[i].ItemReleaseQuantities.Count; q++)
                                         {
-                                            <div class="control-group row-fluid formWarhouses_' + index + '" style="display:none">
+                                            <div class="control-group row-fluid formWarehouses_@i-@q" style="display:none">
                                                 @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].ItemReleaseQuantityId)
                                                 @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].IRFDetailId)
                                                 @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].ItemVariationId)
@@ -526,7 +526,7 @@
             var warehouse = "";
             var index = $(event.target).closest('tr').data('id');
             $("#WarehouseModalIndex").val(index);
-            dropAllFormWar(index);
+            
             var itemVariationId = parseInt($("#ItemReleaseDetails_" + index + "__ItemVariationId").val());
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
@@ -543,6 +543,7 @@
                         quantities = value.ItemReleaseQuantities;
                     }
                 });
+                dropAllFormWar(index, quantities.length);
                 $("#WarehouseCount").val(0);
                 for (var i = 0; i < quantities.length; i++) {
                     var hiddenFields =
@@ -562,7 +563,7 @@
                                 '</div>' +
                             '</div>' +
                             '<div class="span1 span-inset">' +
-                                '<button type="button" class="btn dropWar">-</button>' +
+                                '<button type="button" class="btn dropWar" data-id="' + i + '">-</button>' +
                             '</div>' +
                         '</div>';
 
@@ -589,7 +590,7 @@
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__IRFDetailId").val() + '" type="hidden" />' +
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__ItemVariationId").val() + '" type="hidden" />';
                 var mainFormValues =
-                        '<div class="control-group row-fluid formWarhouses_' + index + '" style="display:none">' + hiddenFields +
+                        '<div class="control-group row-fluid formWarehouses_' + index + '__' + i + '" style="display:none">' + hiddenFields +
                             '<input  type="text" for="numbers" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val() + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Quantity" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__Quantity">' +
                         '</div>';
                 $('.AddEditItemReleaseForm').append(mainFormValues);
@@ -782,17 +783,20 @@
             });
         });
         function dropWarhouse() {
-            $(".dropWar").click(function () {
+            $(".dropWar").click(function (event) {
                 $(this).parents().eq(1).remove();
-                var index = $("#WarehouseModalIndex").val();
-                $(".formWarhouses_" + index).remove();
+                var i = $(event.target).data('id');
+                var index = parseInt($("#WarehouseModalIndex").val());
+                $(".formWarehouses_" + index + "-" + i).remove();
             });
         }
         function dropAllWar() {
             $(".warhouses").remove();
         }
-        function dropAllFormWar(index) {
-            $(".formWarhouses_" + index).remove();
+        function dropAllFormWar(index, count) {
+            for (var i = 0; i < count; i++) {
+                $(".formWarehouses_" + index + "-" + i).remove();
+            }
         }
     });
 
