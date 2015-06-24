@@ -208,6 +208,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
+        #region Get Last Item SKU Code
+
+        public JsonResult GetLastItemSKuCode()
+        {
+            var itemCode = itemVariationService.GetAll().OrderByDescending(x => x.SKUCode).FirstOrDefault().SKUCode;
+            return Json(itemCode, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #endregion  
     }
 }

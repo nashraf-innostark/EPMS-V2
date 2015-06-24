@@ -68,6 +68,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Get Last Item Code
+
+        public JsonResult GetLastItemCode()
+        {
+            var itemCode = inventoryItemService.GetAll().OrderByDescending(x => x.ItemCode).FirstOrDefault().ItemCode;
+            return Json(itemCode, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
 
         #endregion
     }

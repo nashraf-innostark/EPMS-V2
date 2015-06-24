@@ -18,8 +18,8 @@ namespace EPMS.Web.ModelMappers
                 model.UnitPrice = source.UnitPrice;
                 model.PackagePrice = source.PackagePrice;
                 model.PriceCalculation = source.PriceCalculation;
-                model.DescriptionEn = source.DescriptionEn;
-                model.DescriptionAr = source.DescriptionAr;
+                model.DescriptionEn = source.InventoryItem.ItemDescriptionEn;
+                model.DescriptionAr = source.InventoryItem.ItemDescriptionAr;
                 model.SKUDescriptionEn = source.SKUDescriptionEn;
                 model.SKUDescriptionAr = source.SKUDescriptionAr;
                 model.QuantityInHand = source.QuantityInHand;

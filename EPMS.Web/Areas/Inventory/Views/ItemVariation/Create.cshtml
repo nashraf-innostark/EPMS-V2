@@ -18,12 +18,12 @@
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Index">
-                Inventory Item Li
+                Inventory Item List
             </a>
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Create">
-                Create Inventory Item
+                Inventory Item
             </a>
         </li>
         <li class="current">
@@ -373,7 +373,7 @@
                                 serial = serial + 1;
 
                                 <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehousrId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
                                     <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
@@ -1080,6 +1080,24 @@
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
     $(document).ready(function () {
         if (itemVarId == 0 || itemVarId == "") {
+            //Auto Generated Number Calculation
+            var url = "/Inventory/ItemVariation/GetLastItemSKuCode";
+            $.ajax({
+                data: inventoryItemId,
+                url: url,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data == null) {
+                        $('#SKUCode').val(101101);
+                    } else {
+                        $('#SKUCode').val(++data);
+                    }
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();
             $("#cancel").show();
