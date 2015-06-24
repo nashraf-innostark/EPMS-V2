@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -7,12 +8,14 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
     public class ItemReleaseService : IItemReleaseService
     {
         private readonly ICustomerRepository customerRepository;
+        private readonly INotificationService notificationService;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IItemReleaseRepository itemReleaseRepository;
         private readonly IOrdersRepository ordersRepository;
@@ -21,9 +24,10 @@ namespace EPMS.Implementation.Services
         private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
         private readonly IItemReleaseQuantityRepository releaseQuantityRepository;
 
-        public ItemReleaseService(ICustomerRepository customerRepository, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository)
+        public ItemReleaseService(ICustomerRepository customerRepository,INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository)
         {
             this.customerRepository = customerRepository;
+            this.notificationService = notificationService;
             this.itemVariationRepository = itemVariationRepository;
             this.itemReleaseRepository = itemReleaseRepository;
             this.ordersRepository = ordersRepository;
@@ -157,6 +161,9 @@ namespace EPMS.Implementation.Services
                 }
                 itemReleaseRepository.Add(itemRelease);
                 itemReleaseRepository.SaveChanges();
+                //Send notification
+                SendNotification(itemRelease);
+
                 return true;
             }
             catch (Exception)
@@ -237,6 +244,57 @@ namespace EPMS.Implementation.Services
         {
             itemReleaseRepository.Delete(itemRelease);
             itemReleaseRepository.SaveChanges();
+        }
+
+        private void SendNotification(ItemRelease itemRelease, bool isUpdated = false)
+        {
+            #region Item Release For Warehouse Manager
+            NotificationViewModel notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse =
+                {
+                    TitleE = ConfigurationManager.AppSettings["ItemReleaseE"],
+                    TitleA = ConfigurationManager.AppSettings["ItemReleaseA"],
+                    AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemReleaseAlertBefore"]),
+                    CategoryId = 7,
+                    SubCategoryId = 5,//For Warehouse Manager
+                    ItemId = itemRelease.ItemReleaseId,
+                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDateType = 1,
+                    SystemGenerated = true,
+                    ForAdmin = false,
+                    ForRole = 8//warehouse manager
+                }
+            };
+
+           
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            #endregion
+
+            #region Item Release For Requester (Employee)
+            notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse =
+                {
+                    TitleE = ConfigurationManager.AppSettings["ItemReleaseE"],
+                    TitleA = ConfigurationManager.AppSettings["ItemReleaseA"],
+                    AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemReleaseAlertBefore"]),
+                    CategoryId = 7,
+                    SubCategoryId = 6,//For requester
+                    ItemId = itemRelease.ItemReleaseId,
+                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDateType = 1,
+                    SystemGenerated = true,
+                    ForAdmin = false,
+                    ForRole = 2,//Employee,
+                    EmployeeId = Convert.ToInt64(itemRelease.RequesterId)
+                }
+            };
+            
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+            #endregion
         }
     }
 }

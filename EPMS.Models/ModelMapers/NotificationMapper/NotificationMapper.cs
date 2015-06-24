@@ -85,6 +85,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-notification.AlertBefore),
                 SystemGenerated = notification.SystemGenerated,
                 ForAdmin = notification.ForAdmin,
+                ForRole = notification.ForRole,
                 IsEmailSent = notification.IsEmailSent,
                 IsSMSsent = notification.IsSMSsent,
 
@@ -165,6 +166,8 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
                 case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
+                case 6: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
+                
                 default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
             switch (notification.AlertBefore)
@@ -172,6 +175,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 30: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
                 case 7: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
                 case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                case 0: notificationListResponse.AlertTime = Resources.Notification.Instant; break;
                 default: notificationListResponse.AlertTime = Resources.Notification.Before + " " + notification.AlertBefore + " " + Resources.Notification.Days; break;
             }
 
@@ -223,6 +227,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
                 case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
+                case 6: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
                 default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
             switch (notification.AlertBefore)
@@ -230,6 +235,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 30: notificationListResponse.AlertTime = Resources.Notification.BeforeOneMonth; break;
                 case 7: notificationListResponse.AlertTime = Resources.Notification.BeforeOneWeek; break;
                 case 1: notificationListResponse.AlertTime = Resources.Notification.BeforeOneDay; break;
+                case 0: notificationListResponse.AlertTime = Resources.Notification.Instant; break;
                 default: notificationListResponse.AlertTime = Resources.Notification.Before + " " + notification.AlertBefore + " " + Resources.Notification.Days; break;
             }
 

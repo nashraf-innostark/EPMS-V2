@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Implementation.Services
@@ -22,6 +25,7 @@ namespace EPMS.Implementation.Services
         private readonly IColorRepository colorRepository;
         private readonly IItemImageRepository imageRepository;
         private readonly IItemManufacturerRepository itemManufacturerRepository;
+        private readonly INotificationService notificationService;
 
         #endregion
 
@@ -29,7 +33,7 @@ namespace EPMS.Implementation.Services
 
         public ItemVariationService(IItemVariationRepository variationRepository, ISizeRepository sizeRepository,
             IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
-            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository)
+            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository,INotificationService notificationService)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -38,6 +42,7 @@ namespace EPMS.Implementation.Services
             this.colorRepository = colorRepository;
             this.imageRepository = imageRepository;
             this.itemManufacturerRepository = itemManufacturerRepository;
+            this.notificationService = notificationService;
         }
 
         #endregion
@@ -119,7 +124,10 @@ namespace EPMS.Implementation.Services
             itemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             itemVariation.RecLastUpdatedDt = DateTime.Now;
             variationRepository.Add(itemVariation);
+            //Item variation Notification
+            SendNotification(itemVariation);
         }
+
         /// <summary>
         /// Update Existing Variation from Client
         /// </summary>
@@ -392,6 +400,35 @@ namespace EPMS.Implementation.Services
             }
         }
 
+        #endregion
+
+        #region Notification Send
+        private void SendNotification(ItemVariation itemVariation)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse =
+                {
+                    TitleE = ConfigurationManager.AppSettings["ItemVariationE"],
+                    TitleA = ConfigurationManager.AppSettings["ItemVariationA"],
+                    SubCategoryId = 3,//Item Variation
+                    AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemVariationAlertBefore"]),
+                    CategoryId = 7,//Inventory
+                    ItemId = itemVariation.ItemVariationId,
+                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDateType = 1,
+                    SystemGenerated = true,
+                    ForAdmin = false,
+                    ForRole = 7//Inventory Manager
+                }
+            };
+
+            #region Create Notification
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            #endregion
+        }
         #endregion
     }
 }

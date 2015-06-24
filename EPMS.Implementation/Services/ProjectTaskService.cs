@@ -362,8 +362,8 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
                 notificationViewModel.NotificationResponse.ForAdmin = true;
 
-                notificationViewModel.NotificationResponse.CategoryId = 5; //Project task
-                notificationViewModel.NotificationResponse.SubCategoryId = 3; //Task delivery date
+                notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                notificationViewModel.NotificationResponse.SubCategoryId = 3; //Project task Delivery
                 notificationViewModel.NotificationResponse.ItemId = task.TaskId; //Task
                 notificationViewModel.NotificationResponse.AlertDate = task.EndDateOriginal;
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian

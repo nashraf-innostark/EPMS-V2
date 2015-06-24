@@ -133,6 +133,24 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instant.
+        /// </summary>
+        public static string Instant {
+            get {
+                return ResourceManager.GetString("Instant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory.
+        /// </summary>
+        public static string Inventory {
+            get {
+                return ResourceManager.GetString("Inventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Meetings.
         /// </summary>
         public static string Meetings {
