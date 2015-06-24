@@ -78,11 +78,11 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                 </div>
             </div>

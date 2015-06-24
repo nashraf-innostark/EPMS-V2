@@ -16,7 +16,7 @@ namespace EPMS.Implementation.Services
 {
     public class ItemReleaseService : IItemReleaseService
     {
-        private readonly ICustomerRepository customerRepository;
+        private readonly IEmployeeRepository employeeRepository;
         private readonly IItemWarehouseRepository itemWarehouseRepository;
         private readonly INotificationService notificationService;
         private readonly IItemVariationRepository itemVariationRepository;
@@ -27,9 +27,8 @@ namespace EPMS.Implementation.Services
         private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
         private readonly IItemReleaseQuantityRepository releaseQuantityRepository;
 
-        public ItemReleaseService(ICustomerRepository customerRepository,IItemWarehouseRepository itemWarehouseRepository,INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository)
+        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository,INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository)
         {
-            this.customerRepository = customerRepository;
             this.itemWarehouseRepository = itemWarehouseRepository;
             this.notificationService = notificationService;
             this.itemVariationRepository = itemVariationRepository;
@@ -39,32 +38,33 @@ namespace EPMS.Implementation.Services
             this.aspNetUserRepository = aspNetUserRepository;
             this.releaseHistoryRepository = releaseHistoryRepository;
             this.releaseQuantityRepository = releaseQuantityRepository;
+            this.employeeRepository = employeeRepository;
         }
 
         public IRFCreateResponse GetCreateResponse(long id)
         {
             IRFCreateResponse response = new IRFCreateResponse
             {
-                Customers = customerRepository.GetAll(),
+                Employees = employeeRepository.GetAll(),
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList(),
                 ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
             IList<RFI> customerRfis = new List<RFI>();
-            if (response.ItemRelease.RequesterId != null)
-            {
-                var customerOrders = ordersRepository.GetOrdersByCustomerId((long)response.ItemRelease.RequesterId);
+            //if (response.ItemRelease.RequesterId != null)
+            //{
+            //    var customerOrders = ordersRepository.GetOrdersByCustomerId((long)response.ItemRelease.RequesterId);
                 
-                foreach (var customerOrder in customerOrders)
-                {
-                    if (customerOrder.RFIs.Any())
-                    {
-                        foreach (var rfI in customerOrder.RFIs)
-                        {
-                            customerRfis.Add(rfI);
-                        }
-                    }
-                }
-            }
+            //    foreach (var customerOrder in customerOrders)
+            //    {
+            //        if (customerOrder.RFIs.Any())
+            //        {
+            //            foreach (var rfI in customerOrder.RFIs)
+            //            {
+            //                customerRfis.Add(rfI);
+            //            }
+            //        }
+            //    }
+            //}
             response.Rfis = customerRfis;
             var itemVariations = itemVariationRepository.GetAll();
             response.ItemWarehouses = new List<ItemWarehouse>();

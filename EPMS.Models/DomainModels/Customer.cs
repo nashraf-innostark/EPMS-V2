@@ -14,13 +14,12 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
         public virtual ICollection<Quotation> Quotations { get; set; }
-        public virtual ICollection<ItemRelease> ItemReleases { get; set; }
-        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistories { get; set; }
     }
 }

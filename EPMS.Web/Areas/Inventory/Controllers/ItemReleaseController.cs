@@ -182,7 +182,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.FormNumber = "010101";
             }
             //Session["RoleName"];
-            viewModel.Customers = response.Customers.Select(x => x.CreateFromServerToClient()).ToList();
+            viewModel.Employees = response.Employees.Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
             return View(viewModel);
         }
