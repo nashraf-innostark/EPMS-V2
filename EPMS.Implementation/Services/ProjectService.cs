@@ -141,7 +141,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.ForAdmin = true;
 
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Other
-                notificationViewModel.NotificationResponse.SubCategoryId = 9; //Ended
+                notificationViewModel.NotificationResponse.SubCategoryId = 9; // Project Delivery
                 notificationViewModel.NotificationResponse.ItemId = project.ProjectId; //Ended
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToString("dd/MM/yyyy");
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian

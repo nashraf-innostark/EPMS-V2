@@ -75,6 +75,7 @@
     <Compile Include="IServices\IItemManufacturerService.cs" />
     <Compile Include="IServices\IItemReleaseService.cs" />
     <Compile Include="IServices\IItemVariationService.cs" />
+    <Compile Include="IServices\IItemWarehouseService.cs" />
     <Compile Include="IServices\IJobApplicantService.cs" />
     <Compile Include="IServices\IJobOfferedService.cs" />
     <Compile Include="IServices\IJobTitleService.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Repository\IItemReleaseHistoryRepository.cs" />
     <Compile Include="Repository\IItemReleaseRepository.cs" />
     <Compile Include="Repository\IItemVariationRepository.cs" />
+    <Compile Include="Repository\IItemWarehouseRepository.cs" />
     <Compile Include="Repository\IJobApplicantRepository.cs" />
     <Compile Include="Repository\IJobOfferedRepository.cs" />
     <Compile Include="Repository\IJobTitleHistoryRepository.cs" />

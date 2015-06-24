@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using EPMS.Models.Common;
 
 namespace EPMS.Models.ResponseModels.NotificationResponseModel
 {
@@ -37,6 +38,7 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public DateTime? RecLastUpdatedDate { get; set; }
         public bool SystemGenerated { get; set; }
         public bool? ForAdmin { get; set; }
+        public int? ForRole { get; set; }
         public long EmployeeId { get; set; }
         public string SmsText { get; set; }
         public string EmailText { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.IServices;
@@ -8,12 +10,15 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
     public class ItemReleaseService : IItemReleaseService
     {
         private readonly ICustomerRepository customerRepository;
+        private readonly IItemWarehouseRepository itemWarehouseRepository;
+        private readonly INotificationService notificationService;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IItemReleaseRepository itemReleaseRepository;
         private readonly IOrdersRepository ordersRepository;
@@ -22,9 +27,11 @@ namespace EPMS.Implementation.Services
         private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
         private readonly IItemReleaseQuantityRepository releaseQuantityRepository;
 
-        public ItemReleaseService(ICustomerRepository customerRepository, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository)
+        public ItemReleaseService(ICustomerRepository customerRepository,IItemWarehouseRepository itemWarehouseRepository,INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository)
         {
             this.customerRepository = customerRepository;
+            this.itemWarehouseRepository = itemWarehouseRepository;
+            this.notificationService = notificationService;
             this.itemVariationRepository = itemVariationRepository;
             this.itemReleaseRepository = itemReleaseRepository;
             this.ordersRepository = ordersRepository;
@@ -148,15 +155,58 @@ namespace EPMS.Implementation.Services
                 foreach (var itemReleaseDetail in itemDetails)
                 {
                     itemRelease.ItemReleaseDetails.Add(itemReleaseDetail);
+
+                     //check item remaining Qty
+                    foreach (var itemReleaseQuantity in itemReleaseDetail.ItemReleaseQuantities)
+                    {
+                        var itemAvailableQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId),
+                            itemReleaseQuantity.WarehouseId);
+                        if (itemAvailableQty <= 1)
+                        {
+                            //Send notification to Inventory Manager about short in-hand inventory
+
+                            #region Send Notification to Inventory Manager
+
+                            SendNotificationAboutShortInventory(itemRelease);
+
+                            #endregion
+                        }
+                    }
                 }
                 itemReleaseRepository.Add(itemRelease);
                 itemReleaseRepository.SaveChanges();
+               
+                //Send notification
+                SendNotification(itemRelease);
+
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        private void SendNotificationAboutShortInventory(ItemRelease itemRelease)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse =
+                {
+                    TitleE = ConfigurationManager.AppSettings["ItemShortOnInventoryE"],
+                    TitleA = ConfigurationManager.AppSettings["ItemShortOnInventoryA"],
+                    AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemShortOnInventoryAlertBefore"]),
+                    CategoryId = 7,
+                    SubCategoryId = 4, //4.	Item Quantity
+                    ItemId = itemRelease.ItemReleaseId,
+                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDateType = 1,
+                    SystemGenerated = true,
+                    ForAdmin = false,
+                    ForRole = 7 //inventory manager
+                }
+            };
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
         }
 
         public bool UpdateItemReleaseStatus(ItemReleaseStatus releaseStatus)
@@ -267,6 +317,61 @@ namespace EPMS.Implementation.Services
             itemReleaseRepository.SaveChanges();
         }
 
+
+        private void SendNotification(ItemRelease itemRelease, bool isUpdated = false)
+        {
+            #region Item Release For Warehouse Manager
+
+            NotificationViewModel notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse =
+                {
+                    TitleE = ConfigurationManager.AppSettings["ItemReleaseE"],
+                    TitleA = ConfigurationManager.AppSettings["ItemReleaseA"],
+                    AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemReleaseAlertBefore"]),
+                    CategoryId = 7,
+                    SubCategoryId = 5, //For Warehouse Manager
+                    ItemId = itemRelease.ItemReleaseId,
+                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDateType = 1,
+                    SystemGenerated = true,
+                    ForAdmin = false,
+                    ForRole = 8 //warehouse manager
+                }
+            };
+
+
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            #endregion
+
+            #region Item Release For Requester (Employee)
+
+            notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse =
+                {
+                    TitleE = ConfigurationManager.AppSettings["ItemReleaseE"],
+                    TitleA = ConfigurationManager.AppSettings["ItemReleaseA"],
+                    AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemReleaseAlertBefore"]),
+                    CategoryId = 7,
+                    SubCategoryId = 6, //For requester
+                    ItemId = itemRelease.ItemReleaseId,
+                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDateType = 1,
+                    SystemGenerated = true,
+                    ForAdmin = false,
+                    ForRole = 2, //Employee,
+                    EmployeeId = Convert.ToInt64(itemRelease.RequesterId)
+                }
+            };
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            #endregion
+        }
+
         private void DeleteRemainingItemQuantities(IEnumerable<ItemReleaseQuantity> dbListQty)
         {
             foreach (var itemReleaseQuantity in dbListQty)
@@ -277,6 +382,7 @@ namespace EPMS.Implementation.Services
                     releaseQuantityRepository.SaveChanges();
                 }
             }
+
         }
     }
 }

@@ -173,8 +173,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             if (loadCustomersAndOrders)
             {
-                rfiViewModel.Customers = rfiresponse.Customers.Select(x => x.CreateForDashboard());
-                rfiViewModel.Orders = rfiresponse.Orders.Select(x => x.CreateForDashboard());
+                rfiViewModel.Customers = rfiresponse.Customers.Any()?rfiresponse.Customers.Select(x => x.CreateForDashboard()):new List<DashboardModels.Customer>();
+                rfiViewModel.Orders = rfiresponse.Orders.Any()?rfiresponse.Orders.Select(x => x.CreateForDashboard()):new List<DashboardModels.Order>();
                 //set customerId
                 if (rfiViewModel.Rfi.OrderId > 0)
                     rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;

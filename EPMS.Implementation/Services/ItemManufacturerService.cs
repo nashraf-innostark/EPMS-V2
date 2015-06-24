@@ -5,7 +5,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Implementation.Services
 {
-    class ItemManufacturerService : IItemManufacturerService
+    public class ItemManufacturerService : IItemManufacturerService
     {
         #region Private
         private readonly IItemManufacturerRepository manufacturerRepository;
