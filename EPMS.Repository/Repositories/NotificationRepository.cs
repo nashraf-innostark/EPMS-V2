@@ -124,7 +124,7 @@ namespace EPMS.Repository.Repositories
                         if (searchRequset.NotificationRequestParams.SystemGenerated)
                         {
                             query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || s.NotificationRecipients.Any(r => r.IsRead == isNotified)) 
-                            && 
+                            &&
                             (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
                            (s.AlertAppearDate <= today)));
                         }

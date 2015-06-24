@@ -68,7 +68,7 @@ namespace EPMS.Web.Controllers
                 requestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 requestParams.UserId = Session["UserID"].ToString();
                 requestParams.RoleId = Convert.ToInt32(Session["RoleId"]);
-                requestParams.UserRoleKey = (UserRole)Convert.ToInt32(Session["RoleKey"]);
+                requestParams.RoleKey = Convert.ToInt32(Session["RoleKey"]);
 
                 ViewBag.Notifications = notificationService.LoadUnreadNotificationsCount(requestParams);
             }

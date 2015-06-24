@@ -51,6 +51,7 @@ namespace EPMS.Web.Controllers
                 searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
                 searchRequest.NotificationRequestParams.RoleId = Convert.ToInt32(Session["RoleId"]);
+                searchRequest.NotificationRequestParams.RoleKey = Convert.ToInt32(Session["RoleKey"]);
 
                 var resultData = notificationService.LoadAllNotifications(searchRequest);
                 return Json(resultData, JsonRequestBehavior.AllowGet);
