@@ -1,4 +1,5 @@
-﻿using EPMS.Implementation.Identity;
+﻿using DataAnnotationsExtensions;
+using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
@@ -42,6 +43,7 @@ namespace IdentitySample.Controllers
         private ICustomerService customerService;
         private IUserPrefrencesService userPrefrencesService;
         private IDashboardWidgetPreferencesService PreferencesService;
+        private ICompanyProfileService companyProfileService;
         /// <summary>
         /// Set User Permission
         /// </summary>
@@ -89,7 +91,9 @@ namespace IdentitySample.Controllers
 
         #region Constructor
 
-        public AccountController(IDashboardWidgetPreferencesService preferencesService, IUserPrefrencesService userPrefrencesService, IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
+        public AccountController(IDashboardWidgetPreferencesService preferencesService,
+            IUserPrefrencesService userPrefrencesService, IMenuRightsService menuRightService,
+            IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService, ICompanyProfileService companyProfileService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
@@ -97,6 +101,7 @@ namespace IdentitySample.Controllers
             this.customerService = customerService;
             this.userPrefrencesService = userPrefrencesService;
             this.PreferencesService = preferencesService;
+            this.companyProfileService = companyProfileService;
         }
 
         #endregion
@@ -190,6 +195,7 @@ namespace IdentitySample.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
+                ViewBag.CompanyURL = companyProfileService.GetDetail().CompanyWebsite;
                 var successNote = TempData["Note"];
                 if (successNote!=null)
                 {
