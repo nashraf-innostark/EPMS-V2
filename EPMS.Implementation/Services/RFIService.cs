@@ -281,7 +281,8 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = false;
-            notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["InventoryManager"]);//InventoryManager
+            //notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["InventoryManager"]);//InventoryManager
+            notificationViewModel.NotificationResponse.ForRole = UserRole.InventoryManager;//InventoryManager
 
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 

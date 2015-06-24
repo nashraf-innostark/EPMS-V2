@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
@@ -361,7 +362,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["TaskDeliveryAlertBefore"]); //Days
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
                 notificationViewModel.NotificationResponse.ForAdmin = true;
-                notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
+                notificationViewModel.NotificationResponse.ForRole = UserRole.Admin;
 
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Other
                 notificationViewModel.NotificationResponse.SubCategoryId = 3; //Project task Delivery
