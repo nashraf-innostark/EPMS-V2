@@ -66,8 +66,15 @@ namespace IdentitySample.Controllers
             var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
 
             //check last saved culture and newley if changed from login page
-            if (Session["Culture"] != null && Session["Culture"].ToString() != userPrefrences.Culture.ToString())
+            //if (Session["Culture"] != null && Session["Culture"].ToString() != userPrefrences.Culture.ToString())
+            //{
+            //    userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
+            //}
+            if (Session["Culture"] == null)
             {
+                userPrefrencesService.AddUpdateCulture(userId, "en");
+            }
+            else {
                 userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
             }
            CultureInfo info = userPrefrences != null
