@@ -25,19 +25,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Private
 
         private readonly IItemReleaseService itemReleaseService;
-        private readonly IRFIService RfiService;
         private readonly IOrdersService ordersService;
+        private readonly IRFIService rfiService;
         private readonly IAspNetUserService userService;
 
         #endregion
 
         #region Constructor
-        public ItemReleaseController(IItemReleaseService itemReleaseService, IRFIService rfiService, IOrdersService ordersService, IAspNetUserService userService)
+        public ItemReleaseController(IItemReleaseService itemReleaseService, IOrdersService ordersService, IAspNetUserService userService, IRFIService rfiService)
         {
             this.itemReleaseService = itemReleaseService;
-            RfiService = rfiService;
             this.ordersService = ordersService;
             this.userService = userService;
+            this.rfiService = rfiService;
         }
 
         #endregion
@@ -182,7 +182,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.ItemRelease.FormNumber = "010101";
             }
             //Session["RoleName"];
-            viewModel.Employees = response.Employees.Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
+            viewModel.Employees = response.Employees.Select(x => x.CreateForIrfRequesterDropDownList()).ToList();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
             return View(viewModel);
         }
@@ -321,21 +321,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Get Customer RFIs
 
         [HttpGet]
-        public JsonResult GetCustomerRfis(long customerId)
+        public JsonResult GetRequesterRfis(string requesterId)
         {
-            var customerOrders = ordersService.GetOrdersByCustomerIdWithRfis(customerId);
-            IList<RFI> customerRfis = new List<RFI>();
-            foreach (var customerOrder in customerOrders)
-            {
-                if (customerOrder.RFIs.Any())
-                {
-                    foreach (var rfI in customerOrder.RFIs)
-                    {
-                        customerRfis.Add(rfI.CreateRfiServerToClientForDropdown());
-                    }
-                }
-            }
-            return Json(customerRfis, JsonRequestBehavior.AllowGet);
+            var rfis = rfiService.GetRfiByRequesterId(requesterId);
+            IList<RFI> requesterRfis = rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
+            return Json(requesterRfis, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

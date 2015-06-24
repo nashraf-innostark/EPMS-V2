@@ -78,11 +78,11 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "UserId", "EmployeeNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "UserId", "EmployeeNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                 </div>
             </div>
@@ -332,6 +332,12 @@
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+        CKEDITOR.replace('DeliveryInfoEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DeliveryInfoAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
         var itemId = parseInt('@Model.ItemRelease.ItemReleaseId');
         if (itemId > 0) {
             // disable on load section
@@ -682,11 +688,9 @@
         });
         $("#selectBoxFilter").select2();
         $("#Requester").on("change", function () {
-            var customerId = parseInt($(this).val());
-            if (isNaN(customerId)) {
-                customerId = 0;
-            }
-            if (customerId == 0) {
+            var requesterId = $(this).val();
+            
+            if (requesterId == "") {
                 $("#RfiId").empty();
                 $("#RfiId").append(
                         $('<option></option>').val(0).html("none")
@@ -697,28 +701,19 @@
                 });
                 $("#DeliveryInfoE").val("");
                 $("#DeliveryInfoA").val("");
-                CKEDITOR.instances['DeliveryInfoEn'].setData("");
-                CKEDITOR.instances['DeliveryInfoAr'].setData("");
+                //CKEDITOR.instances['DeliveryInfoEn'].setData("");
+                //CKEDITOR.instances['DeliveryInfoAr'].setData("");
                 return true;
             }
-            var customersList = '@Html.Raw(Json.Encode(Model.Customers))';
-            var parsed = JSON.parse(customersList);
-            $.each(parsed, function (key, value) {
-                if (value.CustomerId == customerId) {
-                    $("#DeliveryInfoE").val(value.CustomerAddress);
-                    $("#DeliveryInfoA").val(value.CustomerAddress);
-                    //CKEDITOR.instances['DeliveryInfoEn'].setData(value.CustomerAddress);
-                    //CKEDITOR.instances['DeliveryInfoAr'].setData(value.CustomerAddress);
-                }
-            });
-            var url = siteUrl + "/Inventory/ItemRelease/GetCustomerRfis";
+            
+            var url = siteUrl + "/Inventory/ItemRelease/GetRequesterRfis";
             ajaxLoader();
             $.ajax({
                 url: url,
                 type: 'GET',
                 dataType: "json",
                 data: {
-                    customerId: customerId
+                    requesterId: requesterId
                 },
                 success: function (data) {
                     populateRFIDDL(data);
@@ -737,6 +732,10 @@
             $.each(orderNo, function (key, value) {
                 if (value.rfiId == rfiId) {
                     $("#OrderNumber").val(value.orderNo);
+                    $("#DeliveryInfoE").val(value.deliveryInfo);
+                    $("#DeliveryInfoA").val(value.deliveryInfo);
+                    CKEDITOR.instances['DeliveryInfoEn'].setData(value.deliveryInfo);
+                    CKEDITOR.instances['DeliveryInfoAr'].setData(value.deliveryInfo);
                 }
             });
         });
@@ -814,12 +813,7 @@
             $('.btnDisable').removeClass('disableList');
             $('.disableDdl').select2('enable');
             $('.' + 'toBeDisable' + ':input').attr('readonly', false);
-            CKEDITOR.replace('DeliveryInfoEn', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            CKEDITOR.replace('DeliveryInfoAr', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
+            
             //$("#detailEditor").hide();
             //$("#CKEditor").show();
             $("#EditRecord").hide();
@@ -917,9 +911,12 @@
                 );
                 var order = {
                     rfiId: data[i].RFIId,
-                    orderNo: data[i].OrderNumber
+                    orderNo: data[i].OrderNumber,
+                    deliveryInfo : data[i].CustomerDeliveryInfo
                 };
                 orderNo.push(order);
+                
+                
             }
         } else {
             $("#RfiId").append(

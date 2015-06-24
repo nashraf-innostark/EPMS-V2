@@ -246,6 +246,11 @@ namespace EPMS.Implementation.Services
             return null;
         }
 
+        public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
+        {
+            return rfiRepository.GetRfiByRequesterId(requesterId);
+        }
+
         private void SendNotification(RFI rfi, bool isUpdated=false)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();

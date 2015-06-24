@@ -16,7 +16,7 @@ namespace EPMS.Web.ModelMappers
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
             string descpEn = "";
             string descpAr = "";
-            if (!String.IsNullOrEmpty(source.EmployeeDetailsE) )
+            if (!String.IsNullOrEmpty(source.EmployeeDetailsE))
             {
                 descpEn = source.EmployeeDetailsE.Replace("\n", "");
                 descpEn = descpEn.Replace("\r", "");
@@ -84,9 +84,9 @@ namespace EPMS.Web.ModelMappers
                 EmployeeLastNameA = source.EmployeeLastNameA,
                 EmployeeImagePath = source.EmployeeImagePath,
                 EmployeeIqama = source.EmployeeIqama,
-                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt !=null ? Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
-                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt !=null ? Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
-                EmployeeDOB = source.EmployeeDOB !=null ? Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeIqamaIssueDt = source.EmployeeIqamaIssueDt != null ? Convert.ToDateTime(source.EmployeeIqamaIssueDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeIqamaExpiryDt = source.EmployeeIqamaExpiryDt != null ? Convert.ToDateTime(source.EmployeeIqamaExpiryDt).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
+                EmployeeDOB = source.EmployeeDOB != null ? Convert.ToDateTime(source.EmployeeDOB).ToString("dd/MM/yyyy", new CultureInfo("en")) : string.Empty,
                 EmployeeLandlineNum = source.EmployeeLandlineNum ?? "",
                 MaritalStatus = source.MaritalStatus,
                 EmployeeMobileNum = source.EmployeeMobileNum ?? "",
@@ -243,7 +243,6 @@ namespace EPMS.Web.ModelMappers
             };
 
         }
-
         public static EmployeeForDropDownList CreateFromServerToClientForDropDownList(this Employee source)
         {
             return new EmployeeForDropDownList
@@ -253,6 +252,20 @@ namespace EPMS.Web.ModelMappers
                 EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
                 Email = source.Email,
             };
+        }
+        public static EmployeeForDropDownList CreateForIrfRequesterDropDownList(this Employee source)
+        {
+            var userId = source.AspNetUsers.FirstOrDefault(x => x.EmployeeId == source.EmployeeId);
+            if(userId != null)
+                return new EmployeeForDropDownList
+                {
+                    UserId = userId.Id,
+                    EmployeeId = source.EmployeeId,
+                    EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
+                    EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
+                    Email = source.Email,
+                };
+            return new EmployeeForDropDownList();
         }
 
         public static ContactList CreateForContactList(this Employee source)

@@ -45,7 +45,7 @@ namespace EPMS.Implementation.Services
         {
             IRFCreateResponse response = new IRFCreateResponse
             {
-                Employees = employeeRepository.GetAll(),
+                Employees = employeeRepository.GetAll().Where(x=>x.AspNetUsers.Count > 0),
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList(),
                 ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
