@@ -3907,6 +3907,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RIF.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\InventoryItem.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRCreate.Designer.cs</LastGenOutput>
