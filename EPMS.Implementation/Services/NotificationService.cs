@@ -248,6 +248,7 @@ namespace EPMS.Implementation.Services
                     notificationResponse.TitleA = ConfigurationManager.AppSettings["IqamaA"];
                     notificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["IqamaAlertBefore"]); //Days
                     notificationResponse.ForAdmin = true;
+                    notificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
                     notificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
                     notificationResponse.UserId = aspNetUserRepository.GetUserIdByEmployeeId(notificationResponse.EmployeeId);
                     #endregion
@@ -263,6 +264,7 @@ namespace EPMS.Implementation.Services
                     notificationResponse.TitleA = ConfigurationManager.AppSettings["PassportA"];
                     notificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["PassportAlertBefore"]); //Days
                     notificationResponse.ForAdmin = true;
+                    notificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
                     notificationResponse.AlertDateType = 0; //Hijri, 1=Gregorian
                     notificationResponse.UserId = aspNetUserRepository.GetUserIdByEmployeeId(notificationResponse.EmployeeId);
                     #endregion

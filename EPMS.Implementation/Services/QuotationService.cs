@@ -96,6 +96,7 @@ namespace EPMS.Implementation.Services
             NotificationViewModel notificationViewModel = new NotificationViewModel();
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = true;
+            notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
 
             if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
             {

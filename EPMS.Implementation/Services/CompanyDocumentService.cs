@@ -53,6 +53,7 @@ namespace EPMS.Implementation.Services
                 NotificationViewModel notificationViewModel = new NotificationViewModel();
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
                 notificationViewModel.NotificationResponse.ForAdmin = true;
+                notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
                 notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
                 
                 #region CommercialRegisterExpiryDate
