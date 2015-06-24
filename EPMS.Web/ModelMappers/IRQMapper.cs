@@ -2,18 +2,17 @@
 
 namespace EPMS.Web.ModelMappers
 {
-    public static class ItemReleaseQuantityMapper
+    public static class IRQMapper
     {
-        public static Models.ItemReleaseQuantity CreateFromServerToClient(this ItemReleaseQuantity source)
+        public static ItemReleaseQuantity CreateFromServerToClient(this Models.ItemReleaseQuantity source, long IRFDetailId)
         {
-            return new Models.ItemReleaseQuantity
+            return new ItemReleaseQuantity
             {
                 ItemReleaseQuantityId = source.ItemReleaseQuantityId,
-                IRFDetailId = source.IRFDetailId,
+                IRFDetailId = IRFDetailId,
                 ItemVariationId = source.ItemVariationId,
                 WarehouseId = source.WarehouseId,
                 Quantity = source.Quantity,
-                Warehouse = source.Warehouse.CreateFromServerToClient(),
             };
         }
     }

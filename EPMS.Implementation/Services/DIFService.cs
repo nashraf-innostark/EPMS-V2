@@ -57,15 +57,7 @@ namespace EPMS.Implementation.Services
             }
             var difs = historyRepository.GetDifHistoryData((long)parentId);
             var difList = difs as IList<DIFHistory> ?? difs.ToList();
-            if (!difList.Any())
-            {
-                return new DifHistoryResponse
-                {
-                    Difs = null,
-                    DifItems = new List<DIFItem>(),
-                    RecentDif = null
-                };
-            }
+            
             DifHistoryResponse response = new DifHistoryResponse
             {
                 Difs = difList.Select(x => x.CreateFromDifHistoryToDif()),

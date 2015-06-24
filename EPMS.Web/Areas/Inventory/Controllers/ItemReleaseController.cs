@@ -157,10 +157,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 response = itemReleaseService.GetCreateResponse(0);
                 viewModel.ItemWarehouses = response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
-                viewModel.ItemRelease = new ItemRelease
-                {
-                    ItemReleaseQuantities = new List<ItemReleaseQuantity>()
-                };
+                viewModel.ItemRelease = new ItemRelease();
                 viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 if (Session["RoleName"] != null)
                 {
