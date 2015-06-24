@@ -99,7 +99,7 @@ namespace EPMS.Web.Controllers
                 notificationViewModel.NotificationResponse.RecCreatedBy = Session["UserID"].ToString();
                 notificationViewModel.NotificationResponse.SystemGenerated = false;
                 notificationViewModel.NotificationResponse.ForAdmin = false;
-                notificationViewModel.NotificationResponse.ForRole = 0;
+                notificationViewModel.NotificationResponse.ForRole = null;
                 if (notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse))
                 {
                     TempData["message"] = new MessageViewModel

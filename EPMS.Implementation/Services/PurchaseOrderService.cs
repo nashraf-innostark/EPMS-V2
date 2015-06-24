@@ -172,7 +172,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = false;
-            notificationViewModel.NotificationResponse.ForRole = 8;//WH Manager
+            notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["WarehouseManager"]);//WH Manager
 
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 

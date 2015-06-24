@@ -133,8 +133,8 @@ namespace EPMS.Implementation.Services
                 //Save Notification
                 notificationResponse.NotificationId=AddNotification(notificationResponse);
             }
-            //Save Notification recipient
-            //if(!(string.IsNullOrEmpty(notificationResponse.UserId) && notificationResponse.EmployeeId==0))
+            //Save Notification recipient, if there is no recipient, it means notification is for administrations
+            if (!(string.IsNullOrEmpty(notificationResponse.UserId) && notificationResponse.EmployeeId == 0))
                 AddNotificationRecipient(notificationResponse.CreateRecipientFromClientToServer());
             return true;
         }
