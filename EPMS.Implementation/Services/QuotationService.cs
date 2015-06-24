@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -96,7 +97,7 @@ namespace EPMS.Implementation.Services
             NotificationViewModel notificationViewModel = new NotificationViewModel();
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = true;
-            notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
+            notificationViewModel.NotificationResponse.ForRole = UserRole.Admin; ;
 
             if (Utility.IsDate(quotation.FirstInsDueAtCompletion))
             {

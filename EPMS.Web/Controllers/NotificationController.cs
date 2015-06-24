@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 using EPMS.Web.ViewModels.Common;
@@ -99,7 +100,7 @@ namespace EPMS.Web.Controllers
                 notificationViewModel.NotificationResponse.RecCreatedBy = Session["UserID"].ToString();
                 notificationViewModel.NotificationResponse.SystemGenerated = false;
                 notificationViewModel.NotificationResponse.ForAdmin = false;
-                notificationViewModel.NotificationResponse.ForRole = null;
+                notificationViewModel.NotificationResponse.ForRole = UserRole.Default;
                 if (notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse))
                 {
                     TempData["message"] = new MessageViewModel

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
 using EPMS.Models.RequestModels.NotificationRequestModels;
@@ -67,7 +68,8 @@ namespace EPMS.Web.Controllers
                 requestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 requestParams.UserId = Session["UserID"].ToString();
                 requestParams.RoleId = Convert.ToInt32(Session["RoleId"]);
-                //Session["NotificationCount"] = notificationService.LoadUnreadNotificationsCount(requestParams);
+                requestParams.UserRoleKey = (UserRole)Convert.ToInt32(Session["RoleKey"]);
+
                 ViewBag.Notifications = notificationService.LoadUnreadNotificationsCount(requestParams);
             }
         }
@@ -118,6 +120,7 @@ namespace EPMS.Web.Controllers
             Session["UserID"] = result.Id;
             Session["RoleName"] = role;
             Session["RoleId"] = result.AspNetRoles.ToList()[0].Id;
+            Session["RoleKey"] = result.AspNetRoles.ToList()[0].RoleKey;
             Session["EmployeeID"] = result.EmployeeId;
             Session["CustomerID"] = result.CustomerId;
 

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
@@ -203,7 +204,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["InventoryManager"]) //inventory manager
+                    ForRole = UserRole.InventoryManager //inventory manager
                 }
             };
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -336,7 +337,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["WarehouseManager"]) //warehouse manager
+                    ForRole = UserRole.WarehouseManager //warehouse manager
                 }
             };
 
@@ -362,7 +363,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Employee"]), //Employee,
+                    ForRole = UserRole.Employee, //Employee,
                     EmployeeId = Convert.ToInt64(itemRelease.RequesterId)
                 }
             };

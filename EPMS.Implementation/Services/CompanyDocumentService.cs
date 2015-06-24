@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Globalization;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 
@@ -53,7 +54,7 @@ namespace EPMS.Implementation.Services
                 NotificationViewModel notificationViewModel = new NotificationViewModel();
                 notificationViewModel.NotificationResponse.SystemGenerated = true;
                 notificationViewModel.NotificationResponse.ForAdmin = true;
-                notificationViewModel.NotificationResponse.ForRole = Convert.ToInt32(ConfigurationManager.AppSettings["Admin"]);
+                notificationViewModel.NotificationResponse.ForRole = UserRole.Admin;
                 notificationViewModel.NotificationResponse.AlertDateType = 0;//Hijri, 1=Gregorian
                 
                 #region CommercialRegisterExpiryDate

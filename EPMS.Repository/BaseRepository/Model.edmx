@@ -83,6 +83,7 @@
           </Key>
           <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="RoleKey" Type="int" />
         </EntityType>
         <EntityType Name="AspNetUserClaims">
           <Key>
@@ -3579,6 +3580,7 @@
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="MenuRights" Relationship="Self.FK_dbo_MenuRight_dbo_AspNetRoles_Role_Id" FromRole="AspNetRoles" ToRole="MenuRight" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+          <Property Name="RoleKey" Type="Int32" />
         </EntityType>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -7126,6 +7128,7 @@
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="EPMSInventoryModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="RoleKey" ColumnName="RoleKey" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>

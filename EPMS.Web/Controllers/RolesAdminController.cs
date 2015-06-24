@@ -134,6 +134,7 @@ namespace IdentitySample.Controllers
                 role.Id = rolesCount.ToString();
                 if (!RoleManager.RoleExists(role.Name))
                 {
+                    role.RoleKey = 0;
                     var roleresult = await RoleManager.CreateAsync(role);
                     if (!roleresult.Succeeded)
                     {
