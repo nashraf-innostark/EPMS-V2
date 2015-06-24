@@ -73,12 +73,11 @@ namespace EPMS.Implementation.Services
                 Notification notification = notificationRepository.Find((long)notificationId);
                 if (notification != null)
                 {
-                    //Mark the notification as READ
+                    //Check if there already a recipient exist
                     var recipient = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId);
 
-                        //Save, who viewed SystemGenerated notification
-
-                    if (notification.NotificationRecipients.Any(x => x.UserId == userId || x.EmployeeId == employeeId))
+                    //check if this notification has for 'employeeId' recipient, if yes, mark it NOTIFIED (IsRead=true)
+                        if (notification.NotificationRecipients.Any(x => x.UserId == userId || x.EmployeeId == employeeId))
                         {
                             if (recipient != null && !recipient.IsRead)
                             {
@@ -89,14 +88,20 @@ namespace EPMS.Implementation.Services
                         }
                         else
                         {
+                            //seems notification was not for a specific Employee
                             NotificationRecipient newRecipient = new NotificationRecipient
                             {
-                                UserId = userId,
+                                UserId = userId,//we are not setting employee id here, details are in below comment
                                 NotificationId = notification.NotificationId,
                                 IsRead = true
                             };
+
+                            //Check if there already a recipient exist, 
+                            //if yes then pick his EmpId to display the Employee's details
+                            //if no, it means this notification was not created for a specific Employee, so we will not display any Employee's detail, just set UserId, to have a record which user has read the notification
                             if (notification.NotificationRecipients.FirstOrDefault() != null)
                                 newRecipient.EmployeeId = notification.NotificationRecipients.FirstOrDefault().EmployeeId;
+                     
 
                             notificationRecipientRepository.Add(newRecipient);
                             notificationRecipientRepository.SaveChanges();

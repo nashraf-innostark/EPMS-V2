@@ -107,7 +107,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["FirstInsDueAlertBefore"]); //Days
 
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Other
-                notificationViewModel.NotificationResponse.SubCategoryId = 11;
+                notificationViewModel.NotificationResponse.SubCategoryId = 11;//FirstInsDueE
                 notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
                 notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(quotation.FirstInsDueAtCompletion).ToShortDateString();
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian

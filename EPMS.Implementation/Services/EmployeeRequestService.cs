@@ -160,7 +160,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["EmployeeRequestAlertBefore"]); //Days
 
             notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-            notificationViewModel.NotificationResponse.SubCategoryId = 0;
+            notificationViewModel.NotificationResponse.SubCategoryId = 3;
             notificationViewModel.NotificationResponse.ItemId = requestDetail.RequestId;
             notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString();
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian

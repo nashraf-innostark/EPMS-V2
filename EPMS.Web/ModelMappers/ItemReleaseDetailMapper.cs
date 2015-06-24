@@ -1,4 +1,7 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using EPMS.Models.DomainModels;
+using ItemReleaseQuantity = EPMS.Web.Models.ItemReleaseQuantity;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -6,11 +9,15 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.ItemReleaseDetail CreateFromServerToClient(this ItemReleaseDetail source)
         {
+            var itemDetails = source.ItemDetails;
+            itemDetails = itemDetails.Replace("\r", " ");
+            itemDetails = itemDetails.Replace("\t", " ");
+            itemDetails = itemDetails.Replace("\n", " ");
             var retVal = new Models.ItemReleaseDetail
             {
                 IRFDetailId = source.IRFDetailId,
                 ItemReleaseId = source.ItemReleaseId,
-                ItemDetails = source.ItemDetails,
+                ItemDetails = itemDetails,
                 IsItemDescription = source.IsItemDescription,
                 IsItemSKU = source.IsItemDescription,
                 ItemVariationId = source.ItemVariationId,
@@ -21,6 +28,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                ItemReleaseQuantities = source.ItemReleaseQuantities != null ? source.ItemReleaseQuantities.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemReleaseQuantity>()
             };
             if (source.ItemVariation != null)
             {
@@ -49,6 +57,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                ItemReleaseQuantities = source.ItemReleaseQuantities.Select(x => x.CreateFromServerToClient(source.IRFDetailId)).ToList()
             };
         }
     }

@@ -4,12 +4,12 @@ using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
-using FaceSharp.Api.Extensions;
 
 namespace EPMS.Implementation.Services
 {
@@ -67,15 +67,7 @@ namespace EPMS.Implementation.Services
                 return new RfiHistoryResponse();
             }
             var rfis = historyRepository.GetRfiHistoryData((long)parentId);
-            if (rfis == null)
-            {
-                return new RfiHistoryResponse
-                {
-                    Rfis = null,
-                    RfiItems = new List<RFIItem>(),
-                    RecentRfi = null
-                };
-            }
+            
             var rfiList = rfis as IList<RFIHistory> ?? rfis.ToList();
             RfiHistoryResponse response = new RfiHistoryResponse
             {
@@ -117,15 +109,18 @@ namespace EPMS.Implementation.Services
                 //update
                 if (UpdateRFI(rfi))//if RFI updated, then update the items
                     RfiItemUpdation(rfi);
+
+                //Send Notification
+                SendNotification(rfi, true);
             }
             else
             {
                 //save
                 AddRFI(rfi);
+
+                //Send Notification
+                SendNotification(rfi);
             }
-            //Send Notification
-            SendNotification(rfi);
-            ;
             return true;
         }
 
@@ -251,28 +246,41 @@ namespace EPMS.Implementation.Services
             return null;
         }
 
-        private void SendNotification(RFI rfi)
+        private void SendNotification(RFI rfi, bool isUpdated=false)
         {
-            //NotificationViewModel notificationViewModel = new NotificationViewModel();
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
 
-            //#region Request Approved
-            //notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["EmployeeRequestE"];
-            //notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["EmployeeRequestA"];
-            //notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["EmployeeRequestAlertBefore"]); //Days
+            #region RFI
+            //Alert when Edited
+            if (isUpdated)
+            {
+                notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["RFIEditedE"];
+                notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["RFIEditedA"];
 
-            //notificationViewModel.NotificationResponse.CategoryId = 3; //Employees
-            //notificationViewModel.NotificationResponse.SubCategoryId = 0;
-            //notificationViewModel.NotificationResponse.ItemId = rfi.RFIId;
-            //notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString();
-            //notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
-            //notificationViewModel.NotificationResponse.SystemGenerated = true;
-            //notificationViewModel.NotificationResponse.ForAdmin = false;
+                notificationViewModel.NotificationResponse.SubCategoryId = 2; //RFI Edited
+            }
+            else
+            {
+                notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["RFIE"];
+                notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["RFIA"];
 
-            //notificationViewModel.NotificationResponse.UserId = requestDetail.EmployeeRequest.Employee.AspNetUsers.FirstOrDefault().Id;
-            //notificationViewModel.NotificationResponse.EmployeeId = requestDetail.EmployeeRequest.Employee.EmployeeId;
-            //notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+                notificationViewModel.NotificationResponse.SubCategoryId = 1; //RFI Created
+            }
+            
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["RFIAlertBefore"]); //Days
 
-            //#endregion
+            notificationViewModel.NotificationResponse.CategoryId = 7; //Inventory
+            
+            notificationViewModel.NotificationResponse.ItemId = rfi.RFIId;
+            notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(); //Actual event date
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = false;
+            notificationViewModel.NotificationResponse.ForRole = 7;//InventoryManager
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            #endregion
         }
     }
 }

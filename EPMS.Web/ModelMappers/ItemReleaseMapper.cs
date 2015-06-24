@@ -30,19 +30,24 @@ namespace EPMS.Web.ModelMappers
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,
-                ItemReleaseQuantities = source.ItemReleaseQuantities.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
         public static ItemRelease CreateFromClientToServer(this Models.ItemRelease source)
         {
             var deliveryInfoE = source.DeliveryInfo;
-            deliveryInfoE = deliveryInfoE.Replace("\r", "");
-            deliveryInfoE = deliveryInfoE.Replace("\t", "");
-            deliveryInfoE = deliveryInfoE.Replace("\n", "");
+            if (!string.IsNullOrEmpty(deliveryInfoE))
+            {
+                deliveryInfoE = deliveryInfoE.Replace("\r", "");
+                deliveryInfoE = deliveryInfoE.Replace("\t", "");
+                deliveryInfoE = deliveryInfoE.Replace("\n", "");
+            }
             var deliveryInfoA = source.DeliveryInfoArabic;
-            deliveryInfoA = deliveryInfoA.Replace("\r", "");
-            deliveryInfoA = deliveryInfoA.Replace("\t", "");
-            deliveryInfoA = deliveryInfoA.Replace("\n", "");
+            if (!string.IsNullOrEmpty(deliveryInfoA))
+            {
+                deliveryInfoA = deliveryInfoA.Replace("\r", "");
+                deliveryInfoA = deliveryInfoA.Replace("\t", "");
+                deliveryInfoA = deliveryInfoA.Replace("\n", "");
+            }
             var notesE = source.Notes;
             if (!string.IsNullOrEmpty(notesE))
             {

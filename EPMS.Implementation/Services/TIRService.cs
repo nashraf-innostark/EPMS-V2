@@ -68,15 +68,7 @@ namespace EPMS.Implementation.Services
             }
             var tirs = historyRepository.GetTirHistoryData((long)id);
             var tirList = tirs as IList<TIRHistory> ?? tirs.ToList();
-            if (!tirList.Any())
-            {
-                return new TirHistoryResponse
-                {
-                    Tirs = null,
-                    TirItems = new List<TIRItem>(),
-                    RecentTir = null
-                };
-            }
+            
             TirHistoryResponse response = new TirHistoryResponse
             {
                 Tirs = tirList.Select(x => x.CreateFromTirHistoryToTir()),

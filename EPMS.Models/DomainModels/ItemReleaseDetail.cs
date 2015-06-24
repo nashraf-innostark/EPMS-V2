@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
@@ -20,5 +21,6 @@ namespace EPMS.Models.DomainModels
 
         public virtual ItemRelease ItemRelease { get; set; }
         public virtual ItemVariation ItemVariation { get; set; }
+        public virtual ICollection<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
     }
 }

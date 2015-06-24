@@ -29,6 +29,5 @@ namespace EPMS.Models.DomainModels
         public virtual Customer Customer { get; set; }
         public virtual ICollection<ItemReleaseDetailHistory> ItemReleaseDetailHistories { get; set; }
         public virtual RFI RFI { get; set; }
-        public virtual ICollection<ItemReleaseQuantityHistory> ItemReleaseQuantityHistories { get; set; }
     }
 }

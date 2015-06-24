@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
@@ -14,11 +16,13 @@ namespace EPMS.Implementation.Services
         private readonly IPurchaseOrderRepository repository;
         private readonly IPoItemRepository itemRepository;
         private readonly IItemVariationRepository itemVariationRepository;
+        private readonly INotificationService notificationService;
         private readonly IAspNetUserRepository aspNetUserRepository;
 
-        public PurchaseOrderService(IItemVariationRepository itemVariationRepository, IPurchaseOrderRepository repository, IAspNetUserRepository aspNetUserRepository, IPoItemRepository itemRepository)
+        public PurchaseOrderService(IItemVariationRepository itemVariationRepository,INotificationService notificationService, IPurchaseOrderRepository repository, IAspNetUserRepository aspNetUserRepository, IPoItemRepository itemRepository)
         {
             this.itemVariationRepository = itemVariationRepository;
+            this.notificationService = notificationService;
             this.repository = repository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.itemRepository = itemRepository;
@@ -148,6 +152,31 @@ namespace EPMS.Implementation.Services
         {
             repository.Delete(purchaseOrder);
             repository.SaveChanges();
+        }
+
+        private void SendNotification(PurchaseOrder purchaseOrder)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+
+            #region RFI
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["PurchaseOrderE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["PurchaseOrderA"];
+
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["PurchaseOrderAlertBefore"]); //Days
+
+            notificationViewModel.NotificationResponse.CategoryId = 7; //Inventory
+            notificationViewModel.NotificationResponse.SubCategoryId = 7; //PO Accepted (WH Manager)
+
+            notificationViewModel.NotificationResponse.ItemId = purchaseOrder.PurchaseOrderId;
+            notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(); //Actual event date
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = false;
+            notificationViewModel.NotificationResponse.ForRole = 8;//WH Manager
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+
+            #endregion
         }
     }
 }

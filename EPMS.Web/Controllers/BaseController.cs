@@ -66,7 +66,7 @@ namespace EPMS.Web.Controllers
                 requestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 requestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 requestParams.UserId = Session["UserID"].ToString();
-
+                requestParams.RoleId = Convert.ToInt32(Session["RoleId"]);
                 //Session["NotificationCount"] = notificationService.LoadUnreadNotificationsCount(requestParams);
                 ViewBag.Notifications = notificationService.LoadUnreadNotificationsCount(requestParams);
             }
@@ -117,6 +117,7 @@ namespace EPMS.Web.Controllers
             Session["FullName"] = result.UserName;
             Session["UserID"] = result.Id;
             Session["RoleName"] = role;
+            Session["RoleId"] = result.AspNetRoles.ToList()[0].Id;
             Session["EmployeeID"] = result.EmployeeId;
             Session["CustomerID"] = result.CustomerId;
 

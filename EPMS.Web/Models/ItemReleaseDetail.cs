@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
     public class ItemReleaseDetail
     {
+        public ItemReleaseDetail()
+        {
+            ItemReleaseQuantities = new List<ItemReleaseQuantity>();
+        }
         public long IRFDetailId { get; set; }
         public long ItemReleaseId { get; set; }
         [Required(ErrorMessage = "The Item Details field is required")]
@@ -26,5 +31,7 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
+
+        public IList<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
     }
 }

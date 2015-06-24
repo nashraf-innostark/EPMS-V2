@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
+    <Compile Include="Common\NotificationForRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
     <Compile Include="Common\PofRequestByColumn.cs" />
@@ -125,7 +126,6 @@
     <Compile Include="DomainModels\ItemReleaseDetailHistory.cs" />
     <Compile Include="DomainModels\ItemReleaseHistory.cs" />
     <Compile Include="DomainModels\ItemReleaseQuantity.cs" />
-    <Compile Include="DomainModels\ItemReleaseQuantityHistory.cs" />
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\POF.cs" />

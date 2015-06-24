@@ -11,13 +11,14 @@
     <div class="modal-body ">
         <form class="form-horizontal warhouseSelection">
             <input id='WarehouseModalIndex' type='hidden' />
+            <input id='WarehouseCount' type='hidden' />
             <div id="Simple_Multiple_Select_Box" class="control-group row-fluid">
                 <div class="span4">
                     <label class="control-label" for="MaritalStatus">Select one or more Warhouses </label>
                 </div>
                 <div class="span8">
                     <div class="controls">
-                        <select multiple name="simpleMulti" id="simpleMultiWarehouse"></select>
+                        <select multiple name="simpleMulti" id="MultiWarehouse"></select>
                     </div>
                 </div>
 
@@ -27,17 +28,19 @@
                     <button type="button" class="btn addWar">Add Warhouse</button>
                 </div>
             </div>
-            @if (Model.ItemRelease.ItemReleaseQuantities.Any())
+            @*@if (Model.ItemReleaseDetails[0].ItemReleaseQuantities.Any())
             {
-                for (int i = 0; i < Model.ItemRelease.ItemReleaseQuantities.Count(); i++)
+                for (int i = 0; i < Model.ItemReleaseDetails[0].ItemReleaseQuantities.Count(); i++)
                 {
-                    <div class="control-group row-fluid warhouses" data-id="@i">
+                    <div class="control-group row-fluid warhouses">
+                        
+                        @Html.HiddenFor(model => model.ItemReleaseDetails[0].ItemReleaseQuantities[i].ItemVariationId)
                         <div class="span3">
-                            <label class="control-label" for="quantity"> @Model.ItemRelease.ItemReleaseQuantities[i].Warehouse.WarehouseNumber </label>
+                            <label class="control-label" for="quantity"> @Model.ItemReleaseDetails[0].ItemReleaseQuantities[i].Warehouse.WarehouseNumber </label>
                         </div>
                         <div class="span7">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.ItemRelease.ItemReleaseQuantities[i].Quantity, new { @id = "quantity", @class = "" })
+                                @Html.TextBoxFor(model => model.ItemReleaseDetails[0].ItemReleaseQuantities[i].Quantity, new { @class = "" })
                             </div>
                         </div>
                         <div class="span1 span-inset">
@@ -45,11 +48,11 @@
                         </div>
                     </div>
                 }
-            }
+            }*@
         </form>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Add</a>
+        <a href="javascript:;" class="btn btn-primary" id="AddWArehouse">Add</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
     </div>
 </div>

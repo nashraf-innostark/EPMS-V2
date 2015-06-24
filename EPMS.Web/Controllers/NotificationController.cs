@@ -49,6 +49,7 @@ namespace EPMS.Web.Controllers
                 searchRequest.NotificationRequestParams.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 searchRequest.NotificationRequestParams.EmployeeId = Convert.ToInt64(Session["EmployeeID"]);
                 searchRequest.NotificationRequestParams.UserId = Session["UserID"].ToString();
+                searchRequest.NotificationRequestParams.RoleId = Convert.ToInt32(Session["RoleId"]);
 
                 var resultData = notificationService.LoadAllNotifications(searchRequest);
                 return Json(resultData, JsonRequestBehavior.AllowGet);
@@ -96,6 +97,9 @@ namespace EPMS.Web.Controllers
             try
             {
                 notificationViewModel.NotificationResponse.RecCreatedBy = Session["UserID"].ToString();
+                notificationViewModel.NotificationResponse.SystemGenerated = false;
+                notificationViewModel.NotificationResponse.ForAdmin = false;
+                notificationViewModel.NotificationResponse.ForRole = 0;
                 if (notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse))
                 {
                     TempData["message"] = new MessageViewModel
