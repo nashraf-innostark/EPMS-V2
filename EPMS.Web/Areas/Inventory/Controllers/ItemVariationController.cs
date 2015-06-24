@@ -13,6 +13,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.ItemVariation;
 using Microsoft.AspNet.Identity;
@@ -30,6 +31,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         private readonly IStatusService statusService;
         private readonly IItemImageService itemImageService;
         private readonly IWarehouseService warehouseService;
+        private readonly IWarehouseDetailService warehouseDetailService;
 
         #endregion
 
@@ -37,7 +39,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public ItemVariationController(IItemVariationService itemVariationService, IColorService colorService,
             ISizeService sizeService, IManufacturerService manufacturerService, IStatusService statusService,
-            IItemImageService itemImageService, IWarehouseService warehouseService)
+            IItemImageService itemImageService, IWarehouseService warehouseService, IWarehouseDetailService warehouseDetailService)
         {
             this.itemVariationService = itemVariationService;
             this.colorService = colorService;
@@ -46,6 +48,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             this.statusService = statusService;
             this.itemImageService = itemImageService;
             this.warehouseService = warehouseService;
+            this.warehouseDetailService = warehouseDetailService;
         }
 
         #endregion
@@ -195,6 +198,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Get All Warehouses
+        [HttpGet]
+        public JsonResult GetWarehouseDetails(long id)
+        {
+            var warehouse = warehouseService.FindWarehouseById(id);
+            IList<JsTree> details = warehouse.WarehouseDetails.Select(x => x.CreateForJsTree()).ToList();
+            return Json(details, JsonRequestBehavior.AllowGet);
+        }
         #endregion
+
+        #endregion  
     }
 }

@@ -143,6 +143,7 @@
     <Compile Include="Services\ItemManufacturerService.cs" />
     <Compile Include="Services\ItemReleaseService.cs" />
     <Compile Include="Services\ItemVariationService.cs" />
+    <Compile Include="Services\ItemWarehouseService.cs" />
     <Compile Include="Services\JobApplicantService.cs" />
     <Compile Include="Services\JobOfferedService.cs" />
     <Compile Include="Services\JobTitleService.cs" />

@@ -25,6 +25,7 @@ namespace EPMS.Implementation.Services
         private readonly IColorRepository colorRepository;
         private readonly IItemImageRepository imageRepository;
         private readonly IItemManufacturerRepository itemManufacturerRepository;
+        private readonly IItemWarehouseRepository itemWarehouseRepository;
         private readonly INotificationService notificationService;
 
         #endregion
@@ -33,7 +34,7 @@ namespace EPMS.Implementation.Services
 
         public ItemVariationService(IItemVariationRepository variationRepository, ISizeRepository sizeRepository,
             IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
-            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository,INotificationService notificationService)
+            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,INotificationService notificationService)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -42,6 +43,7 @@ namespace EPMS.Implementation.Services
             this.colorRepository = colorRepository;
             this.imageRepository = imageRepository;
             this.itemManufacturerRepository = itemManufacturerRepository;
+            this.itemWarehouseRepository = itemWarehouseRepository;
             this.notificationService = notificationService;
         }
 
@@ -98,6 +100,7 @@ namespace EPMS.Implementation.Services
                 UpdateItemVariation(variationToSave.ItemVariation);
                 UpdateSizeList(variationToSave, itemVariationFromDatabase);
                 UpdateManufacturerList(variationToSave);
+                UpdateWarehouseList(variationToSave);
                 UpdateStatusList(variationToSave, itemVariationFromDatabase);
                 UpdateColorList(variationToSave, itemVariationFromDatabase);
             }
@@ -106,6 +109,7 @@ namespace EPMS.Implementation.Services
                 AddNewVariation(variationToSave.ItemVariation);
                 AddSizeList(variationToSave);
                 AddManufacturerList(variationToSave);
+                AddWarehouseList(variationToSave);
                 AddStatusList(variationToSave);
                 AddColorList(variationToSave);
                 AddImages(variationToSave);
@@ -196,6 +200,76 @@ namespace EPMS.Implementation.Services
         }
 
         /// <summary>
+        /// Add Warehouse List from Client
+        /// </summary>
+        /// <param name="variationToSave"></param>
+        private void AddWarehouseList(ItemVariationRequest variationToSave)
+        {
+            if (variationToSave.ItemWarehouses != null)
+            {
+                foreach (ItemWarehouse itemWarehouse in variationToSave.ItemWarehouses)
+                {
+                    ItemWarehouse warehouse = new ItemWarehouse
+                    {
+                        ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                        Quantity = itemWarehouse.Quantity,
+                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
+                    };
+                    itemWarehouseRepository.Add(warehouse);
+                }
+                itemWarehouseRepository.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Update Warehouse List from Client
+        /// </summary>
+        private void UpdateWarehouseList(ItemVariationRequest variationToSave)
+        {
+            IEnumerable<ItemWarehouse> dbList =
+                itemWarehouseRepository.GetItemsByVariationId(variationToSave.ItemVariation.ItemVariationId).ToList();
+            IEnumerable<ItemWarehouse> clientList = variationToSave.ItemWarehouses;
+            //If Client List contains Entries
+            if (clientList != null)
+            {
+                //Add New Items
+                foreach (ItemWarehouse itemWarehouse in clientList)
+                {
+                    //Add New Items from Client list
+                    if (dbList.Any(a => a.WarehousrId == itemWarehouse.WarehousrId))
+                        continue;
+                    ItemWarehouse itemToAdd = new ItemWarehouse
+                    {
+                        ItemVariationId = itemWarehouse.ItemVariationId,
+                        WarehousrId = itemWarehouse.WarehousrId,
+                        Quantity = itemWarehouse.Quantity,
+                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
+                    };
+                    itemWarehouseRepository.Add(itemToAdd);
+
+                    //Delete Items from DB List which are not in Client List
+                    foreach (ItemWarehouse warehouseItem in dbList)
+                    {
+                        if (clientList.Any(x => x.WarehousrId == warehouseItem.WarehousrId))
+                            continue;
+                        var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehousrId);
+                        itemWarehouseRepository.Delete(itemToDelete);
+                    }
+                }
+            }
+            else
+            {
+                //Delete All Items if List from Client is Empty
+                foreach (ItemWarehouse warehouseItem in dbList)
+                {
+                    var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehousrId);
+                    itemWarehouseRepository.Delete(itemToDelete);
+                }
+            }
+            itemWarehouseRepository.SaveChanges();
+        }
+
+        /// <summary>
         /// Add Manufacturer List from Client
         /// </summary>
         /// <param name="variationToSave"></param>
@@ -213,7 +287,7 @@ namespace EPMS.Implementation.Services
                     };
                     itemManufacturerRepository.Add(manufacturer);
                 }
-                imageRepository.SaveChanges();
+                itemManufacturerRepository.SaveChanges();
             }
         }
 
