@@ -101,5 +101,10 @@ namespace EPMS.Repository.Repositories
             }
             return new RfiRequestResponse { Rfis = rfis, TotalCount = DbSet.Count(query) };
         }
+
+        public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
+        {
+            return DbSet.Where(x=>x.RecCreatedBy == requesterId);
+        }
     }
 }

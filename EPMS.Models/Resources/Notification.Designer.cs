@@ -151,6 +151,15 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Job Application.
+        /// </summary>
+        public static string JobApplication {
+            get {
+                return ResourceManager.GetString("JobApplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Meetings.
         /// </summary>
         public static string Meetings {

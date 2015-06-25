@@ -10,15 +10,16 @@ namespace EPMS.Models.RequestModels.NotificationRequestModels
         public string UserId { get; set; }
         public bool SystemGenerated { get; set; }
         public int RoleId { get; set; }
-        public NotificationForRole NotificationForRole
+        public int RoleKey { get; set; }
+        public UserRole UserRoleKey
         {
             get
             {
-                return (NotificationForRole)RoleId;
+                return (UserRole)RoleKey;
             }
             set
             {
-                RoleId = (short)value;
+                RoleKey = (short)value;
             }
         }
     }

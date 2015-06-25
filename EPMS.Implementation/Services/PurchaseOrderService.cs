@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -172,7 +173,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = false;
-            notificationViewModel.NotificationResponse.ForRole = 8;//WH Manager
+            notificationViewModel.NotificationResponse.ForRole = UserRole.WarehouseManager;//WH Manager
 
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 

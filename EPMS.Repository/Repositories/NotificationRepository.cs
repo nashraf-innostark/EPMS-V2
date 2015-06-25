@@ -78,7 +78,7 @@ namespace EPMS.Repository.Repositories
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
                           )
                           &&
-                          (((s.ForRole == searchRequset.NotificationRequestParams.RoleId)
+                          (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey)
                             &&
                             (
                                 (s.NotificationRecipients.FirstOrDefault(r => r.UserId == searchRequset.NotificationRequestParams.UserId || r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId).IsRead == false)
@@ -124,8 +124,8 @@ namespace EPMS.Repository.Repositories
                         if (searchRequset.NotificationRequestParams.SystemGenerated)
                         {
                             query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || s.NotificationRecipients.Any(r => r.IsRead == isNotified)) 
-                            && 
-                            (((s.ForRole == searchRequset.NotificationRequestParams.RoleId) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
+                            &&
+                            (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
                            (s.AlertAppearDate <= today)));
                         }
                         else
@@ -142,7 +142,7 @@ namespace EPMS.Repository.Repositories
                         {
                             query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || s.NotificationRecipients.All(r => r.IsRead == isNotified))
                             &&
-                            (((s.ForRole == searchRequset.NotificationRequestParams.RoleId) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
+                            (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
                            (s.AlertAppearDate <= today)));
                         }
                         else
@@ -167,7 +167,7 @@ namespace EPMS.Repository.Repositories
                           (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))))
                             &&
-                            (((s.ForRole == searchRequset.NotificationRequestParams.RoleId) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
+                            (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
                            (s.AlertAppearDate <= today)));
                         }
                         else
@@ -345,7 +345,7 @@ namespace EPMS.Repository.Repositories
                     (
                         (
                             (//s.ForAdmin == true || 
-                            s.ForRole == requestParams.RoleId)
+                            s.ForRole == requestParams.RoleKey)
                             && 
                             (
                                 (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false)

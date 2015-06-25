@@ -85,7 +85,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 AlertAppearDate = DateTime.ParseExact(notification.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).AddDays(-notification.AlertBefore),
                 SystemGenerated = notification.SystemGenerated,
                 ForAdmin = notification.ForAdmin,
-                ForRole = notification.ForRole,
+                ForRole = (int)notification.ForRole,
                 IsEmailSent = notification.IsEmailSent,
                 IsSMSsent = notification.IsSMSsent,
 
@@ -166,7 +166,8 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
                 case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
-                case 6: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
+                case 6: notificationListResponse.CategoryName = Resources.Notification.JobApplication; break;
+                case 7: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
                 
                 default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
@@ -227,7 +228,8 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 3: notificationListResponse.CategoryName = Resources.Notification.Employees; break;
                 case 4: notificationListResponse.CategoryName = Resources.Notification.Meetings; break;
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
-                case 6: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
+                case 6: notificationListResponse.CategoryName = Resources.Notification.JobApplication; break;
+                case 7: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
                 default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
             switch (notification.AlertBefore)

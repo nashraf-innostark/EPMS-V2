@@ -20,6 +20,7 @@ namespace EPMS.Web.Models
         public string NotesA { get; set; }
         
         public int Status { get; set; }
+        public string CustomerDeliveryInfo { get; set; }
         public string CustomerName { get; set; }
         public string RequesterName { get; set; }
         public string RequesterNameAr { get; set; }

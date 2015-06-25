@@ -27,5 +27,14 @@ namespace EPMS.Repository.Repositories
             return
                 DbSet.Where(x => x.WarehousrId == variationId);
         }
+
+        public long GetItemQuantity(long itemVariationId, long warehousrId)
+        {
+            var itemAvailableQty =
+                DbSet.Where(x => x.ItemVariationId == itemVariationId && x.WarehousrId == warehousrId)
+                    .Sum(x => x.Quantity);
+            return Convert.ToInt64(itemAvailableQty);
+        }
+
     }
 }

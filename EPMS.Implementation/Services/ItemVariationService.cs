@@ -493,7 +493,7 @@ namespace EPMS.Implementation.Services
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = 7//Inventory Manager
+                    ForRole = UserRole.InventoryManager//Inventory Manager
                 }
             };
 

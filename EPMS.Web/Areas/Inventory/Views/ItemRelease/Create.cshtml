@@ -78,11 +78,11 @@
                 <div class="controls">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "UserId", "EmployeeNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "UserId", "EmployeeNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
                 </div>
             </div>
@@ -217,7 +217,7 @@
                                         @Html.HiddenFor(m => m.ItemReleaseDetails[i].RecCreatedDate)
                                         @for (var q = 0; q < Model.ItemReleaseDetails[i].ItemReleaseQuantities.Count; q++)
                                         {
-                                            <div class="control-group row-fluid formWarhouses_' + index + '" style="display:none">
+                                            <div class="control-group row-fluid formWarehouses_@i-@q" style="display:none">
                                                 @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].ItemReleaseQuantityId)
                                                 @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].IRFDetailId)
                                                 @Html.HiddenFor(m => m.ItemReleaseDetails[i].ItemReleaseQuantities[q].ItemVariationId)
@@ -332,6 +332,12 @@
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+        CKEDITOR.replace('DeliveryInfoEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DeliveryInfoAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
         var itemId = parseInt('@Model.ItemRelease.ItemReleaseId');
         if (itemId > 0) {
             // disable on load section
@@ -526,7 +532,7 @@
             var warehouse = "";
             var index = $(event.target).closest('tr').data('id');
             $("#WarehouseModalIndex").val(index);
-            dropAllFormWar(index);
+            
             var itemVariationId = parseInt($("#ItemReleaseDetails_" + index + "__ItemVariationId").val());
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
@@ -543,6 +549,7 @@
                         quantities = value.ItemReleaseQuantities;
                     }
                 });
+                dropAllFormWar(index, quantities.length);
                 $("#WarehouseCount").val(0);
                 for (var i = 0; i < quantities.length; i++) {
                     var hiddenFields =
@@ -562,7 +569,7 @@
                                 '</div>' +
                             '</div>' +
                             '<div class="span1 span-inset">' +
-                                '<button type="button" class="btn dropWar">-</button>' +
+                                '<button type="button" class="btn dropWar" data-id="' + i + '">-</button>' +
                             '</div>' +
                         '</div>';
 
@@ -589,7 +596,7 @@
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__IRFDetailId").val() + '" type="hidden" />' +
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__ItemVariationId").val() + '" type="hidden" />';
                 var mainFormValues =
-                        '<div class="control-group row-fluid formWarhouses_' + index + '" style="display:none">' + hiddenFields +
+                        '<div class="control-group row-fluid formWarehouses_' + index + '__' + i + '" style="display:none">' + hiddenFields +
                             '<input  type="text" for="numbers" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val() + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Quantity" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__Quantity">' +
                         '</div>';
                 $('.AddEditItemReleaseForm').append(mainFormValues);
@@ -681,11 +688,9 @@
         });
         $("#selectBoxFilter").select2();
         $("#Requester").on("change", function () {
-            var customerId = parseInt($(this).val());
-            if (isNaN(customerId)) {
-                customerId = 0;
-            }
-            if (customerId == 0) {
+            var requesterId = $(this).val();
+            
+            if (requesterId == "") {
                 $("#RfiId").empty();
                 $("#RfiId").append(
                         $('<option></option>').val(0).html("none")
@@ -696,28 +701,19 @@
                 });
                 $("#DeliveryInfoE").val("");
                 $("#DeliveryInfoA").val("");
-                CKEDITOR.instances['DeliveryInfoEn'].setData("");
-                CKEDITOR.instances['DeliveryInfoAr'].setData("");
+                //CKEDITOR.instances['DeliveryInfoEn'].setData("");
+                //CKEDITOR.instances['DeliveryInfoAr'].setData("");
                 return true;
             }
-            var customersList = '@Html.Raw(Json.Encode(Model.Customers))';
-            var parsed = JSON.parse(customersList);
-            $.each(parsed, function (key, value) {
-                if (value.CustomerId == customerId) {
-                    $("#DeliveryInfoE").val(value.CustomerAddress);
-                    $("#DeliveryInfoA").val(value.CustomerAddress);
-                    //CKEDITOR.instances['DeliveryInfoEn'].setData(value.CustomerAddress);
-                    //CKEDITOR.instances['DeliveryInfoAr'].setData(value.CustomerAddress);
-                }
-            });
-            var url = siteUrl + "/Inventory/ItemRelease/GetCustomerRfis";
+            
+            var url = siteUrl + "/Inventory/ItemRelease/GetRequesterRfis";
             ajaxLoader();
             $.ajax({
                 url: url,
                 type: 'GET',
                 dataType: "json",
                 data: {
-                    customerId: customerId
+                    requesterId: requesterId
                 },
                 success: function (data) {
                     populateRFIDDL(data);
@@ -736,6 +732,10 @@
             $.each(orderNo, function (key, value) {
                 if (value.rfiId == rfiId) {
                     $("#OrderNumber").val(value.orderNo);
+                    $("#DeliveryInfoE").val(value.deliveryInfo);
+                    $("#DeliveryInfoA").val(value.deliveryInfo);
+                    CKEDITOR.instances['DeliveryInfoEn'].setData(value.deliveryInfo);
+                    CKEDITOR.instances['DeliveryInfoAr'].setData(value.deliveryInfo);
                 }
             });
         });
@@ -782,17 +782,20 @@
             });
         });
         function dropWarhouse() {
-            $(".dropWar").click(function () {
+            $(".dropWar").click(function (event) {
                 $(this).parents().eq(1).remove();
-                var index = $("#WarehouseModalIndex").val();
-                $(".formWarhouses_" + index).remove();
+                var i = $(event.target).data('id');
+                var index = parseInt($("#WarehouseModalIndex").val());
+                $(".formWarehouses_" + index + "-" + i).remove();
             });
         }
         function dropAllWar() {
             $(".warhouses").remove();
         }
-        function dropAllFormWar(index) {
-            $(".formWarhouses_" + index).remove();
+        function dropAllFormWar(index, count) {
+            for (var i = 0; i < count; i++) {
+                $(".formWarehouses_" + index + "-" + i).remove();
+            }
         }
     });
 
@@ -810,12 +813,7 @@
             $('.btnDisable').removeClass('disableList');
             $('.disableDdl').select2('enable');
             $('.' + 'toBeDisable' + ':input').attr('readonly', false);
-            CKEDITOR.replace('DeliveryInfoEn', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            CKEDITOR.replace('DeliveryInfoAr', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
+            
             //$("#detailEditor").hide();
             //$("#CKEditor").show();
             $("#EditRecord").hide();
@@ -913,9 +911,12 @@
                 );
                 var order = {
                     rfiId: data[i].RFIId,
-                    orderNo: data[i].OrderNumber
+                    orderNo: data[i].OrderNumber,
+                    deliveryInfo : data[i].CustomerDeliveryInfo
                 };
                 orderNo.push(order);
+                
+                
             }
         } else {
             $("#RfiId").append(

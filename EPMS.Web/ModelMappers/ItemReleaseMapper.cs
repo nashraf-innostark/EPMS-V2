@@ -8,6 +8,7 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.ItemRelease CreateFromServerToClient(this ItemRelease source)
         {
+            var employee = (source.Requester !=null && source.Requester.Employee != null) ? source.Requester.Employee : new Employee();
             return new Models.ItemRelease
             {
                 ItemReleaseId = source.ItemReleaseId,
@@ -21,8 +22,8 @@ namespace EPMS.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
-                RequesterNameE = source.Customer.CustomerNameE,
-                RequesterNameA = source.Customer.CustomerNameA,
+                RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
+                RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,

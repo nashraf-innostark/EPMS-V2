@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -10,7 +9,7 @@ namespace EPMS.Web.Models
         public string CreatedBy { get; set; }
         public string ShipmentDetails { get; set; }
         public short? Status { get; set; }
-        public long? RequesterId { get; set; }
+        public string RequesterId { get; set; }
         public long? RFIId { get; set; }
         public string OrderNo { get; set; }
         public string DeliveryInfo { get; set; }
