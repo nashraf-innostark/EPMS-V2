@@ -57,55 +57,56 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemNameEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameEn, new { @dir = "ltr", id = "ItemNameEn"})
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameEn, new { @dir = "ltr", id = "ItemNameEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.ItemNameEn)
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemNameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameAr, new { @dir = "ltr", id = "ItemNameAr"})
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameAr, new { @dir = "ltr", id = "ItemNameAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.ItemNameAr)
                 </div>
             </div>
         </div>
 
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</label>
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionEn, "", new { @class = "required" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionEn, "", new { @class = "required" })
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionAr, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionAr, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
@@ -136,7 +137,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.AveragePrice, new { @dir = "ltr", id = "AveragePrice", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.AveragePrice, new { @dir = "ltr", id = "AveragePrice", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.AveragePrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -148,7 +149,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.AverageCost, new { @dir = "ltr", id = "AverageCost", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.AverageCost, new { @dir = "ltr", id = "AverageCost", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.AverageCost, "", new { @class = "required" })
                 </div>
             </div>
@@ -160,7 +161,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.AveragePackagePrice, new { @dir = "ltr", id = "AveragePackagePrice", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.AveragePackagePrice, new { @dir = "ltr", id = "AveragePackagePrice", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.AveragePackagePrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -172,7 +173,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInPackage, "", new { @class = "required" })
                 </div>
             </div>
@@ -184,7 +185,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -196,60 +197,61 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
         </div>
 
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.InventoryItem.HazardousEn, "", new { @class = "required" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.HazardousEn, "", new { @class = "required" })
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.InventoryItem.HazardousAr, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.InventoryItem.UsageEn, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.ValidationMessageFor(m => m.InventoryItem.UsageAr, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.HazardousAr, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageEn</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.UsageEn, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.UsageAr, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ReorderPoint</label>
@@ -262,7 +264,7 @@
             </div>
         </div>
 
-        <div class="control-group row-fluid">
+        @*<div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DeptInfo</label>
             </div>
@@ -272,83 +274,100 @@
                     @Html.ValidationMessageFor(m => m.InventoryItem.DepartmentId, "", new { @class = "required" })
                 </div>
             </div>
+        </div>*@
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputFielda">Department Information</label>
+            </div>
+            <div class="span9">
+
+                @Html.TextBoxFor(m => m.InventoryItem.DepartmentId, new { @dir = "ltr", id = "DepartmentId", @readonly = "true" })
+                <div class="control-group row-fluid">
+                    <div class="span12 span-inset">
+                        <a href="#modal-dialog" role="button" class="btn" data-toggle="modal">Tree Selector</a>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         @if (Model.InventoryItem.ItemId > 0)
         {
-
-            <div class="alert alert-info alert-block">
-                <i class="icon-alert icon-alert-info"></i>
-                <strong>Item Variations</strong><a href="/Inventory/ItemVariation/Create">Create New Item Variation</a>
-            </div>
-
-        <!--Sortable Responsive Table begin-->
-            <div class="row-fluid">
-                <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableSortableVariations">
-                        <thead>
-                            <tr>
-                                <th> Serial</th>
-                                <th>Barcode</th>
-                                <th>(SKU)Code - SKU Description</th>
-                                <th>Description</th>
-                                <th>Size</th>
-                                <th>Condition</th>
-                                <th>Color</th>
-                                <th>Unit Price</th>
-                                <th>Avrage Cost</th>
-                                <th>Package Price</th>
-                                <th>On-hand Quantity</th>
-                                <th>Quantity Sold</th>
-                                <th>Quantity Used in Manufacturing</th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.InventoryItem.ItemVariations != null)
-                        {
-                            foreach (var item in Model.InventoryItem.ItemVariations.ToList())
-                            {
-                                <tr class="gradeX">
-                                    <td></td>
-                                    <td>@item.ItemBarcode</td>
-                                    @if (direction == "ltr")
-                                    {
-                                        <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionEn</a></td>
-                                    }
-                                    else
-                                    {
-                                        <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionAr</a></td>
-                                    }
-                                    @if (direction == "ltr")
-                                    {
-                                        <td>@item.SKUCode - @item.DescriptionEn</td>
-                                    }
-                                    else
-                                    {
-                                        <td>@item.SKUCode - @item.DescriptionAr</td>
-                                    }
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>@item.UnitPrice</td>
-                                    <td></td>
-                                    <td>@item.PackagePrice</td>
-                                    <td>@item.QuantityInHand</td>
-                                    <td>@item.QuantitySold</td>
-                                    <td>@item.QuantityInManufacturing</td>
-                                </tr>
-                            }
-                        }
-
-                        </tbody>
-                    </table>
+            <span id="itemVariationTable">
+                <div class="alert alert-info alert-block">
+                    <i class="icon-alert icon-alert-info"></i>
+                    <strong>Item Variations</strong><a href="/Inventory/ItemVariation/Create">Create New Item Variation</a>
                 </div>
-            </div>
-        <!--Sortable Responsive Table end-->
+
+                <!--Sortable Responsive Table begin-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <table class="table table-striped table-responsive" id="tableSortableVariations">
+                            <thead>
+                                <tr>
+                                    <th> Serial</th>
+                                    <th>Barcode</th>
+                                    <th>(SKU)Code - SKU Description</th>
+                                    <th>Description</th>
+                                    <th>Size</th>
+                                    <th>Condition</th>
+                                    <th>Color</th>
+                                    <th>Unit Price</th>
+                                    <th>Avrage Cost</th>
+                                    <th>Package Price</th>
+                                    <th>On-hand Quantity</th>
+                                    <th>Quantity Sold</th>
+                                    <th>Quantity Used in Manufacturing</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.InventoryItem.ItemVariations != null)
+                                {
+                                    foreach (var item in Model.InventoryItem.ItemVariations.ToList())
+                                    {
+                                        <tr class="gradeX">
+                                            <td></td>
+                                            <td>@item.ItemBarcode</td>
+                                            @if (direction == "ltr")
+                                            {
+                                                <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionEn</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionAr</a></td>
+                                            }
+                                            @if (direction == "ltr")
+                                            {
+                                                <td>@item.SKUCode - @item.DescriptionEn</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.SKUCode - @item.DescriptionAr</td>
+                                            }
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>@item.UnitPrice</td>
+                                            <td></td>
+                                            <td>@item.PackagePrice</td>
+                                            <td>@item.QuantityInHand</td>
+                                            <td>@item.QuantitySold</td>
+                                            <td>@item.QuantityInManufacturing</td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--Sortable Responsive Table end-->
+            </span>
         }
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
@@ -356,7 +375,7 @@
                     <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemVariation/Create'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -364,10 +383,40 @@
     </div>
 }
 
+@section popups
+{
+    <div id="modal-dialog" class="modal hide fade treeSelector">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Department</h3>
+    </div>
+    <div class="modal-body ">
+        <form class="form-horizontal">
+            <div class="sidebarMenuHolder">
+                <div class="JStree">
+                    <div class="Jstree_shadow_top"></div>
+                    <div id="jstree"></div>
+                    <div class="Jstree_shadow_bottom"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.Web.Resources.RFI.RFI.Select</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
+    </div>
+</div>
+}
 
 
+<script src="~/RTB/ckfinder.js"></script>
+<script src="~/RTE/ckeditor.js"></script>
 <script>
-
+    var editor;
+    var textTillParent;
+    var dir = '@direction';
+    var siteUrl = $("#siteURL").val();
     var itemId = parseInt($('#InventoryItem_ItemId').val());
     var siteUrl = $("#siteURL").val();
     $(document).ready(function () {
@@ -401,20 +450,123 @@
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
+            showCkEditors();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#edit").show();
         }
+
+        //Warehouse Tree
+        var treeInitialData;
+        debugger;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Departments",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "الإدارات",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        }
+        $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
+        });
+        var requestUrl = "/Inventory/InventoryItem/GetAllDepartments";
+        populateTree(0, "jstree", requestUrl);
+
+        $("#selectDepartment").on("click", function () {
+            $('#DepartmentId').val("Selected: " + textTillParent);
+            $('#modal-dialog').modal('toggle');
+            return true;
+        });
+
     });
 
     $("#edit").click(function (event) {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
-        $("#savebtn").hide();
-        $("#cancel").hide();
-        $("#edit").show();
+        $("#savebtn").show();
+        $("#cancel").show();
+        $("#edit").hide();
+        $("#itemVariationTable").hide();
+        $("#CKEditorDescp").show();
+        showCkEditors();
         event.preventDefault();
     });
+
+    function showCkEditors() {
+        $("#CKEditorDescp").show();
+        editor = CKEDITOR.replace('ItemDescriptionEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('ItemDescriptionAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('HazardousEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('HazardousAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('UsageEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+        editor = CKEDITOR.replace('UsageAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
+            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
+            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+        });
+    }
 
 </script>

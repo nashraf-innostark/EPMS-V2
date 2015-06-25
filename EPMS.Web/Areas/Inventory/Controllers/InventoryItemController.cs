@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
+using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryItem;
 using EPMS.Web.ModelMappers;
@@ -16,15 +18,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         private readonly IInventoryItemService inventoryItemService;
         private readonly IItemVariationService itemVariationService;
+        private readonly IInventoryDepartmentService departmentService;
 
         #endregion
 
         #region Constructor
 
-        public InventoryItemController(IInventoryItemService inventoryItemService, IItemVariationService itemVariationService)
+        public InventoryItemController(IInventoryItemService inventoryItemService, IItemVariationService itemVariationService, IInventoryDepartmentService departmentService)
         {
             this.inventoryItemService = inventoryItemService;
             this.itemVariationService = itemVariationService;
+            this.departmentService = departmentService;
         }
 
         #endregion
@@ -56,6 +60,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(InventoryItemViewModel itemViewModel)
         {
             InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
@@ -76,6 +81,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(itemCode, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Get All Departments
+        [HttpGet]
+        public JsonResult GetAllDepartments(long? id)
+        {
+            var departments = departmentService.GetAll();
+            IList<JsTree> details = departments.Select(x => x.CreateForJsTree()).ToList();
+            return Json(details, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #endregion

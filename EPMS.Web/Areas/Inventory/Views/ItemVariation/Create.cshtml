@@ -1081,10 +1081,10 @@
     $(document).ready(function () {
         if (itemVarId == 0 || itemVarId == "") {
             //Auto Generated Number Calculation
-            var url = "/Inventory/ItemVariation/GetLastItemSKuCode";
+            var url1 = "/Inventory/ItemVariation/GetLastItemSKuCode";
             $.ajax({
-                data: inventoryItemId,
-                url: url,
+                data: itemVarId,
+                url: url1,
                 type: "POST",
                 dataType: "json",
                 success: function (data) {

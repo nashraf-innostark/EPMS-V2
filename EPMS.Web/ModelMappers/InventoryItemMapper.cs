@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EPMS.Models.RequestModels;
+using iTextSharp.text.pdf;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -36,6 +37,7 @@ namespace EPMS.Web.ModelMappers
             inventoryItem.AveragePrice = 0;
             inventoryItem.AveragePrice = source.ItemVariations.Where(x => x.PriceCalculation).Sum(y => y.UnitPrice / source.ItemVariations.Count(z => z.PriceCalculation));
             inventoryItem.AveragePackagePrice = source.ItemVariations.Sum(y => y.PackagePrice / source.ItemVariations.Count());
+            inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => x.ItemWarehouses.Sum(y => y.Quantity));
             return inventoryItem;
         }
 
@@ -44,11 +46,14 @@ namespace EPMS.Web.ModelMappers
             var item = new DomainModels.InventoryItem
             {
                 ItemId = source.ItemId,
+                ItemCode = source.ItemCode,
                 ItemNameEn = source.ItemNameEn,
                 ItemNameAr = source.ItemNameAr,
                 ItemImagePath = source.ItemImagePath,
                 ItemDescriptionEn = source.ItemDescriptionEn,
                 ItemDescriptionAr = source.ItemDescriptionAr,
+                DescriptionForQuotationEn = source.DescriptionForQuotationEn,
+                DescriptionForQuotationAr = source.DescriptionForQuotationAr,
                 HazardousEn = source.HazardousEn,
                 HazardousAr = source.HazardousAr,
                 UsageEn = source.UsageEn,
