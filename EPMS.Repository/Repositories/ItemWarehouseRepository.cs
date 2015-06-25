@@ -25,13 +25,13 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<ItemWarehouse> GetItemsByVariationId(long variationId)
         {
             return
-                DbSet.Where(x => x.WarehousrId == variationId);
+                DbSet.Where(x => x.WarehouseId == variationId);
         }
 
-        public long GetItemQuantity(long itemVariationId, long warehousrId)
+        public long GetItemQuantity(long itemVariationId, long WarehouseId)
         {
             var itemAvailableQty =
-                DbSet.Where(x => x.ItemVariationId == itemVariationId && x.WarehousrId == warehousrId)
+                DbSet.Where(x => x.ItemVariationId == itemVariationId && x.WarehouseId == WarehouseId)
                     .Sum(x => x.Quantity);
             return Convert.ToInt64(itemAvailableQty);
         }

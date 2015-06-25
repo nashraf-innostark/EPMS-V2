@@ -236,12 +236,12 @@ namespace EPMS.Implementation.Services
                 foreach (ItemWarehouse itemWarehouse in clientList)
                 {
                     //Add New Items from Client list
-                    if (dbList.Any(a => a.WarehousrId == itemWarehouse.WarehousrId))
+                    if (dbList.Any(a => a.WarehouseId == itemWarehouse.WarehouseId))
                         continue;
                     ItemWarehouse itemToAdd = new ItemWarehouse
                     {
                         ItemVariationId = itemWarehouse.ItemVariationId,
-                        WarehousrId = itemWarehouse.WarehousrId,
+                        WarehouseId = itemWarehouse.WarehouseId,
                         Quantity = itemWarehouse.Quantity,
                         PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
                     };
@@ -250,9 +250,9 @@ namespace EPMS.Implementation.Services
                     //Delete Items from DB List which are not in Client List
                     foreach (ItemWarehouse warehouseItem in dbList)
                     {
-                        if (clientList.Any(x => x.WarehousrId == warehouseItem.WarehousrId))
+                        if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId))
                             continue;
-                        var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehousrId);
+                        var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehouseId);
                         itemWarehouseRepository.Delete(itemToDelete);
                     }
                 }
@@ -262,7 +262,7 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemWarehouse warehouseItem in dbList)
                 {
-                    var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehousrId);
+                    var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehouseId);
                     itemWarehouseRepository.Delete(itemToDelete);
                 }
             }

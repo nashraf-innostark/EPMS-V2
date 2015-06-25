@@ -191,7 +191,8 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 OrderId = source.OrderId,
                 //RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
-                OrderNumber = source.Order != null ? source.Order.OrderNo : string.Empty
+                OrderNumber = source.Order != null ? source.Order.OrderNo : string.Empty,
+                CustomerDeliveryInfo = (source.Order != null && source.Order.Customer != null) ? source.Order.Customer.CustomerAddress : string.Empty,
             };
             return rfi;
         }

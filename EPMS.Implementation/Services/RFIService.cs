@@ -175,7 +175,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateRFI(RFI rfi)
         {
             var previous = rfiRepository.Find(rfi.RFIId);
-            if (previous.Status != rfi.Status && rfi.Status != 2)
+            if (previous.Status != rfi.Status && rfi.Status != 6)
             {
                 var rfiHistoryToAdd = rfi.CreateFromRfiToRfiHistory(previous.RFIItems);
                 historyRepository.Add(rfiHistoryToAdd);
@@ -249,6 +249,11 @@ namespace EPMS.Implementation.Services
             //IEnumerable<Order> customerOrders = ordersRepository.GetOrdersByCustomerId(customerId);
             //IEnumerable<RFI> customerRfis = customerOrders.Select(x => x.RFIs.Select(x=>x.));
             return null;
+        }
+
+        public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
+        {
+            return rfiRepository.GetRfiByRequesterId(requesterId);
         }
 
         private void SendNotification(RFI rfi, bool isUpdated=false)

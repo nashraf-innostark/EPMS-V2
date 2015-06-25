@@ -19,5 +19,6 @@ namespace EPMS.Interfaces.IServices
         void DeleteRFI(RFI rfi);
         RFICreateResponse LoadRfiResponseData(long? id, bool loadCustomersAndOrders, string from);
         IEnumerable<RFI> GetCustomerRfis(long customerId);
+        IEnumerable<RFI> GetRfiByRequesterId(string requesterId);
     }
 }

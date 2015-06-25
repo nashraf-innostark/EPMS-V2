@@ -37,9 +37,12 @@ namespace EPMS.Web.ModelMappers
         public static Warehouse CreateFromClientToServer(this Models.Warehouse source)
         {
             var location = source.WarehouseLocation;
-            location = location.Replace("\r", "");
-            location = location.Replace("\t", "");
-            location = location.Replace("\n", "");
+            if (!string.IsNullOrEmpty(location))
+            {
+                location = location.Replace("\r", "");
+                location = location.Replace("\t", "");
+                location = location.Replace("\n", "");
+            }
             return new Warehouse
             {
                 WarehouseId = source.WarehouseId,
@@ -75,7 +78,7 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 Quantity = source.Quantity,
-                WarehousrId = source.WarehousrId,
+                WarehouseId = source.WarehouseId,
                 WarehouseNo = source.Warehouse.WarehouseNumber
             };
         }

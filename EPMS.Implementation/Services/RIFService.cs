@@ -156,7 +156,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateRIF(RIF rif)
         {
             var previousRif = rifRepository.Find(rif.RIFId);
-            if (previousRif.Status != rif.Status && rif.Status != 2)
+            if (previousRif.Status != rif.Status && rif.Status != 6)
             {
                 var rifHistoryToAdd = rif.CreateFromRifToRifHistory(previousRif.Order,previousRif.RIFItems);
                 historyRepository.Add(rifHistoryToAdd);

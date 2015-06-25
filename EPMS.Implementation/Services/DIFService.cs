@@ -153,7 +153,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateDIF(DIF dif)
         {
             var previous = repository.Find(dif.Id);
-            if (previous.Status != dif.Status && dif.Status != 2)
+            if (previous.Status != dif.Status && dif.Status != 6)
             {
                 var difHistoryToAdd = dif.CreateFromDifToDifHistory(previous.DIFItems);
                 difHistoryToAdd.ManagerId = dif.ManagerId;

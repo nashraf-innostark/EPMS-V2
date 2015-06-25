@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.Repository
     {
         RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest);
         IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime? date);
+        IEnumerable<RFI> GetRfiByRequesterId(string requesterId);
     }
 }

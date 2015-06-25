@@ -33,6 +33,7 @@ namespace EPMS.Web.Models
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public long InventoryItemId { get; set; }
+        public string InventoryItemDesc { get; set; }
 
         public List<Color> Colors { get; set; }
         public List<Size> Sizes { get; set; }

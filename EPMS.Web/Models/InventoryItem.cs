@@ -25,11 +25,11 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
-        public string AveragePrice { get; set; }
-        public string AverageCost { get; set; }
-        public string AveragePackagePrice { get; set; }
+        public double? AveragePrice { get; set; }
+        public double? AverageCost { get; set; }
+        public double? AveragePackagePrice { get; set; }
         public string QuantityInPackage { get; set; }
-        public string QuantityInHand { get; set; }
+        public long? QuantityInHand { get; set; }
         public string QuantitySold { get; set; }
 
         public List<ItemVariation> ItemVariations { get; set; }
