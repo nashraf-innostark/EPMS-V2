@@ -44,6 +44,7 @@
         @Html.HiddenFor(m => m.InventoryItem.ItemId)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedDt)
+        @Html.HiddenFor(m => m.InventoryItem.DepartmentId)
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
         <div class="control-group row-fluid">
@@ -419,10 +420,10 @@
     var siteUrl = $("#siteURL").val();
     var itemId = parseInt($('#InventoryItem_ItemId').val());
     var siteUrl = $("#siteURL").val();
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#tableSortableVariations').dataTable({
             "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
+            "fnInitComplete": function() {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
@@ -435,14 +436,14 @@
                 url: url,
                 type: "POST",
                 dataType: "json",
-                success: function (data) {
+                success: function(data) {
                     if (data == null) {
                         $('#ItemCode').val(10001000);
                     } else {
                         $('#ItemCode').val(++data);
                     }
                 },
-                error: function () {
+                error: function() {
                     alert("An error has occured!!!");
                 }
             });
@@ -493,15 +494,15 @@
             "core": {
                 "initially_open": ["parentNode"]
             }
-        }).bind("select_node.jstree", function (event, data) {
+        }).bind("select_node.jstree", function(event, data) {
             //`data.rslt.obj` is the jquery extended node that was clicked
             if (data.inst._get_parent(data.rslt.obj) != -1) {
                 var parents = [];
                 textTillParent = "";
-                data.rslt.obj.parents("li").each(function () {
+                data.rslt.obj.parents("li").each(function() {
                     parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
                 });
-                $.each(parents, function (key, value) {
+                $.each(parents, function(key, value) {
                     textTillParent = value.description + " >" + textTillParent;
                 });
                 textTillParent = textTillParent + $(".jstree-clicked").text();
@@ -510,15 +511,16 @@
         var requestUrl = "/Inventory/InventoryItem/GetAllDepartments";
         populateTree(0, "jstree", requestUrl);
 
-        $("#selectDepartment").on("click", function () {
-            $('#DepartmentId').val("Selected: " + textTillParent);
+        $("#selectDepartment").on("click", function() {
+            //$('#DepartmentId').val("Selected: " + textTillParent);
+            $('#InventoryItem_DepartmentId').val($('#jstree').jstree('get_selected').attr('id'));
             $('#modal-dialog').modal('toggle');
             return true;
         });
 
     });
 
-    $("#edit").click(function (event) {
+    $("#edit").click(function(event) {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         $("#savebtn").show();
         $("#cancel").show();
@@ -567,6 +569,10 @@
             filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
             filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
+    }
+
+    function jsTreeClick(event) {
+        return true;
     }
 
 </script>
