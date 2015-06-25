@@ -30,7 +30,7 @@ namespace EPMS.Web.Models
         public double? AveragePackagePrice { get; set; }
         public string QuantityInPackage { get; set; }
         public long? QuantityInHand { get; set; }
-        public string QuantitySold { get; set; }
+        public long? QuantitySold { get; set; }
 
         public List<ItemVariation> ItemVariations { get; set; }
     }

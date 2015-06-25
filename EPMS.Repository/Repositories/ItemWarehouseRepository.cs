@@ -25,7 +25,7 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<ItemWarehouse> GetItemsByVariationId(long variationId)
         {
             return
-                DbSet.Where(x => x.WarehousrId == variationId);
+                DbSet.Where(x => x.ItemVariationId == variationId);
         }
 
         public long GetItemQuantity(long itemVariationId, long warehousrId)
@@ -36,5 +36,10 @@ namespace EPMS.Repository.Repositories
             return Convert.ToInt64(itemAvailableQty);
         }
 
+        public ItemWarehouse FindItemWarehouseByVariationAndManufacturerId(long variationId, long warehouseId)
+        {
+            return
+                DbSet.FirstOrDefault(x => x.ItemVariationId == variationId && x.WarehousrId == warehouseId);
+        }
     }
 }

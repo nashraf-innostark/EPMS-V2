@@ -374,20 +374,21 @@
 
                                 <tr class="gradeX" data-id="@i">
                                     @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehousrId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
                                     <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
                                     </td>
-                                    <td></td>
+                                    <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "auto-resize PlaceInWarehouse" })</td>
                                     <td>
                                         @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse", @id = "PlaceInWarehouse" })
-                                        @Html.LabelFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse" })
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse" })
                                     </td>
                                     <td>
                                         @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity", @id = "QuantityInWarehouse" })
-                                        @Html.LabelFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity" })
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity" })
                                     </td>
-                                    <td><i class="icon-photon minus deleteImage"></i></td>
+                                    <td><i class="icon-photon minus deleteWarehouse"></i></td>
                                 </tr>
                             }
                         }
@@ -427,16 +428,26 @@
 
                                 <tr class="gradeX" data-id="@i">
                                     @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
                                     <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        @if (direction == "ltr")
+                                        {
+                                            @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerNameEn, new { @class = "auto-resize Price" })
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerNameAr, new { @class = "auto-resize Price" })
+                                        }
+                                    </td>
                                     <td>
                                         @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
-                                        @Html.LabelFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
                                     </td>
-                                    <td><i class="icon-photon minus deleteImage"></i></td>
+                                    <td><i class="icon-photon minus deleteManufacturer"></i></td>
                                 </tr>
                             }
                         }
@@ -591,7 +602,7 @@
                     <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemVariation/Create'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -617,7 +628,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), "Select Size", new { @class = "select2me sizeDdl", id = "sizeId" })
+                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), "Select Size", new { @class = "select2me sizeDdl toClear", id = "sizeId" })
                         </div>
                     </div>
 
@@ -652,7 +663,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Size.SizeNameEn, new { @dir = "ltr", id = "SizeNameEn", @class = "" })
+                            @Html.TextBoxFor(m => m.Size.SizeNameEn, new { @dir = "ltr", id = "SizeNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Size.SizeNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -663,7 +674,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Size.SizeNameAr, new { @dir = "ltr", id = "SizeNameAr", @class = "" })
+                            @Html.TextBoxFor(m => m.Size.SizeNameAr, new { @dir = "ltr", id = "SizeNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Size.SizeNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -691,7 +702,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me sizeDdl", id = "warehouseDropdown" })
+                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me sizeDdl toClear", id = "warehouseDropdown" })
                         </div>
                     </div>
 
@@ -713,14 +724,14 @@
                         <label class="control-label " id="textTillParent"></label>
                     </div>
                 </div>
-                
+
                 <div class="control-group row-fluid">
                     <div class="span3">
                         <label class="control-label" for="inputFieldaOrder">Quantity</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            <input id="inputFieldQuantity" type="text" name="inputField" class="quantity">
+                            <input id="inputFieldQuantity" type="text" name="inputField" class="quantity toClear">
                         </div>
                     </div>
                 </div>
@@ -778,7 +789,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.ManufacturersForDdl, "ManufacturerId", "ManufacturerNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl", id = "manufacturerId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.ManufacturersForDdl, "ManufacturerId", "ManufacturerNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manufacturerId" })
                             </div>
                         </div>
                     </div>
@@ -790,7 +801,7 @@
                     </div>
                     <div class="span5">
                         <div class="controls">
-                            <input id="manufacturerPriceLable" type="text" name="inputField">
+                            <input id="manufacturerPriceLable" type="text" name="inputField" class="toClear">
                         </div>
                     </div>
 
@@ -824,7 +835,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameEn, new { @dir = "ltr", id = "ManufacturerNameEn", @class = "" })
+                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameEn, new { @dir = "ltr", id = "ManufacturerNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Manufacturer.ManufacturerNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -835,7 +846,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameAr, new { @dir = "ltr", id = "ManufacturerNameAr", @class = "" })
+                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameAr, new { @dir = "ltr", id = "ManufacturerNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Manufacturer.ManufacturerNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -863,7 +874,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), "Select Status", new { @class = "select2me statusDdl", id = "statusId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), "Select Status", new { @class = "select2me statusDdl toClear", id = "statusId" })
                             </div>
                         </div>
                     </div>
@@ -897,7 +908,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Status.StatusNameEn, new { @dir = "ltr", id = "StatusNameEn", @class = "" })
+                            @Html.TextBoxFor(m => m.Status.StatusNameEn, new { @dir = "ltr", id = "StatusNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Status.StatusNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -908,7 +919,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Status.StatusNameAr, new { @dir = "ltr", id = "StatusNameAr", @class = "" })
+                            @Html.TextBoxFor(m => m.Status.StatusNameAr, new { @dir = "ltr", id = "StatusNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Status.StatusNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -936,7 +947,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), "Select Color", new { @class = "select2me colorDdl", id = "colorId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), "Select Color", new { @class = "select2me colorDdl toClear", id = "colorId" })
                             </div>
                         </div>
                     </div>
@@ -978,7 +989,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Color.ColorNameEn, new { @dir = "ltr", id = "ColorNameEn", @class = "" })
+                            @Html.TextBoxFor(m => m.Color.ColorNameEn, new { @dir = "ltr", id = "ColorNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Color.ColorNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -989,7 +1000,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Color.ColorNameAr, new { @dir = "ltr", id = "ColorNameAr", @class = "" })
+                            @Html.TextBoxFor(m => m.Color.ColorNameAr, new { @dir = "ltr", id = "ColorNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Color.ColorNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1046,14 +1057,14 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            <input id="inputFieldaOrder" type="text" name="inputField" class="imageOrder">
+                            <input id="inputFieldaOrder" type="text" name="inputField" class="imageOrder toClear">
                         </div>
                     </div>
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span12">
                         <label class="checkbox">
-                            @Html.CheckBox("Show", new { @id = "iCheckBox" })
+                            @Html.CheckBox("Show", new { @id = "iCheckBox", @class = "toClear" })
                             @*<input type="checkbox" class="uniformCheckbox" id="iCheckBox">*@
                             Show
                         </label>
@@ -1077,6 +1088,7 @@
     var textTillParent = "";
     var dir = '@direction';
     var itemsCount;
+    var myTree;
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
     $(document).ready(function () {
         if (itemVarId == 0 || itemVarId == "") {
@@ -1227,6 +1239,7 @@
         });
         //Add Size to DB
         $('#addSizeToDb').click(function (e) {
+            debugger;
             e.preventDefault();
             var siteUrl = $('#siteURL').val();
             var url = siteUrl + "/Inventory/ItemVariation/SaveSize";
@@ -1422,6 +1435,7 @@
 
         //Add Size from Dropdown to List
         $('.addSizeToList').on("click", function (event) {
+            debugger;
             var sizeId = $('#sizeId').val();
             var sizeList = '@Html.Raw(Json.Encode(Model.SizesForDdl))';
             var parsed = JSON.parse(sizeList);
@@ -1441,6 +1455,7 @@
             $('.sizeTable').append(html);
             ManageSizeList(sizeId);
             $('#sizeModule').modal('hide');
+            clearPopup();
         });
 
         //Delete Size from the List
@@ -1487,13 +1502,13 @@
             $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').val(manufacturerNameEn);
             event.preventDefault();
             $('#manufacturModule').modal('hide');
+            clearPopup();
         });
 
         //Delete Manufacturer from the List
         $('.deleteManufacturer').on("click", function () {
             var hiddenId = $(this).parent().prev().prev().val();
             $(this).parent().parent().remove();
-            ManageManufacturerList(hiddenId, 2);
         });
 
         //Add Status from Dropdown to List
@@ -1517,6 +1532,7 @@
             $('.statusTable').append(html);
             ManageStatusList(statusId);
             $('#itemStatusModule').modal('hide');
+            clearPopup();
         });
 
         //Delete Status from the List
@@ -1548,6 +1564,7 @@
             $('.colorTable').append(html);
             ManageColorList(colorId);
             $('#itemColorModule').modal('hide');
+            clearPopup();
         });
 
         //Delete Color from the List
@@ -1563,61 +1580,66 @@
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
 
+        var treeInitialData;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Details",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Details",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        }
+        myTree = $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
         //Warehouse Tree
         $("#warehouseDropdown").on("change", function () {
-            var treeInitialData;
-            if (dir == "ltr") {
-                treeInitialData = [
-                    {
-                        "data": {
-                            "title": "Details",
-                            "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                        },
-                        "attr": { "id": "parentNode" },
-                    }
-                ];
-            } else {
-                treeInitialData = [
-                    {
-                        "data": {
-                            "title": "Details",
-                            "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                        },
-                        "attr": { "id": "parentNode" },
-                    }
-                ];
-            }
-            $("#jstree").jstree({
-                "json_data": {
-                    "data": treeInitialData
-                },
-                "plugins": ["themes", "json_data", "ui"],
-                "ui": {
-                    "initially_select": ["parentNode"]
-                },
-                "core": {
-                    "initially_open": ["parentNode"]
-                }
-            }).bind("select_node.jstree", function (event, data) {
-                //`data.rslt.obj` is the jquery extended node that was clicked
-                if (data.inst._get_parent(data.rslt.obj) != -1) {
-                    var parents = [];
-                    textTillParent = "";
-                    data.rslt.obj.parents("li").each(function () {
-                        parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
-                    });
-                    $.each(parents, function (key, value) {
-                        textTillParent = value.description + " >" + textTillParent;
-                    });
-                    textTillParent = textTillParent + $(".jstree-clicked").text();
-                }
-            });
+            myTree.jstree("refresh");
             var requesturl = "/Inventory/ItemVariation/GetWarehouseDetails";
             var warehouseId = $('#warehouseDropdown').val();
+            debugger;
             populateTree(warehouseId, "jstree", requesturl);
         });
+        
+    });
 
+    
         $("#selectNode").on("click", function () {
+            debugger;
             $('#textTillParent').text("Selected: " + textTillParent);
             $('#warehouseTreeSelector').modal('toggle');
             return true;
@@ -1625,7 +1647,6 @@
 
         //Add Warehouse from Popup to List
         $('.addWarehouseFromPopup').on("click", function (event) {
-            debugger;
             var index = $("#warehouseDetails").children("tr").length;
             if ($("#warehouseDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
@@ -1669,6 +1690,14 @@
             $('#ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse').text(locationInWarehouse);
             event.preventDefault();
             $('#wherehouseModule').modal('hide');
+            clearPopup();
+        });
+
+        //Delete Warehouse from the List
+        $('.deleteWarehouse').on("click", function () {
+            var hiddenId = $(this).parent().prev().prev().val();
+            $(this).parent().parent().remove();
+            ManageStatusList(hiddenId, 2);
         });
 
     });
@@ -1696,7 +1725,7 @@
             SizeResultArray.push(id);
         }
         RefreshSizeArrayList();
-    }   
+    }
     function RefreshSizeArrayList() {
         //Set the Array List into hidden Variable
         var strSizes = "";
@@ -1776,5 +1805,12 @@
 
     function jsTreeClick(event) {
         return true;
+    }
+    function clearPopup() {
+        $('.toClear').val("");
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
     }
 </script>

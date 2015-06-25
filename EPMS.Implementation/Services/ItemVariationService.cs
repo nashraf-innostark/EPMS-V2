@@ -230,7 +230,7 @@ namespace EPMS.Implementation.Services
                 itemWarehouseRepository.GetItemsByVariationId(variationToSave.ItemVariation.ItemVariationId).ToList();
             IEnumerable<ItemWarehouse> clientList = variationToSave.ItemWarehouses;
             //If Client List contains Entries
-            if (clientList != null)
+            if (clientList != null && clientList.Any())
             {
                 //Add New Items
                 foreach (ItemWarehouse itemWarehouse in clientList)
@@ -262,7 +262,7 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemWarehouse warehouseItem in dbList)
                 {
-                    var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehousrId);
+                    var itemToDelete = itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(warehouseItem.ItemVariationId, warehouseItem.WarehousrId);
                     itemWarehouseRepository.Delete(itemToDelete);
                 }
             }
@@ -300,7 +300,7 @@ namespace EPMS.Implementation.Services
                 itemManufacturerRepository.GetItemsByVariationId(variationToSave.ItemVariation.ItemVariationId).ToList();
             IEnumerable<ItemManufacturer> clientList = variationToSave.ItemManufacturers;
             //If Client List contains Entries
-            if (clientList != null)
+            if (clientList != null && clientList.Any())
             {
                 //Add New Items
                 foreach (ItemManufacturer itemManufacturer in clientList)
@@ -331,7 +331,7 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemManufacturer manufacturerItem in dbList)
                 {
-                    var itemToDelete = itemManufacturerRepository.Find(manufacturerItem.ManufacturerId);
+                    var itemToDelete = itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
                     itemManufacturerRepository.Delete(itemToDelete);
                 }
             }
