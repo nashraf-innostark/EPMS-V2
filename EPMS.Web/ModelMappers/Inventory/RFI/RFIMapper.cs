@@ -99,7 +99,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 RFIId = source.RFIId,
                 Status = source.Status,
                 RequesterName = (source.AspNetUser != null && source.AspNetUser.Employee != null) ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE : string.Empty,
-                RecCreatedDate = source.RecCreatedDate
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString()
             };
             return rfi;
         }

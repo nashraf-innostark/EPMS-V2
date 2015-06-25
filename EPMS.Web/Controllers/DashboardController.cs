@@ -654,6 +654,7 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadRFI(int status, string requester, DateTime date = new DateTime())
         {
+            //Some checks have to be implemented
             if (string.IsNullOrEmpty(requester))
                 requester = Session["UserID"].ToString();
             var orders = GetRFI(status, requester, date);

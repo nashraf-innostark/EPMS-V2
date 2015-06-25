@@ -1173,4 +1173,55 @@ function LoadMyTasks(control) {
         });
 };
 
+function LoadRFIs(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var requester = $("#employeeIdForRFI").val();
+    var status = $("#rfiStatus").val();
+    var rfiDate = $("#rfiDate").val();
+
+    if (control.className == "refresher") {
+        requester = "";
+        status = 0;
+        rfiDate = "";
+    }
+    var url = siteUrl + "/Dashboard/LoadRFI";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            requester: requester,
+            orderStatus: status,
+            date: rfiDate
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#rfiList').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    switch (item.OrderStatus) {
+                        case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            break;
+                        case 1: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
+                            break;
+                        case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
+                            break;
+                        case 4: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
+                            break;
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#rfiList').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
 //#endregion

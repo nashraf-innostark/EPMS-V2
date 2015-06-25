@@ -910,7 +910,7 @@
                         break;
                         
                         <!--Inventory Widgets-->
-                    case "RFI":
+                    case "RFIWidget":
                         if (userPermissionsSet.Contains("RFIWidget"))
                         {
                         <!-- RFI Widget -->
@@ -919,14 +919,14 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/RFI/Index" class="darkGreen">@(EPMS.Web.Resources.Dashboard.Dashboard.RFI)(@EPMS.Web.Resources.Shared.Common.Manager)</a>
+                                            <a href="~/Inventory/RFI/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RFI)(@(Session["RoleKey"].ToString() == "2" ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
-                                                <i class="icon-photon calendar_alt_stroke  opc1"></i>
+                                                <i class="icon-photon box  opc1"></i>
                                             </div>
                                         </div>
-                                        <ul id="customerOrders">
+                                        <ul id="rfiList">
                                             @if (Model.RFI.Any())
                                             {
                                                 foreach (var item in Model.RFI.ToList())
@@ -964,7 +964,7 @@
                                     <!-- Back -->
                                     <div class="widget-area widget-general-stats widget-back">
                                         <div class="widget-savehead">
-                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadOrders(this); "><i class='icon-photon cog'></i>Done</a>
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
                                         </div>
                                         <form>
                                             <div class="container-fluid widget-settings">
@@ -976,7 +976,14 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.employeeId, @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
+                                                            @if (Session["RoleKey"].ToString() == "2")
+                                                            {
+                                                                <input type="date" id="rfiDate"/>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.DropDownListFor(x => x.employeeId, @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -992,7 +999,7 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            <select id="orderStatus">
+                                                            <select id="rfiStatus">
                                                                 <option selected="" value="0">Any</option>
                                                                 <option value="1">Pending</option>
                                                                 <option value="2">On Going</option>

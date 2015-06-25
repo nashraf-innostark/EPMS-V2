@@ -7,6 +7,6 @@ namespace EPMS.Web.DashboardModels
         public long RFIId { get; set; }
         public string RequesterName { get; set; }
         public int Status { get; set; }
-        public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
     }
 }
