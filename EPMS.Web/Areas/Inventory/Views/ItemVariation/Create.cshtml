@@ -18,12 +18,12 @@
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Index">
-                Inventory Item Li
+                Inventory Item List
             </a>
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Create">
-                Create Inventory Item
+                Inventory Item
             </a>
         </li>
         <li class="current">
@@ -1080,6 +1080,24 @@
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
     $(document).ready(function () {
         if (itemVarId == 0 || itemVarId == "") {
+            //Auto Generated Number Calculation
+            var url1 = "/Inventory/ItemVariation/GetLastItemSKuCode";
+            $.ajax({
+                data: itemVarId,
+                url: url1,
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data == null) {
+                        $('#SKUCode').val(101101);
+                    } else {
+                        $('#SKUCode').val(++data);
+                    }
+                },
+                error: function () {
+                    alert("An error has occured!!!");
+                }
+            });
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();
             $("#cancel").show();

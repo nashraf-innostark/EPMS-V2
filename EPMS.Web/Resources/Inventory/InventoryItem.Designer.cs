@@ -178,11 +178,29 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ItemName.
+        ///   Looks up a localized string similar to Item Name.
         /// </summary>
         public static string ItemName {
             get {
                 return ResourceManager.GetString("ItemName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name Arabic.
+        /// </summary>
+        public static string ItemNameAr {
+            get {
+                return ResourceManager.GetString("ItemNameAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name.
+        /// </summary>
+        public static string ItemNameEn {
+            get {
+                return ResourceManager.GetString("ItemNameEn", resourceCulture);
             }
         }
         

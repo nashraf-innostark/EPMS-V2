@@ -63,7 +63,7 @@ namespace EPMS.Implementation.Services
 
         public SaveInventoryItemResponse SaveItem(InventoryItemRequest itemToSave)
         {
-            #region Add
+            #region Update
 
             if (itemToSave.InventoryItem.ItemId > 0)
             {
@@ -72,7 +72,7 @@ namespace EPMS.Implementation.Services
 
             #endregion
 
-            #region Update
+            #region Add
 
             else
             {
@@ -84,7 +84,7 @@ namespace EPMS.Implementation.Services
             return new SaveInventoryItemResponse();
         }
 
-        private void UpdateInventoryItem(InventoryItem inventoryItem)
+        private void SaveInventoryItem(InventoryItem inventoryItem)
         {
             inventoryItem.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             inventoryItem.RecCreatedDt = DateTime.Now;
@@ -94,7 +94,7 @@ namespace EPMS.Implementation.Services
             inventoryItemRepository.SaveChanges();
         }
 
-        private void SaveInventoryItem(InventoryItem inventoryItem)
+        private void UpdateInventoryItem(InventoryItem inventoryItem)
         {
             inventoryItem.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             inventoryItem.RecLastUpdatedDt = DateTime.Now;
