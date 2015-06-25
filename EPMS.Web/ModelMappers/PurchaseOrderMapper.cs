@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
 using EPMS.Web.ViewModels.PurchaseOrder;
 
 namespace EPMS.Web.ModelMappers
@@ -64,6 +65,31 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+            };
+        }
+        public static PurchaseOrderStatus CreateForStatus(this Models.PurchaseOrder source)
+        {
+            var notesE = source.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            return new PurchaseOrderStatus
+            {
+                PurchaseOrderId = source.PurchaseOrderId,
+                Notes = notesE,
+                NotesAr = notesA,
+                ManagerId = source.ManagerId,
+                Status = source.Status,
             };
         }
         public static PurchaseOrder CreateFromClientToServer(this PurchaseOrderCreateViewModel source)

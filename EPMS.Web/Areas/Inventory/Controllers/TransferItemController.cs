@@ -89,36 +89,41 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)] //this is due to CK Editor
         public ActionResult Detail(TransferItemCreateViewModel viewModel)
         {
-            var notesE = viewModel.Tir.NotesE;
-            if (!string.IsNullOrEmpty(notesE))
-            {
-                notesE = notesE.Replace("\r", "");
-                notesE = notesE.Replace("\t", "");
-                notesE = notesE.Replace("\n", "");
-            }
-            var notesA = viewModel.Tir.NotesA;
-            if (!string.IsNullOrEmpty(notesA))
-            {
-                notesA = notesA.Replace("\r", "");
-                notesA = notesA.Replace("\t", "");
-                notesA = notesA.Replace("\n", "");
-            }
-            TransferItemStatus itemStatus = new TransferItemStatus
-            {
-                Id = viewModel.Tir.Id,
-                NotesEn = notesE,
-                NotesAr = notesA,
-                Status = viewModel.Tir.Status,
-                ManagerId = User.Identity.GetUserId()
-            };
-            if (tirService.UpdateTirStatus(itemStatus))
+            //var notesE = viewModel.Tir.NotesE;
+            //if (!string.IsNullOrEmpty(notesE))
+            //{
+            //    notesE = notesE.Replace("\r", "");
+            //    notesE = notesE.Replace("\t", "");
+            //    notesE = notesE.Replace("\n", "");
+            //}
+            //var notesA = viewModel.Tir.NotesA;
+            //if (!string.IsNullOrEmpty(notesA))
+            //{
+            //    notesA = notesA.Replace("\r", "");
+            //    notesA = notesA.Replace("\t", "");
+            //    notesA = notesA.Replace("\n", "");
+            //}
+            //TransferItemStatus itemStatus = new TransferItemStatus
+            //{
+            //    Id = viewModel.Tir.Id,
+            //    NotesEn = notesE,
+            //    NotesAr = notesA,
+            //    Status = viewModel.Tir.Status,
+            //    ManagerId = User.Identity.GetUserId()
+            //};
+            viewModel.Tir.RecUpdatedBy = User.Identity.GetUserId();
+            viewModel.Tir.RecUpdatedDate = DateTime.Now;
+            viewModel.Tir.ManagerId = User.Identity.GetUserId();
+            var tirToUpdate = viewModel.Tir.CreateForStatus();
+            if (tirService.UpdateTirStatus(tirToUpdate))
             {
                 TempData["message"] = new MessageViewModel
                 {
                     Message = Resources.Inventory.TIR.TIRDetail.RecordUpdated,
                     IsUpdated = true
                 };
-                return RedirectToAction("Detail", new { id = viewModel.Tir.Id});
+                return RedirectToAction("Index");
+                //return RedirectToAction("Detail", new { id = viewModel.Tir.Id});
             }
             return View(viewModel);
         }

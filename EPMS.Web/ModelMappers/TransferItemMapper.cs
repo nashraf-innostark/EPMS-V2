@@ -106,5 +106,32 @@ namespace EPMS.Web.ModelMappers
                 TIRItems = source.TirItems.Select(x => x.CreateFromClientToServer(source.Tir.Id, source.Tir.RecCreatedBy, source.Tir.RecCreatedDate, source.Tir.RecUpdatedDate)).ToList()
             };
         }
+        public static TransferItemStatus CreateForStatus(this Models.TIR source)
+        {
+            var notesE = source.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            return new TransferItemStatus
+            {
+                Id = source.Id,
+                ManagerId = source.ManagerId,
+                Status = source.Status,
+                NotesEn = notesE,
+                NotesAr = notesA,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+            };
+        }
     }
 }

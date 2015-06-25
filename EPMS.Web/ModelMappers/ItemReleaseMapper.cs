@@ -85,5 +85,32 @@ namespace EPMS.Web.ModelMappers
                 NotesAr = notesA,
             };
         }
+        public static ItemReleaseStatus CreateForStatus(this Models.ItemRelease source)
+        {
+            var notesE = source.Notes;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.NotesAr;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            return new ItemReleaseStatus
+            {
+                ItemReleaseId = source.ItemReleaseId,
+                Status = source.Status ?? 3,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+                ManagerId = source.ManagerId,
+                Notes = notesE,
+                NotesAr = notesA,
+            };
+        }
     }
 }

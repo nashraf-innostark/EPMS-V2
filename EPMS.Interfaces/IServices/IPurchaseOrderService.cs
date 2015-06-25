@@ -12,6 +12,7 @@ namespace EPMS.Interfaces.IServices
         bool SavePO(PurchaseOrder purchaseOrder);
         bool AddPO(PurchaseOrder purchaseOrder);
         bool UpdatePO(PurchaseOrder purchaseOrder);
+        bool UpdatePOStatus(PurchaseOrderStatus purchaseOrder);
         void DeletePO(PurchaseOrder purchaseOrder);
     }
 }

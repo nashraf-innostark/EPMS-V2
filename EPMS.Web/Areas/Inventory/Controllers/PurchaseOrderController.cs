@@ -108,8 +108,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.PurchaseOrder.ManagerId = User.Identity.GetUserId();
             viewModel.PurchaseOrder.RecUpdatedBy = User.Identity.GetUserId();
             viewModel.PurchaseOrder.RecUpdatedDate = DateTime.Now;
-            var purchaseOrderToUpdate = viewModel.PurchaseOrder.CreateFromClientToServer();
-            if (orderService.UpdatePO(purchaseOrderToUpdate))
+            PurchaseOrderStatus purchaseOrderToUpdate = new PurchaseOrderStatus
+            {
+                PurchaseOrderId = viewModel.PurchaseOrder.PurchaseOrderId,
+                Notes = notesE,
+                NotesAr = notesA,
+                Status = viewModel.PurchaseOrder.Status,
+                ManagerId = User.Identity.GetUserId()
+            };
+            if (orderService.UpdatePOStatus(purchaseOrderToUpdate))
             {
                 TempData["message"] = new MessageViewModel
                 {

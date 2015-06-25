@@ -12,6 +12,7 @@ using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
+using FaceSharp.Api.Objects;
 
 namespace EPMS.Implementation.Services
 {
@@ -51,21 +52,6 @@ namespace EPMS.Implementation.Services
                 ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
             IList<RFI> customerRfis = new List<RFI>();
-            //if (response.ItemRelease.RequesterId != null)
-            //{
-            //    var customerOrders = ordersRepository.GetOrdersByCustomerId((long)response.ItemRelease.RequesterId);
-                
-            //    foreach (var customerOrder in customerOrders)
-            //    {
-            //        if (customerOrder.RFIs.Any())
-            //        {
-            //            foreach (var rfI in customerOrder.RFIs)
-            //            {
-            //                customerRfis.Add(rfI);
-            //            }
-            //        }
-            //    }
-            //}
             response.Rfis = customerRfis;
             var itemVariations = itemVariationRepository.GetAll();
             response.ItemWarehouses = new List<ItemWarehouse>();
@@ -176,6 +162,8 @@ namespace EPMS.Implementation.Services
                 }
                 itemReleaseRepository.Add(itemRelease);
                 itemReleaseRepository.SaveChanges();
+
+                
                
                 //Send notification
                 SendNotification(itemRelease);
@@ -218,6 +206,8 @@ namespace EPMS.Implementation.Services
                 itemRelease.Notes = releaseStatus.Notes;
                 itemRelease.NotesAr = releaseStatus.NotesAr;
                 itemRelease.ManagerId = releaseStatus.ManagerId;
+                itemRelease.RecUpdatedBy = releaseStatus.RecUpdatedBy;
+                itemRelease.RecUpdatedDate = releaseStatus.RecUpdatedDate;
                 if (itemRelease.Status != releaseStatus.Status && releaseStatus.Status != 3)
                 {
                     itemRelease.Status = releaseStatus.Status;
@@ -321,6 +311,7 @@ namespace EPMS.Implementation.Services
 
         private void SendNotification(ItemRelease itemRelease, bool isUpdated = false)
         {
+            var requesterId = aspNetUserRepository.Find(itemRelease.RequesterId).EmployeeId.ToString();
             #region Item Release For Warehouse Manager
 
             NotificationViewModel notificationViewModel = new NotificationViewModel
@@ -364,7 +355,7 @@ namespace EPMS.Implementation.Services
                     SystemGenerated = true,
                     ForAdmin = false,
                     ForRole = UserRole.Employee, //Employee,
-                    EmployeeId = Convert.ToInt64(itemRelease.RequesterId)
+                    EmployeeId = Convert.ToInt64(requesterId)
                 }
             };
 

@@ -149,6 +149,11 @@ namespace EPMS.Implementation.Services
             }
         }
 
+        public bool UpdatePOStatus(PurchaseOrderStatus purchaseOrder)
+        {
+            return true;
+        }
+
         public void DeletePO(PurchaseOrder purchaseOrder)
         {
             repository.Delete(purchaseOrder);
