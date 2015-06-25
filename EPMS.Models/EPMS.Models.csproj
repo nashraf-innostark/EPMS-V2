@@ -152,7 +152,7 @@
     <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RifHistoryMapper.cs" />
     <Compile Include="ModelMapers\RifItemHistoryMapper.cs" />
-    <Compile Include="ModelMapers\RIFItemMapper.cs" />
+    <Compile Include="ModelMapers\RfiItemMapper.cs" />
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
@@ -246,7 +246,7 @@
     <Compile Include="ModelMapers\OrderMapper.cs" />
     <Compile Include="ModelMapers\ProjectMapper.cs" />
     <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
-    <Compile Include="ModelMapers\RFIItemMapper.cs" />
+    <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\DepartmentSearchRequest.cs" />
     <Compile Include="RequestModels\EmployeeRequestSearchRequest.cs" />

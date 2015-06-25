@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RFI;
 namespace EPMS.Web.ModelMappers.Inventory.RFI
@@ -91,6 +92,18 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
         #endregion
 
         #region Server to Client
+        public static RFIWidget CreateRFIWidget(this EPMS.Models.DomainModels.RFI source)
+        {
+            var rfi = new RFIWidget
+            {
+                RFIId = source.RFIId,
+                Status = source.Status,
+                RequesterName = (source.AspNetUser != null && source.AspNetUser.Employee != null) ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE : string.Empty,
+                RecCreatedDate = source.RecCreatedDate
+            };
+            return rfi;
+        }
+
         public static Models.RFI CreateRfiServerToClient(this EPMS.Models.DomainModels.RFI source)
         {
             var rfi = new Models.RFI
@@ -114,7 +127,6 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             };
             return rfi;
         }
-
         public static RFIItem CreateRfiItemServerToClient(this EPMS.Models.DomainModels.RFIItem source)
         {
             var rfiItem = new RFIItem

@@ -2,14 +2,14 @@
 
 namespace EPMS.Models.ModelMapers
 {
-    public static class RfiItemMapper
+    public static class RifItemMapper
     {
-        public static RFIItem CreateRfiItem(this RFIItem source)
+        public static RIFItem CreateRfiItem(this RIFItem source)
         {
-            return new RFIItem
+            return new RIFItem
             {
-                RFIItemId = source.RFIItemId,
-                RFIId = source.RFIId,
+                RIFItemId = source.RIFItemId,
+                RIFId = source.RIFId,
                 ItemVariationId = source.ItemVariationId,
                 ItemDetails = source.ItemDetails,
                 ItemQty = source.ItemQty,

@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -26,5 +28,13 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        public long GetItemReleasedQuantity(long itemVariationId, long warehousrId)
+        {
+            var itemAvailableQty =
+               DbSet.Where(x => x.ItemVariationId == itemVariationId && x.WarehouseId == warehousrId)
+                   .Sum(x => x.Quantity);
+            return Convert.ToInt64(itemAvailableQty);
+        }
     }
 }
