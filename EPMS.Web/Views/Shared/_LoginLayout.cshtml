@@ -115,49 +115,32 @@
         <ul class="nav nav-user-menu">
             <li class="user-sub-menu-container">
                 <a href="javascript:;">
-                    <i class="user-icon"></i><span class="nav-user-selection">Theme Options</span><i class="icon-menu-arrow"></i>
-                </a>
-                <ul class="nav user-sub-menu">
-                    <li class="light">
-                        <a href="javascript:;">
-                            <i class="icon-photon stop"></i>Light Version
-                        </a>
-                    </li>
-                    <li class="dark">
-                        <a href="javascript:;">
-                            <i class="icon-photon stop"></i>Dark Version
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="user-sub-menu-container">
-                <a href="javascript:;">
-                    <img src="/EPMS/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;"><i>EN</i>
+                    @if (Session["Culture"] == null || Session["Culture"].ToString() == "en")
+                    {
+                        <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.EN</i>
+                    }
+                    else
+                    {
+                        <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.AR</i>
+                    }
                 </a>
                 <ul class="nav user-sub-menu">
                     <li class="">
-                        <a href="/EPMS/Culture/Set/EN">
-                            <img src="/EPMS/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;">EN
+                        <a href="~/Culture/Set/EN">
+                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.EN
                         </a>
                     </li>
                     <li class="">
-                        <a href="/EPMS/Culture/Set/AR">
-                            <img src="/EPMS/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;">AR
+                        <a href="~/Culture/Set/AR">
+                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.AR
                         </a>
                     </li>
                 </ul>
             </li>
 
             <li>
-                <a href="http://www.masar.com" target="_blank">
+                <a href="http://@url" target="_blank">
                     <i class="icon-photon target"></i>
-                </a>
-            </li>
-
-            <li>
-                <a href="/EPMS/Notification/Index">
-                    <i class="icon-photon comment_alt2_stroke"></i>
-                    <div class="notification-count">35</div>
                 </a>
             </li>
         </ul>
