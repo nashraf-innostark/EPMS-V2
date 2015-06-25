@@ -80,7 +80,7 @@ namespace EPMS.Implementation.Services
             foreach (var itemWarehouse in response.ItemWarehouses)
             {
                 ItemWarehouse warehouse = itemWarehouse;
-                var item = itemReleaseQuantity.Where(x => x.WarehouseId == warehouse.WarehousrId && x.ItemVariationId == warehouse.ItemVariationId);
+                var item = itemReleaseQuantity.Where(x => x.WarehouseId == warehouse.WarehouseId && x.ItemVariationId == warehouse.ItemVariationId);
                 var quantity = item.Sum(x => x.Quantity);
                 if (quantity != null)
                 {
@@ -126,7 +126,7 @@ namespace EPMS.Implementation.Services
             response.IrfItems = response.RecentIrf.ItemReleaseDetails;
             if (response.RecentIrf != null)
             {
-                if (!string.IsNullOrEmpty(response.RecentIrf.ManagerId))
+                if (!string.IsNullOrEmpty(response.RecentIrf.ManagerId) && response.RecentIrf.Manager.Employee != null)
                 {
                     var manager = response.RecentIrf.Manager.Employee;
                     response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
@@ -218,7 +218,7 @@ namespace EPMS.Implementation.Services
                 itemRelease.Notes = releaseStatus.Notes;
                 itemRelease.NotesAr = releaseStatus.NotesAr;
                 itemRelease.ManagerId = releaseStatus.ManagerId;
-                if (itemRelease.Status != releaseStatus.Status && releaseStatus.Status != 1)
+                if (itemRelease.Status != releaseStatus.Status && releaseStatus.Status != 3)
                 {
                     itemRelease.Status = releaseStatus.Status;
                     var historyToAdd = itemRelease.CreateFromIrfToIrfHistory();

@@ -6,6 +6,6 @@ namespace EPMS.Interfaces.Repository
     public interface IItemWarehouseRepository : IBaseRepository<ItemWarehouse, long>
     {
         IEnumerable<ItemWarehouse> GetItemsByVariationId(long variationId);
-        long GetItemQuantity(long itemVariationId, long warehousrId);
+        long GetItemQuantity(long itemVariationId, long WarehouseId);
     }
 }
