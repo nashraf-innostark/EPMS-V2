@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
@@ -160,8 +158,9 @@ namespace EPMS.Implementation.Services
                      //check item remaining Qty
                     foreach (var itemReleaseQuantity in itemReleaseDetail.ItemReleaseQuantities)
                     {
-                        var itemAvailableQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId),
-                            itemReleaseQuantity.WarehouseId);
+                        var itemQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId),itemReleaseQuantity.WarehouseId);
+                        var itemReleasedQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId),itemReleaseQuantity.WarehouseId);
+                        var itemAvailableQty = itemQty - itemReleasedQty;
                         if (itemAvailableQty <= 1)
                         {
                             //Send notification to Inventory Manager about short in-hand inventory

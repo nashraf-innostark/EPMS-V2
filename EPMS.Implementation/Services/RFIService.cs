@@ -98,6 +98,11 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
+        public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime? date)
+        {
+            return rfiRepository.GetRecentRFIs(status, requester, date);
+        }
+
         public RFI FindRFIById(long id)
         {
             return rfiRepository.Find(id);

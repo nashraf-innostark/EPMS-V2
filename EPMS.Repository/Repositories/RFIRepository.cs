@@ -101,5 +101,14 @@ namespace EPMS.Repository.Repositories
             }
             return new RfiRequestResponse { Rfis = rfis, TotalCount = DbSet.Count(query) };
         }
+
+        public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime? date)
+        {
+            if (requester=="Admin")
+            {
+                return status > 0 ? DbSet.Where(x => x.Status == status).OrderByDescending(x => x.RecCreatedDate).Take(5) : DbSet.OrderByDescending(x => x.RecCreatedDate).Take(5);
+            }
+            return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status).OrderByDescending(x => x.RecCreatedDate).Take(5) : DbSet.Where(x => x.RecCreatedBy == requester).OrderByDescending(x => x.RecCreatedDate).Take(5);
+        }
     }
 }

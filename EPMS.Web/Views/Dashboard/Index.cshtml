@@ -908,6 +908,111 @@
                             <!-- Task Completion Widget ends -->
                         }
                         break;
+                        
+                        <!--Inventory Widgets-->
+                    case "RFI":
+                        if (userPermissionsSet.Contains("RFIWidget"))
+                        {
+                        <!-- RFI Widget -->
+                              <div class="widget-holder" id="RFIWidget">
+                                <div class="widget-flipper">
+                                    <!-- Front -->
+                                    <div class="widget-area widget-general-stats widget-front">
+                                        <div class="widget-head ">
+                                            <a href="~/Inventory/RFI/Index" class="darkGreen">@(EPMS.Web.Resources.Dashboard.Dashboard.RFI)(@EPMS.Web.Resources.Shared.Common.Manager)</a>
+                                            <div>
+                                                <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                                                <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                                                <i class="icon-photon calendar_alt_stroke  opc1"></i>
+                                            </div>
+                                        </div>
+                                        <ul id="customerOrders">
+                                            @if (Model.RFI.Any())
+                                            {
+                                                foreach (var item in Model.RFI.ToList())
+                                                {
+                                                    <li>
+                                                        <a href="~/Inventory/RFI/Create/@item.RFIId">  <span>@item.RFIId</span></a>
+                                                        <div class="dateFormatter">
+                                                            @item.RecCreatedDate
+                                                            @switch (item.Status)
+                                                            {
+                                                                case 2:
+                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
+                                                                    break;
+                                                                case 1:
+                                                                <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
+                                                                    break;
+                                                                case 3:
+                                                                <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
+                                                                    break;
+                                                                case 4:
+                                                                <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
+                                                                    break;
+                                                            }
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li>No record found</li>
+                                            }
+
+                                        </ul>
+                                    </div>
+                                    <!-- Back -->
+                                    <div class="widget-area widget-general-stats widget-back">
+                                        <div class="widget-savehead">
+                                            <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadOrders(this); "><i class='icon-photon cog'></i>Done</a>
+                                        </div>
+                                        <form>
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(x => x.employeeId, @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="container-fluid widget-settings">
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group row-fluid">
+                                                    <div class="span12">
+                                                        <div class="controls">
+                                                            <select id="orderStatus">
+                                                                <option selected="" value="0">Any</option>
+                                                                <option value="1">Pending</option>
+                                                                <option value="2">On Going</option>
+                                                                <option value="4">Completed</option>
+                                                                <option value="3">Canceled</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tempLoader" style="display: none;"></div>
+    </div>
+                        }
+                        break;
+
+
                 }
             }
         </div>

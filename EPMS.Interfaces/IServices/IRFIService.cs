@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -10,6 +11,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<RFI> GetAll();
         RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest);
         RfiHistoryResponse GetRfiHistoryData(long? parentId);
+        IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime? date);
         RFI FindRFIById(long id);
         bool SaveRFI(RFI rfi);
         bool AddRFI(RFI rfi);

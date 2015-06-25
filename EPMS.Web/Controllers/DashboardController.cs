@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.Claims;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
-using EPMS.Models.MenuModels;
-using EPMS.Models.ModelMapers;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.PMS;
+using EPMS.Web.ModelMappers.Inventory.RFI;
 using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-using WebGrease.Css.Extensions;
 using Complaint = EPMS.Web.DashboardModels.Complaint;
 using Customer = EPMS.Web.DashboardModels.Customer;
 using Department = EPMS.Web.DashboardModels.Department;
@@ -38,6 +33,7 @@ namespace EPMS.Web.Controllers
         #region Constructor and Private Services objects
 
         private readonly IProjectTaskService projectTaskService;
+        private readonly IRFIService rfiService;
         private readonly IMeetingService meetingService;
         private readonly IProjectService projectService;
         private readonly IPayrollService payrollService;
@@ -56,6 +52,7 @@ namespace EPMS.Web.Controllers
         /// Dashboard constructor
         /// </summary>
         /// <param name="projectTaskService"></param>
+        /// <param name="rfiService"></param>
         /// <param name="meetingService"></param>
         /// <param name="projectService"></param>
         /// <param name="payrollService"></param>
@@ -68,9 +65,10 @@ namespace EPMS.Web.Controllers
         /// <param name="complaintService"></param>
         /// <param name="preferencesService"></param>
         /// <param name="menuRightsService"></param>
-        public DashboardController(IProjectTaskService projectTaskService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
+        public DashboardController(IProjectTaskService projectTaskService,IRFIService rfiService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
         {
             this.projectTaskService = projectTaskService;
+            this.rfiService = rfiService;
             this.meetingService = meetingService;
             this.projectService = projectService;
             this.payrollService = payrollService;
@@ -104,11 +102,33 @@ namespace EPMS.Web.Controllers
                 return RedirectToAction("Login", "Account");
             }
             ViewBag.UserRole = Session["RoleName"];
+
+
             var requester = string.Empty;
-            if ((string)Session["RoleName"] != "Customer")
-                requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
-            else
-                requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+
+            //if ((string)Session["RoleName"] != "Customer")
+            //    requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["EmployeeID"].ToString();
+            //else
+            //    requester = (string)Session["RoleName"] == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                    case UserRole.Admin:
+                    requester = "Admin";
+                        break;
+                    case UserRole.InventoryManager:
+                        requester = "Admin";
+                        break;
+                    case UserRole.WarehouseManager:
+                        requester = "Admin";
+                        break;
+                    case UserRole.Employee:
+                        requester = Session["EmployeeID"].ToString();
+                        break;
+                    case UserRole.Customer:
+                        requester = Session["CustomerID"].ToString();
+                        break;
+            }
 
             #region Employee Requests Widget
 
@@ -191,6 +211,21 @@ namespace EPMS.Web.Controllers
             }
             #endregion
 
+            #region RFI Widget
+            if (userPermissionsSet.Contains("RFIWidget"))
+            {
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())
+                {
+                    dashboardViewModel.RFI = GetRFI(0, Session["UserID"].ToString());// status 0 means all
+                }
+                else
+                {
+                    dashboardViewModel.RFI = GetRFI(0, requester);// status 0 means all
+                }
+                
+            }
+            #endregion
+
             #region Widget Preferences
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchMenuItems();
             dashboardViewModel.LaunchItems = LoadQuickLaunchUserItems();
@@ -265,6 +300,15 @@ namespace EPMS.Web.Controllers
         {
             return ordersService.GetRecentOrders(requester, status).Select(x => x.CreateForDashboard());
         }
+
+        private IEnumerable<RFIWidget> GetRFI(int status,string requester, DateTime date=new DateTime())
+        {
+            var rfis = rfiService.GetRecentRFIs(status,requester,date);
+            if(rfis.Any())
+                return rfis.Select(x => x.CreateRFIWidget());
+            return new List<RFIWidget>();
+        }
+
         private ProjectResponseForDashboard GetProjects(string requester, long projectId)
         {
             return projectService.LoadProjectForDashboard(requester, projectId);
@@ -598,6 +642,22 @@ namespace EPMS.Web.Controllers
             string userId = ClaimsPrincipal.Current.Identity.GetUserId();
             quickLaunchItemService.DeleteItem(userId, menuId);
             return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Load RFIs
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="requester"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadRFI(int status, string requester, DateTime date = new DateTime())
+        {
+            if (string.IsNullOrEmpty(requester))
+                requester = Session["UserID"].ToString();
+            var orders = GetRFI(status, requester, date);
+            return Json(orders, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
