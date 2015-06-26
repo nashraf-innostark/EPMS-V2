@@ -1176,12 +1176,13 @@ function LoadMyTasks(control) {
 function LoadRFIs(control) {
     Loader(control);
     var siteUrl = $('#siteURL').val();
-
+    var isAdmin = false;
     var requester = "";
     if ($("#employeeIdForRFI").val() == undefined) {
         requester = "";
     } else {
         requester = $("#employeeIdForRFI").val();
+        isAdmin = true;
     }
     
     var status = $("#rfiStatus").val();
@@ -1206,16 +1207,27 @@ function LoadRFIs(control) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
             $('#rfiList').empty();
-            debugger
+            
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
-                    switch (item.Status) {
-                        case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
-                            break;
-                        case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
-                            break;
-                        case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Create/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
-                            break;
+                    if (isAdmin) {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    } else {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
                     }
                 });
             }

@@ -933,9 +933,23 @@
                                                 foreach (var item in Model.RFI.ToList())
                                                 {
                                                     <li>
-                                                        <a href="~/Inventory/RFI/Create/@item.RFIId">  <span>@item.RFIId</span></a>
+                                                        <a href="~/Inventory/RFI/Details/@item.RFIId">
+                                                            <span>
+                                                                @item.RFIId
+                                                            </span>
+                                                        </a>
+                                                        @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                                        {
+                                                            <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                                        }
+                                                        else if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                                        {
+                                                            <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                                        }
                                                         <div class="dateFormatter">
+
                                                             @item.RecCreatedDate
+
                                                             @switch (item.Status)
                                                             {
                                                                 case 6:

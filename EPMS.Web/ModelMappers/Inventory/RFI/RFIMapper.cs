@@ -94,11 +94,16 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
         #region Server to Client
         public static RFIWidget CreateRFIWidget(this EPMS.Models.DomainModels.RFI source)
         {
+            var empName = (source.AspNetUser != null && source.AspNetUser.Employee != null)
+                ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE +
+                  " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : string.Empty;
             var rfi = new RFIWidget
             {
                 RFIId = source.RFIId,
                 Status = source.Status,
-                RequesterName = (source.AspNetUser != null && source.AspNetUser.Employee != null) ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE : string.Empty,
+                RequesterName = empName,
+                RequesterNameShort = empName.Length>7?empName.Substring(0,7):empName,
                 RecCreatedDate = source.RecCreatedDate.ToShortDateString()
             };
             return rfi;
