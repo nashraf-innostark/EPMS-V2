@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RIF;
 
@@ -91,6 +92,22 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
         #endregion
 
         #region Server to Client
+        public static RIFWidget CreateWidget(this EPMS.Models.DomainModels.RIF source)
+        {
+            var empName = (source.AspNetUser != null && source.AspNetUser.Employee != null)
+                ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE +
+                  " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : string.Empty;
+            var rfi = new RIFWidget
+            {
+                Id = source.RIFId,
+                Status = source.Status,
+                RequesterName = empName,
+                RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString()
+            };
+            return rfi;
+        }
         public static Models.RIF CreateRifServerToClient(this EPMS.Models.DomainModels.RIF source)
         {
             var rif = new Models.RIF

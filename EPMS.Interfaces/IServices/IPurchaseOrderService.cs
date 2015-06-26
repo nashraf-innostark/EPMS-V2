@@ -1,4 +1,6 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
@@ -13,5 +15,6 @@ namespace EPMS.Interfaces.IServices
         bool AddPO(PurchaseOrder purchaseOrder);
         bool UpdatePO(PurchaseOrder purchaseOrder);
         void DeletePO(PurchaseOrder purchaseOrder);
+        IEnumerable<PurchaseOrder> GetRecentPOs(int status, string requester, DateTime date);
     }
 }

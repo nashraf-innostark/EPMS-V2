@@ -10,7 +10,9 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.DashboardModels;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ModelMappers.Inventory.DIF;
 using EPMS.Web.ModelMappers.Inventory.RFI;
+using EPMS.Web.ModelMappers.Inventory.RIF;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
@@ -32,6 +34,12 @@ namespace EPMS.Web.Controllers
     {
         #region Constructor and Private Services objects
 
+        private readonly IWarehouseService warehouseService;
+        private readonly IItemReleaseService itemReleaseService;
+        private readonly IRIFService rifService;
+        private readonly IDIFService difService;
+        private readonly ITIRService tirService;
+        private readonly IPurchaseOrderService purchaseOrderService;
         private readonly IProjectTaskService projectTaskService;
         private readonly IRFIService rfiService;
         private readonly IMeetingService meetingService;
@@ -51,6 +59,12 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Dashboard constructor
         /// </summary>
+        /// <param name="warehouseService"></param>
+        /// <param name="itemReleaseService"></param>
+        /// <param name="rifService"></param>
+        /// <param name="difService"></param>
+        /// <param name="tirService"></param>
+        /// <param name="purchaseOrderService"></param>
         /// <param name="projectTaskService"></param>
         /// <param name="rfiService"></param>
         /// <param name="meetingService"></param>
@@ -65,8 +79,14 @@ namespace EPMS.Web.Controllers
         /// <param name="complaintService"></param>
         /// <param name="preferencesService"></param>
         /// <param name="menuRightsService"></param>
-        public DashboardController(IProjectTaskService projectTaskService,IRFIService rfiService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
+        public DashboardController(IWarehouseService warehouseService,IItemReleaseService itemReleaseService,IRIFService rifService,IDIFService difService, ITIRService tirService, IPurchaseOrderService purchaseOrderService, IProjectTaskService projectTaskService,IRFIService rfiService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
         {
+            this.warehouseService = warehouseService;
+            this.itemReleaseService = itemReleaseService;
+            this.rifService = rifService;
+            this.difService = difService;
+            this.tirService = tirService;
+            this.purchaseOrderService = purchaseOrderService;
             this.projectTaskService = projectTaskService;
             this.rfiService = rfiService;
             this.meetingService = meetingService;
@@ -226,6 +246,87 @@ namespace EPMS.Web.Controllers
             }
             #endregion
 
+            #region RIF Widget
+            if (userPermissionsSet.Contains("RIFWidget"))
+            {
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())//Means employee is here
+                {
+                    dashboardViewModel.RIF = GetRIF(0, Session["UserID"].ToString());// status 0 means all
+                }
+                else
+                {
+                    dashboardViewModel.RIF = GetRIF(0, requester);// status 0 means all
+                }
+
+            }
+            #endregion
+
+            #region IRF Widget
+            if (userPermissionsSet.Contains("IRFWidget"))
+            {
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())//Means employee is here
+                {
+                    dashboardViewModel.IRF = GetIRF(0, Session["UserID"].ToString());// status 0 means all
+                }
+                else
+                {
+                    dashboardViewModel.IRF = GetIRF(0, requester);// status 0 means all
+                }
+
+            }
+            #endregion
+
+            #region DIF Widget
+            if (userPermissionsSet.Contains("DIFWidget"))
+            {
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())//Means employee is here
+                {
+                    dashboardViewModel.DIF = GetDIF(0, Session["UserID"].ToString());// status 0 means all
+                }
+                else
+                {
+                    dashboardViewModel.DIF = GetDIF(0, requester);// status 0 means all
+                }
+
+            }
+            #endregion
+
+            #region TIR Widget
+            if (userPermissionsSet.Contains("TIRWidget"))
+            {
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())//Means employee is here
+                {
+                    dashboardViewModel.TIR = GetTIR(0, Session["UserID"].ToString());// status 0 means all
+                }
+                else
+                {
+                    dashboardViewModel.TIR = GetTIR(0, requester);// status 0 means all
+                }
+
+            }
+            #endregion
+
+            #region PO Widget
+            if (userPermissionsSet.Contains("POWidget"))
+            {
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())//Means employee is here
+                {
+                    dashboardViewModel.PO = GetPO(0, Session["UserID"].ToString());// status 0 means all
+                }
+                else
+                {
+                    dashboardViewModel.PO = GetPO(0, requester);// status 0 means all
+                }
+
+            }
+            #endregion
+
+            #region Warehouses for DDL
+            var warehouses = warehouseService.GetAll().ToList();
+            if (warehouses.Any())
+                dashboardViewModel.Warehouses = warehouses.Select(x => x.CreateDDL());
+            #endregion
+
             #region Widget Preferences
             dashboardViewModel.QuickLaunchItems = LoadQuickLaunchMenuItems();
             dashboardViewModel.LaunchItems = LoadQuickLaunchUserItems();
@@ -307,6 +408,46 @@ namespace EPMS.Web.Controllers
             if(rfis.Any())
                 return rfis.Select(x => x.CreateRFIWidget());
             return new List<RFIWidget>();
+        }
+
+        private IEnumerable<RIFWidget> GetRIF(int status, string requester, DateTime date = new DateTime())
+        {
+            var rfis = rifService.GetRecentRIFs(status, requester, date);
+            if (rfis.Any())
+                return rfis.Select(x => x.CreateWidget());
+            return new List<RIFWidget>();
+        }
+
+        private IEnumerable<IRFWidget> GetIRF(int status, string requester, DateTime date = new DateTime())
+        {
+            var rfis = itemReleaseService.GetRecentIRFs(status, requester, date);
+            if (rfis.Any())
+                return rfis.Select(x => x.CreateWidget());
+            return new List<IRFWidget>();
+        }
+
+        private IEnumerable<DIFWidget> GetDIF(int status, string requester, DateTime date = new DateTime())
+        {
+            var rfis = difService.GetRecentDIFs(status, requester, date);
+            if (rfis.Any())
+                return rfis.Select(x => x.CreateWidget());
+            return new List<DIFWidget>();
+        }
+
+        private IEnumerable<TIRWidget> GetTIR(int status, string requester, DateTime date = new DateTime())
+        {
+            var rfis = tirService.GetRecentTIRs(status, requester, date);
+            if (rfis.Any())
+                return rfis.Select(x => x.CreateWidget());
+            return new List<TIRWidget>();
+        }
+
+        private IEnumerable<POWidget> GetPO(int status, string requester, DateTime date = new DateTime())
+        {
+            var rfis = purchaseOrderService.GetRecentPOs(status, requester, date);
+            if (rfis.Any())
+                return rfis.Select(x => x.CreateWidget());
+            return new List<POWidget>();
         }
 
         private ProjectResponseForDashboard GetProjects(string requester, long projectId)

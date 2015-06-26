@@ -1032,6 +1032,611 @@
                         }
                         break;
 
+                    case "RIFWidget":
+                        if (userPermissionsSet.Contains("RIFWidget"))
+                        {
+                        <!-- RFI Widget -->
+    <div class="widget-holder" id="RIFWidget">
+        <div class="widget-flipper">
+            <!-- Front -->
+            <div class="widget-area widget-general-stats widget-front">
+                <div class="widget-head ">
+                    <a href="~/Inventory/RIF/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                    <div>
+                        <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                        <i class="icon-photon box  opc1"></i>
+                    </div>
+                </div>
+                <ul id="rfiList">
+                    @if (Model.RIF.Any())
+                    {
+                        foreach (var item in Model.RIF.ToList())
+                        {
+                            <li>
+                                <a href="~/Inventory/RIF/Details/@item.Id">
+                                    <span>
+                                        @item.Id
+                                    </span>
+                                </a>
+                                @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                else if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                <div class="dateFormatter">
+
+                                    @item.RecCreatedDate
+
+                                    @switch (item.Status)
+                                    {
+                                        case 6:
+                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                            break;
+                                        case 3:
+                                        <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                            break;
+                                        case 2:
+                                        <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                            break;
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No record found</li>
+                    }
+
+                </ul>
+            </div>
+            <!-- Back -->
+            <div class="widget-area widget-general-stats widget-back">
+                <div class="widget-savehead">
+                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
+                </div>
+                <form>
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
+                                    {
+                                        @*<input type="date" id="rfiDate"/>*@
+                                        @Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "rifDate", @readonly = true, @placeholder = "Select Date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRIF" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @Html.DropDownList("Status", new[]
+                                                                {
+                                                                    new SelectListItem { Value = "0" , Text = "Any" },
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                }, new { @id = "rifStatus" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tempLoader" style="display: none;"></div>
+    </div>
+                        }
+                        break;
+
+                    case "IRFWidget":
+                        if (userPermissionsSet.Contains("IRFWidget"))
+                        {
+                        <!-- RFI Widget -->
+    <div class="widget-holder" id="IRFWidget">
+        <div class="widget-flipper">
+            <!-- Front -->
+            <div class="widget-area widget-general-stats widget-front">
+                <div class="widget-head ">
+                    <a href="~/Inventory/ItemRelease/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.IRF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                    <div>
+                        <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                        <i class="icon-photon box  opc1"></i>
+                    </div>
+                </div>
+                <ul id="rfiList">
+                    @if (Model.IRF.Any())
+                    {
+                        foreach (var item in Model.IRF.ToList())
+                        {
+                            <li>
+                                <a href="~/Inventory/RFI/Details/@item.Id">
+                                    <span>
+                                        @item.Id
+                                    </span>
+                                </a>
+                                @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                else if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                <div class="dateFormatter">
+
+                                    @item.RecCreatedDate
+
+                                    @switch (item.Status)
+                                    {
+                                        case 6:
+                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                            break;
+                                        case 3:
+                                        <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                            break;
+                                        case 2:
+                                        <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                            break;
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No record found</li>
+                    }
+
+                </ul>
+            </div>
+            <!-- Back -->
+            <div class="widget-area widget-general-stats widget-back">
+                <div class="widget-savehead">
+                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
+                </div>
+                <form>
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
+                                    {
+                                        @*<input type="date" id="rfiDate"/>*@
+                                        @Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "irfDate", @readonly = true, @placeholder = "Select Date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForIRF" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @Html.DropDownList("Status", new[]
+                                                                {
+                                                                    new SelectListItem { Value = "0" , Text = "Any" },
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                }, new { @id = "irfStatus" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tempLoader" style="display: none;"></div>
+    </div>
+                        }
+                        break;
+
+                    case "DIFWidget":
+                        if (userPermissionsSet.Contains("DIFWidget"))
+                        {
+                        <!-- RFI Widget -->
+    <div class="widget-holder" id="DIFWidget">
+        <div class="widget-flipper">
+            <!-- Front -->
+            <div class="widget-area widget-general-stats widget-front">
+                <div class="widget-head ">
+                    <a href="~/Inventory/DIF/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.DIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                    <div>
+                        <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                        <i class="icon-photon box  opc1"></i>
+                    </div>
+                </div>
+                <ul id="rfiList">
+                    @if (Model.DIF.Any())
+                    {
+                        foreach (var item in Model.DIF.ToList())
+                        {
+                            <li>
+                                <a href="~/Inventory/DIF/Details/@item.Id">
+                                    <span>
+                                        @item.Id
+                                    </span>
+                                </a>
+                                @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                else if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                <div class="dateFormatter">
+
+                                    @item.RecCreatedDate
+
+                                    @switch (item.Status)
+                                    {
+                                        case 6:
+                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                            break;
+                                        case 3:
+                                        <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                            break;
+                                        case 2:
+                                        <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                            break;
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No record found</li>
+                    }
+
+                </ul>
+            </div>
+            <!-- Back -->
+            <div class="widget-area widget-general-stats widget-back">
+                <div class="widget-savehead">
+                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
+                </div>
+                <form>
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
+                                    {
+                                        @*<input type="date" id="rfiDate"/>*@
+                                        @Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "difDate", @readonly = true, @placeholder = "Select Date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForDIF" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @Html.DropDownList("Status", new[]
+                                                                {
+                                                                    new SelectListItem { Value = "0" , Text = "Any" },
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                }, new { @id = "difStatus" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tempLoader" style="display: none;"></div>
+    </div>
+                        }
+                        break;
+
+                    case "TIRWidget":
+                        if (userPermissionsSet.Contains("TIRWidget"))
+                        {
+                        <!-- RFI Widget -->
+    <div class="widget-holder" id="TIRWidget">
+        <div class="widget-flipper">
+            <!-- Front -->
+            <div class="widget-area widget-general-stats widget-front">
+                <div class="widget-head ">
+                    <a href="~/Inventory/TransferItem/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.TIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                    <div>
+                        <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                        <i class="icon-photon box  opc1"></i>
+                    </div>
+                </div>
+                <ul id="rfiList">
+                    @if (Model.TIR.Any())
+                    {
+                        foreach (var item in Model.TIR.ToList())
+                        {
+                            <li>
+                                <a href="~/Inventory/TransferItem/Details/@item.Id">
+                                    <span>
+                                        @item.Id
+                                    </span>
+                                </a>
+                                @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                else if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                <div class="dateFormatter">
+
+                                    @item.RecCreatedDate
+
+                                    @switch (item.Status)
+                                    {
+                                        case 6:
+                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                            break;
+                                        case 3:
+                                        <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                            break;
+                                        case 2:
+                                        <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                            break;
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No record found</li>
+                    }
+
+                </ul>
+            </div>
+            <!-- Back -->
+            <div class="widget-area widget-general-stats widget-back">
+                <div class="widget-savehead">
+                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
+                </div>
+                <form>
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
+                                    {
+                                        @*<input type="date" id="rfiDate"/>*@
+                                        @Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "tirDate", @readonly = true, @placeholder = "Select Date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("Warehouses", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForTIR" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @Html.DropDownList("Status", new[]
+                                                                {
+                                                                    new SelectListItem { Value = "0" , Text = "Any" },
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                }, new { @id = "tirStatus" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tempLoader" style="display: none;"></div>
+    </div>
+                        }
+                        break;
+
+                    case "POWidget":
+                        if (userPermissionsSet.Contains("POWidget"))
+                        {
+                        <!-- RFI Widget -->
+    <div class="widget-holder" id="POWidget">
+        <div class="widget-flipper">
+            <!-- Front -->
+            <div class="widget-area widget-general-stats widget-front">
+                <div class="widget-head ">
+                    <a href="~/Inventory/PurchaseOrder/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.PO)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                    <div>
+                        <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                        <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
+                        <i class="icon-photon box  opc1"></i>
+                    </div>
+                </div>
+                <ul id="rfiList">
+                    @if (Model.PO.Any())
+                    {
+                        foreach (var item in Model.PO.ToList())
+                        {
+                            <li>
+                                <a href="~/Inventory/RFI/Details/@item.Id">
+                                    <span>
+                                        @item.Id
+                                    </span>
+                                </a>
+                                @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                else if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
+                                {
+                                    <span title="@item.RequesterName">@item.RequesterNameShort</span>
+                                }
+                                <div class="dateFormatter">
+
+                                    @item.RecCreatedDate
+
+                                    @switch (item.Status)
+                                    {
+                                        case 6:
+                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                            break;
+                                        case 3:
+                                        <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                            break;
+                                        case 2:
+                                        <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                            break;
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No record found</li>
+                    }
+
+                </ul>
+            </div>
+            <!-- Back -->
+            <div class="widget-area widget-general-stats widget-back">
+                <div class="widget-savehead">
+                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
+                </div>
+                <form>
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
+                                    {
+                                        @*<input type="date" id="rfiDate"/>*@
+                                        @Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "poDate", @readonly = true, @placeholder = "Select Date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForPO" })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid widget-settings">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                            </div>
+                        </div>
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="controls">
+                                    @Html.DropDownList("Status", new[]
+                                                                {
+                                                                    new SelectListItem { Value = "0" , Text = "Any" },
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                }, new { @id = "poStatus" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tempLoader" style="display: none;"></div>
+    </div>
+                        }
+                        break;
+
 
                 }
             }

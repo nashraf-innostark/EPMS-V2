@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using EPMS.Models.DomainModels;
+using EPMS.Web.DashboardModels;
+using Employee = EPMS.Models.DomainModels.Employee;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -84,6 +86,23 @@ namespace EPMS.Web.ModelMappers
                 Notes = notesE,
                 NotesAr = notesA,
             };
+        }
+
+        public static IRFWidget CreateWidget(this ItemRelease source)
+        {
+            var empName = (source.Requester != null && source.Requester.Employee != null)
+                ? source.Requester.Employee.EmployeeFirstNameE + " " + source.Requester.Employee.EmployeeMiddleNameE +
+                  " " + source.Requester.Employee.EmployeeLastNameE
+                : string.Empty;
+            var rfi = new IRFWidget
+            {
+                Id = source.ItemReleaseId,
+                Status = Convert.ToInt32(source.Status),
+                RequesterName = empName,
+                RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString()
+            };
+            return rfi;
         }
     }
 }

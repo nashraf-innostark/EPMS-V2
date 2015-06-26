@@ -2,6 +2,7 @@
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.Models.Common;
 
 namespace EPMS.Web.ModelMappers
@@ -80,6 +81,15 @@ namespace EPMS.Web.ModelMappers
                 Quantity = source.Quantity,
                 WarehouseId = source.WarehouseId,
                 WarehouseNo = source.Warehouse.WarehouseNumber
+            };
+        }
+
+        public static WarehousDDL CreateDDL(this Warehouse source)
+        {
+            return new WarehousDDL
+            {
+                WarehouseId = source.WarehouseId,
+                WarehouseNumber = source.WarehouseNumber
             };
         }
     }

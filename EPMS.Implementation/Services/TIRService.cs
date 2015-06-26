@@ -183,6 +183,11 @@ namespace EPMS.Implementation.Services
             repository.SaveChanges();
         }
 
+        public IEnumerable<TIR> GetRecentTIRs(int status, string requester, DateTime date)
+        {
+            return repository.GetRecentTIRs(status, requester, date);
+        }
+
         private void TirItemUpdation(TIR tir)
         {
             var itemsInDb = itemRepository.GetTirItemsById(tir.Id).ToList();

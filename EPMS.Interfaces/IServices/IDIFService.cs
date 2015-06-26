@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -16,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateDIF(DIF rif);
         void DeleteDIF(DIF rif);
         DifCreateResponse LoadDifResponseData(long? id, string from);
+        IEnumerable<DIF> GetRecentDIFs(int status, string requester, DateTime date);
     }
 }

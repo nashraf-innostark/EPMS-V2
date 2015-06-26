@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -16,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateRIF(RIF rif);
         void DeleteRIF(RIF rif);
         RifCreateResponse LoadRifResponseData(long? id, bool loadCustomersAndOrders, string from);
+        IEnumerable<RIF> GetRecentRIFs(int status, string requester, DateTime date);
     }
 }
