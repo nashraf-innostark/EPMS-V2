@@ -161,10 +161,12 @@ namespace EPMS.Web.ModelMappers
         }
         public static DashboardModels.Employee CreateForDashboard(this Employee source)
         {
+            var empUserId = source.AspNetUsers.FirstOrDefault(x => x.EmployeeId == source.EmployeeId);
             return new DashboardModels.Employee
             {
                 EmployeeId = source.EmployeeId,
                 EmployeeJobId = source.EmployeeJobId,
+                EmployeeUserId = empUserId!=null?empUserId.Id:"",
                 EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
                 EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
                 EmployeeNameEShort = (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE).Length > 14 ? (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE).Substring(0, 14) + "..." : (source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE),

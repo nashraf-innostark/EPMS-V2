@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<RFI> GetAll();
         RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest);
         RfiHistoryResponse GetRfiHistoryData(long? parentId);
-        IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime? date);
+        IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime date);
         RFI FindRFIById(long id);
         bool SaveRFI(RFI rfi);
         bool AddRFI(RFI rfi);

@@ -1,6 +1,7 @@
 ﻿@using System.Configuration
 @using System.Web.UI.WebControls
 @using iTextSharp.text.pdf.qrcode
+@using EPMS.Models.Common
 @model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
 
 @{
@@ -919,9 +920,9 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/RFI/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RFI)(@(Session["RoleKey"].ToString() == "2" ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/RFI/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RFI)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
                                             <div>
-                                                <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                                                <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                                                 <i class="icon-photon box  opc1"></i>
                                             </div>
@@ -937,17 +938,14 @@
                                                             @item.RecCreatedDate
                                                             @switch (item.Status)
                                                             {
-                                                                case 2:
-                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="Pending" class="status" />
-                                                                    break;
-                                                                case 1:
-                                                                <img src="~/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status" />
+                                                                case 6:
+                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 3:
-                                                                <img src="~/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status" />
+                                                                <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
-                                                                case 4:
-                                                                <img src="~/Images/photon/workDone.png" alt="Finished" title="Finished" class="status" />
+                                                                case 2:
+                                                                <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                         </div>
@@ -976,13 +974,14 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @if (Session["RoleKey"].ToString() == "2")
+                                                            @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
                                                             {
-                                                                <input type="date" id="rfiDate"/>
+                                                                @*<input type="date" id="rfiDate"/>*@
+                                                                @Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "rfiDate",@readonly=true, @placeholder = "Select Date" })
                                                             }
                                                             else
                                                             {
-                                                                @Html.DropDownListFor(x => x.employeeId, @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
+                                                                @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
                                                             }
                                                         </div>
                                                     </div>
@@ -999,13 +998,13 @@
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            <select id="rfiStatus">
-                                                                <option selected="" value="0">Any</option>
-                                                                <option value="1">Pending</option>
-                                                                <option value="2">On Going</option>
-                                                                <option value="4">Completed</option>
-                                                                <option value="3">Canceled</option>
-                                                            </select>
+                                                                @Html.DropDownList("RFIStatus", new[]
+                                                                {
+                                                                    new SelectListItem { Value = "0" , Text = "Any" },
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                }, new { @id = "rfiStatus" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1095,6 +1094,13 @@
 <script type="text/javascript">
     var dir = '@direction';
     $(document).ready(function () {
+        $(".datepickerDOB").mask('99/99/9999');
+        $(".datepickerDOB").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd/mm/yy",
+            maxDate: "dateToday"
+        });
         if ('@direction' == "ltr") {
             setTimeout(function () {
                 $.pnotify({

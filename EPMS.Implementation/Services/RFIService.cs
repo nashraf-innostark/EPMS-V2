@@ -98,9 +98,9 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
-        public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime? date)
+        public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime date)
         {
-            return rfiRepository.GetRecentRFIs(status, requester, date);
+            return rfiRepository.GetRecentRFIs(status, requester, date).ToList();
         }
 
         public RFI FindRFIById(long id)

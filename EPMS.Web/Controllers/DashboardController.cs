@@ -214,7 +214,7 @@ namespace EPMS.Web.Controllers
             #region RFI Widget
             if (userPermissionsSet.Contains("RFIWidget"))
             {
-                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())
+                if (Session["EmployeeID"] != null && requester == Session["EmployeeID"].ToString())//Means employee is here
                 {
                     dashboardViewModel.RFI = GetRFI(0, Session["UserID"].ToString());// status 0 means all
                 }
@@ -652,13 +652,21 @@ namespace EPMS.Web.Controllers
         /// <param name="date"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult LoadRFI(int status, string requester, DateTime date = new DateTime())
+        public JsonResult LoadRFI(int status, string requester, string date)
         {
-            //Some checks have to be implemented
-            if (string.IsNullOrEmpty(requester))
-                requester = Session["UserID"].ToString();
-            var orders = GetRFI(status, requester, date);
-            return Json(orders, JsonRequestBehavior.AllowGet);
+            DateTime rfiCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date); 
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                case UserRole.Employee:
+                    var orders = GetRFI(status, Session["UserID"].ToString(), rfiCreatedDate);// status 0 means all
+                    return Json(orders, JsonRequestBehavior.AllowGet);
+                default:
+                    if (string.IsNullOrEmpty(requester))
+                        requester = "Admin";
+                    orders = GetRFI(status, requester, rfiCreatedDate);// status 0 means all
+                     return Json(orders, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new List<RFIWidget>(), JsonRequestBehavior.AllowGet);
         }
 
         #endregion
