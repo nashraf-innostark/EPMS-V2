@@ -21,6 +21,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
+                VendorId = Convert.ToInt64(source.VendorId),
             };
             if (source.ItemVariation != null)
             {
@@ -45,6 +46,7 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PurchaseOrderId = source.PurchaseOrderId,
                 PlaceInDepartment = source.PlaceInDepartment,
+                VendorId = source.VendorId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -62,6 +64,7 @@ namespace EPMS.Web.ModelMappers
                 ItemQty = source.ItemQty,
                 ItemVariationId = source.ItemVariationId,
                 PlaceInDepartment = source.PlaceInDepartment,
+                VendorId = source.VendorId,
 
                 PurchaseOrderId = poId,
 

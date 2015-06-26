@@ -205,7 +205,7 @@
             $('.btnDisable').addClass('disableList');
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $("#SubmitRecord").hide();
-            if (status != 2 && '@userPermissionsSet.Contains("POCreate")' == 'True') {
+            if (status != 1 && '@userPermissionsSet.Contains("POCreate")' == 'True') {
                 $("#EditRecord").show();
             }
         }
@@ -486,7 +486,7 @@
         });
     });
     $("#edit").on('click', function () {
-        if (status != 2) {
+        if (status != 1) {
             AddEdit();
         }
     });
@@ -497,7 +497,7 @@
         toolbar: 'tiny'
     });
     function AddEdit() {
-        if (status != 2) {
+        if (status != 1) {
             var isDetail;
             var val = '@userPermissionsSet.Contains("POCreate")';
             if (val == 'True') {

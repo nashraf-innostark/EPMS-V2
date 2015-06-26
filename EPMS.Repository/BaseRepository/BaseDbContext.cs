@@ -130,8 +130,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public DbSet<DIF> DIF { get; set; }
         public DbSet<DIFItem> DIFItem { get; set; }
-        public DbSet<POF> POF { get; set; }
-        public DbSet<POFItem> POFItem { get; set; }
         public DbSet<TIR> TIR { get; set; }
         public DbSet<TIRItem> TIRItem { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
@@ -142,12 +140,12 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<ItemReleaseDetailHistory> ReleaseDetailHistories { get; set; }
         public DbSet<RFIHistory> RfiHistories { get; set; }
         public DbSet<ItemBarcode> ItemBarcode { get; set; }
-
         public DbSet<ItemWarehouse> ItemWarehouses { get; set; }
         public DbSet<RIFHistory> RifHistories { get; set; }
         public DbSet<RIFItemHistory> RifItemHistories { get; set; }
         public DbSet<TIRHistory> TirHistories { get; set; }
         public DbSet<TIRItemHistory> TirItemHistories { get; set; }
         public DbSet<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }
+        public DbSet<PurchaseOrderHistory> PurchaseOrderHistories { get; set; }
     }
 }

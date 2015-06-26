@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -8,13 +11,13 @@ using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    public class ItemReleaseHistoryRepository : BaseRepository<ItemReleaseHistory>, IItemReleaseHistoryRepository
+    public class POHistoryRepository : BaseRepository<PurchaseOrderHistory>, IPOHistoryRepository
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemReleaseHistoryRepository(IUnityContainer container)
+        public POHistoryRepository(IUnityContainer container)
             : base(container)
         {
         }
@@ -22,13 +25,14 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<ItemReleaseHistory> DbSet
+        protected override IDbSet<PurchaseOrderHistory> DbSet
         {
-            get { return db.ReleaseHistories; }
+            get { return db.PurchaseOrderHistories; }
         }
 
         #endregion
-        public IEnumerable<ItemReleaseHistory> GetIrfHistoryData(long parentId)
+
+        public IEnumerable<PurchaseOrderHistory> GetPoHistoryData(long parentId)
         {
             return DbSet.Where(x => (x.Status == 1 || x.Status == 2) && x.ParentId == parentId).ToList();
         }

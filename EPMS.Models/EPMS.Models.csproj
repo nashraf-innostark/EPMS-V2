@@ -128,10 +128,10 @@
     <Compile Include="DomainModels\ItemReleaseQuantity.cs" />
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
-    <Compile Include="DomainModels\POF.cs" />
-    <Compile Include="DomainModels\POFItem.cs" />
     <Compile Include="DomainModels\PurchaseOrder.cs" />
+    <Compile Include="DomainModels\PurchaseOrderHistory.cs" />
     <Compile Include="DomainModels\PurchaseOrderItem.cs" />
+    <Compile Include="DomainModels\PurchaseOrderItemHistory.cs" />
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
     <Compile Include="DomainModels\RIF.cs" />
@@ -148,6 +148,8 @@
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
+    <Compile Include="ModelMapers\PoHistoryMapper.cs" />
+    <Compile Include="ModelMapers\PoItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RifHistoryMapper.cs" />
@@ -322,6 +324,8 @@
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
     <Compile Include="ResponseModels\POCreateResponse.cs" />
+    <Compile Include="ResponseModels\PODetailResponse.cs" />
+    <Compile Include="ResponseModels\PoHistoryResponse.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
@@ -67,6 +68,37 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedDate = source.RecUpdatedDate,
             };
         }
+        public static PurchaseOrder CreateFromClientToServer(this Models.PurchaseOrder source, IList<Models.PurchaseOrderItem> poItems)
+        {
+            var notesE = source.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            return new PurchaseOrder
+            {
+                PurchaseOrderId = source.PurchaseOrderId,
+                FormNumber = source.FormNumber,
+                NotesE = notesE,
+                NotesA = notesA,
+                ManagerId = source.ManagerId,
+                Status = source.Status,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
+                PurchaseOrderItems = poItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrderId, source.RecCreatedBy, source.RecCreatedDate, source.RecUpdatedDate)).ToList()
+            };
+        }
         public static PurchaseOrderStatus CreateForStatus(this Models.PurchaseOrder source)
         {
             var notesE = source.NotesE;
@@ -121,6 +153,37 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedBy = source.Order.RecUpdatedBy,
                 RecUpdatedDate = source.Order.RecUpdatedDate,
                 PurchaseOrderItems = source.PoItems.Select(x => x.CreateFromClientToServer(source.Order.PurchaseOrderId, source.Order.RecCreatedBy, source.Order.RecCreatedDate, source.Order.RecUpdatedDate)).ToList()
+            };
+        }
+        public static PurchaseOrder CreateFromClientToServer(this PurchaseOrderDetailsViewModel source)
+        {
+            var notesE = source.PurchaseOrder.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.PurchaseOrder.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            return new PurchaseOrder
+            {
+                PurchaseOrderId = source.PurchaseOrder.PurchaseOrderId,
+                FormNumber = source.PurchaseOrder.FormNumber,
+                NotesE = notesE,
+                NotesA = notesA,
+                ManagerId = source.PurchaseOrder.ManagerId,
+                Status = source.PurchaseOrder.Status,
+                RecCreatedBy = source.PurchaseOrder.RecCreatedBy,
+                RecCreatedDate = source.PurchaseOrder.RecCreatedDate,
+                RecUpdatedBy = source.PurchaseOrder.RecUpdatedBy,
+                RecUpdatedDate = source.PurchaseOrder.RecUpdatedDate,
+                PurchaseOrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrder.PurchaseOrderId, source.PurchaseOrder.RecCreatedBy, source.PurchaseOrder.RecCreatedDate, source.PurchaseOrder.RecUpdatedDate)).ToList()
             };
         }
     }

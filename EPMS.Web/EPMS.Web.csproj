@@ -841,6 +841,7 @@
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrder\POHistoryViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderCreateViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderListViewModel.cs" />
@@ -1945,6 +1946,7 @@
     <Content Include="Areas\Inventory\Views\TransferItem\History.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemRelease\History.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\Details.cshtml" />
+    <Content Include="Areas\Inventory\Views\PurchaseOrder\History.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

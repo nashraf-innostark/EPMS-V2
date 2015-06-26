@@ -1,9 +1,11 @@
-﻿namespace EPMS.Models.DomainModels
+﻿using System;
+
+namespace EPMS.Models.DomainModels
 {
-    public class POFItem
+    public class PurchaseOrderItemHistory
     {
         public long ItemId { get; set; }
-        public long POFId { get; set; }
+        public long PurchaseOrderId { get; set; }
         public long? ItemVariationId { get; set; }
         public string ItemDetails { get; set; }
         public long ItemQty { get; set; }
@@ -11,11 +13,13 @@
         public bool IsItemSKU { get; set; }
         public string PlaceInDepartment { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
-        public System.DateTime RecUpdatedDate { get; set; }
+        public DateTime RecUpdatedDate { get; set; }
+        public long? VendorId { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
-        public virtual POF POF { get; set; }
+        public virtual PurchaseOrderHistory PurchaseOrderHistory { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }

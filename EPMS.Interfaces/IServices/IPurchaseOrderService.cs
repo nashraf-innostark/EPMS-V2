@@ -7,6 +7,8 @@ namespace EPMS.Interfaces.IServices
     public interface IPurchaseOrderService
     {
         POCreateResponse GetPoResponseData(long? id);
+        PODetailResponse GetPoDetailResponse(long id, string from);
+        PoHistoryResponse GetPoHistoryData(long? parentId);
         PurchaseOrder FindPoById(long id, string from);
         PurchaseOrderListResponse GetAllPoS(PurchaseOrderSearchRequest searchRequest);
         bool SavePO(PurchaseOrder purchaseOrder);
