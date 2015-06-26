@@ -195,7 +195,11 @@ namespace IdentitySample.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ReturnUrl = returnUrl;
-                ViewBag.CompanyURL = companyProfileService.GetDetail().CompanyWebsite;
+                var companyDetails = companyProfileService.GetDetail();
+                if (companyDetails != null)
+                {
+                    ViewBag.CompanyURL = companyProfileService.GetDetail().CompanyWebsite;
+                }
                 var successNote = TempData["Note"];
                 if (successNote!=null)
                 {
