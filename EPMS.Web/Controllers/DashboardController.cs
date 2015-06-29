@@ -807,9 +807,127 @@ namespace EPMS.Web.Controllers
                     orders = GetRFI(status, requester, rfiCreatedDate);// status 0 means all
                      return Json(orders, JsonRequestBehavior.AllowGet);
             }
-            return Json(new List<RFIWidget>(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Load RIFs
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="requester"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadRIF(int status, string requester, string date)
+        {
+            DateTime rifCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                case UserRole.Employee:
+                    var rifs = GetRIF(status, Session["UserID"].ToString(), rifCreatedDate);// status 0 means all
+                    return Json(rifs, JsonRequestBehavior.AllowGet);
+                default:
+                    if (string.IsNullOrEmpty(requester))
+                        requester = "Admin";
+                    rifs = GetRIF(status, requester, rifCreatedDate);// status 0 means all
+                    return Json(rifs, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// Load IRFs
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="requester"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadIRF(int status, string requester, string date)
+        {
+            DateTime irfCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                case UserRole.Employee:
+                    var irfs = GetIRF(status, Session["UserID"].ToString(), irfCreatedDate);// status 0 means all
+                    return Json(irfs, JsonRequestBehavior.AllowGet);
+                default:
+                    if (string.IsNullOrEmpty(requester))
+                        requester = "Admin";
+                    irfs = GetIRF(status, requester, irfCreatedDate);// status 0 means all
+                    return Json(irfs, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// Load DIFs
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="requester"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadDIF(int status, string requester, string date)
+        {
+            DateTime difCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                case UserRole.Employee:
+                    var difs = GetDIF(status, Session["UserID"].ToString(), difCreatedDate);// status 0 means all
+                    return Json(difs, JsonRequestBehavior.AllowGet);
+                default:
+                    if (string.IsNullOrEmpty(requester))
+                        requester = "Admin";
+                    difs = GetDIF(status, requester, difCreatedDate);// status 0 means all
+                    return Json(difs, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// Load POs
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="requester"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadPO(int status, string requester, string date)
+        {
+            DateTime poCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                case UserRole.Employee:
+                    var POs = GetPO(status, Session["UserID"].ToString(), poCreatedDate);// status 0 means all
+                    return Json(POs, JsonRequestBehavior.AllowGet);
+                default:
+                    if (string.IsNullOrEmpty(requester))
+                        requester = "Admin";
+                    POs = GetPO(status, requester, poCreatedDate);// status 0 means all
+                    return Json(POs, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// Load TIRs
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="requester"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public JsonResult LoadTIR(int status, string requester, string date)
+        {
+            DateTime tirCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
+            switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
+            {
+                case UserRole.Employee:
+                    var TIRs = GetTIR(status, Session["UserID"].ToString(), tirCreatedDate);// status 0 means all
+                    return Json(TIRs, JsonRequestBehavior.AllowGet);
+                default:
+                    if (string.IsNullOrEmpty(requester))
+                        requester = "Admin";
+                    TIRs = GetTIR(status, requester, tirCreatedDate);// status 0 means all
+                    return Json(TIRs, JsonRequestBehavior.AllowGet);
+            }
+        }
         #endregion
 
         #region Get MAC Address

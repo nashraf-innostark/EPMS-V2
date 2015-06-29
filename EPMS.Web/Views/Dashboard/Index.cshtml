@@ -982,7 +982,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDate:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1035,7 +1035,7 @@
                     case "RIFWidget":
                         if (userPermissionsSet.Contains("RIFWidget"))
                         {
-                        <!-- RFI Widget -->
+                        <!-- RIF Widget -->
     <div class="widget-holder" id="RIFWidget">
         <div class="widget-flipper">
             <!-- Front -->
@@ -1043,7 +1043,7 @@
                 <div class="widget-head ">
                     <a href="~/Inventory/RIF/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
                     <div>
-                        <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
+                        <a href="javascript:;" class="refresher" onclick=" LoadRIFs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                         <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
                         <i class="icon-photon box  opc1"></i>
                     </div>
@@ -1097,7 +1097,7 @@
             <!-- Back -->
             <div class="widget-area widget-general-stats widget-back">
                 <div class="widget-savehead">
-                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRFIs(this); "><i class='icon-photon cog'></i>Done</a>
+                    <a href="javascript:;" class="btn btn-mini btn-inverse" onclick=" LoadRIFs(this); "><i class='icon-photon cog'></i>Done</a>
                 </div>
                 <form>
                     <div class="container-fluid widget-settings">
@@ -1156,7 +1156,7 @@
                     case "IRFWidget":
                         if (userPermissionsSet.Contains("IRFWidget"))
                         {
-                        <!-- RFI Widget -->
+                        <!-- IRF Widget -->
     <div class="widget-holder" id="IRFWidget">
         <div class="widget-flipper">
             <!-- Front -->
@@ -1277,7 +1277,7 @@
                     case "DIFWidget":
                         if (userPermissionsSet.Contains("DIFWidget"))
                         {
-                        <!-- RFI Widget -->
+                        <!-- DIF Widget -->
     <div class="widget-holder" id="DIFWidget">
         <div class="widget-flipper">
             <!-- Front -->
@@ -1398,7 +1398,7 @@
                     case "TIRWidget":
                         if (userPermissionsSet.Contains("TIRWidget"))
                         {
-                        <!-- RFI Widget -->
+                        <!-- TIR Widget -->
     <div class="widget-holder" id="TIRWidget">
         <div class="widget-flipper">
             <!-- Front -->
@@ -1519,7 +1519,7 @@
                     case "POWidget":
                         if (userPermissionsSet.Contains("POWidget"))
                         {
-                        <!-- RFI Widget -->
+                        <!-- PO Widget -->
     <div class="widget-holder" id="POWidget">
         <div class="widget-flipper">
             <!-- Front -->

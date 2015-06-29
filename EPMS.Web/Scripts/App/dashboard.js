@@ -1242,4 +1242,350 @@ function LoadRFIs(control) {
         }
     });
 };
+
+function LoadRIFs(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var isAdmin = false;
+    var requester = "";
+    if ($("#employeeIdForRFI").val() == undefined) {
+        requester = "";
+    } else {
+        requester = $("#employeeIdForRFI").val();
+        isAdmin = true;
+    }
+
+    var status = $("#rfiStatus").val();
+    var rfiDate = $("#rfiDate").val();
+
+    if (control.className == "refresher") {
+        status = 0;
+        requester = "";
+        rfiDate = "";
+    }
+    var url = siteUrl + "/Dashboard/LoadRFI";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            status: status,
+            requester: requester,
+            date: rfiDate
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#rfiList').empty();
+
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (isAdmin) {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    } else {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#rfiList').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadIRFs(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var isAdmin = false;
+    var requester = "";
+    if ($("#employeeIdForRFI").val() == undefined) {
+        requester = "";
+    } else {
+        requester = $("#employeeIdForRFI").val();
+        isAdmin = true;
+    }
+
+    var status = $("#rfiStatus").val();
+    var rfiDate = $("#rfiDate").val();
+
+    if (control.className == "refresher") {
+        status = 0;
+        requester = "";
+        rfiDate = "";
+    }
+    var url = siteUrl + "/Dashboard/LoadRFI";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            status: status,
+            requester: requester,
+            date: rfiDate
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#rfiList').empty();
+
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (isAdmin) {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    } else {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#rfiList').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadDIFs(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var isAdmin = false;
+    var requester = "";
+    if ($("#employeeIdForRFI").val() == undefined) {
+        requester = "";
+    } else {
+        requester = $("#employeeIdForRFI").val();
+        isAdmin = true;
+    }
+
+    var status = $("#rfiStatus").val();
+    var rfiDate = $("#rfiDate").val();
+
+    if (control.className == "refresher") {
+        status = 0;
+        requester = "";
+        rfiDate = "";
+    }
+    var url = siteUrl + "/Dashboard/LoadRFI";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            status: status,
+            requester: requester,
+            date: rfiDate
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#rfiList').empty();
+
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (isAdmin) {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    } else {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#rfiList').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadPOs(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var isAdmin = false;
+    var requester = "";
+    if ($("#employeeIdForRFI").val() == undefined) {
+        requester = "";
+    } else {
+        requester = $("#employeeIdForRFI").val();
+        isAdmin = true;
+    }
+
+    var status = $("#rfiStatus").val();
+    var rfiDate = $("#rfiDate").val();
+
+    if (control.className == "refresher") {
+        status = 0;
+        requester = "";
+        rfiDate = "";
+    }
+    var url = siteUrl + "/Dashboard/LoadRFI";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            status: status,
+            requester: requester,
+            date: rfiDate
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#rfiList').empty();
+
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (isAdmin) {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    } else {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#rfiList').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
+function LoadTIRs(control) {
+    Loader(control);
+    var siteUrl = $('#siteURL').val();
+    var isAdmin = false;
+    var requester = "";
+    if ($("#employeeIdForRFI").val() == undefined) {
+        requester = "";
+    } else {
+        requester = $("#employeeIdForRFI").val();
+        isAdmin = true;
+    }
+
+    var status = $("#rfiStatus").val();
+    var rfiDate = $("#rfiDate").val();
+
+    if (control.className == "refresher") {
+        status = 0;
+        requester = "";
+        rfiDate = "";
+    }
+    var url = siteUrl + "/Dashboard/LoadRFI";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            status: status,
+            requester: requester,
+            date: rfiDate
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#rfiList').empty();
+
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (isAdmin) {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    } else {
+                        switch (item.Status) {
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                                break;
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                                break;
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                                break;
+                        }
+                    }
+                });
+            }
+            else {
+                $(".tempLoader").click();
+                $('#rfiList').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
+};
 //#endregion

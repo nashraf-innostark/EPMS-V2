@@ -169,6 +169,15 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by Date.
+        /// </summary>
+        public static string FilterByDate {
+            get {
+                return ResourceManager.GetString("FilterByDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter by Department.
         /// </summary>
         public static string FilterByDepartment {
