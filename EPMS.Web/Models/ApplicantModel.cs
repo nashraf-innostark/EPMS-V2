@@ -10,9 +10,13 @@
         /// </summary>
         public long JobApplicantId { get; set; }
         /// <summary>
-        /// Job Applicant Name
+        /// Job Applicant Name English
         /// </summary>
-        public string ApplicantName { get; set; }
+        public string ApplicantNameEn { get; set; }
+        /// <summary>
+        /// Job Applicant Name Arabic
+        /// </summary>
+        public string ApplicantNameAr { get; set; }
         /// <summary>
         /// Job Applicant Email
         /// </summary>
@@ -22,12 +26,20 @@
         /// </summary>
         public string ApplicantMobile { get; set; }
         /// <summary>
-        /// Job Offered (Job Title Name)
+        /// Job Offered (Job Title Name English)
         /// </summary>
-        public string JobOffered { get; set; }
+        public string JobOfferedEn { get; set; }
         /// <summary>
-        /// Job Offering Department
+        /// Job Offered (Job Title Name Arabic)
         /// </summary>
-        public string DepartmentName { get; set; }
+        public string JobOfferedAr { get; set; }
+        /// <summary>
+        /// Job Offering DepartmentEnglish
+        /// </summary>
+        public string DepartmentNameEn { get; set; }
+        /// <summary>
+        /// Job Offering Department Arabic
+        /// </summary>
+        public string DepartmentNameAr { get; set; }
     }
 }
