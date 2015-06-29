@@ -9,5 +9,6 @@
         public string EmployeeNameEShort { get; set; }
         public string EmployeeNameAShort { get; set; }
         public string EmployeeImagePath { get; set; }
+        public string EmployeeUserId { get; set; }
     }
 }

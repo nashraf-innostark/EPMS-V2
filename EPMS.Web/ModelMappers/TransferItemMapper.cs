@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.ViewModels.TIR;
 
 namespace EPMS.Web.ModelMappers
@@ -104,6 +105,50 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedBy = source.Tir.RecUpdatedBy,
                 RecUpdatedDate = source.Tir.RecUpdatedDate,
                 TIRItems = source.TirItems.Select(x => x.CreateFromClientToServer(source.Tir.Id, source.Tir.RecCreatedBy, source.Tir.RecCreatedDate, source.Tir.RecUpdatedDate)).ToList()
+            };
+        }
+
+        public static TIRWidget CreateWidget(this EPMS.Models.DomainModels.TIR source)
+        {
+            var empName = (source.AspNetUser != null && source.AspNetUser.Employee != null)
+                ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE +
+                  " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : string.Empty;
+            var rfi = new TIRWidget
+            {
+                Id = source.Id,
+                Status = source.Status,
+                RequesterName = empName,
+                RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString()
+            };
+            return rfi;
+        }
+        public static TransferItemStatus CreateForStatus(this Models.TIR source)
+        {
+            var notesE = source.NotesE;
+            if (!string.IsNullOrEmpty(notesE))
+            {
+                notesE = notesE.Replace("\r", "");
+                notesE = notesE.Replace("\t", "");
+                notesE = notesE.Replace("\n", "");
+            }
+            var notesA = source.NotesA;
+            if (!string.IsNullOrEmpty(notesA))
+            {
+                notesA = notesA.Replace("\r", "");
+                notesA = notesA.Replace("\t", "");
+                notesA = notesA.Replace("\n", "");
+            }
+            return new TransferItemStatus
+            {
+                Id = source.Id,
+                ManagerId = source.ManagerId,
+                Status = source.Status,
+                NotesEn = notesE,
+                NotesAr = notesA,
+                RecUpdatedBy = source.RecUpdatedBy,
+                RecUpdatedDate = source.RecUpdatedDate,
             };
         }
     }

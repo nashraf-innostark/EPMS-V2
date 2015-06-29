@@ -236,24 +236,18 @@
 <script>
     $(document).ready(function () {
         if ('@Model.Rif.RIFId' > 0) {
-            editor = CKEDITOR.replace('RFINotesE', {
+            CKEDITOR.replace('RFINotesE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
-            editor = CKEDITOR.replace('RFINotesA', {
+            CKEDITOR.replace('RFINotesA', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
         }
         EnableDisableFields();
         CheckPermissions();
     });
     function EnableDisableFields() {
-        if ('@Model.Rif.Status' != '2') {
+        if ('@Model.Rif.Status' != '2' || '@ViewBag.From' != 'History') {
             $('.toBeDisabled:input').attr('disabled', false);
         } else {
             $('.toBeDisabled:input').attr('disabled', true);

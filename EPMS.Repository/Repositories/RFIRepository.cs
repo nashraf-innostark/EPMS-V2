@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
 using EPMS.Interfaces.Repository;
@@ -101,10 +102,22 @@ namespace EPMS.Repository.Repositories
             }
             return new RfiRequestResponse { Rfis = rfis, TotalCount = DbSet.Count(query) };
         }
-
-        public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
+	 public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
         {
             return DbSet.Where(x=>x.RecCreatedBy == requesterId);
+        }
+
+        public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime date)
+        {
+            DateTime newDataTime=new DateTime();
+            if (requester=="Admin")
+            {
+                requester = "";
+                return status > 0 ? DbSet.Where(x => x.Status == status && (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester) && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
+                    DbSet.Where(x => (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester) && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5);
+            }
+            return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
+                DbSet.Where(x => x.RecCreatedBy == requester && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5);
         }
     }
 }

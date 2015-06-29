@@ -5,6 +5,7 @@
     ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.View.IRFView.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     var header = EPMS.Web.Resources.Inventory.IRF.View.IRFView.Header;
     int i = 0;
 }
@@ -61,7 +62,7 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
-                                            <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                            <td>@(Session["EmployeeID"] != null ? Session["EmployeeID"].ToString() : string.Empty)</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
@@ -126,7 +127,7 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
-                                            <td></td>
+                                            <td>@(direction == "ltr" ? Model.ItemRelease.ManagerName : Model.ItemRelease.ManagerNameAr)</td>
                                         </tr>
                                     }
 
@@ -292,11 +293,14 @@
                 <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
             </div>
         </div>
-        <div id="EditIrf" class="control-group row-fluid">
+        @if (userPermissionsSet.Contains("ItemReleaseCreate"))
+        {
+            <div id="EditIrf" class="control-group row-fluid">
             <div class="span3 span-inset">
                 <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.ItemRelease.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
             </div>
         </div>
+        }
     </div>
 }
 
@@ -315,7 +319,6 @@
             result = noteAr.replace(regex, "");
             $("#notesA").val(result);
             $("#Notes").show();
-            $("#EditIrf").hide();
             $("#SubmitIrf").hide();
         } else {
             CKEDITOR.replace('NotesEn', {

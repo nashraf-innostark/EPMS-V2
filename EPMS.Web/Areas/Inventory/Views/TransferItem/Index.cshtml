@@ -73,8 +73,7 @@
     var dir = '@direction';
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        if ('@ViewBag.IsAllowedCompleteLV' == 'True')
-        {
+        if ('@ViewBag.IsAllowedCompleteLV' == 'True') {
             oTable = $('#tableTransferItemRequest').dataTable({
                 "sPaginationType": "bootstrap",
                 "bProcessing": true,
@@ -93,7 +92,7 @@
                             var element;
                             var val;
                             var irfId;
-                            val = full["FormNumber"];
+                            val = full["Id"];
                             irfId = full["Id"];
                             element = '<a href="Detail/' + irfId + '">' + val + '</a>';
                             return element;
@@ -118,26 +117,14 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             var val = "";
-                            if (dir == "ltr") {
-                                if (full["Status"] == 3) {
-                                    val = "Pending";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "Accepted";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "Rejected";
-                                }
-                            } else {
-                                if (full["Status"] == 3) {
-                                    val = "ريثما";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "قبلت";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "مرفوض";
-                                }
+                            if (full["Status"] == 3) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            }
+                            else if (full["Status"] == 1) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            else if (full["Status"] == 2) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }
@@ -181,7 +168,7 @@
                             var element;
                             var val;
                             var irfId;
-                            val = full["FormNumber"];
+                            val = full["Id"];
                             irfId = full["Id"];
                             element = '<a href="Detail/' + irfId + '">' + val + '</a>';
                             return element;
@@ -206,26 +193,14 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             var val = "";
-                            if (dir == "ltr") {
-                                if (full["Status"] == 3) {
-                                    val = "Pending";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "Accepted";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "Rejected";
-                                }
-                            } else {
-                                if (full["Status"] == 3) {
-                                    val = "ريثما";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "قبلت";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "مرفوض";
-                                }
+                            if (full["Status"] == 3) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            }
+                            else if (full["Status"] == 1) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            else if (full["Status"] == 2) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }

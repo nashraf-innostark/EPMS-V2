@@ -116,6 +116,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rifViewModel.RifItem = new List<Models.RIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            ViewBag.From = from;
             return View(rifViewModel);
         }
         [HttpPost]

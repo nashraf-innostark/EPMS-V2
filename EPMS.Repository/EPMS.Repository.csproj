@@ -172,6 +172,7 @@
     <Compile Include="Repositories\NotificationRecipientRepository.cs" />
     <Compile Include="Repositories\NotificationRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Repositories\POHistoryRepository.cs" />
     <Compile Include="Repositories\PoItemRepository.cs" />
     <Compile Include="Repositories\PreRequisitTaskRepository.cs" />
     <Compile Include="Repositories\ProjectDocumentRepository.cs" />

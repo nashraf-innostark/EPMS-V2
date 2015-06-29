@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -156,7 +157,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateRIF(RIF rif)
         {
             var previousRif = rifRepository.Find(rif.RIFId);
-            if (previousRif.Status != rif.Status && rif.Status != 2)
+            if (previousRif.Status != rif.Status && rif.Status != 6)
             {
                 var rifHistoryToAdd = rif.CreateFromRifToRifHistory(previousRif.Order,previousRif.RIFItems);
                 historyRepository.Add(rifHistoryToAdd);
@@ -222,6 +223,11 @@ namespace EPMS.Implementation.Services
                 rifResponse.Orders = ordersRepository.GetAll();
             }
             return rifResponse;
+        }
+
+        public IEnumerable<RIF> GetRecentRIFs(int status, string requester, DateTime date)
+        {
+            return rifRepository.GetRecentRIFs(status, requester, date);
         }
     }
 }

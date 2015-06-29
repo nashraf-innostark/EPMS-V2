@@ -25,6 +25,7 @@ namespace EPMS.Models.DomainModels
         public string ManagerId { get; set; }
 
         public virtual AspNetUser Manager { get; set; }
+        public virtual AspNetUser ReqCreatedBy { get; set; }
         public virtual AspNetUser Requester { get; set; }
         public virtual RFI RFI { get; set; }
         public virtual ICollection<ItemReleaseDetail> ItemReleaseDetails { get; set; }

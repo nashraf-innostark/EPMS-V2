@@ -169,7 +169,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
-        #region Save Inventory Section
+        #region Save Warehouse Details
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult SaveWarehouseDetails(int parentId, int warehouseId, int nodeId, string nameEn, string nameAr, int nodeLevel, string createdBy, string createdDt)

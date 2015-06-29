@@ -328,6 +328,7 @@
     var parsedWarehouses = JSON.parse(itemWarehouses);
     var releaseDetails = '@Html.Raw(Json.Encode(Model.ItemReleaseDetails))';
     var parsedQuantities = JSON.parse(releaseDetails);
+    var availableItemsWarehouses = [];
 
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
@@ -471,7 +472,7 @@
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
                     warehouse = warehouse + value.PlaceInWarehouse + " - ";
-                    var html = '<option value="' + value.WarehousrId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
+                    var html = '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
                     $("#MultiWarehouse").append(html);
                 }
             });
@@ -526,8 +527,15 @@
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
         $('#warhouseSelector').on('show', function () {
+            // multi select empty
             $("#MultiWarehouse").empty();
+            // validation error
+            $("#WarehouseQtyExceedError").text("");
+            $("#WarehouseQtyNullError").text("");
+            // drop all warehouse from view
             dropAllWar();
+            // drop all warehouses from form while create
+            
             // get warehouse
             var warehouse = "";
             var index = $(event.target).closest('tr').data('id');
@@ -537,7 +545,7 @@
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
                     warehouse = warehouse + value.PlaceInWarehouse + " - ";
-                    var html = '<option value="' + value.WarehousrId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
+                    var html = '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
                     $("#MultiWarehouse").append(html);
                 }
             });
@@ -549,7 +557,7 @@
                         quantities = value.ItemReleaseQuantities;
                     }
                 });
-                dropAllFormWar(index, quantities.length);
+                dropAllFormWarForEdit(index, quantities.length);
                 $("#WarehouseCount").val(0);
                 for (var i = 0; i < quantities.length; i++) {
                     var hiddenFields =
@@ -596,7 +604,7 @@
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__IRFDetailId").val() + '" type="hidden" />' +
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__ItemVariationId").val() + '" type="hidden" />';
                 var mainFormValues =
-                        '<div class="control-group row-fluid formWarehouses_' + index + '__' + i + '" style="display:none">' + hiddenFields +
+                        '<div class="control-group row-fluid formWarehouses_' + index + '-' + i + '" style="display:none">' + hiddenFields +
                             '<input  type="text" for="numbers" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val() + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Quantity" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__Quantity">' +
                         '</div>';
                 $('.AddEditItemReleaseForm').append(mainFormValues);
@@ -604,8 +612,40 @@
             $("#ItemReleaseDetails_" + index + "__ItemQty").val(quantityReleased);
         });
         $("#AddWArehouse").on("click", function () {
-            $('#warhouseSelector').modal('toggle');
-            return true;
+            var index = parseInt($("#WarehouseModalIndex").val());
+            var addedWarehouses = $("#MultiWarehouse option:selected").length;
+            var validationCount = 0;
+            var i = 0;
+            $("#MultiWarehouse option:selected").each(function() {
+                var warId = parseInt($(this).val());
+                var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
+                var availableQty;
+                $.each(parsedWarehouses, function (key, value) {
+                    if (value.WarehouseId == warId && value.ItemVariationId == itemVariationId) {
+                        availableQty = value.Quantity;
+                        return;
+                    }
+                });
+                var enteredQty = parseInt($("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val());
+                if (isNaN(enteredQty)) {
+                    $("#WarehouseQtyNullError").text("Please enter correct value for all Quantities");
+                    return false;
+                } else {
+                    $("#WarehouseQtyNullError").text("");
+                }
+                if (enteredQty <= availableQty) {
+                    validationCount = validationCount + 1;
+                    if (validationCount == addedWarehouses) {
+                        $('#warhouseSelector').modal('toggle');
+                        return true;
+                    }
+                } else {
+                    $("#WarehouseQtyExceedError").text("Please enter available Quantity");
+                    return false;
+                }
+                i = i + 1;
+            });
+            return;
         });
         //reactivateCount();
         $("#importEx").on("click", function () {
@@ -745,11 +785,12 @@
             var index = $("#WarehouseModalIndex").val();
             var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
             var i = 0;
+            dropAllFormWarForCreate(parseInt(index));
             $("#MultiWarehouse option:selected").each(function () {
                 var warId = parseInt($(this).val());
                 var war;
                 $.each(parsedWarehouses, function (key, value) {
-                    if (value.WarehousrId == warId && value.ItemVariationId == itemVariationId) {
+                    if (value.WarehouseId == warId && value.ItemVariationId == itemVariationId) {
                         war = value;
                         return;
                     }
@@ -758,7 +799,7 @@
                 var html =
                 '<div class="control-group row-fluid warhouses">' +
                 '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + index + '" />' +
-                '<input value="' + war.WarehousrId + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].WarehouseId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__WarehouseId" type="hidden" />' +
+                '<input value="' + war.WarehouseId + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].WarehouseId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__WarehouseId" type="hidden" />' +
                 '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].IRFDetailId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__IRFDetailId" type="hidden" />' +
                 '<input value="' + war.ItemVariationId + '" name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemVariationId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemVariationId" type="hidden" />' +
                     '<div class="span3">' +
@@ -792,8 +833,14 @@
         function dropAllWar() {
             $(".warhouses").remove();
         }
-        function dropAllFormWar(index, count) {
+        function dropAllFormWarForEdit(index, count) {
             for (var i = 0; i < count; i++) {
+                $(".formWarehouses_" + index + "-" + i).remove();
+            }
+        }
+        function dropAllFormWarForCreate(index) {
+            var warehouses = $("#MultiWarehouse > option").length;
+            for (var i = 0; i < warehouses; i++) {
                 $(".formWarehouses_" + index + "-" + i).remove();
             }
         }

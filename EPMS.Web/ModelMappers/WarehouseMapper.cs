@@ -2,6 +2,7 @@
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.Models.Common;
 
 namespace EPMS.Web.ModelMappers
@@ -37,9 +38,12 @@ namespace EPMS.Web.ModelMappers
         public static Warehouse CreateFromClientToServer(this Models.Warehouse source)
         {
             var location = source.WarehouseLocation;
-            location = location.Replace("\r", "");
-            location = location.Replace("\t", "");
-            location = location.Replace("\n", "");
+            if (!string.IsNullOrEmpty(location))
+            {
+                location = location.Replace("\r", "");
+                location = location.Replace("\t", "");
+                location = location.Replace("\n", "");
+            }
             return new Warehouse
             {
                 WarehouseId = source.WarehouseId,
@@ -75,8 +79,17 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 Quantity = source.Quantity,
-                WarehousrId = source.WarehousrId,
+                WarehouseId = source.WarehouseId,
                 WarehouseNo = source.Warehouse.WarehouseNumber
+            };
+        }
+
+        public static WarehousDDL CreateDDL(this Warehouse source)
+        {
+            return new WarehousDDL
+            {
+                WarehouseId = source.WarehouseId,
+                WarehouseNumber = source.WarehouseNumber
             };
         }
     }

@@ -79,7 +79,6 @@
                     <div class="controls">
                         @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "nameEn", @class = "toBeDiabled" })
                         <label id="lblNameEn" class="required"></label>
-                        @*@Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameEn, String.Empty, new { @class = "required" })*@
                     </div>
                 </div>
             </div>
@@ -91,7 +90,6 @@
                     <div class="controls">
                         @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameAr, new { @id = "nameAr", @class = "toBeDiabled" })
                         <label id="lblNameAr" class="required"></label>
-                        @*@Html.ValidationMessageFor(m => m.InventoryDepartment.DepartmentNameAr, String.Empty, new { @class = "required" })*@
                     </div>
                 </div>
             </div>
@@ -102,7 +100,6 @@
                 <div class="span9">
                     <div class="controls">
                         @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentColor, new { @id = "color", @class = "toBeDiabled", Value = "#FFF8BE" })
-                        @*<input type="text" id="color" name="color" value="#FFF8BE" />*@
                         <div id="colorpicker"></div>
                     </div>
                 </div>

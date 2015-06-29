@@ -155,6 +155,7 @@
     <Compile Include="Repository\INotificationRecipientRepository.cs" />
     <Compile Include="Repository\INotificationRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IPOHistoryRepository.cs" />
     <Compile Include="Repository\IPoItemRepository.cs" />
     <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />

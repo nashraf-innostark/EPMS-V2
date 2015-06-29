@@ -88,11 +88,11 @@
                     {
                         "aTargets": [1],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
                             var element;
                             var val;
                             var irfId;
-                            val = full["FormNumber"];
+                            val = full["ItemReleaseId"];
                             irfId = full["ItemReleaseId"];
                             element = '<a href="Detail/' + irfId + '">' + val + '</a>';
                             return element;
@@ -108,14 +108,18 @@
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
-                            return full["CreatedBy"];
+                        "mRender": function (data, type, full) {
+                            if (dir == "ltr") {
+                                return full["RequesterNameE"];
+                            } else {
+                                return full["RequesterNameA"];
+                            }                            
                         }
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
                             if (dir == "ltr") {
                                 return full["DeliveryInfo"];
                             } else {
@@ -126,34 +130,22 @@
                     {
                         "aTargets": [5],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
                             var val = "";
-                            if (dir == "ltr") {
-                                if (full["Status"] == 3) {
-                                    val = "Pending";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "Accepted";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "Rejected";
-                                }
-                            } else {
-                                if (full["Status"] == 3) {
-                                    val = "ريثما";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "قبلت";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "مرفوض";
-                                }
+                            if (full["Status"] == 3) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            }
+                            else if (full["Status"] == 1) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            else if (full["Status"] == 2) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }
                     }
                 ],
-                "fnServerParams": function(aoData) {
+                "fnServerParams": function (aoData) {
                     aoData.push({ "name": "search", "value": $('input').val() });
                 },
                 "sAjaxSource": siteUrl + "/Inventory/ItemRelease/Index",
@@ -164,7 +156,7 @@
                     "sInfoEmpty": "No matching record(s) found",
                     "sEmptyTable": "No record(s) found",
                 },
-                "fnRowCallback": function(nRow, aData, iDisplayIndex) {
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
                     var oSettings = oTable.fnSettings();
                     $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
                     return nRow;
@@ -189,7 +181,7 @@
                             var element;
                             var val;
                             var irfId;
-                            val = full["FormNumber"];
+                            val = full["ItemReleaseId"];
                             irfId = full["ItemReleaseId"];
                             element = '<a href="Detail/' + irfId + '">' + val + '</a>';
                             return element;
@@ -218,26 +210,14 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             var val = "";
-                            if (dir == "ltr") {
-                                if (full["Status"] == 3) {
-                                    val = "Pending";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "Accepted";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "Rejected";
-                                }
-                            } else {
-                                if (full["Status"] == 3) {
-                                    val = "ريثما";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "قبلت";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "مرفوض";
-                                }
+                            if (full["Status"] == 3) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            }
+                            else if (full["Status"] == 1) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            else if (full["Status"] == 2) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }

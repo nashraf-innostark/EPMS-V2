@@ -2,7 +2,7 @@
 @model EPMS.Web.ViewModels.PurchaseOrder.PurchaseOrderDetailsViewModel
 
 @{
-    ViewBag.Title = "View Perchase Order (PO) View";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.PO.PO.PageTitleView;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
@@ -18,12 +18,12 @@
         </li>
         <li>
             <a href="~/Inventory/PurchaseOrder/Index">
-                Inventory Perchase Order (PO) List
+                @EPMS.Web.Resources.Inventory.PO.PO.PageTitleIndex
             </a>
         </li>
         <li class="current">
             <a href="javascript:;">
-                Inventory Perchase Order (PO) View
+                @EPMS.Web.Resources.Inventory.PO.PO.InventoryPurchaseOrderView
             </a>
         </li>
     </ul>
@@ -31,7 +31,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Perchase Order (PO) View</small></h2>
+    <h2><small>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderView</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -47,7 +47,7 @@
 
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
-                Perchase Order (PO)
+                @EPMS.Web.Resources.Inventory.PO.PO.CenterTitleView
             </div>
             <div class="invoice-info">
                 <div class="controls">
@@ -59,15 +59,15 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>Employee Name:</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.EmployeeName:</th>
                                         <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>Employee Id:</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.EmployeeId:</th>
                                         <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>PO#:</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.PONumber:</th>
                                         <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.PurchaseOrder.PurchaseOrderId</td>
                                     </tr>
                                 </tbody>
@@ -81,22 +81,22 @@
                                     @if (ViewBag.IsManager)
                                     {
                                         <tr>
-                                            <th>Date:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.Date:</th>
                                             <td>@Model.PurchaseOrder.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>Requester Name:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.RequesterName:</th>
                                             <td>@(direction == "ltr" ? Model.PurchaseOrder.RequesterName : Model.PurchaseOrder.RequesterNameAr)</td>
                                         </tr>
                                     }
                                     else
                                     {
                                         <tr>
-                                            <th>Date:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.Date:</th>
                                             <td>@Model.PurchaseOrder.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>Inventory Manager Name:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.InventoryManagerName:</th>
                                             <td>@(direction == "ltr" ? Model.PurchaseOrder.ManagerName : Model.PurchaseOrder.ManagerNameAr)</td>
                                         </tr>
                                     }
@@ -112,24 +112,24 @@
                                 @if (ViewBag.IsManager)
                                 {
                                     <tr>
-                                        <th>Serial</th>
-                                        <th>Item Name</th>
-                                        <th>Item Code</th>
-                                        <th>SKU Code</th>
-                                        <th>Vendor</th>
-                                        <th>Needed Quantity</th>
-                                        <th>Unit Price</th>
-                                        <th>Total</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.ItemName</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.ItemCode</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.SKUCode</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Vendor</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.NeededQuantity</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.UnitPrice</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Total</th>
                                     </tr>
                                 }
                                 else
                                 {
                                     <tr>
-                                        <th>Serial</th>
-                                        <th>Item Name</th>
-                                        <th>Item Code</th>
-                                        <th>SKU Code</th>
-                                        <th>Needed Quantity</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.ItemName</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.ItemCode</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.SKUCode</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.NeededQuantity</th>
                                     </tr>
                                 }
                             </thead>
@@ -137,38 +137,68 @@
                                 @if (ViewBag.IsManager)
                                 {
                                     i = 0;
-                                    foreach (var itemReleaseDetail in Model.OrderItems)
+                                    for (int po = 0; po < Model.OrderItems.Count(); po++)
                                     {
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].PurchaseOrderId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemVariationId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemDetails)
+                                        @Html.HiddenFor(m => m.OrderItems[po].IsItemDescription)
+                                        @Html.HiddenFor(m => m.OrderItems[po].IsItemSKU)
+                                        @Html.HiddenFor(m => m.OrderItems[po].PlaceInDepartment)
+                                        @Html.HiddenFor(m => m.OrderItems[po].RecCreatedBy)
+                                        @Html.HiddenFor(m => m.OrderItems[po].RecCreatedDate)
                                         <tr>
                                             <td>@(i += 1)</td>
-                                            <td>@itemReleaseDetail.ItemName</td>
-                                            <td>@itemReleaseDetail.ItemCode</td>
-                                            <td>@itemReleaseDetail.ItemSKUCode</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemName)</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemCode)</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemSKUCode)</td>
                                             <td>
-                                                <select class="tableDbM" name="selectBoxFilter2" id="selectBoxFilter2">
-                                                    <option selected="" value="All">Masar</option>
-                                                    <option value="Beige">Wasail</option>
-                                                </select>
+                                                <div class="span9">
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameEn", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM" })
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="controls">
+                                                            @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameAr", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM" })
+                                                        </div>
+                                                    }
+                                                </div>
                                             </td>
                                             <td>
-                                                <input class="n1 tableDbM" type="text" name="numbers" value="@itemReleaseDetail.ItemQty">
+                                                @Html.TextBoxFor(m => m.OrderItems[po].ItemQty, new { @class = "tableDbM" })
                                             </td>
-                                            <td>@itemReleaseDetail.UnitPrice</td>
-                                            <td>@(itemReleaseDetail.ItemQty * itemReleaseDetail.UnitPrice)</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].UnitPrice)</td>
+                                            <td>@(Model.OrderItems[po].ItemQty * Model.OrderItems[po].UnitPrice)</td>
                                         </tr>
                                     }
                                 }
                                 else
                                 {
                                     i = 0;
-                                    foreach (var itemReleaseDetail in Model.OrderItems)
+                                    for (int po = 0; po < Model.OrderItems.Count(); po++)
                                     {
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].PurchaseOrderId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemVariationId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemDetails)
+                                        @Html.HiddenFor(m => m.OrderItems[po].ItemQty)
+                                        @Html.HiddenFor(m => m.OrderItems[po].IsItemDescription)
+                                        @Html.HiddenFor(m => m.OrderItems[po].IsItemSKU)
+                                        @Html.HiddenFor(m => m.OrderItems[po].PlaceInDepartment)
+                                        @Html.HiddenFor(m => m.OrderItems[po].VendorId)
+                                        @Html.HiddenFor(m => m.OrderItems[po].RecCreatedBy)
+                                        @Html.HiddenFor(m => m.OrderItems[po].RecCreatedDate)
                                         <tr>
                                             <td>@(i += 1)</td>
-                                            <td>@itemReleaseDetail.ItemName</td>
-                                            <td>@itemReleaseDetail.ItemCode</td>
-                                            <td>@itemReleaseDetail.ItemSKUCode</td>
-                                            <td>@itemReleaseDetail.ItemQty</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemName)</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemCode)</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemSKUCode)</td>
+                                            <td>@Html.DisplayFor(m => m.OrderItems[po].ItemQty)</td>
                                         </tr>
                                     }
                                 }
@@ -223,7 +253,7 @@
                 <div class="control-group row-fluid">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="jobTitle">Request Status</label>
+                            <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.PO.PO.RequestStatus</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -240,14 +270,14 @@
                 {
                     <div id="SubmitTir" class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn">Submit</button>
+                            <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.Submit</button>
                         </div>
                     </div>
                     if (userPermissionsSet.Contains("POCreate"))
                     {
                         <div id="EditTir" class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Purchaseorder/Create/@Model.PurchaseOrder.PurchaseOrderId" class="btn">Edit</a>
+                                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Purchaseorder/Create/@Model.PurchaseOrder.PurchaseOrderId" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.EditPO</a>
                             </div>
                         </div>
                     }
@@ -260,11 +290,10 @@
 <script>
     $(document).ready(function () {
 
-        if ('@ViewBag.IsManager' != "True" || '@Model.PurchaseOrder.Status' == '1') {
+        if ('@ViewBag.IsManager' != "True" || '@Model.PurchaseOrder.Status' == '1' || '@ViewBag.From' == 'History') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
-            $("#EditTir").hide();
             var noteEn = '@Html.Raw(Model.PurchaseOrder.NotesE)';
             var regex = /(<([^>]+)>)/ig;
             var result = noteEn.replace(regex, "");

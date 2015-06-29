@@ -98,6 +98,11 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
+        public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime date)
+        {
+            return rfiRepository.GetRecentRFIs(status, requester, date).ToList();
+        }
+
         public RFI FindRFIById(long id)
         {
             return rfiRepository.Find(id);
@@ -170,7 +175,7 @@ namespace EPMS.Implementation.Services
         public bool UpdateRFI(RFI rfi)
         {
             var previous = rfiRepository.Find(rfi.RFIId);
-            if (previous.Status != rfi.Status && rfi.Status != 2)
+            if (previous.Status != rfi.Status && rfi.Status != 6)
             {
                 var rfiHistoryToAdd = rfi.CreateFromRfiToRfiHistory(previous.RFIItems);
                 historyRepository.Add(rfiHistoryToAdd);

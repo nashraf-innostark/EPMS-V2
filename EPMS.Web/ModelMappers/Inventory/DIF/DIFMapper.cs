@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.DIF;
 
@@ -88,6 +89,23 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
         #endregion
 
         #region Server to Client
+
+        public static DIFWidget CreateWidget(this EPMS.Models.DomainModels.DIF source)
+        {
+            var empName = (source.AspNetUser != null && source.AspNetUser.Employee != null)
+                ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE +
+                  " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : string.Empty;
+            var rfi = new DIFWidget
+            {
+                Id = source.Id,
+                Status = source.Status,
+                RequesterName = empName,
+                RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString()
+            };
+            return rfi;
+        }
         public static Models.DIF CreateDifServerToClient(this EPMS.Models.DomainModels.DIF source)
         {
             var rif = new Models.DIF

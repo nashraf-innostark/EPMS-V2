@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
@@ -17,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateItemReleaseStatus(ItemReleaseStatus releaseStatus);
         bool UpdateItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails);
         void DeleteItemRelease(ItemRelease itemRelease);
+        IEnumerable<ItemRelease> GetRecentIRFs(int status, string requester, DateTime date);
     }
 }

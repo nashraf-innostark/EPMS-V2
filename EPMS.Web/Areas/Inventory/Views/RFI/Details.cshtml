@@ -248,7 +248,7 @@
         CheckPermissions();
     });
     function EnableDisableFields() {
-        if ('@Model.Rfi.Status' != '2') {
+        if ('@Model.Rfi.Status' != '2' || '@ViewBag.From' != 'History') {
             $('.toBeDisabled:input').attr('disabled', false);
         } else {
             $('.toBeDisabled:input').attr('disabled', true);

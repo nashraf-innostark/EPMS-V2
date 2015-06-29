@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Models;
-using ItemReleaseDetail = EPMS.Models.DomainModels.ItemReleaseDetail;
 
 namespace EPMS.Web.ViewModels.IRF
 {

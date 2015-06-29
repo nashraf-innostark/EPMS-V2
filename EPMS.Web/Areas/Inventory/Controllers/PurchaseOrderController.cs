@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
@@ -54,8 +55,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             PurchaseOrderListResponse response = orderService.GetAllPoS(searchRequest);
-            IEnumerable<PurchaseOrder> ordersList =
-                response.Orders.Select(x => x.CreateFromServerToClient());
+            IEnumerable<PurchaseOrder> ordersList = response.Orders.Any() ?
+                response.Orders.Select(x => x.CreateFromServerToClient()) : new List<PurchaseOrder>();
             PurchaseOrderListViewModel viewModel = new PurchaseOrderListViewModel
             {
                 aaData = ordersList,
@@ -77,11 +78,21 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             PurchaseOrderDetailsViewModel viewModel = new PurchaseOrderDetailsViewModel();
             if (id != null)
             {
-                var purchaseOrder = orderService.FindPoById((long)id, from);
-                viewModel.PurchaseOrder = purchaseOrder.CreateFromServerToClient();
-                viewModel.OrderItems = purchaseOrder.PurchaseOrderItems.Select(x => x.CreateFromServerToClient()).ToList();
+                var response = orderService.GetPoDetailResponse((long)id, from);
+                if (response.PurchaseOrder != null)
+                {
+                    viewModel.PurchaseOrder = response.PurchaseOrder.CreateFromServerToClient();
+                    viewModel.OrderItems = response.OrderItems.Select(x => x.CreateFromServerToClient()).ToList();
+                }
+                else
+                {
+                    viewModel.PurchaseOrder = new PurchaseOrder();
+                    viewModel.OrderItems = new List<PurchaseOrderItem>();
+                }
+                viewModel.Vendors = response.Vendors.Any() ? response.Vendors.Select(x => x.CreateFromServerToClient()) : new List<Vendor>();
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            ViewBag.From = from;
             return View(viewModel);
         }
 
@@ -89,27 +100,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)] //this is due to CK Editor
         public ActionResult Details(PurchaseOrderDetailsViewModel viewModel)
         {
-            var notesE = viewModel.PurchaseOrder.NotesE;
-            if (!string.IsNullOrEmpty(notesE))
-            {
-                notesE = notesE.Replace("\r", "");
-                notesE = notesE.Replace("\t", "");
-                notesE = notesE.Replace("\n", "");
-            }
-            viewModel.PurchaseOrder.NotesE = notesE;
-            var notesA = viewModel.PurchaseOrder.NotesA;
-            if (!string.IsNullOrEmpty(notesA))
-            {
-                notesA = notesA.Replace("\r", "");
-                notesA = notesA.Replace("\t", "");
-                notesA = notesA.Replace("\n", "");
-            }
-            viewModel.PurchaseOrder.NotesA = notesA;
             viewModel.PurchaseOrder.ManagerId = User.Identity.GetUserId();
             viewModel.PurchaseOrder.RecUpdatedBy = User.Identity.GetUserId();
             viewModel.PurchaseOrder.RecUpdatedDate = DateTime.Now;
-            var purchaseOrderToUpdate = viewModel.PurchaseOrder.CreateFromClientToServer();
-            if (orderService.UpdatePO(purchaseOrderToUpdate))
+            var purchaseOrderToUpdate = viewModel.CreateFromClientToServer();
+            if (orderService.SavePO(purchaseOrderToUpdate))
             {
                 TempData["message"] = new MessageViewModel
                 {
@@ -136,10 +131,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
+                var direction = Resources.Shared.Common.TextDirection;
                 viewModel.Order = new PurchaseOrder
                 {
                     FormNumber = "101010",
-                    RequesterName = Session["UserFullName"].ToString()
+                    RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
                 viewModel.PoItems = new List<PurchaseOrderItem>();
             }
@@ -200,6 +196,51 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 return View(viewModel);
             }
+        }
+
+        [SiteAuthorize(PermissionKey = "PODetailsUpdation")]
+        public ActionResult History(long? id)
+        {
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            ViewBag.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
+            PoHistoryResponse response = orderService.GetPoHistoryData(id);
+            POHistoryViewModel viewModel = new POHistoryViewModel
+            {
+                PurchaseOrders = response.PurchaseOrders.Any() ? response.PurchaseOrders.Select(x => x.CreateFromServerToClient()).ToList() : new List<PurchaseOrder>(),
+                PurchaseOrdersItems = response.PoItems.Any() ? response.PoItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<PurchaseOrderItem>(),
+                RecentPo = (response.RecentPo != null && response.RecentPo.PurchaseOrderId > 0) ? response.RecentPo.CreateFromServerToClient() : new PurchaseOrder(),
+                Vendors = response.Vendors.Any() ? response.Vendors.Select(x=>x.CreateFromServerToClient()).ToList() : new List<Vendor>()
+            };
+            viewModel.RecentPo.RequesterName = response.RequesterNameEn;
+            viewModel.RecentPo.RequesterNameAr = response.RequesterNameAr;
+            viewModel.RecentPo.ManagerName = response.ManagerNameEn;
+            viewModel.RecentPo.ManagerNameAr = response.ManagerNameAr;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)] //this is due to CK Editor
+        public ActionResult History(POHistoryViewModel viewModel)
+        {
+            // Update
+            viewModel.RecentPo.ManagerId = User.Identity.GetUserId();
+            viewModel.RecentPo.RecUpdatedBy = User.Identity.GetUserId();
+            viewModel.RecentPo.RecUpdatedDate = DateTime.Now;
+            var purchaseOrderToUpdate = viewModel.RecentPo.CreateFromClientToServer(viewModel.PurchaseOrdersItems);
+            if (orderService.SavePO(purchaseOrderToUpdate))
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = "PO Status Updated",
+                    IsUpdated = true
+                };
+                return RedirectToAction("Index");
+            }
+            // Error
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            ViewBag.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
+            return View(viewModel);
         }
     }
 }

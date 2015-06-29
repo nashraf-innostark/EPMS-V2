@@ -119,7 +119,7 @@ namespace EPMS.Implementation.Services
                 tir.NotesE = status.NotesEn;
                 tir.NotesA = status.NotesAr;
                 tir.ManagerId = status.ManagerId;
-                if (tir.Status != status.Status && status.Status != 1)
+                if (tir.Status != status.Status && status.Status != 3)
                 {
                     tir.Status = status.Status;
                     var tirHistoryToAdd = tir.CreateFromTirToTirHistory();
@@ -181,6 +181,11 @@ namespace EPMS.Implementation.Services
         {
             repository.Add(tir);
             repository.SaveChanges();
+        }
+
+        public IEnumerable<TIR> GetRecentTIRs(int status, string requester, DateTime date)
+        {
+            return repository.GetRecentTIRs(status, requester, date);
         }
 
         private void TirItemUpdation(TIR tir)

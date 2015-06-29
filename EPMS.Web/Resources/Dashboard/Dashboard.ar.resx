@@ -198,4 +198,25 @@
   <data name="Total" xml:space="preserve">
     <value>المجموع</value>
   </data>
+  <data name="DIF" xml:space="preserve">
+    <value>Inventory - DIF</value>
+  </data>
+  <data name="IRF" xml:space="preserve">
+    <value>Inventory - IRF</value>
+  </data>
+  <data name="PO" xml:space="preserve">
+    <value>Inventory - PO</value>
+  </data>
+  <data name="RFI" xml:space="preserve">
+    <value>Inventory - RFI</value>
+  </data>
+  <data name="RIF" xml:space="preserve">
+    <value>Inventory - RIF</value>
+  </data>
+  <data name="TIF" xml:space="preserve">
+    <value>Inventory - TIF</value>
+  </data>
+  <data name="FilterByDate" xml:space="preserve">
+    <value>Filter by Date</value>
+  </data>
 </root>

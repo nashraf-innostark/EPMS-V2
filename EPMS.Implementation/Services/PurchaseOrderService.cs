@@ -6,6 +6,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
@@ -15,18 +16,22 @@ namespace EPMS.Implementation.Services
     public class PurchaseOrderService : IPurchaseOrderService
     {
         private readonly IPurchaseOrderRepository repository;
+        private readonly IPOHistoryRepository historyRepository;
         private readonly IPoItemRepository itemRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly INotificationService notificationService;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IVendorRepository vendorRepository;
 
-        public PurchaseOrderService(IItemVariationRepository itemVariationRepository,INotificationService notificationService, IPurchaseOrderRepository repository, IAspNetUserRepository aspNetUserRepository, IPoItemRepository itemRepository)
+        public PurchaseOrderService(IItemVariationRepository itemVariationRepository,INotificationService notificationService, IPurchaseOrderRepository repository, IAspNetUserRepository aspNetUserRepository, IPoItemRepository itemRepository, IVendorRepository vendorRepository, IPOHistoryRepository historyRepository)
         {
             this.itemVariationRepository = itemVariationRepository;
             this.notificationService = notificationService;
             this.repository = repository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.itemRepository = itemRepository;
+            this.vendorRepository = vendorRepository;
+            this.historyRepository = historyRepository;
         }
 
         private void PoItemUpdation(PurchaseOrder order)
@@ -76,13 +81,73 @@ namespace EPMS.Implementation.Services
 
             response.Order = po;
             response.OrderItems = po.PurchaseOrderItems;
-            if (!string.IsNullOrEmpty(po.RecCreatedBy))
+            if (po.AspNetUser != null && po.AspNetUser.Employee != null)
             {
-                var employee = aspNetUserRepository.Find(po.RecCreatedBy).Employee;
+                var employee = po.AspNetUser.Employee;
                 response.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
                 response.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
             }
             
+            return response;
+        }
+
+        public PODetailResponse GetPoDetailResponse(long id, string from)
+        {
+            PODetailResponse response;
+            if (from == "History")
+            {
+                response = new PODetailResponse
+                {
+                    PurchaseOrder = historyRepository.Find(id).CreateFromPoHistoryToPo()
+                };
+            }
+            else
+            {
+                response = new PODetailResponse
+                {
+                    PurchaseOrder = repository.Find(id)
+                };
+            }
+            response.OrderItems = response.PurchaseOrder.PurchaseOrderItems;
+            response.Vendors = vendorRepository.GetAll();
+            return response;
+        }
+
+        public PoHistoryResponse GetPoHistoryData(long? parentId)
+        {
+            if (parentId == null)
+            {
+                return new PoHistoryResponse();
+            }
+            var pos = historyRepository.GetPoHistoryData((long)parentId);
+            var poList = pos as IList<PurchaseOrderHistory> ?? pos.ToList();
+            PoHistoryResponse response = new PoHistoryResponse
+            {
+                PurchaseOrders = poList.Select(x => x.CreateFromPoHistoryToPo()),
+                RecentPo = repository.Find((long)parentId)
+            };
+            response.PoItems = response.RecentPo.PurchaseOrderItems;
+
+            if (response.RecentPo != null)
+            {
+                if (response.RecentPo.Manager != null)
+                {
+                    var manager = response.RecentPo.Manager.Employee;
+                    response.ManagerNameEn = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " +
+                                           manager.EmployeeLastNameE;
+                    response.ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " +
+                                           manager.EmployeeLastNameA;
+                }
+                if (response.RecentPo.AspNetUser != null)
+                {
+                    var employee = response.RecentPo.AspNetUser.Employee;
+                    response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                                           employee.EmployeeLastNameE;
+                    response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                           employee.EmployeeLastNameA;
+                }
+            }
+            response.Vendors = vendorRepository.GetAll();
             return response;
         }
 
@@ -118,6 +183,12 @@ namespace EPMS.Implementation.Services
                 //save
                 return AddPO(purchaseOrder);
             }
+            if (purchaseOrder.Status != 3)
+            {
+                var poHistoryToAdd = purchaseOrder.CreateFromPoToPoHistory();
+                historyRepository.Add(poHistoryToAdd);
+                historyRepository.SaveChanges();
+            }
             return true;
         }
 
@@ -149,10 +220,20 @@ namespace EPMS.Implementation.Services
             }
         }
 
+        public bool UpdatePOStatus(PurchaseOrderStatus purchaseOrder)
+        {
+            return true;
+        }
+
         public void DeletePO(PurchaseOrder purchaseOrder)
         {
             repository.Delete(purchaseOrder);
             repository.SaveChanges();
+        }
+
+        public IEnumerable<PurchaseOrder> GetRecentPOs(int status, string requester, DateTime date)
+        {
+            return repository.GetRecentPOs(status, requester, date);
         }
 
         private void SendNotification(PurchaseOrder purchaseOrder)

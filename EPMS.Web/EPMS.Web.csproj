@@ -344,6 +344,13 @@
     <Compile Include="DashboardModels\Profile.cs" />
     <Compile Include="DashboardModels\Project.cs" />
     <Compile Include="DashboardModels\Recruitment.cs" />
+    <Compile Include="DashboardModels\RIFWidget.cs" />
+    <Compile Include="DashboardModels\IRFWidget.cs" />
+    <Compile Include="DashboardModels\DIFWidget.cs" />
+    <Compile Include="DashboardModels\POWidget.cs" />
+    <Compile Include="DashboardModels\TIRWidget.cs" />
+    <Compile Include="DashboardModels\RFIWidget.cs" />
+    <Compile Include="DashboardModels\WarehousDDL.cs" />
     <Compile Include="EncryptDecrypt\StringCipher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -683,6 +690,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Inventory\PO\PO.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PO.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\RIF\RIF.ar.Designer.cs">
       <DependentUpon>RIF.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -840,6 +852,7 @@
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrder\POHistoryViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderCreateViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\PurchaseOrderListViewModel.cs" />
@@ -1944,6 +1957,7 @@
     <Content Include="Areas\Inventory\Views\TransferItem\History.cshtml" />
     <Content Include="Areas\Inventory\Views\ItemRelease\History.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\Details.cshtml" />
+    <Content Include="Areas\Inventory\Views\PurchaseOrder\History.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3884,6 +3898,7 @@
     <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFView.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3896,6 +3911,11 @@
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PO\PO.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PO.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\RIF\RIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

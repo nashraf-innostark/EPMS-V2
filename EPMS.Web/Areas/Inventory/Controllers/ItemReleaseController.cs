@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.Inventory.RFI;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.IRF;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using ItemRelease = EPMS.Web.Models.ItemRelease;
 using ItemReleaseDetail = EPMS.Web.Models.ItemReleaseDetail;
-using ItemReleaseQuantity = EPMS.Web.Models.ItemReleaseQuantity;
+using ItemWarehouse = EPMS.Web.Models.ItemWarehouse;
 using RFI = EPMS.Web.Models.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -67,7 +67,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFViewComplete");
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
             IEnumerable<ItemRelease> itemReleaseList =
-                response.ItemReleases.Select(x => x.CreateFromServerToClient());
+                response.ItemReleases.Any() ?
+                response.ItemReleases.Select(x => x.CreateFromServerToClient()) :
+                new List<ItemRelease>();
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel()
             {
                 aaData = itemReleaseList,
@@ -87,12 +89,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             ItemReleaseDetailViewModel viewModel = new ItemReleaseDetailViewModel();
             if (id != null)
             {
-                var itemRelease = itemReleaseService.FindItemReleaseById((long)id,from);
+                var itemRelease = itemReleaseService.FindItemReleaseById((long)id, from);
                 if (itemRelease != null)
                 {
                     viewModel.ItemRelease = itemRelease.CreateFromServerToClient();
-                    viewModel.ItemReleaseDetails =
-                        itemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient());
+                    viewModel.ItemReleaseDetails = itemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient());
+                }
+                else
+                {
+                    viewModel.ItemRelease = new ItemRelease();
+                    viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -103,29 +109,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Detail(ItemReleaseDetailViewModel viewModel)
         {
-            var notesE = viewModel.ItemRelease.Notes;
-            if (!string.IsNullOrEmpty(notesE))
-            {
-                notesE = notesE.Replace("\r", "");
-                notesE = notesE.Replace("\t", "");
-                notesE = notesE.Replace("\n", "");
-            }
-            var notesA = viewModel.ItemRelease.NotesAr;
-            if (!string.IsNullOrEmpty(notesA))
-            {
-                notesA = notesA.Replace("\r", "");
-                notesA = notesA.Replace("\t", "");
-                notesA = notesA.Replace("\n", "");
-            }
-            ItemReleaseStatus status = new ItemReleaseStatus
-            {
-                ItemReleaseId = viewModel.ItemRelease.ItemReleaseId,
-                Status = viewModel.ItemRelease.Status ?? 1,
-                Notes = notesE,
-                NotesAr = notesA,
-                ManagerId = User.Identity.GetUserId()
-            };
-            if (itemReleaseService.UpdateItemReleaseStatus(status))
+            viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
+            viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
+            viewModel.ItemRelease.ManagerId = User.Identity.GetUserId();
+            var itemReleaseToUpdate = viewModel.ItemRelease.CreateForStatus();
+            if (itemReleaseService.UpdateItemReleaseStatus(itemReleaseToUpdate))
             {
                 TempData["message"] = new MessageViewModel
                 {
@@ -148,41 +136,30 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (id != null)
             {
                 response = itemReleaseService.GetCreateResponse((long)id);
-                viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
-                viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient()).ToList();
-                viewModel.Rfis = response.Rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
-                viewModel.ItemWarehouses = response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
+                if (response.ItemRelease != null)
+                {
+                    viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
+                    viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient()).ToList();
+                }
+                viewModel.ItemRelease = new ItemRelease();
+                viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
+                viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList() : new List<RFI>();
             }
             else
             {
                 response = itemReleaseService.GetCreateResponse(0);
-                viewModel.ItemWarehouses = response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
-                viewModel.ItemRelease = new ItemRelease();
-                viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
-                if (Session["RoleName"] != null)
+                var direction = Resources.Shared.Common.TextDirection;
+                viewModel.ItemRelease = new ItemRelease
                 {
-                    if (Session["RoleName"].ToString() != "Admin")
-                    {
-                        var employee = userService.FindById(Session["UserID"].ToString()).Employee;
-                        var direction = Resources.Shared.Common.TextDirection;
-                        if (direction == "ltr")
-                        {
-                            viewModel.ItemRelease.CreatedBy = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
-                        }
-                        else
-                        {
-                            viewModel.ItemRelease.CreatedBy = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
-                        }
-                    }
-                    else
-                    {
-                        viewModel.ItemRelease.CreatedBy = "Admin";
-                    }
-                }
+                    CreatedBy = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
+                };
+                viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
                 viewModel.ItemRelease.FormNumber = "010101";
             }
-            //Session["RoleName"];
-            viewModel.Employees = response.Employees.Select(x => x.CreateForIrfRequesterDropDownList()).ToList();
+            viewModel.Employees = response.Employees.Any() ?
+                response.Employees.Select(x => x.CreateForIrfRequesterDropDownList()).ToList() : new List<EmployeeForDropDownList>();
+            viewModel.ItemWarehouses = response.ItemWarehouses.Any() ?
+                response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList() : new List<ItemWarehouse>();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
             return View(viewModel);
         }
@@ -264,17 +241,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             IrfHistoryResponse response = itemReleaseService.GetIrfHistoryData(id);
             IrfHistoryViewModel viewModel = new IrfHistoryViewModel
             {
-                Irfs = response.Irfs != null ? response.Irfs.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemRelease>(),
+                Irfs = response.Irfs.Any() ? response.Irfs.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemRelease>(),
                 RecentIrf = response.RecentIrf != null ? response.RecentIrf.CreateFromServerToClient() : new ItemRelease(),
                 IrfItems = response.IrfItems.Any() ? response.IrfItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<ItemReleaseDetail>()
             };
-            if (response.RecentIrf != null)
-            {
-                viewModel.RecentIrf.RequesterName = response.RequesterNameEn;
-                viewModel.RecentIrf.RequesterNameAr = response.RequesterNameAr;
-                viewModel.RecentIrf.ManagerName = response.ManagerNameEn;
-                viewModel.RecentIrf.ManagerNameAr = response.ManagerNameAr;
-            }
+            viewModel.RecentIrf.RequesterName = response.RequesterNameEn;
+            viewModel.RecentIrf.RequesterNameAr = response.RequesterNameAr;
+            viewModel.RecentIrf.ManagerName = response.ManagerNameEn;
+            viewModel.RecentIrf.ManagerNameAr = response.ManagerNameAr;
             return View(viewModel);
         }
         // POST: Inventory/ItemRelease/History
@@ -282,29 +256,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult History(IrfHistoryViewModel viewModel)
         {
-            var notesE = viewModel.RecentIrf.Notes;
-            if (!string.IsNullOrEmpty(notesE))
-            {
-                notesE = notesE.Replace("\r", "");
-                notesE = notesE.Replace("\t", "");
-                notesE = notesE.Replace("\n", "");
-            }
-            var notesA = viewModel.RecentIrf.NotesAr;
-            if (!string.IsNullOrEmpty(notesA))
-            {
-                notesA = notesA.Replace("\r", "");
-                notesA = notesA.Replace("\t", "");
-                notesA = notesA.Replace("\n", "");
-            }
-            ItemReleaseStatus status = new ItemReleaseStatus
-            {
-                ItemReleaseId = viewModel.RecentIrf.ItemReleaseId,
-                Status = viewModel.RecentIrf.Status ?? 1,
-                Notes = notesE,
-                NotesAr = notesA,
-                ManagerId = User.Identity.GetUserId()
-            };
-            if (itemReleaseService.UpdateItemReleaseStatus(status))
+            viewModel.RecentIrf.RecUpdatedBy = User.Identity.GetUserId();
+            viewModel.RecentIrf.RecUpdatedDate = DateTime.Now;
+            viewModel.RecentIrf.ManagerId = User.Identity.GetUserId();
+            var itemReleaseToUpdate = viewModel.RecentIrf.CreateForStatus();
+            if (itemReleaseService.UpdateItemReleaseStatus(itemReleaseToUpdate))
             {
                 TempData["message"] = new MessageViewModel
                 {
@@ -326,14 +282,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             var rfis = rfiService.GetRfiByRequesterId(requesterId);
             IList<RFI> requesterRfis = rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
             return Json(requesterRfis, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
-        #region Get ItemWarehouse
-
-        public JsonResult GetItemWarehouse(long itemVariationId)
-        {
-            return Json("", JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

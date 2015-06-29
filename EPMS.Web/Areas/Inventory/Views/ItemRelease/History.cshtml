@@ -171,7 +171,7 @@
                                         <a href="~/Inventory/ItemRelease/Detail/@itemRelease.ItemReleaseId?from=History">@itemRelease.FormNumber</a>
                                     </td>
                                     <td>
-                                        @(direction == "ltr" ? itemRelease.RequesterNameE : itemRelease.RequesterNameA)
+                                        @itemRelease.CreatedBy
                                     </td>
                                     <td>
                                         @itemRelease.RecCreatedDate.ToShortDateString()
