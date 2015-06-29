@@ -6152,8 +6152,8 @@
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers" FromRole="PurchaseOrder" ToRole="AspNetUser" />
-          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers1" FromRole="PurchaseOrder" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers" FromRole="PurchaseOrder" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers1" FromRole="PurchaseOrder" ToRole="AspNetUser" />
           <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderItem" />
         </EntityType>
         <Association Name="FK_PurchaseOrder_AspNetUsers">
