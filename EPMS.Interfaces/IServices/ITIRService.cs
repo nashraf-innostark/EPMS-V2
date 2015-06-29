@@ -1,4 +1,6 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 
@@ -15,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         bool AddTIR(TIR tir);
         bool UpdateTIR(TIR tir);
         void DeleteTIR(TIR tir);
+        IEnumerable<TIR> GetRecentTIRs(int status, string requester, DateTime date);
     }
 }

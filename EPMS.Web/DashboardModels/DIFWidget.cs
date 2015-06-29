@@ -2,9 +2,9 @@
 
 namespace EPMS.Web.DashboardModels
 {
-    public class RFIWidget
+    public class DIFWidget
     {
-        public long RFIId { get; set; }
+        public long Id { get; set; }
         public string RequesterName { get; set; }
         public string RequesterNameShort { get; set; }
         public int Status { get; set; }

@@ -23,17 +23,19 @@ namespace EPMS.Web.ViewModels.Dashboard
         public IEnumerable<EmployeeRequest> EmployeeRequests { get; set; }
         public IEnumerable<DashboardModels.Department> Departments { get; set; }
         public IEnumerable<DashboardModels.Employee> Employees { get; set; }
+        
         public IEnumerable<DashboardModels.Employee> EmployeesRecent { get; set; }
         public IEnumerable<DashboardModels.Customer> Customers { get; set; }
         public IEnumerable<DashboardModels.Complaint> Complaints { get; set; }
 
         #region Inventory Widgets Properties
+        public IEnumerable<WarehousDDL> Warehouses { get; set; }
         public IEnumerable<RFIWidget> RFI { get; set; }
-        public IEnumerable<RFIWidget> IRF { get; set; }
-        public IEnumerable<RFIWidget> RIF { get; set; }
-        public IEnumerable<RFIWidget> DIF { get; set; }
-        public IEnumerable<RFIWidget> TIF { get; set; }
-        public IEnumerable<RFIWidget> PO { get; set; }
+        public IEnumerable<IRFWidget> IRF { get; set; }
+        public IEnumerable<RIFWidget> RIF { get; set; }
+        public IEnumerable<DIFWidget> DIF { get; set; }
+        public IEnumerable<TIRWidget> TIR { get; set; }
+        public IEnumerable<POWidget> PO { get; set; }
         #endregion
 
         public IEnumerable<Order> Orders { get; set; }

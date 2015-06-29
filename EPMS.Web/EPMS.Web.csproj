@@ -344,7 +344,13 @@
     <Compile Include="DashboardModels\Profile.cs" />
     <Compile Include="DashboardModels\Project.cs" />
     <Compile Include="DashboardModels\Recruitment.cs" />
+    <Compile Include="DashboardModels\RIFWidget.cs" />
+    <Compile Include="DashboardModels\IRFWidget.cs" />
+    <Compile Include="DashboardModels\DIFWidget.cs" />
+    <Compile Include="DashboardModels\POWidget.cs" />
+    <Compile Include="DashboardModels\TIRWidget.cs" />
     <Compile Include="DashboardModels\RFIWidget.cs" />
+    <Compile Include="DashboardModels\WarehousDDL.cs" />
     <Compile Include="EncryptDecrypt\StringCipher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

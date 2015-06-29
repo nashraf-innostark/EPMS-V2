@@ -309,6 +309,11 @@ namespace EPMS.Implementation.Services
             itemReleaseRepository.SaveChanges();
         }
 
+        public IEnumerable<ItemRelease> GetRecentIRFs(int status, string requester, DateTime date)
+        {
+            return itemReleaseRepository.GetRecentIRFs(status, requester, date);
+        }
+
 
         private void SendNotification(ItemRelease itemRelease, bool isUpdated = false)
         {

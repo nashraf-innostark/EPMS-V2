@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -222,6 +223,11 @@ namespace EPMS.Implementation.Services
                 rifResponse.Orders = ordersRepository.GetAll();
             }
             return rifResponse;
+        }
+
+        public IEnumerable<RIF> GetRecentRIFs(int status, string requester, DateTime date)
+        {
+            return rifRepository.GetRecentRIFs(status, requester, date);
         }
     }
 }

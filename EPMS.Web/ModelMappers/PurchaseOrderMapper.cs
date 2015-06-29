@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Web.DashboardModels;
 using EPMS.Web.ViewModels.PurchaseOrder;
 
 namespace EPMS.Web.ModelMappers
@@ -185,6 +186,23 @@ namespace EPMS.Web.ModelMappers
                 RecUpdatedDate = source.PurchaseOrder.RecUpdatedDate,
                 PurchaseOrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrder.PurchaseOrderId, source.PurchaseOrder.RecCreatedBy, source.PurchaseOrder.RecCreatedDate, source.PurchaseOrder.RecUpdatedDate)).ToList()
             };
+        }
+
+        public static POWidget CreateWidget(this EPMS.Models.DomainModels.PurchaseOrder source)
+        {
+            var empName = (source.AspNetUser != null && source.AspNetUser.Employee != null)
+                ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE +
+                  " " + source.AspNetUser.Employee.EmployeeLastNameE
+                : string.Empty;
+            var rfi = new POWidget
+            {
+                Id = source.PurchaseOrderId,
+                Status = source.Status,
+                RequesterName = empName,
+                RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString()
+            };
+            return rfi;
         }
     }
 }

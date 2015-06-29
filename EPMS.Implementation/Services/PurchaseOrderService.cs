@@ -231,6 +231,11 @@ namespace EPMS.Implementation.Services
             repository.SaveChanges();
         }
 
+        public IEnumerable<PurchaseOrder> GetRecentPOs(int status, string requester, DateTime date)
+        {
+            return repository.GetRecentPOs(status, requester, date);
+        }
+
         private void SendNotification(PurchaseOrder purchaseOrder)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
