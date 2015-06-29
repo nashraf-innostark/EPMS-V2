@@ -597,6 +597,11 @@ namespace IdentitySample.Controllers
         public ActionResult Signup()
         {
             SignupViewModel signupViewModel = new SignupViewModel();
+            if (Session["Culture"] != null && Session["Culture"] == "ar")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
+            }
             return View(signupViewModel);
         }
 
@@ -861,6 +866,11 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
+            if (Session["Culture"] != null && Session["Culture"] == "ar")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
+            }
             return View();
         }
 

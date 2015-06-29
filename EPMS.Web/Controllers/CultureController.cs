@@ -26,7 +26,7 @@ namespace EPMS.Web.Controllers
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
                 System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
 
-                if (Session["UserID"] != null)
+                if (Session["UserID"] != null && Session["UserID"] != "")
                     userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "ar");
 
                 Session["Culture"] = "ar";
