@@ -55,8 +55,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             PurchaseOrderListResponse response = orderService.GetAllPoS(searchRequest);
-            IEnumerable<PurchaseOrder> ordersList =
-                response.Orders.Select(x => x.CreateFromServerToClient());
+            IEnumerable<PurchaseOrder> ordersList = response.Orders.Any() ?
+                response.Orders.Select(x => x.CreateFromServerToClient()) : new List<PurchaseOrder>();
             PurchaseOrderListViewModel viewModel = new PurchaseOrderListViewModel
             {
                 aaData = ordersList,
@@ -78,10 +78,18 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             PurchaseOrderDetailsViewModel viewModel = new PurchaseOrderDetailsViewModel();
             if (id != null)
             {
-                var purchaseOrder = orderService.GetPoDetailResponse((long)id, from);
-                viewModel.PurchaseOrder = purchaseOrder.PurchaseOrder.CreateFromServerToClient();
-                viewModel.OrderItems = purchaseOrder.OrderItems.Select(x => x.CreateFromServerToClient()).ToList();
-                viewModel.Vendors = purchaseOrder.Vendors.Any() ? purchaseOrder.Vendors.Select(x => x.CreateFromServerToClient()) : new List<Vendor>();
+                var response = orderService.GetPoDetailResponse((long)id, from);
+                if (response.PurchaseOrder != null)
+                {
+                    viewModel.PurchaseOrder = response.PurchaseOrder.CreateFromServerToClient();
+                    viewModel.OrderItems = response.OrderItems.Select(x => x.CreateFromServerToClient()).ToList();
+                }
+                else
+                {
+                    viewModel.PurchaseOrder = new PurchaseOrder();
+                    viewModel.OrderItems = new List<PurchaseOrderItem>();
+                }
+                viewModel.Vendors = response.Vendors.Any() ? response.Vendors.Select(x => x.CreateFromServerToClient()) : new List<Vendor>();
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ViewBag.From = from;
@@ -123,10 +131,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
+                var direction = Resources.Shared.Common.TextDirection;
                 viewModel.Order = new PurchaseOrder
                 {
                     FormNumber = "101010",
-                    RequesterName = Session["UserFullName"].ToString()
+                    RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
                 viewModel.PoItems = new List<PurchaseOrderItem>();
             }

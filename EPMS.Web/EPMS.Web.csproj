@@ -684,6 +684,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Inventory\PO\PO.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PO.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\RIF\RIF.ar.Designer.cs">
       <DependentUpon>RIF.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -3887,6 +3892,7 @@
     <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFView.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3899,6 +3905,11 @@
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PO\PO.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PO.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\RIF\RIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

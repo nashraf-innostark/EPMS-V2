@@ -8,7 +8,8 @@ namespace EPMS.Web.ModelMappers
     {
         public static Models.ItemRelease CreateFromServerToClient(this ItemRelease source)
         {
-            var employee = (source.Requester !=null && source.Requester.Employee != null) ? source.Requester.Employee : new Employee();
+            var requester = (source.ReqCreatedBy !=null && source.ReqCreatedBy.Employee != null) ? source.ReqCreatedBy.Employee : new Employee();
+            var manager = (source.Manager !=null && source.Manager.Employee != null) ? source.Manager.Employee : new Employee();
             return new Models.ItemRelease
             {
                 ItemReleaseId = source.ItemReleaseId,
@@ -22,8 +23,6 @@ namespace EPMS.Web.ModelMappers
                 CreatedBy = source.CreatedBy,
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
-                RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
-                RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -31,6 +30,10 @@ namespace EPMS.Web.ModelMappers
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,
+                RequesterNameE = requester.EmployeeFirstNameE + " " + requester.EmployeeMiddleNameE + " " + requester.EmployeeLastNameE,
+                RequesterNameA = requester.EmployeeFirstNameA + " " + requester.EmployeeMiddleNameA + " " + requester.EmployeeLastNameA,
+                ManagerName = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " + manager.EmployeeLastNameE,
+                ManagerNameAr = manager.EmployeeFirstNameA + " " + manager.EmployeeMiddleNameA + " " + manager.EmployeeLastNameA,
             };
         }
         public static ItemRelease CreateFromClientToServer(this Models.ItemRelease source)

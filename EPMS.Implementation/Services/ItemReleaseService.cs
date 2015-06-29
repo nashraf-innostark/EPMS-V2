@@ -11,6 +11,7 @@ using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
 using FaceSharp.Api.Objects;
+using Microsoft.Practices.EnterpriseLibrary.Common.Properties;
 
 namespace EPMS.Implementation.Services
 {
@@ -27,7 +28,7 @@ namespace EPMS.Implementation.Services
         private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
         private readonly IItemReleaseQuantityRepository releaseQuantityRepository;
 
-        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository,INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository)
+        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository, INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository)
         {
             this.itemWarehouseRepository = itemWarehouseRepository;
             this.notificationService = notificationService;
@@ -45,7 +46,7 @@ namespace EPMS.Implementation.Services
         {
             IRFCreateResponse response = new IRFCreateResponse
             {
-                Employees = employeeRepository.GetAll().Where(x=>x.AspNetUsers.Count > 0),
+                Employees = employeeRepository.GetAll().Where(x => x.AspNetUsers.Count > 0),
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList(),
                 ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
@@ -101,11 +102,11 @@ namespace EPMS.Implementation.Services
             }
             var irfs = releaseHistoryRepository.GetIrfHistoryData((long)parentId);
             var irfList = irfs as IList<ItemReleaseHistory> ?? irfs.ToList();
-            
+
             IrfHistoryResponse response = new IrfHistoryResponse
             {
                 Irfs = irfList.Select(x => x.CreateFromIrfHistoryToIrf()),
-                RecentIrf = itemReleaseRepository.Find((long) parentId)
+                RecentIrf = itemReleaseRepository.Find((long)parentId)
             };
             response.IrfItems = response.RecentIrf.ItemReleaseDetails;
             if (response.RecentIrf != null)
@@ -129,7 +130,8 @@ namespace EPMS.Implementation.Services
 
         public ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest)
         {
-            return itemReleaseRepository.GetAllItemRelease(searchRequest);
+            var irfResponse = itemReleaseRepository.GetAllItemRelease(searchRequest);
+            return irfResponse;
         }
 
         public bool AddItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails)
@@ -141,11 +143,11 @@ namespace EPMS.Implementation.Services
                 {
                     itemRelease.ItemReleaseDetails.Add(itemReleaseDetail);
 
-                     //check item remaining Qty
+                    //check item remaining Qty
                     foreach (var itemReleaseQuantity in itemReleaseDetail.ItemReleaseQuantities)
                     {
-                        var itemQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId),itemReleaseQuantity.WarehouseId);
-                        var itemReleasedQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId),itemReleaseQuantity.WarehouseId);
+                        var itemQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId), itemReleaseQuantity.WarehouseId);
+                        var itemReleasedQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId), itemReleaseQuantity.WarehouseId);
                         var itemAvailableQty = itemQty - itemReleasedQty;
                         if (itemAvailableQty <= 1)
                         {
@@ -162,8 +164,8 @@ namespace EPMS.Implementation.Services
                 itemReleaseRepository.Add(itemRelease);
                 itemReleaseRepository.SaveChanges();
 
-                
-               
+
+
                 //Send notification
                 SendNotification(itemRelease);
 
@@ -267,7 +269,7 @@ namespace EPMS.Implementation.Services
                             {
                                 releaseQuantityRepository.Update(qty);
                                 releaseQuantityRepository.SaveChanges();
-                                dbListQty.RemoveAll(x=>x.ItemReleaseQuantityId == qty.ItemReleaseQuantityId);
+                                dbListQty.RemoveAll(x => x.ItemReleaseQuantityId == qty.ItemReleaseQuantityId);
                             }
                         }
                         else

@@ -2,7 +2,7 @@
 @model EPMS.Web.ViewModels.PurchaseOrder.POHistoryViewModel
 
 @{
-    ViewBag.Title = "History";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.PO.PO.PageTitleHistory;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
@@ -18,12 +18,12 @@
         </li>
         <li>
             <a href="~/Inventory/PurchaseOrder/Index">
-                Inventory Perchase Order (PO) List
+                @EPMS.Web.Resources.Inventory.PO.PO.PageTitleIndex
             </a>
         </li>
         <li class="current">
             <a href="javascript:;">
-                Inventory Perchase Order (PO) View
+                @EPMS.Web.Resources.Inventory.PO.PO.InventoryPurchaseOrderView
             </a>
         </li>
     </ul>
@@ -31,7 +31,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Perchase Order (PO) View</small></h2>
+    <h2><small>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderView</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -47,7 +47,7 @@
 
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
-                Perchase Order (PO)
+                @EPMS.Web.Resources.Inventory.PO.PO.CenterTitleView
             </div>
             <div class="invoice-info">
                 <div class="controls">
@@ -59,15 +59,15 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>Employee Name:</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.EmployeeName:</th>
                                         <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>Employee Id:</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.EmployeeId:</th>
                                         <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>PO#:</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.PONumber:</th>
                                         <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.RecentPo.PurchaseOrderId</td>
                                     </tr>
                                 </tbody>
@@ -81,22 +81,22 @@
                                     @if (ViewBag.IsManager)
                                     {
                                         <tr>
-                                            <th>Date:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.Date:</th>
                                             <td>@Model.RecentPo.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>Requester Name:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.RequesterName:</th>
                                             <td>@(direction == "ltr" ? Model.RecentPo.RequesterName : Model.RecentPo.RequesterNameAr)</td>
                                         </tr>
                                     }
                                     else
                                     {
                                         <tr>
-                                            <th>Date:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.Date:</th>
                                             <td>@Model.RecentPo.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>Inventory Manager Name:</th>
+                                            <th>@EPMS.Web.Resources.Inventory.PO.PO.InventoryManagerName:</th>
                                             <td>@(direction == "ltr" ? Model.RecentPo.ManagerName : Model.RecentPo.ManagerNameAr)</td>
                                         </tr>
                                     }
@@ -112,14 +112,14 @@
                                 @if (ViewBag.IsManager)
                                 {
                                     <tr>
-                                        <th>Serial</th>
-                                        <th>Item Name</th>
-                                        <th>Item Code</th>
-                                        <th>SKU Code</th>
-                                        <th>Vendor</th>
-                                        <th>Needed Quantity</th>
-                                        <th>Unit Price</th>
-                                        <th>Total</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.ItemName</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.ItemCode</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.SKUCode</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Vendor</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.NeededQuantity</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.UnitPrice</th>
+                                        <th>@EPMS.Web.Resources.Inventory.PO.PO.Total</th>
                                     </tr>
                                 }
                             </thead>
@@ -173,18 +173,18 @@
                 </div>
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
-                    <strong>Perchase Order (PO) History</strong>
+                    <strong>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderHistory</strong>
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
                         <table class="table table-striped table-responsive" id="tableSortableResMed">
                             <thead class="cf sorthead">
                                 <tr>
-                                    <th>Serial</th>
-                                    <th>Perchase Order (PO) Number</th>
-                                    <th>Requester</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
+                                    <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
+                                    <th>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
+                                    <th>@EPMS.Web.Resources.Inventory.PO.PO.Requester</th>
+                                    <th>@EPMS.Web.Resources.Inventory.PO.PO.Date</th>
+                                    <th>@EPMS.Web.Resources.Inventory.PO.PO.Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -275,7 +275,7 @@
                 <div class="control-group row-fluid">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="jobTitle">Request Status</label>
+                            <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.PO.PO.RequestStatus</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -292,14 +292,14 @@
                 {
                     <div id="SubmitTir" class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn">Submit</button>
+                            <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.Submit</button>
                         </div>
                     </div>
                     if (userPermissionsSet.Contains("POCreate"))
                     {
                         <div id="EditTir" class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Purchaseorder/Create/@Model.RecentPo.PurchaseOrderId" class="btn">Edit PO</a>
+                                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Purchaseorder/Create/@Model.RecentPo.PurchaseOrderId" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.EditPO</a>
                             </div>
                         </div>
                     }

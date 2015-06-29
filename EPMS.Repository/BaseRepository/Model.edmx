@@ -1888,6 +1888,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemRelease_ReqCreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ItemRelease" Type="Self.ItemRelease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRelease">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ItemRelease_Requester">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="ItemRelease" Type="Self.ItemRelease" Multiplicity="*" />
@@ -1969,6 +1981,18 @@
             </Principal>
             <Dependent Role="ItemReleaseHistory">
               <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseHistory_ReqCreatedBy">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ItemReleaseHistory" Type="Self.ItemReleaseHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemReleaseHistory">
+              <PropertyRef Name="RecCreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3177,6 +3201,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="ItemRelease" EntitySet="ItemRelease" />
           </AssociationSet>
+          <AssociationSet Name="FK_ItemRelease_ReqCreatedBy" Association="Self.FK_ItemRelease_ReqCreatedBy">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ItemRelease" EntitySet="ItemRelease" />
+          </AssociationSet>
           <AssociationSet Name="FK_ItemRelease_Requester" Association="Self.FK_ItemRelease_Requester">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="ItemRelease" EntitySet="ItemRelease" />
@@ -3202,6 +3230,10 @@
             <End Role="ItemReleaseDetailHistory" EntitySet="ItemReleaseDetailHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemReleaseHistory_Manager" Association="Self.FK_ItemReleaseHistory_Manager">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseHistory_ReqCreatedBy" Association="Self.FK_ItemReleaseHistory_ReqCreatedBy">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistory" />
           </AssociationSet>
@@ -3674,14 +3706,18 @@
           <NavigationProperty Name="TIRManager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="AspNetUser" ToRole="TIR" />
           <NavigationProperty Name="PurchaseOrders" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers" FromRole="AspNetUser" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseOrderManager" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers1" FromRole="AspNetUser" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="ItemReleases" Relationship="EPMSInventoryModel.FK_ItemRelease_Manager" FromRole="AspNetUser" ToRole="ItemRelease" />
           <NavigationProperty Name="DIFHistories" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="AspNetUser" ToRole="DIFHistory" />
           <NavigationProperty Name="RFIHistories" Relationship="EPMSInventoryModel.FK_RFIHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RFIHistory" />
           <NavigationProperty Name="RIFHistories" Relationship="EPMSInventoryModel.FK_RIFHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RIFHistory" />
           <NavigationProperty Name="TIRHistories" Relationship="EPMSInventoryModel.FK_TIRHistory_AspNetUsers" FromRole="AspNetUser" ToRole="TIRHistory" />
-          <NavigationProperty Name="ItemReleaseHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Manager" FromRole="AspNetUser" ToRole="ItemReleaseHistory" />
           <NavigationProperty Name="PurchaseOrderHistoryManager" Relationship="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers" FromRole="AspNetUser" ToRole="PurchaseOrderHistory" />
           <NavigationProperty Name="PurchaseOrderHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers1" FromRole="AspNetUser" ToRole="PurchaseOrderHistory" />
+          <NavigationProperty Name="ItemReleasesManager" Relationship="EPMSInventoryModel.FK_ItemRelease_Manager" FromRole="AspNetUser" ToRole="ItemRelease" />
+          <NavigationProperty Name="ItemReleasesCreatedBy" Relationship="EPMSInventoryModel.FK_ItemRelease_ReqCreatedBy" FromRole="AspNetUser" ToRole="ItemRelease" />
+          <NavigationProperty Name="ItemReleasesRequester" Relationship="EPMSInventoryModel.FK_ItemRelease_Requester" FromRole="AspNetUser" ToRole="ItemRelease" />
+          <NavigationProperty Name="ItemReleaseHistoriesManager" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Manager" FromRole="AspNetUser" ToRole="ItemReleaseHistory" />
+          <NavigationProperty Name="ItemReleaseHistoriesCreatedBy" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_ReqCreatedBy" FromRole="AspNetUser" ToRole="ItemReleaseHistory" />
+          <NavigationProperty Name="ItemReleaseHistoriesRequester" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Requester" FromRole="AspNetUser" ToRole="ItemReleaseHistory" />
           </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -5734,23 +5770,6 @@
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="ItemReleaseQuantity" EntitySet="ItemReleaseQuantities" />
           </AssociationSet>
-          <EntitySet Name="ItemReleases" EntityType="EPMSInventoryModel.ItemRelease" />
-          <AssociationSet Name="FK_ItemRelease_Manager" Association="EPMSInventoryModel.FK_ItemRelease_Manager">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="ItemRelease" EntitySet="ItemReleases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemRelease_Requester" Association="EPMSInventoryModel.FK_ItemRelease_Requester">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="ItemRelease" EntitySet="ItemReleases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemRelease_RFI" Association="EPMSInventoryModel.FK_ItemRelease_RFI">
-            <End Role="RFI" EntitySet="RFIs" />
-            <End Role="ItemRelease" EntitySet="ItemReleases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemReleaseDetail_ItemRelease" Association="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease">
-            <End Role="ItemRelease" EntitySet="ItemReleases" />
-            <End Role="ItemReleaseDetail" EntitySet="ItemReleaseDetails" />
-          </AssociationSet>
           <EntitySet Name="DIFHistories" EntityType="EPMSInventoryModel.DIFHistory" />
           <EntitySet Name="RFIHistories" EntityType="EPMSInventoryModel.RFIHistory" />
           <EntitySet Name="RFIItemHistories" EntityType="EPMSInventoryModel.RFIItemHistory" />
@@ -5819,27 +5838,10 @@
             <End Role="TIRItemHistory" EntitySet="TIRItemHistories" />
           </AssociationSet>
           <EntitySet Name="InventoryItems" EntityType="EPMSInventoryModel.InventoryItem" />
-          <EntitySet Name="ItemReleaseHistories" EntityType="EPMSInventoryModel.ItemReleaseHistory" />
           <EntitySet Name="ItemWarehouses" EntityType="EPMSInventoryModel.ItemWarehouse" />
-          <AssociationSet Name="FK_ItemReleaseHistory_Manager" Association="EPMSInventoryModel.FK_ItemReleaseHistory_Manager">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemReleaseHistory_Requester" Association="EPMSInventoryModel.FK_ItemReleaseHistory_Requester">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
-          </AssociationSet>
           <AssociationSet Name="FK_ItemVariation_InventoryItems" Association="EPMSInventoryModel.FK_ItemVariation_InventoryItems">
             <End Role="InventoryItem" EntitySet="InventoryItems" />
             <End Role="ItemVariation" EntitySet="ItemVariations" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemReleaseDetailHistory_ItemReleaseHistory" Association="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory">
-            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
-            <End Role="ItemReleaseDetailHistory" EntitySet="ItemReleaseDetailHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemReleaseHistory_RFI" Association="EPMSInventoryModel.FK_ItemReleaseHistory_RFI">
-            <End Role="RFI" EntitySet="RFIs" />
-            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemWarehouse_ItemVariation" Association="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation">
             <End Role="ItemVariation" EntitySet="ItemVariations" />
@@ -5883,6 +5885,48 @@
           <AssociationSet Name="FK_PurchaseOrderItemHistory_PurchaseOrderHistory" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory">
             <End Role="PurchaseOrderHistory" EntitySet="PurchaseOrderHistories" />
             <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
+          </AssociationSet>
+          <EntitySet Name="ItemReleases" EntityType="EPMSInventoryModel.ItemRelease" />
+          <EntitySet Name="ItemReleaseHistories" EntityType="EPMSInventoryModel.ItemReleaseHistory" />
+          <AssociationSet Name="FK_ItemRelease_Manager" Association="EPMSInventoryModel.FK_ItemRelease_Manager">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemRelease" EntitySet="ItemReleases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemRelease_ReqCreatedBy" Association="EPMSInventoryModel.FK_ItemRelease_ReqCreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemRelease" EntitySet="ItemReleases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemRelease_Requester" Association="EPMSInventoryModel.FK_ItemRelease_Requester">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemRelease" EntitySet="ItemReleases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseHistory_Manager" Association="EPMSInventoryModel.FK_ItemReleaseHistory_Manager">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseHistory_ReqCreatedBy" Association="EPMSInventoryModel.FK_ItemReleaseHistory_ReqCreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseHistory_Requester" Association="EPMSInventoryModel.FK_ItemReleaseHistory_Requester">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemRelease_RFI" Association="EPMSInventoryModel.FK_ItemRelease_RFI">
+            <End Role="RFI" EntitySet="RFIs" />
+            <End Role="ItemRelease" EntitySet="ItemReleases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseDetail_ItemRelease" Association="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease">
+            <End Role="ItemRelease" EntitySet="ItemReleases" />
+            <End Role="ItemReleaseDetail" EntitySet="ItemReleaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseDetailHistory_ItemReleaseHistory" Association="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory">
+            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
+            <End Role="ItemReleaseDetailHistory" EntitySet="ItemReleaseDetailHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemReleaseHistory_RFI" Association="EPMSInventoryModel.FK_ItemReleaseHistory_RFI">
+            <End Role="RFI" EntitySet="RFIs" />
+            <End Role="ItemReleaseHistory" EntitySet="ItemReleaseHistories" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
@@ -6420,81 +6464,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ItemRelease">
-          <Key>
-            <PropertyRef Name="ItemReleaseId" />
-          </Key>
-          <Property Name="ItemReleaseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int16" />
-          <Property Name="RequesterId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RFIId" Type="Int64" />
-          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryInfoArabic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="QuantityReleased" Type="Int64" Nullable="false" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_ItemRelease_Manager" FromRole="ItemRelease" ToRole="AspNetUser" />
-          <NavigationProperty Name="Requester" Relationship="EPMSInventoryModel.FK_ItemRelease_Requester" FromRole="ItemRelease" ToRole="AspNetUser" />
-          <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemRelease_RFI" FromRole="ItemRelease" ToRole="RFI" />
-          <NavigationProperty Name="ItemReleaseDetails" Relationship="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" FromRole="ItemRelease" ToRole="ItemReleaseDetail" />
-        </EntityType>
-        <Association Name="FK_ItemRelease_Manager">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemRelease">
-              <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemRelease_Requester">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemRelease">
-              <PropertyRef Name="RequesterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemRelease_RFI">
-          <End Type="EPMSInventoryModel.RFI" Role="RFI" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RFI">
-              <PropertyRef Name="RFIId" />
-            </Principal>
-            <Dependent Role="ItemRelease">
-              <PropertyRef Name="RFIId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemReleaseDetail_ItemRelease">
-          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.ItemReleaseDetail" Role="ItemReleaseDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemRelease">
-              <PropertyRef Name="ItemReleaseId" />
-            </Principal>
-            <Dependent Role="ItemReleaseDetail">
-              <PropertyRef Name="ItemReleaseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DIFHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -6842,34 +6811,6 @@
           <Property Name="DepartmentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ItemVariations" Relationship="EPMSInventoryModel.FK_ItemVariation_InventoryItems" FromRole="InventoryItem" ToRole="ItemVariation" />
         </EntityType>
-        <EntityType Name="ItemReleaseHistory">
-          <Key>
-            <PropertyRef Name="ItemReleaseId" />
-          </Key>
-          <Property Name="ItemReleaseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int16" />
-          <Property Name="RequesterId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RFIId" Type="Int64" />
-          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryInfoArabic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="QuantityReleased" Type="Int64" Nullable="false" />
-          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ParentId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Manager" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
-          <NavigationProperty Name="Requester" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Requester" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
-          <NavigationProperty Name="ItemReleaseDetailHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory" FromRole="ItemReleaseHistory" ToRole="ItemReleaseDetailHistory" />
-          <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_RFI" FromRole="ItemReleaseHistory" ToRole="RFI" />
-        </EntityType>
         <EntityType Name="ItemWarehouse">
           <Key>
             <PropertyRef Name="WarehouseId" />
@@ -6882,30 +6823,6 @@
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemWarehouse" ToRole="ItemVariation" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" FromRole="ItemWarehouse" ToRole="Warehouse" />
         </EntityType>
-        <Association Name="FK_ItemReleaseHistory_Manager">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemReleaseHistory">
-              <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemReleaseHistory_Requester">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemReleaseHistory">
-              <PropertyRef Name="RequesterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ItemVariation_InventoryItems">
           <End Type="EPMSInventoryModel.InventoryItem" Role="InventoryItem" Multiplicity="1" />
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
@@ -6915,30 +6832,6 @@
             </Principal>
             <Dependent Role="ItemVariation">
               <PropertyRef Name="InventoryItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemReleaseDetailHistory_ItemReleaseHistory">
-          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.ItemReleaseDetailHistory" Role="ItemReleaseDetailHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemReleaseHistory">
-              <PropertyRef Name="ItemReleaseId" />
-            </Principal>
-            <Dependent Role="ItemReleaseDetailHistory">
-              <PropertyRef Name="ItemReleaseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemReleaseHistory_RFI">
-          <End Type="EPMSInventoryModel.RFI" Role="RFI" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RFI">
-              <PropertyRef Name="RFIId" />
-            </Principal>
-            <Dependent Role="ItemReleaseHistory">
-              <PropertyRef Name="RFIId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7120,6 +7013,183 @@
             </Principal>
             <Dependent Role="PurchaseOrderItemHistory">
               <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ItemRelease">
+          <Key>
+            <PropertyRef Name="ItemReleaseId" />
+          </Key>
+          <Property Name="ItemReleaseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShipmentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RequesterId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RFIId" Type="Int64" />
+          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInfoArabic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QuantityReleased" Type="Int64" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_ItemRelease_Manager" FromRole="ItemRelease" ToRole="AspNetUser" />
+          <NavigationProperty Name="ReqCreatedBy" Relationship="EPMSInventoryModel.FK_ItemRelease_ReqCreatedBy" FromRole="ItemRelease" ToRole="AspNetUser" />
+          <NavigationProperty Name="Requester" Relationship="EPMSInventoryModel.FK_ItemRelease_Requester" FromRole="ItemRelease" ToRole="AspNetUser" />
+          <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemRelease_RFI" FromRole="ItemRelease" ToRole="RFI" />
+          <NavigationProperty Name="ItemReleaseDetails" Relationship="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" FromRole="ItemRelease" ToRole="ItemReleaseDetail" />
+        </EntityType>
+        <EntityType Name="ItemReleaseHistory">
+          <Key>
+            <PropertyRef Name="ItemReleaseId" />
+          </Key>
+          <Property Name="ItemReleaseId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ShipmentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RequesterId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RFIId" Type="Int64" />
+          <Property Name="OrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryInfoArabic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QuantityReleased" Type="Int64" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Manager" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="ReqCreatedBy" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_ReqCreatedBy" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="Requester" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_Requester" FromRole="ItemReleaseHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="ItemReleaseDetailHistories" Relationship="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory" FromRole="ItemReleaseHistory" ToRole="ItemReleaseDetailHistory" />
+          <NavigationProperty Name="RFI" Relationship="EPMSInventoryModel.FK_ItemReleaseHistory_RFI" FromRole="ItemReleaseHistory" ToRole="RFI" />
+        </EntityType>
+        <Association Name="FK_ItemRelease_Manager">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRelease">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemRelease_ReqCreatedBy">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRelease">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemRelease_Requester">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemRelease">
+              <PropertyRef Name="RequesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseHistory_Manager">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemReleaseHistory">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseHistory_ReqCreatedBy">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemReleaseHistory">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseHistory_Requester">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemReleaseHistory">
+              <PropertyRef Name="RequesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemRelease_RFI">
+          <End Type="EPMSInventoryModel.RFI" Role="RFI" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIId" />
+            </Principal>
+            <Dependent Role="ItemRelease">
+              <PropertyRef Name="RFIId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseDetail_ItemRelease">
+          <End Type="EPMSInventoryModel.ItemRelease" Role="ItemRelease" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemReleaseDetail" Role="ItemReleaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemRelease">
+              <PropertyRef Name="ItemReleaseId" />
+            </Principal>
+            <Dependent Role="ItemReleaseDetail">
+              <PropertyRef Name="ItemReleaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseDetailHistory_ItemReleaseHistory">
+          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemReleaseDetailHistory" Role="ItemReleaseDetailHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemReleaseHistory">
+              <PropertyRef Name="ItemReleaseId" />
+            </Principal>
+            <Dependent Role="ItemReleaseDetailHistory">
+              <PropertyRef Name="ItemReleaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemReleaseHistory_RFI">
+          <End Type="EPMSInventoryModel.RFI" Role="RFI" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemReleaseHistory" Role="ItemReleaseHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFI">
+              <PropertyRef Name="RFIId" />
+            </Principal>
+            <Dependent Role="ItemReleaseHistory">
+              <PropertyRef Name="RFIId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8381,30 +8451,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemReleases">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemRelease">
-              <MappingFragment StoreEntitySet="ItemRelease">
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="QuantityReleased" ColumnName="QuantityReleased" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DeliveryInfoArabic" ColumnName="DeliveryInfoArabic" />
-                <ScalarProperty Name="DeliveryInfo" ColumnName="DeliveryInfo" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
-                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ShipmentDetails" ColumnName="ShipmentDetails" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
-                <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DIFHistories">
             <EntityTypeMapping TypeName="EPMSInventoryModel.DIFHistory">
               <MappingFragment StoreEntitySet="DIFHistory">
@@ -8561,31 +8607,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemReleaseHistories">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemReleaseHistory">
-              <MappingFragment StoreEntitySet="ItemReleaseHistory">
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="QuantityReleased" ColumnName="QuantityReleased" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DeliveryInfoArabic" ColumnName="DeliveryInfoArabic" />
-                <ScalarProperty Name="DeliveryInfo" ColumnName="DeliveryInfo" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
-                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="ShipmentDetails" ColumnName="ShipmentDetails" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
-                <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ItemWarehouses">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ItemWarehouse">
               <MappingFragment StoreEntitySet="ItemWarehouse">
@@ -8648,6 +8669,55 @@
                 <ScalarProperty Name="NotesA" ColumnName="NotesA" />
                 <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
                 <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemReleases">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemRelease">
+              <MappingFragment StoreEntitySet="ItemRelease">
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="QuantityReleased" ColumnName="QuantityReleased" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DeliveryInfoArabic" ColumnName="DeliveryInfoArabic" />
+                <ScalarProperty Name="DeliveryInfo" ColumnName="DeliveryInfo" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
+                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ShipmentDetails" ColumnName="ShipmentDetails" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemReleaseHistories">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ItemReleaseHistory">
+              <MappingFragment StoreEntitySet="ItemReleaseHistory">
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="NotesAr" ColumnName="NotesAr" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="QuantityReleased" ColumnName="QuantityReleased" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DeliveryInfoArabic" ColumnName="DeliveryInfoArabic" />
+                <ScalarProperty Name="DeliveryInfo" ColumnName="DeliveryInfo" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="RFIId" ColumnName="RFIId" />
+                <ScalarProperty Name="RequesterId" ColumnName="RequesterId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ShipmentDetails" ColumnName="ShipmentDetails" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="ItemReleaseId" ColumnName="ItemReleaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8828,11 +8898,6 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseQuantity_ItemReleaseDetail" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseQuantity_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseQuantity_Warehouse" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ItemRelease" Width="1.5" PointX="22.25" PointY="44.75" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Manager" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Requester" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_RFI" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" />
         <EntityTypeShape EntityType="EPMSInventoryModel.DIFHistory" Width="1.5" PointX="5.25" PointY="77.125" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RFIHistory" Width="1.5" PointX="17.25" PointY="34.25" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RFIItemHistory" Width="1.5" PointX="23.5" PointY="28.25" />
@@ -8856,13 +8921,8 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItemHistory_RIFHistory" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRItemHistory_TIRHistory" />
         <EntityTypeShape EntityType="EPMSInventoryModel.InventoryItem" Width="1.5" PointX="0.75" PointY="20.25" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseHistory" Width="1.5" PointX="19.5" PointY="44.125" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemWarehouse" Width="1.5" PointX="15.75" PointY="17.375" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_Manager" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_Requester" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemVariation_InventoryItems" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_RFI" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" />
         <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrderItem" Width="1.5" PointX="17.125" PointY="41.125" />
@@ -8876,6 +8936,18 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers1" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemRelease" Width="1.875" PointX="22.625" PointY="43.375" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseHistory" Width="2.5" PointX="27.375" PointY="42.125" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Manager" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_ReqCreatedBy" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Requester" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_Manager" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_ReqCreatedBy" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_Requester" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_RFI" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseDetail_ItemRelease" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseDetailHistory_ItemReleaseHistory" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseHistory_RFI" />
         </Diagram>
     </Diagrams>
   </Designer>

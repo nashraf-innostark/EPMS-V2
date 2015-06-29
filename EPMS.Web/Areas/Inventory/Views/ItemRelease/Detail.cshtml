@@ -62,7 +62,7 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
-                                            <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                            <td>@(Session["EmployeeID"] != null ? Session["EmployeeID"].ToString() : string.Empty)</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
@@ -127,7 +127,7 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
-                                            <td></td>
+                                            <td>@(direction == "ltr" ? Model.ItemRelease.ManagerName : Model.ItemRelease.ManagerNameAr)</td>
                                         </tr>
                                     }
 

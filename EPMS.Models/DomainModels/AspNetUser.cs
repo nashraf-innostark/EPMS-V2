@@ -37,13 +37,17 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<TIR> TIRManager { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrderManager { get; set; }
-        public virtual ICollection<ItemRelease> ItemReleases { get; set; }
         public virtual ICollection<DIFHistory> DIFHistories { get; set; }
         public virtual ICollection<RFIHistory> RFIHistories { get; set; }
         public virtual ICollection<RIFHistory> RIFHistories { get; set; }
         public virtual ICollection<TIRHistory> TIRHistories { get; set; }
-        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistories { get; set; }
         public virtual ICollection<PurchaseOrderHistory> PurchaseOrderHistoryManager { get; set; }
         public virtual ICollection<PurchaseOrderHistory> PurchaseOrderHistories { get; set; }
+        public virtual ICollection<ItemRelease> ItemReleasesManager { get; set; }
+        public virtual ICollection<ItemRelease> ItemReleasesCreatedBy { get; set; }
+        public virtual ICollection<ItemRelease> ItemReleasesRequester { get; set; }
+        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesManager { get; set; }
+        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesCreatedBy { get; set; }
+        public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesRequester { get; set; }
     }
 }

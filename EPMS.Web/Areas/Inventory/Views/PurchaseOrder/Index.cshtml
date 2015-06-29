@@ -1,7 +1,7 @@
 ﻿@model EPMS.Web.ViewModels.PurchaseOrder.PurchaseOrderListViewModel
 
 @{
-    ViewBag.Title = "Inventory Perchase Order (PO) List";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.PO.PO.PageTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
@@ -24,7 +24,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (userPermissionsSet.Contains("POCreate"))
     {
-        <h3><small><a href="~/Inventory/PurchaseOrder/Create">Create Perchase Order (PO)</a></small></h3>
+        <h3><small><a href="~/Inventory/PurchaseOrder/Create">@EPMS.Web.Resources.Inventory.PO.PO.CreateNew</a></small></h3>
     }
 </header>
 <!--Notifications begin-->
@@ -41,21 +41,21 @@
                         @if (ViewBag.IsManager)
                         {
                             <tr>
-                                <th>Serial</th>
-                                <th>Perchase Order (PO) Number</th>
-                                <th>Requester</th>
-                                <th>Date</th>
-                                <th>Status</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Requester</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Date</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Status</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
-                                <th>Serial</th>
-                                <th>Perchase Order (PO) Number</th>
-                                <th>Inventory Manager</th>
-                                <th>Date</th>
-                                <th>Status</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.InventoryManager</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Date</th>
+                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Status</th>
                             </tr>
                         }
                     </thead>
@@ -86,7 +86,7 @@
                     {
                         "aTargets": [1],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
                             var element;
                             var val;
                             var irfId;
@@ -106,35 +106,23 @@
                     {
                         "aTargets": [3],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
                             return full["RecCreatedDateString"];
                         }
                     },
                     {
                         "aTargets": [4],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
+                        "mRender": function (data, type, full) {
                             var val = "";
-                            if (dir == "ltr") {
-                                if (full["Status"] == 3) {
-                                    val = "Pending";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "Accepted";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "Rejected";
-                                }
-                            } else {
-                                if (full["Status"] == 3) {
-                                    val = "ريثما";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "قبلت";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "مرفوض";
-                                }
+                            if (full["Status"] == 3) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            }
+                            else if (full["Status"] == 1) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            else if (full["Status"] == 2) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }
@@ -201,26 +189,14 @@
                         "sDefaultContent": "No Data",
                         "mRender": function (data, type, full) {
                             var val = "";
-                            if (dir == "ltr") {
-                                if (full["Status"] == 3) {
-                                    val = "Pending";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "Accepted";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "Rejected";
-                                }
-                            } else {
-                                if (full["Status"] == 3) {
-                                    val = "ريثما";
-                                }
-                                else if (full["Status"] == 1) {
-                                    val = "قبلت";
-                                }
-                                else if (full["Status"] == 2) {
-                                    val = "مرفوض";
-                                }
+                            if (full["Status"] == 3) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            }
+                            else if (full["Status"] == 1) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                            }
+                            else if (full["Status"] == 2) {
+                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }
