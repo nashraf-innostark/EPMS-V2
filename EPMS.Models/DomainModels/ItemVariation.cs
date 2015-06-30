@@ -53,5 +53,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
         public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public virtual ICollection<PurchaseOrderItemHistory> PurchaseOrderItemHistories { get; set; }
+        public virtual ICollection<VendorItem> VendorItems { get; set; }
     }
 }

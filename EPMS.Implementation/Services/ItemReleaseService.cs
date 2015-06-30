@@ -147,8 +147,8 @@ namespace EPMS.Implementation.Services
                     foreach (var itemReleaseQuantity in itemReleaseDetail.ItemReleaseQuantities)
                     {
                         var itemQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId), itemReleaseQuantity.WarehouseId);
-                        var itemReleasedQty = itemWarehouseRepository.GetItemQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId), itemReleaseQuantity.WarehouseId);
-                        var itemAvailableQty = itemQty - itemReleasedQty;
+                        var itemReleasedQty = releaseQuantityRepository.GetItemReleasedQuantity(Convert.ToInt64(itemReleaseDetail.ItemVariationId), itemReleaseQuantity.WarehouseId);
+                        var itemAvailableQty = itemQty - (itemReleasedQty + itemReleaseDetail.ItemQty);
                         if (itemAvailableQty <= 1)
                         {
                             //Send notification to Inventory Manager about short in-hand inventory
