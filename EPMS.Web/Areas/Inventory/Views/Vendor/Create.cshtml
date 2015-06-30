@@ -5,6 +5,7 @@
     ViewBag.Title = Model.Vendor.VendorId > 0 ? EPMS.Web.Resources.Inventory.Vendor.UpdatPageTitle : EPMS.Web.Resources.Inventory.Vendor.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -141,74 +142,109 @@
             </div>
         </div>
 
-        <!--WYSIWYG Editor - Minimum Options begin-->
-        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">Excel Import</label>
+        <div id="poTable">
+            <div class="alert alert-info alert-block">
+                <i class="icon-alert icon-alert-info"></i>
+                <strong>Vendor Transactions</strong>
             </div>
-            <div class="span9">
-                <div class="controls elrte-wrapper">
-                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
-                    <script>
-                        $('#tiny').elrte({
-                            lang: "en",
-                            styleWithCSS: false,
-                            height: 200,
-                            toolbar: 'tiny'
-                        });
-                    </script>
+            <!--Sortable Responsive Table begin-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-striped table-responsive" id="tableSortableVariations">
+                        <thead>
+                            <tr>
+                                <th> Serial</th>
+                                <th>PO Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.PurchaseOrders != null)
+                            {
+                                var serial = 0;
+                                foreach (var item in Model.PurchaseOrders.ToList())
+                                {
+                                    serial = serial+1;
+                                    <tr class="gradeX">
+                                        <td>@serial</td>
+                                        <td><a href="~/Inventory/PurchaseOrder/Details/@item.PurchaseOrderId">@item.FormNumber</a></td>
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="button" id="importEx" class="btn">Import</button>
+        <div id="itemAddition">
+            <!--WYSIWYG Editor - Minimum Options begin-->
+            <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">Excel Import</label>
+                </div>
+                <div class="span9">
+                    <div class="controls elrte-wrapper">
+                        <textarea id="tiny" rows="2" class="auto-resize"></textarea>
+                        <script>
+                            $('#tiny').elrte({
+                                lang: "en",
+                                styleWithCSS: false,
+                                height: 200,
+                                toolbar: 'tiny'
+                            });
+                        </script>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" id="importEx" class="btn">Import</button>
+                </div>
+            </div>
 
-        <!--Basic Responsive Table begin-->
-        <div class="row-fluid" id="ress">
-            <div class="span12">
-                <table class="table table-striped table-responsive ">
-                    <thead class="">
-                        <tr>
-                            <th>Serial</th>
-                            <th style="width:85%">Item Details</th>
+            <!--Basic Responsive Table begin-->
+            <div class="row-fluid" id="ress">
+                <div class="span12">
+                    <table class="table table-striped table-responsive ">
+                        <thead class="">
+                            <tr>
+                                <th>Serial</th>
+                                <th style="width:85%">Item Details</th>
 
 
-                            <th style="width:4%">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody class="qouteAdd" id="vitemdetail">
-                        @if (Model.Vendor.VendorItems.Any())
-                        {
-                            var serial = 0;
-                            for (int i = 0; i < Model.Vendor.VendorItems.Count(); i++)
+                                <th style="width:4%">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody class="qouteAdd" id="vitemdetail">
+                            @if (Model.Vendor.VendorItems.Any())
                             {
-                                serial = serial + 1;
-                                <tr>
-                                    <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
-                                    <td>
-                                        <div class="control-group row-fluid">
-                                            <div class="span1">
-                                                <label class="control-label serialNumber">@serial</label>
-                                            </div>
-
+                                var serial = 0;
+                                for (int i = 0; i < Model.Vendor.VendorItems.Count(); i++)
+                                {
+                                    serial = serial + 1;
+                            <tr>
+                                <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
+                                <td>
+                                    <div class="control-group row-fluid">
+                                        <div class="span1">
+                                            <label class="control-label serialNumber">@serial</label>
                                         </div>
-                                    </td>
-                                    <td>
-                                        @Html.TextAreaFor(model => model.Vendor.VendorItems[i].ItemDetails, new { @class = "auto-resize vendorItem" })
-                                        @*<textarea rows="2" class="auto-resize"></textarea>*@
-                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                    </td>
-                                    <td class="delete">
-                                        <i class="icon-photon minus deleteRow"></i>
-                                    </td>
-                                </tr>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    @Html.TextAreaFor(model => model.Vendor.VendorItems[i].ItemDetails, new { @class = "auto-resize vendorItem" })
+                                    @*<textarea rows="2" class= "auto-resize"></textarea>*@
+                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                </td>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow"></i>
+                                </td>
+                            </tr>
+                                }
                             }
-                        }
-                        else
-                        {
+                            else
+                            {
                             <tr>
                                 <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
                                 <td>
@@ -227,17 +263,17 @@
                                     <i class="icon-photon minus deleteRow"></i>
                                 </td>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder">Add</button>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn trAdder">Add</button>
+                    </div>
                 </div>
             </div>
         </div>
-
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -254,36 +290,35 @@
     </div>
 }
 
-<!--Item Search Dialogue-->
-<div id="itemSearcher" class="modal fade treeSelector">
+@section popups{
+
+    <div id="itemSearcher" class="modal hide fade treeSelector">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Item Search</h3>
+        <h3>@EPMS.Web.Resources.RFI.RFI.ItemSearch</h3>
     </div>
     <div class="modal-body ">
         <form class="form-horizontal">
+            <input id='ItemModalIndex' type='hidden' />
             <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="selectBoxFilter">Select Item</label>
+                    <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.SelectItem</label>
                 </div>
-                <div class="span9">
+                <div class="span6">
                     <div class="controls">
-                        <select name="selectBoxFilter" id="selectBoxFilter">
-                            <option selected="" value="All">Item1 - sku1</option>
-                            <option value="Beige">Item2 - sku1</option>
-                            <option value="Beige">Item2 - sku2</option>
-                            <option value="Beige">Item2 - sku3</option>
-                            <option value="Beige">Item3 - sku1</option>
-                        </select>
+                        @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
                     </div>
+                    <label id="ItemVariationDropDownListValidation"></label>
                 </div>
             </div>
+
             <div class="control-group row-fluid">
                 <div class="span4">
-                    <label class="control-label" for="selectBoxFilter">Item Tree Selector</label>
+                    <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.ItemTreeSelector</label>
                 </div>
                 <div class="span8 span-inset">
-                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemTreeSelector">+</button>
+                    <button type="button" id="btnTreeSelector" class="btn itemAdder">+</button>
+                    <label id="txtSelectedDepartmentName"></label>
                 </div>
 
             </div>
@@ -291,11 +326,11 @@
 
                 <div class="span9 ">
                     <label class="control-label">
-                        <input type="checkbox" class="uniformCheckbox" value="checkbox1" style="margin: -1px 2px 0px 0px;">Add Item Description
+                        <input type="checkbox" id="ItemDescriptionModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemDescription
                     </label>
 
                     <label class="control-label">
-                        <input type="checkbox" class="uniformCheckbox" value="checkbox1" style="margin: -1px 2px 0px 0px;">Add Item SKU
+                        <input type="checkbox" id="ItemSKUModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemSKU
                     </label>
                 </div>
 
@@ -304,37 +339,45 @@
         </form>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary">Save Changes</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        <a href="javascript:;" class="btn btn-primary" id="SaveChanges">@EPMS.Web.Resources.RFI.RFI.SaveChanges</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
     </div>
 </div>
 
-
-<div id="itemTreeSelector" class="modal hide fade treeSelector">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Place in Warehouse Tree</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <div class="sidebarMenuHolder">
-                <div class="JStree">
-                    <div class="Jstree_shadow_top"></div>
-                    <div id="jstree"></div>
-                    <div class="Jstree_shadow_bottom"></div>
+    <div id="itemTreeSelector" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>@EPMS.Web.Resources.RFI.RFI.PlaceInWarehouseTree</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <div class="sidebarMenuHolder">
+                    <div class="JStree">
+                        <div class="Jstree_shadow_top"></div>
+                        <div id="jstree"></div>
+                        <div class="Jstree_shadow_bottom"></div>
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-</div>
+            </form>
+        </div>
 
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.Web.Resources.RFI.RFI.Select</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
+        </div>
+    </div>
+
+}
 
 
 <script>
     var itemsCount;
+    var siteUrl = $('#siteURL').val();
     var iExcelData = false;
     var isUpdate = false;
     var elementToDelete;
+    var textTillParent;
+    var dir = '@direction';
     var vendorId = parseInt($('#Vendor_VendorId').val());
     $(document).ready(function () {
         if (vendorId == 0 || vendorId == "") {
@@ -351,6 +394,7 @@
             $(".deleteRow").hide();
             $(".itemAdder").hide();
             $(".trAdder").hide();
+            $("#itemAddition").hide();
             itemsCount = parseInt('@Model.Vendor.VendorItems.Count');
         }
         $("#JobTitleForm").validate({
@@ -377,8 +421,122 @@
             }
         });
         $("#selectBoxFilter").select2();
+
+        var treeInitialData;
+        if (dir == "ltr") {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "Departments",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        } else {
+            treeInitialData = [
+                {
+                    "data": {
+                        "title": "الإدارات",
+                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
+                    },
+                    "attr": { "id": "parentNode" },
+                }
+            ];
+        }
+        $("#jstree").jstree({
+            "json_data": {
+                "data": treeInitialData
+            },
+            "plugins": ["themes", "json_data", "ui"],
+            "ui": {
+                "initially_select": ["parentNode"]
+            },
+            "core": {
+                "initially_open": ["parentNode"]
+            }
+        }).bind("select_node.jstree", function (event, data) {
+            //`data.rslt.obj` is the jquery extended node that was clicked
+            if (data.inst._get_parent(data.rslt.obj) != -1) {
+                var parents = [];
+                textTillParent = "";
+                data.rslt.obj.parents("li").each(function () {
+                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
+                });
+                $.each(parents, function (key, value) {
+                    textTillParent = value.description + " >" + textTillParent;
+                });
+                textTillParent = textTillParent + $(".jstree-clicked").text();
+            }
+        });
+
+        var requestUrl = "/Inventory/InventoryDepartment/GetAllDepartments";
+        populateTree(0, "jstree", requestUrl);
+
+        $("#btnTreeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+
+        $("#selectDepartment").on("click", function () {
+            var index = parseInt($("#ItemModalIndex").val());
+            $("#TirItems_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            $('#itemTreeSelector').modal('toggle');
+            return true;
+        });
+
+        $("#SaveChanges").on("click", function () {
+            if (validateSelect2Ddl("#ItemVariationDropDownList")) {
+                getModalControlsValues();
+            }
+        });
     });
-    
+
+
+    function getModalControlsValues() {
+        debugger;
+        //get item's values
+        var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+        var isItemSku = $('#ItemSKUModalChk').is(':checked');
+        var itemVariationId = $("#ItemVariationDropDownList").val();
+
+        //set item's values
+        var index = $("#ItemModalIndex").val();
+        $("#TirItems_" + index + "__IsItemDescription").val(isItemDescription);
+        $("#TirItems_" + index + "__IsItemSKU").val(isItemSku);
+        $("#TirItems_" + index + "__ItemVariationId").val(itemVariationId);
+
+        //set item sku and description in details text area
+        var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+        var parsedRfiItems = JSON.parse(rfiItems);
+
+        $.each(parsedRfiItems, function (key, value) {
+            if (value.ItemVariationId == itemVariationId) {
+                $("#TirItems_" + index + "__ItemDetails").val("");
+                var textToAppend = "";
+                if ('@direction' == "ltr") {
+                    textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                } else {
+                    textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                }
+                if (isItemSku) {
+                    textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                }
+                if (isItemDescription) {
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                    } else {
+                        textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                    }
+                }
+                $("#TirItems_" + index + "__ItemDetails").val(textToAppend);
+            }
+        });
+        $('#itemSearcher').modal('toggle');
+    };
+
     $("#edit").click(function (event) {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         $("#savebtn").show();
@@ -387,9 +545,12 @@
         $(".deleteRow").show();
         $(".itemAdder").show();
         $(".trAdder").show();
+        $("#itemAddition").show();
+        $("#poTable").hide();
         event.preventDefault();
     });
 
+    
     $("#importEx").on("click", function () {
 
         var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
@@ -524,6 +685,10 @@
             $(textVarList[i]).attr('name', "Vendor.VendorItems[" + i + "].ItemDetails");
         }
 
+    }
+
+    function jsTreeClick(event) {
+        return true;
     }
 
 </script>

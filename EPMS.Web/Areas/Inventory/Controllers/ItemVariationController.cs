@@ -7,10 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.Models.Common;
@@ -32,6 +34,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         private readonly IItemImageService itemImageService;
         private readonly IWarehouseService warehouseService;
         private readonly IWarehouseDetailService warehouseDetailService;
+        private readonly IInventoryItemService inventoryItemService;
 
         #endregion
 
@@ -39,7 +42,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public ItemVariationController(IItemVariationService itemVariationService, IColorService colorService,
             ISizeService sizeService, IManufacturerService manufacturerService, IStatusService statusService,
-            IItemImageService itemImageService, IWarehouseService warehouseService, IWarehouseDetailService warehouseDetailService)
+            IItemImageService itemImageService, IWarehouseService warehouseService, IWarehouseDetailService warehouseDetailService, IInventoryItemService inventoryItemService)
         {
             this.itemVariationService = itemVariationService;
             this.colorService = colorService;
@@ -49,6 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             this.itemImageService = itemImageService;
             this.warehouseService = warehouseService;
             this.warehouseDetailService = warehouseDetailService;
+            this.inventoryItemService = inventoryItemService;
         }
 
         #endregion
@@ -56,18 +60,29 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Public
 
         #region Create
-        public ActionResult Create(long? id)
+        public ActionResult Create(long? id, long inventoryItemId)
         {
+
             ItemVariationViewModel variationViewModel = new ItemVariationViewModel();
+            ItemVariationResponse response;
             if (id != null)
             {
-                variationViewModel.ItemVariation = itemVariationService.FindVariationById((long)id).CreateFromServerToClient();
+                response = itemVariationService.ItemVariationResponse((long)id,inventoryItemId);
+                variationViewModel.ItemVariation = response.ItemVariation.CreateFromServerToClient();
             }
-            variationViewModel.ColorsForDdl = colorService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.SizesForDdl = sizeService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.ManufacturersForDdl = manufacturerService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.StatusesForDdl = statusService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.WarehousesForDdl = warehouseService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
+            else
+            {
+                response = itemVariationService.ItemVariationResponse(0, inventoryItemId);
+                variationViewModel.ItemVariation.InventoryItemId = inventoryItemId;
+                variationViewModel.ItemVariation.DescriptionEn = response.InventoryItem.ItemDescriptionEn;
+                variationViewModel.ItemVariation.DescriptionAr = response.InventoryItem.ItemDescriptionAr;
+            }
+            variationViewModel.ColorsForDdl = response.ColorsForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.SizesForDdl = response.SizesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.ManufacturersForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.StatusesForDdl = response.StatusesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.WarehousesForDdl = response.WarehousesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+
             return View(variationViewModel);
         }
 
@@ -82,7 +97,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             itemVariationService.SaveItemVariation(itemToSave);
             {
                 TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
-                return RedirectToAction("Create");
+                return RedirectToAction("Create", "InventoryItem", new { id = variationViewModel.ItemVariation.InventoryItemId});
             }
         }
 
@@ -213,7 +228,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public JsonResult GetLastItemSKuCode()
         {
             var itemCode = itemVariationService.GetAll().OrderByDescending(x => x.SKUCode).FirstOrDefault().SKUCode;
-            return Json(itemCode, JsonRequestBehavior.AllowGet);
+            var itemDescription =
+                inventoryItemService.GetAll().OrderByDescending(x => x.ItemCode).FirstOrDefault().ItemCode;
+            List<string> list = new List<string>();
+            list.Add(itemCode);
+            list.Add(itemDescription);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

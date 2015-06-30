@@ -23,7 +23,13 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<ItemManufacturer> GetItemsByVariationId(long variationId)
         {
             return
-                DbSet.Where(x => x.ManufacturerId == variationId);
+                DbSet.Where(x => x.ItemVariationId == variationId);
+        }
+
+        public ItemManufacturer FindItemManufacturerByVariationAndManufacturerId(long variationId, long manufacturerId)
+        {
+            return
+                DbSet.FirstOrDefault(x => x.ItemVariationId == variationId && x.ManufacturerId == manufacturerId);
         }
     }
 }

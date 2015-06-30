@@ -58,8 +58,6 @@ namespace EPMS.Web.ModelMappers
                 UnitPrice = source.UnitPrice,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,
-                DescriptionEn = source.DescriptionEn,
-                DescriptionAr = source.DescriptionAr,
                 SKUDescriptionEn = source.SKUDescriptionEn,
                 SKUDescriptionAr = source.SKUDescriptionAr,
                 QuantityInHand = source.QuantityInHand,
@@ -83,6 +81,7 @@ namespace EPMS.Web.ModelMappers
             request.ItemVariation = item;
             request.ItemImages = new List<DomainModels.ItemImage>(source.ItemImages.Select(x=>x.CreateFrom()));
             request.ItemManufacturers = new List<DomainModels.ItemManufacturer>(source.ItemManufacturers.Select(x => x.CreateFrom()));
+            request.ItemWarehouses = new List<DomainModels.ItemWarehouse>(source.ItemWarehouses.Select(x => x.CreateFrom()));
             return request;
         }
 
@@ -107,6 +106,18 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 ManufacturerId = source.ManufacturerId,
                 Price = source.Price,
+            };
+        }
+
+        //For manipulating Item Warehouse
+        public static DomainModels.ItemWarehouse CreateFrom(this WebModels.ItemWarehouse source)
+        {
+            return new DomainModels.ItemWarehouse
+            {
+                ItemVariationId = source.ItemVariationId,
+                PlaceInWarehouse = source.PlaceInWarehouse,
+                Quantity = source.Quantity,
+                WarehouseId = source.WarehouseId
             };
         }
     }

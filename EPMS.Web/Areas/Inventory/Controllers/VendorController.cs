@@ -19,15 +19,20 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         private readonly IVendorService vendorService;
         private readonly IVendorItemsService vendorItemsService;
+        private readonly IPurchaseOrderService purchaseOrderService;
+        private readonly IItemVariationService itemVariationService;
 
         #endregion
 
         #region Constructor
 
-        public VendorController(IVendorService vendorService, IVendorItemsService vendorItemsService)
+        public VendorController(IVendorService vendorService, IVendorItemsService vendorItemsService,
+            IPurchaseOrderService purchaseOrderService, IItemVariationService itemVariationService)
         {
             this.vendorService = vendorService;
             this.vendorItemsService = vendorItemsService;
+            this.purchaseOrderService = purchaseOrderService;
+            this.itemVariationService = itemVariationService;
         }
 
         #endregion
@@ -53,7 +58,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 vendorViewModel.Vendor = vendorService.FindVendorById((long)id).CreateFromServerToClient();
                 vendorViewModel.Vendor.VendorItems = vendorItemsService.GetItemsByVendorId((long)id).ToList();
+                vendorViewModel.PurchaseOrders = purchaseOrderService.FindPoByVendorId(id).Select(x=>x.CreateFromServerToClient());
             }
+            vendorViewModel.ItemVariationDropDownList = itemVariationService.GetItemVariationDropDownList();
             return View(vendorViewModel);
         }
         [HttpPost]

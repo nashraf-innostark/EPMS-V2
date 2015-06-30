@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EPMS.Models.RequestModels;
 using iTextSharp.text.pdf;
 using WebModels = EPMS.Web.Models;
@@ -37,7 +38,8 @@ namespace EPMS.Web.ModelMappers
             inventoryItem.AveragePrice = 0;
             inventoryItem.AveragePrice = source.ItemVariations.Where(x => x.PriceCalculation).Sum(y => y.UnitPrice / source.ItemVariations.Count(z => z.PriceCalculation));
             inventoryItem.AveragePackagePrice = source.ItemVariations.Sum(y => y.PackagePrice / source.ItemVariations.Count());
-            inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => x.ItemWarehouses.Sum(y => y.Quantity));
+            inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
+            inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantitySold));
             return inventoryItem;
         }
 

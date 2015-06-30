@@ -19,5 +19,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdatePOStatus(PurchaseOrderStatus purchaseOrder);
         void DeletePO(PurchaseOrder purchaseOrder);
         IEnumerable<PurchaseOrder> GetRecentPOs(int status, string requester, DateTime date);
+        IEnumerable<PurchaseOrder> FindPoByVendorId(long? vendorId);
     }
 }

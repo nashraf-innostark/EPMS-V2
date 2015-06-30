@@ -27,6 +27,8 @@ namespace EPMS.Implementation.Services
         private readonly IItemManufacturerRepository itemManufacturerRepository;
         private readonly IItemWarehouseRepository itemWarehouseRepository;
         private readonly INotificationService notificationService;
+        private readonly IWarehouseService warehouseService;
+        private readonly IInventoryItemRepository inventoryItemRepository;
 
         #endregion
 
@@ -34,7 +36,9 @@ namespace EPMS.Implementation.Services
 
         public ItemVariationService(IItemVariationRepository variationRepository, ISizeRepository sizeRepository,
             IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
-            IColorRepository colorRepository, IItemImageRepository imageRepository, IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,INotificationService notificationService)
+            IColorRepository colorRepository, IItemImageRepository imageRepository,
+            IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,
+            INotificationService notificationService, IWarehouseService warehouseService, IInventoryItemRepository inventoryItemRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -45,6 +49,8 @@ namespace EPMS.Implementation.Services
             this.itemManufacturerRepository = itemManufacturerRepository;
             this.itemWarehouseRepository = itemWarehouseRepository;
             this.notificationService = notificationService;
+            this.warehouseService = warehouseService;
+            this.inventoryItemRepository = inventoryItemRepository;
         }
 
         #endregion
@@ -83,6 +89,19 @@ namespace EPMS.Implementation.Services
         public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList()
         {
             return variationRepository.GetItemVariationDropDownList();
+        }
+
+        public ItemVariationResponse ItemVariationResponse(long id, long itemVariationId)
+        {
+            ItemVariationResponse response = new ItemVariationResponse();
+            response.ItemVariation = id > 0 ? variationRepository.Find(id) : new ItemVariation();
+            response.ColorsForDdl = colorRepository.GetAll();
+            response.SizesForDdl = sizeRepository.GetAll();
+            response.ManufacturersForDdl = manufacturerRepository.GetAll();
+            response.StatusesForDdl = statusRepository.GetAll();
+            response.WarehousesForDdl = warehouseService.GetAll();
+            response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
+            return response;
         }
 
         public IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId)
@@ -230,7 +249,7 @@ namespace EPMS.Implementation.Services
                 itemWarehouseRepository.GetItemsByVariationId(variationToSave.ItemVariation.ItemVariationId).ToList();
             IEnumerable<ItemWarehouse> clientList = variationToSave.ItemWarehouses;
             //If Client List contains Entries
-            if (clientList != null)
+            if (clientList != null && clientList.Any())
             {
                 //Add New Items
                 foreach (ItemWarehouse itemWarehouse in clientList)
@@ -262,7 +281,7 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemWarehouse warehouseItem in dbList)
                 {
-                    var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehouseId);
+                    var itemToDelete = itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
                     itemWarehouseRepository.Delete(itemToDelete);
                 }
             }
@@ -300,7 +319,7 @@ namespace EPMS.Implementation.Services
                 itemManufacturerRepository.GetItemsByVariationId(variationToSave.ItemVariation.ItemVariationId).ToList();
             IEnumerable<ItemManufacturer> clientList = variationToSave.ItemManufacturers;
             //If Client List contains Entries
-            if (clientList != null)
+            if (clientList != null && clientList.Any())
             {
                 //Add New Items
                 foreach (ItemManufacturer itemManufacturer in clientList)
@@ -331,7 +350,7 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemManufacturer manufacturerItem in dbList)
                 {
-                    var itemToDelete = itemManufacturerRepository.Find(manufacturerItem.ManufacturerId);
+                    var itemToDelete = itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
                     itemManufacturerRepository.Delete(itemToDelete);
                 }
             }

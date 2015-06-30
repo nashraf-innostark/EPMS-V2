@@ -298,7 +298,7 @@
             <span id="itemVariationTable">
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
-                    <strong>Item Variations</strong><a href="/Inventory/ItemVariation/Create">Create New Item Variation</a>
+                    <strong>Item Variations</strong><a href="/Inventory/ItemVariation/Create/null?inventoryItemId=@Model.InventoryItem.ItemId">Create New Item Variation</a>
                 </div>
 
                 <!--Sortable Responsive Table begin-->
@@ -334,19 +334,19 @@
                                             <td>@item.ItemBarcode</td>
                                             @if (direction == "ltr")
                                             {
-                                                <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionEn</a></td>
+                                                <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId?inventoryItemId=0">@item.SKUCode - @item.SKUDescriptionEn</a></td>
                                             }
                                             else
                                             {
-                                                <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId">@item.SKUCode - @item.SKUDescriptionAr</a></td>
+                                                <td><a href="~/Inventory/ItemVariation/Create/@item.ItemVariationId?inventoryItemId=0">@item.SKUCode - @item.SKUDescriptionAr</a></td>
                                             }
                                             @if (direction == "ltr")
                                             {
-                                                <td>@item.SKUCode - @item.DescriptionEn</td>
+                                                <td>@item.DescriptionEn</td>
                                             }
                                             else
                                             {
-                                                <td>@item.SKUCode - @item.DescriptionAr</td>
+                                                <td>@item.DescriptionAr</td>
                                             }
                                             <td></td>
                                             <td></td>

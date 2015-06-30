@@ -9,9 +9,12 @@ using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.InventoryItem;
 using EPMS.Web.ModelMappers;
+using EPMS.WebBase.Mvc;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
+    [Authorize]
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class InventoryItemController : BaseController
     {
         #region Private
@@ -36,7 +39,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Public
 
         #region Index
-
+        [SiteAuthorize(PermissionKey = "InventoryItemIndex")]
         public ActionResult Index()
         {
             return View(new InventoryItemViewModel
@@ -48,7 +51,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Create
-
+        [SiteAuthorize(PermissionKey = "InventoryItemCreate")]
         public ActionResult Create(long? id)
         {
             InventoryItemViewModel itemViewModel = new InventoryItemViewModel();
@@ -73,6 +76,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Json Methods
+
         #region Get Last Item Code
 
         public JsonResult GetLastItemCode()
@@ -91,6 +96,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             IList<JsTree> details = departments.Select(x => x.CreateForJsTree()).ToList();
             return Json(details, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
         #endregion
 
         #endregion
