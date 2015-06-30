@@ -82,8 +82,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     viewModel.Tir = tir.CreateFromServerToClient();
                     viewModel.TirItems = tir.TIRItems.Select(x => x.CreateFromServerToClient()).ToList();
                 }
-                viewModel.Tir = new TIR();
-                viewModel.TirItems = new List<TIRItem>();
+                else
+                {
+                    viewModel.Tir = new TIR();
+                    viewModel.TirItems = new List<TIRItem>();
+                }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);

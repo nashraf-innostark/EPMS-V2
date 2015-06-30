@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     var i = 0;
+    var k = 0;
 }
 
 <div class="main-content withPanel">
@@ -112,6 +113,7 @@
                                     <table class="table table-striped table-responsive" id="tableSortableResMed2">
                                         <thead>
                                             <tr>
+                                                <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptSerial</th>
                                                 <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectParentDepartment</th>
                                                 <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectParentSection</th>
                                                 <th class="center">@EPMS.Web.Resources.Inventory.InventoryDepartment.SectName</th>
@@ -124,6 +126,7 @@
                                             {
                                                 var id = departments.DepartmentId + "_tableSection";
                                                 <tr class="gradeX" id="@id">
+                                                    <td class="center">@(k += 1)</td>
                                                     <td class="center">@departments.ParentDepartmentEn</td>
                                                     <td class="center">
                                                         @for (int j = departments.ParentNodesSections.Count - 1; j >= 0; j--)
@@ -133,11 +136,11 @@
                                                             {
                                                                 <a href="~/Inventory/InventoryDepartment/Create/@parentNodesSection.Href">@parentNodesSection.TextEn</a>
                                                                 @: >
-                                                                }
+                                                            }
                                                             else
                                                             {
                                                                 @:None
-                                                                }
+                                                            }
                                                         }
                                                     </td>
                                                     <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>

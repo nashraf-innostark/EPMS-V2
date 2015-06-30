@@ -70,7 +70,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perchase Order (PO).
+        ///   Looks up a localized string similar to Purchase Order (PO).
         /// </summary>
         public static string CenterTitleView {
             get {
@@ -88,7 +88,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Perchase Order (PO).
+        ///   Looks up a localized string similar to Create Purchase Order (PO).
         /// </summary>
         public static string CreateNew {
             get {
@@ -187,7 +187,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Perchase Order (PO) View.
+        ///   Looks up a localized string similar to Inventory Purchase Order (PO) View.
         /// </summary>
         public static string InventoryPurchaseOrderView {
             get {
@@ -232,7 +232,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Perchase Order (PO) Create.
+        ///   Looks up a localized string similar to Inventory Purchase Order (PO) Create.
         /// </summary>
         public static string PageTitleCreate {
             get {
@@ -241,7 +241,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Perchase Order (PO) Edit.
+        ///   Looks up a localized string similar to Inventory Purchase Order (PO) Edit.
         /// </summary>
         public static string PageTitleEdit {
             get {
@@ -259,7 +259,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory Perchase Order (PO) List.
+        ///   Looks up a localized string similar to Inventory Purchase Order (PO) List.
         /// </summary>
         public static string PageTitleIndex {
             get {
@@ -268,7 +268,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to View Perchase Order (PO) View.
+        ///   Looks up a localized string similar to View Purchase Order (PO) View.
         /// </summary>
         public static string PageTitleView {
             get {
@@ -277,7 +277,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perchase Order (PO) Create.
+        ///   Looks up a localized string similar to Purchase Order (PO) Create.
         /// </summary>
         public static string POCreate {
             get {
@@ -286,7 +286,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perchase Order (PO) Edit.
+        ///   Looks up a localized string similar to Purchase Order (PO) Edit.
         /// </summary>
         public static string POEdit {
             get {
@@ -304,7 +304,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perchase Order (PO) History.
+        ///   Looks up a localized string similar to Purchase Order (PO) History.
         /// </summary>
         public static string PurchaseOrderHistory {
             get {
@@ -313,7 +313,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perchase Order (PO) Number.
+        ///   Looks up a localized string similar to Purchase Order (PO) Number.
         /// </summary>
         public static string PurchaseOrderNumber {
             get {
@@ -322,7 +322,7 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Perchase Order (PO) View.
+        ///   Looks up a localized string similar to Purchase Order (PO) View.
         /// </summary>
         public static string PurchaseOrderView {
             get {
