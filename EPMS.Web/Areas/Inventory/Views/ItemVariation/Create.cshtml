@@ -47,7 +47,6 @@
     <div class="container-fluid">
 
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(m => m.ItemVariation.InventoryItemId)
         @Html.HiddenFor(m => m.ItemVariation.Sizes)
         @Html.HiddenFor(m => m.ItemVariation.InventoryItemId)
         @Html.HiddenFor(m => m.ItemVariation.ItemVariationId)
@@ -281,12 +280,12 @@
             </div>
         </div><div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Weight</label>
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", id = "Weight", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.Weight, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoEn, new { @dir = "ltr", id = "AdditionalInfoEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoEn, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -373,7 +372,7 @@
                                 serial = serial + 1;
 
                                 <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehousrId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
                                     @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
                                     <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
@@ -617,7 +616,7 @@
     <!--Size Module-->
     <div id="sizeModule" class="modal hide fade">
         <div class="modal-header">
-            <button type="button" class="" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Item Size</h3>
         </div>
         <div class="modal-body ">
@@ -1062,15 +1061,23 @@
                     </div>
                 </div>
                 <div class="control-group row-fluid">
+                    <div class="span1">
+                        @Html.CheckBox("Show", new { @id = "iCheckBox", @class = "toClear", @style = "margin: 23px 0 0 5px" })
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <label class="control-label" for="inputFieldaOrder">Show</label>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="control-group row-fluid">
                     <div class="span12">
                         <label class="checkbox">
                             @Html.CheckBox("Show", new { @id = "iCheckBox", @class = "toClear" })
-                            @*<input type="checkbox" class="uniformCheckbox" id="iCheckBox">*@
                             Show
                         </label>
-
                     </div>
-                </div>
+                </div>*@
             </form>
         </div>
         <div class="modal-footer">
@@ -1091,7 +1098,15 @@
     var myTree;
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
     $(document).ready(function () {
+        //Delete Color from the List
+        $('.deleteColor').on("click", function () {
+            debugger;
+            var hiddenId = $(this).parent().prev().prev().val();
+            $(this).parent().parent().remove();
+            ManageColorList(hiddenId, 2);
+        });
         if (itemVarId == 0 || itemVarId == "") {
+            debugger;
             //Auto Generated Number Calculation
             var url1 = "/Inventory/ItemVariation/GetLastItemSKuCode";
             $.ajax({
@@ -1100,10 +1115,12 @@
                 type: "POST",
                 dataType: "json",
                 success: function (data) {
-                    if (data == null) {
+                    if (data[0] == null) {
                         $('#SKUCode').val(101101);
+                        $('#ItemBarcode').val(101101 +' - '+ data[1]);
                     } else {
-                        $('#SKUCode').val(++data);
+                        $('#SKUCode').val(++data[0]);
+                        $('#ItemBarcode').val(data[0] + ' - ' + data[1]);
                     }
                 },
                 error: function () {
@@ -1421,6 +1438,8 @@
                 var coloList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
                 var parsed = JSON.parse(coloList);
                 var colorCode;
+                var cnameEn;
+                var cnameAr;
                 $.each(parsed, function (key, value) {
                     if (value.ColorId == colorId) {
                         colorCode = value.ColorCode;
@@ -1429,7 +1448,7 @@
                     }
                 });
                 $('#colorStyle').css("color", colorCode);
-                $('#colorStyle').text = cnameEn;
+                $('#colorStyle').text(cnameEn);
             }
         });
 
@@ -1567,12 +1586,7 @@
             clearPopup();
         });
 
-        //Delete Color from the List
-        $('.deleteColor').on("click", function () {
-            var hiddenId = $(this).parent().prev().prev().val();
-            $(this).parent().parent().remove();
-            ManageColorList(hiddenId, 2);
-        });
+        
 
         $(".warehouseTree").click(function (event) {
             $('#warehouseTreeSelector').modal('show');

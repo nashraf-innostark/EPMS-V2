@@ -58,8 +58,6 @@ namespace EPMS.Web.ModelMappers
                 UnitPrice = source.UnitPrice,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,
-                DescriptionEn = source.DescriptionEn,
-                DescriptionAr = source.DescriptionAr,
                 SKUDescriptionEn = source.SKUDescriptionEn,
                 SKUDescriptionAr = source.SKUDescriptionAr,
                 QuantityInHand = source.QuantityInHand,
@@ -119,7 +117,7 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 Quantity = source.Quantity,
-                WarehousrId = source.WarehousrId
+                WarehouseId = source.WarehouseId
             };
         }
     }

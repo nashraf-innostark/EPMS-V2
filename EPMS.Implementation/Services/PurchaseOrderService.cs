@@ -236,6 +236,15 @@ namespace EPMS.Implementation.Services
             return repository.GetRecentPOs(status, requester, date);
         }
 
+        public IEnumerable<PurchaseOrder> FindPoByVendorId(long? vendorId)
+        {
+            if (vendorId != null)
+            {
+                return repository.FindPoByVendorId((long) vendorId);
+            }
+            return new List<PurchaseOrder>();
+        }
+
         private void SendNotification(PurchaseOrder purchaseOrder)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();

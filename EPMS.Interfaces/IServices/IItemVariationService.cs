@@ -14,5 +14,8 @@ namespace EPMS.Interfaces.IServices
         void DeleteVartiation(ItemVariation itemVariation);
         ItemVariationResponse SaveItemVariation(ItemVariationRequest variationToSave);
         IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId);
+        IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList();
+
+        ItemVariationResponse ItemVariationResponse(long id, long itemVariationId);
     }
 }
