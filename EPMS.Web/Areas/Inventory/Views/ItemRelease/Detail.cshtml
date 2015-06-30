@@ -280,26 +280,29 @@
                 <div class="span2">
                     <div class="controls">
                         @Html.DropDownListFor(model => model.ItemRelease.Status, new[] {
-                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" },
-                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" },
-                           new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } },
-                           new { @id = "Status", @class = "select2me disableDdl" })
+                            new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" },
+                            new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" },
+                            new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } },
+                            new { @id = "Status", @class = "select2me disableDdl" })
                     </div>
                 </div>
             </div>
         </div>
-        <div id="SubmitIrf" class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
-            </div>
-        </div>
-        @if (userPermissionsSet.Contains("ItemReleaseCreate"))
+        @if (Model.ItemRelease.Status != 1)
         {
-            <div id="EditIrf" class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.ItemRelease.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+            <div id="SubmitIrf" class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
+                </div>
             </div>
-        </div>
+            if (userPermissionsSet.Contains("ItemReleaseCreate"))
+            {
+                <div id="EditIrf" class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.ItemRelease.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+                    </div>
+                </div>
+            }
         }
     </div>
 }

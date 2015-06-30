@@ -189,17 +189,29 @@ namespace EPMS.Repository.Repositories
             return new TIRListResponse { TirItems = tirs, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
 
-        public IEnumerable<TIR> GetRecentTIRs(int status, string requester, DateTime date)
+        public IEnumerable<TIR> GetRecentTIRs(int status, string requester, int warehouseId)
         {
-            DateTime newDataTime = new DateTime();
+            if (warehouseId > 0)
+            {
+                // TIR warehouse not specified by Client. Ask him
+
+                if (requester == "Admin")
+                {
+                    requester = "";
+                    return status > 0 ? DbSet.Where(x => x.Status == status && (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
+                        DbSet.Where(x => (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester)).OrderByDescending(x => x.RecCreatedDate).Take(5);
+                }
+                return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status).OrderByDescending(x => x.RecCreatedDate).Take(5) :
+                    DbSet.Where(x => x.RecCreatedBy == requester).OrderByDescending(x => x.RecCreatedDate).Take(5);
+            }
             if (requester == "Admin")
             {
                 requester = "";
-                return status > 0 ? DbSet.Where(x => x.Status == status && (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester) && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
-                    DbSet.Where(x => (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester) && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5);
+                return status > 0 ? DbSet.Where(x => x.Status == status && (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
+                    DbSet.Where(x => (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester)).OrderByDescending(x => x.RecCreatedDate).Take(5);
             }
-            return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
-                DbSet.Where(x => x.RecCreatedBy == requester && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5);
+            return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status).OrderByDescending(x => x.RecCreatedDate).Take(5) :
+                DbSet.Where(x => x.RecCreatedBy == requester).OrderByDescending(x => x.RecCreatedDate).Take(5);
         }
     }
 }

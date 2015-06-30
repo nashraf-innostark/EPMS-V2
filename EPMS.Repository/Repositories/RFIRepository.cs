@@ -65,7 +65,7 @@ namespace EPMS.Repository.Repositories
                     (s.AspNetUser.Employee.EmployeeLastNameE.Contains(rfiSearchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(rfiSearchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(rfiSearchRequest.SearchString))
-                    
+
                     );
             }
             else
@@ -76,7 +76,7 @@ namespace EPMS.Repository.Repositories
                     //(s.RFIId.Equals(Convert.ToInt64(rfiSearchRequest.SearchString))) ||
                     //(s.RecCreatedDate.ToShortDateString().Contains(rfiSearchRequest.SearchString))||
                     (s.Order.Customer.CustomerNameE.Contains(rfiSearchRequest.SearchString)) ||
-                    (s.Order.Customer.CustomerNameA.Contains(rfiSearchRequest.SearchString)) 
+                    (s.Order.Customer.CustomerNameA.Contains(rfiSearchRequest.SearchString))
                     ) && (s.RecCreatedBy.Equals(employeeId)));
             }
 
@@ -87,8 +87,8 @@ namespace EPMS.Repository.Repositories
             }
             else if (rfiSearchRequest.iSortCol_0 == 3 && rfiSearchRequest.Requester == "Admin")
             {
-                rfis = rfiSearchRequest.sSortDir_0 == "asc" ? 
-                    DbSet.Where(query).OrderBy(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList():
+                rfis = rfiSearchRequest.sSortDir_0 == "asc" ?
+                    DbSet.Where(query).OrderBy(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList() :
                     DbSet.Where(query).OrderByDescending(x => x.AspNetUser.Employee.EmployeeFirstNameE).Skip(fromRow).Take(toRow).ToList();
             }
             else
@@ -102,15 +102,15 @@ namespace EPMS.Repository.Repositories
             }
             return new RfiRequestResponse { Rfis = rfis, TotalCount = DbSet.Count(query) };
         }
-	 public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
+        public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
         {
-            return DbSet.Where(x=>x.RecCreatedBy == requesterId);
+            return DbSet.Where(x => x.RecCreatedBy == requesterId);
         }
 
         public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime date)
         {
-            DateTime newDataTime=new DateTime();
-            if (requester=="Admin")
+            DateTime newDataTime = new DateTime();
+            if (requester == "Admin")
             {
                 requester = "";
                 return status > 0 ? DbSet.Where(x => x.Status == status && (string.IsNullOrEmpty(requester) || x.RecCreatedBy == requester) && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5) :

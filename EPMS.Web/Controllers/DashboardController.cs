@@ -341,7 +341,7 @@ namespace EPMS.Web.Controllers
             var direction = Resources.Shared.Common.TextDirection;
             ViewBag.ReorderTitle = direction == "ltr" ? "Drag & Drop" : "سحب و افلات";
             ViewBag.ReorderBody = direction == "ltr" ? "Reorder Widgets or Quicklaunch bar items by dragging & dropping them." : ".إعادة ترتيب القطع أو عناصر شريط عن طريق سحب و إفلاتها";
-            //dashboardViewModel.UserMac = GetMacAddress();
+            dashboardViewModel.Employees = GetAllEmployees();
             return View(dashboardViewModel);
         }
         #endregion
@@ -434,9 +434,9 @@ namespace EPMS.Web.Controllers
             return new List<DIFWidget>();
         }
 
-        private IEnumerable<TIRWidget> GetTIR(int status, string requester, DateTime date = new DateTime())
+        private IEnumerable<TIRWidget> GetTIR(int status, string requester, int warehouseId = 0)
         {
-            var rfis = tirService.GetRecentTIRs(status, requester, date);
+            var rfis = tirService.GetRecentTIRs(status, requester, warehouseId);
             if (rfis.Any())
                 return rfis.Select(x => x.CreateWidget());
             return new List<TIRWidget>();
@@ -910,21 +910,20 @@ namespace EPMS.Web.Controllers
         /// </summary>
         /// <param name="status"></param>
         /// <param name="requester"></param>
-        /// <param name="date"></param>
+        /// <param name="warehouseId"></param>
         /// <returns></returns>
         [HttpGet]
-        public JsonResult LoadTIR(int status, string requester, string date)
+        public JsonResult LoadTIR(int status, string requester, int warehouseId)
         {
-            DateTime tirCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
             switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
             {
                 case UserRole.Employee:
-                    var TIRs = GetTIR(status, Session["UserID"].ToString(), tirCreatedDate);// status 0 means all
+                    var TIRs = GetTIR(status, Session["UserID"].ToString(), warehouseId);// status 0 means all
                     return Json(TIRs, JsonRequestBehavior.AllowGet);
                 default:
                     if (string.IsNullOrEmpty(requester))
                         requester = "Admin";
-                    TIRs = GetTIR(status, requester, tirCreatedDate);// status 0 means all
+                    TIRs = GetTIR(status, requester, warehouseId);// status 0 means all
                     return Json(TIRs, JsonRequestBehavior.AllowGet);
             }
         }

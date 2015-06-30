@@ -17,6 +17,6 @@ namespace EPMS.Interfaces.IServices
         bool AddTIR(TIR tir);
         bool UpdateTIR(TIR tir);
         void DeleteTIR(TIR tir);
-        IEnumerable<TIR> GetRecentTIRs(int status, string requester, DateTime date);
+        IEnumerable<TIR> GetRecentTIRs(int status, string requester, int warehouseId);
     }
 }

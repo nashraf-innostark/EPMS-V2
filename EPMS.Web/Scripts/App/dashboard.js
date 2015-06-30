@@ -1248,22 +1248,22 @@ function LoadRIFs(control) {
     var siteUrl = $('#siteURL').val();
     var isAdmin = false;
     var requester = "";
-    if ($("#employeeIdForRFI").val() == undefined) {
+    if ($("#employeeIdForRIF").val() == undefined) {
         requester = "";
     } else {
-        requester = $("#employeeIdForRFI").val();
+        requester = $("#employeeIdForRIF").val();
         isAdmin = true;
     }
 
-    var status = $("#rfiStatus").val();
-    var rfiDate = $("#rfiDate").val();
+    var status = $("#rifStatus").val();
+    var rfiDate = $("#rifDate").val();
 
     if (control.className == "refresher") {
         status = 0;
         requester = "";
         rfiDate = "";
     }
-    var url = siteUrl + "/Dashboard/LoadRFI";
+    var url = siteUrl + "/Dashboard/LoadRIF";
     $.ajax({
         url: url,
         type: 'GET',
@@ -1276,26 +1276,26 @@ function LoadRIFs(control) {
         success: function (data) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
-            $('#rfiList').empty();
+            $('#rifList').empty();
 
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1303,7 +1303,7 @@ function LoadRIFs(control) {
             }
             else {
                 $(".tempLoader").click();
-                $('#rfiList').append('<li>No record found</li>');
+                $('#rifList').append('<li>No record found</li>');
             }
         },
         error: function (e) {
@@ -1317,22 +1317,22 @@ function LoadIRFs(control) {
     var siteUrl = $('#siteURL').val();
     var isAdmin = false;
     var requester = "";
-    if ($("#employeeIdForRFI").val() == undefined) {
+    if ($("#employeeIdForIRF").val() == undefined) {
         requester = "";
     } else {
-        requester = $("#employeeIdForRFI").val();
+        requester = $("#employeeIdForIRF").val();
         isAdmin = true;
     }
 
-    var status = $("#rfiStatus").val();
-    var rfiDate = $("#rfiDate").val();
+    var status = $("#irfStatus").val();
+    var rfiDate = $("#irfDate").val();
 
     if (control.className == "refresher") {
         status = 0;
         requester = "";
         rfiDate = "";
     }
-    var url = siteUrl + "/Dashboard/LoadRFI";
+    var url = siteUrl + "/Dashboard/LoadIRF";
     $.ajax({
         url: url,
         type: 'GET',
@@ -1345,26 +1345,26 @@ function LoadIRFs(control) {
         success: function (data) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
-            $('#rfiList').empty();
+            $('#irfList').empty();
 
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1372,7 +1372,7 @@ function LoadIRFs(control) {
             }
             else {
                 $(".tempLoader").click();
-                $('#rfiList').append('<li>No record found</li>');
+                $('#irfList').append('<li>No record found</li>');
             }
         },
         error: function (e) {
@@ -1386,22 +1386,22 @@ function LoadDIFs(control) {
     var siteUrl = $('#siteURL').val();
     var isAdmin = false;
     var requester = "";
-    if ($("#employeeIdForRFI").val() == undefined) {
+    if ($("#employeeIdForDIF").val() == undefined) {
         requester = "";
     } else {
-        requester = $("#employeeIdForRFI").val();
+        requester = $("#employeeIdForDIF").val();
         isAdmin = true;
     }
 
-    var status = $("#rfiStatus").val();
-    var rfiDate = $("#rfiDate").val();
+    var status = $("#difStatus").val();
+    var rfiDate = $("#difDate").val();
 
     if (control.className == "refresher") {
         status = 0;
         requester = "";
         rfiDate = "";
     }
-    var url = siteUrl + "/Dashboard/LoadRFI";
+    var url = siteUrl + "/Dashboard/LoadDIF";
     $.ajax({
         url: url,
         type: 'GET',
@@ -1414,26 +1414,26 @@ function LoadDIFs(control) {
         success: function (data) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
-            $('#rfiList').empty();
+            $('#difList').empty();
 
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1441,7 +1441,7 @@ function LoadDIFs(control) {
             }
             else {
                 $(".tempLoader").click();
-                $('#rfiList').append('<li>No record found</li>');
+                $('#difList').append('<li>No record found</li>');
             }
         },
         error: function (e) {
@@ -1455,22 +1455,22 @@ function LoadPOs(control) {
     var siteUrl = $('#siteURL').val();
     var isAdmin = false;
     var requester = "";
-    if ($("#employeeIdForRFI").val() == undefined) {
+    if ($("#employeeIdForPO").val() == undefined) {
         requester = "";
     } else {
-        requester = $("#employeeIdForRFI").val();
+        requester = $("#employeeIdForPO").val();
         isAdmin = true;
     }
 
-    var status = $("#rfiStatus").val();
-    var rfiDate = $("#rfiDate").val();
+    var status = $("#poStatus").val();
+    var rfiDate = $("#poDate").val();
 
     if (control.className == "refresher") {
         status = 0;
         requester = "";
         rfiDate = "";
     }
-    var url = siteUrl + "/Dashboard/LoadRFI";
+    var url = siteUrl + "/Dashboard/LoadPO";
     $.ajax({
         url: url,
         type: 'GET',
@@ -1483,26 +1483,26 @@ function LoadPOs(control) {
         success: function (data) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
-            $('#rfiList').empty();
+            $('#poList').empty();
 
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1510,7 +1510,7 @@ function LoadPOs(control) {
             }
             else {
                 $(".tempLoader").click();
-                $('#rfiList').append('<li>No record found</li>');
+                $('#poList').append('<li>No record found</li>');
             }
         },
         error: function (e) {
@@ -1524,54 +1524,60 @@ function LoadTIRs(control) {
     var siteUrl = $('#siteURL').val();
     var isAdmin = false;
     var requester = "";
-    if ($("#employeeIdForRFI").val() == undefined) {
+    if ($("#employeeIdForTIR").val() == undefined) {
         requester = "";
     } else {
-        requester = $("#employeeIdForRFI").val();
+        requester = $("#employeeIdForTIR").val();
         isAdmin = true;
     }
 
-    var status = $("#rfiStatus").val();
-    var rfiDate = $("#rfiDate").val();
+    var status = $("#tirStatus").val();
+    var warId;
+    if ($("#warNumberForTIR").val() == undefined) {
+        warId = -1;
+    } else {
+        warId = $("#warNumberForTIR").val();
+    }
 
     if (control.className == "refresher") {
         status = 0;
         requester = "";
-        rfiDate = "";
+        warId = 0;
     }
-    var url = siteUrl + "/Dashboard/LoadRFI";
+    var dataToPost = {
+        status: status,
+        requester: requester,
+        warehouseId: warId
+    };
+    var url = siteUrl + "/Dashboard/LoadTIR";
     $.ajax({
         url: url,
         type: 'GET',
         dataType: "json",
-        data: {
-            status: status,
-            requester: requester,
-            date: rfiDate
-        },
+        data: dataToPost,
         success: function (data) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
-            $('#rfiList').empty();
+            $('#tirList').empty();
 
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1579,7 +1585,7 @@ function LoadTIRs(control) {
             }
             else {
                 $(".tempLoader").click();
-                $('#rfiList').append('<li>No record found</li>');
+                $('#tirList').append('<li>No record found</li>');
             }
         },
         error: function (e) {

@@ -92,8 +92,16 @@
                                         <td>@Model.Tir.RecCreatedDate.ToShortDateString()</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequesterName</th>
-                                        <td>@Model.Tir.RequesterName</td>
+                                        @if (ViewBag.IsAllowedCompleteView)
+                                        {
+                                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequesterName</th>
+                                            <td>@Model.Tir.RequesterName</td>
+                                        }
+                                        else
+                                        {
+                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
+                                            <td>@(direction == "ltr" ? Model.Tir.ManagerName : Model.Tir.ManagerNameAr)</td>
+                                        }
                                     </tr>
                                 </tbody>
                             </table>
