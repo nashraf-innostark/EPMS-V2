@@ -236,6 +236,10 @@
         }
         EnableDisableFields();
         CheckPermissions();
+        if ('@ViewBag.From' == 'History') {
+            $("#editDiv").hide();
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
     });
     function EnableDisableFields() {
         if ('@Model.Dif.Status' != '2') {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
@@ -89,6 +88,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            ViewBag.From = from;
             return View(viewModel);
         }
 

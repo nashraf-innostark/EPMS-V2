@@ -246,9 +246,13 @@
         }
         EnableDisableFields();
         CheckPermissions();
+        if ('@ViewBag.From' == 'History') {
+            $('.toBeDisabled:input').attr('disabled', true);
+            $("#submitDiv").hide();
+        }
     });
     function EnableDisableFields() {
-        if ('@Model.Rfi.Status' != '2' || '@ViewBag.From' != 'History') {
+        if ('@Model.Rfi.Status' != '2') {
             $('.toBeDisabled:input').attr('disabled', false);
         } else {
             $('.toBeDisabled:input').attr('disabled', true);

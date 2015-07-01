@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.RequestModels;
-using System.Configuration;
-using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
@@ -50,7 +48,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             DifListViewModel viewModel = new DifListViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Manager")
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
             {
                 searchRequest.Requester = "Admin";
             }
@@ -112,6 +110,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rifViewModel.DifItem = new List<Models.DIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
+            ViewBag.From = from;
             return View(rifViewModel);
         }
         [HttpPost]

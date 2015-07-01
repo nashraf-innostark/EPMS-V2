@@ -234,7 +234,6 @@
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
-            $("#EditTir").hide();
             var noteEn = '@Html.Raw(Model.Tir.NotesE)';
             var regex = /(<([^>]+)>)/ig;
             var result = noteEn.replace(regex, "");
@@ -252,6 +251,11 @@
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
             $("#CKNotes").show();
+        }
+        if ('@ViewBag.From' == 'History') {
+            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.disableDdl').select2('disable');
+            $("#SubmitTir").hide();
         }
     });
 </script>

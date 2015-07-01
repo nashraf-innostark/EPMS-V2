@@ -42,7 +42,7 @@
             <div class="span12">
                 <table id="dataTable" class="table table-striped table-responsive">
                     <thead class="cf sorthead">
-                        @if (ViewBag.UserRole == "manager")
+                        @if (ViewBag.UserRole == "inventorymanager")
                         {
                             <tr>
                                 <th></th>
@@ -75,7 +75,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var siteUrl = $('#siteURL').val();
-        if ('@ViewBag.UserRole' == "manager") {
+        if ('@ViewBag.UserRole' == "inventorymanager") {
             var oTable = $('#dataTable').dataTable({
                 "bProcessing": true,
                 "bServerSide": true,
