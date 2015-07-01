@@ -1097,6 +1097,8 @@
     var itemsCount;
     var myTree;
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
+    var coloList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
+    var parsedColor = JSON.parse(coloList);
     $(document).ready(function () {
         //Delete Color from the List
         $('.deleteColor').on("click", function () {
@@ -1404,6 +1406,7 @@
                 nameAr: nameAr,
                 code: code,
             };
+            
             $.ajax({
                 url: url,
                 type: "POST",
@@ -1425,6 +1428,13 @@
                     $('.select2me').select2({
                         placeholder: "Select",
                     });
+                    var colorToAdd = {
+                        ColorId: data.ColorId,
+                        ColorNameAr: data.ColorNameAr,
+                        ColorNameEn: data.ColorNameEn,
+                        ColorCode: data.ColorCode,
+                    };
+                    parsedColor.push(colorToAdd);
                 },
                 error: function () {
                     alert("An error has occured!!!");
@@ -1436,12 +1446,10 @@
             var colorId = $(this).val();
             if (colorId != "") {
                 $("#ColorId").val(colorId);
-                var coloList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
-                var parsed = JSON.parse(coloList);
                 var colorCode;
                 var cnameEn;
                 var cnameAr;
-                $.each(parsed, function (key, value) {
+                $.each(parsedColor, function (key, value) {
                     if (value.ColorId == colorId) {
                         colorCode = value.ColorCode;
                         cnameEn = value.ColorNameEn;
