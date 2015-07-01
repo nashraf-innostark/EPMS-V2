@@ -44,7 +44,7 @@
         @Html.HiddenFor(m => m.InventoryItem.ItemId)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedDt)
-        @Html.HiddenFor(m => m.InventoryItem.DepartmentId)
+        @Html.HiddenFor(m => m.InventoryItem.DepartmentId, new {@id = "departmentId"})
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
         <div class="control-group row-fluid">
@@ -283,7 +283,7 @@
             </div>
             <div class="span9">
 
-                @Html.TextBoxFor(m => m.InventoryItem.DepartmentId, new { @dir = "ltr", id = "DepartmentId", @readonly = "true" })
+                @Html.TextBoxFor(m => m.InventoryItem.DepartmentPath, new { @dir = "ltr", id = "DepartmentPath", @readonly = "true" })
                 <div class="control-group row-fluid">
                     <div class="span12 span-inset">
                         <a href="#modal-dialog" role="button" class="btn" data-toggle="modal">Tree Selector</a>
@@ -292,6 +292,7 @@
                 </div>
             </div>
         </div>
+        
 
         @if (Model.InventoryItem.ItemId > 0)
         {
@@ -512,7 +513,7 @@
         populateTree(0, "jstree", requestUrl);
 
         $("#selectDepartment").on("click", function() {
-            //$('#DepartmentId').val("Selected: " + textTillParent);
+            $('#DepartmentPath').val("Selected: " + textTillParent);
             $('#InventoryItem_DepartmentId').val($('#jstree').jstree('get_selected').attr('id'));
             $('#modal-dialog').modal('toggle');
             return true;

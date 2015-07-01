@@ -214,6 +214,24 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Name cannot exceed 500 characters. .
+        /// </summary>
+        public static string NameLengthValidation {
+            get {
+                return ResourceManager.GetString("NameLengthValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Name is required..
+        /// </summary>
+        public static string NameValidation {
+            get {
+                return ResourceManager.GetString("NameValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity On Hand.
         /// </summary>
         public static string QOnHand {

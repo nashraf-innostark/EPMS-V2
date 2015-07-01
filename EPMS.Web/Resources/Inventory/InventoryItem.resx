@@ -201,4 +201,10 @@
   <data name="UsageEn" xml:space="preserve">
     <value>Usage</value>
   </data>
+  <data name="NameValidation" xml:space="preserve">
+    <value>Item Name is required.</value>
+  </data>
+  <data name="NameLengthValidation" xml:space="preserve">
+    <value>Item Name cannot exceed 500 characters. </value>
+  </data>
 </root>
