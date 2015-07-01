@@ -266,5 +266,23 @@ namespace EPMS.Web.Resources.Inventory {
                 return ResourceManager.GetString("VendorNameEn", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor Name is required..
+        /// </summary>
+        public static string VendorNameValidation {
+            get {
+                return ResourceManager.GetString("VendorNameValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name cannot exceed 400 characters. .
+        /// </summary>
+        public static string VendorStringLengthValidation {
+            get {
+                return ResourceManager.GetString("VendorStringLengthValidation", resourceCulture);
+            }
+        }
     }
 }

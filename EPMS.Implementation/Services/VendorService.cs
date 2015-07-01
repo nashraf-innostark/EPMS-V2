@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -111,9 +112,16 @@ namespace EPMS.Implementation.Services
                 {
                     VendorItem item = new VendorItem
                     {
-                        ItemId = vendorItem.ItemId,
+                        ItemVariationId = vendorItem.ItemVariationId,
+                        IsItemDescription = vendorItem.IsItemDescription,
+                        IsItemSKU = vendorItem.IsItemSKU,
+                        PlaceInDepartment = vendorItem.PlaceInDepartment,
                         ItemDetails = vendorItem.ItemDetails,
-                        VendorId = itemsToSave.Vendor.VendorId
+                        VendorId = itemsToSave.Vendor.VendorId,
+                        RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecCreatedDate = DateTime.Now,
+                        RecUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecUpdatedDate = DateTime.Now
                     };
                     vendorItemsRepository.Add(item);
                 }
@@ -136,9 +144,16 @@ namespace EPMS.Implementation.Services
                         continue;
                     VendorItem item = new VendorItem
                     {
-                        ItemId = vendorItem.ItemId,
+                        ItemVariationId = vendorItem.ItemVariationId,
+                        IsItemDescription = vendorItem.IsItemDescription,
+                        IsItemSKU = vendorItem.IsItemSKU,
+                        PlaceInDepartment = vendorItem.PlaceInDepartment,
                         ItemDetails = vendorItem.ItemDetails,
-                        VendorId = itemsToSave.Vendor.VendorId
+                        VendorId = itemsToSave.Vendor.VendorId,
+                        RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecCreatedDate = DateTime.Now,
+                        RecUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecUpdatedDate = DateTime.Now
                     };
                     vendorItemsRepository.Add(item);
                 }

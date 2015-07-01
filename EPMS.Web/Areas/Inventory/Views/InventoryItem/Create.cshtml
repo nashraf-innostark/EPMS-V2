@@ -44,7 +44,7 @@
         @Html.HiddenFor(m => m.InventoryItem.ItemId)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedDt)
-        @Html.HiddenFor(m => m.InventoryItem.DepartmentId)
+        @Html.HiddenFor(m => m.InventoryItem.DepartmentId, new {@id = "departmentId"})
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
         <div class="control-group row-fluid">
@@ -90,7 +90,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired"})
                         @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -114,7 +114,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new { @dir = "ltr", id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new { @dir = "ltr", id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -126,7 +126,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new { @dir = "ltr", id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new { @dir = "ltr", id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -211,7 +211,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.HazardousEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.HazardousAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -235,7 +235,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.UsageEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -247,7 +247,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.UsageAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -283,7 +283,7 @@
             </div>
             <div class="span9">
 
-                @Html.TextBoxFor(m => m.InventoryItem.DepartmentId, new { @dir = "ltr", id = "DepartmentId", @readonly = "true" })
+                @Html.TextBoxFor(m => m.InventoryItem.DepartmentPath, new { @dir = "ltr", id = "DepartmentPath", @readonly = "true" })
                 <div class="control-group row-fluid">
                     <div class="span12 span-inset">
                         <a href="#modal-dialog" role="button" class="btn" data-toggle="modal">Tree Selector</a>
@@ -292,6 +292,7 @@
                 </div>
             </div>
         </div>
+        
 
         @if (Model.InventoryItem.ItemId > 0)
         {
@@ -411,8 +412,7 @@
 }
 
 
-<script src="~/RTB/ckfinder.js"></script>
-<script src="~/RTE/ckeditor.js"></script>
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     var editor;
     var textTillParent;
@@ -459,7 +459,7 @@
             $("#edit").show();
         }
 
-        //Warehouse Tree
+        //Departments Tree
         var treeInitialData;
         debugger;
         if (dir == "ltr") {
@@ -512,7 +512,7 @@
         populateTree(0, "jstree", requestUrl);
 
         $("#selectDepartment").on("click", function() {
-            //$('#DepartmentId').val("Selected: " + textTillParent);
+            $('#DepartmentPath').val("Selected: " + textTillParent);
             $('#InventoryItem_DepartmentId').val($('#jstree').jstree('get_selected').attr('id'));
             $('#modal-dialog').modal('toggle');
             return true;
@@ -520,6 +520,7 @@
 
     });
 
+    //Edit CLick Function
     $("#edit").click(function(event) {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         $("#savebtn").show();
@@ -531,43 +532,26 @@
         event.preventDefault();
     });
 
+    //Show CK Editors to Fields
     function showCkEditors() {
         $("#CKEditorDescp").show();
-        editor = CKEDITOR.replace('ItemDescriptionEn', {
+        CKEDITOR.replace('ItemDescriptionEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('ItemDescriptionAr', {
+        CKEDITOR.replace('ItemDescriptionAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('HazardousEn', {
+        CKEDITOR.replace('HazardousEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('HazardousAr', {
+        CKEDITOR.replace('HazardousAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('UsageEn', {
+        CKEDITOR.replace('UsageEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('UsageAr', {
+        CKEDITOR.replace('UsageAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
     }
 

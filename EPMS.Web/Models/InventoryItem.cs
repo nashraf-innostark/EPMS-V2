@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -7,7 +8,11 @@ namespace EPMS.Web.Models
     {
         public long ItemId { get; set; }
         public string ItemCode { get; set; }
+        [Required(ErrorMessageResourceType = typeof (Resources.Inventory.InventoryItem), ErrorMessageResourceName = "NameValidation")]
+        [StringLength(200, ErrorMessageResourceType = typeof (Resources.Inventory.InventoryItem), ErrorMessageResourceName = "NameLengthValidation")]
         public string ItemNameEn { get; set; }
+        [Required(ErrorMessageResourceType = typeof (Resources.Inventory.InventoryItem), ErrorMessageResourceName = "NameValidation")]
+        [StringLength(200, ErrorMessageResourceType = typeof (Resources.Inventory.InventoryItem), ErrorMessageResourceName = "NameLengthValidation")]
         public string ItemNameAr { get; set; }
         public string ItemImagePath { get; set; }
         public string ItemDescriptionEn { get; set; }
@@ -31,6 +36,7 @@ namespace EPMS.Web.Models
         public string QuantityInPackage { get; set; }
         public long? QuantityInHand { get; set; }
         public long? QuantitySold { get; set; }
+        public string DepartmentPath { get; set; }
 
         public List<ItemVariation> ItemVariations { get; set; }
     }
