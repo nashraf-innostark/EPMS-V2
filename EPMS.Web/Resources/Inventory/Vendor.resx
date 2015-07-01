@@ -186,4 +186,10 @@
   <data name="VendorNameEn" xml:space="preserve">
     <value>Vendor Name</value>
   </data>
+  <data name="VendorNameValidation" xml:space="preserve">
+    <value>Vendor Name is required.</value>
+  </data>
+  <data name="VendorStringLengthValidation" xml:space="preserve">
+    <value>Name cannot exceed 400 characters. </value>
+  </data>
 </root>

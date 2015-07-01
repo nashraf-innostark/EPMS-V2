@@ -163,7 +163,7 @@
                                 var serial = 0;
                                 foreach (var item in Model.PurchaseOrders.ToList())
                                 {
-                                    serial = serial+1;
+                                    serial = serial + 1;
                                     <tr class="gradeX">
                                         <td>@serial</td>
                                         <td><a href="~/Inventory/PurchaseOrder/Details/@item.PurchaseOrderId">@item.FormNumber</a></td>
@@ -176,6 +176,62 @@
                 </div>
             </div>
         </div>
+
+        <div id="vendorItemTable">
+            <div class="alert alert-info alert-block">
+                <i class="icon-alert icon-alert-info"></i>
+                <strong>Items Offered by the Vendor</strong>
+            </div>
+            <!--Sortable Responsive Table begin-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-striped table-responsive" id="tableSortableVariations">
+                        <thead>
+                            <tr>
+                                <th> Serial</th>
+                                <th>Item Name</th>
+                                <th>Item Code</th>
+                                <th>SKU Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.PurchaseOrders != null)
+                            {
+                                var serial = 0;
+                                foreach (var item in Model.Vendor.VendorItems.ToList())
+                                {
+                                    serial = serial + 1;
+                                    <tr class="gradeX">
+                                        <td>@serial</td>
+                                        @if (item.ItemVariationId == null)
+                                        {
+                                            <td>@item.ItemDetails</td>
+                                            <td></td>
+                                            <td></td>
+                                        }
+                                        else
+                                        {
+                                            if (direction == "ltr")
+                                            {
+                                                <td>@item.ItemVariation.InventoryItem.ItemNameEn</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.ItemVariation.InventoryItem.ItemNameAr</td>
+                                            }
+                                            <td>@item.ItemVariation.InventoryItem.ItemCode</td>
+                                            <td>@item.ItemVariation.SKUCode</td>
+                                        }
+                                    </tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div id="itemAddition">
             <!--WYSIWYG Editor - Minimum Options begin-->
             <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
@@ -222,47 +278,60 @@
                                 for (int i = 0; i < Model.Vendor.VendorItems.Count(); i++)
                                 {
                                     serial = serial + 1;
-                            <tr>
-                                <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
-                                <td>
-                                    <div class="control-group row-fluid">
-                                        <div class="span1">
-                                            <label class="control-label serialNumber">@serial</label>
-                                        </div>
+                                    <tr data-id="@i">
+                                        <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].IsItemDescription)
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].IsItemSKU)
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].ItemVariationId)
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].ItemId)
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].PlaceInDepartment)
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].RecCreatedBy)
+                                        @Html.HiddenFor(m => m.Vendor.VendorItems[i].RecCreatedDate)
+                                        <td>
+                                            <div class="control-group row-fluid">
+                                                <div class="span1">
+                                                    <label class="control-label serialNumber">@serial</label>
+                                                </div>
 
-                                    </div>
-                                </td>
-                                <td>
-                                    @Html.TextAreaFor(model => model.Vendor.VendorItems[i].ItemDetails, new { @class = "auto-resize vendorItem" })
-                                    @*<textarea rows="2" class= "auto-resize"></textarea>*@
-                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                </td>
-                                <td class="delete">
-                                    <i class="icon-photon minus deleteRow"></i>
-                                </td>
-                            </tr>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @Html.TextAreaFor(model => model.Vendor.VendorItems[i].ItemDetails, new { @class = "auto-resize vendorItem" })
+                                            @*<textarea rows="2" class= "auto-resize"></textarea>*@
+                                            <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                        </td>
+                                        <td class="delete">
+                                            <i class="icon-photon minus deleteRow"></i>
+                                        </td>
+                                    </tr>
                                 }
                             }
                             else
                             {
-                            <tr>
-                                <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
-                                <td>
-                                    <div class="control-group row-fluid">
-                                        <div class="span1">
-                                            <label class="control-label serialNumber">1</label>
-                                        </div>
+                                <tr data-id="0">
+                                    <td style='display:none'>
+                                        <input name='Vendor.VendorItems[0].IsItemDescription' id='Vender_VendorItems_0__IsItemDescription' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].IsItemSKU' id='Vender_VendorItems_0__IsItemSKU' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].ItemVariationId' id='Vender_VendorItems_0__ItemVariationId' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].PlaceInDepartment' id='Vender_VendorItems_0__PlaceInDepartment' type='hidden' />
+                                    </td>
+                                    <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
+                                    <td>
+                                        <div class="control-group row-fluid">
+                                            <div class="span1">
+                                                <label class="control-label serialNumber">1</label>
+                                            </div>
 
-                                    </div>
-                                </td>
-                                <td>
-                                    <textarea rows="2" class="auto-resize" name="Vendor.VendorItems[0].ItemDetails"></textarea>
-                                    <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
-                                </td>
-                                <td class="delete">
-                                    <i class="icon-photon minus deleteRow"></i>
-                                </td>
-                            </tr>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea rows="2" class="auto-resize" name="Vendor.VendorItems[0].ItemDetails" id="Vender_VendorItems_0__ItemDetails"></textarea>
+                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -293,56 +362,56 @@
 @section popups{
 
     <div id="itemSearcher" class="modal hide fade treeSelector">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>@EPMS.Web.Resources.RFI.RFI.ItemSearch</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <input id='ItemModalIndex' type='hidden' />
-            <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.SelectItem</label>
-                </div>
-                <div class="span6">
-                    <div class="controls">
-                        @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>@EPMS.Web.Resources.RFI.RFI.ItemSearch</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <input id='ItemModalIndex' type='hidden' />
+                <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.SelectItem</label>
                     </div>
-                    <label id="ItemVariationDropDownListValidation"></label>
-                </div>
-            </div>
-
-            <div class="control-group row-fluid">
-                <div class="span4">
-                    <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.ItemTreeSelector</label>
-                </div>
-                <div class="span8 span-inset">
-                    <button type="button" id="btnTreeSelector" class="btn itemAdder">+</button>
-                    <label id="txtSelectedDepartmentName"></label>
+                    <div class="span6">
+                        <div class="controls">
+                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+                        </div>
+                        <label id="ItemVariationDropDownListValidation"></label>
+                    </div>
                 </div>
 
-            </div>
-            <div class="control-group row-fluid">
+                <div class="control-group row-fluid">
+                    <div class="span4">
+                        <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.ItemTreeSelector</label>
+                    </div>
+                    <div class="span8 span-inset">
+                        <button type="button" id="btnTreeSelector" class="btn itemAdder">+</button>
+                        <label id="txtSelectedDepartmentName"></label>
+                    </div>
 
-                <div class="span9 ">
-                    <label class="control-label">
-                        <input type="checkbox" id="ItemDescriptionModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemDescription
-                    </label>
+                </div>
+                <div class="control-group row-fluid">
 
-                    <label class="control-label">
-                        <input type="checkbox" id="ItemSKUModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemSKU
-                    </label>
+                    <div class="span9 ">
+                        <label class="control-label">
+                            <input type="checkbox" id="ItemDescriptionModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemDescription
+                        </label>
+
+                        <label class="control-label">
+                            <input type="checkbox" id="ItemSKUModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemSKU
+                        </label>
+                    </div>
+
                 </div>
 
-            </div>
-
-        </form>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" id="SaveChanges">@EPMS.Web.Resources.RFI.RFI.SaveChanges</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary" id="SaveChanges">@EPMS.Web.Resources.RFI.RFI.SaveChanges</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
-    </div>
-</div>
 
     <div id="itemTreeSelector" class="modal hide fade treeSelector">
         <div class="modal-header">
@@ -370,6 +439,8 @@
 }
 
 
+<script src="~/RTB/ckfinder.js"></script>
+<script src="~/RTE/ckeditor.js"></script>
 <script>
     var itemsCount;
     var siteUrl = $('#siteURL').val();
@@ -386,6 +457,7 @@
             $("#cancel").show();
             $("#edit").hide();
             itemsCount = 0;
+            showCkEditors();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
@@ -481,7 +553,7 @@
 
         $("#selectDepartment").on("click", function () {
             var index = parseInt($("#ItemModalIndex").val());
-            $("#TirItems_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#Vender_VendorItems_" + index + "__PlaceInDepartment").val(textTillParent);
             $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
             $('#itemTreeSelector').modal('toggle');
             return true;
@@ -491,6 +563,38 @@
             if (validateSelect2Ddl("#ItemVariationDropDownList")) {
                 getModalControlsValues();
             }
+        });
+        $('#itemSearcher').on('show', function () {
+            //clear DDL required value label
+            $("#ItemVariationDropDownListValidation").text("");
+            $("#ItemVariationDropDownListValidation").removeClass("Error");
+
+            //get the id from tr that is selected for the item popup
+            var index = $(event.target).closest('tr').data('id');
+            $("#ItemModalIndex").val(index);
+            //get item's values
+            var isItemDescription = $("#TirItems_" + index + "__IsItemDescription").val();
+            var isItemSKU = $("#TirItems_" + index + "__IsItemSKU").val();
+            var itemVariationId = $("#TirItems_" + index + "__ItemVariationId").val();
+            var placeInDepartment = $("#TirItems_" + index + "__PlaceInDepartment").val();
+            // clear selected department label text
+            $("#txtSelectedDepartmentName").text("");
+
+            //set modal fields according to modal values
+            $("#ItemVariationDropDownList").select2("val", itemVariationId); //set the value
+
+            if (isItemDescription == "false" || isItemDescription == "False" || isItemDescription == "") {
+                $('#ItemDescriptionModalChk').attr('checked', false);
+            } else {
+                $('#ItemDescriptionModalChk').attr('checked', true);
+            }
+
+            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU == "") {
+                $('#ItemSKUModalChk').attr('checked', false);
+            } else {
+                $('#ItemSKUModalChk').attr('checked', true);
+            }
+            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
     });
 
@@ -504,17 +608,17 @@
 
         //set item's values
         var index = $("#ItemModalIndex").val();
-        $("#TirItems_" + index + "__IsItemDescription").val(isItemDescription);
-        $("#TirItems_" + index + "__IsItemSKU").val(isItemSku);
-        $("#TirItems_" + index + "__ItemVariationId").val(itemVariationId);
+        $("#Vender_VendorItems_" + index + "__IsItemDescription").val(isItemDescription);
+        $("#Vender_VendorItems_" + index + "__IsItemSKU").val(isItemSku);
+        $("#Vender_VendorItems_" + index + "__ItemVariationId").val(itemVariationId);
 
         //set item sku and description in details text area
-        var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-        var parsedRfiItems = JSON.parse(rfiItems);
+        var vendorItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+        var parsedRfiItems = JSON.parse(vendorItems);
 
         $.each(parsedRfiItems, function (key, value) {
             if (value.ItemVariationId == itemVariationId) {
-                $("#TirItems_" + index + "__ItemDetails").val("");
+                $("#Vender_VendorItems_" + index + "__ItemDetails").val("");
                 var textToAppend = "";
                 if ('@direction' == "ltr") {
                     textToAppend = textToAppend + "Name: " + value.ItemNameE;
@@ -531,7 +635,7 @@
                         textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
                     }
                 }
-                $("#TirItems_" + index + "__ItemDetails").val(textToAppend);
+                $("#Vender_VendorItems_" + index + "__ItemDetails").val(textToAppend);
             }
         });
         $('#itemSearcher').modal('toggle');
@@ -547,10 +651,12 @@
         $(".trAdder").show();
         $("#itemAddition").show();
         $("#poTable").hide();
+        $("#vendorItemTable").hide();
+        showCkEditors();
         event.preventDefault();
     });
 
-    
+
     $("#importEx").on("click", function () {
 
         var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
@@ -577,7 +683,13 @@
                     }
                     y++;
                 });
-                var html = '<tr>' + '<td style="display:none"><input name="RfiItem.Index" type="hidden" value=' + itemsCount + ' /></td>' +
+                var html = '<tr data-id=' + itemsCount + '>' + '<td style="display:none"><input name="RfiItem.Index" type="hidden" value=' + itemsCount + ' /></td>' +
+                    '<td style="display:none">' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].IsItemDescription" id="Vender_VendorItems_' + index + '__IsItemDescription" type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].IsItemSKU" id=Vender_VendorItems_' + index + '__IsItemSKU type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].ItemVariationId" id="Vender_VendorItems_' + index + '__ItemVariationId" type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].PlaceInDepartment" id=Vender_VendorItems_' + index + '__PlaceInDepartment" type="hidden" />' +
+                    '</td>' +
                     '<td >' +
                     '<div class="control-group row-fluid">' +
                     '<div class="span1">' +
@@ -587,7 +699,7 @@
                     '</div>' +
                     '</td>' +
                     '<td >' +
-                    '<textarea rows="2" class="auto-resize" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails">' + t1 + '</textarea>' +
+                    '<textarea rows="2" class="auto-resize" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails" id="Vender_VendorItems_' + itemsCount + '__ItemDetails>' + t1 + '</textarea>' +
                     '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                     '</td>' +
                     '<td class="delete">' +
@@ -620,8 +732,14 @@
 
     $('.trAdder').on("click", function (event) {
         var index = $("#vitemdetail").children("tr").length;
-        itemsCount = itemsCount + 1;
-        var html = ' <tr>' + '<td style="display:none"><input name="Vendor.VendorItems.Index" type="hidden" value=' + index + ' /></td>' +
+        itemsCount = itemsCount;
+        var html = ' <tr data-id=' + index + '>' + '<td style="display:none"><input name="Vendor.VendorItems.Index" type="hidden" value=' + index + ' /></td>' +
+            '<td style="display:none">' +
+            '<input name="Vendor.VendorItems[' + index + '].IsItemDescription" id="Vender_VendorItems_' + index + '__IsItemDescription" type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].IsItemSKU" id=Vender_VendorItems_' + index + '__IsItemSKU type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].ItemVariationId" id="Vender_VendorItems_' + index + '__ItemVariationId" type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].PlaceInDepartment" id=Vender_VendorItems_' + index + '__PlaceInDepartment" type="hidden" />' +
+            '</td>' +
             '<td >' +
             '<div class="control-group row-fluid">' +
             '<div class="span1">' +
@@ -631,7 +749,7 @@
             '</div>' +
             '</td>' +
             '<td >' +
-            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + index + '].ItemDetails">' +
+            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + index + '].ItemDetails" id="Vender_VendorItems_' + index + '__ItemDetails">' +
             '</textarea>' +
             '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
             '</td>' +
@@ -689,6 +807,16 @@
 
     function jsTreeClick(event) {
         return true;
+    }
+
+    function showCkEditors() {
+        $("#CKEditorDescp").show();
+        CKEDITOR.replace('DetailsEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DetailsAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
     }
 
 </script>

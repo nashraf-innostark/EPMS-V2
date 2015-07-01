@@ -64,6 +64,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View(vendorViewModel);
         }
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(VendorViewModel vendorViewModel)
         {
             VendorRequest vendorToSave = vendorViewModel.Vendor.CreateFromClientToServer();

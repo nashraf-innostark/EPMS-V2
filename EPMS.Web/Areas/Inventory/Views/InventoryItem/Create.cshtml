@@ -459,7 +459,7 @@
             $("#edit").show();
         }
 
-        //Warehouse Tree
+        //Departments Tree
         var treeInitialData;
         debugger;
         if (dir == "ltr") {
@@ -520,6 +520,7 @@
 
     });
 
+    //Edit CLick Function
     $("#edit").click(function(event) {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         $("#savebtn").show();
@@ -531,43 +532,26 @@
         event.preventDefault();
     });
 
+    //Show CK Editors to Fields
     function showCkEditors() {
         $("#CKEditorDescp").show();
-        editor = CKEDITOR.replace('ItemDescriptionEn', {
+        CKEDITOR.replace('ItemDescriptionEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('ItemDescriptionAr', {
+        CKEDITOR.replace('ItemDescriptionAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('HazardousEn', {
+        CKEDITOR.replace('HazardousEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('HazardousAr', {
+        CKEDITOR.replace('HazardousAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('UsageEn', {
+        CKEDITOR.replace('UsageEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('UsageAr', {
+        CKEDITOR.replace('UsageAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
     }
 

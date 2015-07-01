@@ -309,7 +309,7 @@
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableVariationsSize">
+                <table class="table table-striped table-responsive tableSize" id="tableSortableVariationsSize">
                     <thead>
                         <tr>
                             <th>Size</th>
@@ -350,7 +350,7 @@
         <!--Sortable Responsive Table begin-->
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableVariationsWherehouse">
+                <table class="table table-striped table-responsive tableWarehouse" id="tableSortableVariationsWherehouse">
                     <thead>
                         <tr>
                             <td style='display:none'></td>
@@ -405,7 +405,7 @@
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableVariationsManufacturer">
+                <table class="table table-striped table-responsive tableManufacturer" id="tableSortableVariationsManufacturer">
                     <thead>
                         <tr>
                             <td style='display:none'></td>
@@ -464,7 +464,7 @@
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableItemStatus">
+                <table class="table table-striped table-responsive tableStatus" id="tableSortableItemStatus">
                     <thead>
                         <tr>
                             <th> Status</th>
@@ -503,7 +503,7 @@
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableItemColor">
+                <table class="table table-striped table-responsive tableColor" id="tableSortableItemColor">
                     <thead>
                         <tr>
                             <th> Color</th>
@@ -541,7 +541,7 @@
 
         <div class="row-fluid">
             <div class="span12">
-                <table class="table table-striped table-responsive" id="tableSortableVariationsImg">
+                <table class="table table-striped table-responsive tableImage" id="tableSortableVariationsImg">
                     <thead>
                         <tr>
                             <th style='display:none'></th>
@@ -1474,6 +1474,15 @@
             $('.sizeTable').append(html);
             ManageSizeList(sizeId);
             $('#sizeModule').modal('hide');
+            $('.tableSize').dataTable().fnDestroy();
+            $('.tableSize').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
             clearPopup();
         });
 
@@ -1521,6 +1530,15 @@
             $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').val(manufacturerNameEn);
             event.preventDefault();
             $('#manufacturModule').modal('hide');
+            $('.tableManufacturer').dataTable().fnDestroy();
+            $('.tableManufacturer').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
             clearPopup();
         });
 
@@ -1551,6 +1569,15 @@
             $('.statusTable').append(html);
             ManageStatusList(statusId);
             $('#itemStatusModule').modal('hide');
+            $('.tableStatus').dataTable().fnDestroy();
+            $('.tableStatus').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
             clearPopup();
         });
 
@@ -1583,10 +1610,17 @@
             $('.colorTable').append(html);
             ManageColorList(colorId);
             $('#itemColorModule').modal('hide');
+            $('.tableColor').dataTable().fnDestroy();
+            $('.tableColor').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
             clearPopup();
         });
-
-        
 
         $(".warehouseTree").click(function (event) {
             $('#warehouseTreeSelector').modal('show');
@@ -1704,6 +1738,15 @@
             $('#ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse').text(locationInWarehouse);
             event.preventDefault();
             $('#wherehouseModule').modal('hide');
+            $('.tableWarehouse').dataTable().fnDestroy();
+            $('.tableWarehouse').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
             clearPopup();
         });
 
