@@ -124,7 +124,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Vendor.DetailsEn, new { id = "DetailsEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextAreaFor(m => m.Vendor.DetailsEn, new { id = "DetailsEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Vendor.DetailsEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -136,7 +136,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Vendor.DetailsAr, new { id = "DetailsAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextAreaFor(m => m.Vendor.DetailsAr, new { id = "DetailsAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Vendor.DetailsAr, "", new { @class = "required" })
                 </div>
             </div>

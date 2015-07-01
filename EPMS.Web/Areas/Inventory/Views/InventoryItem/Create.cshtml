@@ -90,7 +90,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired"})
                         @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -114,7 +114,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new { @dir = "ltr", id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new { @dir = "ltr", id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -126,7 +126,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new { @dir = "ltr", id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new { @dir = "ltr", id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -211,7 +211,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.HazardousEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -223,7 +223,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.HazardousAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -235,7 +235,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.UsageEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -247,7 +247,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                        @Html.TextAreaFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.UsageAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -412,8 +412,7 @@
 }
 
 
-<script src="~/RTB/ckfinder.js"></script>
-<script src="~/RTE/ckeditor.js"></script>
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     var editor;
     var textTillParent;

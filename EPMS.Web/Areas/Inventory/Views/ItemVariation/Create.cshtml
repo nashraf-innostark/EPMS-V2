@@ -1163,6 +1163,7 @@
             imageRowNo = $("#imageDetails").children("tr").length;
             if ($("#imageDetails").children("tr").children("td").html() == "No data available in table") {
                 imageRowNo = imageRowNo - 1;
+                $("#imageDetails").children("tr").children("td").html().hide();
             }
         });
 
@@ -1483,6 +1484,9 @@
                     });
                 }
             });
+            if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
+                $(".sizeTable").children("tr").children("td").hide();
+            }
             clearPopup();
         });
 
@@ -1499,6 +1503,7 @@
             var index = $("#manufacturerDetails").children("tr").length;
             if ($("#manufacturerDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
+                $("#manufacturerDetails").children("tr").children("td").hide();
             }
             itemsCount = itemsCount + 1;
             var price = $('#manufacturerPriceLable').val();
@@ -1578,6 +1583,9 @@
                     });
                 }
             });
+            if ($(".statusTable").children("tr").children("td").html() == "No data available in table") {
+                $(".statusTable").children("tr").children("td").hide();
+            }
             clearPopup();
         });
 
@@ -1619,6 +1627,9 @@
                     });
                 }
             });
+            if ($(".colorTable").children("tr").children("td").html() == "No data available in table") {
+                $(".colorTable").children("tr").children("td").hide();
+            }
             clearPopup();
         });
 
@@ -1698,6 +1709,7 @@
             var index = $("#warehouseDetails").children("tr").length;
             if ($("#warehouseDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
+                $("#warehouseDetails").children("tr").children("td").hide();
             }
             itemsCount = itemsCount + 1;
             var locationInWarehouse = $('#textTillParent').text();
