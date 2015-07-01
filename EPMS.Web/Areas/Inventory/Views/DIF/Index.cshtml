@@ -1,4 +1,5 @@
-﻿@model  EPMS.Web.ViewModels.DIF.DifListViewModel
+﻿@using EPMS.Models.Common
+@model  EPMS.Web.ViewModels.DIF.DifListViewModel
 @{
     ViewBag.Title = EPMS.Web.Resources.Inventory.DIF.DIF.ListPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,7 +25,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.Inventory.DIF.DIF.ListPageHeading</small></h2>
-@if (ViewBag.UserRole == "employee")
+@if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
 {
     <h3><small><a href="~/Inventory/DIF/Create">@EPMS.Web.Resources.Inventory.DIF.DIF.CreateRFILink</a></small></h3>
 }
@@ -75,7 +76,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var siteUrl = $('#siteURL').val();
-        if ('@ViewBag.UserRole' == "inventorymanager") {
+        if ('@((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))' == '@(UserRole.InventoryManager)') {
             var oTable = $('#dataTable').dataTable({
                 "bProcessing": true,
                 "bServerSide": true,

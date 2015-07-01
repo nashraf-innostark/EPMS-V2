@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
@@ -51,14 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             searchRequest.SearchString = Request["search"];
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
-            {
-                searchRequest.Requester = "Admin";
-            }
-            else
-            {
-                searchRequest.Requester = Session["UserID"].ToString();
-            }
+            searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
             IEnumerable<TIR> transferItemList =

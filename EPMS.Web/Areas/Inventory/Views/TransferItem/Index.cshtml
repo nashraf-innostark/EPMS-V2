@@ -1,4 +1,5 @@
-﻿@model EPMS.Web.ViewModels.TIR.TransferItemListViewModel
+﻿@using EPMS.Models.Common
+@model EPMS.Web.ViewModels.TIR.TransferItemListViewModel
 
 @{
     ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRIndex.PageTitle;
@@ -40,7 +41,7 @@
             <div class="span12">
                 <table class="table table-striped table-responsive" id="tableTransferItemRequest">
                     <thead class="cf sorthead">
-                        @if (ViewBag.UserRole == "inventorymanager")
+                        @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager)
                         {
                             <tr>
                                 <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Serial</th>
@@ -73,7 +74,7 @@
     var dir = '@direction';
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        if ('@ViewBag.UserRole' == "inventorymanager") {
+        if ('@((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))' == '@(UserRole.InventoryManager)') {
             oTable = $('#tableTransferItemRequest').dataTable({
                 "sPaginationType": "bootstrap",
                 "bProcessing": true,

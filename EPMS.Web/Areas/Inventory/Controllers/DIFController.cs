@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -48,14 +49,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             DifListViewModel viewModel = new DifListViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
-            {
-                searchRequest.Requester = "Admin";
-            }
-            else
-            {
-                searchRequest.Requester = Session["UserID"].ToString();
-            }
+            searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rifService.LoadAllDifs(searchRequest);
             var data = requestResponse.Difs.Select(x => x.CreateDifServerToClient());
             var responseData = data as IList<Models.DIF> ?? data.ToList();

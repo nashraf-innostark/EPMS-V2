@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.ModelMappers;
@@ -51,14 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             RifListViewModel viewModel = new RifListViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
-            {
-                searchRequest.Requester = "Admin";
-            }
-            else
-            {
-                searchRequest.Requester = Session["UserID"].ToString();
-            }
+            searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rifService.LoadAllRifs(searchRequest);
             var data = requestResponse.Rifs.Select(x => x.CreateRifServerToClient());
             var responseData = data as IList<Models.RIF> ?? data.ToList();

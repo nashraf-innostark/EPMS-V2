@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
@@ -65,15 +66,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
-            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
-            {
-                searchRequest.Requester = "Admin";
-            }
-            else
-            {
-                searchRequest.Requester = Session["UserID"].ToString();
-            }
+                ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+
+            searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
             IEnumerable<ItemRelease> itemReleaseList =
                 response.ItemReleases.Any() ?

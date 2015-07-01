@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.ModelMappers;
@@ -52,14 +53,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             RfiListViewModel viewModel = new RfiListViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
-            {
-                searchRequest.Requester = "Admin";
-            }
-            else
-            {
-                searchRequest.Requester = Session["UserID"].ToString();
-            }
+            searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rfiService.LoadAllRfis(searchRequest);
             var data = requestResponse.Rfis.Select(x => x.CreateRfiServerToClient());
             var responseData = data as IList<RFI> ?? data.ToList();
