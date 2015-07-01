@@ -1608,11 +1608,11 @@
         $('.addColorToList').on("click", function (event) {
             debugger;
             var colorId = $('#colorId').val();
-            var colorList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
-            var parsed = JSON.parse(colorList);
+            @*var colorList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
+            var parsed = JSON.parse(colorList);*@
             var colorNameEn;
             var colorNameAr;
-            $.each(parsed, function (key, value) {
+            $.each(parsedColor, function (key, value) {
                 if (value.ColorId == colorId) {
                     colorNameEn = value.ColorNameEn;
                     colorNameAr = value.ColorName;
