@@ -39,7 +39,7 @@
             <div class="span12">
                 <table class="table table-striped table-responsive" id="ItemReleaseTable">
                     <thead class="cf sorthead">
-                        @if (ViewBag.IsAllowedCompleteLV)
+                        @if (ViewBag.UserRole == "inventorymanager")
                         {
                             <tr>
                                 <th>@EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Serial</th>
@@ -73,7 +73,7 @@
     var dir = '@direction';
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        if ('@ViewBag.IsAllowedCompleteLV' == 'True') {
+        if ('@ViewBag.UserRole' == "inventorymanager") {
             oTable = $('#ItemReleaseTable').dataTable({
                 "sPaginationType": "bootstrap",
                 "bProcessing": true,
@@ -113,7 +113,7 @@
                                 return full["RequesterNameE"];
                             } else {
                                 return full["RequesterNameA"];
-                            }                            
+                            }
                         }
                     },
                     {
