@@ -47,8 +47,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "ItemReleaseIndex")]
         public ActionResult Index()
         {
-            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFViewComplete");
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel
             {
@@ -64,8 +62,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index(ItemReleaseSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFViewComplete");
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
             {

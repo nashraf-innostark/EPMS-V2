@@ -33,8 +33,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "POIndex")]
         public ActionResult Index()
         {
-            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower(); 
             PurchaseOrderListViewModel viewModel = new PurchaseOrderListViewModel
             {
                 SearchRequest = new PurchaseOrderSearchRequest()
@@ -49,8 +48,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index(PurchaseOrderSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
+            {
+                searchRequest.Requester = "Admin";
+            }
+            else
+            {
+                searchRequest.Requester = Session["UserID"].ToString();
+            } 
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             PurchaseOrderListResponse response = orderService.GetAllPoS(searchRequest);
             IEnumerable<PurchaseOrder> ordersList = response.Orders.Any() ?

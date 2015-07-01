@@ -72,7 +72,7 @@ namespace EPMS.Repository.Repositories
             int status;
             if (int.TryParse(searchRequest.SearchString, out status))
             {
-                if (searchRequest.CompleteAccess)
+                if (searchRequest.Requester == "Admin")
                 {
                     queery =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.FormNumber.Contains(searchRequest.SearchString) ||
@@ -82,14 +82,14 @@ namespace EPMS.Repository.Repositories
                 else
                 {
                     queery =
-                s => (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Contains(searchRequest.SearchString) ||
-                    (s.DeliveryInfo.Contains(searchRequest.SearchString) || s.DeliveryInfoArabic.Contains(searchRequest.SearchString)) || s.Status == status)
+                s => ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Contains(searchRequest.SearchString) ||
+                    (s.DeliveryInfo.Contains(searchRequest.SearchString) || s.DeliveryInfoArabic.Contains(searchRequest.SearchString)) || s.Status == status))
                     && s.RecCreatedBy.Equals(searchRequest.Requester));
                 }
             }
             else
             {
-                if (searchRequest.CompleteAccess)
+                if (searchRequest.Requester == "Admin")
                 {
                     queery =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.FormNumber.Contains(searchRequest.SearchString) ||
@@ -99,8 +99,8 @@ namespace EPMS.Repository.Repositories
                 else
                 {
                     queery =
-                s => (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Contains(searchRequest.SearchString) ||
-                    (s.DeliveryInfo.Contains(searchRequest.SearchString) || s.DeliveryInfoArabic.Contains(searchRequest.SearchString)))
+                s => ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Contains(searchRequest.SearchString) ||
+                    (s.DeliveryInfo.Contains(searchRequest.SearchString) || s.DeliveryInfoArabic.Contains(searchRequest.SearchString))))
                     && s.RecCreatedBy.Equals(searchRequest.Requester));
                 }
             }

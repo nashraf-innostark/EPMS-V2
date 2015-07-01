@@ -76,7 +76,7 @@ namespace EPMS.Repository.Repositories
             int status;
             if (int.TryParse(searchRequest.SearchString, out status))
             {
-                if (searchRequest.IsManager)
+                if (searchRequest.Requester == "Admin")
                 {
                     if (searchRequest.iSortCol_0 == 3)
                     {
@@ -104,26 +104,26 @@ namespace EPMS.Repository.Repositories
                     {
                         var date = Convert.ToDateTime(searchRequest.SearchString);
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
+                            ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
-                    s.RecCreatedDate.Equals(date) || s.Status == status));
+                    s.RecCreatedDate.Equals(date) || s.Status == status)) && s.RecCreatedBy.Equals(searchRequest.Requester));
                     }
                     else
                     {
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
+                            ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
-                    s.Status == status));
+                    s.Status == status)) && s.RecCreatedBy.Equals(searchRequest.Requester));
                     }
                 }
             }
             else
             {
-                if (searchRequest.IsManager)
+                if (searchRequest.Requester == "Admin")
                 {
                     if (searchRequest.iSortCol_0 == 3 && searchRequest.SearchString != "")
                     {
@@ -150,19 +150,20 @@ namespace EPMS.Repository.Repositories
                     {
                         var date = Convert.ToDateTime(searchRequest.SearchString);
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
+                            ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString) ||
-                    s.RecCreatedDate.Equals(date)));
+                    s.RecCreatedDate.Equals(date))) && s.RecCreatedBy.Equals(searchRequest.Requester));
                     }
                     else
                     {
                         query = s =>
-                            (string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
+                            ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Equals(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString) ||
                     s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString) ||
-                    s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)));
+                    s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString) || s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)))
+                     && s.RecCreatedBy.Equals(searchRequest.Requester));
                     }
                 }
             }

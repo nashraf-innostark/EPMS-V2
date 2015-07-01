@@ -6,6 +6,7 @@ namespace EPMS.Models.RequestModels
     {
         public bool IsManager { get; set; }
         public string Direction { get; set; }
+        public string Requester { get; set; }
         public PurchaseOrderByColumn PurchaseOrderByColumn
         {
             get

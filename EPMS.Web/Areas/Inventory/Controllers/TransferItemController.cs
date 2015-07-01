@@ -34,8 +34,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "TIRListView")]
         public ActionResult Index()
         {
-            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("TIRDetailUpdate");
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             TransferItemListViewModel viewModel = new TransferItemListViewModel
             {
                 SearchRequest = new TransferItemSearchRequest()
@@ -51,8 +50,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index(TransferItemSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            searchRequest.CompleteAccess = userPermissionsSet.Contains("TIRDetailUpdate");
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
+            {
+                searchRequest.Requester = "Admin";
+            }
+            else
+            {
+                searchRequest.Requester = Session["UserID"].ToString();
+            }
             searchRequest.Direction = Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
             IEnumerable<TIR> transferItemList =
