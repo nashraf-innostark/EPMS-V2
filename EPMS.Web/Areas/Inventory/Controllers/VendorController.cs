@@ -7,11 +7,12 @@ using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Vendor;
 using EPMS.Models.RequestModels;
+using EPMS.WebBase.Mvc;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "InvSys", IsModule = true)]
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class VendorController : BaseController
     {
 
@@ -40,6 +41,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Public
 
         #region Index
+        [SiteAuthorize(PermissionKey = "VendorIndex")]
         public ActionResult Index()
         {
             return View(new VendorViewModel
@@ -50,7 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Create
-
+        [SiteAuthorize(PermissionKey = "VendorCreate")]
         public ActionResult Create(long? id)
         {
             VendorViewModel vendorViewModel = new VendorViewModel();
