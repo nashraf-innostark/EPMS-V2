@@ -118,7 +118,7 @@
             </div>
         </div>
 
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid NotesCK">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Notes</label>
             </div>
@@ -129,8 +129,19 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid ckDetails">
+            <div class="span3">
+                <label class="control-label" for="LocationText">@EPMS.Web.Resources.Inventory.Vendor.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input type="text" id="NotesEn" class="tbdisable" />
+                </div>
+            </div>
+        </div>
 
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid NotesCK">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.NotesAr</label>
             </div>
@@ -138,6 +149,17 @@
                 <div class="controls">
                     @Html.TextAreaFor(m => m.Vendor.DetailsAr, new { id = "DetailsAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.Vendor.DetailsAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid ckDetails">
+            <div class="span3">
+                <label class="control-label" for="LocationText">@EPMS.Web.Resources.Inventory.Vendor.NotesAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input type="text" id="NotesAr" class="tbdisable" />
                 </div>
             </div>
         </div>
@@ -456,6 +478,8 @@
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
+            $(".NotesCK").show();
+            $(".ckDetails").hide();
             itemsCount = 0;
             showCkEditors();
         } else {
@@ -467,6 +491,8 @@
             $(".itemAdder").hide();
             $(".trAdder").hide();
             $("#itemAddition").hide();
+            $(".NotesCK").hide();
+            $(".ckDetails").show();
             itemsCount = parseInt('@Model.Vendor.VendorItems.Count');
         }
         $("#JobTitleForm").validate({
@@ -596,6 +622,17 @@
             }
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
         });
+
+        var notesEn = $("#DetailsEn").val();
+        var regexEn = /(<([^>]+)>)/ig;
+        var resultEn = notesEn.replace(regexEn, "");
+        $("#NotesEn").val(resultEn);
+
+        var notesAr = $("#DetailsAr").val();
+        var regexAr = /(<([^>]+)>)/ig;
+        var resultAr = notesAr.replace(regexAr, "");
+        $("#NotesAr").val(resultAr);
+
     });
 
 
@@ -652,6 +689,8 @@
         $("#itemAddition").show();
         $("#poTable").hide();
         $("#vendorItemTable").hide();
+        $(".NotesCK").show();
+        $(".ckDetails").hide();
         showCkEditors();
         event.preventDefault();
     });
