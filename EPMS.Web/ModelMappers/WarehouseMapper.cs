@@ -35,6 +35,19 @@ namespace EPMS.Web.ModelMappers
                 WarehouseDetails = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Select(x => x.CreateFromServerToClient()).ToList() : new List<Models.WarehouseDetail>()
             };
         }
+        public static Models.Warehouse CreateFromItemVariationDropDown(this Warehouse source)
+        {
+            return new Models.Warehouse
+            {
+                WarehouseId = source.WarehouseId,
+                WarehouseNumber = source.WarehouseNumber,
+                ManagerName = source.ManagerName,
+                WarehouseManager = source.WarehouseManager,
+                WarehouseSize = source.WarehouseSize,
+                IsFull = source.IsFull,
+                ParentId = source.ParentId,
+            };
+        }
         public static Warehouse CreateFromClientToServer(this Models.Warehouse source)
         {
             var location = source.WarehouseLocation;

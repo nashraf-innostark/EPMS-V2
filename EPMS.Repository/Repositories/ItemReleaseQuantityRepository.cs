@@ -36,5 +36,12 @@ namespace EPMS.Repository.Repositories
                    .Sum(x => x.Quantity);
             return Convert.ToInt64(itemAvailableQty);
         }
+
+        public long GetItemReleasedQuantity(long itemVariationId, long warehousrId, long irfDetailId)
+        {
+            var itemAvailableQty = 
+                DbSet.Where(x => x.ItemVariationId == itemVariationId && x.WarehouseId == warehousrId && x.IRFDetailId != irfDetailId).Sum(x => x.Quantity);
+            return Convert.ToInt64(itemAvailableQty);
+        }
     }
 }

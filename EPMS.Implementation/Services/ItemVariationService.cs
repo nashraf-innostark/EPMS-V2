@@ -231,6 +231,7 @@ namespace EPMS.Implementation.Services
                     ItemWarehouse warehouse = new ItemWarehouse
                     {
                         ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                        WarehouseId = itemWarehouse.WarehouseId,
                         Quantity = itemWarehouse.Quantity,
                         PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
                     };
@@ -259,7 +260,7 @@ namespace EPMS.Implementation.Services
                         continue;
                     ItemWarehouse itemToAdd = new ItemWarehouse
                     {
-                        ItemVariationId = itemWarehouse.ItemVariationId,
+                        ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
                         WarehouseId = itemWarehouse.WarehouseId,
                         Quantity = itemWarehouse.Quantity,
                         PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
@@ -387,7 +388,7 @@ namespace EPMS.Implementation.Services
             List<Status> dbList = itemVariationFromDatabase.Status.ToList();
 
             //Add New Items from Clientlist to Database
-            if (variationToSave.SizeArrayList != null)
+            if (variationToSave.StatusArrayList != null)
             {
                 string[] clientList = variationToSave.StatusArrayList.Split(',');
                 var result = dbList.Where(p => clientList.All(p2 => Convert.ToInt64(p2) != p.StatusId));
@@ -446,7 +447,7 @@ namespace EPMS.Implementation.Services
             List<Color> dbList = itemVariationFromDatabase.Colors.ToList();
 
             //Add New Items from Clientlist to Database
-            if (variationToSave.SizeArrayList != null)
+            if (variationToSave.ColorArrayList != null)
             {
                 string[] clientList = variationToSave.ColorArrayList.Split(',');
                 var result = dbList.Where(p => clientList.All(p2 => Convert.ToInt64(p2) != p.ColorId));

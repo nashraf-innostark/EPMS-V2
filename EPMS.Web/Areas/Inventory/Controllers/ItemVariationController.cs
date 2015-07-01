@@ -7,9 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using EPMS.Interfaces.IServices;
-using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -81,7 +79,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             variationViewModel.SizesForDdl = response.SizesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.ManufacturersForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.StatusesForDdl = response.StatusesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.WarehousesForDdl = response.WarehousesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.WarehousesForDdl = response.WarehousesForDdl.Select(x => x.CreateFromItemVariationDropDown()).ToList();
 
             return View(variationViewModel);
         }

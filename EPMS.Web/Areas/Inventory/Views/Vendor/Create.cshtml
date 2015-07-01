@@ -637,7 +637,6 @@
 
 
     function getModalControlsValues() {
-        debugger;
         //get item's values
         var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
         var isItemSku = $('#ItemSKUModalChk').is(':checked');
@@ -816,7 +815,6 @@
     }
 
     $('.deleteRow').on("click", function () {
-        debugger;
         var count = $('.qouteAdd tr').length;
         if (count > 1) {
             $(this).parent().parent().remove();
@@ -826,7 +824,6 @@
     });
 
     function activateSerial() {
-        debugger;
         var count = $('.qouteAdd tr').length;
         var add = 0;
         $('.qouteAdd tr').each(function () {

@@ -49,6 +49,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             ViewBag.IsAllowedCompleteLV = userPermissionsSet.Contains("IRFViewComplete");
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel
             {
                 SearchRequest = new ItemReleaseSearchRequest()
@@ -65,6 +66,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             searchRequest.CompleteAccess = userPermissionsSet.Contains("IRFViewComplete");
+            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
+            {
+                searchRequest.Requester = "Admin";
+            }
+            else
+            {
+                searchRequest.Requester = Session["UserID"].ToString();
+            }
             ItemReleaseResponse response = itemReleaseService.GetAllItemRelease(searchRequest);
             IEnumerable<ItemRelease> itemReleaseList =
                 response.ItemReleases.Any() ?
@@ -102,6 +112,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            ViewBag.From = from;
             return View(viewModel);
         }
 
@@ -139,10 +150,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 if (response.ItemRelease != null)
                 {
                     viewModel.ItemRelease = response.ItemRelease.CreateFromServerToClient();
-                    viewModel.ItemReleaseDetails = response.ItemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient()).ToList();
+                    viewModel.ItemReleaseDetails =
+                        response.ItemRelease.ItemReleaseDetails.Select(x => x.CreateFromServerToClient()).ToList();
                 }
-                viewModel.ItemRelease = new ItemRelease();
-                viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
+                else
+                {
+                    viewModel.ItemRelease = new ItemRelease();
+                    viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
+                }
                 viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList() : new List<RFI>();
             }
             else

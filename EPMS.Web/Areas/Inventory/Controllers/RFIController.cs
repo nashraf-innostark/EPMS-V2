@@ -52,7 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             RfiListViewModel viewModel = new RfiListViewModel();
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "Manager")
+            if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
             {
                 searchRequest.Requester = "Admin";
             }

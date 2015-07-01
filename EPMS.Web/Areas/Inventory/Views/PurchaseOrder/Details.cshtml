@@ -312,5 +312,10 @@
             });
             $("#CKNotes").show();
         }
+        if ('@ViewBag.From' == 'History') {
+            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.disableDdl').select2('disable');
+            $("#SubmitTir").hide();
+        }
     });
 </script>

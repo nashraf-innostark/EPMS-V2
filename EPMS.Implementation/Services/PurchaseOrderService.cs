@@ -175,8 +175,14 @@ namespace EPMS.Implementation.Services
             if (purchaseOrder.PurchaseOrderId > 0)
             {
                 //update
-                if (UpdatePO(purchaseOrder))//if RFI updated, then update the items
+                if (UpdatePO(purchaseOrder)) //if RFI updated, then update the items
+                {
                     PoItemUpdation(purchaseOrder);
+                    if (purchaseOrder.Status == 1)
+                    {
+                        SendNotification(purchaseOrder);
+                    }
+                }
             }
             else
             {

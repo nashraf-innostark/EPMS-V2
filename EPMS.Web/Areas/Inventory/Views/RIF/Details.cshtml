@@ -245,9 +245,13 @@
         }
         EnableDisableFields();
         CheckPermissions();
+        if ('@ViewBag.From' == 'History') {
+            $("#editDiv").hide();
+            $('.toBeDisabled:input').attr('disabled', true);
+        }
     });
     function EnableDisableFields() {
-        if ('@Model.Rif.Status' != '2' || '@ViewBag.From' != 'History') {
+        if ('@Model.Rif.Status' != '2') {
             $('.toBeDisabled:input').attr('disabled', false);
         } else {
             $('.toBeDisabled:input').attr('disabled', true);
