@@ -140,22 +140,30 @@ namespace EPMS.Implementation.Services
                 //Add New Items
                 foreach (VendorItem vendorItem in clientItemsList)
                 {
-                    if (dbItemsList.Any(a => a.ItemId == vendorItem.ItemId))
-                        continue;
-                    VendorItem item = new VendorItem
+                    if (vendorItem.ItemId > 0)
                     {
-                        ItemVariationId = vendorItem.ItemVariationId,
-                        IsItemDescription = vendorItem.IsItemDescription,
-                        IsItemSKU = vendorItem.IsItemSKU,
-                        PlaceInDepartment = vendorItem.PlaceInDepartment,
-                        ItemDetails = vendorItem.ItemDetails,
-                        VendorId = itemsToSave.Vendor.VendorId,
-                        RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
-                        RecCreatedDate = DateTime.Now,
-                        RecUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
-                        RecUpdatedDate = DateTime.Now
-                    };
-                    vendorItemsRepository.Add(item);
+                        vendorItem.VendorId = itemsToSave.Vendor.VendorId;
+                        vendorItem.RecUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+                        vendorItem.RecUpdatedDate = DateTime.Now;
+                        vendorItemsRepository.Update(vendorItem);
+                    }
+                    else
+                    {
+                        VendorItem item = new VendorItem
+                        {
+                            ItemVariationId = vendorItem.ItemVariationId,
+                            IsItemDescription = vendorItem.IsItemDescription,
+                            IsItemSKU = vendorItem.IsItemSKU,
+                            PlaceInDepartment = vendorItem.PlaceInDepartment,
+                            ItemDetails = vendorItem.ItemDetails,
+                            VendorId = itemsToSave.Vendor.VendorId,
+                            RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                            RecCreatedDate = DateTime.Now,
+                            RecUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                            RecUpdatedDate = DateTime.Now
+                        };
+                        vendorItemsRepository.Add(item);
+                    }
                 }
 
                 //Delete Items

@@ -41,11 +41,11 @@ namespace EPMS.WebBase.Mvc
             }*/
 
             // check Domain
-            var dir = AppDomain.CurrentDomain.BaseDirectory;
-            if (dir != Domain)
-            {
-                return false;
-            }
+            //var dir = AppDomain.CurrentDomain.BaseDirectory;
+            //if (dir != Domain)
+            //{
+            //    return false;
+            //}
 
             //// check license expiry date
             DateTime currDate = DateTime.Now;
