@@ -2,7 +2,7 @@
 @model EPMS.Web.ViewModels.TIR.TirHistoryViewModel
 
 @{
-    ViewBag.Title = "History";
+    ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRDetail.HistoryPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];

@@ -605,12 +605,13 @@
         $('#warhouseSelector').on('hide', function () {
             var warehouseCount = parseInt($("#WarehouseCount").val());
             var index = parseInt($("#WarehouseModalIndex").val());
-            var quantityReleased = 0;
+            
             for (var i = 0; i < warehouseCount; i++) {
                 var currQty = parseInt($("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__Quantity").val());
                 if (!isNaN(currQty)) {
-                    quantityReleased = quantityReleased + currQty;
-                } var hiddenFields =
+                    
+                }
+                var hiddenFields =
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + i + '" />' +
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].ItemReleaseQuantityId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__ItemReleaseQuantityId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__ItemReleaseQuantityId").val() + '" type="hidden" />' +
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].WarehouseId" id="ItemReleaseDetails_' + index + '_ItemReleaseQuantities_' + i + '__WarehouseId" value="' + $("#ItemReleaseDetails_" + index + "_ItemReleaseQuantities_" + i + "__WarehouseId").val() + '" type="hidden" />' +
@@ -622,25 +623,30 @@
                         '</div>';
                 $('.AddEditItemReleaseForm').append(mainFormValues);
             }
-            $("#ItemReleaseDetails_" + index + "__ItemQty").val(quantityReleased);
+            
         });
         $("#AddWarehouse").on("click", function () {
             var index = parseInt($("#WarehouseModalIndex").val());
             var addedWarehouses = $("#MultiWarehouse option:selected").length;
             var validationCount = 0;
             var i = 0;
+            var quantityReleased = 0;
             $("#MultiWarehouse option:selected").each(function() {
                 var warId = parseInt($(this).val());
                 var itemVariationId = $("#ItemReleaseDetails_" + index + "__ItemVariationId").val();
                 var availableQty;
                 $.each(parsedWarehouses, function (key, value) {
                     if (value.WarehouseId == warId && value.ItemVariationId == itemVariationId) {
-                        $.each(addedQuantities, function(key1, value1) {
-                            if (value1.WarehouseId == warId && value1.ItemVariationId == itemVariationId) {
-                                availableQty = value.Quantity + value1.Quantity;
-                                return;
-                            }
-                        });
+                        if (addedQuantities.length > 0) {
+                            $.each(addedQuantities, function(key1, value1) {
+                                if (value1.WarehouseId == warId && value1.ItemVariationId == itemVariationId) {
+                                    availableQty = value.Quantity + value1.Quantity;
+                                    return;
+                                }
+                            });
+                        } else {
+                            availableQty = value.Quantity;
+                        }
                         return;
                     }
                 });
@@ -650,11 +656,13 @@
                     return false;
                 } else {
                     $("#WarehouseQtyNullError").text("");
+                    quantityReleased = quantityReleased + enteredQty;
                 }
                 if (enteredQty <= availableQty) {
                     validationCount = validationCount + 1;
                     if (validationCount == addedWarehouses) {
                         $('#warhouseSelector').modal('toggle');
+                        $("#ItemReleaseDetails_" + index + "__ItemQty").val(quantityReleased);
                         return true;
                     }
                 } else {
@@ -663,6 +671,7 @@
                 }
                 i = i + 1;
             });
+            
             return;
         });
         //reactivateCount();
@@ -807,9 +816,16 @@
             $("#MultiWarehouse option:selected").each(function () {
                 var warId = parseInt($(this).val());
                 var war;
+                var quantity;
                 $.each(parsedWarehouses, function (key, value) {
                     if (value.WarehouseId == warId && value.ItemVariationId == itemVariationId) {
                         war = value;
+                        return;
+                    }
+                });
+                $.each(parsedQuantities, function (key, value) {
+                    if (value.WarehouseId == warId && value.ItemVariationId == itemVariationId) {
+                        quantity = value;
                         return;
                     }
                 });
@@ -833,6 +849,15 @@
                     '</div>' +
                 '</div>';
                 i = i + 1;
+                
+                if (quantity != undefined) {
+                    addedQuantitiesObj = {
+                        ItemVariationId: quantity.ItemVariationId,
+                        WarehouseId: quantity.Warehouse.WarehouseId,
+                        Quantity: quantity.Quantity
+                    };
+                    addedQuantities.push(addedQuantitiesObj);
+                }
                 var count = parseInt($("#WarehouseCount").val());
                 count = count + 1;
                 $("#WarehouseCount").val(count);

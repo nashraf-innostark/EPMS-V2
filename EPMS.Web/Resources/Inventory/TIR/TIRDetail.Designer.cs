@@ -124,6 +124,15 @@ namespace EPMS.Web.Resources.Inventory.TIR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View Transfer Item Request (TIR).
+        /// </summary>
+        public static string HistoryPageTitle {
+            get {
+                return ResourceManager.GetString("HistoryPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Code.
         /// </summary>
         public static string ItemCode {
