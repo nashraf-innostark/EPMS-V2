@@ -552,78 +552,91 @@ namespace EPMS.Implementation.Services
                 if (employee != null)
                 {
                     var employeeFullNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
-                                       employee.EmployeeLastNameE;
+                                            employee.EmployeeLastNameE;
                     var employeeFullNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
-                                           employee.EmployeeLastNameA;
-                    fileText = fileText.Replace("[EmployeeNameEng]", notificationResponse.TextForAdmin ? employeeFullNameE + "'s" : "Your");
-                fileText = fileText.Replace("[EmployeeNameAr]", notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
-                    fileText = fileText.Replace("[AlertDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
-                    fileText = fileText.Replace("[AlertDate]", DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")).ToShortDateString());
-            }
-            if (notificationResponse.NotificationCode == "30")//Employee Request
-            {
-                var request = requestRepository.Find(notificationResponse.ItemId);
-                if (request != null)
+                                            employee.EmployeeLastNameA;
+                    fileText = fileText.Replace("[EmployeeNameEng]",
+                        notificationResponse.TextForAdmin ? employeeFullNameE + "'s" : "Your");
+                    fileText = fileText.Replace("[EmployeeNameAr]",
+                        notificationResponse.TextForAdmin ? employeeFullNameA : "Your");
+                    fileText = fileText.Replace("[AlertDate]",
+                        DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en"))
+                            .ToShortDateString());
+                    fileText = fileText.Replace("[AlertDate]",
+                        DateTime.ParseExact(notificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en"))
+                            .ToShortDateString());
+                }
+                if (notificationResponse.NotificationCode == "30") //Employee Request
                 {
-                    fileText = fileText.Replace("[RequestStatusEng]", request.RequestDetails.FirstOrDefault(x => x.IsReplied).IsApproved ? "accepted" : "declined");
-                    fileText = fileText.Replace("[RequestStatusAr]", request.RequestDetails.FirstOrDefault(x => x.IsReplied).IsApproved ? "قبلت" : "ورفض");
+                    var request = requestRepository.Find(notificationResponse.ItemId);
+                    if (request != null)
+                    {
+                        fileText = fileText.Replace("[RequestStatusEng]",
+                            request.RequestDetails.FirstOrDefault(x => x.IsReplied).IsApproved ? "accepted" : "declined");
+                        fileText = fileText.Replace("[RequestStatusAr]",
+                            request.RequestDetails.FirstOrDefault(x => x.IsReplied).IsApproved ? "قبلت" : "ورفض");
 
-                    fileText = fileText.Replace("[RequestTopic]", request.RequestTopic);
+                        fileText = fileText.Replace("[RequestTopic]", request.RequestTopic);
+                    }
+
                 }
 
-            }
-
-            else if (notificationResponse.NotificationCode == "52" || notificationResponse.NotificationCode == "58" ||
-                notificationResponse.NotificationCode == "59")
-            {
-                //ProjectId=ItemId 
-                var project = projectRepository.Find(notificationResponse.ItemId);
-                if (project != null)
+                else if (notificationResponse.NotificationCode == "52" || notificationResponse.NotificationCode == "58" ||
+                         notificationResponse.NotificationCode == "59")
                 {
-                    fileText = fileText.Replace("[ProjectNameEng]", project.NameE);
-                    fileText = fileText.Replace("[ProjectNameAr]", project.NameA);
-                }
+                    //ProjectId=ItemId 
+                    var project = projectRepository.Find(notificationResponse.ItemId);
+                    if (project != null)
+                    {
+                        fileText = fileText.Replace("[ProjectNameEng]", project.NameE);
+                        fileText = fileText.Replace("[ProjectNameAr]", project.NameA);
+                    }
 
-            }
-            else if (notificationResponse.NotificationCode == "511" || notificationResponse.NotificationCode == "512" ||
-                notificationResponse.NotificationCode == "513" || notificationResponse.NotificationCode == "514")
-            {
-                //QuotationId=ItemId 
-            }
-            else if (notificationResponse.NotificationCode == "53" || notificationResponse.NotificationCode == "510")
-            {
-                //TaskId=ItemId 
-                var projectTask = projectTaskRepository.Find(notificationResponse.ItemId);
-                if (projectTask != null)
+                }
+                else if (notificationResponse.NotificationCode == "511" ||
+                         notificationResponse.NotificationCode == "512" ||
+                         notificationResponse.NotificationCode == "513" ||
+                         notificationResponse.NotificationCode == "514")
                 {
-                    fileText = fileText.Replace("[TaskNameEng]", projectTask.TaskNameE);
-                    fileText = fileText.Replace("[TaskNameAr]", projectTask.TaskNameA);
+                    //QuotationId=ItemId 
                 }
-            }
-            else if (notificationResponse.NotificationCode == "6")
-            {
-                //JobApplicant=ItemId,JobOfferedId=SubCategoryId 
-                var jobApplicant = jobApplicantRepository.Find(notificationResponse.ItemId);
-                if (jobApplicant != null)
+                else if (notificationResponse.NotificationCode == "53" ||
+                         notificationResponse.NotificationCode == "510")
                 {
-                    fileText = fileText.Replace("[ApplicantName]", jobApplicant.ApplicantFirstNameE + " " + jobApplicant.ApplicantMiddleNameE);
-
-                    var jobTitle = jobApplicant.JobOffered.JobTitle;
-
-                    fileText = fileText.Replace("[JobTitleEng]", jobTitle.JobTitleNameE);
-                    fileText = fileText.Replace("[JobTitleAr]", jobTitle.JobTitleNameA);
+                    //TaskId=ItemId 
+                    var projectTask = projectTaskRepository.Find(notificationResponse.ItemId);
+                    if (projectTask != null)
+                    {
+                        fileText = fileText.Replace("[TaskNameEng]", projectTask.TaskNameE);
+                        fileText = fileText.Replace("[TaskNameAr]", projectTask.TaskNameA);
+                    }
                 }
-            }
-            else if (notificationResponse.NotificationCode == "40")
-            {
-                //Meeting 
-                var meeting = meetingRepository.Find(notificationResponse.ItemId);
-                if (meeting != null)
+                else if (notificationResponse.NotificationCode == "6")
                 {
-                    fileText = fileText.Replace("[MeetingTopicEng]", meeting.TopicName);
-                    fileText = fileText.Replace("[MeetingTopicAr]", meeting.TopicNameAr);
-                }
+                    //JobApplicant=ItemId,JobOfferedId=SubCategoryId 
+                    var jobApplicant = jobApplicantRepository.Find(notificationResponse.ItemId);
+                    if (jobApplicant != null)
+                    {
+                        fileText = fileText.Replace("[ApplicantName]",
+                            jobApplicant.ApplicantFirstNameE + " " + jobApplicant.ApplicantMiddleNameE);
 
+                        var jobTitle = jobApplicant.JobOffered.JobTitle;
+
+                        fileText = fileText.Replace("[JobTitleEng]", jobTitle.JobTitleNameE);
+                        fileText = fileText.Replace("[JobTitleAr]", jobTitle.JobTitleNameA);
+                    }
+                }
+                else if (notificationResponse.NotificationCode == "40")
+                {
+                    //Meeting 
+                    var meeting = meetingRepository.Find(notificationResponse.ItemId);
+                    if (meeting != null)
+                    {
+                        fileText = fileText.Replace("[MeetingTopicEng]", meeting.TopicName);
+                        fileText = fileText.Replace("[MeetingTopicAr]", meeting.TopicNameAr);
+                    }
+
+                }
             }
             return fileText;
         }
