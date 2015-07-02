@@ -301,7 +301,7 @@
                                 {
                                     serial = serial + 1;
                                     <tr data-id="@i">
-                                        <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
+                                        <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='@i' /></td>
                                         @Html.HiddenFor(m => m.Vendor.VendorItems[i].IsItemDescription)
                                         @Html.HiddenFor(m => m.Vendor.VendorItems[i].IsItemSKU)
                                         @Html.HiddenFor(m => m.Vendor.VendorItems[i].ItemVariationId)
@@ -331,13 +331,13 @@
                             else
                             {
                                 <tr data-id="0">
+                                    <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
                                     <td style='display:none'>
                                         <input name='Vendor.VendorItems[0].IsItemDescription' id='Vendor_VendorItems_0__IsItemDescription' type='hidden' />
                                         <input name='Vendor.VendorItems[0].IsItemSKU' id='Vendor_VendorItems_0__IsItemSKU' type='hidden' />
                                         <input name='Vendor.VendorItems[0].ItemVariationId' id='Vendor_VendorItems_0__ItemVariationId' type='hidden' />
                                         <input name='Vendor.VendorItems[0].PlaceInDepartment' id='Vendor_VendorItems_0__PlaceInDepartment' type='hidden' />
                                     </td>
-                                    <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
                                     <td>
                                         <div class="control-group row-fluid">
                                             <div class="span1">
