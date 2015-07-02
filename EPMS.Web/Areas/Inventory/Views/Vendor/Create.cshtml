@@ -332,10 +332,10 @@
                             {
                                 <tr data-id="0">
                                     <td style='display:none'>
-                                        <input name='Vendor.VendorItems[0].IsItemDescription' id='Vender_VendorItems_0__IsItemDescription' type='hidden' />
-                                        <input name='Vendor.VendorItems[0].IsItemSKU' id='Vender_VendorItems_0__IsItemSKU' type='hidden' />
-                                        <input name='Vendor.VendorItems[0].ItemVariationId' id='Vender_VendorItems_0__ItemVariationId' type='hidden' />
-                                        <input name='Vendor.VendorItems[0].PlaceInDepartment' id='Vender_VendorItems_0__PlaceInDepartment' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].IsItemDescription' id='Vendor_VendorItems_0__IsItemDescription' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].IsItemSKU' id='Vendor_VendorItems_0__IsItemSKU' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].ItemVariationId' id='Vendor_VendorItems_0__ItemVariationId' type='hidden' />
+                                        <input name='Vendor.VendorItems[0].PlaceInDepartment' id='Vendor_VendorItems_0__PlaceInDepartment' type='hidden' />
                                     </td>
                                     <td style='display:none'><input name='Vendor.VendorItems.Index' type='hidden' value='0' /></td>
                                     <td>
@@ -347,7 +347,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <textarea rows="2" class="auto-resize" name="Vendor.VendorItems[0].ItemDetails" id="Vender_VendorItems_0__ItemDetails"></textarea>
+                                        <textarea rows="2" class="auto-resize" name="Vendor.VendorItems[0].ItemDetails" id="Vendor_VendorItems_0__ItemDetails"></textarea>
                                         <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
                                     </td>
                                     <td class="delete">
@@ -480,6 +480,8 @@
             $("#edit").hide();
             $(".NotesCK").show();
             $(".ckDetails").hide();
+            $("#poTable").hide();
+            $("#vendorItemTable").hide();
             itemsCount = 0;
             showCkEditors();
         } else {
@@ -493,7 +495,7 @@
             $("#itemAddition").hide();
             $(".NotesCK").hide();
             $(".ckDetails").show();
-            itemsCount = parseInt('@Model.Vendor.VendorItems.Count');
+            //itemsCount = parseInt('@Model.Vendor.VendorItems.Count');
         }
         $("#JobTitleForm").validate({
             errorElement: "span",
@@ -579,7 +581,7 @@
 
         $("#selectDepartment").on("click", function () {
             var index = parseInt($("#ItemModalIndex").val());
-            $("#Vender_VendorItems_" + index + "__PlaceInDepartment").val(textTillParent);
+            $("#Vendor_VendorItems_" + index + "__PlaceInDepartment").val(textTillParent);
             $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
             $('#itemTreeSelector').modal('toggle');
             return true;
@@ -637,6 +639,7 @@
 
 
     function getModalControlsValues() {
+        debugger;
         //get item's values
         var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
         var isItemSku = $('#ItemSKUModalChk').is(':checked');
@@ -644,9 +647,9 @@
 
         //set item's values
         var index = $("#ItemModalIndex").val();
-        $("#Vender_VendorItems_" + index + "__IsItemDescription").val(isItemDescription);
-        $("#Vender_VendorItems_" + index + "__IsItemSKU").val(isItemSku);
-        $("#Vender_VendorItems_" + index + "__ItemVariationId").val(itemVariationId);
+        $("#Vendor_VendorItems_" + index + "__IsItemDescription").val(isItemDescription);
+        $("#Vendor_VendorItems_" + index + "__IsItemSKU").val(isItemSku);
+        $("#Vendor_VendorItems_" + index + "__ItemVariationId").val(itemVariationId);
 
         //set item sku and description in details text area
         var vendorItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
@@ -654,7 +657,7 @@
 
         $.each(parsedRfiItems, function (key, value) {
             if (value.ItemVariationId == itemVariationId) {
-                $("#Vender_VendorItems_" + index + "__ItemDetails").val("");
+                $("#Vendor_VendorItems_" + index + "__ItemDetails").val("");
                 var textToAppend = "";
                 if ('@direction' == "ltr") {
                     textToAppend = textToAppend + "Name: " + value.ItemNameE;
@@ -671,7 +674,7 @@
                         textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
                     }
                 }
-                $("#Vender_VendorItems_" + index + "__ItemDetails").val(textToAppend);
+                $("#Vendor_VendorItems_" + index + "__ItemDetails").val(textToAppend);
             }
         });
         $('#itemSearcher').modal('toggle');
@@ -723,10 +726,10 @@
                 });
                 var html = '<tr data-id=' + itemsCount + '>' + '<td style="display:none"><input name="RfiItem.Index" type="hidden" value=' + itemsCount + ' /></td>' +
                     '<td style="display:none">' +
-                    '<input name="Vendor.VendorItems[' + itemsCount + '].IsItemDescription" id="Vender_VendorItems_' + index + '__IsItemDescription" type="hidden" />' +
-                    '<input name="Vendor.VendorItems[' + itemsCount + '].IsItemSKU" id=Vender_VendorItems_' + index + '__IsItemSKU type="hidden" />' +
-                    '<input name="Vendor.VendorItems[' + itemsCount + '].ItemVariationId" id="Vender_VendorItems_' + index + '__ItemVariationId" type="hidden" />' +
-                    '<input name="Vendor.VendorItems[' + itemsCount + '].PlaceInDepartment" id=Vender_VendorItems_' + index + '__PlaceInDepartment" type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].IsItemDescription" id="Vendor_VendorItems_' + index + '__IsItemDescription" type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].IsItemSKU" id=Vendor_VendorItems_' + index + '__IsItemSKU type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].ItemVariationId" id="Vendor_VendorItems_' + index + '__ItemVariationId" type="hidden" />' +
+                    '<input name="Vendor.VendorItems[' + itemsCount + '].PlaceInDepartment" id=Vendor_VendorItems_' + index + '__PlaceInDepartment" type="hidden" />' +
                     '</td>' +
                     '<td >' +
                     '<div class="control-group row-fluid">' +
@@ -737,7 +740,7 @@
                     '</div>' +
                     '</td>' +
                     '<td >' +
-                    '<textarea rows="2" class="auto-resize" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails" id="Vender_VendorItems_' + itemsCount + '__ItemDetails>' + t1 + '</textarea>' +
+                    '<textarea rows="2" class="auto-resize" name = "Vendor.VendorItems[' + itemsCount + '].ItemDetails" id="Vendor_VendorItems_' + itemsCount + '__ItemDetails> </textarea>' +
                     '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
                     '</td>' +
                     '<td class="delete">' +
@@ -773,10 +776,10 @@
         itemsCount = itemsCount;
         var html = ' <tr data-id=' + index + '>' + '<td style="display:none"><input name="Vendor.VendorItems.Index" type="hidden" value=' + index + ' /></td>' +
             '<td style="display:none">' +
-            '<input name="Vendor.VendorItems[' + index + '].IsItemDescription" id="Vender_VendorItems_' + index + '__IsItemDescription" type="hidden" />' +
-            '<input name="Vendor.VendorItems[' + index + '].IsItemSKU" id=Vender_VendorItems_' + index + '__IsItemSKU type="hidden" />' +
-            '<input name="Vendor.VendorItems[' + index + '].ItemVariationId" id="Vender_VendorItems_' + index + '__ItemVariationId" type="hidden" />' +
-            '<input name="Vendor.VendorItems[' + index + '].PlaceInDepartment" id=Vender_VendorItems_' + index + '__PlaceInDepartment" type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].IsItemDescription" id="Vendor_VendorItems_' + index + '__IsItemDescription" type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].IsItemSKU" id=Vendor_VendorItems_' + index + '__IsItemSKU type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].ItemVariationId" id="Vendor_VendorItems_' + index + '__ItemVariationId" type="hidden" />' +
+            '<input name="Vendor.VendorItems[' + index + '].PlaceInDepartment" id=Vendor_VendorItems_' + index + '__PlaceInDepartment" type="hidden" />' +
             '</td>' +
             '<td >' +
             '<div class="control-group row-fluid">' +
@@ -787,7 +790,7 @@
             '</div>' +
             '</td>' +
             '<td >' +
-            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + index + '].ItemDetails" id="Vender_VendorItems_' + index + '__ItemDetails">' +
+            '<textarea  rows="2" class="auto-resize vendorItem" name = "Vendor.VendorItems[' + index + '].ItemDetails" id="Vendor_VendorItems_' + index + '__ItemDetails">' +
             '</textarea>' +
             '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
             '</td>' +
