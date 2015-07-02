@@ -66,16 +66,19 @@ namespace EPMS.Web.ModelMappers
         /// <summary>
         /// To Convert Job Applicant Model in Applicant Model for Job Applicants List
         /// </summary>
-        public static Models.ApplicantModel CreateFromApplicant(this DomainModels.JobApplicant source)
+        public static ApplicantModel CreateFromApplicant(this DomainModels.JobApplicant source)
         {
-            return new Models.ApplicantModel()
+            return new ApplicantModel()
             {
-                ApplicantName = source.ApplicantFirstNameE + " " + source.ApplicantMiddleNameE,
+                ApplicantNameEn = source.ApplicantFirstNameE + " " + source.ApplicantMiddleNameE + " " + source.ApplicantFamilyNameE,
+                ApplicantNameAr = source.ApplicantFirstNameA + " " + source.ApplicantMiddleNameA + " " + source.ApplicantFamilyNameA,
                 JobApplicantId = source.ApplicantId,
                 ApplicantMobile = source.MobileNumber,
                 ApplicantEmail = source.Email,
-                JobOffered = source.JobOffered.JobTitle.JobTitleNameE,
-                DepartmentName = source.JobOffered.JobTitle.Department.DepartmentNameE
+                JobOfferedEn = source.JobOffered.JobTitle.JobTitleNameE,
+                JobOfferedAr = source.JobOffered.JobTitle.JobTitleNameA,
+                DepartmentNameEn = source.JobOffered.JobTitle.Department.DepartmentNameE,
+                DepartmentNameAr = source.JobOffered.JobTitle.Department.DepartmentNameA
             };
         }
 

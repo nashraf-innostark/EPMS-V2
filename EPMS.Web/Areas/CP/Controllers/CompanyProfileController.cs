@@ -98,6 +98,7 @@ namespace EPMS.Web.Areas.CP.Controllers
         }
 
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "CP")]
         public ActionResult Detail(CompanyProfileViewModel companyProfileViewModel)
         {
             if (companyProfileViewModel.TabId == 1)

@@ -162,6 +162,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "JobApplicant")]
         public ActionResult JobApplicantList(JobApplicantSearchRequest jobApplicantSearchRequest)
         {
             jobApplicantSearchRequest.SearchString = Request["search"];

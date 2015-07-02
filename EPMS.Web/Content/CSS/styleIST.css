@@ -12,7 +12,9 @@
     color: #e02222;
     text-align: left !important;
 }
-
+.body-login .nav-user-menu > li{
+  display: block !important;
+}
 .displayCK {
     display: inline-block;
     vertical-align: middle;

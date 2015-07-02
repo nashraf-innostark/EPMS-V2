@@ -123,6 +123,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(QuotationCreateViewModel viewModel)
         {
             // Update case
@@ -264,8 +265,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
                 viewModel.Quotation = QuotationService.FindQuotationById((long) id).CreateFromServerToClientLv();
                 // Get Order from Order Number
-                viewModel.Order =
+                if (viewModel.Quotation.OrderId>0)
+                {
+                    viewModel.Order =
                     OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
+                }
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
                 return View(viewModel);
             }

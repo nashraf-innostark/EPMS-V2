@@ -130,6 +130,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         // Post: HR/Request/Create
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "RequestCreate")]
         public ActionResult Create(RequestViewModel requestViewModel)
         {
             try

@@ -208,6 +208,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "CreateTask")]
         public ActionResult Create(TaskCreateViewModel viewModel)
         {
             if (Request.Form["Save"] != null)

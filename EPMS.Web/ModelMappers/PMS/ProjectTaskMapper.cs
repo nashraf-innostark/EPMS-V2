@@ -38,8 +38,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
             projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
-            var progress = (source.TaskProgress / source.TotalWeight) * 100;
-            projectTask.TaskProgress = String.Format("{0:###.##}", progress);
+            var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
+            projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -118,8 +118,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
             projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
-            var progress = (source.TaskProgress / source.TotalWeight) * 100;
-            projectTask.TaskProgress = String.Format("{0:###.##}", progress);
+            var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
+            projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -198,8 +198,8 @@ namespace EPMS.Web.ModelMappers.PMS
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
             projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
-            var progress = (source.TaskProgress / source.TotalWeight) * 100;
-            projectTask.TaskProgress = String.Format("{0:###.##}", progress);
+            var progress = (source.TaskProgress !=0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
+            projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
             //projectTask.TaskProgress = String.Format("{0:###.##}", source.TaskProgress);
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
@@ -427,7 +427,7 @@ namespace EPMS.Web.ModelMappers.PMS
                 SubTaskWeight model = new SubTaskWeight
                 {
                     TaskId = subTask.TaskId,
-                    TaskWeight = Convert.ToInt32(String.Format("{0:###.##}", subTask.TotalWeight))
+                    TaskWeight = String.Format("{0:###.##}", subTask.TotalWeight) != "" ? Convert.ToInt32(String.Format("{0:###.##}", subTask.TotalWeight)) : 0
                 };
                 projectTask.SubTasksWeight.Add(model);
             }

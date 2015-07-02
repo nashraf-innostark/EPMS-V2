@@ -153,6 +153,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
 
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Create(ProjectViewModel projectViewModel)
         {
             try
