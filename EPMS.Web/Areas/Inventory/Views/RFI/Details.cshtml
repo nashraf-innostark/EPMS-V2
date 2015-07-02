@@ -1,4 +1,5 @@
-﻿@model  EPMS.Web.ViewModels.RFI.RFIViewModel
+﻿@using EPMS.Models.Common
+@model  EPMS.Web.ViewModels.RFI.RFIViewModel
 @{
     ViewBag.Title = EPMS.Web.Resources.RFI.RFI.DetailsPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -66,7 +67,7 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@(Session["RoleName"].ToString().ToLower() == "manager" ? EPMS.Web.Resources.RFI.RFI.InventoryManagerName : EPMS.Web.Resources.RFI.RFI.EmployeeName):</th>
+                                        <th>@(((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager) ? EPMS.Web.Resources.RFI.RFI.InventoryManagerName : EPMS.Web.Resources.RFI.RFI.EmployeeName):</th>
                                         <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                     </tr>
                                     <tr>
@@ -90,7 +91,7 @@
                         <div class="invoice-infos">
                             <table>
                                 <tbody>
-                                    @if (Session["RoleName"].ToString().ToLower() == "manager")
+                                    @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager)
                                     {
                                         <tr>
                                             <th>@EPMS.Web.Resources.RFI.RFI.Date:</th>
