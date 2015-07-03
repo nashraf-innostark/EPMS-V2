@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Repository.Repositories;
 
 namespace EPMS.Implementation.Services
 {
@@ -13,13 +14,17 @@ namespace EPMS.Implementation.Services
     {
         #region Private
         private readonly IItemWarehouseRepository warehouseRepository;
+        private readonly ItemReleaseQuantityRepository itemReleaseQuantityRepository;
+
         #endregion
 
         #region Constructor
-        public ItemWarehouseService(IItemWarehouseRepository warehouseRepository)
+        public ItemWarehouseService(IItemWarehouseRepository warehouseRepository, ItemReleaseQuantityRepository itemReleaseQuantityRepository)
         {
             this.warehouseRepository = warehouseRepository;
+            this.itemReleaseQuantityRepository = itemReleaseQuantityRepository;
         }
+
         #endregion
 
         #region Public
@@ -56,6 +61,20 @@ namespace EPMS.Implementation.Services
         public IEnumerable<ItemWarehouse> GetItemsByVariationId(long variationId)
         {
             return warehouseRepository.GetItemsByVariationId(variationId);
+        }
+
+        public IEnumerable<ItemWarehouse> GetAllWarehouses()
+        {
+            var releaseQuantities = itemReleaseQuantityRepository.GetAll();
+            var itemWarehouses = warehouseRepository.GetAll();
+            foreach (ItemWarehouse itemWarehouse in itemWarehouses)
+            {
+                var itemReleaseQuantity = releaseQuantities.FirstOrDefault(x => x.WarehouseId == itemWarehouse.WarehouseId && x.ItemVariationId == itemWarehouse.ItemVariationId);
+                if (
+                    itemReleaseQuantity != null)
+                    itemWarehouse.Quantity = itemWarehouse.Quantity - itemReleaseQuantity.Quantity;
+            }
+            return itemWarehouses;            
         }
 
         #endregion

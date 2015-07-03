@@ -85,6 +85,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(ItemVariationViewModel variationViewModel)
         {
             ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();

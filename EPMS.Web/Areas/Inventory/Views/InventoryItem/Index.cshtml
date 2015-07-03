@@ -43,7 +43,13 @@
                             <th>@EPMS.Web.Resources.Inventory.InventoryItem.ItemCode</th>
                             <th>@EPMS.Web.Resources.Inventory.InventoryItem.ItemName</th>
                             <th>@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</th>
-                            @*<th>@EPMS.Web.Resources.Inventory.InventoryItem.DeptInfo</th>*@
+                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.DeptInfo</th>
+                            <th>Item Variation (SkU) Description</th>
+                            <th>On Hand Quantity</th>
+                            <th>Quantity Sold</th>
+                            <th>Average Price</th>
+                            <th>Average Cost</th>
+                            <th>Reorder Point (RoP)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +74,14 @@
                                 {
                                     <td>@item.ItemDescriptionAr</td>
                                 }
+                                <td>@item.DepartmentPath</td>
+                                <td></td>
+                                <td>@item.QuantityInHand</td>
+                                <td>@item.QuantitySold</td>
+                                <td>@item.AveragePrice</td>
+                                <td>@item.AverageCost</td>
+                                <td>@item.ReorderLevel</td>
+
                             </tr>
                         }
                     </tbody>
@@ -83,7 +97,13 @@
         $('#InventoryItems').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                //null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null,
                 null,
                 null,

@@ -60,7 +60,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.ItemBarcode, new { @dir = "ltr", id = "ItemBarcode", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.ItemBarcode, new { @dir = "ltr", id = "ItemBarcode", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.ItemBarcode)
                 </div>
             </div>
@@ -72,7 +72,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUCode, new { @dir = "ltr", id = "SKUCode", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUCode, new { @dir = "ltr", id = "SKUCode", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUCode)
                 </div>
             </div>
@@ -84,7 +84,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.UnitPrice, new { @dir = "ltr", id = "UnitPrice", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitPrice, new { @dir = "ltr", id = "UnitPrice", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.UnitPrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -96,7 +96,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.PackagePrice, new { @dir = "ltr", id = "PackagePrice", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.PackagePrice, new { @dir = "ltr", id = "PackagePrice", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.PackagePrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -119,7 +119,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionEn, new { @dir = "ltr", id = "DescriptionEn", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionEn, new { @dir = "ltr", id = "DescriptionEn", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionEn)
                 </div>
             </div>
@@ -131,7 +131,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionAr, new { @dir = "ltr", id = "DescriptionAr", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionAr, new { @dir = "ltr", id = "DescriptionAr", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionAr)
                 </div>
             </div>
@@ -143,7 +143,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionEn, new { @dir = "ltr", id = "SKUDescriptionEn", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionEn, new { @dir = "ltr", id = "SKUDescriptionEn", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUDescriptionEn)
                 </div>
             </div>
@@ -155,7 +155,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionAr, new { @dir = "ltr", id = "SKUDescriptionAr", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionAr, new { @dir = "ltr", id = "SKUDescriptionAr", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUDescriptionAr)
                 </div>
             </div>
@@ -167,7 +167,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -179,7 +179,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
@@ -191,7 +191,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.ReorderPoint, new { @dir = "ltr", id = "ReorderPoint", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.ReorderPoint, new { @dir = "ltr", id = "ReorderPoint", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.ReorderPoint, "", new { @class = "required" })
                 </div>
             </div>
@@ -203,7 +203,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInManufacturing, new { @dir = "ltr", id = "QuantityInManufacturing", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInManufacturing, new { @dir = "ltr", id = "QuantityInManufacturing", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInManufacturing, "", new { @class = "required" })
                 </div>
             </div>
@@ -215,7 +215,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", id = "Weight", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", id = "Weight", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.Weight, "", new { @class = "required" })
                 </div>
             </div>
@@ -227,7 +227,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Height, new { @dir = "ltr", id = "Height", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.Height, new { @dir = "ltr", id = "Height", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.Height, "", new { @class = "required" })
                 </div>
             </div>
@@ -239,7 +239,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Width, new { @dir = "ltr", id = "Width", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.Width, new { @dir = "ltr", id = "Width", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.Width, "", new { @class = "required" })
                 </div>
             </div>
@@ -251,7 +251,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Depth, new { @dir = "ltr", id = "Depth", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.Depth, new { @dir = "ltr", id = "Depth", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.Depth, "", new { @class = "required" })
                 </div>
             </div>
@@ -263,7 +263,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.NotesEn, new { @dir = "ltr", id = "NotesEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.NotesEn, new { @dir = "ltr", id = "NotesEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.NotesEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -274,7 +274,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.NotesAr, new { @dir = "ltr", id = "NotesAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.NotesAr, new { @dir = "ltr", id = "NotesAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.NotesAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -284,7 +284,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoEn, new { @dir = "ltr", id = "AdditionalInfoEn", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoEn, new { @dir = "ltr", id = "AdditionalInfoEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -295,7 +295,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoAr, new { @dir = "ltr", id = "AdditionalInfoAr", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoAr, new { @dir = "ltr", id = "AdditionalInfoAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -356,8 +356,8 @@
                             <td style='display:none'></td>
                             <th>Serial</th>
                             <th>Warehouse Number</th>
-                            <th>Quantity in Warehouse</th>
                             <th>Place in Warehouse</th>
+                            <th>Quantity in Warehouse</th>
                             <th>Delete</th>
 
                         </tr>
@@ -523,7 +523,7 @@
                                     <td>@item.ColorNameAr</td>
                                 }
                                 <td>
-                                    <i class="icon-photon minus deleteStatus"></i>
+                                    <i class="icon-photon minus deleteColor"></i>
                                 </td>
                             </tr>
                         }
@@ -701,7 +701,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me sizeDdl toClear", id = "warehouseDropdown" })
+                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me toClear", id = "warehouseDropdown" })
                         </div>
                     </div>
 
@@ -1106,12 +1106,7 @@
     var manufacturerList = '@Html.Raw(Json.Encode(Model.ManufacturersForDdl))';
     var parsedManufacturer = JSON.parse(manufacturerList);
     $(document).ready(function () {
-        //Delete Color from the List
-        $('.deleteColor').on("click", function () {
-            var hiddenId = $(this).parent().prev().prev().val();
-            $(this).parent().parent().remove();
-            ManageColorList(hiddenId, 2);
-        });
+        
         if (itemVarId == 0 || itemVarId == "") {
             //Auto Generated Number Calculation
             var url1 = "/Inventory/ItemVariation/GetLastItemSKuCode";
@@ -1169,7 +1164,6 @@
             imageRowNo = $("#imageDetails").children("tr").length;
             if ($("#imageDetails").children("tr").children("td").html() == "No data available in table") {
                 imageRowNo = imageRowNo - 1;
-                $("#imageDetails").children("tr").children("td").html().hide();
             }
         });
 
@@ -1218,6 +1212,7 @@
             }
         });
         $('.trImageDetails').on("click", function (event) {
+           
             var index = $("#imageDetails").children("tr").length;
             if ($("#imageDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
@@ -1239,7 +1234,7 @@
                 '<input type="checkbox" class="uniformCheckbox" name = "ItemVariation.ItemImages[' + index + '].ShowImage" id="ItemVariation_ItemImages_' + index + '__ShowImage"> Show' +
                 '</td>' +
                 '<td>' +
-                '<i class="icon-photon minus deleteStatus"></i>' +
+                '<i class="icon-photon minus deleteImage"  data-id=' + index + '></i>' +
                 '</td>' +
                 '</tr>';
             $('#imageDetails').append(html);
@@ -1254,6 +1249,14 @@
             event.preventDefault();
             $('#ItemImagerModule').modal('hide');
         });
+
+        //Delete Image from the List
+        $('.deleteImage').live("click", function () {
+            var atable = $('#tableSortableVariationsImg').dataTable();
+            var pos = $(this).data("id");
+            atable.fnDeleteRow(pos);
+        });
+
         //Open Dialogue - Add Size to DB
         $("#openSize").click(function (event) {
             $('#sizeAddModule').modal('show');
@@ -1516,9 +1519,13 @@
         });
 
         //Delete Size from the List
-        $('.deleteSize').on("click", function () {
+        $('.deleteSize').live("click", function () {
+            debugger;
             var hiddenId = $(this).parent().prev().prev().val();
-            $(this).parent().parent().remove();
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#tableSortableVariationsSize').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
             ManageSizeList(hiddenId, 2);
         });
 
@@ -1550,7 +1557,7 @@
                 '<div class="span2"><div class="controls"><input  rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '"></div></div>' +
                 '</td>' +
                 '<td>' +
-                '<i class="icon-photon minus deleteStatus"></i>' +
+                '<i class="icon-photon minus deleteManufacturer"></i>' +
                 '</td>' +
                 '</tr>';
             $('#manufacturerDetails').append(html);
@@ -1570,9 +1577,12 @@
         });
 
         //Delete Manufacturer from the List
-        $('.deleteManufacturer').on("click", function () {
+        $('.deleteManufacturer').live("click", function () {
             var hiddenId = $(this).parent().prev().prev().val();
-            $(this).parent().parent().remove();
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#tableSortableVariationsManufacturer').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
         });
 
         //Add Status from Dropdown to List
@@ -1610,9 +1620,12 @@
         });
 
         //Delete Status from the List
-        $('.deleteStatus').on("click", function () {
+        $('.deleteStatus').live("click", function () {
             var hiddenId = $(this).parent().prev().prev().val();
-            $(this).parent().parent().remove();
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#tableSortableItemStatus').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
             ManageStatusList(hiddenId, 2);
         });
 
@@ -1648,6 +1661,16 @@
                 $(".colorTable").children("tr").children("td").hide();
             }
             clearPopup();
+        });
+
+        //Delete Color from the List
+        $('.deleteColor').live("click", function () {
+            var hiddenId = $(this).parent().prev().prev().val();
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#tableSortableItemColor').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
+            ManageColorList(hiddenId, 2);
         });
 
         $(".warehouseTree").click(function (event) {
@@ -1756,7 +1779,7 @@
                 '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
                 '</td>' +
                 '<td>' +
-                '<i class="icon-photon minus deleteStatus"></i>' +
+                '<i class="icon-photon minus deleteWarehouse"></i>' +
                 '</td>' +
                 '</tr>';
             $('#warehouseDetails').append(html);
@@ -1778,9 +1801,12 @@
         });
 
         //Delete Warehouse from the List
-        $('.deleteWarehouse').on("click", function () {
+        $('.deleteWarehouse').live("click", function () {
             var hiddenId = $(this).parent().prev().prev().val();
-            $(this).parent().parent().remove();
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#tableSortableVariationsWherehouse').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
             ManageStatusList(hiddenId, 2);
         });
 
