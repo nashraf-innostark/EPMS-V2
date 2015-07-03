@@ -11,6 +11,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
+using EPMS.Repository.Repositories;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Implementation.Services
@@ -30,6 +31,7 @@ namespace EPMS.Implementation.Services
         private readonly IWarehouseService warehouseService;
         private readonly IInventoryItemRepository inventoryItemRepository;
         private readonly ItemWarehouseService itemWarehouseService;
+        private readonly ItemReleaseQuantityRepository itemReleaseQuantityRepository;
 
         #endregion
 
@@ -39,7 +41,7 @@ namespace EPMS.Implementation.Services
             IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
             IColorRepository colorRepository, IItemImageRepository imageRepository,
             IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,
-            INotificationService notificationService, IWarehouseService warehouseService, IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService)
+            INotificationService notificationService, IWarehouseService warehouseService, IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService, ItemReleaseQuantityRepository itemReleaseQuantityRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -53,6 +55,7 @@ namespace EPMS.Implementation.Services
             this.warehouseService = warehouseService;
             this.inventoryItemRepository = inventoryItemRepository;
             this.itemWarehouseService = itemWarehouseService;
+            this.itemReleaseQuantityRepository = itemReleaseQuantityRepository;
         }
 
         #endregion
@@ -104,7 +107,16 @@ namespace EPMS.Implementation.Services
             response.WarehousesForDdl = warehouseService.GetAll();
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
 
-            response.ItemVariation.ItemWarehouses = itemWarehouseService.GetAllWarehouses().ToList();
+            //response.ItemVariation.ItemWarehouses = new List<ItemWarehouse>();
+            var releaseQtyList = itemReleaseQuantityRepository.GetAll();
+            foreach (ItemWarehouse itemWarehouse in response.ItemVariation.ItemWarehouses)
+            {
+                var itemReleaseQuantity = releaseQtyList.Where(x => x.WarehouseId == itemWarehouse.WarehouseId && x.ItemVariationId == itemWarehouse.ItemVariationId).Sum(y=>y.Quantity);
+                if (itemReleaseQuantity != null)
+                {
+                    itemWarehouse.Quantity = itemWarehouse.Quantity - itemReleaseQuantity;
+                }
+            }
             return response;
         }
 
