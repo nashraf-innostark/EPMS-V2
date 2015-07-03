@@ -29,6 +29,7 @@ namespace EPMS.Implementation.Services
         private readonly INotificationService notificationService;
         private readonly IWarehouseService warehouseService;
         private readonly IInventoryItemRepository inventoryItemRepository;
+        private readonly ItemWarehouseService itemWarehouseService;
 
         #endregion
 
@@ -38,7 +39,7 @@ namespace EPMS.Implementation.Services
             IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
             IColorRepository colorRepository, IItemImageRepository imageRepository,
             IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,
-            INotificationService notificationService, IWarehouseService warehouseService, IInventoryItemRepository inventoryItemRepository)
+            INotificationService notificationService, IWarehouseService warehouseService, IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -51,6 +52,7 @@ namespace EPMS.Implementation.Services
             this.notificationService = notificationService;
             this.warehouseService = warehouseService;
             this.inventoryItemRepository = inventoryItemRepository;
+            this.itemWarehouseService = itemWarehouseService;
         }
 
         #endregion
@@ -101,6 +103,8 @@ namespace EPMS.Implementation.Services
             response.StatusesForDdl = statusRepository.GetAll();
             response.WarehousesForDdl = warehouseService.GetAll();
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
+
+            response.ItemVariation.ItemWarehouses = itemWarehouseService.GetAllWarehouses().ToList();
             return response;
         }
 
