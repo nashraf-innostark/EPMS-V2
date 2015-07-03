@@ -304,12 +304,14 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\Inventory\Controllers\BarcodeController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryWarehouseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemReleaseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Inventory\Controllers\DIFController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\PhysicalCountController.cs" />
     <Compile Include="Areas\Inventory\Controllers\PurchaseOrderController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
@@ -408,6 +410,7 @@
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantExperience.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\Barcode.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\ApplicantQualification.cs" />
     <Compile Include="Models\Common\JsTree.cs" />
@@ -814,6 +817,7 @@
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
+    <Compile Include="ViewModels\Barcode\BarcodeViewModel.cs" />
     <Compile Include="ViewModels\CKEditor\ImagesViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
@@ -1883,6 +1887,9 @@
     <Content Include="RTE\skins\moono\images\lock.png" />
     <Content Include="RTE\skins\moono\images\refresh.png" />
     <Content Include="RTE\styles.js" />
+    <Content Include="Scripts\App\Barcode\jquery-barcode.js" />
+    <Content Include="Scripts\App\Barcode\jquery-barcode.min.js" />
+    <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
@@ -1958,6 +1965,10 @@
     <Content Include="Areas\Inventory\Views\ItemRelease\History.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\Details.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\History.cshtml" />
+    <Content Include="Areas\Inventory\Views\Barcode\Index.cshtml" />
+    <Content Include="Scripts\App\Barcode\jquery-barcode.min.js.map">
+      <DependentUpon>jquery-barcode.min.js</DependentUpon>
+    </Content>
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4418,6 +4429,7 @@
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Inventory\Models\" />
+    <Folder Include="Areas\Inventory\Views\PhysicalCount\" />
     <Folder Include="Areas\Inventory\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
