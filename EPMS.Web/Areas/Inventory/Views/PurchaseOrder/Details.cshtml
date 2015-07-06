@@ -213,7 +213,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextAreaFor(model => model.PurchaseOrder.NotesE, new { @id = "NotesEn", @class = "" })
+                                @Html.TextAreaFor(model => model.PurchaseOrder.NotesE, new { @id = "NotesEn", @class = "toBeDisabled" })
                             </div>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextAreaFor(model => model.PurchaseOrder.NotesA, new { @id = "NotesAr", @class = "" })
+                                @Html.TextAreaFor(model => model.PurchaseOrder.NotesA, new { @id = "NotesAr", @class = "toBeDisabled" })
                             </div>
                         </div>
                     </div>
@@ -289,8 +289,7 @@
 <script src="~/RTE/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-
-        if ('@ViewBag.IsManager' != "True" || '@Model.PurchaseOrder.Status' == '1' || '@ViewBag.From' == 'History') {
+        @*if ('@ViewBag.IsManager' != "True" || '@Model.PurchaseOrder.Status' == '1' || '@ViewBag.From' == 'History') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
@@ -311,9 +310,21 @@
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
             $("#CKNotes").show();
+        }*@
+        CKEDITOR.replace('NotesEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('NotesAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#CKNotes").show();
+        if ('@ViewBag.IsManager' != "True" || '@Model.PurchaseOrder.Status' == '1' || '@ViewBag.From' == 'History') {
+            $('.toBeDisabled:input').attr('disabled', true);
+            $('.disableDdl').select2('disable');
+            $("#SubmitTir").hide();
         }
         if ('@ViewBag.From' == 'History') {
-            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.toBeDisable:input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
         }

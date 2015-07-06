@@ -6,6 +6,7 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IItemVariationRepository : IBaseRepository<ItemVariation, long>
     {
+        long GetItemVariationId(string item);
         IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList();
         IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId);
     }

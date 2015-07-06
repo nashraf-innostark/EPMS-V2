@@ -9,6 +9,7 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<ItemVariation> GetAll();
         ItemVariation FindVariationById(long id);
+        long GetItemVariationId(string item);
         bool AddVariation(ItemVariation itemVariation);
         bool UpdateVariation(ItemVariation itemVariation);
         void DeleteVartiation(ItemVariation itemVariation);

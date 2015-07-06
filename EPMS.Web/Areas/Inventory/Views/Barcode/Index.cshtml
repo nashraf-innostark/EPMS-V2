@@ -50,8 +50,8 @@
                         <tr>
                             <th>Serial</th>
                             <th style="width:65%">Item Details</th>
-                            <th>Barcode</th>
-                            <th>Quantity</th>
+                            <th style="width:18%">Barcode</th>
+                            <th style="width:6%">Print</th>
                             <th style="width:4%">Delete</th>
                         </tr>
                     </thead>
@@ -65,13 +65,16 @@
                                 </div>
                             </td>
                             <td>
-                                <textarea rows="2" class="auto-resize" id='Barcodes_0__ItemDetails' name="Barcodes[0].ItemDetails"></textarea>
+                                <textarea rows="2" class="auto-resize" id='Barcodes_0__ItemDetails' name="Barcodes[0].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>
                                 <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                <span class="field-validation-valid required" data-valmsg-for="Barcodes[0].ItemDetails" data-valmsg-replace="true"></span>
                             </td>
-                            <td><textarea rows="2" class="auto-resize" id='Barcodes_0__BarcodeValue' name="Barcodes[0].BarcodeValue"></textarea></td>
-                            <td class="quantity">
-                                <input class="n1" type="text" value="0" id='Barcodes_0__Quantity' name="Barcodes[0].Quantity" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
-                                <span class="field-validation-valid required" data-valmsg-for="Barcodes[0].Quantity" data-valmsg-replace="true"></span>
+                            <td>
+                                <div id="BarcodeValue_0"></div>
+                                <textarea rows="2" style="display: none" class="auto-resize" id='Barcodes_0__BarcodeValue' name="Barcodes[0].BarcodeValue"></textarea>
+                            </td>
+                            <td>
+                                <button type="button" class="btn tableBtn print">Print</button>
                             </td>
                             <td class="delete">
                                 <i class="icon-photon minus deleteRow"></i>
@@ -87,11 +90,11 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="button" class="btn" id="print">Print</button>
-            </div>
-        </div>
+        @*<div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn" id="print">Print</button>
+                </div>
+            </div>*@
     </div>
 </form>
 
@@ -110,12 +113,13 @@
             var index = $("#BarcodeTableBody").children("tr").length;
             var html = ' <tr data-id="' + index + '">' +
                 '<td ><div class="control-group row-fluid"><div class="span1">' +
-                '<label class="control-label serialNumber"></label></div></div></td>' +
-                '<td><textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__ItemDetails" name="Barcodes[' + index + '].ItemDetails"></textarea>' +
-                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button></td>' +
-                '<td ><textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__BarcodeValue" name="Barcodes[' + index + '].BarcodeValue"></textarea></td><td class="quantity"> ' +
-                '<input class="n1" type="text" value=0 id="Barcodes_' + index + '__Quantity" name="Barcodes[' + index + '].Quantity" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                '<span class="field-validation-valid required" data-valmsg-for="Barcodes[' + index + '].Quantity" data-valmsg-replace="true"></span></td>' +
+                    '<label class="control-label serialNumber"></label></div></div></td>' +
+                '<td><textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__ItemDetails" name="Barcodes[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
+                    '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                    '<span class="field-validation-valid required" data-valmsg-for="Barcodes[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+                '<td ><div id="BarcodeValue_' + index + '"></div>' +
+                    '<textarea rows="2" style="display: none" class="auto-resize" id="Barcodes_' + index + '__BarcodeValue" name="Barcodes[' + index + '].BarcodeValue"></textarea></td>' +
+                '<td><button type="button" class="btn tableBtn print">Print</button> </td>' +
                 '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
             $('.qouteAdd').append(html);
             //remove validation
@@ -126,6 +130,7 @@
 
             activateSerial();
             reActivateDelete();
+            reActivatePrint();
 
         });
         reActivateDelete();
@@ -151,7 +156,7 @@
             var coln = $(excel).find("tr:first td").length;
             var count = 0;
             var x = 0;
-            if (coln == 3) {
+            if (coln == 2) {
                 var index = 0;
                 $(excel).find("tr").each(function () {
                     var y = 0;
@@ -174,18 +179,22 @@
 
                     var html = '<tr data-id="' + index + '">' +
                         '<td ><div class="control-group row-fluid"><div class="span1">' +
-                        '<label class="control-label serialNumber"></label></div></div></td>' +
-                        '<td ><textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__ItemDetails" name="Barcodes[' + index + '].ItemDetails">' + t1 + '</textarea> </td>' +
-                        '<td ><textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__BarcodeValue" name="Barcodes[' + index + '].BarcodeValue">' + t2 + '</textarea></td>' +
-                        '<td class="quantity"><input class="n1" type="text" id="Barcodes_' + index + '__Quantity" name="Barcodes[' + index + '].Quantity" name="" value="' + t3 + '" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                        '<span class="field-validation-valid required" data-valmsg-for="Barcodes[' + index + '].Quantity" data-valmsg-replace="true"></span></td>' +
+                            '<label class="control-label serialNumber"></label></div></div></td>' +
+                        '<td>' +
+                            '<textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__ItemDetails" name="Barcodes[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                            '<span class="field-validation-valid required" data-valmsg-for="Barcodes[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+                        '<td><div id="BarcodeValue_' + index + '"></div>' +
+                            '<textarea rows="2" style="display: none" class="auto-resize" id="Barcodes_' + index + '__BarcodeValue" name="Barcodes[' + index + '].BarcodeValue">' + t2 + '</textarea></td>' +
+                        '<td><button type="button" class="btn tableBtn print">Print</button> </td>' +
                         '<td class="delete"><i class="icon-photon minus deleteRow"></i></td></tr>';
 
                     if (count == 0) {
                         $('.qouteAdd').html("");
                     }
                     $('.qouteAdd').append(html);
+                    generateBarcode(index);
                     reActivateDelete();
+                    reActivatePrint();
                     count++;
                     index++;
                     //remove validation
@@ -261,40 +270,21 @@
                     $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
                 }
             });
+            generateBarcode(index);
             $('#itemSearcher').modal('toggle');
         }
-        $("#print").on('click', function (event) {
-            //event.preventDefault();
-            var validStatus = $("#form-barcode-print").valid();
-            if (validStatus) {
-                var index = $("#BarcodeTableBody").children("tr").length;
-                for (var i = 0; i < index; i++) {
-                    var barcodeValue = $("#Barcodes_" + i + "__BarcodeValue").val();
-                    barcodeValue = { code: barcodeValue, rect: true };
-                    var btype = "code128";
-                    var settings = {
-                        barWidth: 1,
-                        barHeight: 50,
-                        moduleSize: 5,
-                        showHRI: true,
-                        addQuietZone: true,
-                        marginHRI: 5,
-                        bgColor: "#FFFFFF",
-                        color: "#000000",
-                        fontSize: 10,
-                        output: "css",
-                        posX: 0,
-                        posY: 0
-                    };
-                    $("#demo").barcode(barcodeValue, btype, settings);
-                    var printQty = parseInt($("#Barcodes_" + (index-1) + "__Quantity").val());
-                    for (var j = 0; j < printQty; j++) {
-                        $("#demo").show().printElement();
-                    }
+        reActivatePrint();
+        function reActivatePrint() {
+            $(".print").unbind();
+            $(".print").on('click', function (event) {
+                //event.preventDefault();
+                var index = $(this).parent().parent().get(0).rowIndex - 1;
+                var validStatus = $("#Barcodes_" + index + "__ItemDetails").valid();
+                if (validStatus) {
+                    $("#BarcodeValue_" + index).show().printElement();
                 }
-            }
-        });
-
+            });
+        }
     });
     $('#tiny').elrte({
         lang: "en",
@@ -302,4 +292,24 @@
         height: 200,
         toolbar: 'tiny'
     });
+    function generateBarcode(index) {
+        var barcodeValue = $("#Barcodes_" + index + "__BarcodeValue").val();
+        barcodeValue = { code: barcodeValue, rect: true };
+        var btype = "code128";
+        var settings = {
+            barWidth: 1,
+            barHeight: 50,
+            moduleSize: 5,
+            showHRI: true,
+            addQuietZone: true,
+            marginHRI: 5,
+            bgColor: "#FFFFFF",
+            color: "#000000",
+            fontSize: 10,
+            output: "css",
+            posX: 0,
+            posY: 0
+        };
+        $("#BarcodeValue_" + index).barcode(barcodeValue, btype, settings);
+    }
 </script>

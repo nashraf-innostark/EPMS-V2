@@ -46,9 +46,9 @@
                     <label class="control-label">@EPMS.Web.Resources.RFI.RFI.Client </label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
+                    <div class="controls clientDDL">
                         @(direction == "ltr" ? Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rfi.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                        @Html.ValidationMessageFor(m => m.Rfi.CustomerId, String.Empty, new { @class = "required" })
+                        <label id="clientValidationError" class="required"></label>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <label class="control-label">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
+                    <div class="controls orderDDL">
                         @if (Model.Rfi.OrderId > 0)
                         {
                             @Html.DropDownListFor(m => m.Rfi.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
@@ -66,7 +66,7 @@
                         {
                             @Html.DropDownListFor(m => m.Rfi.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                         }
-                        @Html.ValidationMessageFor(m => m.Rfi.OrderId, String.Empty, new { @class = "required" })
+                        <label id="orderValidationError" class="required"></label>
                     </div>
                 </div>
             </div>
@@ -253,7 +253,7 @@
        
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.RFI.RFI.Submit</button>
             </div>
         </div>
     </div>
@@ -501,6 +501,14 @@
                 activateSerial();
             });
         }
+        function reActivateDeleteOnly() {
+            $('.deleteRow').on("click", function () {
+                var count = $('.qouteAdd tr').length;
+                if (count > 1) {
+                    $(this).parent().parent().remove();
+                }
+            });
+        }
 
         function activateSerial() {
             var count = $('.qouteAdd tr').length;
@@ -513,12 +521,13 @@
 
 
         $("#importEx").on("click", function () {
-
             var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
             var coln = $(excel).find("tr:first td").length;
             var count = 0;
             var x = 0;
             if (coln == 2) {
+                var url = siteUrl + "/Inventory/ItemVariation/GetItemVariationId";
+                ajaxLoader();
                 var index = 1;
                 $(excel).find("tr").each(function () {
                     var y = 0;
@@ -526,74 +535,86 @@
                     var t2 = 0;
                     var t3 = 0;
                     var t4 = 0;
-
-
                     $(this).find("td").each(function () {
-
-
                         if (y == 0) {
                             t1 = $(this).text();
-
                         } else if (y == 1) {
                             t2 = parseInt($(this).text());
                         } else if (y == 2) {
                             t3 = parseInt($(this).text());
                         }
-
                         y++;
                     });
-
                     t4 = t3 * t2;
-                    var indexCell = "<td style='display:none'>" +
-                        "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
-                        "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
-                        "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
-                        "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' />" +
-                        "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
-                        "</td>";
-                    //RfiItem
-                    var html = '<tr data-id=' + index + '>' +
-                        indexCell +
-                        '<td>' +
-                        '<div class="control-group row-fluid">' +
-                        '<div class="span1">' +
-                        '<label class="control-label serialNumber"  ></label>' +
-                        '</div></div>' +
-                        '</td>' +
-                        '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                        '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                        '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                        '</td>' +
-                        '<td class="quantity"> ' +
-                        '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                        '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                        '</td>' +
-                        '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                        '</td></tr>';
 
-                    index = index + 1;
-                    if (count == 0) {
-                        $('.qouteAdd').html("");
-                    }
+                    // AJAX to get variationId
+                    var item = t1;
+                    
+                    
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: "json",
+                        data: {
+                            item: item
+                        },
+                        success: function (data) {
+                            if (data != null) {
+                                var indexCell = "<td style='display:none'>" +
+                                                "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
+                                                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
+                                                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
+                                                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' value='" + data + "'/>" +
+                                                "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
+                                                "</td>";
+                                //RfiItem
+                                var html = '<tr data-id=' + index + '>' +
+                                    indexCell +
+                                    '<td>' +
+                                    '<div class="control-group row-fluid">' +
+                                    '<div class="span1">' +
+                                    '<label class="control-label serialNumber"  ></label>' +
+                                    '</div></div>' +
+                                    '</td>' +
+                                    '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                                    '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                                    '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                                    '</td>' +
+                                    '<td class="quantity"> ' +
+                                    '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                                    '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                                    '</td>' +
+                                    '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                                    '</td></tr>';
 
-                    $('.qouteAdd').append(html);
-                    reActivateDelete();
-                    //reactivateCount();
+                                index = index + 1;
+                                if (count == 0) {
+                                    $('.qouteAdd').html("");
+                                }
+                                $('.qouteAdd').append(html);
+                                reActivateDelete();
+                                activateSerial();
+                                count++;
+                            } else {
+                                alert("No record found for '" + item + "'");
+                            }
+                        },
+                        error: function (e) {
+                            $.unblockUI();
+                            alert('Error=' + e.toString());
+                        }
+                    });
 
-                    count++;
+                    
                 });
-
-                activateSerial();
+                $.unblockUI();
             } else {
-
                 $.pnotify({
                     title: 'Sorry',
                     type: 'info',
                     text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
                 });
-
             }
-
         });
     });
 
@@ -604,6 +625,31 @@
         toolbar: 'tiny'
     });
     function jsTreeClick(event) {
+        return true;
+    }
+    function validateForm(event) {
+        var client = $("#Client").val();
+        if (client == 0 || client == "" || client == null) {
+            event.preventDefault();
+            $("#clientValidationError").text("Please Select Client");
+            $('html,body').animate({
+                scrollTop: $(".clientDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#clientValidationError").text("");
+        }
+        var order = $("#OrderNo").val();
+        if (order == 0 || order == "" || order == null) {
+            event.preventDefault();
+            $("#orderValidationError").text("Please Select Order");
+            $('html,body').animate({
+                scrollTop: $(".orderDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#orderValidationError").text("");
+        }
         return true;
     }
 </script>

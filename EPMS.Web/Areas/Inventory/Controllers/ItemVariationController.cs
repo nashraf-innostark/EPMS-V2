@@ -65,7 +65,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             ItemVariationResponse response;
             if (id != null)
             {
-                response = itemVariationService.ItemVariationResponse((long)id,inventoryItemId);
+                response = itemVariationService.ItemVariationResponse((long)id, inventoryItemId);
                 variationViewModel.ItemVariation = response.ItemVariation.CreateFromServerToClient();
             }
             else
@@ -96,7 +96,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             itemVariationService.SaveItemVariation(itemToSave);
             {
                 TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
-                return RedirectToAction("Create", "InventoryItem", new { id = variationViewModel.ItemVariation.InventoryItemId});
+                return RedirectToAction("Create", "InventoryItem", new { id = variationViewModel.ItemVariation.InventoryItemId });
             }
         }
 
@@ -237,6 +237,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
-        #endregion  
+        #region Get Item Variation Id
+        [HttpGet]
+        public JsonResult GetItemVariationId(string item)
+        {
+            var itemVariationId = itemVariationService.GetItemVariationId(item);
+            if (itemVariationId > 0)
+            {
+                return Json(itemVariationId, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #endregion
     }
 }
