@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -63,13 +60,13 @@ namespace EPMS.Implementation.Services
             return warehouseRepository.GetItemsByVariationId(variationId);
         }
 
-        public IEnumerable<ItemWarehouse> GetAllWarehouses()
+        public IEnumerable<ItemWarehouse> GetAllWarehouses(long variationId)
         {
             var releaseQuantities = itemReleaseQuantityRepository.GetAll();
-            var itemWarehouses = warehouseRepository.GetAll();
+            var itemWarehouses = warehouseRepository.GetItemWarehousesByVariationId(variationId).ToList();
             foreach (ItemWarehouse itemWarehouse in itemWarehouses)
             {
-                var itemReleaseQuantity = releaseQuantities.FirstOrDefault(x => x.WarehouseId == itemWarehouse.WarehouseId && x.ItemVariationId == itemWarehouse.ItemVariationId);
+                var itemReleaseQuantity = releaseQuantities.Where(a=>a.ItemVariationId == variationId).FirstOrDefault(x => x.WarehouseId == itemWarehouse.WarehouseId && x.ItemVariationId == itemWarehouse.ItemVariationId);
                 if (
                     itemReleaseQuantity != null)
                     itemWarehouse.Quantity = itemWarehouse.Quantity - itemReleaseQuantity.Quantity;

@@ -104,7 +104,7 @@ namespace EPMS.Implementation.Services
             response.WarehousesForDdl = warehouseService.GetAll();
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
 
-            response.ItemVariation.ItemWarehouses = itemWarehouseService.GetAllWarehouses().ToList();
+            response.ItemVariation.ItemWarehouses = itemWarehouseService.GetAllWarehouses(id).ToList();
             return response;
         }
 
@@ -126,6 +126,7 @@ namespace EPMS.Implementation.Services
                 UpdateWarehouseList(variationToSave);
                 UpdateStatusList(variationToSave, itemVariationFromDatabase);
                 UpdateColorList(variationToSave, itemVariationFromDatabase);
+                UpdateImages(variationToSave, itemVariationFromDatabase);
             }
             else
             {
@@ -329,16 +330,22 @@ namespace EPMS.Implementation.Services
                 //Add New Items
                 foreach (ItemManufacturer itemManufacturer in clientList)
                 {
-                    //Add New Items from Client list
-                    if (dbList.Any(a => a.ManufacturerId == itemManufacturer.ManufacturerId))
-                        continue;
-                    ItemManufacturer itemToAdd = new ItemManufacturer
+                    if (itemManufacturer.ManufacturerId > 0 && itemManufacturer.ItemVariationId > 0)
                     {
-                        ItemVariationId = itemManufacturer.ItemVariationId,
-                        ManufacturerId = itemManufacturer.ManufacturerId,
-                        Price = itemManufacturer.Price,
-                    };
-                    itemManufacturerRepository.Add(itemToAdd);
+                        //Update Items
+                        itemManufacturerRepository.Update(itemManufacturer);
+                    }
+                    else
+                    {
+                        //Add New Items from Client list
+                        ItemManufacturer itemToAdd = new ItemManufacturer
+                        {
+                            ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                            ManufacturerId = itemManufacturer.ManufacturerId,
+                            Price = itemManufacturer.Price,
+                        };
+                        itemManufacturerRepository.Add(itemToAdd);
+                    }
 
                     //Delete Items from DB List which are not in Client List
                     foreach (ItemManufacturer manufacturerItem in dbList)
@@ -497,6 +504,45 @@ namespace EPMS.Implementation.Services
                 imageRepository.SaveChanges();
             }
         }
+
+        private void UpdateImages(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
+        {
+            IEnumerable<ItemImage> dbList = itemVariationFromDatabase.ItemImages.ToList();
+            IEnumerable<ItemImage> clientList = variationToSave.ItemImages;
+
+            if (clientList != null)
+            {
+                //Add New Items
+                foreach (ItemImage image in clientList)
+                {
+                    if (image.ImageId > 0)
+                    {
+                        imageRepository.Update(image);
+                    }
+                    else
+                    {
+                        ItemImage itemImage = new ItemImage
+                        {
+                            ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                            ImageOrder = image.ImageOrder,
+                            ItemImagePath = image.ItemImagePath,
+                            ShowImage = image.ShowImage
+                        };
+                        imageRepository.Add(itemImage);
+                    }
+                }
+            }
+            else
+            {
+                //Delete All Items if List from Client is Empty
+                foreach (ItemImage image in  dbList)
+                {
+                    imageRepository.Delete(image);
+                }
+            }
+            imageRepository.SaveChanges();
+        }
+
 
         #endregion
 
