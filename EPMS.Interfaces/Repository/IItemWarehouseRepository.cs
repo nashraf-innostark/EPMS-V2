@@ -8,5 +8,6 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<ItemWarehouse> GetItemsByVariationId(long variationId);
         long GetItemQuantity(long itemVariationId, long warehousrId);
         ItemWarehouse FindItemWarehouseByVariationAndManufacturerId(long variationId, long warehouseId);
+        IEnumerable<ItemWarehouse> GetItemWarehousesByVariationId(long variationId);
     }
 }
