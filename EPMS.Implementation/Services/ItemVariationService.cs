@@ -108,13 +108,20 @@ namespace EPMS.Implementation.Services
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
 
             //response.ItemVariation.ItemWarehouses = new List<ItemWarehouse>();
-            var releaseQtyList = itemReleaseQuantityRepository.GetAll();
-            foreach (ItemWarehouse itemWarehouse in response.ItemVariation.ItemWarehouses)
+            if (response.ItemVariation.ItemWarehouses != null)
             {
-                var itemReleaseQuantity = releaseQtyList.Where(x => x.WarehouseId == itemWarehouse.WarehouseId && x.ItemVariationId == itemWarehouse.ItemVariationId).Sum(y=>y.Quantity);
-                if (itemReleaseQuantity != null)
+                var releaseQtyList = itemReleaseQuantityRepository.GetAll();
+                foreach (ItemWarehouse itemWarehouse in response.ItemVariation.ItemWarehouses)
                 {
-                    itemWarehouse.Quantity = itemWarehouse.Quantity - itemReleaseQuantity;
+                    var itemReleaseQuantity =
+                        releaseQtyList.Where(
+                            x =>
+                                x.WarehouseId == itemWarehouse.WarehouseId &&
+                                x.ItemVariationId == itemWarehouse.ItemVariationId).Sum(y => y.Quantity);
+                    if (itemReleaseQuantity != null)
+                    {
+                        itemWarehouse.Quantity = itemWarehouse.Quantity - itemReleaseQuantity;
+                    }
                 }
             }
             return response;
