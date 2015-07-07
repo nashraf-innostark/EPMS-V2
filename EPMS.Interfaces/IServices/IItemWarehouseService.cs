@@ -11,5 +11,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateItemWarehouse(ItemWarehouse itemWarehouse);
         void DeleteItemWarehouse(ItemWarehouse itemWarehouse);
         IEnumerable<ItemWarehouse> GetItemsByVariationId(long variationId);
+        ItemWarehouse GetItemWarehouseByItemBarCodeAndWarehouseId(string itemBarcode, long warehouseId);
     }
 }
