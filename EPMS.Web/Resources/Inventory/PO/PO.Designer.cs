@@ -277,6 +277,15 @@ namespace EPMS.Web.Resources.Inventory.PO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Purchase Order has been added successfully.
+        /// </summary>
+        public static string POAdded {
+            get {
+                return ResourceManager.GetString("POAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Purchase Order (PO) Create.
         /// </summary>
         public static string POCreate {
@@ -300,6 +309,24 @@ namespace EPMS.Web.Resources.Inventory.PO {
         public static string PONumber {
             get {
                 return ResourceManager.GetString("PONumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Order Status has been updated successfully.
+        /// </summary>
+        public static string POStatusUpdated {
+            get {
+                return ResourceManager.GetString("POStatusUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase Order has been updated successfully.
+        /// </summary>
+        public static string POUpdated {
+            get {
+                return ResourceManager.GetString("POUpdated", resourceCulture);
             }
         }
         

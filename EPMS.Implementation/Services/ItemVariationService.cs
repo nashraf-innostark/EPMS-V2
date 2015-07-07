@@ -71,9 +71,16 @@ namespace EPMS.Implementation.Services
             return variationRepository.Find(id);
         }
 
-        public long GetItemVariationId(string item)
+        public long[] GetItemVariationId(string[] items)
         {
-            return variationRepository.GetItemVariationId(item);
+            long[] variationIds = new long[items.Length];
+            int i = 0;
+            foreach (string item in items)
+            {
+                variationIds.SetValue(variationRepository.GetItemVariationId(item), i);
+                i++;
+            }
+            return variationIds;
         }
 
         public bool AddVariation(ItemVariation itemVariation)

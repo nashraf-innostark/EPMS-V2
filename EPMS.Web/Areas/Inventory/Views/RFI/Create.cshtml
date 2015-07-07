@@ -271,6 +271,7 @@
     var siteUrl;
     var textTillParent = "";
     var dir = '@direction';
+    var variationIds = new Array();
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         CKEDITOR.replace('RFINotesE', {
@@ -525,10 +526,10 @@
             var coln = $(excel).find("tr:first td").length;
             var count = 0;
             var x = 0;
+            var excelItems = new Array();
             if (coln == 2) {
-                var url = siteUrl + "/Inventory/ItemVariation/GetItemVariationId";
                 ajaxLoader();
-                var index = 1;
+                // make array of items to get variation id
                 $(excel).find("tr").each(function () {
                     var y = 0;
                     var t1 = "";
@@ -546,68 +547,72 @@
                         y++;
                     });
                     t4 = t3 * t2;
-
-                    // AJAX to get variationId
-                    var item = t1;
-                    
-                    
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: "json",
-                        data: {
-                            item: item
-                        },
-                        success: function (data) {
-                            if (data != null) {
-                                var indexCell = "<td style='display:none'>" +
-                                                "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
-                                                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
-                                                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
-                                                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' value='" + data + "'/>" +
-                                                "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
-                                                "</td>";
-                                //RfiItem
-                                var html = '<tr data-id=' + index + '>' +
-                                    indexCell +
-                                    '<td>' +
-                                    '<div class="control-group row-fluid">' +
-                                    '<div class="span1">' +
-                                    '<label class="control-label serialNumber"  ></label>' +
-                                    '</div></div>' +
-                                    '</td>' +
-                                    '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                                    '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                                    '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                                    '</td>' +
-                                    '<td class="quantity"> ' +
-                                    '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                                    '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                                    '</td>' +
-                                    '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                                    '</td></tr>';
-
-                                index = index + 1;
-                                if (count == 0) {
-                                    $('.qouteAdd').html("");
-                                }
-                                $('.qouteAdd').append(html);
-                                reActivateDelete();
-                                activateSerial();
-                                count++;
-                            } else {
-                                alert("No record found for '" + item + "'");
-                            }
-                        },
-                        error: function (e) {
-                            $.unblockUI();
-                            alert('Error=' + e.toString());
-                        }
-                    });
-
-                    
+                    excelItems.push(t1);
                 });
-                $.unblockUI();
+
+                // pause javascript execution until AJAX response
+                var afterAjax = function () {
+                    var index = 1;
+                    $(excel).find("tr").each(function () {
+                        var y = 0;
+                        var t1 = "";
+                        var t2 = 0;
+                        var t3 = 0;
+                        var t4 = 0;
+                        $(this).find("td").each(function () {
+                            if (y == 0) {
+                                t1 = $(this).text();
+                            } else if (y == 1) {
+                                t2 = parseInt($(this).text());
+                            } else if (y == 2) {
+                                t3 = parseInt($(this).text());
+                            }
+                            y++;
+                        });
+                        t4 = t3 * t2;
+
+                        var indexCell = "<td style='display:none'>" +
+                                                    "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
+                                                    "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
+                                                    "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
+                                                    "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' value='" + variationIds[(index - 1)] + "'/>" +
+                                                    "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
+                                                    "</td>";
+                        //RfiItem
+                        var html = '<tr data-id=' + index + '>' +
+                            indexCell +
+                            '<td>' +
+                            '<div class="control-group row-fluid">' +
+                            '<div class="span1">' +
+                            '<label class="control-label serialNumber"  ></label>' +
+                            '</div></div>' +
+                            '</td>' +
+                            '<td> <textarea rows="2"  class="auto-resize"  id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
+                            '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                            '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                            '</td>' +
+                            '<td class="quantity"> ' +
+                            '<input class="n1" type="text" value=' + t2 + ' id="RfiItem_' + index + '__ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+                            '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                            '</td>' +
+                            '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+                            '</td></tr>';
+
+                        index = index + 1;
+                        if (count == 0) {
+                            $('.qouteAdd').html("");
+                        }
+                        $('.qouteAdd').append(html);
+                        reActivateDelete();
+                        activateSerial();
+                        count++;
+
+                    });
+                }
+
+                // AJAX to get variationId
+                getItemVariationIds(excelItems, afterAjax);
+                
             } else {
                 $.pnotify({
                     title: 'Sorry',
@@ -624,6 +629,31 @@
         height: 200,
         toolbar: 'tiny'
     });
+    function getItemVariationIds(excelItems, callback) {
+        var url = siteUrl + "/Inventory/ItemVariation/GetItemVariationId";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: {
+                items: excelItems
+            },
+            success: function (data) {
+                if (data != null) {
+                    $.unblockUI();
+                    variationIds = data;
+                    callback.call();
+                } else {
+                    $.unblockUI();
+                    alert("No record found for '" + excelItems + "'");
+                }
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
+    }
     function jsTreeClick(event) {
         return true;
     }

@@ -477,7 +477,7 @@
             var itemVariationId = $("#RFIItemVariationDropDownList").val();
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
-                    warehouse = warehouse + value.PlaceInWarehouse + " - ";
+                    warehouse = warehouse + value.WarehouseNo  + " > " + value.PlaceInWarehouse + " - ";
                     var html = '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
                     $("#MultiWarehouse").append(html);
                 }
@@ -565,7 +565,8 @@
                 });
                 dropAllFormWarForEdit(index, quantities.length);
                 $("#WarehouseCount").val(0);
-                
+
+                selectedValues = new Array();
                 for (var i = 0; i < quantities.length; i++) {
                     var hiddenFields =
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + i + '" />' +

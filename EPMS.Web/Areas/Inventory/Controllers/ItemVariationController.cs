@@ -238,15 +238,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Get Item Variation Id
-        [HttpGet]
-        public JsonResult GetItemVariationId(string item)
+        [HttpPost]
+        public JsonResult GetItemVariationId(string[] items)
         {
-            var itemVariationId = itemVariationService.GetItemVariationId(item);
-            if (itemVariationId > 0)
-            {
-                return Json(itemVariationId, JsonRequestBehavior.AllowGet);
-            }
-            return Json(null, JsonRequestBehavior.AllowGet);
+            var itemVariationId = itemVariationService.GetItemVariationId(items);
+            return Json(itemVariationId, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

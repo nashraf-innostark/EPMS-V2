@@ -133,7 +133,7 @@
                                     </tr>
                                 }
                             </thead>
-                            <tbody class="qouteAdd">
+                            <tbody class="qouteAdd" id="POTableBody">
                                 @if (ViewBag.IsManager)
                                 {
                                     i = 0;
@@ -154,19 +154,20 @@
                                             <td>@Html.DisplayFor(m => m.OrderItems[po].ItemCode)</td>
                                             <td>@Html.DisplayFor(m => m.OrderItems[po].ItemSKUCode)</td>
                                             <td>
-                                                <div class="span9">
+                                                <div class="span9 VendorError_@i">
                                                     @if (direction == "ltr")
                                                     {
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameEn", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM" })
+                                                            @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameEn", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                         </div>
                                                     }
                                                     else
                                                     {
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameAr", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM" })
+                                                            @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameAr", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                         </div>
                                                     }
+                                                    <label id="VendorError_@i" class="required"></label>
                                                 </div>
                                             </td>
                                             <td>
@@ -270,7 +271,7 @@
                 {
                     <div id="SubmitTir" class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.Submit</button>
+                            <button type="submit" class="btn" onclick="validateVendors(event)">@EPMS.Web.Resources.Inventory.PO.PO.Submit</button>
                         </div>
                     </div>
                     if (userPermissionsSet.Contains("POCreate"))
@@ -329,4 +330,24 @@
             $("#SubmitTir").hide();
         }
     });
+
+    function validateVendors(event) {
+        if ('@ViewBag.IsManager' == "True" && parseInt($("#Status").val()) == 1) {
+            var index = $("#POTableBody").children("tr").length;
+            for (var i = 0; i < index; i++) {
+                var vendorId = $("#OrderItems_" + i + "__VendorId").val();
+                if (vendorId == 0 || vendorId == "" || vendorId == null) {
+                    $("#VendorError_" + (i + 1)).text("Please select vendor");
+                    $('html,body').animate({
+                        scrollTop: $(".VendorError_" + (i + 1)).offset().top
+                    }, 'slow');
+                    event.preventDefault();
+                    return false;
+                } else {
+                    $("#VendorError_" + (i + 1)).text("");
+                }
+            }
+        }
+        return true;
+    }
 </script>
