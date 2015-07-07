@@ -15,10 +15,5 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult Create(long? id)
-        {
-            return View();
-        }
     }
 }

@@ -54,6 +54,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public virtual ICollection<PurchaseOrderItemHistory> PurchaseOrderItemHistories { get; set; }
         public virtual ICollection<VendorItem> VendorItems { get; set; }
-        public virtual ICollection<PhysicalCount> PhysicalCounts { get; set; }
+        public virtual ICollection<PhysicalCountItem> PhysicalCountItems { get; set; }
     }
 }
