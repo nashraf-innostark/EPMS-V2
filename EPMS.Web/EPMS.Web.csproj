@@ -483,6 +483,7 @@
     <Compile Include="Models\TIRItem.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorItems.cs" />
+    <Compile Include="Models\WarehousDdl.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Models\WarehouseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -857,6 +858,7 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
+    <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\POHistoryViewModel.cs" />

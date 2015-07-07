@@ -12,6 +12,7 @@
         public long ItemsInPackage { get; set; }
         public long TotalItemsInPackages { get; set; }
         public long TotalItemsCount { get; set; }
+        public string RecCreatedByName { get; set; }
         public string RecCreatedBy { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
