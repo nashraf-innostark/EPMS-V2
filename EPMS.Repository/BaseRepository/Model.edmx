@@ -895,6 +895,20 @@
           <Property Name="RecLastUpdatedDt" Type="datetime" />
           <Property Name="OrderStatus" Type="int" />
         </EntityType>
+        <EntityType Name="PhysicalCount">
+          <Key>
+            <PropertyRef Name="PCId" />
+          </Key>
+          <Property Name="PCId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
+          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="NoOfPackagesInWarehouse" Type="bigint" Nullable="false" />
+          <Property Name="NoOfItemInWarehouse" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="PreRequisitTask">
           <Key>
             <PropertyRef Name="TaskId" />
@@ -2293,6 +2307,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PhysicalCount_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="1" />
+          <End Role="PhysicalCount" Type="Self.PhysicalCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="PhysicalCount">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicalCount_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="PhysicalCount" Type="Self.PhysicalCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="PhysicalCount">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PreRequisitTask_PreRequisitTask">
           <End Role="ProjectTask" Type="Self.ProjectTask" Multiplicity="1" />
           <End Role="PreRequisitTask" Type="Self.PreRequisitTask" Multiplicity="*" />
@@ -3043,6 +3081,7 @@
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotificationRecipient" EntityType="Self.NotificationRecipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhysicalCount" EntityType="Self.PhysicalCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreRequisitTask" EntityType="Self.PreRequisitTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocuments" Schema="dbo" store:Type="Tables" />
@@ -3353,6 +3392,14 @@
           <AssociationSet Name="FK_Orders_Orders" Association="Self.FK_Orders_Orders">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicalCount_ItemVariation" Association="Self.FK_PhysicalCount_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="PhysicalCount" EntitySet="PhysicalCount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicalCount_Warehouse" Association="Self.FK_PhysicalCount_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="PhysicalCount" EntitySet="PhysicalCount" />
           </AssociationSet>
           <AssociationSet Name="FK_PreRequisitTask_PreRequisitTask" Association="Self.FK_PreRequisitTask_PreRequisitTask">
             <End Role="ProjectTask" EntitySet="ProjectTask" />
@@ -4109,6 +4156,7 @@
           <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItem" />
           <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItemHistory" />
           <NavigationProperty Name="VendorItems" Relationship="EPMSInventoryModel.FK_VendorItems_ItemVariation" FromRole="ItemVariation" ToRole="VendorItem" />
+          <NavigationProperty Name="PhysicalCounts" Relationship="EPMSInventoryModel.FK_PhysicalCount_ItemVariation" FromRole="ItemVariation" ToRole="PhysicalCount" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -5937,6 +5985,15 @@
             <End Role="RIFHistory" EntitySet="RIFHistories" />
             <End Role="RIFItemHistory" EntitySet="RIFItemHistories" />
           </AssociationSet>
+          <EntitySet Name="PhysicalCounts" EntityType="EPMSInventoryModel.PhysicalCount" />
+          <AssociationSet Name="FK_PhysicalCount_ItemVariation" Association="EPMSInventoryModel.FK_PhysicalCount_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="PhysicalCount" EntitySet="PhysicalCounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PhysicalCount_Warehouse" Association="EPMSInventoryModel.FK_PhysicalCount_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="PhysicalCount" EntitySet="PhysicalCounts" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -5958,6 +6015,7 @@
           <NavigationProperty Name="WarehouseDetails" Relationship="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" FromRole="Warehouse" ToRole="WarehouseDetail" />
           <NavigationProperty Name="ItemReleaseQuantities" Relationship="EPMSInventoryModel.FK_ItemReleaseQuantity_Warehouse" FromRole="Warehouse" ToRole="ItemReleaseQuantity" />
           <NavigationProperty Name="ItemWarehouses" Relationship="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" FromRole="Warehouse" ToRole="ItemWarehouse" />
+          <NavigationProperty Name="PhysicalCounts" Relationship="EPMSInventoryModel.FK_PhysicalCount_Warehouse" FromRole="Warehouse" ToRole="PhysicalCount" />
         </EntityType>
         <Association Name="FK_Warehouse_Employee">
           <End Type="EPMSInventoryModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -7242,6 +7300,46 @@
             </Principal>
             <Dependent Role="RIFItemHistory">
               <PropertyRef Name="RIFId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PhysicalCount">
+          <Key>
+            <PropertyRef Name="PCId" />
+          </Key>
+          <Property Name="PCId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="NoOfPackagesInWarehouse" Type="Int64" Nullable="false" />
+          <Property Name="NoOfItemInWarehouse" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_PhysicalCount_ItemVariation" FromRole="PhysicalCount" ToRole="ItemVariation" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_PhysicalCount_Warehouse" FromRole="PhysicalCount" ToRole="Warehouse" />
+        </EntityType>
+        <Association Name="FK_PhysicalCount_ItemVariation">
+          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.PhysicalCount" Role="PhysicalCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="PhysicalCount">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PhysicalCount_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.PhysicalCount" Role="PhysicalCount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="PhysicalCount">
+              <PropertyRef Name="WarehouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8782,6 +8880,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PhysicalCounts">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.PhysicalCount">
+              <MappingFragment StoreEntitySet="PhysicalCount">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="NoOfItemInWarehouse" ColumnName="NoOfItemInWarehouse" />
+                <ScalarProperty Name="NoOfPackagesInWarehouse" ColumnName="NoOfPackagesInWarehouse" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="PCId" ColumnName="PCId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9010,6 +9123,9 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFHistory_AspNetUsers" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFHistory_Orders" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItemHistory_RIFHistory" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.PhysicalCount" Width="1.5" PointX="16.5" PointY="4" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PhysicalCount_ItemVariation" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PhysicalCount_Warehouse" />
         </Diagram>
     </Diagrams>
   </Designer>
