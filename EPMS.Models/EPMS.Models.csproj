@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
+    <Compile Include="Common\PhysicalCountByColumn.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
+    <Compile Include="RequestModels\PhysicalCountSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
@@ -324,6 +326,7 @@
     <Compile Include="ResponseModels\OrdersResponse.cs" />
     <Compile Include="ResponseModels\PayrollResponse.cs" />
     <Compile Include="ResponseModels\PayrollWidgetResponse.cs" />
+    <Compile Include="ResponseModels\PhysicalCountResponse.cs" />
     <Compile Include="ResponseModels\POCreateResponse.cs" />
     <Compile Include="ResponseModels\PODetailResponse.cs" />
     <Compile Include="ResponseModels\PoHistoryResponse.cs" />
