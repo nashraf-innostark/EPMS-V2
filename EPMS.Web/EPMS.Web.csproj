@@ -1969,6 +1969,7 @@
     <Content Include="Scripts\App\Barcode\jquery-barcode.min.js.map">
       <DependentUpon>jquery-barcode.min.js</DependentUpon>
     </Content>
+    <Content Include="Areas\Inventory\Views\PhysicalCount\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4429,7 +4430,6 @@
     <Folder Include="Areas\HR\Models\" />
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Inventory\Models\" />
-    <Folder Include="Areas\Inventory\Views\PhysicalCount\" />
     <Folder Include="Areas\Inventory\Views\Shared\" />
     <Folder Include="Areas\Meeting\Models\" />
     <Folder Include="Areas\Meeting\Views\Shared\" />
