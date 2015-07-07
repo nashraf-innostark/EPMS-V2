@@ -54,5 +54,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             };
             return Json(countListViewModel, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Create(long? id)
+        {
+            return View();
+        }
     }
 }
