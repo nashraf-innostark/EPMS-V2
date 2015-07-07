@@ -71,23 +71,23 @@
         @Html.HiddenFor(model => model.InventoryDepartment.ParentId, new { @id = "ParentId" })
         @Html.HiddenFor(model => model.RequestFrom, new { @id = "RequestFrom" })
         <div class="container-fluid">
-            <div class="control-group row-fluid nameEn-required">
+            <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="nameEn">@EPMS.Web.Resources.Inventory.InventoryDepartment.DepartmentName</label>
                 </div>
                 <div class="span9">
-                    <div class="controls">
+                    <div class="controls nameEnRequired">
                         @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "nameEn", @class = "toBeDiabled" })
                         <label id="lblNameEn" class="required"></label>
                     </div>
                 </div>
             </div>
-            <div class="control-group row-fluid nameAr-required">
+            <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="nameAr">@EPMS.Web.Resources.Inventory.InventoryDepartment.DepartmentNameArabic</label>
                 </div>
                 <div class="span9">
-                    <div class="controls">
+                    <div class="controls nameArRequired">
                         @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentNameAr, new { @id = "nameAr", @class = "toBeDiabled" })
                         <label id="lblNameAr" class="required"></label>
                     </div>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.InventoryDepartment.DepartmentNameEn, new { @id = "description", @class = "" })
+                        @Html.TextAreaFor(model => model.InventoryDepartment.DepartmentDesc, new { @id = "description", @class = "" })
                     </div>
                 </div>
             </div>
@@ -134,14 +134,14 @@
             <div id="SaveNewNode" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="button" class="btn" onclick="SaveNewNode(event); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
+                        <button type="button" class="btn disableBtn" onclick="SaveNewNode(event);">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
                     </div>
                 </div>
             </div>
             <div id="UpdateNode" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="button" class="btn" onclick="SaveNewNode(event);">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
+                        <button type="button" class="btn disableBtn" onclick="SaveNewNode(event);">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
                     </div>
                 </div>
             </div>
@@ -330,6 +330,7 @@
             });
             $("#SaveNewNode").css("display", "none");
             $("#UpdateNode").css("display", "none");
+            //$("#InventoryDepartmentForm").valid();
             return true;
         }
         $.each(parsed, function (key, value) {
@@ -355,6 +356,7 @@
         $("#Descp").show();
         $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
         $("#colorpicker").addClass('disableList');
+        //$("#InventoryDepartmentForm").valid();
         return true;
     }
     function AddNewNode() {
@@ -385,22 +387,26 @@
         return true;
     }
     function SaveNewNode(event) {
+        //var validStatus = $("#InventoryDepartmentForm").valid();
+        //if (validStatus) {
+        //    $("button.disableBtn").attr("disabled", true);
+            
+        //} else {
+        //    return false;
+        //}
+        $("button.disableBtn").attr("disabled", true);
         if ($("#nameEn").val() == "" || $("#nameEn").val() == 0) {
-            $("#lblNameEn").text("Department Name (english) is required");
+            $("#lblNameEn").text("Department Name is required");
             $("#nameEn").css("background-color", "pink");
-            $('html,body').animate({
-                scrollTop: $(".nameEn-required").offset().top
-            }, 'slow');
+            $("button.disableBtn").attr("disabled", false);
             return false;
         } else {
             $("#lblNameEn").text("");
         }
         if ($("#nameAr").val() == "" || $("#nameAr").val() == 0) {
-            $("#lblNameAr").text("Department Name (arabic) is required");
+            $("#lblNameAr").text("Department Name Arabic is required");
             $("#nameAr").css("background-color", "pink");
-            $('html,body').animate({
-                scrollTop: $(".nameAr-required").offset().top
-            }, 'slow');
+            $("button.disableBtn").attr("disabled", false);
             return false;
         } else {
             $("#lblNameAr").text("");

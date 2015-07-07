@@ -154,7 +154,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.Tir.NotesE, new { @id = "NotesEn", @class = "" })
+                        @Html.TextAreaFor(model => model.Tir.NotesE, new { @id = "NotesEn", @class = "toBeDisabled" })
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.Tir.NotesA, new { @id = "NotesAr", @class = "" })
+                        @Html.TextAreaFor(model => model.Tir.NotesA, new { @id = "NotesAr", @class = "toBeDisabled" })
                     </div>
                 </div>
             </div>
@@ -229,8 +229,7 @@
 <script src="~/RTE/ckeditor.js"></script>
 <script>
     $(document).ready(function () {
-
-        if ('@ViewBag.IsAllowedCompleteView' != "True" || '@Model.Tir.Status' == '1') {
+        @*if ('@ViewBag.IsAllowedCompleteView' != "True" || '@Model.Tir.Status' == '1') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
@@ -251,9 +250,21 @@
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
             $("#CKNotes").show();
+        }*@
+        CKEDITOR.replace('NotesEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('NotesAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#CKNotes").show();
+        if ('@ViewBag.IsAllowedCompleteView' != "True" || '@Model.Tir.Status' == '1') {
+            $('.toBeDisabled:input').attr('disabled', true);
+            $('.disableDdl').select2('disable');
+            $("#SubmitTir").hide();
         }
         if ('@ViewBag.From' == 'History') {
-            $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.toBeDisable:input').attr('readonly', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
         }

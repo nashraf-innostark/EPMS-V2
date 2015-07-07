@@ -6,8 +6,10 @@ namespace EPMS.Web.Models
     {
         public long Id { get; set; }
         [Required]
-        [Display(Name = "Returning Reason")]
+        [Display(Name = "Defectiveness")]
         public string DefectivenessE { get; set; }
+        [Required]
+        [Display(Name = "Defectiveness in arabic")]
         public string DefectivenessA { get; set; }
         public string RecCreatedBy { get; set; }
         public System.DateTime RecCreatedDate { get; set; }

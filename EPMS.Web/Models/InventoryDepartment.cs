@@ -12,8 +12,10 @@ namespace EPMS.Web.Models
         }
         public long DepartmentId { get; set; }
         [Required]
+        [Display(Name = "Department Name")]
         public string DepartmentNameEn { get; set; }
         [Required]
+        [Display(Name = "Department Name Arabic")]
         public string DepartmentNameAr { get; set; }
         public string DepartmentColor { get; set; }
         public string DepartmentDesc { get; set; }

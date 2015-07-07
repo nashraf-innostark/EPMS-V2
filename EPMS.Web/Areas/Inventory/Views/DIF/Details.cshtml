@@ -228,17 +228,17 @@
 <script>
     $(document).ready(function () {
         if ('@Model.Dif.Id' > 0) {
-            editor = CKEDITOR.replace('RFINotesE', {
+            CKEDITOR.replace('RFINotesE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
-            editor = CKEDITOR.replace('RFINotesA', {
+            CKEDITOR.replace('RFINotesA', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
         }
         EnableDisableFields();
         CheckPermissions();
         if ('@ViewBag.From' == 'History') {
-            $("#editDiv").hide();
+            $("#submitDiv").hide();
             $('.toBeDisabled:input').attr('disabled', true);
         }
     });

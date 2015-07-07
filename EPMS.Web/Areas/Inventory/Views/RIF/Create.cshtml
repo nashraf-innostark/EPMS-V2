@@ -46,9 +46,9 @@
                     <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.Client </label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
+                    <div class="controls clientDDL">
                         @(direction == "ltr" ? Html.DropDownListFor(x => x.Rif.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rif.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                        @*@Html.ValidationMessageFor(m => m.Rif.CustomerId, String.Empty, new { @class = "required" })*@
+                        <label id="clientValidationError" class="required"></label>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
+                    <div class="controls orderDDL">
                         @if (Model.Rif.OrderId > 0)
                         {
                             @Html.DropDownListFor(m => m.Rif.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
@@ -66,7 +66,7 @@
                         {
                             @Html.DropDownListFor(m => m.Rif.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                         }
-                        @*@Html.ValidationMessageFor(m => m.Rif.OrderId, String.Empty, new { @class = "required" })*@
+                        <label id="orderValidationError" class="required"></label>
                     </div>
                 </div>
             </div>
@@ -253,7 +253,7 @@
        
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.RFI.RFI.Submit</button>
             </div>
         </div>
     </div>
@@ -606,6 +606,31 @@
         toolbar: 'tiny'
     });
     function jsTreeClick(event) {
+        return true;
+    }
+    function validateForm(event) {
+        var client = $("#Client").val();
+        if (client == 0 || client == "" || client == null) {
+            event.preventDefault();
+            $("#clientValidationError").text("Please Select Client");
+            $('html,body').animate({
+                scrollTop: $(".clientDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#clientValidationError").text("");
+        }
+        var rfi = $("#OrderNo").val();
+        if (rfi == 0 || rfi == "" || rfi == null) {
+            event.preventDefault();
+            $("#orderValidationError").text("Please Select Order");
+            $('html,body').animate({
+                scrollTop: $(".orderDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#orderValidationError").text("");
+        }
         return true;
     }
 </script>

@@ -75,7 +75,7 @@
                 <label class="control-label" for="Requester">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Requester</label>
             </div>
             <div class="span2">
-                <div class="controls">
+                <div class="controls requesterDDL">
                     @if (direction == "ltr")
                     {
                         @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "UserId", "EmployeeNameE"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
@@ -84,6 +84,7 @@
                     {
                         @Html.DropDownListFor(m => m.ItemRelease.RequesterId, new SelectList(Model.Employees, "UserId", "EmployeeNameA"), "--Select--", new { @class = "select2me disableDdl", @id = "Requester" })
                     }
+                    <label id="requesterValidationError" class="required"></label>
                 </div>
             </div>
         </div>
@@ -92,7 +93,7 @@
                 <label class="control-label" for="RfiId">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RFI</label>
             </div>
             <div class="span2">
-                <div class="controls">
+                <div class="controls rfiDDL">
                     @if (direction == "ltr")
                     {
                         @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
@@ -101,6 +102,7 @@
                     {
                         @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
                     }
+                    <label id="rfiValidationError" class="required"></label>
                 </div>
             </div>
 
@@ -305,7 +307,7 @@
         </div>
         <div id="SubmitRecord" class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Submit</button>
+                <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Submit</button>
             </div>
         </div>
     </div>
@@ -475,7 +477,7 @@
             var itemVariationId = $("#RFIItemVariationDropDownList").val();
             $.each(parsedWarehouses, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
-                    warehouse = warehouse + value.PlaceInWarehouse + " - ";
+                    warehouse = warehouse + value.WarehouseNo  + " > " + value.PlaceInWarehouse + " - ";
                     var html = '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + ' - ' + value.Quantity + '</option>';
                     $("#MultiWarehouse").append(html);
                 }
@@ -563,7 +565,8 @@
                 });
                 dropAllFormWarForEdit(index, quantities.length);
                 $("#WarehouseCount").val(0);
-                
+
+                selectedValues = new Array();
                 for (var i = 0; i < quantities.length; i++) {
                     var hiddenFields =
                             '<input name="ItemReleaseDetails[' + index + '].ItemReleaseQuantities[' + i + '].Index" type="hidden" value="' + i + '" />' +
@@ -756,7 +759,6 @@
         $("#selectBoxFilter").select2();
         $("#Requester").on("change", function () {
             var requesterId = $(this).val();
-            
             if (requesterId == "") {
                 $("#RfiId").empty();
                 $("#RfiId").append(
@@ -795,6 +797,10 @@
             var rfiId = parseInt($("#RfiId").val());
             if (rfiId == 0) {
                 $("#OrderNumber").val("");
+                $("#DeliveryInfoE").val("");
+                $("#DeliveryInfoA").val("");
+                CKEDITOR.instances['DeliveryInfoEn'].setData("");
+                CKEDITOR.instances['DeliveryInfoAr'].setData("");
             }
             $.each(orderNo, function (key, value) {
                 if (value.rfiId == rfiId) {
@@ -1020,6 +1026,31 @@
         $.unblockUI();
     }
     function jsTreeClick(event) {
+        return true;
+    }
+    function validateForm(event) {
+        var requester = $("#Requester").val();
+        if (requester == 0 || requester == "" || requester == null) {
+            event.preventDefault();
+            $("#requesterValidationError").text("Please Select Requester");
+            $('html,body').animate({
+                scrollTop: $(".requesterDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#requesterValidationError").text("");
+        }
+        var rfi = $("#RfiId").val();
+        if (rfi == 0 || rfi == "" || rfi == null) {
+            event.preventDefault();
+            $("#rfiValidationError").text("Please Select RFI");
+            $('html,body').animate({
+                scrollTop: $(".rfiDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#rfiValidationError").text("");
+        }
         return true;
     }
 </script>
