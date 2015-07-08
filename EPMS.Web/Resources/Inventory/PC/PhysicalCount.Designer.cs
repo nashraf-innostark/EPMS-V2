@@ -68,5 +68,14 @@ namespace EPMS.Web.Resources.Inventory.PC {
                 return ResourceManager.GetString("PageTitleIndex", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical Count.
+        /// </summary>
+        public static string PC {
+            get {
+                return ResourceManager.GetString("PC", resourceCulture);
+            }
+        }
     }
 }
