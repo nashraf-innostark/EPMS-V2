@@ -78,26 +78,7 @@
             </div>
         </div>
         <!--Input Field end-->
-        <!--WYSIWYG Editor - Minimum Options begin-->
-        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.ExcelImport</label>
-            </div>
-            <div class="span9">
-                <div class="controls elrte-wrapper">
-                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="button" id="importEx" class="btn">@EPMS.Web.Resources.RFI.RFI.Import</button>
-            </div>
-            <div class="span3 span-inset">
-                <button type="button" id="itemFromOrder" class="btn">@EPMS.Web.Resources.RFI.RFI.ImportItemsFromOrder</button>
-            </div>
-        </div>
-        <!--WYSIWYG Editor - Minimum Options end-->
+        
         <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
@@ -452,83 +433,6 @@
                 $(this).find(".serialNumber").text(add);
             });
         }
-
-
-        $("#importEx").on("click", function () {
-            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
-            var coln = $(excel).find("tr:first td").length;
-            var count = 0;
-            var x = 0;
-            if (coln == 2) {
-                var index = 1;
-                $(excel).find("tr").each(function () {
-                    var y = 0;
-                    var t1 = "";
-                    var t2 = 0;
-                    var t3 = 0;
-                    var t4 = 0;
-                    $(this).find("td").each(function () {
-                        if (y == 0) {
-                            t1 = $(this).text();
-                        } else if (y == 1) {
-                            t2 = parseInt($(this).text());
-                        } else if (y == 2) {
-                            t3 = parseInt($(this).text());
-                        }
-                        y++;
-                    });
-                    t4 = t3 * t2;
-                    var indexCell = "<td style='display:none'>" +
-                        "<input name='DifItem.Index' type='hidden' value='" + index + "' />" +
-                        "<input name='DifItem[" + index + "].IsItemDescription' id='DifItem_" + index + "__IsItemDescription' type='hidden' />" +
-                        "<input name='DifItem[" + index + "].IsItemSKU' id='DifItem_" + index + "__IsItemSKU' type='hidden' />" +
-                        "<input name='DifItem[" + index + "].ItemVariationId' id='DifItem_" + index + "__ItemVariationId' type='hidden' />" +
-                        "<input name='DifItem[" + index + "].PlaceInDepartment' id='DifItem_" + index + "__PlaceInDepartment' type='hidden' />" +
-                        "</td>";
-                    //DifItem
-                    var html = '<tr data-id=' + index + '>' +
-                        indexCell +
-                        '<td>' +
-                        '<div class="control-group row-fluid">' +
-                        '<div class="span1">' +
-                        '<label class="control-label serialNumber"  ></label>' +
-                        '</div></div>' +
-                        '</td>' +
-                        '<td> <textarea rows="2"  class="auto-resize"  id="DifItem_' + index + '__ItemDetails" name="DifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                        '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                        '<span class="field-validation-valid required" data-valmsg-for="DifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                        '</td>' +
-                        '<td class="quantity"> ' +
-                        '<input class="n1" type="text" value=' + t2 + ' id="DifItem_' + index + '__ItemQty" name="DifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                        '<span class="field-validation-valid required" data-valmsg-for="DifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                        '</td>' +
-                        '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                        '</td></tr>';
-
-                    index = index + 1;
-                    if (count == 0) {
-                        $('.qouteAdd').html("");
-                    }
-
-                    $('.qouteAdd').append(html);
-                    reActivateDelete();
-                    //reactivateCount();
-
-                    count++;
-                });
-
-                activateSerial();
-            } else {
-
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
-                });
-
-            }
-
-        });
     });
 
     $('#tiny').elrte({
