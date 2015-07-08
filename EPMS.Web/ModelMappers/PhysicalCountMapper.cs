@@ -12,5 +12,16 @@ namespace EPMS.Web.ModelMappers
                 PCId = source.PCId
             };
         }
+        public static PhysicalCountModel CreateFromServerToClient(this PhysicalCount source)
+        {
+            return new PhysicalCountModel
+            {
+                PCId = source.PCId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedDate = source.RecLastUpdatedDate
+            };
+        }
     }
 }

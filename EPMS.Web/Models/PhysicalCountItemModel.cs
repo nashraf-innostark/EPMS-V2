@@ -8,6 +8,7 @@
         public long WarehouseId { get; set; }
         public long NoOfPackagesInWarehouse { get; set; }
         public long NoOfItemInWarehouse { get; set; }
+        public string ItemBarcode { get; set; }
         public string ItemDetailsEn { get; set; }
         public string ItemDetailsAr { get; set; }
         public long ItemsInPackage { get; set; }

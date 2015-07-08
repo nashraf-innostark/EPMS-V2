@@ -485,7 +485,6 @@
     <Compile Include="Models\TIRItem.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorItems.cs" />
-    <Compile Include="Models\WarehousDdl.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Models\WarehouseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -930,6 +929,7 @@
     <Content Include="Images\CKUploads\10966523_10152685879702657_1713565689_n.jpg" />
     <Content Include="Images\CKUploads\11079327_10152685878212657_284329175_n.jpg" />
     <Content Include="Images\CKUploads\11106462_10152685879987657_1716894699_n.jpg" />
+    <Content Include="Images\loading.gif" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />
     <Content Include="NotificationsTextFiles\CommercialRegisterExpiryDateEmail.txt" />

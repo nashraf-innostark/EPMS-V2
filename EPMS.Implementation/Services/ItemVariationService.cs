@@ -71,6 +71,12 @@ namespace EPMS.Implementation.Services
             return variationRepository.Find(id);
         }
 
+        public ItemVariation FindVariationByBarcode(string barcode)
+        {
+            var item = variationRepository.FindVariationByBarcode(barcode);
+            return item;
+        }
+
         public long[] GetItemVariationId(string[] items)
         {
             long[] variationIds = new long[items.Length];

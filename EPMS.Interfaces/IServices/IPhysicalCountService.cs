@@ -13,5 +13,6 @@ namespace EPMS.Interfaces.IServices
         bool AddPhysicalCount(PhysicalCount physicalCount);
         bool UpdatePhysicalCount(PhysicalCount physicalCount);
         void DeletePhysicalCount(PhysicalCount physicalCount);
+        PCCreateResponse LoadPhysicalCountResponseData(long? id,string requesterUserId);
     }
 }
