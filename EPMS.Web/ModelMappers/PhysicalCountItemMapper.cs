@@ -9,8 +9,8 @@ namespace EPMS.Web.ModelMappers
         {
             return new PhysicalCountItemModel
             {
-                PCItemId = source.PCItemId,
-                PCId = source.PCId,
+                PcItemId = source.PCItemId,
+                PcId = source.PCId,
                 ItemVariationId = source.ItemVariationId,
                 WarehouseId = source.WarehouseId,
 
@@ -34,8 +34,8 @@ namespace EPMS.Web.ModelMappers
         {
             return new PhysicalCountItem
             {
-                PCItemId = source.PCItemId,
-                PCId = source.PCId,
+                PCItemId = source.PcItemId,
+                PCId = source.PcId,
                 ItemVariationId = source.ItemVariationId,
                 WarehouseId = source.WarehouseId,
 

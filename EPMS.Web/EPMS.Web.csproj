@@ -1978,6 +1978,7 @@
       <DependentUpon>jquery-barcode.min.js</DependentUpon>
     </Content>
     <Content Include="Areas\Inventory\Views\PhysicalCount\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\PhysicalCount\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

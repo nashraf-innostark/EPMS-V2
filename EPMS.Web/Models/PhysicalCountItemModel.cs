@@ -2,8 +2,8 @@
 {
     public class PhysicalCountItemModel
     {
-        public long PCItemId { get; set; }
-        public long PCId { get; set; }
+        public long PcItemId { get; set; }
+        public long PcId { get; set; }
         public long ItemVariationId { get; set; }
         public long WarehouseId { get; set; }
         public long NoOfPackagesInWarehouse { get; set; }
