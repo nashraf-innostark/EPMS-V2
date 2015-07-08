@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -89,6 +90,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
             var customers = CustomerService.GetAll();
             ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
+            ViewBag.ShowExcelImport = CheckInventoryModule() != true;
             var users = AspNetUserService.FindById(User.Identity.GetUserId());
             var direction = Resources.Shared.Common.TextDirection;
             var createdByName = "";
@@ -334,6 +336,23 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
+        #region CheckInventoryModule
+
+        bool CheckInventoryModule()
+        {
+            string licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            string licenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
+            string[] splitLicenseKey = licenseKey.Split('|');
+            string modules = splitLicenseKey[4];
+            string[] splitModules = modules.Split(';');
+            if (splitModules.Contains("IS"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
 
         #endregion
     }
