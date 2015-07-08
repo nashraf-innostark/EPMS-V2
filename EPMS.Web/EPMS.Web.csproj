@@ -359,6 +359,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\PhysicalCountItemMapper.cs" />
     <Compile Include="ModelMappers\PhysicalCountMapper.cs" />
     <Compile Include="ModelMappers\ColorMapper.cs" />
     <Compile Include="ModelMappers\CompanyProfileMapper.cs" />
@@ -449,6 +450,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\ParentNodesSection.cs" />
     <Compile Include="Models\PhysicalCountListModel.cs" />
+    <Compile Include="Models\PhysicalCountItemModel.cs" />
     <Compile Include="Models\PhysicalCountModel.cs" />
     <Compile Include="Models\PreRequisitTask.cs" />
     <Compile Include="Models\Project.cs" />
