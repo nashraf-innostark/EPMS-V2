@@ -282,14 +282,14 @@
                 <div id="AddDetail" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn" onclick="SaveNode(); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
+                            <button type="button" class="btn disableBtn" onclick="SaveNode(); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnCreate</button>
                         </div>
                     </div>
                 </div>
                 <div id="UpdateDetail" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn" onclick="SaveNode(); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
+                            <button type="button" class="btn disableBtn" onclick="SaveNode(); ">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnUpdate</button>
                         </div>
                     </div>
                 </div>
@@ -528,6 +528,7 @@
         return true;
     }
     function SaveNode() {
+        $("button.disableBtn").attr("disabled", true);
         var parent = parseInt($('#DetailParentId').val());
         if (isNaN(parent)) {
             parent = 0;
@@ -573,6 +574,7 @@
         });
     }
     function successCreatingNode(data) {
+        $("button.disableBtn").attr("disabled", true);
         if (data != null) {
             if (data == "Saved") {
                 window.location.reload();
@@ -586,6 +588,7 @@
         }
     }
     function callError() {
+        $("button.disableBtn").attr("disabled", true);
         alert("Problem in Saving Changes.");
     }
 </script>

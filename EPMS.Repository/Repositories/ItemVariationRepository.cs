@@ -20,6 +20,15 @@ namespace EPMS.Repository.Repositories
             get { return db.ItemVariations; }
         }
 
+        public long GetItemVariationId(string item)
+        {
+            ItemVariation itemVariation = DbSet.FirstOrDefault(x => x.SKUCode.Equals(item) ||
+                x.InventoryItem.ItemNameEn.Equals(item) || x.InventoryItem.ItemNameAr.Equals(item) || x.InventoryItem.ItemCode.Equals(item));
+            if (itemVariation != null)
+                return itemVariation.ItemVariationId;
+            return 0;
+        }
+
         public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList()
         {
             return DbSet.Select(x => new ItemVariationDropDownListItem

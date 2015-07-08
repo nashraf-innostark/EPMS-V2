@@ -237,4 +237,13 @@
   <data name="PurchaseOrderHistory" xml:space="preserve">
     <value>Purchase Order (PO) History</value>
   </data>
+  <data name="POAdded" xml:space="preserve">
+    <value>Purchase Order has been added successfully</value>
+  </data>
+  <data name="POStatusUpdated" xml:space="preserve">
+    <value>Purchase Order Status has been updated successfully</value>
+  </data>
+  <data name="POUpdated" xml:space="preserve">
+    <value>Purchase Order has been updated successfully</value>
+  </data>
 </root>

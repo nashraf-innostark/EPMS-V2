@@ -120,7 +120,7 @@
   <ItemGroup>
     <Compile Include="BaseRepository\BaseDbContext.cs" />
     <Compile Include="BaseRepository\BaseRespository.cs" />
-    <Compile Include="BaseRepository\Model.Designer.cs">
+    <Compile Include="BaseRepository\Model1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
@@ -172,6 +172,7 @@
     <Compile Include="Repositories\NotificationRecipientRepository.cs" />
     <Compile Include="Repositories\NotificationRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Repositories\PhysicalCountRepository.cs" />
     <Compile Include="Repositories\POHistoryRepository.cs" />
     <Compile Include="Repositories\PoItemRepository.cs" />
     <Compile Include="Repositories\PreRequisitTaskRepository.cs" />
@@ -211,7 +212,7 @@
     </None>
     <EntityDeploy Include="BaseRepository\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="Content\bootstrap-theme.css.map" />
     <None Include="Content\bootstrap.css.map" />

@@ -42,6 +42,11 @@ namespace EPMS.Repository.Repositories
                 DbSet.FirstOrDefault(x => x.ItemVariationId == variationId && x.WarehouseId == warehouseId);
         }
 
+        public ItemWarehouse FindItemWarehouseByItemBarCodeAndWarehouseId(string itemBarcode, long warehouseId)
+        {
+            return DbSet.FirstOrDefault(x => x.WarehouseId == warehouseId && x.ItemVariation.ItemBarcode == itemBarcode);
+        }
+
         public IEnumerable<ItemWarehouse> GetItemWarehousesByVariationId(long variationId)
         {
             return DbSet.Where(x => x.ItemVariationId == variationId);

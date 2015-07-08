@@ -304,12 +304,14 @@
     <Compile Include="Areas\HR\Controllers\PayrollController.cs" />
     <Compile Include="Areas\HR\Controllers\RequestController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\Inventory\Controllers\BarcodeController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryDepartmentController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryItemController.cs" />
     <Compile Include="Areas\Inventory\Controllers\InventoryWarehouseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemReleaseController.cs" />
     <Compile Include="Areas\Inventory\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Inventory\Controllers\DIFController.cs" />
+    <Compile Include="Areas\Inventory\Controllers\PhysicalCountController.cs" />
     <Compile Include="Areas\Inventory\Controllers\PurchaseOrderController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RIFController.cs" />
     <Compile Include="Areas\Inventory\Controllers\RFIController.cs" />
@@ -357,6 +359,8 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\PhysicalCountItemMapper.cs" />
+    <Compile Include="ModelMappers\PhysicalCountMapper.cs" />
     <Compile Include="ModelMappers\ColorMapper.cs" />
     <Compile Include="ModelMappers\CompanyProfileMapper.cs" />
     <Compile Include="ModelMappers\ComplaintMapper.cs" />
@@ -408,6 +412,7 @@
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantExperience.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\Barcode.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\ApplicantQualification.cs" />
     <Compile Include="Models\Common\JsTree.cs" />
@@ -444,6 +449,9 @@
     <Compile Include="Models\MeetingModel.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\ParentNodesSection.cs" />
+    <Compile Include="Models\PhysicalCountListModel.cs" />
+    <Compile Include="Models\PhysicalCountItemModel.cs" />
+    <Compile Include="Models\PhysicalCountModel.cs" />
     <Compile Include="Models\PreRequisitTask.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsForDDL.cs" />
@@ -477,6 +485,7 @@
     <Compile Include="Models\TIRItem.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorItems.cs" />
+    <Compile Include="Models\WarehousDdl.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Models\WarehouseDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -690,6 +699,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Inventory\PC\PhysicalCount.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhysicalCount.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\PO\PO.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -814,6 +828,7 @@
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
+    <Compile Include="ViewModels\Barcode\BarcodeViewModel.cs" />
     <Compile Include="ViewModels\CKEditor\ImagesViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs" />
     <Compile Include="ViewModels\Common\MessageViewModel.cs" />
@@ -850,6 +865,8 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
+    <Compile Include="ViewModels\PhysicalCount\PhysicalCountListViewModel.cs" />
+    <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\POHistoryViewModel.cs" />
@@ -1883,6 +1900,9 @@
     <Content Include="RTE\skins\moono\images\lock.png" />
     <Content Include="RTE\skins\moono\images\refresh.png" />
     <Content Include="RTE\styles.js" />
+    <Content Include="Scripts\App\Barcode\jquery-barcode.js" />
+    <Content Include="Scripts\App\Barcode\jquery-barcode.min.js" />
+    <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
@@ -1958,6 +1978,11 @@
     <Content Include="Areas\Inventory\Views\ItemRelease\History.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\Details.cshtml" />
     <Content Include="Areas\Inventory\Views\PurchaseOrder\History.cshtml" />
+    <Content Include="Areas\Inventory\Views\Barcode\Index.cshtml" />
+    <Content Include="Scripts\App\Barcode\jquery-barcode.min.js.map">
+      <DependentUpon>jquery-barcode.min.js</DependentUpon>
+    </Content>
+    <Content Include="Areas\Inventory\Views\PhysicalCount\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3911,6 +3936,10 @@
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PhysicalCount.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\PO\PO.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

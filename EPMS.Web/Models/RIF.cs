@@ -14,6 +14,8 @@ namespace EPMS.Web.Models
         [Required]
         [Display(Name = "Returning Reason")]
         public string ReasonE { get; set; }
+        [Required]
+        [Display(Name = "Returning Reason in arabic")]
         public string ReasonA { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }

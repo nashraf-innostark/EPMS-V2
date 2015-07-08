@@ -27,8 +27,9 @@ namespace EPMS.Implementation.Services
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
         private readonly IItemReleaseQuantityRepository releaseQuantityRepository;
+        private readonly IRFIRepository rfiRepository;
 
-        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository, INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IRFIRepository rfiRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository)
+        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository, INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository, IRFIRepository rfiRepository)
         {
             this.itemWarehouseRepository = itemWarehouseRepository;
             this.notificationService = notificationService;
@@ -40,6 +41,7 @@ namespace EPMS.Implementation.Services
             this.releaseHistoryRepository = releaseHistoryRepository;
             this.releaseQuantityRepository = releaseQuantityRepository;
             this.employeeRepository = employeeRepository;
+            this.rfiRepository = rfiRepository;
         }
 
         public IRFCreateResponse GetCreateResponse(long id)
@@ -50,8 +52,11 @@ namespace EPMS.Implementation.Services
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList(),
                 ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
-            IList<RFI> customerRfis = new List<RFI>();
-            response.Rfis = customerRfis;
+            response.Rfis = new List<RFI>();
+            if (id > 0)
+            {
+                response.Rfis = rfiRepository.GetRfiByRequesterId(response.ItemRelease.RequesterId);
+            }
             var itemVariations = itemVariationRepository.GetAll();
             response.ItemWarehouses = new List<ItemWarehouse>();
             foreach (var itemVariation in itemVariations)
@@ -288,6 +293,12 @@ namespace EPMS.Implementation.Services
                 {
                     if (clientItems.All(x => x.IRFDetailId != itemReleaseDetail.IRFDetailId))
                     {
+                        var quantitiesToDelete = itemReleaseDetail.ItemReleaseQuantities.ToList();
+                        foreach (var itemReleaseQuantity in quantitiesToDelete)
+                        {
+                            releaseQuantityRepository.Delete(itemReleaseQuantity);
+                            releaseQuantityRepository.SaveChanges();
+                        }
                         detailRepository.Delete(itemReleaseDetail);
                         detailRepository.SaveChanges();
                         //itemToSave.ItemReleaseDetails.Remove(itemReleaseDetail);

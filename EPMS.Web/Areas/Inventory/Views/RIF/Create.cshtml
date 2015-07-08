@@ -34,7 +34,7 @@
 <!--Notifications end-->
 @using (Html.BeginForm("Create", "RIF", FormMethod.Post, new { @id = "RIFForm", @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(x=>x.Rif.RIFId)
+    @Html.HiddenFor(x => x.Rif.RIFId)
     @Html.HiddenFor(x => x.Rif.ManagerId)
     @Html.HiddenFor(x => x.Rif.RecCreatedBy)
     @Html.HiddenFor(x => x.Rif.RecCreatedDate)
@@ -46,9 +46,9 @@
                     <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.Client </label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
+                    <div class="controls clientDDL">
                         @(direction == "ltr" ? Html.DropDownListFor(x => x.Rif.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Rif.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
-                        @*@Html.ValidationMessageFor(m => m.Rif.CustomerId, String.Empty, new { @class = "required" })*@
+                        <label id="clientValidationError" class="required"></label>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     <label class="control-label" for="MaritalStatus">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
                 </div>
                 <div class="span2">
-                    <div class="controls">
+                    <div class="controls orderDDL">
                         @if (Model.Rif.OrderId > 0)
                         {
                             @Html.DropDownListFor(m => m.Rif.OrderId, new SelectList(Model.Orders, "OrderId", "OrderNo"), "", new { @class = "select2me", @id = "OrderNo" })
@@ -66,12 +66,12 @@
                         {
                             @Html.DropDownListFor(m => m.Rif.OrderId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "OrderNo" })
                         }
-                        @*@Html.ValidationMessageFor(m => m.Rif.OrderId, String.Empty, new { @class = "required" })*@
+                        <label id="orderValidationError" class="required"></label>
                     </div>
                 </div>
             </div>
         }
-        
+
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -111,26 +111,6 @@
             </div>
         </div>
         <!--Input Field end-->
-        <!--WYSIWYG Editor - Minimum Options begin-->
-        <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.ExcelImport</label>
-            </div>
-            <div class="span9">
-                <div class="controls elrte-wrapper">
-                    <textarea id="tiny" rows="2" class="auto-resize"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="button" id="importEx" class="btn">@EPMS.Web.Resources.RFI.RFI.Import</button>
-            </div>
-            <div class="span3 span-inset">
-                <button type="button" id="itemFromOrder" class="btn">@EPMS.Web.Resources.RFI.RFI.ImportItemsFromOrder</button>
-            </div>
-        </div>
-        <!--WYSIWYG Editor - Minimum Options end-->
         <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
@@ -152,7 +132,7 @@
                                 <tr data-id=@i>
                                     <td style='display:none'>
                                         <input name='RifItem.Index' type='hidden' value=@i />
-                                        
+
                                         @Html.HiddenFor(m => m.RifItem[i].IsItemDescription)
                                         @Html.HiddenFor(m => m.RifItem[i].IsItemSKU)
                                         @Html.HiddenFor(m => m.RifItem[i].ItemVariationId)
@@ -162,19 +142,19 @@
                                     <td>
                                         <div class="control-group row-fluid">
                                             <div class="span1">
-                                                <label class="control-label serialNumber">@(i+1)</label>
+                                                <label class="control-label serialNumber">@(i + 1)</label>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.RifItem[i].ItemDetails, new { @class = "auto-resize",@rows=2 })
-                                        
+                                        @Html.TextAreaFor(m => m.RifItem[i].ItemDetails, new { @class = "auto-resize", @rows = 2 })
+
                                         <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
                                         @Html.ValidationMessageFor(m => m.RifItem[i].ItemDetails)
                                     </td>
                                     <td class="quantity">
                                         @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2 })
-                                        @Html.ValidationMessageFor(m => m.RifItem[i].ItemQty,null, new { @class = "required"})
+                                        @Html.ValidationMessageFor(m => m.RifItem[i].ItemQty, null, new { @class = "required" })
                                     </td>
 
 
@@ -217,7 +197,7 @@
                                 </td>
                             </tr>
                         }
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -250,10 +230,10 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.RFI.RFI.Submit</button>
             </div>
         </div>
     </div>
@@ -385,7 +365,7 @@
                 "initially_open": ["parentNode"]
             }
         }).bind("select_node.jstree", function (event, data) {
-            //`data.rslt.obj` is the jquery extended node that was clicked          
+            //`data.rslt.obj` is the jquery extended node that was clicked
             if (data.inst._get_parent(data.rslt.obj) != -1) {
                 var parents = [];
                 textTillParent = "";
@@ -512,91 +492,6 @@
                 $(this).find(".serialNumber").text(add);
             });
         }
-
-
-        $("#importEx").on("click", function () {
-
-            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
-            var coln = $(excel).find("tr:first td").length;
-            var count = 0;
-            var x = 0;
-            if (coln == 2) {
-                var index = 1;
-                $(excel).find("tr").each(function () {
-                    var y = 0;
-                    var t1 = "";
-                    var t2 = 0;
-                    var t3 = 0;
-                    var t4 = 0;
-
-
-                    $(this).find("td").each(function () {
-
-
-                        if (y == 0) {
-                            t1 = $(this).text();
-
-                        } else if (y == 1) {
-                            t2 = parseInt($(this).text());
-                        } else if (y == 2) {
-                            t3 = parseInt($(this).text());
-                        }
-
-                        y++;
-                    });
-
-                    t4 = t3 * t2;
-                    var indexCell = "<td style='display:none'>" +
-                        "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
-                        "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
-                        "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' type='hidden' />" +
-                        "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' type='hidden' />" +
-                        "<input name='RifItem[" + index + "].PlaceInDepartment' id='RifItem_" + index + "__PlaceInDepartment' type='hidden' />" +
-                        "</td>";
-                    //RifItem
-                    var html = '<tr data-id=' + index + '>' +
-                        indexCell +
-                        '<td>' +
-                        '<div class="control-group row-fluid">' +
-                        '<div class="span1">' +
-                        '<label class="control-label serialNumber"  ></label>' +
-                        '</div></div>' +
-                        '</td>' +
-                        '<td> <textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + t1 + '</textarea>' +
-                        '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                        '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
-                        '</td>' +
-                        '<td class="quantity"> ' +
-                        '<input class="n1" type="text" value=' + t2 + ' id="RifItem_' + index + '__ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
-                        '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
-                        '</td>' +
-                        '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
-                        '</td></tr>';
-
-                    index = index + 1;
-                    if (count == 0) {
-                        $('.qouteAdd').html("");
-                    }
-
-                    $('.qouteAdd').append(html);
-                    reActivateDelete();
-                    //reactivateCount();
-
-                    count++;
-                });
-
-                activateSerial();
-            } else {
-
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
-                });
-
-            }
-
-        });
     });
 
     $('#tiny').elrte({
@@ -606,6 +501,31 @@
         toolbar: 'tiny'
     });
     function jsTreeClick(event) {
+        return true;
+    }
+    function validateForm(event) {
+        var client = $("#Client").val();
+        if (client == 0 || client == "" || client == null) {
+            event.preventDefault();
+            $("#clientValidationError").text("Please Select Client");
+            $('html,body').animate({
+                scrollTop: $(".clientDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#clientValidationError").text("");
+        }
+        var rfi = $("#OrderNo").val();
+        if (rfi == 0 || rfi == "" || rfi == null) {
+            event.preventDefault();
+            $("#orderValidationError").text("Please Select Order");
+            $('html,body').animate({
+                scrollTop: $(".orderDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#orderValidationError").text("");
+        }
         return true;
     }
 </script>

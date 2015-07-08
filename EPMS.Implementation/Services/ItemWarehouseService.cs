@@ -60,6 +60,11 @@ namespace EPMS.Implementation.Services
             return warehouseRepository.GetItemsByVariationId(variationId);
         }
 
+        public ItemWarehouse GetItemWarehouseByItemBarCodeAndWarehouseId(string itemBarcode, long warehouseId)
+        {
+            return warehouseRepository.FindItemWarehouseByItemBarCodeAndWarehouseId(itemBarcode, warehouseId);
+        }
+
         public IEnumerable<ItemWarehouse> GetAllWarehouses(long variationId)
         {
             var releaseQuantities = itemReleaseQuantityRepository.GetAll();
@@ -73,7 +78,6 @@ namespace EPMS.Implementation.Services
             }
             return itemWarehouses;            
         }
-
         #endregion
     }
 }

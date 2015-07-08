@@ -106,7 +106,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = "PO Status Updated",
+                    Message = Resources.Inventory.PO.PO.POStatusUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");
@@ -156,7 +156,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "PO Updated",
+                        Message = Resources.Inventory.PO.PO.POUpdated,
                         IsUpdated = true
                     };
                 }
@@ -171,7 +171,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     viewModel.Order.RecUpdatedDate = DateTime.Now;
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = "PO Added",
+                        Message = Resources.Inventory.PO.PO.POAdded,
                         IsSaved = true
                     };
                 }
@@ -230,7 +230,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = "PO Status Updated",
+                    Message = Resources.Inventory.PO.PO.POStatusUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");

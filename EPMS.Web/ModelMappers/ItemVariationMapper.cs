@@ -63,6 +63,61 @@ namespace EPMS.Web.ModelMappers
             model.ItemDescForIndexAr = descAr;
             return model;
         }
+        public static WebModels.ItemVariation CreateFromServerToClient(this DomainModels.ItemVariation source, IEnumerable<DomainModels.ItemWarehouse> itemWarehouses)
+        {
+            Models.ItemVariation model = new Models.ItemVariation();
+            model.ItemVariationId = source.ItemVariationId;
+            model.InventoryItemId = source.InventoryItemId;
+            model.ItemBarcode = source.ItemBarcode;
+            model.SKUCode = source.SKUCode;
+            model.UnitPrice = source.UnitPrice;
+            model.PackagePrice = source.PackagePrice;
+            model.PriceCalculation = source.PriceCalculation;
+            model.DescriptionEn = source.InventoryItem.ItemDescriptionEn;
+            model.DescriptionAr = source.InventoryItem.ItemDescriptionAr;
+            model.SKUDescriptionEn = source.SKUDescriptionEn;
+            model.SKUDescriptionAr = source.SKUDescriptionAr;
+            model.QuantityInHand = source.QuantityInHand;
+            model.QuantitySold = source.QuantitySold;
+            model.ReorderPoint = source.ReorderPoint;
+            model.QuantityInManufacturing = source.QuantityInManufacturing;
+            model.Weight = source.Weight;
+            model.Height = source.Height;
+            model.Width = source.Width;
+            model.Depth = source.Depth;
+            model.NotesEn = source.NotesEn;
+            model.NotesAr = source.NotesAr;
+            model.AdditionalInfoEn = source.AdditionalInfoEn;
+            model.AdditionalInfoAr = source.AdditionalInfoAr;
+            model.RecCreatedBy = source.RecCreatedBy;
+            model.RecCreatedDt = source.RecCreatedDt;
+            model.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            model.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            model.Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList();
+            model.Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList();
+            model.Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList();
+            model.ItemManufacturers = source.ItemManufacturers.Select(x => x.CreateFromServerToClient()).ToList();
+            model.ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()).ToList();
+            model.ItemWarehouses = itemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
+            var descEn = source.InventoryItem.ItemDescriptionEn;
+            if (!string.IsNullOrEmpty(descEn))
+            {
+                descEn = descEn.Replace("\r", "");
+                descEn = descEn.Replace("\t", "");
+                descEn = descEn.Replace("\n", "");
+            }
+            var descAr = source.InventoryItem.ItemDescriptionAr;
+            if (!string.IsNullOrEmpty(descAr))
+            {
+                descAr = descAr.Replace("\r", "");
+                descAr = descAr.Replace("\t", "");
+                descAr = descAr.Replace("\n", "");
+            }
+
+            model.ItemDescForIndexEn = descEn;
+            model.ItemDescForIndexAr = descAr;
+            return model;
+        }
 
         public static ItemVariationRequest CreateFromClientToServer(this WebModels.ItemVariation source)
         {
