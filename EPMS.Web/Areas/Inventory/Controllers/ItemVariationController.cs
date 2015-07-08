@@ -88,15 +88,33 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(ItemVariationViewModel variationViewModel)
         {
-            ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
-            itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
-            itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;
-            itemToSave.StatusArrayList = variationViewModel.StatusArrayList;
-            itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
-            itemVariationService.SaveItemVariation(itemToSave);
+            if (variationViewModel.ItemVariation.ItemVariationId > 0)
             {
-                TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
-                return RedirectToAction("Create", "InventoryItem", new { id = variationViewModel.ItemVariation.InventoryItemId });
+                ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
+                itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
+                itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;
+                itemToSave.StatusArrayList = variationViewModel.StatusArrayList;
+                itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
+                itemVariationService.SaveItemVariation(itemToSave);
+                {
+                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.ItemVariation.IsUpdated, IsUpdated = true };
+                    return RedirectToAction("Create", "InventoryItem",
+                        new {id = variationViewModel.ItemVariation.InventoryItemId});
+                }
+            }
+            else
+            {
+                ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
+                itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
+                itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;
+                itemToSave.StatusArrayList = variationViewModel.StatusArrayList;
+                itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
+                itemVariationService.SaveItemVariation(itemToSave);
+                {
+                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.ItemVariation.IsUpdated, IsSaved = true };
+                    return RedirectToAction("Create", "InventoryItem",
+                        new {id = variationViewModel.ItemVariation.InventoryItemId});
+                }
             }
         }
 

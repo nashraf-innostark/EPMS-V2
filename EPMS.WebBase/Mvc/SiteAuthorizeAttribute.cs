@@ -25,7 +25,7 @@ namespace EPMS.WebBase.Mvc
         {
             // check license
             var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            LicenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            LicenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
             var splitLicenseKey = LicenseKey.Split('|');
             Domain = splitLicenseKey[0];
             MacAddress = splitLicenseKey[1];

@@ -207,4 +207,10 @@
   <data name="NameLengthValidation" xml:space="preserve">
     <value>Item Name cannot exceed 500 characters. </value>
   </data>
+  <data name="IsSaved" xml:space="preserve">
+    <value>Inventory Item has been Added.</value>
+  </data>
+  <data name="IsUpdated" xml:space="preserve">
+    <value>Inventory Item has been Updated.</value>
+  </data>
 </root>
