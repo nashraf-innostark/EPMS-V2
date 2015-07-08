@@ -699,6 +699,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Inventory\PC\PhysicalCount.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhysicalCount.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Inventory\PO\PO.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3931,6 +3936,10 @@
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PhysicalCount.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\PO\PO.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
