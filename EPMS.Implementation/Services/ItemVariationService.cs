@@ -277,7 +277,7 @@ namespace EPMS.Implementation.Services
                     {
                         if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId))
                             continue;
-                        var itemToDelete = itemWarehouseRepository.Find(warehouseItem.WarehouseId);
+                        var itemToDelete = itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
                         itemWarehouseRepository.Delete(itemToDelete);
                     }
                 }
@@ -352,7 +352,7 @@ namespace EPMS.Implementation.Services
                     {
                         if (clientList.Any(x => x.ManufacturerId == manufacturerItem.ManufacturerId))
                             continue;
-                        var itemToDelete = itemManufacturerRepository.Find(manufacturerItem.ManufacturerId);
+                        var itemToDelete = itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
                         itemManufacturerRepository.Delete(itemToDelete);
                     }
                 }

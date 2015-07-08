@@ -372,20 +372,20 @@
                                 serial = serial + 1;
 
                                 <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
                                     <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
                                     </td>
-                                    <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "auto-resize WarehouseNo" })</td>
+                                    <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "WarehouseNo" })</td>
                                     <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity", @id = "QuantityInWarehouse" })
-                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "auto-resize Quantity" })
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity"})
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
                                     </td>
                                     <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse", @id = "PlaceInWarehouse" })
-                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "auto-resize PlaceInWarehouse" })
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse"})
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
                                     </td>
                                     <td><i class="icon-photon minus deleteWarehouse"></i></td>
                                 </tr>
@@ -426,8 +426,8 @@
                                 serial = serial + 1;
 
                                 <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "manufacturerId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
                                     <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
@@ -559,12 +559,13 @@
                             var serial = 0;
                             for (int i = 0; i < Model.ItemVariation.ItemImages.Count(); i++)
                             {
-                                @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemImagePath)
-                                @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ImageId)
-                                @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemVariationId)
+                                
                                 serial = serial + 1;
 
                                 <tr data-id="@i">
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemImagePath)
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ImageId)
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemVariationId)
                                     <td style='display:none'><input name='ItemVariation.ItemImages.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
@@ -1222,10 +1223,11 @@
             itemsCount = itemsCount + 1;
             var order = $('.imageOrder').val();
             var popupcb = $("#iCheckBox").is(':checked');
-            var html = ' <tr data-id=' + index + '>' + '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
+            var html = ' <tr class="gradeX" data-id=' + index + '>' + '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ImageId" name = "ItemVariation.ItemImages[' + index + '].ImageId type="hidden" />' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ItemVariationId" name = "ItemVariation.ItemImages[' + index + '].ItemVariationId type="hidden" />' +
                 '<td>' + itemsCount +
+                '</td>' +
                 '</td>' +
                 '<td>' +
                 '<input type="hidden" id="ItemVariation_ItemImages_' + index + '__ItemImagePath" name = "ItemVariation.ItemImages[' + index + '].ItemImagePath" class = "auto-resize ItemImagePath">' +
@@ -1242,7 +1244,6 @@
                 '</td>' +
                 '</tr>';
             $('#imageDetails').append(html);
-            reActivateDelete();
             if (popupcb) {
                 $('#ItemVariation_ItemImages_' + index + '__ShowImage').prop('checked', true);
                 $('#ItemVariation_ItemImages_' + index + '__ShowImage').val("true");
@@ -1251,15 +1252,27 @@
                 $('#ItemVariation_ItemImages_' + index + '__ShowImage').prop('checked', false);
                 $('#ItemVariation_ItemImages_' + index + '__ShowImage').val("false");
             }
+            $('.tableImage').dataTable().fnDestroy();
+            $('.tableImage').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
             event.preventDefault();
             $('#ItemImagerModule').modal('hide');
         });
 
         //Delete Image from the List
-        $('.deleteImage').on("click", function () {
+        $('.deleteImage').live("click", function () {
+            debugger;
+            var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsImg').dataTable();
-            var pos = $(this).data("id");
+            var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
+            //row.remove();
         });
 
         //Open Dialogue - Add Size to DB
@@ -1503,7 +1516,7 @@
             var html = '<tr class="gradeX sizeTableRow">' +
                 '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
                 '<td>' + sizeNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteSize"></i></td>' +
+                '<td><i class="icon-photon minus deleteSize' + sizeId + '"></i></td>' +
                 '</tr>';
             $('.sizeTable').append(html);
             ManageSizeList(sizeId);
@@ -1516,6 +1529,15 @@
                         dropdownCssClass: 'noSearch'
                     });
                 }
+            });
+            $(".deleteSize"+ sizeId).on("click", function () {
+                debugger;
+                var hiddenId = $(this).parent().prev().prev().val();
+                var row = $(this).parent().parent().get(0);
+                var atable = $('#tableSortableVariationsSize').dataTable();
+                var pos = atable.fnGetPosition(row);
+                atable.fnDeleteRow(pos);
+                ManageSizeList(hiddenId, 2);
             });
             if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
                 $(".sizeTable").children("tr").children("td").hide();
@@ -1555,7 +1577,7 @@
             var html = ' <tr data-id=' + index + '>' +
                 '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
                 '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
-                '<td style="display:none"><input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" /></td>' +
+                '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
                 '<td>' + itemsCount +
                 '</td>' +
                 '<td><input  rows="2" class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price"></div></td>' +
@@ -1583,8 +1605,7 @@
         });
 
         //Delete Manufacturer from the List
-        $('.deleteManufacturer').on("click", function () {
-            var hiddenId = $(this).parent().prev().prev().val();
+        $('.deleteManufacturer').live("click", function () {
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsManufacturer').dataTable();
             var pos = atable.fnGetPosition(row);
@@ -1626,7 +1647,7 @@
         });
 
         //Delete Status from the List
-        $('.deleteStatus').on("click", function () {
+        $('.deleteStatus').live("click", function () {
             var hiddenId = $(this).parent().prev().prev().val();
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableItemStatus').dataTable();
@@ -1670,7 +1691,8 @@
         });
 
         //Delete Color from the List
-        $('.deleteColor').on("click", function () {
+        $('.deleteColor').live("click", function () {
+            debugger;
             var hiddenId = $(this).parent().prev().prev().val();
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableItemColor').dataTable();
@@ -1750,7 +1772,7 @@
 
         //Add Warehouse from Popup to List
         $('.addWarehouseFromPopup').on("click", function (event) {
-            debugger;
+       
             var index = $("#warehouseDetails").children("tr").length;
             if ($("#warehouseDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
@@ -1771,7 +1793,7 @@
             var html = ' <tr data-id=' + index + '>' +
                 '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
                 '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
-                '<td style="display:none"><input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" /></td>' +
+                '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
                 '<td>' + itemsCount +
                 '</td>' +
                 '<td>' +
@@ -1793,7 +1815,6 @@
             $('#ItemVariation_ItemWarehouses' + index + '__WarehouseNumber').text(warehouseNumber);
             $('#ItemVariation_ItemWarehouses' + index + '__Quantity').text(quantity);
             $('#ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse').text(locationInWarehouse);
-            reActivateDelete();
             event.preventDefault();
             $('#wherehouseModule').modal('hide');
             $('.tableWarehouse').dataTable().fnDestroy();
@@ -1809,18 +1830,18 @@
         });
 
         //Delete Warehouse from the List
-        $('.deleteWarehouse').on("click", function () {
-            var hiddenId = $(this).parent().prev().prev().val();
+        $('.deleteWarehouse').live("click", function () {
+            debugger;
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsWherehouse').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
-            ManageStatusList(hiddenId, 2);
         });
 
     });
 
     //For manipulating the Lists
+
     //For manipulating the Size List
 
     var SizeResultArray = new Array();
@@ -1931,15 +1952,15 @@
             placeholder: "Select",
         });
     }
-
-    function reActivateDelete() {
-        $('.deleteWarehouse').on("click", function () {
+    function reActivateDeleteSize(a, b, c) {
+        $('.deleteSize').on("click", function () {
+            debugger;
             var hiddenId = $(this).parent().prev().prev().val();
             var row = $(this).parent().parent().get(0);
-            var atable = $('#tableSortableVariationsWherehouse').dataTable();
+            var atable = $('#tableSortableVariationsSize').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
-            ManageStatusList(hiddenId, 2);
+            ManageSizeList(hiddenId, 2);
         });
     }
 </script>

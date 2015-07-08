@@ -169,6 +169,24 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Item has been Added..
+        /// </summary>
+        public static string IsSaved {
+            get {
+                return ResourceManager.GetString("IsSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Item has been Updated..
+        /// </summary>
+        public static string IsUpdated {
+            get {
+                return ResourceManager.GetString("IsUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ItemCode.
         /// </summary>
         public static string ItemCode {

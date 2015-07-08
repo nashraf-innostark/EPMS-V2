@@ -65,12 +65,27 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(InventoryItemViewModel itemViewModel)
         {
-            InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
-            inventoryItemService.SaveItem(itemToSave);
+            if (itemViewModel.InventoryItem.ItemId > 0)
             {
-                TempData["message"] = new MessageViewModel { Message = "Added", IsSaved = true };
-                return RedirectToAction("Index");
+                //Update Case
+                InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
+                inventoryItemService.SaveItem(itemToSave);
+                {
+                    TempData["message"] = new MessageViewModel {Message = Resources.Inventory.InventoryItem.IsUpdated, IsSaved = true};
+                    return RedirectToAction("Index");
+                }
             }
+            else
+            {
+                //Add Case
+                InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
+                inventoryItemService.SaveItem(itemToSave);
+                {
+                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.InventoryItem.IsSaved, IsSaved = true };
+                    return RedirectToAction("Index");
+                }
+            }
+            
         }
 
         #endregion
