@@ -149,20 +149,21 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "RFICreate")]
         public ActionResult Create(long? id)
         {
+            string direction = Resources.Shared.Common.TextDirection;
             bool loadCustomersAndOrders = CheckHasCustomerModule();
             var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders, "");
             RFIViewModel rfiViewModel = new RFIViewModel();
             if (rfiresponse.Rfi != null)
             {
                 rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
-                rfiViewModel.Rfi.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? rfiresponse.RequesterNameE : rfiresponse.RequesterNameA;
+                rfiViewModel.Rfi.RequesterName = direction == "ltr" ? rfiresponse.RequesterNameE : rfiresponse.RequesterNameA;
                 rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemServerToClient()).ToList();
             }
             else
             {
                 rfiViewModel.Rfi = new RFI
                 {
-                    RequesterName = Session["UserFullName"].ToString()
+                    RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
                 rfiViewModel.RfiItem = new List<RFIItem>();
             }

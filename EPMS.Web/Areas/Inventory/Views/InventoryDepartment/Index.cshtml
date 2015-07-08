@@ -85,7 +85,14 @@
                                         var id = departments.DepartmentId + "_tableDepartment";
                                         <tr class="gradeX" id="@id">
                                             <td class="center">@(i += 1)</td>
-                                            <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>
+                                            @if (direction == "ltr")
+                                            {
+                                                <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameAr</a></td>
+                                            }
                                             <td class="center">@departments.DepartmentColor</td>
                                             <td class="center @departments.DepartmentId"></td>
                                             <script>
@@ -127,7 +134,14 @@
                                                 var id = departments.DepartmentId + "_tableSection";
                                                 <tr class="gradeX" id="@id">
                                                     <td class="center">@(k += 1)</td>
-                                                    <td class="center">@departments.ParentDepartmentEn</td>
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <td class="center">@departments.ParentDepartmentEn</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="center">@departments.ParentDepartmentAr</td>
+                                                    }
                                                     <td class="center">
                                                         @for (int j = departments.ParentNodesSections.Count - 1; j >= 0; j--)
                                                         {
@@ -143,7 +157,14 @@
                                                             }
                                                         }
                                                     </td>
-                                                    <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameEn</a></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameAr</a></td>
+                                                    }
                                                     <td class="center @departments.DepartmentId"></td>
                                                     <script>
                                                         var descpE = '@Html.Raw(departments.DepartmentDesc)';
@@ -223,7 +244,7 @@
                     "data": [
                         {
                             "data": {
-                                "title": "الإدارات",
+                                "title": "القسم",
                                 "attr": { "href": "#", "onclick": "" }
                             },
                             "attr": { "id": "parentNode" },
