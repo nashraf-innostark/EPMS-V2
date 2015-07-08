@@ -1,0 +1,334 @@
+﻿@model EPMS.Web.ViewModels.PhysicalCount.PhysicalCountViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = @EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Inventory/PhysicalCount/Index">
+                @EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageListBreadcrumbs
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle</a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "PhysicalCount", FormMethod.Post, new { @id = "PhysicalCountForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+
+
+        <div class="control-group row-fluid">
+
+            <div class="form-legend centTitle">
+                @EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageHeading
+            </div>
+
+            <div class="invoice-info">
+
+
+                <div class="controls">
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> Print</a>
+                </div>
+
+                <div class="control-group row-fluid">
+                    <div class="span6">
+                        <div class="invoice-from">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.EmployeeName:</th>
+                                        <td>@Model.PhysicalCount.RequesterName</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.EmployeeId:</th>
+                                        <td>@Model.PhysicalCount.RequesterEmpId</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.PCNo:</th>
+                                        <td>@Model.PhysicalCount.PCId</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+
+                    <div class="span6">
+                        <div class="invoice-infos">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Date:</th>
+                                        <td>@Model.PhysicalCount.RecCreatedDate.ToShortDateString()</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Warhouse:</th>
+                                        <td>
+                                            <div class="control-group row-fluid">
+
+                                                <div class="span2">
+                                                    <div class="controls">
+                                                        @Html.DropDownList("WHDDL", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"))
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Input Field end-->
+        <!--Basic Responsive Table begin-->
+        <div class="row-fluid" id="ress">
+            <div class="span12">
+                <table class="table table-striped table-responsive ">
+                    <thead class="">
+                        <tr>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Serial</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemBarcode</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemDetails</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemsInPackage</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.NumberOfPackages</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsInPackages</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemsInWharewhouse</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsCount</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="qouteAdd">
+                        @if (Model.PhysicalCountItems.Any())
+                        {
+                            for (int i = 0; i < Model.PhysicalCountItems.Count(); i++)
+                            {
+                                <tr data-id=@i>
+                                    <td style='display: none'>
+                                        <input name='RfiItem.Index' type='hidden' value=@i />
+                                        @Html.HiddenFor(m => m.PhysicalCountItems[i].PcItemId)
+                                        @Html.HiddenFor(m => m.PhysicalCountItems[i].PcId)
+                                        @Html.HiddenFor(m => m.PhysicalCountItems[i].RecCreatedBy)
+                                        @Html.HiddenFor(m => m.PhysicalCountItems[i].RecCreatedDate)
+                                    </td>
+                                    <td>
+                                        <div class="control-group row-fluid">
+                                            <div class="span1">
+                                                <label class="control-label serialNumber">@(i + 1)</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.TextAreaFor(m => m.PhysicalCountItems[i].ItemBarcode, new {@class = "auto-resize tableDbM", @rows = 2})
+                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].ItemBarcode)
+                                    </td>
+                                    <td class="quantity">
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].ItemDetailsEn)
+                                    </td>
+
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].ItemsInPackage)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, new {@class = "n1 tableDbM"})
+                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].TotalItemsInPackages)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, new {@class = "n1 tableDbM"})
+                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse)
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].TotalItemsCount, new { @class = "n1 tableDbM" })
+                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].TotalItemsCount)
+                                    </td>
+                                    <td class="delete">
+                                        <i class="icon-photon minus deleteRow"></i>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            
+                            <tr data-id=0>
+                                <td style='display: none'>
+                                    <input name='PhysicalCountItems.Index' type='hidden' value=0 />
+                                    <input name='PhysicalCountItems[0].PcItemId' id='PhysicalCountItems_0__PcItemId' type='hidden' />
+                                    <input name='PhysicalCountItems[0].PcId' id='PhysicalCountItems_0__PcId' type='hidden' />
+                                    <input name='PhysicalCountItems[0].RecCreatedBy' id='PhysicalCountItems_0__RecCreatedBy' type='hidden' />
+                                    <input name='PhysicalCountItems[0].RecCreatedDate' id='PhysicalCountItems_0__RecCreatedDate' type='hidden' />
+                                </td>
+                                <td>
+                                    <div class="control-group row-fluid">
+                                        <div class="span1">
+                                            <label class="control-label serialNumber">1</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <textarea rows="2" class="auto-resize tableDbM itemBarcode" name='PhysicalCountItems[0].ItemBarcode' id='PhysicalCountItems_0__ItemBarcode'></textarea>
+                                </td>
+                                <td class="quantity">
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemDetailsEn' id='PhysicalCountItems_0__ItemDetailsEn'/>
+                                </td>
+                                <td>
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemsInPackage' id='PhysicalCountItems_0__ItemsInPackage'/>
+                                </td>
+                                <td>
+                                    <input type="text" class="n1 tableDbM" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' />
+                                </td>
+                                <td>
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].TotalItemsInPackages' id='PhysicalCountItems_0__TotalItemsInPackages' />
+                                </td>
+                                <td>
+                                    <input type="text" class="n1 tableDbM" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' />
+                                </td>
+                                <td>
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].TotalItemsCount' id='PhysicalCountItems_0__TotalItemsCount'/>
+                                </td>
+                                <td class="delete">
+                                    <i class="icon-photon minus deleteRow"></i>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn trAdder">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Add</button>
+                </div>
+
+            </div>
+        </div>
+        <!--Basic Responsive Table end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformation" type="text" name="CLK Editor" disabled />
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.NotesAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    <input id="ExtraInformation" type="text" name="CLK Editor" disabled />
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    
+    function ProductLoaded(rowId, data) {
+        $.unblockUI();
+        if (data.ItemVariationId <= 0) {
+            toastr.error("No record found");
+        } else {
+            toastr.success("Product found successfully");
+            $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val(data.ItemBarcode);
+            var itemDetails = data.SKUCode + " - " + data.DescriptionEn;
+            $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(itemDetails);
+        }
+    }
+    function LoadDataByBarcode(barcode, rowId) {
+
+        $.blockUI({ message: '<h3><img src="../../Images/loading.gif" height=55px; width=55px; /> Fetching Data...</h2>' });
+
+        if (barcode != "") {
+            $.ajax({
+                url: "/Inventory/ItemVariation/GetItemVariationByBarcode",
+                type: "GET",
+                data: { id: barcode },
+                dataType: "json",
+                success: function(data) {
+                    ProductLoaded(rowId, data);
+                },
+                error: function (textStatus, errorThrown) {
+                    $.unblockUI();
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+            });
+        }
+    }
+    $(document).on('keyup', '.itemBarcode', function (ev) {
+        if (ev.which === 13) {
+            var rowId = $(this).parent().parent().data("id");
+            var barcode = $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val();
+            barcode = barcode.substring(0, barcode.length-1);
+            LoadDataByBarcode(barcode, rowId);
+            // Avoid form submit
+            return false;
+        }
+    });
+    $(document).ready(function () {
+
+        $('.trAdder').on("click", function () {
+
+            var html = ' <tr> <td> <div class="control-group row-fluid"> <div class="span1"> <label class="control-label serialNumber" >1</label> </div> </div> </td> <td > <textarea rows="2" class="auto-resize tableDbM"></textarea> </td> <td class="quantity"> </td> <td > </td> <td > <input class="n1 tableDbM" type="text" name="numbers"> </td> <td >  </td> <td > <input class="n1 tableDbM" type="text" name="numbers" > </td> <td > </td> <td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>'
+
+            $('.qouteAdd').append(html);
+            activateSerial();
+            reActivateDelete();
+        });
+        reActivateDelete();
+        //reactivateCount();
+        function reActivateDelete() {
+            $('.deleteRow').on("click", function () {
+                var count = $('.qouteAdd tr').length;
+                if (count > 1) {
+                    $(this).parent().parent().remove();
+                }
+                activateSerial();
+            });
+        }
+        function activateSerial() {
+            var count = $('.qouteAdd tr').length;
+            var add = 0;
+            $('.qouteAdd tr').each(function () {
+                add++;
+                $(this).find(".serialNumber").text(add);
+            });
+        }
+    });
+</script>

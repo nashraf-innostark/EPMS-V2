@@ -48,5 +48,10 @@ namespace EPMS.Repository.Repositories
             return
                 DbSet.Where(x => x.InventoryItemId == inventoryItemId);
         }
+
+        public ItemVariation FindVariationByBarcode(string barcode)
+        {
+            return DbSet.FirstOrDefault(x => x.ItemBarcode == barcode);
+        }
     }
 }

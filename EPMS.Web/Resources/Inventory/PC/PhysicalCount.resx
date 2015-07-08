@@ -123,4 +123,64 @@
   <data name="PC" xml:space="preserve">
     <value>Physical Count</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CreatePageHeading" xml:space="preserve">
+    <value>Physical Count View</value>
+  </data>
+  <data name="CreatePageListBreadcrumbs" xml:space="preserve">
+    <value>Physical Count List</value>
+  </data>
+  <data name="CreatePageTitle" xml:space="preserve">
+    <value>Physical Count View</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>Employee Id</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Employee Name</value>
+  </data>
+  <data name="ItemBarcode" xml:space="preserve">
+    <value>Item Barcode</value>
+  </data>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>Item Name - SKU Descriptoin</value>
+  </data>
+  <data name="ItemsInPackage" xml:space="preserve">
+    <value>Items in Package</value>
+  </data>
+  <data name="ItemsInWharewhouse" xml:space="preserve">
+    <value>Number of Items in Wharewhouse</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="NotesAr" xml:space="preserve">
+    <value>Notes in Arabic</value>
+  </data>
+  <data name="NumberOfPackages" xml:space="preserve">
+    <value>Number of Packages in Wharewhouse</value>
+  </data>
+  <data name="PCNo" xml:space="preserve">
+    <value>PC#</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>Serial</value>
+  </data>
+  <data name="TotalItemsCount" xml:space="preserve">
+    <value>Total Items Count</value>
+  </data>
+  <data name="TotalItemsInPackages" xml:space="preserve">
+    <value>Total Items in packages</value>
+  </data>
+  <data name="Warhouse" xml:space="preserve">
+    <value>Warhouse</value>
+  </data>
 </root>
