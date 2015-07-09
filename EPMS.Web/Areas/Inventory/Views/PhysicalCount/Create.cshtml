@@ -262,10 +262,10 @@
     
     function ProductLoaded(rowId, data) {
         $.unblockUI();
-        if (data.ItemVariationId <= 0) {
-            toastr.error("No record found");
+        if (data==null) {
+            alert("No record found");//You should use your error showing method
         } else {
-            toastr.success("Product found successfully");
+            alert("Product found successfully");//You should use your error showing method
             $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val(data.ItemBarcode);
             var itemDetails = data.SKUCode + " - " + data.DescriptionEn;
             $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(itemDetails);
