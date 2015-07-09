@@ -26,6 +26,7 @@ namespace EPMS.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public string DepartmentPath { get; set; }
+        public double? QuantityInPackage { get; set; }
 
         public virtual ICollection<ItemVariation> ItemVariations { get; set; }
     }

@@ -41,6 +41,7 @@ namespace EPMS.Web.ModelMappers
             inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
             inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantitySold));
             inventoryItem.DepartmentPath = source.DepartmentPath;
+            inventoryItem.QuantityInPackage = source.QuantityInPackage;
             return inventoryItem;
         }
 
@@ -68,7 +69,8 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                DepartmentPath = source.DepartmentPath
+                DepartmentPath = source.DepartmentPath,
+                QuantityInPackage = source.QuantityInPackage
             };
             var request = new InventoryItemRequest();
             request.InventoryItem = item;
