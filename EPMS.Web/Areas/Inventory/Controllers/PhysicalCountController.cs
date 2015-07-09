@@ -16,7 +16,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Private
 
         private readonly IPhysicalCountService physicalCountService;
-        
+
         #endregion
 
         #region Constructor
@@ -56,22 +56,24 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public ActionResult Create(long? id)
         {
-            PhysicalCountViewModel physicalCountViewModel=new PhysicalCountViewModel();
-            physicalCountViewModel.PhysicalCount.RecCreatedDate = DateTime.Now;
+            PhysicalCountViewModel physicalCountViewModel = new PhysicalCountViewModel
+            {
+                PhysicalCount = { RecCreatedDate = DateTime.Now }
+            };
             var pcResponse = physicalCountService.LoadPhysicalCountResponseData(id, Session["UserID"].ToString());
 
             physicalCountViewModel.Warehouses = pcResponse.Warehouses.Select(x => x.CreateDDL());
 
-            if (pcResponse.PhysicalCount!=null)
+            if (pcResponse.PhysicalCount != null)
                 physicalCountViewModel.PhysicalCount = pcResponse.PhysicalCount.CreateFromServerToClient();
             if (pcResponse.RequesterEmpId != null)
             {
                 physicalCountViewModel.PhysicalCount.RequesterEmpId = pcResponse.RequesterEmpId;
-                physicalCountViewModel.PhysicalCount.RequesterName =Resources.Shared.Common.TextDirection == "ltr" ? pcResponse.RequesterNameE:pcResponse.RequesterNameA;
+                physicalCountViewModel.PhysicalCount.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? pcResponse.RequesterNameE : pcResponse.RequesterNameA;
             }
-            
 
-            physicalCountViewModel.PhysicalCountItems = pcResponse.PhysicalCountItems.Select(x=>x.CreateFromServerToClient()).ToList();
+
+            physicalCountViewModel.PhysicalCountItems = pcResponse.PhysicalCountItems.Select(x => x.CreateFromServerToClient()).ToList();
             return View(physicalCountViewModel);
         }
         [HttpPost]

@@ -1,7 +1,8 @@
 ﻿@model EPMS.Web.ViewModels.PhysicalCount.PhysicalCountViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = @EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle;
+    ViewBag.Title = EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle;
+    string direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -140,7 +141,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.PhysicalCountItems[i].ItemBarcode, new {@class = "auto-resize tableDbM", @rows = 2})
+                                        @Html.TextAreaFor(m => m.PhysicalCountItems[i].ItemBarcode, new { @class = "auto-resize tableDbM", @rows = 2 })
                                         @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].ItemBarcode)
                                     </td>
                                     <td class="quantity">
@@ -151,14 +152,14 @@
                                         @Html.TextBoxFor(m => m.PhysicalCountItems[i].ItemsInPackage)
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, new {@class = "n1 tableDbM"})
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, new { @class = "n1 tableDbM" })
                                         @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse)
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.PhysicalCountItems[i].TotalItemsInPackages)
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, new {@class = "n1 tableDbM"})
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, new { @class = "n1 tableDbM" })
                                         @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse)
                                     </td>
                                     <td>
@@ -173,7 +174,7 @@
                         }
                         else
                         {
-                            
+
                             <tr data-id=0>
                                 <td style='display: none'>
                                     <input name='PhysicalCountItems.Index' type='hidden' value=0 />
@@ -193,10 +194,10 @@
                                     <textarea rows="2" class="auto-resize tableDbM itemBarcode" name='PhysicalCountItems[0].ItemBarcode' id='PhysicalCountItems_0__ItemBarcode'></textarea>
                                 </td>
                                 <td class="quantity">
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemDetailsEn' id='PhysicalCountItems_0__ItemDetailsEn'/>
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemDetailsEn' id='PhysicalCountItems_0__ItemDetailsEn' />
                                 </td>
                                 <td>
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemsInPackage' id='PhysicalCountItems_0__ItemsInPackage'/>
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemsInPackage' id='PhysicalCountItems_0__ItemsInPackage' />
                                 </td>
                                 <td>
                                     <input type="text" class="n1 tableDbM" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' />
@@ -208,7 +209,7 @@
                                     <input type="text" class="n1 tableDbM" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' />
                                 </td>
                                 <td>
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].TotalItemsCount' id='PhysicalCountItems_0__TotalItemsCount'/>
+                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].TotalItemsCount' id='PhysicalCountItems_0__TotalItemsCount' />
                                 </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow"></i>
@@ -259,34 +260,40 @@
     </div>
 }
 <script>
-    
+    var dir = '@direction';
     function ProductLoaded(rowId, data) {
         $.unblockUI();
-        if (data==null) {
+        if (data == null) {
             alert("No record found");//You should use your error showing method
         } else {
-            alert("Product found successfully");//You should use your error showing method
+            //alert("Product found successfully");//You should use your error showing method
             $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val(data.ItemBarcode);
-            var itemDetails = data.SKUCode + " - " + data.DescriptionEn;
-            $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(itemDetails);
+            //var itemDetails = data.SKUCode + " - " + data.DescriptionEn;
+            if (dir == "ltr") {
+                $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(data.SKUDescriptionEn);
+            } else {
+                $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(data.SKUDescriptionAr);
+            }
+            $("#PhysicalCountItems_" + rowId + "__ItemsInPackage").val(data.ItemsInPackage);
         }
     }
     function LoadDataByBarcode(barcode, rowId) {
 
         $.blockUI({ message: '<h3><img src="../../Images/loading.gif" height=55px; width=55px; /> Fetching Data...</h2>' });
-
+        var siteUrl = $("#siteURL").val();
         if (barcode != "") {
             $.ajax({
-                url: "/Inventory/ItemVariation/GetItemVariationByBarcode",
+                url: siteUrl + "/Inventory/ItemVariation/GetItemVariationByBarcode",
                 type: "GET",
                 data: { id: barcode },
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     ProductLoaded(rowId, data);
                 },
                 error: function (textStatus, errorThrown) {
                     $.unblockUI();
-                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                    //alert("Status: " + textStatus);
+                    alert("Error: " + errorThrown);
                 }
             });
         }
@@ -295,7 +302,7 @@
         if (ev.which === 13) {
             var rowId = $(this).parent().parent().data("id");
             var barcode = $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val();
-            barcode = barcode.substring(0, barcode.length-1);
+            barcode = barcode.substring(0, barcode.length - 1);
             LoadDataByBarcode(barcode, rowId);
             // Avoid form submit
             return false;

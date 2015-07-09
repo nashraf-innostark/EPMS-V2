@@ -264,17 +264,20 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
-        #region Get Item Variation Id
+        #region Get Item Variation By Barcode
+
+        [HttpGet]
         public JsonResult GetItemVariationByBarcode(string id)
         {
-            var itemVariation = itemVariationService.FindVariationByBarcode(id);
-            if (itemVariation != null)
+            PCFromBarcodeResponse barcodeResponse = itemVariationService.FindVariationByBarcode(id);
+            if (barcodeResponse != null)
             {
-                return Json(itemVariation.CreateFromServerToClient(), JsonRequestBehavior.AllowGet);
+                return Json(barcodeResponse, JsonRequestBehavior.AllowGet);
             }
             return Json(null, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #endregion
     }
 }
