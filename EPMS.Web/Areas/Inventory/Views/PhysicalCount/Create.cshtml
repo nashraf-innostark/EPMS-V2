@@ -88,10 +88,13 @@
 
                                                 <div class="span2">
                                                     <div class="controls">
-                                                        @Html.DropDownList("WHDDL", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"))
+                                                        @Html.DropDownList("WHDDL", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "warehouse" })
                                                     </div>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <label id="warehouseValidationError" class="required"></label>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -130,6 +133,8 @@
                                         <input name='RfiItem.Index' type='hidden' value=@i />
                                         @Html.HiddenFor(m => m.PhysicalCountItems[i].PcItemId)
                                         @Html.HiddenFor(m => m.PhysicalCountItems[i].PcId)
+                                        @Html.HiddenFor(m => m.PhysicalCountItems[i].ItemVariationId)
+                                        @Html.HiddenFor(m => m.PhysicalCountItems[i].WarehouseId)
                                         @Html.HiddenFor(m => m.PhysicalCountItems[i].RecCreatedBy)
                                         @Html.HiddenFor(m => m.PhysicalCountItems[i].RecCreatedDate)
                                     </td>
@@ -141,30 +146,29 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.PhysicalCountItems[i].ItemBarcode, new { @class = "auto-resize tableDbM", @rows = 2 })
+                                        @Html.TextAreaFor(m => m.PhysicalCountItems[i].ItemBarcode, new { @class = "auto-resize tableDbM disableOnLoad", @rows = 2 })
                                         @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].ItemBarcode)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].ItemDetailsEn)
+                                        @Html.DisplayFor(m => m.PhysicalCountItems[i].ItemDetailsEn, new { @class = "n1 tableDbM" })
                                     </td>
 
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].ItemsInPackage)
+                                        @Html.DisplayFor(m => m.PhysicalCountItems[i].ItemsInPackage, new { @class = "n1 tableDbM" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, new { @class = "n1 tableDbM" })
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, new { @class = "n1 tableDbM disableOnLoad" })
                                         @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse)
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].TotalItemsInPackages)
+                                        @Html.DisplayFor(m => m.PhysicalCountItems[i].TotalItemsInPackages, new { @class = "n1 tableDbM" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, new { @class = "n1 tableDbM" })
+                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, new { @class = "n1 tableDbM disableOnLoad" })
                                         @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse)
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => m.PhysicalCountItems[i].TotalItemsCount, new { @class = "n1 tableDbM" })
-                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].TotalItemsCount)
+                                        @Html.DisplayFor(m => m.PhysicalCountItems[i].TotalItemsCount, new { @class = "n1 tableDbM" })
                                     </td>
                                     <td class="delete">
                                         <i class="icon-photon minus deleteRow"></i>
@@ -180,6 +184,8 @@
                                     <input name='PhysicalCountItems.Index' type='hidden' value=0 />
                                     <input name='PhysicalCountItems[0].PcItemId' id='PhysicalCountItems_0__PcItemId' type='hidden' />
                                     <input name='PhysicalCountItems[0].PcId' id='PhysicalCountItems_0__PcId' type='hidden' />
+                                    <input name='PhysicalCountItems[0].ItemVariationId' id='PhysicalCountItems_0__ItemVariationId' type='hidden' />
+                                    <input name='PhysicalCountItems[0].WarehouseId' id='PhysicalCountItems_0__WarehouseId' type='hidden' />
                                     <input name='PhysicalCountItems[0].RecCreatedBy' id='PhysicalCountItems_0__RecCreatedBy' type='hidden' />
                                     <input name='PhysicalCountItems[0].RecCreatedDate' id='PhysicalCountItems_0__RecCreatedDate' type='hidden' />
                                 </td>
@@ -191,25 +197,27 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <textarea rows="2" class="auto-resize tableDbM itemBarcode" name='PhysicalCountItems[0].ItemBarcode' id='PhysicalCountItems_0__ItemBarcode'></textarea>
+                                    <textarea rows="2" class="auto-resize tableDbM itemBarcode disableOnLoad" name='PhysicalCountItems[0].ItemBarcode' id='PhysicalCountItems_0__ItemBarcode'></textarea>
                                 </td>
                                 <td class="quantity">
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemDetailsEn' id='PhysicalCountItems_0__ItemDetailsEn' />
+                                    <label class="n1 tableDbM" id='PhysicalCountItems_0__ItemDetailsEn'></label>
                                 </td>
                                 <td>
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].ItemsInPackage' id='PhysicalCountItems_0__ItemsInPackage' />
+                                    <label class="n1 tableDbM" id='PhysicalCountItems_0__ItemsInPackage'></label>
                                 </td>
                                 <td>
-                                    <input type="text" class="n1 tableDbM" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' />
+                                    <input type="text" class="n1 tableDbM NoOfPackages disableOnLoad" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' data-val="true" data-val-number="The field Number of Packages in Wharewhouse must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Packages in Wharewhouse is required." />
+                                    <span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[0].NoOfPackagesInWarehouse" data-valmsg-replace="true"></span>
                                 </td>
                                 <td>
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].TotalItemsInPackages' id='PhysicalCountItems_0__TotalItemsInPackages' />
+                                    <label class="n1 tableDbM" id='PhysicalCountItems_0__TotalItemsInPackages'></label>
                                 </td>
                                 <td>
-                                    <input type="text" class="n1 tableDbM" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' />
+                                    <input type="text" class="n1 tableDbM NoOfItems disableOnLoad" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' data-val="true" data-val-number="The field Number of Items in Wharewhouse must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Items in Wharewhouse is required." />
+                                    <span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[0].NoOfItemInWarehouse" data-valmsg-replace="true"></span>
                                 </td>
                                 <td>
-                                    <label class="n1 tableDbM" name='PhysicalCountItems[0].TotalItemsCount' id='PhysicalCountItems_0__TotalItemsCount' />
+                                    <label class="n1 tableDbM" id='PhysicalCountItems_0__TotalItemsCount'></label>
                                 </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow"></i>
@@ -222,7 +230,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Add</button>
+                    <button type="button" class="btn trAdder disableBtn">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Add</button>
                 </div>
 
             </div>
@@ -254,34 +262,40 @@
         <!--Input Field end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                <button type="submit" class="btn disableBtn" onclick="validateForm(event)">@EPMS.Web.Resources.RFI.RFI.Submit</button>
             </div>
         </div>
     </div>
 }
 <script>
     var dir = '@direction';
+    var warehouseId;
     function ProductLoaded(rowId, data) {
         $.unblockUI();
         if (data == null) {
             alert("No record found");//You should use your error showing method
         } else {
             //alert("Product found successfully");//You should use your error showing method
+            $("#PhysicalCountItems_" + rowId + "__ItemVariationId").val(data.ItemVariationId);
             $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val(data.ItemBarcode);
             //var itemDetails = data.SKUCode + " - " + data.DescriptionEn;
+            var itemDetails;
             if (dir == "ltr") {
-                $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(data.SKUDescriptionEn);
+                itemDetails = data.ItemNameEn + " - " + data.SKUDescriptionEn;
             } else {
-                $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(data.SKUDescriptionAr);
+                itemDetails = data.ItemNameAr + " - " + data.SKUDescriptionAr;
             }
+            $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").val(itemDetails);
             $("#PhysicalCountItems_" + rowId + "__ItemsInPackage").val(data.ItemsInPackage);
+            $("#PhysicalCountItems_" + rowId + "__ItemDetailsEn").text(itemDetails);
+            $("#PhysicalCountItems_" + rowId + "__ItemsInPackage").text(data.ItemsInPackage);
+            $("#PhysicalCountItems_" + rowId + "__WarehouseId").val(warehouseId);
         }
     }
     function LoadDataByBarcode(barcode, rowId) {
-
-        $.blockUI({ message: '<h3><img src="../../Images/loading.gif" height=55px; width=55px; /> Fetching Data...</h2>' });
         var siteUrl = $("#siteURL").val();
         if (barcode != "") {
+            $.blockUI({ message: '<h3><img src="../../Images/loading.gif" height=55px; width=55px; /> Fetching Data...</h2>' });
             $.ajax({
                 url: siteUrl + "/Inventory/ItemVariation/GetItemVariationByBarcode",
                 type: "GET",
@@ -298,17 +312,45 @@
             });
         }
     }
-    $(document).on('keyup', '.itemBarcode', function (ev) {
-        if (ev.which === 13) {
-            var rowId = $(this).parent().parent().data("id");
-            var barcode = $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val();
-            barcode = barcode.substring(0, barcode.length - 1);
-            LoadDataByBarcode(barcode, rowId);
-            // Avoid form submit
-            return false;
-        }
+    $(document).on('focusout', '.itemBarcode', function (ev) {
+        var rowId = $(this).parent().parent().data("id");
+        var barcode = $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val();
+        LoadDataByBarcode(barcode, rowId);
+        return false;
     });
+    $(document).on('focusout', '.NoOfPackages', function (ev) {
+        var rowId = $(this).parent().parent().data("id");
+        var noOfPkgs = parseInt($(this).val());
+        var itemsInPkg = parseInt($("#PhysicalCountItems_" + rowId + "__ItemsInPackage").val());
+        if (!isNaN(noOfPkgs)) {
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsInPackages").val(itemsInPkg * noOfPkgs);
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsInPackages").text(itemsInPkg * noOfPkgs);
+        } else {
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsInPackages").val("");
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsInPackages").text("");
+        }
+        return true;
+    });
+    $(document).on('focusout', '.NoOfItems', function (ev) {
+        var rowId = $(this).parent().parent().data("id");
+        var noOfItems = parseInt($(this).val());
+        var totalItems = parseInt($("#PhysicalCountItems_" + rowId + "__TotalItemsInPackages").val());
+        if (!isNaN(noOfItems)) {
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsCount").val(noOfItems + totalItems);
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsCount").text(noOfItems + totalItems);
+        } else {
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsCount").val("");
+            $("#PhysicalCountItems_" + rowId + "__TotalItemsCount").text("");
+        }
+        return true;
+    });
+
     $(document).ready(function () {
+        warehouseId = parseInt($("#warehouse").val());
+        if (warehouseId == 0 || isNaN(warehouseId)) {
+            $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+            $("button.disableBtn").attr("disabled", true);
+        }
 
         $('.trAdder').on("click", function () {
 
@@ -337,5 +379,21 @@
                 $(this).find(".serialNumber").text(add);
             });
         }
+
+        $("#warehouse").on("change", function () {
+            warehouseId = parseInt($(this).val());
+            $('.' + 'disableOnLoad' + ':input').attr('readonly', false);
+            $("button.disableBtn").attr("disabled", false);
+        });
     });
+    function validateForm(event) {
+        if (warehouseId == 0 || warehouseId == null || isNaN(warehouseId)) {
+            $("#warehouseValidationError").text("Please select warehouse");
+            event.preventDefault();
+            return false;
+        } else {
+            $("#warehouseValidationError").text("");
+            return true;
+        }
+    }
 </script>

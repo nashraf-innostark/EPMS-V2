@@ -1,4 +1,7 @@
-﻿namespace EPMS.Web.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace EPMS.Web.Models
 {
     public class PhysicalCountItemModel
     {
@@ -8,6 +11,7 @@
         public long WarehouseId { get; set; }
         public long NoOfPackagesInWarehouse { get; set; }
         public long NoOfItemInWarehouse { get; set; }
+        [Required]
         public string ItemBarcode { get; set; }
         public string ItemDetailsEn { get; set; }
         public string ItemDetailsAr { get; set; }
@@ -16,8 +20,8 @@
         public long TotalItemsCount { get; set; }
         public string RecCreatedByName { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public System.DateTime RecLastUpdatedDate { get; set; }
+        public DateTime RecLastUpdatedDate { get; set; }
     }
 }

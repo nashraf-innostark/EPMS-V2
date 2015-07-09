@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.PhysicalCount;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -63,7 +65,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             var pcResponse = physicalCountService.LoadPhysicalCountResponseData(id, Session["UserID"].ToString());
 
             physicalCountViewModel.Warehouses = pcResponse.Warehouses.Select(x => x.CreateDDL());
-
             if (pcResponse.PhysicalCount != null)
                 physicalCountViewModel.PhysicalCount = pcResponse.PhysicalCount.CreateFromServerToClient();
             if (pcResponse.RequesterEmpId != null)
@@ -79,7 +80,58 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [HttpPost]
         public ActionResult Create(PhysicalCountViewModel physicalCountViewModel)
         {
-            return View();
+            try
+            {
+
+
+                DateTime date = DateTime.Now;
+                string userId = User.Identity.GetUserId();
+                if (physicalCountViewModel.PhysicalCount.PCId > 0)
+                {
+                    physicalCountViewModel.PhysicalCount.RecLastUpdatedBy = userId;
+                    physicalCountViewModel.PhysicalCount.RecLastUpdatedDate = date;
+                    foreach (var physicalCountItemModel in physicalCountViewModel.PhysicalCountItems)
+                    {
+                        physicalCountItemModel.RecLastUpdatedBy = userId;
+                        physicalCountItemModel.RecLastUpdatedDate = date;
+                    }
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = "Updated",
+                        IsUpdated = true
+                    };
+
+                }
+                else
+                {
+                    physicalCountViewModel.PhysicalCount.RecCreatedBy = userId;
+                    physicalCountViewModel.PhysicalCount.RecCreatedDate = date;
+                    physicalCountViewModel.PhysicalCount.RecLastUpdatedBy = userId;
+                    physicalCountViewModel.PhysicalCount.RecLastUpdatedDate = date;
+                    foreach (var physicalCountItemModel in physicalCountViewModel.PhysicalCountItems)
+                    {
+                        physicalCountItemModel.RecCreatedBy = userId;
+                        physicalCountItemModel.RecCreatedDate = date;
+                        physicalCountItemModel.RecLastUpdatedBy = userId;
+                        physicalCountItemModel.RecLastUpdatedDate = date;
+                    }
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = "Saved",
+                        IsUpdated = true
+                    };
+                }
+                PhysicalCount dataToSave = physicalCountViewModel.CreateFromClientToServer();
+                if (physicalCountService.SavePhysicalCount(dataToSave))
+                {
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace EPMS.Models.ResponseModels
         public string ItemNameAr { get; set; }
         public string SKUDescriptionEn { get; set; }
         public string SKUDescriptionAr { get; set; }
-        public long ItemsInPackage { get; set; }
-        public ItemVariation ItemVariation { get; set; }
+        public double ItemsInPackage { get; set; }
+        public long ItemVariationId { get; set; }
     }
 }

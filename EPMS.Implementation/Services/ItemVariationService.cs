@@ -73,15 +73,21 @@ namespace EPMS.Implementation.Services
 
         public PCFromBarcodeResponse FindVariationByBarcode(string barcode)
         {
-            PCFromBarcodeResponse response = new PCFromBarcodeResponse();
-            response.ItemVariation = variationRepository.FindVariationByBarcode(barcode);
-            response.ItemBarcode = barcode;
-            response.ItemNameEn = response.ItemVariation.InventoryItem.ItemNameEn;
-            response.ItemNameAr = response.ItemVariation.InventoryItem.ItemNameAr;
-            response.SKUDescriptionEn = response.ItemVariation.SKUDescriptionEn;
-            response.SKUDescriptionAr = response.ItemVariation.SKUDescriptionAr;
-            //response.ItemsInPackage = response.ItemVariation.InventoryItem.
-            return response;
+            var item = variationRepository.FindVariationByBarcode(barcode);
+            if (item != null)
+            {
+                return new PCFromBarcodeResponse
+                {
+                    ItemBarcode = barcode,
+                    ItemVariationId = item.ItemVariationId,
+                    ItemNameEn = item.InventoryItem.ItemNameEn,
+                    ItemNameAr = item.InventoryItem.ItemNameAr,
+                    SKUDescriptionEn = item.SKUDescriptionEn,
+                    SKUDescriptionAr = item.SKUDescriptionAr,
+                    ItemsInPackage = item.InventoryItem.QuantityInPackage ?? 0
+                };
+            }
+            return null;
         }
 
         public long[] GetItemVariationId(string[] items)

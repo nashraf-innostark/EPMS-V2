@@ -69,7 +69,8 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["PCId"];
+                        var element = '<a href="Create/' + full["PCId"] + '">' + full["PCId"] + '</a>';
+                        return element;
                     },
                     "bSortable": false
                 }
