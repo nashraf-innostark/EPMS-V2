@@ -101,13 +101,14 @@ namespace EPMS.Web.ModelMappers
 
         public static MeetingRequest CreateFrom(this Models.Meeting source)
         {
+            CultureInfo culture = new CultureInfo("en-US");
             DomainModels.Meeting meeting = new DomainModels.Meeting();
             meeting.MeetingId = source.MeetingId;
             meeting.TopicName = source.TopicName;
             meeting.TopicNameAr = source.TopicNameAr;
             meeting.RelatedProject = source.RelatedProject;
             if (source.Date != null)
-                meeting.Date = Convert.ToDateTime(source.Date);
+                meeting.Date = DateTime.ParseExact(source.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             meeting.Agenda = source.Agenda;
             meeting.AgendaAr = source.AgendaAr;
             meeting.Discussion = source.Discussion;

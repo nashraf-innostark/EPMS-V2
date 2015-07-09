@@ -105,9 +105,9 @@
                 <div class="controls">
                     @Html.DropDownListFor(model => model.NotificationResponse.AlertBefore, new[]
                     {
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneMonth },
-                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneWeek },
-                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneDay }
+                        new SelectListItem { Value = "30" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneMonth },
+                        new SelectListItem { Value = "7" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneWeek },
+                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneDay }
                     }, new { @id = "NotificationAlertBefore", @class = "select2me" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.AlertBefore, "", new { @class = "required" })
                 </div>
@@ -211,12 +211,12 @@
             $("#AlertEndDateA").val(ConvertDates($("#AlertEndDateE").val(), "gregorian", "islamic"));
         }
         $("#emp").on("change", function () {
-            var employOrNot = $("#emp option:selected").text();
+            var employOrNot = $("#emp option:selected").val();
             NotificationContact(employOrNot);
         });
         $(".uniformCheckbox").uniform();
         AlertDateType("#dateTypeDDl");
-        NotificationContact($("#emp option:selected").text());
+        NotificationContact($("#emp option:selected").val());
     });
     function BusyIndicator() {
         var siteUrl = $('#siteURL').val();
@@ -247,10 +247,11 @@
         }
     };
     function NotificationContact(employOrNot) {
-        if (employOrNot == "Not Employee") {
+        if (employOrNot == "") {
             $("#mobile").removeAttr('readonly');
             $("#mailAlert").removeAttr('readonly');
-
+            $("#mobile").val("");
+            $("#mailAlert").val("");
         }
         else {
             $("#mobile").attr('readonly', 'readonly');
