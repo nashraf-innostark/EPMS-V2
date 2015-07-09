@@ -214,7 +214,7 @@
     <value>خيارات الالوان</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>مسلسل</value>
+    <value>تسلسل</value>
   </data>
   <data name="RequiredDdlField" xml:space="preserve">
     <value>Please select a value Ar</value>
@@ -224,5 +224,11 @@
   </data>
   <data name="Manager" xml:space="preserve">
     <value>Manager</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>تحديث</value>
+  </data>
+  <data name="AddNewNode" xml:space="preserve">
+    <value>إضافة عقدة جديد</value>
   </data>
 </root>
