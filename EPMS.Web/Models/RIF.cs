@@ -33,5 +33,6 @@ namespace EPMS.Web.Models
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
         public string ManagerId { get; set; }
+        public string FormNumber { get; set; }
     }
 }

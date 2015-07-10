@@ -107,6 +107,14 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.RecCreatedBy == requesterId);
         }
 
+        public string GetLastFormNumber()
+        {
+            RFI rfi = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (rfi != null)
+                return rfi.FormNumber;
+            return "RF00000001";
+        }
+
         public IEnumerable<RFI> GetRecentRFIs(int status, string requester, DateTime date)
         {
             DateTime newDataTime = new DateTime();

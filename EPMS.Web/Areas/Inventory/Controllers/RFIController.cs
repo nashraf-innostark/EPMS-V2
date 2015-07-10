@@ -163,6 +163,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 rfiViewModel.Rfi = new RFI
                 {
+                    FormNumber = Utility.GenerateFormNumber("RF", rfiresponse.LastFormNumber),
                     RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
                 rfiViewModel.RfiItem = new List<RFIItem>();
