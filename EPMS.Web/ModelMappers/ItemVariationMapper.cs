@@ -121,6 +121,39 @@ namespace EPMS.Web.ModelMappers
 
         public static ItemVariationRequest CreateFromClientToServer(this WebModels.ItemVariation source)
         {
+            var itemNameEn = source.InventoryItem.ItemNameEn.Substring(0, 5);
+            var itemNameAr = source.InventoryItem.ItemNameAr.Substring(0,5);
+            string colorEn = "Col";
+            string colorAr = "---";
+            var firstOrDefaultColor = source.Colors.FirstOrDefault();
+            if (firstOrDefaultColor != null)
+            {
+                colorEn = firstOrDefaultColor.ColorNameEn;
+                colorAr = firstOrDefaultColor.ColorNameAr;
+            }
+            var deptNameEn = "Dep";
+            var deptNameAr = "---";
+            if (source.InventoryItem.InventoryDepartment != null)
+            {
+                deptNameEn = source.InventoryItem.InventoryDepartment.DepartmentNameEn;
+                deptNameAr = source.InventoryItem.InventoryDepartment.DepartmentNameAr;
+            }
+            string sizeEn = "Siz";
+            string sizeAr = "---";
+            var firstOrDefaultSize = source.Sizes.FirstOrDefault();
+            if (firstOrDefaultSize != null)
+            {
+                colorEn = firstOrDefaultSize.SizeNameEn;
+                colorAr = firstOrDefaultSize.SizeNameAr;
+            }
+            string conditionEn = "Con";
+            string conditionAr = "---";
+            var firstOrDefaultStatus = source.Statuses.FirstOrDefault();
+            if (firstOrDefaultStatus != null)
+            {
+                conditionEn = firstOrDefaultStatus.StatusNameEn;
+                conditionEn = firstOrDefaultStatus.StatusNameAr;
+            }
             var item = new DomainModels.ItemVariation
             {
                 ItemVariationId = source.ItemVariationId,
@@ -130,8 +163,8 @@ namespace EPMS.Web.ModelMappers
                 UnitPrice = source.UnitPrice,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,
-                SKUDescriptionEn = source.SKUDescriptionEn,
-                SKUDescriptionAr = source.SKUDescriptionAr,
+                SKUDescriptionEn = itemNameEn + deptNameEn + colorEn + sizeEn + conditionEn,
+                SKUDescriptionAr = itemNameAr + deptNameAr + colorAr + sizeAr + conditionAr,
                 QuantityInHand = source.QuantityInHand,
                 QuantitySold = source.QuantitySold,
                 ReorderPoint = source.ReorderPoint,

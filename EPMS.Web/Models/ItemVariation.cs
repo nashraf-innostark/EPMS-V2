@@ -6,6 +6,10 @@ namespace EPMS.Web.Models
 {
     public class ItemVariation
     {
+        public ItemVariation()
+        {
+            InventoryItem  = new InventoryItemForVariation();
+        }
         public long ItemVariationId { get; set; }
         public string ItemBarcode { get; set; }
         public string SKUCode { get; set; }
@@ -44,6 +48,7 @@ namespace EPMS.Web.Models
         public List<Status> Statuses { get; set; }
         public List<ItemWarehouse> ItemWarehouses { get; set; }
         public List<ItemImage> ItemImages { get; set; }
+        public InventoryItemForVariation InventoryItem { get; set; }
 
     }
 }

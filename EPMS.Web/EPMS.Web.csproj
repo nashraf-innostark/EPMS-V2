@@ -433,6 +433,7 @@
     <Compile Include="Models\EmployeeListViewResponse.cs" />
     <Compile Include="Models\InventoryDepartment.cs" />
     <Compile Include="Models\InventoryItem.cs" />
+    <Compile Include="Models\InventoryItemForVariation.cs" />
     <Compile Include="Models\InventorySections.cs" />
     <Compile Include="Models\ItemImage.cs" />
     <Compile Include="Models\ItemManufacturer.cs" />

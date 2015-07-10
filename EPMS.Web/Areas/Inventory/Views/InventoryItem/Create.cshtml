@@ -174,7 +174,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInPackage, "", new { @class = "required" })
                 </div>
             </div>
