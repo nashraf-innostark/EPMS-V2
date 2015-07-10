@@ -132,7 +132,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 var direction = Resources.Shared.Common.TextDirection;
                 viewModel.Order = new PurchaseOrder
                 {
-                    FormNumber = "101010",
+                    FormNumber = Utility.GenerateFormNumber("PO", response.LastFormNumber),
                     RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
                 viewModel.PoItems = new List<PurchaseOrderItem>();

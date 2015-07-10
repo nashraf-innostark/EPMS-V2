@@ -10,6 +10,44 @@ namespace EPMS.Web
 {
     public class Utility
     {
+        public static string GenerateFormNumber(string form, string formNumber)
+        {
+            // get number 
+            string num = formNumber.Substring(2);
+            long number = Convert.ToInt64(num);
+            // Add 1
+            number++;
+            string noOfZeros = "";
+            switch (number.ToString().Length)
+            {
+                case 1:
+                    noOfZeros = "0000000";
+                    break;
+                case 2:
+                    noOfZeros = "000000";
+                    break;
+                case 3:
+                    noOfZeros = "00000";
+                    break;
+                case 4:
+                    noOfZeros = "0000";
+                    break;
+                case 5:
+                    noOfZeros = "000";
+                    break;
+                case 6:
+                    noOfZeros = "00";
+                    break;
+                case 7:
+                    noOfZeros = "0";
+                    break;
+                case 8:
+                    noOfZeros = "";
+                    break;
+            }
+            return form + noOfZeros + number;
+        }
+
         public static void SendEmailAsync(string email, string subject, string body)
         {
 

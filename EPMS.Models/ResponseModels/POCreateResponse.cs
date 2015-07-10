@@ -6,6 +6,7 @@ namespace EPMS.Models.ResponseModels
     public class POCreateResponse
     {
         public PurchaseOrder Order { get; set; }
+        public string LastFormNumber { get; set; }
         public string RequesterNameE { get; set; }
         public string RequesterNameA { get; set; }
 

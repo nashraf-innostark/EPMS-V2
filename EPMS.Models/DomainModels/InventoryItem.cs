@@ -29,5 +29,6 @@ namespace EPMS.Models.DomainModels
         public double? QuantityInPackage { get; set; }
 
         public virtual ICollection<ItemVariation> ItemVariations { get; set; }
+        public virtual InventoryDepartment InventoryDepartment { get; set; }
     }
 }

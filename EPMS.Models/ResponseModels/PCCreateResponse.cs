@@ -9,7 +9,7 @@ namespace EPMS.Models.ResponseModels
         {
             PhysicalCountItems = new List<PhysicalCountItem>();
         }
-        public string RequesterEmpId { get; set; }
+        public long RequesterEmpId { get; set; }
         public string RequesterNameE { get; set; }
         public string RequesterNameA { get; set; }
 

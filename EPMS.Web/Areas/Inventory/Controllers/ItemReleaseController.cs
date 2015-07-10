@@ -160,10 +160,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 var direction = Resources.Shared.Common.TextDirection;
                 viewModel.ItemRelease = new ItemRelease
                 {
-                    CreatedBy = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
+                    CreatedBy = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString(),
+                    FormNumber = Utility.GenerateFormNumber("IR", response.LastFormNumber)
                 };
                 viewModel.ItemReleaseDetails = new List<ItemReleaseDetail>();
-                viewModel.ItemRelease.FormNumber = "010101";
             }
             viewModel.Employees = response.Employees.Any() ?
                 response.Employees.Select(x => x.CreateForIrfRequesterDropDownList()).ToList() : new List<EmployeeForDropDownList>();

@@ -78,23 +78,18 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View(physicalCountViewModel);
         }
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(PhysicalCountViewModel physicalCountViewModel)
         {
             try
             {
-
-
                 DateTime date = DateTime.Now;
                 string userId = User.Identity.GetUserId();
                 if (physicalCountViewModel.PhysicalCount.PCId > 0)
                 {
                     physicalCountViewModel.PhysicalCount.RecLastUpdatedBy = userId;
                     physicalCountViewModel.PhysicalCount.RecLastUpdatedDate = date;
-                    foreach (var physicalCountItemModel in physicalCountViewModel.PhysicalCountItems)
-                    {
-                        physicalCountItemModel.RecLastUpdatedBy = userId;
-                        physicalCountItemModel.RecLastUpdatedDate = date;
-                    }
+                    
                     TempData["message"] = new MessageViewModel
                     {
                         Message = "Updated",
@@ -108,18 +103,28 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     physicalCountViewModel.PhysicalCount.RecCreatedDate = date;
                     physicalCountViewModel.PhysicalCount.RecLastUpdatedBy = userId;
                     physicalCountViewModel.PhysicalCount.RecLastUpdatedDate = date;
-                    foreach (var physicalCountItemModel in physicalCountViewModel.PhysicalCountItems)
-                    {
-                        physicalCountItemModel.RecCreatedBy = userId;
-                        physicalCountItemModel.RecCreatedDate = date;
-                        physicalCountItemModel.RecLastUpdatedBy = userId;
-                        physicalCountItemModel.RecLastUpdatedDate = date;
-                    }
+                    
                     TempData["message"] = new MessageViewModel
                     {
                         Message = "Saved",
                         IsUpdated = true
                     };
+                }
+                foreach (var physicalCountItemModel in physicalCountViewModel.PhysicalCountItems)
+                {
+                    if (physicalCountItemModel.PcItemId > 0)
+                    {
+                        physicalCountItemModel.RecLastUpdatedBy = userId;
+                        physicalCountItemModel.RecLastUpdatedDate = date;
+                    }
+                    else
+                    {
+                        physicalCountItemModel.PcId = physicalCountViewModel.PhysicalCount.PCId;
+                        physicalCountItemModel.RecCreatedBy = userId;
+                        physicalCountItemModel.RecCreatedDate = date;
+                        physicalCountItemModel.RecLastUpdatedBy = userId;
+                        physicalCountItemModel.RecLastUpdatedDate = date;
+                    }
                 }
                 PhysicalCount dataToSave = physicalCountViewModel.CreateFromClientToServer();
                 if (physicalCountService.SavePhysicalCount(dataToSave))

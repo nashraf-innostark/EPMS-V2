@@ -130,7 +130,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 viewModel.Tir = new TIR
                 {
-                    FormNumber = "101010",
+                    FormNumber = Utility.GenerateFormNumber("TI", tirResponse.LastFormNumber),
                     RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
                 viewModel.TirItems = new List<TIRItem>();

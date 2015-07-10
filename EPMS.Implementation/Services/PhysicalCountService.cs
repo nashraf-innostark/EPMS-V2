@@ -147,11 +147,15 @@ namespace EPMS.Implementation.Services
                     createResponse.PhysicalCount = pc;
                     createResponse.PhysicalCountItems = pc.PhysicalCountItems;
 
-                    createResponse.RequesterEmpId = employee.EmployeeJobId;
-                    createResponse.RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE +
-                                                    " " + employee.EmployeeLastNameE;
-                    createResponse.RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA +
-                                                    " " + employee.EmployeeLastNameA;
+                    employee = aspNetUserRepository.Find(pc.RecCreatedBy).Employee;
+                    if (employee != null)
+                    {
+                        createResponse.RequesterEmpId = employee.EmployeeId;
+                        createResponse.RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE +
+                                                        " " + employee.EmployeeLastNameE;
+                        createResponse.RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA +
+                                                        " " + employee.EmployeeLastNameA;
+                    }
                 }
             }
             else
@@ -159,7 +163,7 @@ namespace EPMS.Implementation.Services
                 employee = aspNetUserRepository.Find(requesterUserId).Employee;
                 if (employee != null)
                 {
-                    createResponse.RequesterEmpId = employee.EmployeeJobId;
+                    createResponse.RequesterEmpId = employee.EmployeeId;
                     createResponse.RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE +
                                                     " " + employee.EmployeeLastNameE;
                     createResponse.RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA +

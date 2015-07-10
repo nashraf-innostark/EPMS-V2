@@ -22,7 +22,11 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecCreatedDate = source.RecCreatedDate,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                NotesEn = source.NotesEn,
+                NotesAr = source.NotesAr,
+
+                WarehouseId = source.PhysicalCountItems.Any() ? source.PhysicalCountItems.FirstOrDefault().WarehouseId : 0
             };
         }
         public static PhysicalCount CreateFromClientToServer(this PhysicalCountViewModel source)
@@ -34,6 +38,8 @@ namespace EPMS.Web.ModelMappers
                 RecLastUpdatedBy = source.PhysicalCount.RecLastUpdatedBy,
                 RecCreatedDate = source.PhysicalCount.RecCreatedDate,
                 RecLastUpdatedDate = source.PhysicalCount.RecLastUpdatedDate,
+                NotesEn = source.PhysicalCount.NotesEn,
+                NotesAr = source.PhysicalCount.NotesAr,
 
                 PhysicalCountItems = source.PhysicalCountItems.Select(x=>x.CreateFromClientToServer()).ToList()
             };

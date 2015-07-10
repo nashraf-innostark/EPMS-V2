@@ -10,6 +10,8 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+        public string NotesEn { get; set; }
+        public string NotesAr { get; set; }
 
         public virtual ICollection<PhysicalCountItem> PhysicalCountItems { get; set; }
     }

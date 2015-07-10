@@ -214,5 +214,13 @@ namespace EPMS.Repository.Repositories
             return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status).OrderByDescending(x => x.RecCreatedDate).Take(5) :
                 DbSet.Where(x => x.RecCreatedBy == requester).OrderByDescending(x => x.RecCreatedDate).Take(5);
         }
+
+        public string GetLastFormNumber()
+        {
+            TIR tir = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (tir != null)
+                return tir.FormNumber;
+            return "TI00000001";
+        }
     }
 }
