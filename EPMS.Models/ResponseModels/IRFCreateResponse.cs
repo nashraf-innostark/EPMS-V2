@@ -5,6 +5,7 @@ namespace EPMS.Models.ResponseModels
 {
     public class IRFCreateResponse
     {
+        public string LastFormNumber { get; set; }
         public ItemRelease ItemRelease { get; set; }
         public IEnumerable<ItemReleaseDetail> ItemReleaseDetails { get; set; }
         public IEnumerable<ItemReleaseQuantity> ItemReleaseQuantities { get; set; }

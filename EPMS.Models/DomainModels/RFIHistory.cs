@@ -18,6 +18,7 @@ namespace EPMS.Models.DomainModels
         public int? Status { get; set; }
         public string ManagerId { get; set; }
         public long ParentId { get; set; }
+        public string FormNumber { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Order Order { get; set; }

@@ -188,6 +188,7 @@
     <Compile Include="IServices\IWarehouseService.cs" />
     <Compile Include="Repository\IWarehouseDetailRepository.cs" />
     <Compile Include="Repository\IWarehouseRepository.cs" />
+    <Compile Include="Repository\IPhysicalCountItemRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

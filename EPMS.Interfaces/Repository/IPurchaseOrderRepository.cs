@@ -11,5 +11,6 @@ namespace EPMS.Interfaces.Repository
         PurchaseOrderListResponse GetAllPoS(PurchaseOrderSearchRequest searchRequest);
         IEnumerable<PurchaseOrder> GetRecentPOs(int status, string requester, DateTime date);
         IEnumerable<PurchaseOrder> FindPoByVendorId(long vendorId);
+        string GetLastFormNumber();
     }
 }

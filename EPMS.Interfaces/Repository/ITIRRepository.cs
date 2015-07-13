@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.Repository
     {
         TIRListResponse GetAllTirs(TransferItemSearchRequest searchRequest);
         IEnumerable<TIR> GetRecentTIRs(int status, string requester, int warehouseId);
+        string GetLastFormNumber();
     }
 }

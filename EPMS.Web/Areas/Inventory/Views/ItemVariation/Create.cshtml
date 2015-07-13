@@ -1239,7 +1239,8 @@
             itemsCount = itemsCount + 1;
             var order = $('.imageOrder').val();
             var popupcb = $("#iCheckBox").is(':checked');
-            var html = ' <tr class="gradeX" data-id=' + index + '>' + '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
+            var html = ' <tr class="gradeX" data-id=' + index + '>' +
+                '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ImageId" name = "ItemVariation.ItemImages[' + index + '].ImageId type="hidden" />' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ItemVariationId" name = "ItemVariation.ItemImages[' + index + '].ItemVariationId type="hidden" />' +
                 '<td>' + itemsCount +

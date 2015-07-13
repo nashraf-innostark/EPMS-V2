@@ -178,7 +178,8 @@ namespace EPMS.Implementation.Services
         {
             RifCreateResponse rifResponse = new RifCreateResponse
             {
-                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
+                LastFormNumber = rifRepository.GetLastFormNumber()
             };
             if (id != null)
             {

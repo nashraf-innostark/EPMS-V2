@@ -52,6 +52,10 @@ namespace EPMS.Implementation.Services
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList(),
                 ItemRelease = id != 0 ? itemReleaseRepository.Find(id) : new ItemRelease(),
             };
+            if (id == 0)
+            {
+                response.LastFormNumber = itemReleaseRepository.GetLastFormNumber();
+            }
             response.Rfis = new List<RFI>();
             if (id > 0)
             {

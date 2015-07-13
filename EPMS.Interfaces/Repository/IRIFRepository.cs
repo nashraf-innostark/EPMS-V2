@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.Repository
     {
         RifRequestResponse LoadAllRifs(RifSearchRequest rifSearchRequest);
         IEnumerable<RIF> GetRecentRIFs(int status, string requester, DateTime date);
+        string GetLastFormNumber();
     }
 }

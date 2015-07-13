@@ -127,6 +127,14 @@ namespace EPMS.Repository.Repositories
                 DbSet.Where(x => x.RecCreatedBy == requester && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5);
         }
 
+        public string GetLastFormNumber()
+        {
+            ItemRelease itemRelease = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (itemRelease != null)
+                return itemRelease.FormNumber;
+            return "IR00000001";
+        }
+
         #endregion
     }
 }

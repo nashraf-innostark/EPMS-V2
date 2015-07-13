@@ -207,5 +207,13 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.PurchaseOrderItems.Count(y => y.VendorId == vendorId) > 0);
         }
+
+        public string GetLastFormNumber()
+        {
+            PurchaseOrder po = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (po != null)
+                return po.FormNumber;
+            return "PO00000001";
+        }
     }
 }

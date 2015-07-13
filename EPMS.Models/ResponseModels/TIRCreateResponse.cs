@@ -6,6 +6,7 @@ namespace EPMS.Models.ResponseModels
     public class TIRCreateResponse
     {
         public TIR Tir { get; set; }
+        public string LastFormNumber { get; set; }
         public string RequesterNameE { get; set; }
         public string RequesterNameA { get; set; }
         public string ManagerNameE { get; set; }

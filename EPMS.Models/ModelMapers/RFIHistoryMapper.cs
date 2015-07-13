@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ModelMapers
@@ -15,6 +13,7 @@ namespace EPMS.Models.ModelMapers
             {
                 RFIId = source.RFIId,
                 ParentId = source.RFIId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,
@@ -38,6 +37,7 @@ namespace EPMS.Models.ModelMapers
             var rfi = new RFI
             {
                 RFIId = source.RFIId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,
@@ -61,6 +61,7 @@ namespace EPMS.Models.ModelMapers
             var rfi = new RFI
             {
                 RFIId = source.RFIId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,

@@ -42,7 +42,11 @@ namespace EPMS.Implementation.Services
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
             };
-            if (id == null) return response;
+            if (id == null)
+            {
+                response.LastFormNumber = repository.GetLastFormNumber();
+                return response;
+            }
 
             var tir = repository.Find((long)id);
             if (tir == null) return response;

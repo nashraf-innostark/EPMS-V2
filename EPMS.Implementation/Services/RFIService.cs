@@ -196,8 +196,13 @@ namespace EPMS.Implementation.Services
         {
             RFICreateResponse rfiResponse = new RFICreateResponse
             {
-                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
+                
             };
+            if (id == null)
+            {
+                rfiResponse.LastFormNumber = rfiRepository.GetLastFormNumber();
+            }
             if (id != null)
             {
                 RFI rfi;

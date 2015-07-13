@@ -114,5 +114,13 @@ namespace EPMS.Repository.Repositories
             return status > 0 ? DbSet.Where(x => x.RecCreatedBy == requester && x.Status == status && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5) :
                 DbSet.Where(x => x.RecCreatedBy == requester && (date == newDataTime || DbFunctions.TruncateTime(x.RecCreatedDate) == date.Date)).OrderByDescending(x => x.RecCreatedDate).Take(5);
         }
+
+        public string GetLastFormNumber()
+        {
+            RIF rif = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            if (rif != null)
+                return rif.FormNumber;
+            return "RI00000001";
+        }
     }
 }

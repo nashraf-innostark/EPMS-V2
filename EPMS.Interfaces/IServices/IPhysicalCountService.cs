@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.IServices
         PhysicalCountResponse GetAllPhysicalCountResponse(PhysicalCountSearchRequest searchRequest);
         IEnumerable<PhysicalCount> GetAll();
         PhysicalCount FindPhysicalCountById(long id);
+        bool SavePhysicalCount(PhysicalCount physicalCount);
         bool AddPhysicalCount(PhysicalCount physicalCount);
         bool UpdatePhysicalCount(PhysicalCount physicalCount);
         void DeletePhysicalCount(PhysicalCount physicalCount);
