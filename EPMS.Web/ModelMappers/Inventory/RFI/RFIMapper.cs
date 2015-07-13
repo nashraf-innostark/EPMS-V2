@@ -14,6 +14,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             var rfi = new EPMS.Models.DomainModels.RFI
             {
                 RFIId = source.Rfi.RFIId,
+                FormNumber = source.Rfi.FormNumber,
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
@@ -56,6 +57,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             var rfi = new EPMS.Models.DomainModels.RFI
             {
                 RFIId = source.Rfi.RFIId,
+                FormNumber = source.Rfi.FormNumber,
                 OrderId = source.Rfi.OrderId,
                 UsageE = source.Rfi.UsageE,
                 UsageA = source.Rfi.UsageA,
@@ -75,6 +77,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             var rfi = new EPMS.Models.DomainModels.RFI
             {
                 RFIId = source.RFIId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,
@@ -114,6 +117,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             var rfi = new Models.RFI
             {
                 RFIId = source.RFIId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 UsageE = source.UsageE,
                 UsageA = source.UsageA,

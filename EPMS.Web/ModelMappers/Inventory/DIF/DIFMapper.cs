@@ -15,6 +15,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
             var rif = new EPMS.Models.DomainModels.DIF
             {
                 Id = source.Dif.Id,
+                FormNumber = source.Dif.FormNumber,
                 DefectivenessE = source.Dif.DefectivenessE,
                 DefectivenessA = source.Dif.DefectivenessA,
                 Status = source.Dif.Status == 0 ? 6 : source.Dif.Status,
@@ -55,6 +56,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
             var rif = new EPMS.Models.DomainModels.DIF
             {
                 Id = source.Dif.Id,
+                FormNumber = source.Dif.FormNumber,
                 DefectivenessE = source.Dif.DefectivenessE,
                 DefectivenessA = source.Dif.DefectivenessA,
                 Status = source.Dif.Status == 0 ? 6 : source.Dif.Status,
@@ -73,6 +75,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
             var rif = new EPMS.Models.DomainModels.DIF
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 Status = source.Status == 0 ? 6 : source.Status,
@@ -111,6 +114,7 @@ namespace EPMS.Web.ModelMappers.Inventory.DIF
             var rif = new Models.DIF
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 ManagerId = source.ManagerId,

@@ -11,5 +11,6 @@ namespace EPMS.Interfaces.Repository
         DifRequestResponse LoadAllDifs(DifSearchRequest searchRequest);
         DIF Find(long id);
         IEnumerable<DIF> GetRecentDIFs(int status, string requester, DateTime date);
+        string GetLastFormNumber();
     }
 }

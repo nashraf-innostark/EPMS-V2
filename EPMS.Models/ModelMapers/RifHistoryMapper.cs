@@ -11,6 +11,7 @@ namespace EPMS.Models.ModelMapers
             return new RIFHistory
             {
                 RIFId = source.RIFId,
+                FormNumber = source.FormNumber,
                 ParentId = source.RIFId,
                 OrderId = source.OrderId,
                 ReturningReasonE = source.ReturningReasonE,
@@ -33,6 +34,7 @@ namespace EPMS.Models.ModelMapers
             return new RIF
             {
                 RIFId = source.RIFId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 ReturningReasonE = source.ReturningReasonE,
                 ReturningReasonA = source.ReturningReasonA,
@@ -54,6 +56,7 @@ namespace EPMS.Models.ModelMapers
             return new RIF
             {
                 RIFId = source.RIFId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 ReturningReasonE = source.ReturningReasonE,
                 ReturningReasonA = source.ReturningReasonA,

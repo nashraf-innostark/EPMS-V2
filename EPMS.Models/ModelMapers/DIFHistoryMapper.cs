@@ -12,6 +12,7 @@ namespace EPMS.Models.ModelMapers
             var rif = new DIFHistory
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 ParentId = source.Id,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
@@ -34,6 +35,7 @@ namespace EPMS.Models.ModelMapers
             var rif = new DIF
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 DefectivenessE = source.DefectivenessE,
                 DefectivenessA = source.DefectivenessA,
                 Status = source.Status == 0 ? 6 : source.Status,

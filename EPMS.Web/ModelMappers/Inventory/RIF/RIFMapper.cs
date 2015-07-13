@@ -15,6 +15,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             var rif = new EPMS.Models.DomainModels.RIF
             {
                 RIFId = source.Rif.RIFId,
+                FormNumber = source.Rif.FormNumber,
                 OrderId = source.Rif.OrderId,
                 ReturningReasonE = source.Rif.ReasonE,
                 ReturningReasonA = source.Rif.ReasonA,
@@ -56,6 +57,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             var rif = new EPMS.Models.DomainModels.RIF
             {
                 RIFId = source.Rif.RIFId,
+                FormNumber = source.Rif.FormNumber,
                 OrderId = source.Rif.OrderId,
                 ReturningReasonE = source.Rif.ReasonE,
                 ReturningReasonA = source.Rif.ReasonA,
@@ -75,6 +77,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             var rif = new EPMS.Models.DomainModels.RIF
             {
                 RIFId = source.RIFId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 ReturningReasonE = source.ReasonE,
                 ReturningReasonA = source.ReasonA,
@@ -113,6 +116,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             var rif = new Models.RIF
             {
                 RIFId = source.RIFId,
+                FormNumber = source.FormNumber,
                 OrderId = source.OrderId,
                 ReasonE = source.ReturningReasonE,
                 ReasonA = source.ReturningReasonA,

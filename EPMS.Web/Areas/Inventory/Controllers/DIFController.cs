@@ -153,6 +153,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 rifViewModel.Dif = new Models.DIF
                 {
+                    FormNumber = Utility.GenerateFormNumber("DI", Difresponse.LastFormNumber),
                     RequesterName = Session["UserFullName"].ToString()
                 };
                 rifViewModel.DifItem = new List<Models.DIFItem>();

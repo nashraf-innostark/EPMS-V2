@@ -160,6 +160,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 rifViewModel.Rif = new Models.RIF
                 {
+                    FormNumber = Utility.GenerateFormNumber("RI", Rifresponse.LastFormNumber),
                     RequesterName = Session["UserFullName"].ToString()
                 };
                 rifViewModel.RifItem = new List<Models.RIFItem>();

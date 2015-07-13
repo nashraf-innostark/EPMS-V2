@@ -10,6 +10,7 @@ namespace EPMS.Models.ResponseModels
         public string RequesterNameA { get; set; }
         public string ManagerNameE { get; set; }
         public string ManagerNameA { get; set; }
+        public string LastFormNumber { get; set; }
 
         public IEnumerable<DIFItem> DifItem { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
