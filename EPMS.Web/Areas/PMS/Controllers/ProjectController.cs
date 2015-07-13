@@ -46,14 +46,19 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
         public ActionResult Index()
         {
-            ProjectListViewModel projectsList=new ProjectListViewModel
+            ProjectListViewModel projectsList = new ProjectListViewModel();
+            if (Session["RoleName"].ToString() == "Employee")
             {
-                Projects =
+                projectsList.Projects = projectService.LoadAllUnfinishedProjectsByEmployeeId(Session["UserID"].ToString()).Select(x => x.CreateFromServerToClient());
+            }
+            else
+            {
+                projectsList.Projects =
                     Session["RoleName"].ToString() == "Customer"
                         ? projectService.LoadAllUnfinishedProjectsByCustomerId(
                             Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient())
-            };
+                        : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient());
+            }
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             ViewBag.UserRole = Session["RoleName"];
             
@@ -63,14 +68,19 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
         public ActionResult Finished()
         {
-            ProjectListViewModel projectsList = new ProjectListViewModel
+            ProjectListViewModel projectsList = new ProjectListViewModel();
+            if (Session["RoleName"].ToString() == "Employee")
             {
-                Projects =
+                projectsList.Projects = projectService.LoadAllFinishedProjectsByEmployeeId(Session["UserID"].ToString()).Select(x => x.CreateFromServerToClient());
+            }
+            else
+            {
+                projectsList.Projects =
                     Session["RoleName"].ToString() == "Customer"
                         ? projectService.LoadAllFinishedProjectsByCustomerId(
                             Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient())
-            };
+                        : projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient());
+            }
             return View(projectsList);
         }
         #endregion
@@ -326,6 +336,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region Get Customer Quotations
         [HttpGet]
         public JsonResult GetCustomerQuotations(long customerId)

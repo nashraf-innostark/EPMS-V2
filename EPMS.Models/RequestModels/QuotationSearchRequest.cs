@@ -4,9 +4,10 @@ namespace EPMS.Models.RequestModels
 {
     public class QuotationSearchRequest : GetPagedListRequest
     {
-        public string ClientName { get; set; }
+        public string RoleName { get; set; }
         public long OrderNo { get; set; }
         public long CustomerId { get; set; }
+        public string EmployeeId { get; set; }
         public QuotationByColumn QuotationByColumn
         {
             get

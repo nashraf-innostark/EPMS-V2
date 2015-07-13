@@ -45,9 +45,19 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.Status != 4 && x.CustomerId == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
 
+        public IEnumerable<Project> GetAllOnGoingProjectsByEmployeeId(string id)
+        {
+            return DbSet.Where(x => x.Status != 4 && x.RecCreatedBy == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
+        }
+
         public IEnumerable<Project> GetAllFinishedProjectsByCustomerId(long id)
         {
             return DbSet.Where(x => x.Status == 4 && x.CustomerId == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
+        }
+
+        public IEnumerable<Project> GetAllFinishedProjectsByEmployeeId(string id)
+        {
+            return DbSet.Where(x => x.Status == 4 && x.RecCreatedBy == id);//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
 
         public Project GetProjectForDashboard(string requester, long projectId)

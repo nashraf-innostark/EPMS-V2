@@ -108,7 +108,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var profileToUpdate = companyProfileViewModel.CompanyProfile.CreateFromProfile();
                 if (profileService.UpdateDetail(profileToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
+                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -119,7 +119,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var documentToUpdate = companyProfileViewModel.CompanyDocuments.CreateFromDocument();
                 if (documentService.UpdateDetail(documentToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
+                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -130,7 +130,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var bankToUpdate = companyProfileViewModel.CompanyBank.CreateFromBank();
                 if (bankService.UpdateDetail(bankToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
+                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -141,7 +141,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var socialToUpdate = companyProfileViewModel.CompanySocial.CreateFromSocial();
                 if (socialService.UpdateDetail(socialToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
+                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -172,7 +172,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                         new
                         {
                             response = "Failed to upload. Error: " + exp.Message,
-                            status = (int) HttpStatusCode.BadRequest
+                            status = (int)HttpStatusCode.BadRequest
                         }, JsonRequestBehavior.AllowGet);
             }
             return
@@ -180,41 +180,21 @@ namespace EPMS.Web.Areas.CP.Controllers
                     new
                     {
                         filename = filename,
-                        size = companyLogo.ContentLength/1024 + "KB",
+                        size = companyLogo.ContentLength / 1024 + "KB",
                         response = "Successfully uploaded!",
-                        status = (int) HttpStatusCode.OK
+                        status = (int)HttpStatusCode.OK
                     }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SendSms(CompanyProfileViewModel companyProfileViewModel)
+        [HttpPost]
+        public ActionResult SendSms(string bankName, string bankNameAr, string bankAccountNo, string bankIbanNo, string mobileNum)
         {
-            string username = ConfigurationManager.AppSettings["MobileUsername"];
-            string password = ConfigurationManager.AppSettings["MobilePassword"];
-            string senderId = ConfigurationManager.AppSettings["SenderID"];
-            string smsText = "Bank Name: " + companyProfileViewModel.BankName + ", Bank Name Arabic: " +
-                             companyProfileViewModel.BankNameAr + ", Account #: " +
-                             companyProfileViewModel.BankAccountNo + ", Iban #: " + companyProfileViewModel.BankIbanNo +
-                             ", Mobile #:" + companyProfileViewModel.BankMobileNo;
-            string mobileNo = companyProfileViewModel.MobileNo.Aggregate("", (current, item) => current + "," + item);
-            WebRequest smsRequest =
-                WebRequest.Create("http://www.jawalbsms.ws/api.php/sendsms?user=" + username + "&pass=" +
-                                  password +
-                                  "&to=" + mobileNo.Substring(1, mobileNo.Length - 1) + "&message=" + smsText +
-                                  "&sender=" + senderId);
-            WebResponse smsRequestResponse = smsRequest.GetResponse();
-            Stream smsDataStream = smsRequestResponse.GetResponseStream();
-            StreamReader smsReader = new StreamReader(smsDataStream);
-            string smsResponse = smsReader.ReadToEnd();
-            //Patient SMS End
-
-            if (smsResponse.ToLower().Contains("success"))
-            {
-                TempData["message"] = new MessageViewModel {Message = "Message Sent", IsInfo = true};
-                return RedirectToAction("Detail");
-            }
-            TempData["message"] = new MessageViewModel {Message = "Error Code " + smsResponse, IsError = true};
-            return RedirectToAction("Detail");
-
+            string smsText = "Bank Name: " + bankName + ", Bank Name Arabic: " + bankNameAr + 
+                ", Account #: " + bankAccountNo + ", Iban #: " + bankIbanNo;
+            string mobileNo = mobileNum;
+            // Send SMS
+            bool smsResponse = Utility.SendSms(smsText, mobileNo);
+            return Json(smsResponse);
         }
         #endregion
     }

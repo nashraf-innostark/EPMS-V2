@@ -56,9 +56,25 @@ namespace EPMS.Repository.Repositories
 
             long orderId = Convert.ToInt64(searchRequest.SearchString);
 
-            Expression<Func<Quotation, bool>> query =
-                s => ((searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId)) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || (s.ClientName.Contains(searchRequest.SearchString)) ||
-                    (s.OrderId == orderId)));
+            Expression<Func<Quotation, bool>> query;
+            if (searchRequest.RoleName == "Employee")
+            {
+                query =
+                    s =>
+                        ((s.RecCreatedBy == searchRequest.EmployeeId) &&
+                         ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
+                          (s.ClientName.Contains(searchRequest.SearchString)) ||
+                          (s.OrderId == orderId)));
+            }
+            else
+            {
+                query =
+                    s =>
+                        ((searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId)) &&
+                         ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
+                          (s.ClientName.Contains(searchRequest.SearchString)) ||
+                          (s.OrderId == orderId)));
+            }
 
             IEnumerable<Quotation> quotations = searchRequest.sSortDir_0 == "asc" ?
                 DbSet

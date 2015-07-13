@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.PMS.Project.ListPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
 }
 <!-- Navigation Bar Start-->
@@ -24,7 +25,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.PMS.Project.ListPageHeading</small></h2>
-    @if (ViewBag.UserRole != "Customer")
+    @if (userPermissionsSet.Contains("ProjectCreate"))
     {
         <h3> <small><a href="~/PMS/Project/Create">@EPMS.Web.Resources.PMS.Project.AddNew</a></small></h3>
     }

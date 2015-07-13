@@ -63,14 +63,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Index(QuotationSearchRequest searchRequest)
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
-            string roleName = (string) Session["RoleName"];
-            if (roleName == "Admin")
+            searchRequest.RoleName = (string) Session["RoleName"];
+            switch (searchRequest.RoleName)
             {
-                searchRequest.CustomerId = 0;
-            }
-            if (roleName == "Customer")
-            {
-                searchRequest.CustomerId = (long) Session["CustomerID"];
+                case "Customer":
+                    searchRequest.CustomerId = (long) Session["CustomerID"];
+                    break;
+                case "Employee":
+                    searchRequest.EmployeeId = Session["UserID"].ToString();
+                    break;
+                default:
+                    searchRequest.CustomerId = 0;
+                    break;
             }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
