@@ -32,6 +32,7 @@ namespace EPMS.Implementation.Services
         private readonly IInventoryItemRepository inventoryItemRepository;
         private readonly ItemWarehouseService itemWarehouseService;
         private readonly ItemReleaseQuantityRepository itemReleaseQuantityRepository;
+        private readonly InventoryDepartmentRepository inventoryDepartmentRepository;
 
         #endregion
 
@@ -41,7 +42,9 @@ namespace EPMS.Implementation.Services
             IManufacturerRepository manufacturerRepository, IStatusRepository statusRepository,
             IColorRepository colorRepository, IItemImageRepository imageRepository,
             IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,
-            INotificationService notificationService, IWarehouseService warehouseService, IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService, ItemReleaseQuantityRepository itemReleaseQuantityRepository)
+            INotificationService notificationService, IWarehouseService warehouseService,
+            IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService,
+            ItemReleaseQuantityRepository itemReleaseQuantityRepository, InventoryDepartmentRepository inventoryDepartmentRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -56,6 +59,7 @@ namespace EPMS.Implementation.Services
             this.inventoryItemRepository = inventoryItemRepository;
             this.itemWarehouseService = itemWarehouseService;
             this.itemReleaseQuantityRepository = itemReleaseQuantityRepository;
+            this.inventoryDepartmentRepository = inventoryDepartmentRepository;
         }
 
         #endregion
@@ -154,10 +158,13 @@ namespace EPMS.Implementation.Services
         /// </summary>
         public ItemVariationResponse SaveItemVariation(ItemVariationRequest variationToSave)
         {
+            variationToSave.ItemVariation.InventoryItem =
+                inventoryItemRepository.Find(variationToSave.ItemVariation.InventoryItemId);
             ItemVariation itemVariationFromDatabase = variationRepository.Find(variationToSave.ItemVariation.ItemVariationId);
             if (variationToSave.ItemVariation.ItemVariationId > 0)
             {
-                UpdateItemVariation(variationToSave.ItemVariation);
+                UpdateItemVariation(variationToSave);
+                //UpdateItemVariation(variationToSave.ItemVariation);
                 UpdateSizeList(variationToSave, itemVariationFromDatabase);
                 UpdateManufacturerList(variationToSave);
                 UpdateWarehouseList(variationToSave);
@@ -167,7 +174,7 @@ namespace EPMS.Implementation.Services
             }
             else
             {
-                AddNewVariation(variationToSave.ItemVariation);
+                AddNewVariation(variationToSave);
                 AddSizeList(variationToSave);
                 AddManufacturerList(variationToSave);
                 AddWarehouseList(variationToSave);
@@ -182,25 +189,105 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Add New Variation from Client
         /// </summary>
-        private void AddNewVariation(ItemVariation itemVariation)
+        private void AddNewVariation(ItemVariationRequest variationToSave)
         {
-            itemVariation.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
-            itemVariation.RecCreatedDt = DateTime.Now;
-            itemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
-            itemVariation.RecLastUpdatedDt = DateTime.Now;
-            variationRepository.Add(itemVariation);
+            variationToSave.ItemVariation.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+            variationToSave.ItemVariation.RecCreatedDt = DateTime.Now;
+            variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+            variationToSave.ItemVariation.RecLastUpdatedDt = DateTime.Now;
+            var itemNameEn = variationToSave.ItemVariation.InventoryItem.ItemNameEn.Substring(0, 6);
+            var itemNameAr = variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
+            Color color = colorRepository.Find(Convert.ToInt64(variationToSave.ColorArrayList));
+            var colorEn = "000";
+            var colorAr = "000";
+            if (color != null)
+            {
+                colorEn = color.ColorNameEn.Substring(0, 3);
+                colorAr = color.ColorNameAr.Substring(0, 3);
+            }
+            Size size = sizeRepository.Find(Convert.ToInt64(variationToSave.SizeArrayList));
+            var sizeEn = "000";
+            var sizeAr = "000";
+            if (size != null)
+            {
+                sizeEn = size.SizeNameEn.Substring(0, 3);
+                sizeAr = size.SizeNameAr.Substring(0, 3);
+            }
+            InventoryDepartment department = null;
+            var deptnameEn = "000";
+            var deptnameAr = "000";
+            if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
+            {
+                department = inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
+            }
+            if (department != null)
+            {
+                deptnameEn = department.DepartmentNameEn.Substring(0, 3);
+                deptnameAr = department.DepartmentNameEn.Substring(0, 3);
+            }
+            Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
+            var statusEn = "000";
+            var statusAr = "000";
+            if (status != null)
+            {
+                statusEn = status.StatusNameEn.Substring(0, 3);
+                statusAr = status.StatusNameAr.Substring(0, 3);
+            }
+            variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
+            variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
+            variationRepository.Add(variationToSave.ItemVariation);
             //Item variation Notification
-            SendNotification(itemVariation);
+            SendNotification(variationToSave.ItemVariation);
         }
 
         /// <summary>
         /// Update Existing Variation from Client
         /// </summary>
-        private void UpdateItemVariation(ItemVariation itemVariation)
+        private void UpdateItemVariation(ItemVariationRequest variationToSave)
         {
-            itemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
-            itemVariation.RecLastUpdatedDt = DateTime.Now;
-            variationRepository.Update(itemVariation);
+            variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+            variationToSave.ItemVariation.RecLastUpdatedDt = DateTime.Now;
+            var itemNameEn = variationToSave.ItemVariation.InventoryItem.ItemNameEn.Substring(0, 6);
+            var itemNameAr = variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
+            Color color = colorRepository.Find(Convert.ToInt64(variationToSave.ColorArrayList));
+            var colorEn = "000";
+            var colorAr = "000";
+            if (color != null)
+            {
+                colorEn = color.ColorNameEn.Substring(0,3);
+                colorAr = color.ColorNameAr.Substring(0, 3);
+            }
+            Size size = sizeRepository.Find(Convert.ToInt64(variationToSave.SizeArrayList));
+            var sizeEn = "000";
+            var sizeAr = "000";
+            if (size !=null)
+            {
+                sizeEn = size.SizeNameEn.Substring(0, 3);
+                sizeAr = size.SizeNameAr.Substring(0, 3);
+            }
+            InventoryDepartment department = null;
+            var deptnameEn = "000";
+            var deptnameAr = "000";
+            if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
+            {
+                department = inventoryDepartmentRepository.Find((long) variationToSave.ItemVariation.InventoryItem.DepartmentId);
+            }
+            if (department != null)
+            {
+                deptnameEn = department.DepartmentNameEn.Substring(0, 3);
+                deptnameAr = department.DepartmentNameEn.Substring(0, 3);
+            }
+            Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
+            var statusEn = "000";
+            var statusAr = "000";
+            if (status != null)
+            {
+                statusEn = status.StatusNameEn.Substring(0, 3);
+                statusAr = status.StatusNameAr.Substring(0, 3);
+            }
+            variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn+sizeEn+statusEn;
+            variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
+            variationRepository.Update(variationToSave.ItemVariation);
         }
         /// <summary>
         /// Save Size List from Client
@@ -380,6 +467,7 @@ namespace EPMS.Implementation.Services
                             ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
                             ManufacturerId = itemManufacturer.ManufacturerId,
                             Price = itemManufacturer.Price,
+                            Quantity = itemManufacturer.Quantity
                         };
                         itemManufacturerRepository.Add(itemToAdd);
                     }
@@ -547,7 +635,7 @@ namespace EPMS.Implementation.Services
             IEnumerable<ItemImage> dbList = itemVariationFromDatabase.ItemImages.ToList();
             IEnumerable<ItemImage> clientList = variationToSave.ItemImages;
 
-            if (clientList != null)
+            if (clientList != null && clientList.Count() > 1)
             {
                 //Add New Items
                 foreach (ItemImage image in clientList)

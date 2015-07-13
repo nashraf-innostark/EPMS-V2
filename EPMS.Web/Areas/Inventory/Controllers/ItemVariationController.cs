@@ -88,6 +88,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(ItemVariationViewModel variationViewModel)
         {
+            //variationViewModel.ItemVariation.InventoryItem =
+            //    inventoryItemService.FindItemById(variationViewModel.ItemVariation.InventoryItemId)
+            //        .CreateForItemVariation();
             if (variationViewModel.ItemVariation.ItemVariationId > 0)
             {
                 ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();

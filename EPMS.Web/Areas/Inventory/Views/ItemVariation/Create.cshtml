@@ -303,7 +303,7 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Size</strong><a href="#sizeModule" data-toggle="modal">Add New Size</a>
+            <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id ="addNewSize">Add New Size</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -412,6 +412,7 @@
                             <th> Serial</th>
                             <th>Manufacturer</th>
                             <th>Price</th>
+                            <th>Quantity</th>
                             <th>Delete</th>
 
                         </tr>
@@ -430,7 +431,7 @@
                                     @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
                                     <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
-                                        <label class="control-label serialNumber">@serial</label>
+                                        <label class="control-label">@serial</label>
                                     </td>
                                     <td>
                                         @if (direction == "ltr")
@@ -446,6 +447,10 @@
                                         @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
                                         @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
                                     </td>
+                                    <td>
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Quantity, new { @class = "auto-resize Quantity" })
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Quantity, new { @class = "auto-resize Quantity" })
+                                    </td>
                                     <td><i class="icon-photon minus deleteManufacturer"></i></td>
                                 </tr>
                             }
@@ -458,7 +463,7 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Item Status</strong><a href="#itemStatusModule" data-toggle="modal">Add New Status</a>
+            <strong>Item Status</strong><a href="#itemStatusModule" data-toggle="modal" id="addNewStatus">Add New Status</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -497,7 +502,7 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Item Color</strong><a href="#itemColorModule" data-toggle="modal">Add New Color</a>
+            <strong>Item Color</strong><a href="#itemColorModule" data-toggle="modal" id="addNewColor">Add New Color</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -804,6 +809,17 @@
                     <div class="span5">
                         <div class="controls">
                             <input id="manufacturerPriceLable" type="text" name="inputField" class="toClear">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="manufacturerQuantityLable">Quantity</label>
+                    </div>
+                    <div class="span5">
+                        <div class="controls">
+                            <input id="manufacturerQuantityLable" type="text" name="inputField" class="toClear">
                         </div>
                     </div>
 
@@ -1121,10 +1137,10 @@
                 success: function (data) {
                     if (data[0] == null) {
                         $('#SKUCode').val(101101);
-                        $('#ItemBarcode').val(101101 + ' - ' + data[1]);
+                        $('#ItemBarcode').val(100010001 + ' - ' + 101101);
                     } else {
                         $('#SKUCode').val(++data[0]);
-                        $('#ItemBarcode').val(data[0] + ' - ' + data[1]);
+                        $('#ItemBarcode').val(data[1] + ' - ' + data[0]);
                     }
                 },
                 error: function () {
@@ -1267,7 +1283,6 @@
 
         //Delete Image from the List
         $('.deleteImage').live("click", function () {
-            debugger;
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsImg').dataTable();
             var pos = atable.fnGetPosition(row);
@@ -1516,7 +1531,7 @@
             var html = '<tr class="gradeX sizeTableRow">' +
                 '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
                 '<td>' + sizeNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteSize' + sizeId + '"></i></td>' +
+                '<td><i class="icon-photon minus deleteSize"></i></td>' +
                 '</tr>';
             $('.sizeTable').append(html);
             ManageSizeList(sizeId);
@@ -1530,29 +1545,22 @@
                     });
                 }
             });
-            $(".deleteSize"+ sizeId).on("click", function () {
-                debugger;
-                var hiddenId = $(this).parent().prev().prev().val();
-                var row = $(this).parent().parent().get(0);
-                var atable = $('#tableSortableVariationsSize').dataTable();
-                var pos = atable.fnGetPosition(row);
-                atable.fnDeleteRow(pos);
-                ManageSizeList(hiddenId, 2);
-            });
             if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
                 $(".sizeTable").children("tr").children("td").hide();
             }
+            $("#addNewSize").hide();
             clearPopup();
         });
 
         //Delete Size from the List
-        $('.deleteSize').on("click", function () {
+        $('.deleteSize').live("click", function () {
             debugger;
             var hiddenId = $(this).parent().prev().prev().val();
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsSize').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
+            $("#addNewSize").show();
             ManageSizeList(hiddenId, 2);
         });
 
@@ -1564,8 +1572,9 @@
                 index = index - 1;
                 $("#manufacturerDetails").children("tr").children("td").hide();
             }
-            itemsCount = itemsCount + 1;
+            itemsCount = index + 1;
             var price = $('#manufacturerPriceLable').val();
+            var quantity = $('#manufacturerQuantityLable').val();
             var manufacturerId = $('#manuId').val();
             var manufacturerNameEn, manufacturerNameAr;
             $.each(parsedManufacturer, function (key, value) {
@@ -1580,16 +1589,25 @@
                 '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
                 '<td>' + itemsCount +
                 '</td>' +
-                '<td><input  rows="2" class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price"></div></td>' +
                 '<td>' +
-                '<div class="span2"><div class="controls"><input  rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '"></div></div>' +
+                '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
+                '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                '<td>' +
+                '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
+                '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
+                '</td>' +
+                '<td>' +
+                '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
+                '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
                 '</td>' +
                 '<td>' +
                 '<i class="icon-photon minus deleteManufacturer"></i>' +
                 '</td>' +
                 '</tr>';
             $('#manufacturerDetails').append(html);
-            $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').val(manufacturerNameEn);
+            $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
+            $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
+            $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
             event.preventDefault();
             $('#manufacturModule').modal('hide');
             $('.tableManufacturer').dataTable().fnDestroy();
@@ -1643,6 +1661,7 @@
             if ($(".statusTable").children("tr").children("td").html() == "No data available in table") {
                 $(".statusTable").children("tr").children("td").hide();
             }
+            $("#addNewStatus").hide();
             clearPopup();
         });
 
@@ -1653,6 +1672,7 @@
             var atable = $('#tableSortableItemStatus').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
+            $("#addNewStatus").show();
             ManageStatusList(hiddenId, 2);
         });
 
@@ -1687,17 +1707,18 @@
             if ($(".colorTable").children("tr").children("td").html() == "No data available in table") {
                 $(".colorTable").children("tr").children("td").hide();
             }
+            $("#addNewColor").hide();
             clearPopup();
         });
 
         //Delete Color from the List
         $('.deleteColor').live("click", function () {
-            debugger;
             var hiddenId = $(this).parent().prev().prev().val();
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableItemColor').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
+            $("#addNewColor").show();
             ManageColorList(hiddenId, 2);
         });
 
@@ -1798,23 +1819,23 @@
                 '</td>' +
                 '<td>' +
                 '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" type="hidden" class = "auto-resize Number">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
+                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
                 '</td>' +
                 '<td>' +
                 '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Price" type="hidden" value = "' + quantity + '">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
+                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
                 '<td>' +
                 '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" type="hidden" value = "' + locationInWarehouse + '">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
+                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
                 '</td>' +
                 '<td>' +
                 '<i class="icon-photon minus deleteWarehouse"></i>' +
                 '</td>' +
                 '</tr>';
             $('#warehouseDetails').append(html);
-            $('#ItemVariation_ItemWarehouses' + index + '__WarehouseNumber').text(warehouseNumber);
-            $('#ItemVariation_ItemWarehouses' + index + '__Quantity').text(quantity);
-            $('#ItemVariation_ItemWarehouses' + index + '__PlaceInWarehouse').text(locationInWarehouse);
+            $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
+            $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
+            $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
             event.preventDefault();
             $('#wherehouseModule').modal('hide');
             $('.tableWarehouse').dataTable().fnDestroy();
@@ -1831,12 +1852,22 @@
 
         //Delete Warehouse from the List
         $('.deleteWarehouse').live("click", function () {
-            debugger;
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsWherehouse').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
         });
+
+        //Hide Add New Buttons if list contains any Item in Color, Status and Size
+        if ($(".sizeTable").children("tr").children("td").html() != "No data available in table") {
+            $("#addNewSize").hide();
+        }
+        if ($(".colorTable").children("tr").children("td").html() != "No data available in table") {
+            $("#addNewColor").hide();
+        }
+        if ($(".statusTable").children("tr").children("td").html() != "No data available in table") {
+            $("#addNewStatus").hide();
+        }
 
     });
 
@@ -1954,7 +1985,6 @@
     }
     function reActivateDeleteSize(a, b, c) {
         $('.deleteSize').on("click", function () {
-            debugger;
             var hiddenId = $(this).parent().prev().prev().val();
             var row = $(this).parent().parent().get(0);
             var atable = $('#tableSortableVariationsSize').dataTable();

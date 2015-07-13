@@ -68,11 +68,11 @@
                                 }
                                 @if (direction == "ltr")
                                 {
-                                    <td>@item.ItemDescriptionEn</td>
+                                    <td>@Html.Raw(item.ItemDescriptionEn)</td>
                                 }
                                 else
                                 {
-                                    <td>@item.ItemDescriptionAr</td>
+                                    <td>@Html.Raw(item.ItemDescriptionAr)</td>
                                 }
                                 <td>@item.DepartmentPath</td>
                                 <td></td>

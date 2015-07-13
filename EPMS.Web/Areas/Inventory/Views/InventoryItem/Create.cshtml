@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using EPMS.Models.ResponseModels
 @model EPMS.Web.ViewModels.InventoryItem.InventoryItemViewModel
 
 @{
@@ -174,7 +175,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage"})
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInPackage, "", new { @class = "required" })
                 </div>
             </div>
@@ -264,18 +265,6 @@
                 </div>
             </div>
         </div>
-
-        @*<div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DeptInfo</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DepartmentId, new { @dir = "ltr", id = "DepartmentId", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.DepartmentId, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>*@
         
         <div class="control-group row-fluid">
             <div class="span3">
@@ -286,7 +275,7 @@
                 @Html.TextBoxFor(m => m.InventoryItem.DepartmentPath, new { @dir = "ltr", id = "DepartmentPath", @readonly = "true" })
                 <div class="control-group row-fluid">
                     <div class="span12 span-inset">
-                        <a href="#modal-dialog" role="button" class="btn" data-toggle="modal">Tree Selector</a>
+                        <a href="#modal-dialog" role="button" class="btn treeSelectorButton" data-toggle="modal">Tree Selector</a>
 
                     </div>
                 </div>
@@ -345,17 +334,33 @@
                                             }
                                             @if (direction == "ltr")
                                             {
-                                                <td>@item.ItemDescForIndexEn</td>
+                                                <td>@Html.Raw(item.ItemDescForIndexEn)</td>
                                             }
                                             else
                                             {
-                                                <td>@item.ItemDescForIndexAr</td>
+                                                <td>@Html.Raw(item.ItemDescForIndexAr)</td>
                                             }
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            @if (direction == "ltr")
+                                            {
+                                                <td>@item.SizeNameEn</td>
+                                                <td>@item.StatusNameEn</td>
+                                                <td>@item.ColorNameEn</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.ColorNameAr</td>
+                                                <td>@item.StatusNameAr</td>
+                                                <td>@item.ColorNameAr</td>
+                                            }
                                             <td>@item.UnitPrice</td>
-                                            <td></td>
+                                            @if (direction == "ltr")
+                                            {
+                                                <td>@item.SKUDescriptionEn</td>
+                                            }
+                                            else
+                                            {
+                                                <td>@item.SKUDescriptionAr</td>
+                                            }
                                             <td>@item.PackagePrice</td>
                                             <td>@item.QuantityInHand</td>
                                             <td>@item.QuantitySold</td>
@@ -422,7 +427,7 @@
     var siteUrl = $("#siteURL").val();
     var itemId = parseInt($('#InventoryItem_ItemId').val());
     var siteUrl = $("#siteURL").val();
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#tableSortableVariations').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function() {
@@ -453,12 +458,14 @@
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
+            $('.treeSelectorButton').show();
             showCkEditors();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#edit").show();
+            $('.treeSelectorButton').hide();
         }
 
         //Departments Tree
@@ -530,6 +537,7 @@
         $("#itemVariationTable").hide();
         $("#CKEditorDescp").show();
         showCkEditors();
+        $('.treeSelectorButton').show();
         event.preventDefault();
     });
 

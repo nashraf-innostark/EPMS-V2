@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.RequestModels;
+using iTextSharp.text.pdf.qrcode;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -61,6 +62,12 @@ namespace EPMS.Web.ModelMappers
 
             model.ItemDescForIndexEn = descEn;
             model.ItemDescForIndexAr = descAr;
+            model.SizeNameEn = source.Sizes != null && source.Sizes.Count > 0 ? source.Sizes.FirstOrDefault().SizeNameEn : "";
+            model.SizeNameAr = source.Sizes != null && source.Sizes.Count > 0 ? source.Sizes.FirstOrDefault().SizeNameAr : "";
+            model.ColorNameEn = source.Colors != null && source.Colors.Count > 0 ? source.Colors.FirstOrDefault().ColorNameEn: "";
+            model.ColorNameAr = source.Colors != null && source.Colors.Count > 0 ? source.Colors.FirstOrDefault().ColorNameAr: "";
+            model.StatusNameEn = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameEn : "";
+            model.StatusNameAr = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameAr : "";
             return model;
         }
         public static WebModels.ItemVariation CreateFromServerToClient(this DomainModels.ItemVariation source, IEnumerable<DomainModels.ItemWarehouse> itemWarehouses)
@@ -121,39 +128,6 @@ namespace EPMS.Web.ModelMappers
 
         public static ItemVariationRequest CreateFromClientToServer(this WebModels.ItemVariation source)
         {
-            var itemNameEn = source.InventoryItem.ItemNameEn.Substring(0, 5);
-            var itemNameAr = source.InventoryItem.ItemNameAr.Substring(0,5);
-            string colorEn = "Col";
-            string colorAr = "---";
-            var firstOrDefaultColor = source.Colors.FirstOrDefault();
-            if (firstOrDefaultColor != null)
-            {
-                colorEn = firstOrDefaultColor.ColorNameEn;
-                colorAr = firstOrDefaultColor.ColorNameAr;
-            }
-            var deptNameEn = "Dep";
-            var deptNameAr = "---";
-            if (source.InventoryItem.InventoryDepartment != null)
-            {
-                deptNameEn = source.InventoryItem.InventoryDepartment.DepartmentNameEn;
-                deptNameAr = source.InventoryItem.InventoryDepartment.DepartmentNameAr;
-            }
-            string sizeEn = "Siz";
-            string sizeAr = "---";
-            var firstOrDefaultSize = source.Sizes.FirstOrDefault();
-            if (firstOrDefaultSize != null)
-            {
-                colorEn = firstOrDefaultSize.SizeNameEn;
-                colorAr = firstOrDefaultSize.SizeNameAr;
-            }
-            string conditionEn = "Con";
-            string conditionAr = "---";
-            var firstOrDefaultStatus = source.Statuses.FirstOrDefault();
-            if (firstOrDefaultStatus != null)
-            {
-                conditionEn = firstOrDefaultStatus.StatusNameEn;
-                conditionEn = firstOrDefaultStatus.StatusNameAr;
-            }
             var item = new DomainModels.ItemVariation
             {
                 ItemVariationId = source.ItemVariationId,
@@ -163,8 +137,8 @@ namespace EPMS.Web.ModelMappers
                 UnitPrice = source.UnitPrice,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,
-                SKUDescriptionEn = itemNameEn + deptNameEn + colorEn + sizeEn + conditionEn,
-                SKUDescriptionAr = itemNameAr + deptNameAr + colorAr + sizeAr + conditionAr,
+                SKUDescriptionEn = source.SKUDescriptionEn,
+                SKUDescriptionAr = source.SKUDescriptionAr,
                 QuantityInHand = source.QuantityInHand,
                 QuantitySold = source.QuantitySold,
                 ReorderPoint = source.ReorderPoint,
@@ -211,6 +185,7 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 ManufacturerId = source.ManufacturerId,
                 Price = source.Price,
+                Quantity = source.Quantity
             };
         }
 

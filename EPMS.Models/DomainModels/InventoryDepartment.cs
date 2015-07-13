@@ -21,5 +21,6 @@ namespace EPMS.Models.DomainModels
 
         public virtual ICollection<InventoryDepartment> InventoryDepartments { get; set; }
         public virtual InventoryDepartment ParentDepartment { get; set; }
+        public virtual ICollection<InventoryItem> InventoryItems { get; set; }
     }
 }

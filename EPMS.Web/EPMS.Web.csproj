@@ -359,6 +359,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\InventoryItemVariationMapper.cs" />
     <Compile Include="ModelMappers\PhysicalCountItemMapper.cs" />
     <Compile Include="ModelMappers\PhysicalCountMapper.cs" />
     <Compile Include="ModelMappers\ColorMapper.cs" />

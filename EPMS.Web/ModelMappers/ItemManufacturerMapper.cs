@@ -14,6 +14,7 @@ namespace EPMS.Web.ModelMappers
                 Price = source.Price,
                 ManufacturerNameEn = source.Manufacturer.ManufacturerNameEn,
                 ManufacturerNameAr = source.Manufacturer.ManufacturerNameAr,
+                Quantity = source.Quantity
             };
         }
     }

@@ -42,7 +42,12 @@ namespace EPMS.Web.Models
         public string ItemDescForIndexAr { get; set; }
         public List<Color> Colors { get; set; }
         public List<Size> Sizes { get; set; }
-
+        public string SizeNameEn { get; set; }
+        public string SizeNameAr { get; set; }
+        public string StatusNameEn { get; set; }
+        public string StatusNameAr { get; set; }
+        public string ColorNameEn { get; set; }
+        public string ColorNameAr { get; set; }
 
         public List<ItemManufacturer> ItemManufacturers { get; set; }
         public List<Status> Statuses { get; set; }

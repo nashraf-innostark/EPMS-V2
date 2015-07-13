@@ -12,5 +12,6 @@ namespace EPMS.Web.Models
         public string Price { get; set; }
         public string ManufacturerNameEn { get; set; }
         public string ManufacturerNameAr { get; set; }
+        public long? Quantity { get; set; }
     }
 }
