@@ -37,7 +37,11 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         {
             IEnumerable<string> emEmails = response.EmployeeEmails;
             string empemails = emEmails.Aggregate("", (current, item) => current + "," + item);
-            string emails = empemails.Substring(1, empemails.Length - 1);
+            string emails = "";
+            if (!string.IsNullOrEmpty(empemails))
+            {
+                emails = empemails.Substring(1, empemails.Length - 1);
+            }
             if (!string.IsNullOrEmpty(meetingViewModel.Meeting.AttendeeEmail1))
             {
                 emails = emails + "," + meetingViewModel.Meeting.AttendeeEmail1;
@@ -52,7 +56,10 @@ namespace EPMS.Web.Areas.Meeting.Controllers
             }
             string emailSubject = "Meeting Invitation";
             string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName + " on " + meetingViewModel.Meeting.Date;
-            Utility.SendEmailAsync(emails, emailSubject, emailBody);
+            if (!string.IsNullOrEmpty(emails))
+            {
+                Utility.SendEmailAsync(emails, emailSubject, emailBody);
+            }
         }
         #endregion
 
