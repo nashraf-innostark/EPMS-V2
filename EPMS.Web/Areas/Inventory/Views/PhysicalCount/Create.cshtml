@@ -267,13 +267,22 @@
 <script>
     var dir = '@direction';
     var warehouseId;
+    var isError;
     function ProductLoaded(rowId, data) {
         
         $.unblockUI();
         if (data == null) {
             clearTableRow(rowId);
-            alert("No record found");//You should use your error showing method
+            var m = $(".alert-error");
+            m.children("span").text("No record found");
+            m.show();
+            isError = true;
         } else {
+            if (isError) {
+                var m = $(".alert-error");
+                m.children("span").text("");
+                m.hide();
+            }
             $("#PhysicalCountItems_" + rowId + "__ItemVariationId").val(data.ItemVariationId);
             $("#PhysicalCountItems_" + rowId + "__ItemBarcode").val(data.ItemBarcode);
             var itemDetails;
@@ -317,9 +326,10 @@
                 error: function (textStatus, errorThrown) {
                     clearTableRow(rowId);
                     $.unblockUI();
-                    //alert("Status: " + textStatus);
-                    alert("Error: " + errorThrown);
-                    
+                    var m = $(".alert-error");
+                    m.children("span").text("No record found");
+                    m.show();
+                    isError = true;
                 }
             });
         }
