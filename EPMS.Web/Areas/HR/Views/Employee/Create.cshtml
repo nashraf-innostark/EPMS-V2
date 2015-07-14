@@ -1244,17 +1244,11 @@
         }
         if (isDetail == false) {
             // CK Editor
-            editor = CKEDITOR.replace('ExtraInformationE', {
+             CKEDITOR.replace('ExtraInformationE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
-            editor = CKEDITOR.replace('ExtraInformationA', {
+            CKEDITOR.replace('ExtraInformationA', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
             $("#Descp").hide();
             $("#CKEditorDescp").show();
