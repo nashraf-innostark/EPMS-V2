@@ -208,23 +208,29 @@ namespace EPMS.Implementation.Services
             variationToSave.ItemVariation.RecCreatedDt = DateTime.Now;
             variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             variationToSave.ItemVariation.RecLastUpdatedDt = DateTime.Now;
-            var itemNameEn = variationToSave.ItemVariation.InventoryItem.ItemNameEn.Substring(0, 6);
-            var itemNameAr = variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
+            string itemNameEn;
+            string itemNameAr;
+            itemNameEn = variationToSave.ItemVariation.InventoryItem.ItemNameEn.Length < 6
+                ? variationToSave.ItemVariation.InventoryItem.ItemNameEn
+                : variationToSave.ItemVariation.InventoryItem.ItemNameEn.Substring(0, 6);
+            itemNameAr = variationToSave.ItemVariation.InventoryItem.ItemNameAr.Length < 6
+                ? variationToSave.ItemVariation.InventoryItem.ItemNameAr
+                : variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
             Color color = colorRepository.Find(Convert.ToInt64(variationToSave.ColorArrayList));
             var colorEn = "000";
             var colorAr = "000";
             if (color != null)
             {
-                colorEn = color.ColorNameEn.Substring(0, 3);
-                colorAr = color.ColorNameAr.Substring(0, 3);
+                colorEn = color.ColorNameEn.Length < 3 ? color.ColorNameEn : color.ColorNameEn.Substring(0, 3);
+                colorAr = color.ColorNameAr.Length < 3 ? color.ColorNameAr : color.ColorNameAr.Substring(0, 3);
             }
             Size size = sizeRepository.Find(Convert.ToInt64(variationToSave.SizeArrayList));
             var sizeEn = "000";
             var sizeAr = "000";
             if (size != null)
             {
-                sizeEn = size.SizeNameEn.Substring(0, 3);
-                sizeAr = size.SizeNameAr.Substring(0, 3);
+                sizeEn = size.SizeNameEn.Length < 3 ? size.SizeNameEn : size.SizeNameEn.Substring(0, 3);
+                sizeAr = size.SizeNameAr.Length < 3 ? size.SizeNameAr : size.SizeNameAr.Substring(0, 3);
             }
             InventoryDepartment department = null;
             var deptnameEn = "000";
@@ -235,16 +241,16 @@ namespace EPMS.Implementation.Services
             }
             if (department != null)
             {
-                deptnameEn = department.DepartmentNameEn.Substring(0, 3);
-                deptnameAr = department.DepartmentNameEn.Substring(0, 3);
+                deptnameEn = department.DepartmentNameEn.Length < 3 ? department.DepartmentNameEn : department.DepartmentNameEn.Substring(0, 3);
+                deptnameAr = department.DepartmentNameAr.Length < 3 ? department.DepartmentNameAr : department.DepartmentNameAr.Substring(0, 3);
             }
             Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
             var statusEn = "000";
             var statusAr = "000";
             if (status != null)
             {
-                statusEn = status.StatusNameEn.Substring(0, 3);
-                statusAr = status.StatusNameAr.Substring(0, 3);
+                statusEn = status.StatusNameEn.Length < 3 ? status.StatusNameEn : status.StatusNameEn.Substring(0, 3);
+                statusAr = status.StatusNameAr.Length < 3 ? status.StatusNameAr : status.StatusNameAr.Substring(0, 3);
             }
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
@@ -260,43 +266,49 @@ namespace EPMS.Implementation.Services
         {
             variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             variationToSave.ItemVariation.RecLastUpdatedDt = DateTime.Now;
-            var itemNameEn = variationToSave.ItemVariation.InventoryItem.ItemNameEn.Substring(0, 6);
-            var itemNameAr = variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
+            string itemNameEn;
+            string itemNameAr;
+            itemNameEn = variationToSave.ItemVariation.InventoryItem.ItemNameEn.Length < 6
+                ? variationToSave.ItemVariation.InventoryItem.ItemNameEn
+                : variationToSave.ItemVariation.InventoryItem.ItemNameEn.Substring(0, 6);
+            itemNameAr = variationToSave.ItemVariation.InventoryItem.ItemNameAr.Length < 6
+                ? variationToSave.ItemVariation.InventoryItem.ItemNameAr
+                : variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
             Color color = colorRepository.Find(Convert.ToInt64(variationToSave.ColorArrayList));
             var colorEn = "000";
             var colorAr = "000";
             if (color != null)
             {
-                colorEn = color.ColorNameEn.Substring(0,3);
-                colorAr = color.ColorNameAr.Substring(0, 3);
+                colorEn = color.ColorNameEn.Length < 3 ? color.ColorNameEn : color.ColorNameEn.Substring(0, 3);
+                colorAr = color.ColorNameAr.Length < 3 ? color.ColorNameAr : color.ColorNameAr.Substring(0, 3);
             }
             Size size = sizeRepository.Find(Convert.ToInt64(variationToSave.SizeArrayList));
             var sizeEn = "000";
             var sizeAr = "000";
-            if (size !=null)
+            if (size != null)
             {
-                sizeEn = size.SizeNameEn.Substring(0, 3);
-                sizeAr = size.SizeNameAr.Substring(0, 3);
+                sizeEn = size.SizeNameEn.Length < 3 ? size.SizeNameEn : size.SizeNameEn.Substring(0, 3);
+                sizeAr = size.SizeNameAr.Length < 3 ? size.SizeNameAr : size.SizeNameAr.Substring(0, 3);
             }
             InventoryDepartment department = null;
             var deptnameEn = "000";
             var deptnameAr = "000";
             if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
             {
-                department = inventoryDepartmentRepository.Find((long) variationToSave.ItemVariation.InventoryItem.DepartmentId);
+                department = inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
             }
             if (department != null)
             {
-                deptnameEn = department.DepartmentNameEn.Substring(0, 3);
-                deptnameAr = department.DepartmentNameEn.Substring(0, 3);
+                deptnameEn = department.DepartmentNameEn.Length < 3 ? department.DepartmentNameEn : department.DepartmentNameEn.Substring(0, 3);
+                deptnameAr = department.DepartmentNameAr.Length < 3 ? department.DepartmentNameAr : department.DepartmentNameAr.Substring(0, 3);
             }
             Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
             var statusEn = "000";
             var statusAr = "000";
             if (status != null)
             {
-                statusEn = status.StatusNameEn.Substring(0, 3);
-                statusAr = status.StatusNameAr.Substring(0, 3);
+                statusEn = status.StatusNameEn.Length < 3 ? status.StatusNameEn : status.StatusNameEn.Substring(0, 3);
+                statusAr = status.StatusNameAr.Length < 3 ? status.StatusNameAr : status.StatusNameAr.Substring(0, 3);
             }
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn+sizeEn+statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
@@ -648,7 +660,7 @@ namespace EPMS.Implementation.Services
             IEnumerable<ItemImage> dbList = itemVariationFromDatabase.ItemImages.ToList();
             IEnumerable<ItemImage> clientList = variationToSave.ItemImages;
 
-            if (clientList != null && clientList.Count() > 1)
+            if (clientList != null && clientList.Count() > 0)
             {
                 //Add New Items
                 foreach (ItemImage image in clientList)

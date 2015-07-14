@@ -1189,6 +1189,8 @@
         var siteURL = $('#siteURL').val();
         var url = siteURL + "/Inventory/ItemVariation/UploadImage";
         var errors = "";
+        var imageName;
+        var imagePath;
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', // type: '', for all types
             maxsize: 1, //file size in MBs
@@ -1208,11 +1210,13 @@
             },
 
             loaded: function (result) {
+                debugger;
                 $("#PRO" + result.fileno).remove();
                 $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
                 //Inserted a Hidden field in the Form for Uploaded Image Name
-                var imagename = "<input name='ItemVariation.ItemImages[" + imageRowNo + "].ItemImagePath' id='ItemVariation_ItemImages_" + imageRowNo + "__ItemImagePath' type='hidden' value=" + result.filename + ">";
-                $('#imageDetails').append(imagename);
+                imageName = "<input name='ItemVariation.ItemImages[" + imageRowNo + "].ItemImagePath' id='ItemVariation_ItemImages_" + imageRowNo + "__ItemImagePath' type='hidden' value=" + result.filename + ">";
+                //$('#imageDetails').children("tr").append(imagename);
+                imagePath = result.filename;
             },
 
             progress: function (result) {
@@ -1236,19 +1240,21 @@
             if ($("#imageDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
             }
-            itemsCount = itemsCount + 1;
+            itemsCount = index + 1;
             var order = $('.imageOrder').val();
             var popupcb = $("#iCheckBox").is(':checked');
+            
             var html = ' <tr class="gradeX" data-id=' + index + '>' +
                 '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ImageId" name = "ItemVariation.ItemImages[' + index + '].ImageId type="hidden" />' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ItemVariationId" name = "ItemVariation.ItemImages[' + index + '].ItemVariationId type="hidden" />' +
+                //'<input type="hidden" id="ItemVariation_ItemImages_' + index + '__ItemImagePath" name = "ItemVariation.ItemImages[' + index + '].ItemImagePath" class = "auto-resize ItemImagePath">' +
+                imageName +
                 '<td>' + itemsCount +
                 '</td>' +
                 '</td>' +
                 '<td>' +
-                '<input type="hidden" id="ItemVariation_ItemImages_' + index + '__ItemImagePath" name = "ItemVariation.ItemImages[' + index + '].ItemImagePath" class = "auto-resize ItemImagePath">' +
-                '<img class="itemImg" src="/Images/ItemImage/' + $('#ItemVariation_ItemImages_' + index + '__ItemImagePath').val() + '" alt="user" />' +
+                '<img class="itemImg" src="/Images/ItemImage/' + imagePath + '" alt="user" />' +
                 '</td>' +
                 '<td>' +
                 '<div class="span2"><div class="controls"><input  rows="2" class="auto-resize" name = "ItemVariation.ItemImages[' + index + '].ImageOrder" class = "auto-resize ImageOrder" value = "' + order + '"></div></div>' +
