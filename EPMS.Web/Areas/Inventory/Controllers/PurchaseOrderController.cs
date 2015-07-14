@@ -196,7 +196,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
         }
 
-        [SiteAuthorize(PermissionKey = "PODetailsUpdation")]
+        [SiteAuthorize(PermissionKey = "POHistory")]
         public ActionResult History(long? id)
         {
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
