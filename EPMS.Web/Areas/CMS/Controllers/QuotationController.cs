@@ -64,17 +64,36 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
             searchRequest.RoleName = (string) Session["RoleName"];
-            switch (searchRequest.RoleName)
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            //switch (searchRequest.RoleName)
+            //{
+            //    case "Customer":
+            //        searchRequest.CustomerId = (long) Session["CustomerID"];
+            //        break;
+            //    case "Employee":
+            //        searchRequest.EmployeeId = Session["UserID"].ToString();
+            //        break;
+            //    default:
+            //        searchRequest.CustomerId = 0;
+            //        break;
+            //}
+            
+            if (searchRequest.RoleName == "Customer")
             {
-                case "Customer":
-                    searchRequest.CustomerId = (long) Session["CustomerID"];
-                    break;
-                case "Employee":
-                    searchRequest.EmployeeId = Session["UserID"].ToString();
-                    break;
-                default:
-                    searchRequest.CustomerId = 0;
-                    break;
+                searchRequest.AllowedAll = false;
+                searchRequest.CustomerId = (long)Session["CustomerID"];
+            }
+            else
+            {
+                if (userPermissionsSet.Contains("ListviewAllQuotations"))
+                {
+                    searchRequest.AllowedAll = true;
+                }
+                else
+                {
+                    searchRequest.AllowedAll = false;
+                    searchRequest.UserId = Session["UserID"].ToString();
+                }
             }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());

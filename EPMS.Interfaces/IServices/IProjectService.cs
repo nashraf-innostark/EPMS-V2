@@ -13,7 +13,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Project> LoadAllUnfinishedProjects();
         IEnumerable<Project> LoadAllFinishedProjects();
         IEnumerable<Project> LoadAllUnfinishedProjectsByCustomerId(long id);
-        IEnumerable<Project> LoadAllUnfinishedProjectsByEmployeeId(string id);
+        IEnumerable<Project> LoadAllUnfinishedProjectsByUserId(string id);
         IEnumerable<Project> LoadAllFinishedProjectsByCustomerId(long id);
         IEnumerable<Project> LoadAllFinishedProjectsByEmployeeId(string id);
         ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId);
