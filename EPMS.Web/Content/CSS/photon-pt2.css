@@ -9504,6 +9504,12 @@ background-color:rgba(164, 164, 252, 0.39) !important;
 .nav-side-menu > li.helpSection:hover a{
 background-color:rgba(77, 132, 194, 0.32) !important;
 }
+.nav-side-menu > li.userMgt:hover a{
+background-color: rgba(152, 236, 220, 0.27) !important;
+}
+.nav-side-menu > li.inventorySys:hover a{
+background-color: rgba(152, 236, 220, 0.27) !important;
+}
 
  .lightBlue{
 	color:rgb(97, 196, 239) !important;
