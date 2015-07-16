@@ -198,7 +198,7 @@
                 <label class="control-label" for="dualMulti">@EPMS.Web.Resources.PMS.Task.Pre_ReqTask</label>
             </div>
             <div class="span9">
-                <div class="controls">
+                <div class="controls" id="pre-req-div">
                     @if ((Model.ProjectAllTasks != null))
                     {
                         if (direction == "ltr")
@@ -428,6 +428,7 @@
             $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
             $('#Client').select2('disable');
             $('#ProjectId').select2('disable');
+            $('#ParentTaskId').select2('disable');
             var descpE = '@Html.Raw(Model.ProjectTask.DescriptionE)';
             var regex = /(<([^>]+)>)/ig;
             var result = descpE.replace(regex, "");
@@ -448,6 +449,7 @@
             $("#notesAr").val(result);
             $("#Notes").show();
             $("#CKEditorNotes").hide();
+            $("#pre-req-div").addClass("disableList");
         }
         if (isDetail == false) {
             CKEDITOR.replace('DescriptionE', {

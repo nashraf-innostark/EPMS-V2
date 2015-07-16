@@ -47,18 +47,25 @@ namespace EPMS.Web.Areas.PMS.Controllers
         public ActionResult Index()
         {
             ProjectListViewModel projectsList = new ProjectListViewModel();
-            if (Session["RoleName"].ToString() == "Employee")
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            var roleName = Session["RoleName"].ToString();
+            if (roleName == "Customer")
             {
-                projectsList.Projects = projectService.LoadAllUnfinishedProjectsByEmployeeId(Session["UserID"].ToString()).Select(x => x.CreateFromServerToClient());
+                var customerId = Convert.ToInt64(Session["CustomerID"]);
+                projectsList.Projects = projectService.LoadAllUnfinishedProjectsByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
             }
             else
             {
-                projectsList.Projects =
-                    Session["RoleName"].ToString() == "Customer"
-                        ? projectService.LoadAllUnfinishedProjectsByCustomerId(
-                            Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient());
+                if (userPermissionsSet.Contains("ListviewAllProjects"))
+                {
+                    projectsList.Projects = projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient());
+                }
+                else
+                {
+                    projectsList.Projects = projectService.LoadAllUnfinishedProjectsByUserId(Session["UserID"].ToString()).Select(x => x.CreateFromServerToClient());
+                }
             }
+            
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             ViewBag.UserRole = Session["RoleName"];
             

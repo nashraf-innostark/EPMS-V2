@@ -90,17 +90,22 @@ namespace EPMS.Repository.Repositories
             }
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
-            //DateTime startDate = Convert.ToDateTime(searchRequest.SearchString);
-            //DateTime endDate = Convert.ToDateTime(searchRequest.SearchString);
-            //decimal totalCost = Convert.ToDecimal(searchRequest.SearchString);
-            //int taskProgress = Convert.ToInt32(searchRequest.SearchString);
 
-            Expression<Func<ProjectTask, bool>> query =
+            Expression<Func<ProjectTask, bool>> query;
+            if (searchRequest.AllowedAll)
+            {
+                query =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
                     (s.Project.NameA.Contains(searchRequest.SearchString))));
-                    //|| (s.StartDate == startDate) ||
-                    //(s.EndDate == endDate) || (s.TotalCost.Equals(totalCost)) || (s.TaskProgress.Equals(taskProgress))));
+            }
+            else
+            {
+                query =
+                s => (s.RecCreatedBy.Equals(searchRequest.UserId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
+                    (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
+                    (s.Project.NameA.Contains(searchRequest.SearchString)))));
+            }
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -108,12 +113,15 @@ namespace EPMS.Repository.Repositories
                                            :
                                            DbSet
                                            .Where(query).OrderByDescending(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList();
-            //var countOfTasks = DbSet.Count(x => x.ParentTask == null);
             return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Where(x => x.ParentTask == null).Count(query), TotalRecords = DbSet.Where(x => x.ParentTask == null).Count(query) };
         }
 
         public TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId)
         {
+            if (searchRequest.iSortCol_0 == 1)
+            {
+                searchRequest.iSortCol_0 = 2;
+            }
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
 
@@ -121,8 +129,6 @@ namespace EPMS.Repository.Repositories
                 s => (s.TaskEmployees.Any(y => y.EmployeeId == employeeId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
                     (s.Project.NameA.Contains(searchRequest.SearchString)))));
-            //|| (s.StartDate == startDate) ||
-            //(s.EndDate == endDate) || (s.TotalCost.Equals(totalCost)) || (s.TaskProgress.Equals(taskProgress))));
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -134,6 +140,10 @@ namespace EPMS.Repository.Repositories
         }
         public TaskResponse GetProjectTasksForCustomer(TaskSearchRequest searchRequest, long customerId)
         {
+            if (searchRequest.iSortCol_0 == 1)
+            {
+                searchRequest.iSortCol_0 = 2;
+            }
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
 
@@ -141,8 +151,6 @@ namespace EPMS.Repository.Repositories
                 s => (s.CustomerId == customerId && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
                     (s.Project.NameA.Contains(searchRequest.SearchString)))));
-            //|| (s.StartDate == startDate) ||
-            //(s.EndDate == endDate) || (s.TotalCost.Equals(totalCost)) || (s.TaskProgress.Equals(taskProgress))));
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
                 DbSet

@@ -94,7 +94,7 @@ namespace EPMS.Implementation.Services
             return projectRepository.GetAllOnGoingProjectsByCustomerId(id);
         }
 
-        public IEnumerable<Project> LoadAllUnfinishedProjectsByEmployeeId(string id)
+        public IEnumerable<Project> LoadAllUnfinishedProjectsByUserId(string id)
         {
             return projectRepository.GetAllOnGoingProjectsByEmployeeId(id);
         }

@@ -57,23 +57,31 @@ namespace EPMS.Repository.Repositories
             long orderId = Convert.ToInt64(searchRequest.SearchString);
 
             Expression<Func<Quotation, bool>> query;
-            if (searchRequest.RoleName == "Employee")
+            if (!searchRequest.AllowedAll)
             {
-                query =
+                if (searchRequest.RoleName == "Customer")
+                {
+                    query =
                     s =>
-                        ((s.RecCreatedBy == searchRequest.EmployeeId) &&
-                         ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
-                          (s.ClientName.Contains(searchRequest.SearchString)) ||
-                          (s.OrderId == orderId)));
+                        ((s.CustomerId == searchRequest.CustomerId) && (string.IsNullOrEmpty(searchRequest.SearchString) || 
+                        (s.ClientName.Contains(searchRequest.SearchString) || s.OrderId == orderId)));
+                }
+                else
+                {
+                    query =
+                    s =>
+                        ((s.RecCreatedBy.Equals(searchRequest.UserId)) && (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                          (s.ClientName.Contains(searchRequest.SearchString) || s.OrderId == orderId)));
+                }
+
             }
             else
             {
                 query =
                     s =>
-                        ((searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId)) &&
-                         ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
-                          (s.ClientName.Contains(searchRequest.SearchString)) ||
-                          (s.OrderId == orderId)));
+                        (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        ((s.ClientName.Contains(searchRequest.SearchString)) ||
+                        s.OrderId == orderId));
             }
 
             IEnumerable<Quotation> quotations = searchRequest.sSortDir_0 == "asc" ?
