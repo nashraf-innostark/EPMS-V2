@@ -1925,7 +1925,6 @@
     <Content Include="Areas\Inventory\Views\Vendor\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
     <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
-    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Create.cshtml" />
     <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
     <Content Include="Images\CKUploads\SetUp project.docx" />
@@ -1948,7 +1947,6 @@
     <Content Include="Areas\Inventory\Views\Vendor\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
     <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
-    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
     <Content Include="Views\Shared\_ApplicantApplyLayout.cshtml" />
@@ -1991,6 +1989,7 @@
     </Content>
     <Content Include="Areas\Inventory\Views\PhysicalCount\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\PhysicalCount\Create.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
