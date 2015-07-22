@@ -60,7 +60,7 @@
             </li>
         </ul>
     </div>
-
+    
     <header>
         <i class="icon-big-notepad"></i>
         <h2><small>@EPMS.Web.Resources.Inventory.InventoryDepartment.BCTitleCreate</small></h2>
@@ -156,6 +156,7 @@
     var inventoryDepartments = '@Html.Raw(Json.Encode(Model.InventoryDepartments))';
     var parsed = JSON.parse(inventoryDepartments);
     $().ready(function () {
+        $("#layoutMainContent").removeClass("main-content");
         $('.' + 'toBeDiabled' + ':input').attr('disabled', true);
         $("#colorpicker").addClass('disableList');
         $("#CKEditorDescp").hide();

@@ -195,6 +195,7 @@
     var inventorySections = '@Html.Raw(Json.Encode(Model.Sections))';
     var parsedSection = JSON.parse(inventorySections);
     $(document).ready(function () {
+        $("#layoutMainContent").removeClass("main-content");
         $('#tableSortableResMed').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {

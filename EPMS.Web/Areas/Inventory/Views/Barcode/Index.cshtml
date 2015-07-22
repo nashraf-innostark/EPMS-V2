@@ -89,11 +89,12 @@
 }
 
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<!-- Barcode Generation Library -->
 <script type="text/javascript" src="~/Scripts/App/Barcode/jquery-barcode.js"></script>
+<!-- jQuery Print Element -->
 <script type="text/javascript" src="~/Scripts/App/Barcode/jquery.printElement.js"></script>
 <script>
     $(document).ready(function () {
-        $(".tree-selector").hide();
         $('.trAdder').on("click", function () {
             var index = $("#BarcodeTableBody").children("tr").length;
             var html = ' <tr data-id="' + index + '">' +
@@ -137,6 +138,7 @@
             });
         }
         $('#itemSearcher').on('show', function () {
+            $(".tree-selector").hide();
             //clear DDL required value label
             $("#ItemVariationDropDownListValidation").text("");
             $("#ItemVariationDropDownListValidation").removeClass("Error");
