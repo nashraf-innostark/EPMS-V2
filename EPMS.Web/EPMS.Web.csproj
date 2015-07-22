@@ -324,6 +324,7 @@
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -361,6 +362,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AllownaceMapper.cs" />
+    <Compile Include="ModelMappers\ImageSliderMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemVariationMapper.cs" />
     <Compile Include="ModelMappers\PhysicalCountItemMapper.cs" />
     <Compile Include="ModelMappers\PhysicalCountMapper.cs" />
@@ -434,6 +436,7 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeJobHistory.cs" />
     <Compile Include="Models\EmployeeListViewResponse.cs" />
+    <Compile Include="Models\ImageSlider.cs" />
     <Compile Include="Models\InventoryDepartment.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\InventoryItemForVariation.cs" />
@@ -827,6 +830,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Users.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Website\ImageSlider.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ImageSlider.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -891,6 +899,7 @@
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Slider\SliderViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
     <Compile Include="ViewModels\Tasks\TaskListViewModel.cs" />
@@ -1990,6 +1999,7 @@
     <Content Include="Areas\Inventory\Views\PhysicalCount\Create.cshtml" />
     <Content Include="Areas\Website\Views\web.config" />
     <Content Include="Areas\Website\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Website\Views\Slider\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4012,6 +4022,10 @@
     <EmbeddedResource Include="Resources\UserManagement\Users.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Users.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ImageSlider.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImageSlider.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
