@@ -7,6 +7,7 @@ using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.EnumForDropDown;
 using EPMS.Web.ModelMappers;
+using EPMS.Web.ModelMappers.Website.Partner;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.HomePage;
 
@@ -34,7 +35,8 @@ namespace EPMS.Web.Areas.Website.Controllers
             HomePageResponse response = sliderService.GetHomePageResponse();
             HomePageViewModel viewModel = new HomePageViewModel
             {
-                ImageSlider = response.ImageSlider.Select(x => x.CreateFromServerToClient()).ToList()
+                ImageSlider = response.ImageSlider.Select(x => x.CreateFromServerToClient()).ToList(),
+                Partners = response.Partners.Select(x=>x.CreateFromServerToClient()).ToList()
             };
             IEnumerable<Position> actionTypes = Enum.GetValues(typeof(Position))
                                                        .Cast<Position>();

@@ -159,6 +159,7 @@
     <Compile Include="Services\NewsAndArticleService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\PartnerService.cs" />
     <Compile Include="Services\PayrollService.cs" />
     <Compile Include="Services\PhysicalCountService.cs" />
     <Compile Include="Services\PoItemService.cs" />

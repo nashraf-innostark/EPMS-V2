@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using EPMS.Models.DomainModels;
+﻿using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -17,7 +16,7 @@ namespace EPMS.Web.ModelMappers
                 SubTitleEn = source.SubTitleEn,
                 SubTitleAr = source.SubTitleAr,
                 ImageOrder = source.ImageOrder,
-                ImagePath = source.ImagePath,
+                ImageName = source.ImageName,
                 Position = source.Position,
                 Description = descp,
                 Link = source.Link,
@@ -37,7 +36,7 @@ namespace EPMS.Web.ModelMappers
                 SubTitleEn = source.SubTitleEn,
                 SubTitleAr = source.SubTitleAr,
                 ImageOrder = source.ImageOrder,
-                ImagePath = source.ImagePath,
+                ImageName = source.ImageName,
                 Position = source.Position,
                 Description = source.Description,
                 Link = source.Link,

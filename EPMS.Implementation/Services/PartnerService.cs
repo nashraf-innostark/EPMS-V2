@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
-    public class ImageSliderService : IImageSliderService
+    public class PartnerService : IPartnerService
     {
         #region Private
 
-        private readonly IImageSliderRepository repository;
-        private readonly IPartnerRepository partnerRepository;
+        private readonly IPartnerRepository repository;
         
         #endregion
         
@@ -20,39 +18,27 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ImageSliderService(IImageSliderRepository repository, IPartnerRepository partnerRepository)
+        public PartnerService(IPartnerRepository repository)
         {
             this.repository = repository;
-            this.partnerRepository = partnerRepository;
         }
 
         #endregion
-
-        public HomePageResponse GetHomePageResponse()
-        {
-            HomePageResponse response = new HomePageResponse
-            {
-                ImageSlider = repository.GetAll(),
-                Partners = partnerRepository.GetAll()
-            };
-            return response;
-        }
-
-        public IEnumerable<ImageSlider> GetAll()
+        public IEnumerable<Partner> GetAll()
         {
             return repository.GetAll();
         }
 
-        public ImageSlider FindImageSliderById(long id)
+        public Partner FindPartnerById(long id)
         {
             return repository.Find(id);
         }
 
-        public bool AddImageSlider(ImageSlider imageSlider)
+        public bool AddPartner(Partner partner)
         {
             try
             {
-                repository.Add(imageSlider);
+                repository.Add(partner);
                 repository.SaveChanges();
                 return true;
             }
@@ -62,11 +48,11 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public bool UpdateImageSlider(ImageSlider imageSlider)
+        public bool UpdatePartner(Partner partner)
         {
             try
             {
-                repository.Update(imageSlider);
+                repository.Update(partner);
                 repository.SaveChanges();
                 return true;
             }
@@ -76,7 +62,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeleteImageSlider(long id)
+        public void DeletePartner(long id)
         {
             var dataToDelete = repository.Find(id);
             repository.Delete(dataToDelete);

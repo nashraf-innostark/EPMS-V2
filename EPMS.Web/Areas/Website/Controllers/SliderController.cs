@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
@@ -16,7 +15,6 @@ using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Slider;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
@@ -62,6 +60,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "SliderCreate")]
         public ActionResult Create(SliderViewModel viewModel)
         {
             try

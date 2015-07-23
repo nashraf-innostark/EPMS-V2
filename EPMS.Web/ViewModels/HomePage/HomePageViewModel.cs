@@ -10,6 +10,7 @@ namespace EPMS.Web.ViewModels.HomePage
             Position = new List<SelectListItem>();
         }
         public IList<Models.ImageSlider> ImageSlider { get; set; }
+        public IList<Models.Partner> Partners { get; set; }
         public IEnumerable<SelectListItem> Position { get; set; }
     }
 }

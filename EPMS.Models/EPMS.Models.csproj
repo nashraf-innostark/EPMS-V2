@@ -131,6 +131,7 @@
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\NewsAndArticle.cs" />
+    <Compile Include="DomainModels\Partner.cs" />
     <Compile Include="DomainModels\PhysicalCount.cs" />
     <Compile Include="DomainModels\PhysicalCountItem.cs" />
     <Compile Include="DomainModels\PurchaseOrder.cs" />
