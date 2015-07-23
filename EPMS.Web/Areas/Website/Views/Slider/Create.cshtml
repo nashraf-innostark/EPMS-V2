@@ -1,8 +1,16 @@
 ﻿@model EPMS.Web.ViewModels.Slider.SliderViewModel
 
 @{
-    ViewBag.Title = "Website Slider Addition";
+    if (Model.ImageSlider.SliderId > 0)
+    {
+        ViewBag.Title = "Website Slider Updation";
+    }
+    else
+    {
+        ViewBag.Title = "Website Slider Addition";
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -19,7 +27,7 @@
         </li>
         <li class="current">
             <a href="javascript:;">
-                Website Slider Addition
+                @ViewBag.Title
             </a>
         </li>
     </ul>
@@ -27,13 +35,22 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Website Slider Add</small></h2>
+    @if (Model.ImageSlider.SliderId > 0)
+    {
+        <h2><small>Website Slider Edit</small></h2>
+    }
+    else
+    {
+        <h2><small>Website Slider Add</small></h2>
+    }
 </header>
 
 @using (Html.BeginForm("Create", "Slider", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditSliderForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         @Html.HiddenFor(model => model.ImageSlider.SliderId)
+        @Html.HiddenFor(model => model.ImageSlider.RecCreatedBy)
+        @Html.HiddenFor(model => model.ImageSlider.RecCreatedDate)
         @Html.HiddenFor(model => model.ImageSlider.ImagePath, new { @id = "ImagePath" })
         <div class="control-group row-fluid">
             <div class="span3">
@@ -41,7 +58,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.ImageOrder, new { @id = "Order", @class = "" })
+                    @Html.TextBoxFor(model => model.ImageSlider.ImageOrder, new { @id = "Order", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
@@ -51,7 +68,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.TitleEn, new { @id = "TitleEn", @class = "" })
+                    @Html.TextBoxFor(model => model.ImageSlider.TitleEn, new { @id = "TitleEn", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
@@ -61,7 +78,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.TitleAr, new { @id = "TitleAr", @class = "" })
+                    @Html.TextBoxFor(model => model.ImageSlider.TitleAr, new { @id = "TitleAr", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
@@ -71,7 +88,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.SubTitleEn, new { @id = "SubTitleEn", @class = "" })
+                    @Html.TextBoxFor(model => model.ImageSlider.SubTitleEn, new { @id = "SubTitleEn", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
@@ -81,7 +98,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.SubTitleAr, new { @id = "SubTitleAr", @class = "" })
+                    @Html.TextBoxFor(model => model.ImageSlider.SubTitleAr, new { @id = "SubTitleAr", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
@@ -106,13 +123,9 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.ImageSlider.Position, new[]
-                    {
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Website.ImageSlider.Top },
-                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Website.ImageSlider.Bottom },
-                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Website.ImageSlider.Left },
-                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Website.ImageSlider.Right }
-                    }, new { @id = "Position", @class = "" })
+                    @Html.DropDownListFor(model => model.ImageSlider.Position,
+                                        new SelectList(Model.Position, "Value", "Text", Model.ImageSlider.Position),
+                             new { @id = "Position", @class = "select2me disableSelect" })
                 </div>
             </div>
         </div>
@@ -123,34 +136,101 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.Link, new { @id = "Link", @class = "" })
+                    @Html.TextBoxFor(model => model.ImageSlider.Link, new { @id = "Link", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Description">Description</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextAreaFor(model => model.ImageSlider.Description, new { @id = "Description", @class = "" })
+        <div id="Descp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="descp">Description</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descp" readonly="readonly" />
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn">Create</button>
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Description">Description</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.ImageSlider.Description, new { @id = "Description", @class = "" })
+                    </div>
+                </div>
             </div>
         </div>
+        <div id="Edit" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn" id="edit">Edit</button>
+                </div>
+            </div>
+        </div>
+        <div id="Create" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">Create</button>
+                </div>
+            </div>
+        </div>
+        <div id="Update" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" name="Update">Update</button>
+                </div>
+            </div>
+        </div>
+        @if (Model.ImageSlider.SliderId > 0)
+        {
+            <div id="Delete" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" name="Delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 }
 
+<script src="~/RTE/ckeditor.js"></script>
 <script type="text/javascript">
     $().ready(function () {
+        if (parseInt('@Model.ImageSlider.SliderId') > 0 || '@userPermissionsSet.Contains("SliderCreate")' == 'False') {
+            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+            $('.disableSelect').select2('disable');
+            var descpE = '@Html.Raw(Model.ImageSlider.Description)';
+            var regex = /(<([^>]+)>)/ig;
+            var res = descpE.replace(regex, "");
+            $("#descp").val(res);
+            $("#Descp").show();
+            $("#CKEditorDescp").hide();
+            var val = '@userPermissionsSet.Contains("SliderCreate")';
+            if (val == 'True') {
+                $("#Edit").show();
+            } else {
+
+            }
+        } else {
+            $("#Descp").hide();
+            CKEDITOR.replace('Description', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#CKEditorDescp").show();
+            $("#Create").show();
+        }
+
+
+
         var errors = "";
         var url = $('#siteURL').val() + "/Website/Slider/UploadImage";
         $('#upload').mfupload({
-            type: '',   //all types
+            type: '', //all types
             maxsize: 1,
             post_upload: url,
             folder: "./",
@@ -182,5 +262,19 @@
                 }
             }
         });
-    })
+
+    });
+    $("#edit").click(function (event) {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', false);
+        // CK Editor
+        CKEDITOR.replace('Description', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $('.disableSelect').select2('enable');
+        $("#Descp").hide();
+        $("#CKEditorDescp").show();
+        $("#Edit").hide();
+        $("#Update").show();
+        $("#Delete").show();
+    });
 </script>

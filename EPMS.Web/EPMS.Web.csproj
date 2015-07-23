@@ -324,6 +324,7 @@
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="DashboardModels\RFIWidget.cs" />
     <Compile Include="DashboardModels\WarehousDDL.cs" />
     <Compile Include="EncryptDecrypt\StringCipher.cs" />
+    <Compile Include="EnumForDropDown\Position.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -854,6 +856,7 @@
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpViewModel.cs" />
+    <Compile Include="ViewModels\HomePage\HomePageViewModel.cs" />
     <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
     <Compile Include="ViewModels\InventoryItem\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
@@ -4474,6 +4477,7 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
+    <Folder Include="Areas\Website\Views\Partner\" />
     <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />

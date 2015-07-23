@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -23,6 +25,21 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+
+        public HomePageResponse GetHomePageResponse()
+        {
+            HomePageResponse response = new HomePageResponse
+            {
+                ImageSlider = repository.GetAll()
+            };
+            return response;
+        }
+
+        public IEnumerable<ImageSlider> GetAll()
+        {
+            return repository.GetAll();
+        }
+
         public ImageSlider FindImageSliderById(long id)
         {
             return repository.Find(id);
@@ -56,9 +73,10 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeleteImageSlider(ImageSlider imageSlider)
+        public void DeleteImageSlider(long id)
         {
-            repository.Delete(imageSlider);
+            var dataToDelete = repository.Find(id);
+            repository.Delete(dataToDelete);
             repository.SaveChanges();
         }
     }

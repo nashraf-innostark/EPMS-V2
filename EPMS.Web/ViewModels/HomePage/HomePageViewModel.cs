@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using EPMS.Web.Models;
 
-namespace EPMS.Web.ViewModels.Slider
+namespace EPMS.Web.ViewModels.HomePage
 {
-    public class SliderViewModel
+    public class HomePageViewModel
     {
-        public SliderViewModel()
+        public HomePageViewModel()
         {
             Position = new List<SelectListItem>();
         }
-        public ImageSlider ImageSlider { get; set; }
+        public IList<Models.ImageSlider> ImageSlider { get; set; }
         public IEnumerable<SelectListItem> Position { get; set; }
     }
 }

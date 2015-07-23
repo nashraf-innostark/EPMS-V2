@@ -305,6 +305,7 @@
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
+    <Compile Include="ResponseModels\HomePageResponse.cs" />
     <Compile Include="ResponseModels\IRFCreateResponse.cs" />
     <Compile Include="ResponseModels\IrfHistoryResponse.cs" />
     <Compile Include="ResponseModels\ItemReleaseResponse.cs" />

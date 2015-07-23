@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -8,9 +10,11 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
+using EPMS.Web.EnumForDropDown;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Slider;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -35,9 +39,24 @@ namespace EPMS.Web.Areas.Website.Controllers
         #region Public
 
         // GET: Website/Slider
-        public ActionResult Create()
+        [SiteAuthorize(PermissionKey = "SliderCreate,SliderView")]
+        public ActionResult Create(long? id)
         {
-            SliderViewModel viewModel = new SliderViewModel();
+            SliderViewModel viewModel = new SliderViewModel
+            {
+                ImageSlider =
+                    id != null
+                        ? sliderService.FindImageSliderById((long) id).CreateFromServerToClient()
+                        : new Models.ImageSlider()
+            };
+            IEnumerable<Position> positions = Enum.GetValues(typeof(Position))
+                                                       .Cast<Position>();
+            viewModel.Position = from action in positions
+                                 select new SelectListItem
+                                 {
+                                     Text = action.ToString(),
+                                     Value = ((int)action).ToString()
+                                 };
             return View(viewModel);
         }
 
@@ -47,7 +66,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             try
             {
-                if (viewModel.ImageSlider.SliderId > 0)
+                if (Request.Form["Update"] != null)
                 {
                     viewModel.ImageSlider.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.ImageSlider.RecUpdatedDate = DateTime.Now;
@@ -56,9 +75,25 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Image Slider Updated",
+                            Message = "Slider Image Updated",
                             IsUpdated = true
                         };
+                    }
+                }
+                else if (Request.Form["Delete"] != null)
+                {
+                    try
+                    {
+                        sliderService.DeleteImageSlider(viewModel.ImageSlider.SliderId);
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Slider Image Deleted",
+                            IsUpdated = true
+                        };
+                    }
+                    catch (Exception)
+                    {
+                        return View(viewModel);
                     }
                 }
                 else
@@ -72,7 +107,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Image Slider Added",
+                            Message = "Slider Image Added",
                             IsUpdated = true
                         };
                     }

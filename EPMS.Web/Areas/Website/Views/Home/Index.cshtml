@@ -1,6 +1,12 @@
-﻿@{
+﻿@using System.Configuration
+@using EPMS.Web.Models
+@model EPMS.Web.ViewModels.HomePage.HomePageViewModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Website Main Page Create";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -49,7 +55,11 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Slider</strong><a href="~/Website/Slider/Create">Create New Slider Image</a>
+            <strong>Slider</strong>
+            @if (userPermissionsSet.Contains("SliderCreate"))
+            {
+                <a href="~/Website/Slider/Create">Create New Slider Image</a>
+            }
         </div>
 
         <div class="row-fluid">
@@ -69,29 +79,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td><img src="images/photon/flask.jpg" /></td>
-                            <td>1</td>
-                            <td>Flasks</td>
-                            <td>Best in the market</td>
-                            <td>beaker labratory item color is red and size is 3xl and it is new</td>
-                            <td>http://www.cr3ativ3mind.com</td>
-                            <td>
-                                <select>
-                                    <option>Top </option>
-                                    <option>Bottom</option>
-                                    <option>Left </option>
-                                    <option>Right</option>
-                                </select>
-                            </td>
-                            <td><a href="#">Delete</a></td>
-                        </tr>
+                        @foreach (ImageSlider imageSlider in Model.ImageSlider)
+                        {
+                            int i = 0;
+                            <tr class="gradeX">
+                                <td>@(i + 1)</td>
+                                <td><img src='@Url.Content(ConfigurationManager.AppSettings["SliderImage"] + imageSlider.ImagePath)' alt="user" /></td>
+                                <td>@imageSlider.ImageOrder</td>
+                                @if (direction == "ltr")
+                                {
+                                    <td><a href="~/Website/Slider/Create/@imageSlider.SliderId">@imageSlider.TitleEn</a></td>
+                                    <td>@imageSlider.SubTitleEn</td>
+                                }
+                                else
+                                {
+                                    <td><a href="~/Website/Slider/Create/@imageSlider.SliderId">@imageSlider.TitleAr</a></td>
+                                    <td>@imageSlider.SubTitleAr</td>
+                                }
+                                <td class="@imageSlider.SliderId"></td>
+                                <script>
+                                    var info = '@Html.Raw(imageSlider.Description))';
+                                    var regex = /(<([^>]+)>)/ig;
+                                    var result = info.replace(regex, "");
+                                    $("." + '@imageSlider.SliderId').text(result);
+                                </script>
+
+                                <td>@imageSlider.Link</td>
+                                <td>
+                                    <div class="controls">
+                                        @Html.DropDownListFor(model => model.ImageSlider[i].Position,
+                                        new SelectList(Model.Position, "Value", "Text", Model.ImageSlider[i].Position),
+                                        new { @class = "select2me tableDbM" })
+                                    </div>
+                                </td>
+                                <td><a href="#">Delete</a></td>
+                            </tr>
+                                i++;
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
             <strong>Departments</strong><a href="#">Create New Department</a>
@@ -125,7 +154,7 @@
                 </table>
             </div>
         </div>
-        
+
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
             <strong>Partners</strong><a href="#">Create New Partner</a>
@@ -157,7 +186,7 @@
                 </table>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="button" class="btn">Create</button>
@@ -204,8 +233,52 @@
                 }
             }
         });
-        $('#tableSortableVariations,#tableSortableVariations2,#tableSortableVariations3').dataTable({
+        $('#tableSortableVariations').dataTable({
             "sPaginationType": "bootstrap",
+            "aoColumns": [
+                null,
+                { "bSortable": false },
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  { "bSortable": false },
+                  { "bSortable": false }
+            ],
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+        $('#tableSortableVariations2').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                null,
+                { "bSortable": false },
+                  null,
+                  null,
+                  null,
+                  null,
+                  { "bSortable": false }
+            ],
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+        $('#tableSortableVariations3').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                null,
+                { "bSortable": false },
+                  null,
+                  null,
+                  null,
+                  { "bSortable": false }
+            ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'

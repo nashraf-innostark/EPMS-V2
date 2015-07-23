@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Configuration;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -6,6 +7,8 @@ namespace EPMS.Web.ModelMappers
     {
         public static ImageSlider CreateFromClientToServer(this Models.ImageSlider source)
         {
+            string descp = source.Description.Replace("\n", "");
+            descp = descp.Replace("\r", "");
             return new ImageSlider
             {
                 SliderId = source.SliderId,
@@ -16,7 +19,7 @@ namespace EPMS.Web.ModelMappers
                 ImageOrder = source.ImageOrder,
                 ImagePath = source.ImagePath,
                 Position = source.Position,
-                Description = source.Description,
+                Description = descp,
                 Link = source.Link,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
