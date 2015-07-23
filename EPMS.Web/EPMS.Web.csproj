@@ -325,6 +325,7 @@
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
     <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
+    <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -415,6 +416,7 @@
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
     <Compile Include="ModelMappers\WarehouseMapper.cs" />
+    <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantExperience.cs" />
@@ -456,6 +458,7 @@
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\MeetingAttendee.cs" />
     <Compile Include="Models\MeetingModel.cs" />
+    <Compile Include="Models\NewsAndArticle.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\ParentNodesSection.cs" />
     <Compile Include="Models\PhysicalCountListModel.cs" />
@@ -837,6 +840,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ImageSlider.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Website\NewsAndArticles\NewsAndArticlesList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NewsAndArticlesList.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -876,6 +884,8 @@
     <Compile Include="ViewModels\JobTitle\JobTitleViewModel.cs" />
     <Compile Include="ViewModels\Meeting\MeetingListViewModel.cs" />
     <Compile Include="ViewModels\Meeting\MeetingViewModel.cs" />
+    <Compile Include="ViewModels\NewsAndArticle\NewsAndArticleListViewModel.cs" />
+    <Compile Include="ViewModels\NewsAndArticle\NewsAndArticleViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
@@ -2003,6 +2013,7 @@
     <Content Include="Areas\Website\Views\web.config" />
     <Content Include="Areas\Website\Views\Home\Index.cshtml" />
     <Content Include="Areas\Website\Views\Slider\Create.cshtml" />
+    <Content Include="Areas\Website\Views\NewsAndArticle\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4029,6 +4040,10 @@
     <EmbeddedResource Include="Resources\Website\ImageSlider.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageSlider.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticlesList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NewsAndArticlesList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
