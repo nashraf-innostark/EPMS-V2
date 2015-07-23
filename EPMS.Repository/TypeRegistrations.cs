@@ -85,6 +85,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IPhysicalCountRepository, PhysicalCountRepository>();
             unityContainer.RegisterType<IPhysicalCountItemRepository, PhysicalCountItemRepository>();
             unityContainer.RegisterType<IImageSliderRepository, ImageSliderRepository>();
+            unityContainer.RegisterType<INewsAndArticleRepository, NewsAndArticleRepository>();
         }
     }
 }

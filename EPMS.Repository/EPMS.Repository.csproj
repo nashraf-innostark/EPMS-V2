@@ -170,6 +170,7 @@
     <Compile Include="Repositories\MeetingRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRightRepository.cs" />
+    <Compile Include="Repositories\NewsAndArticleRepository.cs" />
     <Compile Include="Repositories\NotificationRecipientRepository.cs" />
     <Compile Include="Repositories\NotificationRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
