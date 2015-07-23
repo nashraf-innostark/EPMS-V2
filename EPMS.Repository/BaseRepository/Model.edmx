@@ -5,18 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Aisle">
-          <Key>
-            <PropertyRef Name="AisleId" />
-          </Key>
-          <Property Name="AisleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AisleName" Type="nvarchar" MaxLength="200" />
-          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -454,8 +442,8 @@
           <Property Name="SubTitleAr" Type="nvarchar" MaxLength="100" />
           <Property Name="ImageOrder" Type="int" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="400" />
-          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
-          <Property Name="Link" Type="nchar" MaxLength="10" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" />
           <Property Name="Position" Type="int" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
@@ -864,6 +852,26 @@
           <Property Name="MenuRightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Menu_MenuId" Type="int" />
           <Property Name="Role_Id" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="NewsAndArticle">
+          <Key>
+            <PropertyRef Name="NewsArticleId" />
+          </Key>
+          <Property Name="NewsArticleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="Type" Type="bit" Nullable="false" />
+          <Property Name="TitleEn" Type="nvarchar" MaxLength="300" />
+          <Property Name="TitleAr" Type="nchar" MaxLength="300" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="200" />
+          <Property Name="AuthorNameEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="AuthorNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="ContentEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ContentAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ShowToPublic" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Notification">
           <Key>
@@ -1294,42 +1302,6 @@
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Section">
-          <Key>
-            <PropertyRef Name="SectionId" />
-          </Key>
-          <Property Name="SectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
-          <Property Name="AisleId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Shelf">
-          <Key>
-            <PropertyRef Name="ShelfId" />
-          </Key>
-          <Property Name="ShelfId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ShelfName" Type="nvarchar" MaxLength="200" />
-          <Property Name="SectionId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ShelfSection">
-          <Key>
-            <PropertyRef Name="ShelfSectionId" />
-          </Key>
-          <Property Name="ShelfSectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ShelfSectionName" Type="nvarchar" MaxLength="200" />
-          <Property Name="ShelfId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -2863,42 +2835,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Section_Aisle">
-          <End Role="Aisle" Type="Self.Aisle" Multiplicity="1" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Aisle">
-              <PropertyRef Name="AisleId" />
-            </Principal>
-            <Dependent Role="Section">
-              <PropertyRef Name="AisleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shelf_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ShelfSection_Shelf">
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="1" />
-          <End Role="ShelfSection" Type="Self.ShelfSection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Principal>
-            <Dependent Role="ShelfSection">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TaskEmployee_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
@@ -3092,7 +3028,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EPMSInventoryModelStoreContainer">
-          <EntitySet Name="Aisle" EntityType="Self.Aisle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantExperience" EntityType="Self.ApplicantExperience" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantQualification" EntityType="Self.ApplicantQualification" Schema="dbo" store:Type="Tables" />
@@ -3143,6 +3078,7 @@
           <EntitySet Name="MeetingDocuments" EntityType="Self.MeetingDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuRight" EntityType="Self.MenuRight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewsAndArticle" EntityType="Self.NewsAndArticle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notification" EntityType="Self.Notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotificationRecipient" EntityType="Self.NotificationRecipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -3168,9 +3104,6 @@
           <EntitySet Name="RIFHistory" EntityType="Self.RIFHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFItem" EntityType="Self.RIFItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFItemHistory" EntityType="Self.RIFItemHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Shelf" EntityType="Self.Shelf" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShelfSection" EntityType="Self.ShelfSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
@@ -3631,18 +3564,6 @@
             <End Role="RIFHistory" EntitySet="RIFHistory" />
             <End Role="RIFItemHistory" EntitySet="RIFItemHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK_Section_Aisle" Association="Self.FK_Section_Aisle">
-            <End Role="Aisle" EntitySet="Aisle" />
-            <End Role="Section" EntitySet="Section" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shelf_Section" Association="Self.FK_Shelf_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="Shelf" EntitySet="Shelf" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShelfSection_Shelf" Association="Self.FK_ShelfSection_Shelf">
-            <End Role="Shelf" EntitySet="Shelf" />
-            <End Role="ShelfSection" EntitySet="ShelfSection" />
-          </AssociationSet>
           <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="TaskEmployee" EntitySet="TaskEmployee" />
@@ -3712,19 +3633,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSInventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Aisle">
-          <Key>
-            <PropertyRef Name="AisleId" />
-          </Key>
-          <Property Name="AisleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AisleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
-        </EntityType>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -4654,47 +4562,6 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmployeeRequest" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetails" ToRole="EmployeeRequests" />
         </EntityType>
-        <EntityType Name="Section">
-          <Key>
-            <PropertyRef Name="SectionId" />
-          </Key>
-          <Property Name="SectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AisleId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Aisle" Relationship="Self.FK_Section_Aisle" FromRole="Section" ToRole="Aisle" />
-          <NavigationProperty Name="Shelf" Relationship="Self.FK_Shelf_Section" FromRole="Section" ToRole="Shelf" />
-        </EntityType>
-        <EntityType Name="Shelf">
-          <Key>
-            <PropertyRef Name="ShelfId" />
-          </Key>
-          <Property Name="ShelfId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ShelfName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SectionId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Section" Relationship="Self.FK_Shelf_Section" FromRole="Shelf" ToRole="Section" />
-          <NavigationProperty Name="ShelfSections" Relationship="Self.FK_ShelfSection_Shelf" FromRole="Shelf" ToRole="ShelfSection" />
-        </EntityType>
-        <EntityType Name="ShelfSection">
-          <Key>
-            <PropertyRef Name="ShelfSectionId" />
-          </Key>
-          <Property Name="ShelfSectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ShelfSectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ShelfId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Shelf" Relationship="Self.FK_ShelfSection_Shelf" FromRole="ShelfSection" ToRole="Shelf" />
-        </EntityType>
         <EntityType Name="Size">
           <Key>
             <PropertyRef Name="SizeId" />
@@ -4783,18 +4650,6 @@
           <NavigationProperty Name="ParentDetail" Relationship="Self.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail1" ToRole="WarehouseDetail" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
         </EntityType>
-        <Association Name="FK_Section_Aisle">
-          <End Role="Aisle" Type="Self.Aisle" Multiplicity="1" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Aisle">
-              <PropertyRef Name="AisleId" />
-            </Principal>
-            <Dependent Role="Section">
-              <PropertyRef Name="AisleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
@@ -5387,30 +5242,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shelf_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ShelfSection_Shelf">
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="1" />
-          <End Role="ShelfSection" Type="Self.ShelfSection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Principal>
-            <Dependent Role="ShelfSection">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WarehouseDetail_WarehouseDetail">
           <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="0..1" />
           <End Role="WarehouseDetail1" Type="Self.WarehouseDetail" Multiplicity="*" />
@@ -5444,7 +5275,6 @@
           <End Role="ProjectTask1" Type="Self.ProjectTask" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Aisles" EntityType="Self.Aisle" />
           <EntitySet Name="Allowances" EntityType="Self.Allowance" />
           <EntitySet Name="ApplicantExperiences" EntityType="Self.ApplicantExperience" />
           <EntitySet Name="ApplicantQualifications" EntityType="Self.ApplicantQualification" />
@@ -5489,19 +5319,12 @@
           <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
-          <EntitySet Name="Sections" EntityType="Self.Section" />
-          <EntitySet Name="Shelves" EntityType="Self.Shelf" />
-          <EntitySet Name="ShelfSections" EntityType="Self.ShelfSection" />
           <EntitySet Name="Sizes" EntityType="Self.Size" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="TaskEmployees" EntityType="Self.TaskEmployee" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrence" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="WarehouseDetails" EntityType="Self.WarehouseDetail" />
-          <AssociationSet Name="FK_Section_Aisle" Association="Self.FK_Section_Aisle">
-            <End Role="Aisle" EntitySet="Aisles" />
-            <End Role="Section" EntitySet="Sections" />
-          </AssociationSet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Allowance" EntitySet="Allowances" />
@@ -5697,14 +5520,6 @@
           <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="Self.FK_QuotationItemDetail_Quotation">
             <End Role="Quotation" EntitySet="Quotations" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shelf_Section" Association="Self.FK_Shelf_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="Shelf" EntitySet="Shelves" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShelfSection_Shelf" Association="Self.FK_ShelfSection_Shelf">
-            <End Role="Shelf" EntitySet="Shelves" />
-            <End Role="ShelfSection" EntitySet="ShelfSections" />
           </AssociationSet>
           <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="Self.FK_WarehouseDetail_WarehouseDetail">
             <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
@@ -6034,6 +5849,7 @@
             <End Role="RFIItemHistory" EntitySet="RFIItemHistories" />
           </AssociationSet>
           <EntitySet Name="ImageSliders" EntityType="EPMSInventoryModel.ImageSlider" />
+          <EntitySet Name="NewsAndArticles" EntityType="EPMSInventoryModel.NewsAndArticle" />
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7487,13 +7303,33 @@
           <Property Name="SubTitleAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ImageOrder" Type="Int32" />
           <Property Name="ImagePath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Link" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="Int32" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="NewsAndArticle">
+          <Key>
+            <PropertyRef Name="NewsArticleId" />
+          </Key>
+          <Property Name="NewsArticleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="Type" Type="Boolean" Nullable="false" />
+          <Property Name="TitleEn" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="TitleAr" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContentEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ContentAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -7501,19 +7337,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EPMSInventoryModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="Aisles">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Aisle">
-              <MappingFragment StoreEntitySet="Aisle">
-                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
-                <ScalarProperty Name="AisleName" ColumnName="AisleName" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Allowances">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
@@ -8339,45 +8162,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sections">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Section">
-              <MappingFragment StoreEntitySet="Section">
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
-                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Shelves">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Shelf">
-              <MappingFragment StoreEntitySet="Shelf">
-                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
-                <ScalarProperty Name="ShelfName" ColumnName="ShelfName" />
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShelfSections">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.ShelfSection">
-              <MappingFragment StoreEntitySet="ShelfSection">
-                <ScalarProperty Name="ShelfSectionId" ColumnName="ShelfSectionId" />
-                <ScalarProperty Name="ShelfSectionName" ColumnName="ShelfSectionName" />
-                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Sizes">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Size">
               <MappingFragment StoreEntitySet="Size">
@@ -9089,6 +8873,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NewsAndArticles">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.NewsAndArticle">
+              <MappingFragment StoreEntitySet="NewsAndArticle">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
+                <ScalarProperty Name="ContentAr" ColumnName="ContentAr" />
+                <ScalarProperty Name="ContentEn" ColumnName="ContentEn" />
+                <ScalarProperty Name="AuthorNameAr" ColumnName="AuthorNameAr" />
+                <ScalarProperty Name="AuthorNameEn" ColumnName="AuthorNameEn" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="TitleAr" ColumnName="TitleAr" />
+                <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="NewsArticleId" ColumnName="NewsArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9112,7 +8917,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="66">
-        <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="22.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />
@@ -9157,9 +8961,6 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.Quotation" Width="1.5" PointX="3.75" PointY="49.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.QuotationItemDetail" Width="1.5" PointX="6" PointY="51" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RequestDetail" Width="1.5" PointX="10.5" PointY="47.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.Section" Width="1.5" PointX="25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.Shelf" Width="1.5" PointX="27.25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ShelfSection" Width="1.5" PointX="29.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Size" Width="1.5" PointX="5.25" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Status" Width="1.5" PointX="5.25" PointY="26.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TaskEmployee" Width="1.5" PointX="13.5" PointY="21.25" IsExpanded="true" />
@@ -9168,7 +8969,6 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.WarehouseDetail" Width="1.5" PointX="10.5" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Warehouse" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RIF" Width="1.5" PointX="6" PointY="39" IsExpanded="true" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_Section_Aisle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Allowance_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ApplicantExperience_JobApplicants" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ApplicantQualification_JobApplicants" ManuallyRouted="false" />
@@ -9218,8 +9018,6 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ProjectTask_ProjectTask" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TaskEmployee_Task" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_Shelf_Section" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ShelfSection_Shelf" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_WarehouseDetail_WarehouseDetail" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.ItemColor" ManuallyRouted="false" />
@@ -9305,7 +9103,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFHistory_AspNetUsers" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFHistory_Orders" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItemHistory_RIFHistory" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.PhysicalCountItem" Width="1.75" PointX="16.5" PointY="4.125" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.PhysicalCountItem" Width="1.75" PointX="16.5" PointY="3.75" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PhysicalCountItem_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PhysicalCountItem_Warehouse" />
         <EntityTypeShape EntityType="EPMSInventoryModel.InventoryItem" Width="1.875" PointX="22.375" PointY="9.125" />
@@ -9324,6 +9122,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItem_RFI" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItemHistory_RFIHistory" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ImageSlider" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.NewsAndArticle" Width="1.5" PointX="25" PointY="15.25" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -130,6 +130,7 @@
     <Compile Include="DomainModels\ItemReleaseQuantity.cs" />
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
+    <Compile Include="DomainModels\NewsAndArticle.cs" />
     <Compile Include="DomainModels\PhysicalCount.cs" />
     <Compile Include="DomainModels\PhysicalCountItem.cs" />
     <Compile Include="DomainModels\PurchaseOrder.cs" />
@@ -171,7 +172,6 @@
     <Compile Include="RequestModels\RifSearchRequest.cs" />
     <Compile Include="RequestModels\RfiSearchRequest.cs" />
     <Compile Include="Common\TaskByColumn.cs" />
-    <Compile Include="DomainModels\Aisle.cs" />
     <Compile Include="DomainModels\Allowance.cs" />
     <Compile Include="DomainModels\ApplicantExperience.cs" />
     <Compile Include="DomainModels\ApplicantQualification.cs" />
@@ -224,9 +224,6 @@
     <Compile Include="DomainModels\Quotation.cs" />
     <Compile Include="DomainModels\QuotationItemDetail.cs" />
     <Compile Include="DomainModels\RequestDetail.cs" />
-    <Compile Include="DomainModels\Section.cs" />
-    <Compile Include="DomainModels\Shelf.cs" />
-    <Compile Include="DomainModels\ShelfSection.cs" />
     <Compile Include="DomainModels\TaskEmployee.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
     <Compile Include="DomainModels\VendorItem.cs" />

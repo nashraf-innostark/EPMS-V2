@@ -136,6 +136,7 @@
     <Compile Include="Services\DepartmentService.cs" />
     <Compile Include="Services\EmployeeRequestService.cs" />
     <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\ImageSliderService.cs" />
     <Compile Include="Services\InventoryDepartmentService.cs" />
     <Compile Include="Services\InventoryItemService.cs" />
     <Compile Include="Services\ItemBarcodeService.cs" />

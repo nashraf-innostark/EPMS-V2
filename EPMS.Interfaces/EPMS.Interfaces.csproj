@@ -68,6 +68,7 @@
     <Compile Include="IServices\IDepartmentService.cs" />
     <Compile Include="IServices\IEmployeeRequestService.cs" />
     <Compile Include="IServices\IEmployeeService.cs" />
+    <Compile Include="IServices\IImageSliderService.cs" />
     <Compile Include="IServices\IInventoryDepartmentService.cs" />
     <Compile Include="IServices\IInventoryItemService.cs" />
     <Compile Include="IServices\IItemBarcodeService.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Repository\IApplicantExperienceRepository.cs" />
     <Compile Include="Repository\IApplicantQualificationRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
+    <Compile Include="Repository\IImageSliderRepository.cs" />
     <Compile Include="Repository\IItemBarcodeRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs" />
     <Compile Include="Repository\IColorRepository.cs" />

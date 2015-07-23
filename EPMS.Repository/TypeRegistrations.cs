@@ -84,6 +84,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IPOHistoryRepository, POHistoryRepository>();
             unityContainer.RegisterType<IPhysicalCountRepository, PhysicalCountRepository>();
             unityContainer.RegisterType<IPhysicalCountItemRepository, PhysicalCountItemRepository>();
+            unityContainer.RegisterType<IImageSliderRepository, ImageSliderRepository>();
         }
     }
 }

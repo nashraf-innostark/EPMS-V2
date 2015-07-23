@@ -49,7 +49,6 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index()
         {
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
-            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             ItemReleaseListViewModel viewModel = new ItemReleaseListViewModel
             {
                 SearchRequest = new ItemReleaseSearchRequest()

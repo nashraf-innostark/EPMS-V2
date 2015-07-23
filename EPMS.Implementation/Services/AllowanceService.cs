@@ -8,7 +8,11 @@ namespace EPMS.Implementation.Services
 {
     public class AllowanceService : IAllowanceService
     {
+        #region Private
+
         private readonly IAllowanceRepository repository;
+        
+        #endregion
         
         #region Constructor
         /// <summary>
@@ -28,7 +32,7 @@ namespace EPMS.Implementation.Services
         }
         public Allowance FindByEmpIdDate(long empId, DateTime currTime)
         {
-            return repository.FindAllownce(empId,currTime);
+            return repository.FindAllownce(empId, currTime);
         }
 
         public IEnumerable<Allowance> GetAll()

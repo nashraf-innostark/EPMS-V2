@@ -34,6 +34,7 @@
 {
     <div class="container-fluid">
         @Html.HiddenFor(model => model.ImageSlider.SliderId)
+        @Html.HiddenFor(model => model.ImageSlider.ImagePath, new { @id = "ImagePath" })
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Order">Order</label>
@@ -147,10 +148,11 @@
 <script type="text/javascript">
     $().ready(function () {
         var errors = "";
+        var url = $('#siteURL').val() + "/Website/Slider/UploadImage";
         $('#upload').mfupload({
             type: '',   //all types
             maxsize: 1,
-            post_upload: "./file-uploader.html",
+            post_upload: url,
             folder: "./",
             ini_text: "Drag your file here or click (max: 1MB)",
             over_text: "Drop Here",
@@ -165,6 +167,7 @@
             loaded: function (result) {
                 $("#PRO" + result.fileno).remove();
                 $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                $("#ImagePath").val(result.filename);
             },
             progress: function (result) {
                 $("#PRO" + result.fileno).css("width", result.perc + "%");

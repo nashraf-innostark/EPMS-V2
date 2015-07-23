@@ -149,5 +149,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<PurchaseOrderHistory> PurchaseOrderHistories { get; set; }
         public DbSet<PhysicalCount> PhysicalCount { get; set; }
         public DbSet<PhysicalCountItem> PhysicalCountItems { get; set; }
+        public DbSet<ImageSlider> ImageSliders { get; set; }
     }
 }

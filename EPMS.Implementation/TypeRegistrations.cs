@@ -73,6 +73,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IPoItemService, PoItemService>();
             unityContainer.RegisterType<IItemWarehouseService, ItemWarehouseService>();
             unityContainer.RegisterType<IPhysicalCountService, PhysicalCountService>();
+            unityContainer.RegisterType<IImageSliderService, ImageSliderService>();
         }
     }
 }

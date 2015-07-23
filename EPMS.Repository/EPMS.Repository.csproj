@@ -147,6 +147,7 @@
     <Compile Include="Repositories\EmployeeRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestDetailRepository.cs" />
     <Compile Include="Repositories\EmployeeRequestRepository.cs" />
+    <Compile Include="Repositories\ImageSliderRepository.cs" />
     <Compile Include="Repositories\InventoryDepartmentRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
     <Compile Include="Repositories\ItemReleaseQuantityRepository.cs" />
