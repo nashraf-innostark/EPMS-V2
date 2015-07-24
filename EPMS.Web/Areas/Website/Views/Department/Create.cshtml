@@ -1,0 +1,206 @@
+﻿@model EPMS.Web.ViewModels.Website.Department.DepartmentViewModel
+
+@{
+    ViewBag.Title = Model.WebsiteDepartment.DepartmentId > 0 ? "Website Department Updation" : "Website Department Addition";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Website/Home/Index">
+                Website Main Page
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    @if (Model.WebsiteDepartment.DepartmentId > 0)
+    {
+        <h2><small>Website Department Edit</small></h2>
+    }
+    else
+    {
+        <h2><small>Website Department Add</small></h2>
+    }
+</header>
+
+@using (Html.BeginForm("Create", "Department", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditSliderForm", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        @Html.HiddenFor(model => model.WebsiteDepartment.DepartmentId)
+        @Html.HiddenFor(model => model.WebsiteDepartment.RecCreatedBy)
+        @Html.HiddenFor(model => model.WebsiteDepartment.RecCreatedDate)
+        @Html.HiddenFor(model => model.WebsiteDepartment.ImageName, new { @id = "ImageName" })
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Order">Order  </label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.DepartmentOrder, new { @id = "Order", @class = "toBeDisable" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NameEn">Department Name</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.NameEn, new { @id = "NameEn", @class = "toBeDisable" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="NameAr">Department Name Arabic</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.NameAr, new { @id = "NameAr", @class = "toBeDisable" })
+                </div>
+            </div>
+        </div>
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="inputField">
+                    Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid" id="image">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="Link">Link</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.Link, new { @id = "Link", @class = "toBeDisable" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ShowToPublic">Show to public?</label>
+            </div>
+            <div class="span9 span-inset" id="ShowToPublicDiv">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.WebsiteDepartment.ShowToPublic, new { @id = "ShowToPublic" })
+                </div>
+            </div>
+        </div>
+        <div id="Edit" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="button" class="btn" id="edit">Edit</button>
+                </div>
+            </div>
+        </div>
+        <div id="Create" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn">Create</button>
+                </div>
+            </div>
+        </div>
+        <div id="Update" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" name="Update">Update</button>
+                </div>
+            </div>
+        </div>
+        @if (Model.WebsiteDepartment.DepartmentId > 0 && userPermissionsSet.Contains("WebsiteDepartmentDelete"))
+        {
+            <div id="Delete" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" name="Delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<script src="~/RTE/ckeditor.js"></script>
+<script type="text/javascript">
+    $().ready(function() {
+        if (parseInt('@Model.WebsiteDepartment.DepartmentId') > 0 || '@userPermissionsSet.Contains("WebsiteDepartmentCreate")' == 'False') {
+            $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+            $('#image').addClass('disableList');
+            $('#ShowToPublicDiv').addClass('disableList');
+            var val = '@userPermissionsSet.Contains("WebsiteDepartmentCreate")';
+            if (val == 'True') {
+                $("#Edit").show();
+            } else {
+
+            }
+        } else {
+            $("#Create").show();
+        }
+        var errors = "";
+        var url = $('#siteURL').val() + "/Website/Department/UploadImage";
+        $('#upload').mfupload({
+            type: '', //all types
+            maxsize: 1,
+            post_upload: url,
+            folder: "./",
+            ini_text: "Drag your file here or click (max: 1MB)",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+            init: function() {
+                $("#uploaded").empty();
+            },
+            start: function(result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+            loaded: function(result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                $("#ImageName").val(result.filename);
+            },
+            progress: function(result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+            error: function(error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+            completed: function() {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+    });
+    $("#edit").click(function (event) {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', false);
+        $('#image').removeClass('disableList');
+        $('#ShowToPublicDiv').removeClass('disableList');
+        $("#Edit").hide();
+        $("#Update").show();
+        $("#Delete").show();
+    });
+</script>

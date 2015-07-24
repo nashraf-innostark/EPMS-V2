@@ -13,6 +13,7 @@ namespace EPMS.Implementation.Services
 
         private readonly IImageSliderRepository repository;
         private readonly IPartnerRepository partnerRepository;
+        private readonly IWebsiteDepartmentRepository departmentRepository;
         
         #endregion
         
@@ -20,10 +21,11 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ImageSliderService(IImageSliderRepository repository, IPartnerRepository partnerRepository)
+        public ImageSliderService(IImageSliderRepository repository, IPartnerRepository partnerRepository, IWebsiteDepartmentRepository departmentRepository)
         {
             this.repository = repository;
             this.partnerRepository = partnerRepository;
+            this.departmentRepository = departmentRepository;
         }
 
         #endregion
@@ -33,7 +35,8 @@ namespace EPMS.Implementation.Services
             HomePageResponse response = new HomePageResponse
             {
                 ImageSlider = repository.GetAll(),
-                Partners = partnerRepository.GetAll()
+                Partners = partnerRepository.GetAll(),
+                WebsiteDepartments = departmentRepository.GetAll()
             };
             return response;
         }
@@ -79,8 +82,11 @@ namespace EPMS.Implementation.Services
         public void DeleteImageSlider(long id)
         {
             var dataToDelete = repository.Find(id);
-            repository.Delete(dataToDelete);
-            repository.SaveChanges();
+            if (dataToDelete != null)
+            {
+                repository.Delete(dataToDelete);
+                repository.SaveChanges();
+            }
         }
     }
 }

@@ -6,11 +6,11 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Implementation.Services
 {
-    public class PartnerService : IPartnerService
+    public class WebsiteDepartmentService : IWebsiteDepartmentService
     {
         #region Private
 
-        private readonly IPartnerRepository repository;
+        private readonly IWebsiteDepartmentRepository repository;
         
         #endregion
         
@@ -18,27 +18,27 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public PartnerService(IPartnerRepository repository)
+        public WebsiteDepartmentService(IWebsiteDepartmentRepository repository)
         {
             this.repository = repository;
         }
 
         #endregion
-        public IEnumerable<Partner> GetAll()
+        public IEnumerable<WebsiteDepartment> GetAll()
         {
             return repository.GetAll();
         }
 
-        public Partner FindPartnerById(long id)
+        public WebsiteDepartment FindDepartmentById(long id)
         {
             return repository.Find(id);
         }
 
-        public bool AddPartner(Partner partner)
+        public bool AddDepartment(WebsiteDepartment websiteDepartment)
         {
             try
             {
-                repository.Add(partner);
+                repository.Add(websiteDepartment);
                 repository.SaveChanges();
                 return true;
             }
@@ -48,11 +48,11 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public bool UpdatePartner(Partner partner)
+        public bool UpdateDepartment(WebsiteDepartment websiteDepartment)
         {
             try
             {
-                repository.Update(partner);
+                repository.Update(websiteDepartment);
                 repository.SaveChanges();
                 return true;
             }
@@ -62,7 +62,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeletePartner(long id)
+        public void DeleteDepartment(long id)
         {
             var dataToDelete = repository.Find(id);
             if (dataToDelete != null)

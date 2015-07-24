@@ -935,7 +935,6 @@
           <Property Name="NameAr" Type="nvarchar" MaxLength="100" />
           <Property Name="ImageName" Type="nvarchar" MaxLength="400" />
           <Property Name="ImageOrder" Type="int" />
-          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Link" Type="nvarchar" MaxLength="100" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
@@ -1498,6 +1497,23 @@
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WebsiteDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameEn" Type="nvarchar" MaxLength="100" />
+          <Property Name="NameAr" Type="nvarchar" MaxLength="100" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="400" />
+          <Property Name="DepartmentOrder" Type="int" />
+          <Property Name="ShowToPublic" Type="bit" Nullable="false" />
+          <Property Name="Link" Type="nvarchar" MaxLength="100" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -3133,6 +3149,7 @@
           <EntitySet Name="VendorItems" EntityType="Self.VendorItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -5868,6 +5885,7 @@
           <EntitySet Name="NewsAndArticles" EntityType="EPMSInventoryModel.NewsAndArticle" />
           <EntitySet Name="ImageSliders" EntityType="EPMSInventoryModel.ImageSlider" />
           <EntitySet Name="Partners" EntityType="EPMSInventoryModel.Partner" />
+          <EntitySet Name="WebsiteDepartments" EntityType="EPMSInventoryModel.WebsiteDepartment" />
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7358,12 +7376,28 @@
           <Property Name="NameAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ImageName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="ImageOrder" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="WebsiteDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentOrder" Type="Int32" />
+          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -8936,12 +8970,29 @@
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ImageOrder" ColumnName="ImageOrder" />
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="NameAr" ColumnName="NameAr" />
                 <ScalarProperty Name="NameEn" ColumnName="NameEn" />
                 <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebsiteDepartments">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteDepartment">
+              <MappingFragment StoreEntitySet="WebsiteDepartment">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
+                <ScalarProperty Name="DepartmentOrder" ColumnName="DepartmentOrder" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9175,6 +9226,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.NewsAndArticle" Width="1.5" PointX="25" PointY="15.25" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ImageSlider" Width="1.5" PointX="19.75" PointY="0.75" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Partner" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteDepartment" Width="1.5" PointX="22.75" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

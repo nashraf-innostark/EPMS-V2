@@ -9,7 +9,6 @@ namespace EPMS.Web.Models
         public string NameAr { get; set; }
         public string ImageName { get; set; }
         public int? ImageOrder { get; set; }
-        public string Description { get; set; }
         public string Link { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }

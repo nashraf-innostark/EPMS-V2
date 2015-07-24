@@ -2,14 +2,16 @@
 
 namespace EPMS.Models.DomainModels
 {
-    public class Partner
+    public class WebsiteDepartment
     {
-        public long PartnerId { get; set; }
+        public long DepartmentId { get; set; }
         public string NameEn { get; set; }
         public string NameAr { get; set; }
         public string ImageName { get; set; }
-        public int? ImageOrder { get; set; }
+        public int? DepartmentOrder { get; set; }
+        public bool ShowToPublic { get; set; }
         public string Link { get; set; }
+        public string Description { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }

@@ -69,6 +69,10 @@ namespace EPMS.Web.Areas.Website.Controllers
                 {
                     try
                     {
+                        var directory = ConfigurationManager.AppSettings["PartnerImage"];
+                        var path = "~" + directory + viewModel.Partner.ImageName;
+                        var fullPath = Request.MapPath(path);
+                        Utility.DeleteFile(fullPath);
                         partnerService.DeletePartner(viewModel.Partner.PartnerId);
                         TempData["message"] = new MessageViewModel
                         {
@@ -130,6 +134,32 @@ namespace EPMS.Web.Areas.Website.Controllers
                 return Json(new { response = "Failed to upload. Error: " + exp.Message, status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { response = "Failed to upload", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Delete Partner
+
+        public JsonResult DeletePartner(long partnerId, string imageName)
+        {
+            try
+            {
+                // Delete image
+                if (!string.IsNullOrEmpty(imageName))
+                {
+                    var directory = ConfigurationManager.AppSettings["PartnerImage"];
+                    var path = "~" + directory + imageName;
+                    var fullPath = Request.MapPath(path);
+                    Utility.DeleteFile(fullPath);
+                }
+                // Delete data from DB
+                partnerService.DeletePartner(partnerId);
+                return Json("Deleted", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
         }
 
         #endregion

@@ -87,6 +87,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IImageSliderRepository, ImageSliderRepository>();
             unityContainer.RegisterType<INewsAndArticleRepository, NewsAndArticleRepository>();
             unityContainer.RegisterType<IPartnerRepository, PartnerRepository>();
+            unityContainer.RegisterType<IWebsiteDepartmentRepository, WebsiteDepartmentRepository>();
         }
     }
 }

@@ -7,6 +7,9 @@
     ViewBag.Title = "Website Main Page Create";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    int i = 0;
+    int j = 0;
+    int k = 0;
 }
 
 <div class="breadcrumb-container">
@@ -78,12 +81,11 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="sliderTableRows">
                         @foreach (ImageSlider imageSlider in Model.ImageSlider)
                         {
-                            int i = 0;
                             <tr class="gradeX">
-                                <td>@(i + 1)</td>
+                                <td class="sliderSerialNumber">@(i + 1)</td>
                                 <td><img src='@Url.Content(ConfigurationManager.AppSettings["SliderImage"] + imageSlider.ImageName)' alt="" /></td>
                                 <td>@imageSlider.ImageOrder</td>
                                 @if (direction == "ltr")
@@ -98,7 +100,7 @@
                                 }
                                 <td class="@imageSlider.SliderId"></td>
                                 <script>
-                                    var info = '@Html.Raw(imageSlider.Description))';
+                                    var info = '@Html.Raw(imageSlider.Description)';
                                     var regex = /(<([^>]+)>)/ig;
                                     var result = info.replace(regex, "");
                                     $("." + '@imageSlider.SliderId').text(result);
@@ -114,7 +116,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><a href="#">Delete</a></td>
+                                <td><a href="#" class="deleteSliderRow" onclick="deleteSliderRow(@imageSlider.SliderId, '@imageSlider.ImageName')">Delete</a></td>
                             </tr>
                                 i++;
                         }
@@ -125,7 +127,11 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Departments</strong><a href="#">Create New Department</a>
+            <strong>Departments</strong>
+            @if (userPermissionsSet.Contains("WebsiteDepartmentCreate"))
+            {
+                <a href="~/Website/Department/Create">Create New Department</a>
+            }
         </div>
 
         <div class="row-fluid">
@@ -143,6 +149,26 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (WebsiteDepartment websiteDepartment in Model.WebsiteDepartments)
+                        {
+                            <tr class="gradeX">
+                                <td class="departmentSerialNumber">@(j + 1)</td>
+                                <td></td>
+                                <td>@websiteDepartment.DepartmentOrder</td>
+                                @if (direction == "ltr")
+                                {
+                                    <td><a href="~/Website/Department/Create/@websiteDepartment.DepartmentId">@websiteDepartment.NameEn</a></td>
+                                }
+                                else
+                                {
+                                    <td><a href="~/Website/Department/Create/@websiteDepartment.DepartmentId">@websiteDepartment.NameAr</a></td>
+                                }
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            j++;
+                        }
                         <tr class="gradeX">
                             <td>1</td>
                             <td><img src="images/photon/flask.jpg" /></td>
@@ -179,12 +205,12 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="partnerTableRows">
                         @foreach (Partner partner in Model.Partners)
                         {
-                            int i = 0;
+
                             <tr class="gradeX">
-                                <td>@(i + 1)</td>
+                                <td class="partnerSerialNumber">@(k + 1)</td>
                                 <td><img src='@Url.Content(ConfigurationManager.AppSettings["PartnerImage"] + partner.ImageName)' alt="" /></td>
                                 <td>@partner.ImageOrder</td>
                                 @if (direction == "ltr")
@@ -196,8 +222,9 @@
                                     <td><a href="~/Website/Partner/Create/@partner.PartnerId">@partner.NameAr</a></td>
                                 }
                                 <td>@partner.Link</td>
-                                <td><a href="#">Delete</a></td>
+                                <td><a href="#" class="deletePartnerRoW" onclick="deletePartnerRoW(@partner.PartnerId, '@partner.ImageName')">Delete</a></td>
                             </tr>
+                                k++;
                         }
                     </tbody>
                 </table>
@@ -213,6 +240,8 @@
 </form>
 
 <script>
+    var sliderRow;
+    var partnerRow;
     $(document).ready(function () {
         var errors = "";
 
@@ -255,13 +284,13 @@
             "aoColumns": [
                 null,
                 { "bSortable": false },
-                  null,
-                  null,
-                  null,
-                  null,
-                  null,
-                  { "bSortable": false },
-                  { "bSortable": false }
+                null,
+                null,
+                null,
+                null,
+                null,
+                { "bSortable": false },
+                { "bSortable": false }
             ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
@@ -274,11 +303,11 @@
             "aoColumns": [
                 null,
                 { "bSortable": false },
-                  null,
-                  null,
-                  null,
-                  null,
-                  { "bSortable": false }
+                null,
+                null,
+                null,
+                null,
+                { "bSortable": false }
             ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
@@ -291,10 +320,10 @@
             "aoColumns": [
                 null,
                 { "bSortable": false },
-                  null,
-                  null,
-                  null,
-                  { "bSortable": false }
+                null,
+                null,
+                null,
+                { "bSortable": false }
             ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
@@ -303,4 +332,109 @@
             }
         });
     });
+    $('.deleteSliderRow').on("click", function () {
+        sliderRow = $(this).parent().parent();
+    });
+    function deleteSliderRow(sliderId, imageName) {
+        if ('@userPermissionsSet.Contains("DeleteSlider")' == 'False') {
+            var m = $(".alert-error");
+            m.children("span").text("You have no permission to delete");
+            m.show();
+            return;
+        }
+        if (confirm("Are you sure to delete this row ?") == false) {
+            return;
+        }
+
+        var serviceUrl = '/Website/Slider/DeleteSliderImage';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                sliderId: sliderId,
+                imageName: imageName
+            },
+            success: function (result) {
+                if (result == "Deleted") {
+                    if (sliderRow != null || sliderRow != "" || sliderRow != undefined) {
+                        sliderRow.remove();
+                        reActivateSliderSerial();
+                    }
+                    var m = $(".alert-success");
+                    m.children("span").text("Record has been Deleted");
+                    m.show();
+                }
+                if (result == "Error") {
+                    var m = $(".alert-error");
+                    m.children("span").text("Error deleting record");
+                    m.show();
+                }
+            },
+            error: function () {
+                var m = $(".alert-error");
+                m.children("span").text("Error deleting record");
+                m.show();
+            }
+        });
+    }
+    $('.deletePartnerRoW').on("click", function () {
+        partnerRow = $(this).parent().parent();
+    });
+    function deletePartnerRoW(partnerId, imageName) {
+        if ('@userPermissionsSet.Contains("DeletePartner")' == 'False') {
+            var m = $(".alert-error");
+            m.children("span").text("You have no permission to delete");
+            m.show();
+            return;
+        }
+        if (confirm("Are you sure to delete this row ?") == false) {
+            return;
+        }
+
+        var serviceUrl = '/Website/Partner/DeletePartner';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                partnerId: partnerId,
+                imageName: imageName
+            },
+            success: function (result) {
+                if (result == "Deleted") {
+                    if (partnerRow != null || partnerRow != "" || partnerRow != undefined) {
+                        partnerRow.remove();
+                    }
+                    var m = $(".alert-success");
+                    m.children("span").text("Record has been Deleted");
+                    m.show();
+                }
+                if (result == "Error") {
+                    var m = $(".alert-error");
+                    m.children("span").text("Error deleting record");
+                    m.show();
+                }
+            },
+            error: function () {
+                var m = $(".alert-error");
+                m.children("span").text("Error deleting record");
+                m.show();
+            }
+        });
+    }
+    function reActivateSliderSerial() {
+        var add = 0;
+        $('.sliderTableRows tr').each(function () {
+            add++;
+            $(this).find(".sliderSerialNumber").text(add);
+        });
+    }
+    function reActivatePartnerSerial() {
+        var add = 0;
+        $('.partnerTableRows tr').each(function () {
+            add++;
+            $(this).find(".partnerSerialNumber").text(add);
+        });
+    }
 </script>

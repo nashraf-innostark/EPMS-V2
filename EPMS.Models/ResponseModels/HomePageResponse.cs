@@ -7,5 +7,6 @@ namespace EPMS.Models.ResponseModels
     {
         public IEnumerable<ImageSlider> ImageSlider { get; set; }
         public IEnumerable<Partner> Partners { get; set; }
+        public IEnumerable<WebsiteDepartment> WebsiteDepartments { get; set; }
     }
 }

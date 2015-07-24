@@ -6,8 +6,12 @@ namespace EPMS.Web.ModelMappers
     {
         public static ImageSlider CreateFromClientToServer(this Models.ImageSlider source)
         {
-            string descp = source.Description.Replace("\n", "");
-            descp = descp.Replace("\r", "");
+            string descp = source.Description;
+            if (!string.IsNullOrEmpty(descp))
+            {
+                descp = descp.Replace("\n", "");
+                descp = descp.Replace("\r", "");
+            }
             return new ImageSlider
             {
                 SliderId = source.SliderId,

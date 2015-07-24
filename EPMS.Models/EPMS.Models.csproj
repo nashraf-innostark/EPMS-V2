@@ -149,6 +149,7 @@
     <Compile Include="DomainModels\TIRItem.cs" />
     <Compile Include="DomainModels\TIRItemHistory.cs" />
     <Compile Include="DomainModels\TransferItemStatus.cs" />
+    <Compile Include="DomainModels\WebsiteDepartment.cs" />
     <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />

@@ -208,6 +208,7 @@
     <Compile Include="Repositories\VendorRepository.cs" />
     <Compile Include="Repositories\WarehouseDetailRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
+    <Compile Include="Repositories\WebsiteDepartmentRepository.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>

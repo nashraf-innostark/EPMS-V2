@@ -4,8 +4,6 @@
     {
         public static EPMS.Models.DomainModels.Partner CreateFromClientToServer(this Models.Partner source)
         {
-            string descp = source.Description.Replace("\n", "");
-            descp = descp.Replace("\r", "");
             return new EPMS.Models.DomainModels.Partner
             {
                 PartnerId = source.PartnerId,
@@ -14,7 +12,6 @@
                 ImageOrder = source.ImageOrder,
                 ImageName = source.ImageName,
                 Link = source.Link,
-                Description = descp,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -32,7 +29,6 @@
                 ImageOrder = source.ImageOrder,
                 ImageName = source.ImageName,
                 Link = source.Link,
-                Description = source.Description,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
