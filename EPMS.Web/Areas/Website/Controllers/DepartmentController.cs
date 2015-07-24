@@ -151,7 +151,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     Utility.DeleteFile(fullPath);
                 }
                 // Delete data from DB
-                ///////////////////////////////partnerService.DeletePartner(partnerId);
+                departmentService.DeleteDepartment(departmentId);
                 return Json("Deleted", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)

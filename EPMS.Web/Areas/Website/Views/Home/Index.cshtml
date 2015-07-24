@@ -148,12 +148,12 @@
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="departmentTableRows">
                         @foreach (WebsiteDepartment websiteDepartment in Model.WebsiteDepartments)
                         {
                             <tr class="gradeX">
                                 <td class="departmentSerialNumber">@(j + 1)</td>
-                                <td></td>
+                                <td><img src='@Url.Content(ConfigurationManager.AppSettings["PartnerImage"] + websiteDepartment.ImageName)' alt="" /></td>
                                 <td>@websiteDepartment.DepartmentOrder</td>
                                 @if (direction == "ltr")
                                 {
@@ -163,21 +163,18 @@
                                 {
                                     <td><a href="~/Website/Department/Create/@websiteDepartment.DepartmentId">@websiteDepartment.NameAr</a></td>
                                 }
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td class="@websiteDepartment.DepartmentId"></td>
+                                <script>
+                                    var info = '@Html.Raw(websiteDepartment.Description)';
+                                    var regex = /(<([^>]+)>)/ig;
+                                    var result = info.replace(regex, "");
+                                    $("." + '@websiteDepartment.DepartmentId').text(result);
+                                </script>
+                                <td>@websiteDepartment.Link</td>
+                                <td><a href="#" class="deleteDepartmentRow" onclick="deleteDepartmentRow(@websiteDepartment.DepartmentId, '@websiteDepartment.ImageName')">Delete</a></td>
                             </tr>
-                            j++;
+                                j++;
                         }
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td><img src="images/photon/flask.jpg" /></td>
-                            <td>1</td>
-                            <td>Labs</td>
-                            <td>beaker labratory item color is red and size is 3xl and it is new</td>
-                            <td>http://www.cr3ativ3mind.com</td>
-                            <td><a href="#">Delete</a></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -231,17 +228,18 @@
             </div>
         </div>
 
-        <div class="control-group row-fluid">
+        @*<div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="button" class="btn">Create</button>
             </div>
-        </div>
+        </div>*@
     </div>
 </form>
 
 <script>
     var sliderRow;
     var partnerRow;
+    var departmentRow;
     $(document).ready(function () {
         var errors = "";
 
@@ -377,6 +375,51 @@
                 m.show();
             }
         });
+    } $('.deleteDepartmentRow').on("click", function () {
+        departmentRow = $(this).parent().parent();
+    });
+    function deleteDepartmentRow(departmentId, imageName) {
+        if ('@userPermissionsSet.Contains("WebsiteDepartmentDelete")' == 'False') {
+            var m = $(".alert-error");
+            m.children("span").text("You have no permission to delete");
+            m.show();
+            return;
+        }
+        if (confirm("Are you sure to delete this row ?") == false) {
+            return;
+        }
+
+        var serviceUrl = '/Website/Department/DeleteDepartment';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                departmentId: departmentId,
+                imageName: imageName
+            },
+            success: function (result) {
+                if (result == "Deleted") {
+                    if (departmentRow != null || departmentRow != "" || departmentRow != undefined) {
+                        departmentRow.remove();
+                        reActivateDepartmentSerial();
+                    }
+                    var m = $(".alert-success");
+                    m.children("span").text("Record has been Deleted");
+                    m.show();
+                }
+                if (result == "Error") {
+                    var m = $(".alert-error");
+                    m.children("span").text("Error deleting record");
+                    m.show();
+                }
+            },
+            error: function () {
+                var m = $(".alert-error");
+                m.children("span").text("Error deleting record");
+                m.show();
+            }
+        });
     }
     $('.deletePartnerRoW').on("click", function () {
         partnerRow = $(this).parent().parent();
@@ -405,6 +448,7 @@
                 if (result == "Deleted") {
                     if (partnerRow != null || partnerRow != "" || partnerRow != undefined) {
                         partnerRow.remove();
+                        reActivatePartnerSerial();
                     }
                     var m = $(".alert-success");
                     m.children("span").text("Record has been Deleted");
@@ -435,6 +479,13 @@
         $('.partnerTableRows tr').each(function () {
             add++;
             $(this).find(".partnerSerialNumber").text(add);
+        });
+    }
+    function reActivateDepartmentSerial() {
+        var add = 0;
+        $('.departmentTableRows tr').each(function () {
+            add++;
+            $(this).find(".departmentSerialNumber").text(add);
         });
     }
 </script>
