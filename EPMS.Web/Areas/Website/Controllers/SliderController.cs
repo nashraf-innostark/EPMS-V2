@@ -44,7 +44,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             {
                 ImageSlider =
                     id != null
-                        ? sliderService.FindImageSliderById((long) id).CreateFromServerToClient()
+                        ? sliderService.FindImageSliderById((long)id).CreateFromServerToClient()
                         : new Models.ImageSlider()
             };
             IEnumerable<Position> positions = Enum.GetValues(typeof(Position))
@@ -83,6 +83,10 @@ namespace EPMS.Web.Areas.Website.Controllers
                 {
                     try
                     {
+                        var directory = ConfigurationManager.AppSettings["SliderImage"];
+                        var path = "~" + directory + viewModel.ImageSlider.ImageName;
+                        var fullPath = Request.MapPath(path);
+                        Utility.DeleteFile(fullPath);
                         sliderService.DeleteImageSlider(viewModel.ImageSlider.SliderId);
                         TempData["message"] = new MessageViewModel
                         {

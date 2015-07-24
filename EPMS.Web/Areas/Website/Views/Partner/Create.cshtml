@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div id="Descp">
+        @*<div id="Descp">
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="descp">Description</label>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div id="Edit" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
@@ -163,12 +163,12 @@
         if (parseInt('@Model.Partner.PartnerId') > 0 || '@userPermissionsSet.Contains("PartnerCreate")' == 'False') {
             $('.' + 'toBeDisable' + ':input').attr('disabled', true);
             $('#image').addClass('disableList');
-            var descpE = '@Html.Raw(Model.Partner.Description)';
+            @*var descpE = '@Html.Raw(Model.Partner.Description)';
             var regex = /(<([^>]+)>)/ig;
             var res = descpE.replace(regex, "");
             $("#descp").val(res);
             $("#Descp").show();
-            $("#CKEditorDescp").hide();
+            $("#CKEditorDescp").hide();*@
             var val = '@userPermissionsSet.Contains("PartnerCreate")';
             if (val == 'True') {
                 $("#Edit").show();
@@ -176,11 +176,11 @@
 
             }
         } else {
-            $("#Descp").hide();
-            CKEDITOR.replace('Description', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            $("#CKEditorDescp").show();
+            //$("#Descp").hide();
+            //CKEDITOR.replace('Description', {
+            //    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            //});
+            //$("#CKEditorDescp").show();
             $("#Create").show();
         }
         var errors = "";
@@ -222,12 +222,12 @@
     $("#edit").click(function (event) {
         $('.' + 'toBeDisable' + ':input').attr('disabled', false);
         $('#image').removeClass('disableList');
-        // CK Editor
-        CKEDITOR.replace('Description', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-        });
-        $("#Descp").hide();
-        $("#CKEditorDescp").show();
+        //// CK Editor
+        //CKEDITOR.replace('Description', {
+        //    filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        //});
+        //$("#Descp").hide();
+        //$("#CKEditorDescp").show();
         $("#Edit").hide();
         $("#Update").show();
         $("#Delete").show();

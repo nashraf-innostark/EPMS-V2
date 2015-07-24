@@ -84,7 +84,7 @@
                             int i = 0;
                             <tr class="gradeX">
                                 <td>@(i + 1)</td>
-                                <td><img src='@Url.Content(ConfigurationManager.AppSettings["SliderImage"] + imageSlider.ImageName)' alt="user" /></td>
+                                <td><img src='@Url.Content(ConfigurationManager.AppSettings["SliderImage"] + imageSlider.ImageName)' alt="" /></td>
                                 <td>@imageSlider.ImageOrder</td>
                                 @if (direction == "ltr")
                                 {
@@ -106,10 +106,12 @@
 
                                 <td>@imageSlider.Link</td>
                                 <td>
-                                    <div class="controls">
-                                        @Html.DropDownListFor(model => model.ImageSlider[i].Position,
-                                        new SelectList(Model.Position, "Value", "Text", Model.ImageSlider[i].Position),
-                                        new { @class = "select2me tableDbM" })
+                                    <div class="span8">
+                                        <div class="controls">
+                                            @Html.DropDownListFor(model => model.ImageSlider[i].Position,
+                                            new SelectList(Model.Position, "Value", "Text", Model.ImageSlider[i].Position),
+                                            new { @class = "select2me tableDbM" })
+                                        </div>
                                     </div>
                                 </td>
                                 <td><a href="#">Delete</a></td>
@@ -183,15 +185,15 @@
                             int i = 0;
                             <tr class="gradeX">
                                 <td>@(i + 1)</td>
-                                <td><img src='@Url.Content(ConfigurationManager.AppSettings["PartnerImage"] + partner.ImageName)' alt="user" /></td>
+                                <td><img src='@Url.Content(ConfigurationManager.AppSettings["PartnerImage"] + partner.ImageName)' alt="" /></td>
                                 <td>@partner.ImageOrder</td>
                                 @if (direction == "ltr")
                                 {
-                                    <td><a href="~/Website/Partner/Create/@partner.PartnerId">@partner.NameEn</td>
+                                    <td><a href="~/Website/Partner/Create/@partner.PartnerId">@partner.NameEn</a></td>
                                 }
                                 else
                                 {
-                                    <td><a href="~/Website/Partner/Create/@partner.PartnerId">@partner.NameAr</td>
+                                    <td><a href="~/Website/Partner/Create/@partner.PartnerId">@partner.NameAr</a></td>
                                 }
                                 <td>@partner.Link</td>
                                 <td><a href="#">Delete</a></td>
