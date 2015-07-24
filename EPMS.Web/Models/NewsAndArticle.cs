@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.Web.Models
 {
@@ -7,7 +8,11 @@ namespace EPMS.Web.Models
         public long NewsArticleId { get; set; }
         public int? SortOrder { get; set; }
         public bool Type { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.NewsAndArticles.NewsAndArticleCreate), ErrorMessageResourceName = "TitleValidation")]
+        [StringLength(300, ErrorMessageResourceType = typeof(Resources.Website.NewsAndArticles.NewsAndArticleCreate), ErrorMessageResourceName = "TitleLengthValidation")]
         public string TitleEn { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.NewsAndArticles.NewsAndArticleCreate), ErrorMessageResourceName = "TitleValidation")]
+        [StringLength(300, ErrorMessageResourceType = typeof(Resources.Website.NewsAndArticles.NewsAndArticleCreate), ErrorMessageResourceName = "TitleLengthValidation")]
         public string TitleAr { get; set; }
         public string ImagePath { get; set; }
         public string AuthorNameEn { get; set; }
@@ -19,5 +24,7 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
+        public string DateTimeForIndex { get; set; }
+        public string TypeForIndex { get; set; }
     }
 }

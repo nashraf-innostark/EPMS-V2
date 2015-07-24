@@ -1,13 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Website.NewsAndArticles;
+using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.NewsAndArticle;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
@@ -37,8 +42,117 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             return View(new NewsAndArticleListViewModel
             {
-                NewsAndArticles = newsAndArticleService.GetAll().Select(x=>x.CreateFromServerToClient())
+                NewsAndArticles = newsAndArticleService.GetAll().Select(x=>x.CreateFromServerToClient()).OrderBy(y=>y.SortOrder)
             });
+        }
+
+        #endregion
+
+        #region Create
+
+        public ActionResult Create(long? id)
+        {
+            NewsAndArticleViewModel newsAndArticleViewModel = new NewsAndArticleViewModel();
+            if (id != null)
+            {
+                newsAndArticleViewModel.NewsAndArticle =
+                    newsAndArticleService.FindNewsAndArticleById((long) id).CreateFromServerToClient();
+            }
+            return View(newsAndArticleViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Create(NewsAndArticleViewModel newsAndArticleViewModel)
+        {
+            try
+            {
+                if (newsAndArticleViewModel.NewsAndArticle.NewsArticleId > 0)
+                {
+                    //Update Case
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedDt = DateTime.Now;
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedBy = User.Identity.GetUserId();
+                    NewsAndArticle newsAndArticleToUpdate =
+                        newsAndArticleViewModel.NewsAndArticle.CreateFromClientToServer();
+                    if (newsAndArticleService.UpdateNewsAndArticle(newsAndArticleToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = Resources.Website.NewsAndArticles.NewsAndArticlesList.Updated, IsUpdated = true };
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    //Add Case
+                    newsAndArticleViewModel.NewsAndArticle.RecCreatedDt = DateTime.Now;
+                    newsAndArticleViewModel.NewsAndArticle.RecCreatedBy = User.Identity.GetUserId();
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedDt = DateTime.Now;
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedBy = User.Identity.GetUserId();
+                    NewsAndArticle newsAndArticleToAdd =
+                        newsAndArticleViewModel.NewsAndArticle.CreateFromClientToServer();
+                    if (newsAndArticleService.AddNewsAndArticle(newsAndArticleToAdd))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = Resources.Website.NewsAndArticles.NewsAndArticlesList.Added, IsSaved = true };
+                        return RedirectToAction("Index");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                return RedirectToAction("Create", e);
+            }
+            return View(newsAndArticleViewModel);
+        }
+
+        #endregion
+
+        #region Upload Image
+
+        public ActionResult UploadImage()
+        {
+            HttpPostedFileBase image = Request.Files[0];
+            var filename = "";
+            try
+            {
+                //Save File to Folder
+                if ((image != null))
+                {
+                    filename =
+                        (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + image.FileName)
+                            .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["NewsOrArticleImage"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    image.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return
+                    Json(
+                        new
+                        {
+                            response = "Failed to upload. Error: " + exp.Message,
+                            status = (int)HttpStatusCode.BadRequest
+                        }, JsonRequestBehavior.AllowGet);
+            }
+            return
+                Json(
+                    new
+                    {
+                        filename = filename,
+                        size = image.ContentLength / 1024 + "KB",
+                        response = "Successfully uploaded!",
+                        status = (int)HttpStatusCode.OK
+                    }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Json
+
+        public JsonResult DeleteIt(long abcd)
+        {
+            newsAndArticleService.Delete(abcd);
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
         }
 
         #endregion
