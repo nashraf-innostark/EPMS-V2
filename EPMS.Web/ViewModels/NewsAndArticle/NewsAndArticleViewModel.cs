@@ -9,8 +9,8 @@ namespace EPMS.Web.ViewModels.NewsAndArticle
     {
         public NewsAndArticleViewModel()
         {
-            NewsAndArticles = new Models.NewsAndArticle();
+            NewsAndArticle = new Models.NewsAndArticle();
         }
-        public Models.NewsAndArticle NewsAndArticles { get; set; }
+        public Models.NewsAndArticle NewsAndArticle { get; set; }
     }
 }

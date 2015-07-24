@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.IServices
         bool AddNewsAndArticle(NewsAndArticle newsAndArticle);
         bool UpdateNewsAndArticle(NewsAndArticle newsAndArticle);
         void DeleteNewsAndArticle(NewsAndArticle newsAndArticle);
+        bool Delete(long id);
     }
 }

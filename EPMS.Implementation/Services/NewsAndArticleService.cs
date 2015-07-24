@@ -59,6 +59,14 @@ namespace EPMS.Implementation.Services
             newsAndArticleRepository.SaveChanges();
         }
 
+        public bool Delete(long id)
+        {
+            NewsAndArticle newsAndArticleToDelete = newsAndArticleRepository.Find(id);
+            newsAndArticleRepository.Delete(newsAndArticleToDelete);
+            newsAndArticleRepository.SaveChanges();
+            return true;
+        }
+
         #endregion
     }
 }
