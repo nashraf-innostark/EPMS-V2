@@ -159,6 +159,7 @@
     <Compile Include="Services\NewsAndArticleService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\PartnerService.cs" />
     <Compile Include="Services\PayrollService.cs" />
     <Compile Include="Services\PhysicalCountService.cs" />
     <Compile Include="Services\PoItemService.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Services\WarehouseDetailService.cs" />
     <Compile Include="Services\WarehouseService.cs" />
+    <Compile Include="Services\WebsiteDepartmentService.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

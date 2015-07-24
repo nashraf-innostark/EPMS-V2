@@ -1,7 +1,7 @@
-﻿@model EPMS.Web.ViewModels.Slider.SliderViewModel
+﻿@model EPMS.Web.ViewModels.Website.Department.DepartmentViewModel
 
 @{
-    ViewBag.Title = Model.ImageSlider.SliderId > 0 ? "Website Slider Updation" : "Website Slider Addition";
+    ViewBag.Title = Model.WebsiteDepartment.DepartmentId > 0 ? "Website Department Updation" : "Website Department Addition";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
@@ -28,70 +28,51 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    @if (Model.ImageSlider.SliderId > 0)
+    @if (Model.WebsiteDepartment.DepartmentId > 0)
     {
-        <h2><small>Website Slider Edit</small></h2>
+        <h2><small>Website Department Edit</small></h2>
     }
     else
     {
-        <h2><small>Website Slider Add</small></h2>
+        <h2><small>Website Department Add</small></h2>
     }
 </header>
 
-@using (Html.BeginForm("Create", "Slider", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditSliderForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Department", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditSliderForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.HiddenFor(model => model.ImageSlider.SliderId)
-        @Html.HiddenFor(model => model.ImageSlider.RecCreatedBy)
-        @Html.HiddenFor(model => model.ImageSlider.RecCreatedDate)
-        @Html.HiddenFor(model => model.ImageSlider.ImageName, new { @id = "ImageName" })
+        @Html.HiddenFor(model => model.WebsiteDepartment.DepartmentId)
+        @Html.HiddenFor(model => model.WebsiteDepartment.RecCreatedBy)
+        @Html.HiddenFor(model => model.WebsiteDepartment.RecCreatedDate)
+        @Html.HiddenFor(model => model.WebsiteDepartment.ImageName, new { @id = "ImageName" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Order">Order</label>
+                <label class="control-label" for="Order">Order  </label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.ImageOrder, new { @id = "Order", @class = "toBeDisable" })
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.DepartmentOrder, new { @id = "Order", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TitleEn">Title</label>
+                <label class="control-label" for="NameEn">Department Name</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.TitleEn, new { @id = "TitleEn", @class = "toBeDisable" })
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.NameEn, new { @id = "NameEn", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
+
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TitleAr">Title Arabic</label>
+                <label class="control-label" for="NameAr">Department Name Arabic</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.TitleAr, new { @id = "TitleAr", @class = "toBeDisable" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="SubTitleEn">Sub Title</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.SubTitleEn, new { @id = "SubTitleEn", @class = "toBeDisable" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="SubTitleAr">Sub Title Arabic</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.SubTitleAr, new { @id = "SubTitleAr", @class = "toBeDisable" })
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.NameAr, new { @id = "NameAr", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
@@ -108,51 +89,23 @@
                 </div>
             </div>
         </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label" for="Position"> Position </label>
-            </div>
-            <div class="span2">
-                <div class="controls">
-                    @Html.DropDownListFor(model => model.ImageSlider.Position,
-                                        new SelectList(Model.Position, "Value", "Text", Model.ImageSlider.Position),
-                             new { @id = "Position", @class = "select2me disableSelect" })
-                </div>
-            </div>
-        </div>
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Link">Link</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ImageSlider.Link, new { @id = "Link", @class = "toBeDisable" })
+                    @Html.TextBoxFor(model => model.WebsiteDepartment.Link, new { @id = "Link", @class = "toBeDisable" })
                 </div>
             </div>
         </div>
-        <div id="Descp">
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="descp">Description</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input type="text" id="descp" readonly="readonly" />
-                    </div>
-                </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="ShowToPublic">Show to public?</label>
             </div>
-        </div>
-        <div id="CKEditorDescp">
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="Description">Description</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        @Html.TextAreaFor(model => model.ImageSlider.Description, new { @id = "Description", @class = "" })
-                    </div>
+            <div class="span9 span-inset" id="ShowToPublicDiv">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.WebsiteDepartment.ShowToPublic, new { @id = "ShowToPublic" })
                 </div>
             </div>
         </div>
@@ -177,7 +130,7 @@
                 </div>
             </div>
         </div>
-        @if (Model.ImageSlider.SliderId > 0 && userPermissionsSet.Contains("DeleteSlider"))
+        @if (Model.WebsiteDepartment.DepartmentId > 0 && userPermissionsSet.Contains("WebsiteDepartmentDelete"))
         {
             <div id="Delete" style="display: none">
                 <div class="control-group row-fluid">
@@ -192,36 +145,22 @@
 
 <script src="~/RTE/ckeditor.js"></script>
 <script type="text/javascript">
-    $().ready(function () {
-        if (parseInt('@Model.ImageSlider.SliderId') > 0 || '@userPermissionsSet.Contains("SliderCreate")' == 'False') {
+    $().ready(function() {
+        if (parseInt('@Model.WebsiteDepartment.DepartmentId') > 0 || '@userPermissionsSet.Contains("WebsiteDepartmentCreate")' == 'False') {
             $('.' + 'toBeDisable' + ':input').attr('disabled', true);
-            $('.disableSelect').select2('disable');
             $('#image').addClass('disableList');
-            var descpE = '@Html.Raw(Model.ImageSlider.Description)';
-            var regex = /(<([^>]+)>)/ig;
-            var res = descpE.replace(regex, "");
-            $("#descp").val(res);
-            $("#Descp").show();
-            $("#CKEditorDescp").hide();
-            var val = '@userPermissionsSet.Contains("SliderCreate")';
+            $('#ShowToPublicDiv').addClass('disableList');
+            var val = '@userPermissionsSet.Contains("WebsiteDepartmentCreate")';
             if (val == 'True') {
                 $("#Edit").show();
             } else {
 
             }
         } else {
-            $("#Descp").hide();
-            CKEDITOR.replace('Description', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            $("#CKEditorDescp").show();
             $("#Create").show();
         }
-
-
-
         var errors = "";
-        var url = $('#siteURL').val() + "/Website/Slider/UploadImage";
+        var url = $('#siteURL').val() + "/Website/Department/UploadImage";
         $('#upload').mfupload({
             type: '', //all types
             maxsize: 1,
@@ -231,42 +170,35 @@
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
-            init: function () {
+            init: function() {
                 $("#uploaded").empty();
             },
-            start: function (result) {
+            start: function(result) {
                 $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
             },
-            loaded: function (result) {
+            loaded: function(result) {
                 $("#PRO" + result.fileno).remove();
                 $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
                 $("#ImageName").val(result.filename);
             },
-            progress: function (result) {
+            progress: function(result) {
                 $("#PRO" + result.fileno).css("width", result.perc + "%");
             },
-            error: function (error) {
+            error: function(error) {
                 errors += error.filename + ": " + error.err_des + "\n";
             },
-            completed: function () {
+            completed: function() {
                 if (errors != "") {
                     alert(errors);
                     errors = "";
                 }
             }
         });
-
     });
     $("#edit").click(function (event) {
         $('.' + 'toBeDisable' + ':input').attr('disabled', false);
-        // CK Editor
-        CKEDITOR.replace('Description', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-        });
-        $('.disableSelect').select2('enable');
         $('#image').removeClass('disableList');
-        $("#Descp").hide();
-        $("#CKEditorDescp").show();
+        $('#ShowToPublicDiv').removeClass('disableList');
         $("#Edit").hide();
         $("#Update").show();
         $("#Delete").show();

@@ -90,6 +90,7 @@
     <Compile Include="IServices\INewsAndArticleService.cs" />
     <Compile Include="IServices\INotificationService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
+    <Compile Include="IServices\IPartnerService.cs" />
     <Compile Include="IServices\IPayrollService.cs" />
     <Compile Include="IServices\IPhysicalCountService.cs" />
     <Compile Include="IServices\IPoItemService.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="IServices\IVendorItemsService.cs" />
     <Compile Include="IServices\IVendorService.cs" />
     <Compile Include="IServices\IWarehouseDetailService.cs" />
+    <Compile Include="IServices\IWebsiteDepartmentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IApplicantExperienceRepository.cs" />
@@ -160,6 +162,7 @@
     <Compile Include="Repository\INotificationRecipientRepository.cs" />
     <Compile Include="Repository\INotificationRepository.cs" />
     <Compile Include="Repository\IOrdersRepository.cs" />
+    <Compile Include="Repository\IPartnerRepository.cs" />
     <Compile Include="Repository\IPhysicalCountRepository.cs" />
     <Compile Include="Repository\IPOHistoryRepository.cs" />
     <Compile Include="Repository\IPoItemRepository.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="Repository\IWarehouseDetailRepository.cs" />
     <Compile Include="Repository\IWarehouseRepository.cs" />
     <Compile Include="Repository\IPhysicalCountItemRepository.cs" />
+    <Compile Include="Repository\IWebsiteDepartmentRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

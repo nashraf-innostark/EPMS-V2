@@ -304,6 +304,42 @@ namespace EPMS.Web.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bottom.
+        /// </summary>
+        public static string PositionBottom {
+            get {
+                return ResourceManager.GetString("PositionBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string PositionLeft {
+            get {
+                return ResourceManager.GetString("PositionLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right.
+        /// </summary>
+        public static string PositionRight {
+            get {
+                return ResourceManager.GetString("PositionRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Top.
+        /// </summary>
+        public static string PositionTop {
+            get {
+                return ResourceManager.GetString("PositionTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product.
         /// </summary>
         public static string Product {

@@ -151,5 +151,7 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<PhysicalCountItem> PhysicalCountItems { get; set; }
         public DbSet<ImageSlider> ImageSliders { get; set; }
         public DbSet<NewsAndArticle> NewsAndArticles { get; set; }
+        public DbSet<Partner> Partners { get; set; }
+        public DbSet<WebsiteDepartment> WebsiteDepartments { get; set; }
     }
 }

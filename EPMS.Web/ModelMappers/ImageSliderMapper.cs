@@ -6,6 +6,12 @@ namespace EPMS.Web.ModelMappers
     {
         public static ImageSlider CreateFromClientToServer(this Models.ImageSlider source)
         {
+            string descp = source.Description;
+            if (!string.IsNullOrEmpty(descp))
+            {
+                descp = descp.Replace("\n", "");
+                descp = descp.Replace("\r", "");
+            }
             return new ImageSlider
             {
                 SliderId = source.SliderId,
@@ -14,9 +20,9 @@ namespace EPMS.Web.ModelMappers
                 SubTitleEn = source.SubTitleEn,
                 SubTitleAr = source.SubTitleAr,
                 ImageOrder = source.ImageOrder,
-                ImagePath = source.ImagePath,
+                ImageName = source.ImageName,
                 Position = source.Position,
-                Description = source.Description,
+                Description = descp,
                 Link = source.Link,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -34,7 +40,7 @@ namespace EPMS.Web.ModelMappers
                 SubTitleEn = source.SubTitleEn,
                 SubTitleAr = source.SubTitleAr,
                 ImageOrder = source.ImageOrder,
-                ImagePath = source.ImagePath,
+                ImageName = source.ImageName,
                 Position = source.Position,
                 Description = source.Description,
                 Link = source.Link,

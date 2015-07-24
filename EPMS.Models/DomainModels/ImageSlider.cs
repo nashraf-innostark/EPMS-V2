@@ -10,7 +10,7 @@ namespace EPMS.Models.DomainModels
         public string SubTitleEn { get; set; }
         public string SubTitleAr { get; set; }
         public int? ImageOrder { get; set; }
-        public string ImagePath { get; set; }
+        public string ImageName { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
         public int? Position { get; set; }

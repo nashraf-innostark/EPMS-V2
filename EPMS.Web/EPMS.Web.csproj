@@ -323,7 +323,9 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Website\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
@@ -358,6 +360,7 @@
     <Compile Include="DashboardModels\RFIWidget.cs" />
     <Compile Include="DashboardModels\WarehousDDL.cs" />
     <Compile Include="EncryptDecrypt\StringCipher.cs" />
+    <Compile Include="EnumForDropDown\Position.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -414,7 +417,11 @@
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
     <Compile Include="ModelMappers\WarehouseMapper.cs" />
+    <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
+    <Compile Include="ModelMappers\Website\Partner\PartnerMapper.cs" />
+    <Compile Include="Models\WebsiteDepartment.cs" />
+    <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
     <Compile Include="Models\ApplicantExperience.cs" />
@@ -459,6 +466,7 @@
     <Compile Include="Models\NewsAndArticle.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\ParentNodesSection.cs" />
+    <Compile Include="Models\Partner.cs" />
     <Compile Include="Models\PhysicalCountListModel.cs" />
     <Compile Include="Models\PhysicalCountItemModel.cs" />
     <Compile Include="Models\PhysicalCountModel.cs" />
@@ -867,6 +875,7 @@
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\Help\HelpViewModel.cs" />
+    <Compile Include="ViewModels\HomePage\HomePageViewModel.cs" />
     <Compile Include="ViewModels\InventoryDepartment\InventoryDepartmentViewModel.cs" />
     <Compile Include="ViewModels\InventoryItem\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
@@ -922,6 +931,7 @@
     <Compile Include="ViewModels\TIR\TransferItemCreateViewModel.cs" />
     <Compile Include="ViewModels\TIR\TransferItemListViewModel.cs" />
     <Compile Include="ViewModels\Vendor\VendorViewModel.cs" />
+    <Compile Include="ViewModels\Website\Department\DepartmentViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2018,6 +2028,8 @@
     <Content Include="Areas\Website\Views\Slider\Create.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\Index.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\Create.cshtml" />
+    <Content Include="Areas\Website\Views\Partner\Create.cshtml" />
+    <Content Include="Areas\Website\Views\Department\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

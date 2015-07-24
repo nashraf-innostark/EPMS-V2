@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -10,6 +12,8 @@ namespace EPMS.Implementation.Services
         #region Private
 
         private readonly IImageSliderRepository repository;
+        private readonly IPartnerRepository partnerRepository;
+        private readonly IWebsiteDepartmentRepository departmentRepository;
         
         #endregion
         
@@ -17,12 +21,31 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ImageSliderService(IImageSliderRepository repository)
+        public ImageSliderService(IImageSliderRepository repository, IPartnerRepository partnerRepository, IWebsiteDepartmentRepository departmentRepository)
         {
             this.repository = repository;
+            this.partnerRepository = partnerRepository;
+            this.departmentRepository = departmentRepository;
         }
 
         #endregion
+
+        public HomePageResponse GetHomePageResponse()
+        {
+            HomePageResponse response = new HomePageResponse
+            {
+                ImageSlider = repository.GetAll(),
+                Partners = partnerRepository.GetAll(),
+                WebsiteDepartments = departmentRepository.GetAll()
+            };
+            return response;
+        }
+
+        public IEnumerable<ImageSlider> GetAll()
+        {
+            return repository.GetAll();
+        }
+
         public ImageSlider FindImageSliderById(long id)
         {
             return repository.Find(id);
@@ -56,10 +79,14 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeleteImageSlider(ImageSlider imageSlider)
+        public void DeleteImageSlider(long id)
         {
-            repository.Delete(imageSlider);
-            repository.SaveChanges();
+            var dataToDelete = repository.Find(id);
+            if (dataToDelete != null)
+            {
+                repository.Delete(dataToDelete);
+                repository.SaveChanges();
+            }
         }
     }
 }

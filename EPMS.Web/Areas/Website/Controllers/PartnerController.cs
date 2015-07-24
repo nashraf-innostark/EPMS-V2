@@ -1,77 +1,66 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.EnumForDropDown;
-using EPMS.Web.ModelMappers;
+using EPMS.Web.ModelMappers.Website.Partner;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Slider;
+using EPMS.Web.ViewModels.Partner;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
-    public class SliderController : BaseController
+    public class PartnerController : BaseController
     {
         #region Private
 
-        private readonly IImageSliderService sliderService;
-
+        private readonly IPartnerService partnerService;
+        
         #endregion
 
         #region Constructor
-        public SliderController(IImageSliderService sliderService)
+        public PartnerController(IPartnerService partnerService)
         {
-            this.sliderService = sliderService;
+            this.partnerService = partnerService;
         }
 
         #endregion
 
         #region Public
 
-        // GET: Website/Slider
-        [SiteAuthorize(PermissionKey = "SliderCreate,SliderView")]
+        // GET: Website/Partner
+        [SiteAuthorize(PermissionKey = "PartnerCreate,PartnerView")]
         public ActionResult Create(long? id)
         {
-            SliderViewModel viewModel = new SliderViewModel
+            PartnerViewModel viewModel = new PartnerViewModel
             {
-                ImageSlider = id != null ? sliderService.FindImageSliderById((long)id).CreateFromServerToClient() : new Models.ImageSlider()
+                Partner = id != null ? partnerService.FindPartnerById((long)id).CreateFromServerToClient() : new Partner()
             };
-            IEnumerable<Position> positions = Enum.GetValues(typeof(Position))
-                                                       .Cast<Position>();
-            viewModel.Position = from action in positions
-                                 select new SelectListItem
-                                 {
-                                     Text = action.ToString(),
-                                     Value = ((int)action).ToString()
-                                 };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateInput(false)]
-        [SiteAuthorize(PermissionKey = "SliderCreate")]
-        public ActionResult Create(SliderViewModel viewModel)
+        [SiteAuthorize(PermissionKey = "PartnerCreate")]
+        public ActionResult Create(PartnerViewModel viewModel)
         {
             try
             {
                 if (Request.Form["Update"] != null)
                 {
-                    viewModel.ImageSlider.RecUpdatedBy = User.Identity.GetUserId();
-                    viewModel.ImageSlider.RecUpdatedDate = DateTime.Now;
-                    ImageSlider imageSliderToUpdate = viewModel.ImageSlider.CreateFromClientToServer();
-                    if (sliderService.UpdateImageSlider(imageSliderToUpdate))
+                    viewModel.Partner.RecUpdatedBy = User.Identity.GetUserId();
+                    viewModel.Partner.RecUpdatedDate = DateTime.Now;
+                    EPMS.Models.DomainModels.Partner partnerToUpdate = viewModel.Partner.CreateFromClientToServer();
+                    if (partnerService.UpdatePartner(partnerToUpdate))
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Slider Image Updated",
+                            Message = "Partner Updated",
                             IsUpdated = true
                         };
                     }
@@ -80,17 +69,14 @@ namespace EPMS.Web.Areas.Website.Controllers
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(viewModel.ImageSlider.ImageName))
-                        {
-                            var directory = ConfigurationManager.AppSettings["SliderImage"];
-                            var path = "~" + directory + viewModel.ImageSlider.ImageName;
-                            var fullPath = Request.MapPath(path);
-                            Utility.DeleteFile(fullPath);
-                        }
-                        sliderService.DeleteImageSlider(viewModel.ImageSlider.SliderId);
+                        var directory = ConfigurationManager.AppSettings["PartnerImage"];
+                        var path = "~" + directory + viewModel.Partner.ImageName;
+                        var fullPath = Request.MapPath(path);
+                        Utility.DeleteFile(fullPath);
+                        partnerService.DeletePartner(viewModel.Partner.PartnerId);
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Slider Image Deleted",
+                            Message = "Partner Deleted",
                             IsUpdated = true
                         };
                     }
@@ -101,16 +87,16 @@ namespace EPMS.Web.Areas.Website.Controllers
                 }
                 else
                 {
-                    viewModel.ImageSlider.RecCreatedBy = User.Identity.GetUserId();
-                    viewModel.ImageSlider.RecCreatedDate = DateTime.Now;
-                    viewModel.ImageSlider.RecUpdatedBy = User.Identity.GetUserId();
-                    viewModel.ImageSlider.RecUpdatedDate = DateTime.Now;
-                    ImageSlider imageSliderToAdd = viewModel.ImageSlider.CreateFromClientToServer();
-                    if (sliderService.AddImageSlider(imageSliderToAdd))
+                    viewModel.Partner.RecCreatedBy = User.Identity.GetUserId();
+                    viewModel.Partner.RecCreatedDate = DateTime.Now;
+                    viewModel.Partner.RecUpdatedBy = User.Identity.GetUserId();
+                    viewModel.Partner.RecUpdatedDate = DateTime.Now;
+                    EPMS.Models.DomainModels.Partner partnerToAdd = viewModel.Partner.CreateFromClientToServer();
+                    if (partnerService.AddPartner(partnerToAdd))
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Slider Image Added",
+                            Message = "Partner Added",
                             IsUpdated = true
                         };
                     }
@@ -137,7 +123,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 if ((userPhoto != null))
                 {
                     var filename = userPhoto.FileName;
-                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["SliderImage"]);
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["PartnerImage"]);
                     savedFileName = Path.Combine(filePathOriginal, filename);
                     userPhoto.SaveAs(savedFileName);
                     return Json(new { filename = userPhoto.FileName, size = userPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
@@ -152,22 +138,22 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #endregion
 
-        #region Delete Slider Image
+        #region Delete Partner
 
-        public JsonResult DeleteSliderImage(long sliderId, string imageName)
+        public JsonResult DeletePartner(long partnerId, string imageName)
         {
             try
             {
                 // Delete image
                 if (!string.IsNullOrEmpty(imageName))
                 {
-                    var directory = ConfigurationManager.AppSettings["SliderImage"];
+                    var directory = ConfigurationManager.AppSettings["PartnerImage"];
                     var path = "~" + directory + imageName;
                     var fullPath = Request.MapPath(path);
                     Utility.DeleteFile(fullPath);
                 }
                 // Delete data from DB
-                sliderService.DeleteImageSlider(sliderId);
+                partnerService.DeletePartner(partnerId);
                 return Json("Deleted", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -177,6 +163,5 @@ namespace EPMS.Web.Areas.Website.Controllers
         }
 
         #endregion
-
     }
 }

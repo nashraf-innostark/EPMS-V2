@@ -131,6 +131,7 @@
     <Compile Include="DomainModels\ItemReleaseStatus.cs" />
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\NewsAndArticle.cs" />
+    <Compile Include="DomainModels\Partner.cs" />
     <Compile Include="DomainModels\PhysicalCount.cs" />
     <Compile Include="DomainModels\PhysicalCountItem.cs" />
     <Compile Include="DomainModels\PurchaseOrder.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="DomainModels\TIRItem.cs" />
     <Compile Include="DomainModels\TIRItemHistory.cs" />
     <Compile Include="DomainModels\TransferItemStatus.cs" />
+    <Compile Include="DomainModels\WebsiteDepartment.cs" />
     <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
@@ -305,6 +307,7 @@
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
+    <Compile Include="ResponseModels\HomePageResponse.cs" />
     <Compile Include="ResponseModels\IRFCreateResponse.cs" />
     <Compile Include="ResponseModels\IrfHistoryResponse.cs" />
     <Compile Include="ResponseModels\ItemReleaseResponse.cs" />
